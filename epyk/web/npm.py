@@ -1,5 +1,18 @@
+from typing import Tuple, List
+
 
 PACKAGES = {
+
+    'ag-grid-community': {
+        "path": 'dist',
+        'imports': [
+            "import * as agGrid from 'ag-grid-community'",
+        ],
+        "styles": [
+            "ag-grid-community/styles/ag-grid.css",
+            "ag-grid-community/styles/ag-theme-alpine.css"
+        ]
+    },
 
     'chart.js': {
         "path": 'dist',
@@ -47,6 +60,9 @@ PACKAGES = {
     "@eonasdan/tempus-dominus": {
         "imports": [
             "import * as tempusDominus from '@eonasdan/tempus-dominus'"
+        ],
+        "styles": [
+            "node_modules/@eonasdan/tempus-dominus/dist/css/tempus-dominus.css"
         ]
     },
 
@@ -110,10 +126,53 @@ PACKAGES = {
 
 def get_imports(package_name: str, **kwargs) -> str:
     """
+    Get all the imports to be added to the component module to run correctly within any
+    web framework.
 
-    :param package_name:
+    This will add the explicit imports required in JavaScript / TypeScript modules.
+    Those lines cannot be added to the js file since standalone page can't import Js modules
+    and modules are not compatible with all browsers.
+
+    :param package_name: The component package name
     """
     if package_name in PACKAGES:
         return ";\n".join(PACKAGES[package_name].get("imports", [])).format(**kwargs) + "\n"
 
     return ""
+
+
+def to_module(content: str, requirements: Tuple[str]) -> str:
+    """
+    Change a component file (javascript) to a module file.
+
+    :param content: The javaScript component content
+    :param requirements: The list of npm alias requirements
+    """
+    content = "\n" + content
+    for used_package in requirements:
+        content = get_imports(used_package) + content
+    return content
+
+
+def get_styles(requirements: Tuple[str], **kwargs) -> List[str]:
+    """
+    Get the list of style files to be explicitly added to the core framework.
+
+    :param requirements: The list of npm alias requirements
+    """
+    extra_styles = []
+    for used_package in requirements:
+        extra_styles.extend(PACKAGES.get(used_package, {}).get("styles", []))
+    return extra_styles
+
+
+def get_scripts(requirements: Tuple[str], **kwargs) -> List[str]:
+    """
+    Get the list of script files to be explicitly added to the core framework.
+
+    :param requirements: The list of npm alias requirements
+    """
+    extra_scripts = []
+    for used_package in requirements:
+        extra_scripts.extend(PACKAGES.get(used_package, {}).get("scripts", []))
+    return extra_scripts

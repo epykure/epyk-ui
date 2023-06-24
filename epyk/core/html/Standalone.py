@@ -319,6 +319,26 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         self.__metadata = dict(kwargs)
         return self
 
+    @classmethod
+    def get_import(cls, path: str, suffix: str = "", root_path: str = None, is_ts: bool = True) -> str:
+        """
+        Get the import statement to be added to a module.
+        This would work with ts or js files.
+
+        If the root_path of the application file is added, the process will check if the component file exists.
+
+        :param path: The component file path
+        :param suffix:Suffix import for Component or Modules derived from the core builder
+        :param root_path: The application file path (within the app/ folder)
+        :param is_ts: Flag to specify the file format (ts or js)
+        """
+        if root_path is not None:
+            script_path = Path(root_path, "%s.%s" % (path, "ts" if is_ts else 'js'))
+            if not script_path.exists():
+                raise ValueError("Component script does not exist: %s" % script_path)
+
+        return "import { %s%s } from '%s'" % (cls.__name__, suffix, path)
+
     def __str__(self):
         if self.component_url is not None:
             if Path(self.component_url).exists():
@@ -338,7 +358,6 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         if self.style_urls is not None:
             css_content = css_files_loader(self.style_urls, self.selector, style_vars=self.page.theme.all())
             if css_content:
-                print(self.selector)
                 self.page.properties.css.add_text(css_content, map_id=self.selector)
 
         values = dict(self.__metadata)

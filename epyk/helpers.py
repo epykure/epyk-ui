@@ -1,12 +1,14 @@
+import logging
+
 from epyk.core.css.themes import Theme
 from epyk.core.css import Icons, css_files_loader
 from epyk.core.html import Standalone, html_template_loader
-from epyk.core.js import Imports
 
 from epyk.web import templates, npm
 
 from typing import Dict, Union, Any, List
 
+from collections import OrderedDict
 import zipfile
 import json
 from pathlib import Path
@@ -119,7 +121,7 @@ def check_component_requirements(component: Standalone.Component, app_path: str,
 
 def to_svelte_component(
         component: Standalone.Component, name: str = "ek-svelte-{selector}-{version}", out_path: str = None,
-        version: str = None, init_value: Any = "", init_options: dict = None):
+        version: str = None, init_value: Any = "", init_options: dict = None) -> Dict[str, str]:
     """
     Convert a Standalone component to a valid Svelte component.
 
@@ -139,18 +141,14 @@ def to_svelte_component(
         out_path = Path().cwd()
     init_options = init_options or {}
 
-    out_js_name = name.format(selector=component.selector, version=version) + ".js"
-    with open(Path(out_path, out_js_name), "w") as jf:
+    component_files = {"js": name.format(selector=component.selector, version=version) + ".js"}
+    with open(Path(out_path, component_files["js"]), "w") as jf:
         js_path = Path(component.component_url)
         with open(js_path) as hf:
-            content = hf.read()
-            if "@eonasdan/tempus-dominus" in component.requirements:
-                content = "import { TempusDominus, DateTime } from '@eonasdan/tempus-dominus';\n\n" + content
-                content = content.replace("tempusDominus.TempusDominus", "TempusDominus")
-            jf.write(content)
+            jf.write(npm.to_module(hf.read(), component.requirements))
 
-    out_file_name = name.format(selector=component.selector, version=version) + ".svelte"
-    with open(Path(out_path, out_file_name), "w") as sf:
+    component_files["component"] = name.format(selector=component.selector, version=version) + ".svelte"
+    with open(Path(out_path, component_files["component"]), "w") as sf:
         css_styles = css_files_loader(component.style_urls, minify=False)
         html_def = html_template_loader(
             component.template_url, new_var_format="{ %s }",
@@ -158,7 +156,7 @@ def to_svelte_component(
         js_expr = ["export let %s" % v for v in html_def["vars"]]
         js_expr.append("export let %s")
         js_expr.append("import { onMount } from 'svelte'")
-        js_expr.append("import { %s } from './%s'" % (component.__name__, out_js_name))
+        js_expr.append("import { %s } from './%s'" % (component.__name__, component_files["js"]))
         js_expr.append('onMount(() => {component = new %s(%s, %s, %s);})' % (
             component.__name__, component.__name__.lower(), json.dumps(init_value), init_options))
         sf.write(templates.SVELTE_COMPONENT % {
@@ -170,17 +168,27 @@ def to_svelte_component(
     if version is not None:
         out_zip_name = name.format(selector=component.selector, version=version) + ".zip"
         with zipfile.ZipFile(out_zip_name, 'w') as zip_object:
-            zip_object.write(out_js_name, out_js_name)
-            zip_object.write(out_file_name, out_file_name)
+            zip_object.write(component_files["js"], component_files["js"])
+            zip_object.write(component_files["component"], component_files["component"])
             # delete files in the folder
-            Path(out_path, out_js_name).unlink()
-            Path(out_path, out_file_name).unlink()
+            Path(out_path, component_files["js"]).unlink()
+            Path(out_path, component_files["component"]).unlink()
+    return component_files
 
 
 def to_angular_component(
-        component: Standalone.Component, name: str = "ek-angular-{selector}-{version}", out_path: str = None, version: str = None,
-        init_value: Any = "", init_options: dict = None):
+        component: Standalone.Component, name: str = "ek-angular-{selector}-{version}", out_path: str = None,
+        version: str = None, init_value: Any = "", init_options: dict = None) -> Dict[str, str]:
+    """
 
+    :param component:
+    :param name:
+    :param out_path:
+    :param version:
+    :param init_value:
+    :param init_options:
+    """
+    component_files = {}
     # Write component definition to the assets folder
     if out_path is None:
         out_path = Path().cwd()
@@ -188,40 +196,33 @@ def to_angular_component(
     out_path.mkdir(parents=True, exist_ok=True)
     init_options = init_options or {}
 
-    out_js_name = name.format(selector=component.selector, version=version) + ".js"
-    with open(Path(out_path, out_js_name), "w") as jf:
+    component_files = {"js": name.format(selector=component.selector, version=version) + ".js"}
+    with open(Path(out_path, component_files["js"]), "w") as jf:
         js_path = Path(component.component_url)
         with open(js_path) as hf:
-            content = "\n" + hf.read()
-            for dep in component.requirements[::-1]:
-                if dep in Imports.JS_IMPORTS:
-                    js_headers = Imports.JS_IMPORTS[dep].get("register", {}).get("npm_imports", [])
-                    if js_headers:
-                        content = ";\n".join(js_headers) + "\n" + content
-            jf.write(content)
+            jf.write(npm.to_module(hf.read(), component.requirements))
 
-    out_css_name = name.format(selector=component.selector, version=version) + ".css"
-    with open(Path(out_path, out_css_name), "w") as cf:
+    component_files["css"] = name.format(selector=component.selector, version=version) + ".css"
+    with open(Path(out_path, component_files["css"]), "w") as cf:
         css_styles = css_files_loader(component.style_urls, minify=False)
         if css_styles:
             cf.write(css_styles)
 
-    out_html_name = name.format(selector=component.selector, version=version) + ".html"
-    with open(Path(out_path, out_html_name), "w") as hf:
+    component_files["html"] = name.format(selector=component.selector, version=version) + ".html"
+    with open(Path(out_path, component_files["html"]), "w") as hf:
         html_def = html_template_loader(component.template_url, ref_expr="#%s" % component.__name__.lower())
         hf.write(html_def["template"])
 
-    out_spec_file_name = name.format(selector=component.selector, version=version) + ".component.spec.ts"
-    with open(Path(Path(out_path).parent, out_spec_file_name), "w") as sf:
+    component_files["spec"] = name.format(selector=component.selector, version=version) + ".component.spec.ts"
+    with open(Path(Path(out_path).parent, component_files["spec"]), "w") as sf:
         sf.write(templates.ANGULAR_COMPONENT_SPEC % {
             "asset_class": component.__name__,
         })
 
-    out_file_name = name.format(selector=component.selector, version=version) + ".component.ts"
+    component_files["component"] = name.format(selector=component.selector, version=version) + ".component.ts"
     js_frgs = ["@Input() %s" % var for var in html_def['vars']]
     # @Input() label;
-    print(html_def)
-    with open(Path(Path(out_path).parent, out_file_name), "w") as sf:
+    with open(Path(Path(out_path).parent, component_files["component"]), "w") as sf:
         sf.write(templates.ANGULAR_COMPONENT % {
             "asset_class": component.__name__,
             "selector": component.selector,
@@ -236,22 +237,23 @@ def to_angular_component(
     if version is not None:
         out_zip_name = name.format(selector=component.selector, version=version) + ".zip"
         with zipfile.ZipFile(out_zip_name, 'w') as zip_object:
-            zip_object.write(str(Path(component.selector, out_js_name)), str(Path(component.selector, out_js_name)))
-            zip_object.write(str(Path(component.selector, out_css_name)), str(Path(component.selector, out_css_name)))
-            zip_object.write(str(Path(component.selector, out_html_name)), str(Path(component.selector, out_html_name)))
-            zip_object.write(out_spec_file_name, out_spec_file_name)
-            zip_object.write(out_file_name, out_file_name)
+            zip_object.write(str(Path(component.selector, component_files["js"])), str(Path(component.selector, component_files["js"])))
+            zip_object.write(str(Path(component.selector, component_files["css"])), str(Path(component.selector, component_files["css"])))
+            zip_object.write(str(Path(component.selector, component_files["html"])), str(Path(component.selector, component_files["html"])))
+            zip_object.write(component_files["spec"], component_files["spec"])
+            zip_object.write(component_files["component"], component_files["component"])
             # delete files in the folder
-            Path(out_path, out_js_name).unlink()
-            Path(out_path, out_css_name).unlink()
-            Path(out_path, out_html_name).unlink()
-            Path(Path(out_path).parent, out_spec_file_name).unlink()
-            Path(Path(out_path).parent, out_file_name).unlink()
+            Path(out_path, component_files["js"]).unlink()
+            Path(out_path, component_files["css"]).unlink()
+            Path(out_path, component_files["html"]).unlink()
+            Path(Path(out_path).parent, component_files["spec"]).unlink()
+            Path(Path(out_path).parent, component_files["component"]).unlink()
+    return component_files
 
 
-
-def to_react_component(component: Standalone.Component, name: str = "ek-react-{selector}-{version}", out_path: str = None,
-                       version: str = None, init_value: Any = "", init_options: dict = None):
+def to_react_component(
+        component: Standalone.Component, name: str = "ek-react-{selector}-{version}", out_path: str = None,
+        version: str = None, init_value: Any = "", init_options: dict = None) -> Dict[str, str]:
     """
     Convert a Standalone component to a valid React component.
 
@@ -275,30 +277,26 @@ def to_react_component(component: Standalone.Component, name: str = "ek-react-{s
     out_path.mkdir(parents=True, exist_ok=True)
     init_options = init_options or {}
 
-    out_js_name = name.format(selector=component.selector, version=version) + ".js"
-    with open(Path(out_path, out_js_name), "w") as jf:
+    component_files = {"js": name.format(selector=component.selector, version=version) + ".js"}
+    with open(Path(out_path, component_files["js"]), "w") as jf:
         js_path = Path(component.component_url)
         with open(js_path) as hf:
-            content = hf.read()
-            for used_package in component.requirements:
-                content = npm.get_imports(used_package) + content
-            content += "/n/n"
-            jf.write(content)
+            jf.write(npm.to_module(hf.read(), component.requirements))
 
-    out_css_name = name.format(selector=component.selector, version=version) + ".css"
-    with open(Path(out_path, out_css_name), "w") as cf:
+    component_files["css"] = name.format(selector=component.selector, version=version) + ".css"
+    with open(Path(out_path, component_files["css"]), "w") as cf:
         css_styles = css_files_loader(component.style_urls, minify=False)
         if css_styles:
             cf.write(css_styles)
 
     # Then add the component definition to the root
     html_def = html_template_loader(
-        component.template_url, new_var_format="{ this.state.%s }",
-        ref_expr="ref={ this.dom }")
-    out_file_name = name.format(selector=component.selector, version=version) + ".component.js"
+        component.template_url, new_var_format="{ this.state.%s }", ref_expr="ref={ this.dom }")
+    component_files["component"] = name.format(selector=component.selector, version=version) + ".component.js"
     # Special formatting for React
-    html_def["template"] = html_def["template"].replace("class=", "className=").replace("for=", "htmlFor=").replace('"{ this.state.cssStyle }"', "{ this.state.cssStyle }")
-    with open(Path(Path(out_path).parent, out_file_name), "w") as sf:
+    html_def["template"] = html_def["template"].replace("class=", "className=").replace("for=", "htmlFor=").replace(
+        '"{ this.state.cssStyle }"', "{ this.state.cssStyle }")
+    with open(Path(Path(out_path).parent, component_files["component"]), "w") as sf:
         sf.write(templates.REACT_COMPONENT % {
             "asset_class": component.__name__,
             "asset_path": "./%s/%s" % (Path(out_path).name, name.format(selector=component.selector, version=version)),
@@ -311,17 +309,19 @@ def to_react_component(component: Standalone.Component, name: str = "ek-react-{s
     if version is not None:
         out_zip_name = name.format(selector=component.selector, version=version) + ".zip"
         with zipfile.ZipFile(out_zip_name, 'w') as zip_object:
-            zip_object.write(str(Path(component.selector, out_js_name)), str(Path(component.selector, out_js_name)))
-            zip_object.write(str(Path(component.selector, out_css_name)), str(Path(component.selector, out_css_name)))
-            zip_object.write(out_file_name, out_file_name)
+            zip_object.write(str(Path(component.selector, component_files["js"])), str(Path(component.selector, component_files["js"])))
+            zip_object.write(str(Path(component.selector, component_files["css"])), str(Path(component.selector, component_files["css"])))
+            zip_object.write(component_files["component"], component_files["component"])
             # delete files in the folder
-            Path(out_path, out_js_name).unlink()
-            Path(out_path, out_css_name).unlink()
-            Path(Path(out_path).parent, out_file_name).unlink()
+            Path(out_path, component_files["js"]).unlink()
+            Path(out_path, component_files["css"]).unlink()
+            Path(Path(out_path).parent, component_files["component"]).unlink()
+    return component_files
 
 
-def to_vue_component(component: Standalone.Component, name: str = "ek-vue-{selector}-{version}", out_path: str = None,
-                     version: str = None, init_value: Any = "", init_options: dict = None):
+def to_vue_component(
+        component: Standalone.Component, name: str = "ek-vue-{selector}-{version}", out_path: str = None,
+        version: str = None, init_value: Any = "", init_options: dict = None) -> Dict[str, str]:
     """
     Convert a Standalone component to a valid Vue component.
 
@@ -343,31 +343,27 @@ def to_vue_component(component: Standalone.Component, name: str = "ek-vue-{selec
     out_path.mkdir(parents=True, exist_ok=True)
     init_options = init_options or {}
 
-    out_js_name = name.format(selector=component.selector, version=version) + ".js"
-    with open(Path(out_path, out_js_name), "w") as jf:
+    component_files = {"js": name.format(selector=component.selector, version=version) + ".js"}
+    with open(Path(out_path, component_files["js"]), "w") as jf:
         js_path = Path(component.component_url)
         with open(js_path) as hf:
-            content = hf.read()
-            if "@eonasdan/tempus-dominus" in component.requirements:
-                content = "import { TempusDominus } from '@eonasdan/tempus-dominus';\n\n" + content
-                content = content.replace("tempusDominus.TempusDominus", "TempusDominus")
-            jf.write(content)
+            jf.write(npm.to_module(hf.read(), component.requirements))
 
-    out_css_name = name.format(selector=component.selector, version=version) + ".css"
-    with open(Path(out_path, out_css_name), "w") as cf:
+    component_files["css"] = name.format(selector=component.selector, version=version) + ".css"
+    with open(Path(out_path, component_files["css"]), "w") as cf:
         css_styles = css_files_loader(component.style_urls, minify=False)
         if css_styles:
             cf.write(css_styles)
 
     # Then add the component definition to the root
-    out_html_name = name.format(selector=component.selector, version=version) + ".html"
-    with open(Path(out_path, out_html_name), "w") as hf:
+    component_files["html"] = name.format(selector=component.selector, version=version) + ".html"
+    with open(Path(out_path, component_files["html"]), "w") as hf:
         html_def = html_template_loader(
             component.template_url, new_var_format="{ this.state.%s }", ref_expr="ref={ this.dom }")
         hf.write(html_def["template"])
 
-    out_file_name = name.format(selector=component.selector, version=version) + ".component.vue"
-    with open(Path(Path(out_path).parent, out_file_name), "w") as sf:
+    component_files["component"] = name.format(selector=component.selector, version=version) + ".component.vue"
+    with open(Path(Path(out_path).parent, component_files["component"]), "w") as sf:
         sf.write(templates.VUE_COMPONENT % {
             "asset_path": "./%s/%s" % (Path(out_path).name, name.format(selector=component.selector, version=version)),
         })
@@ -375,14 +371,16 @@ def to_vue_component(component: Standalone.Component, name: str = "ek-vue-{selec
     if version is not None:
         out_zip_name = name.format(selector=component.selector, version=version) + ".zip"
         with zipfile.ZipFile(out_zip_name, 'w') as zip_object:
-            zip_object.write(str(Path(component.selector, out_js_name)), str(Path(component.selector, out_js_name)))
-            zip_object.write(str(Path(component.selector, out_css_name)), str(Path(component.selector, out_css_name)))
-            zip_object.write(str(Path(component.selector, out_html_name)), str(Path(component.selector, out_html_name)))
-            zip_object.write(out_file_name, out_file_name)
+            zip_object.write(str(Path(component.selector, component_files["js"])), str(Path(component.selector, component_files["js"])))
+            zip_object.write(str(Path(component.selector, component_files["css"])), str(Path(component.selector, component_files["css"])))
+            zip_object.write(str(Path(component.selector, component_files["html"])), str(Path(component.selector, component_files["html"])))
+            zip_object.write(component_files["component"], component_files["component"])
             # delete files in the folder
-            Path(out_path, out_js_name).unlink()
-            Path(out_path, out_css_name).unlink()
-            Path(Path(out_path).parent, out_file_name).unlink()
+            Path(out_path, component_files["js"]).unlink()
+            Path(out_path, component_files["css"]).unlink()
+            Path(out_path, component_files["html"]).unlink()
+            Path(Path(out_path).parent, component_files["component"]).unlink()
+    return component_files
 
 
 def add_to_svelte_app(
@@ -446,7 +444,8 @@ def add_to_angular_app(
         app_path: str,
         folder: str = "assets",
         name: str = "{selector}",
-        raise_exception: bool = False
+        raise_exception: bool = False,
+        view_path: str = "app"
 ) -> dict:
     """
     This will add the component directly tp the src folder in the linked application.
@@ -454,22 +453,56 @@ def add_to_angular_app(
 
     To start the angular application: ng serve --open
 
+    This will also update the required angular system files accordingly
+
     :param components: List of components to add to a Angular application
     :param app_path: Angular application path (root)
     :param folder: Components' folder
     :param name: Component's files name format
     :param raise_exception: Flag to raise exception if error
+    :param view_path: The path for the Angular view (the app file). default app/
     """
-    result = {"dependencies": {}}
+    result = {"dependencies": {}, "styles": [], "scripts": [], "modules": {}}
     for component in components:
         result[component.selector] = check_component_requirements(component, app_path, raise_exception)
         result["dependencies"].update(result[component.selector])
         assets_path = Path(app_path, "src", folder)
         assets_path.mkdir(parents=True, exist_ok=True)
-        to_angular_component(component, name=name, out_path=str(assets_path))
-        module_path = Path(app_path, "src", "app", "app.module.ts")
-        if module_path.exists():
-            print("ok")
+        component_files = to_angular_component(component, name=name, out_path=str(assets_path))
+        result["styles"].extend(npm.get_styles(component.requirements))
+        result["scripts"].extend(npm.get_scripts(component.requirements))
+        result["modules"][component.__name__] = component.get_import(
+            "../%s/%s" % (folder, component_files["component"][:-3]), suffix="Component",
+            root_path=Path(app_path, "src", view_path))
+    angular_config_path = Path(app_path, "angular.json")
+    if angular_config_path.exists():
+        app_path = Path(app_path)
+        with open(angular_config_path) as ap:
+            angular_config = json.loads(ap.read(), object_pairs_hook=OrderedDict)
+            for cat in ["styles", "scripts"]:
+                for style in set(result[cat]):
+                    if style not in angular_config["projects"][app_path.name]["architect"]["build"]["options"][cat]:
+                        angular_config["projects"][app_path.name]["architect"]["build"]["options"][cat].insert(0, style)
+        with open(angular_config_path, "w") as ap:
+            json.dump(angular_config, ap, indent=2)
+    else:
+        count_styles = len(result["styles"])
+        count_scripts = len(result["scripts"])
+        logging.warning("%s styles and %s scripts not added" % (count_styles, count_scripts))
+        logging.warning("Cannot locate file: %s" % angular_config_path)
+    app_module_path = Path(app_path, "src", view_path, "app.module.ts")
+    if app_module_path.exists():
+        auto_update = False
+        with open(app_module_path) as am:
+            imports, config = map(lambda x: x.strip(), am.read().split("@NgModule"))
+            imports = imports + "\n\n// Auto generated"
+            for module in result["modules"].values():
+                if module not in imports:
+                    imports = "%s\n%s;" % (imports, module)
+                    auto_update = True
+        if auto_update:
+            with open(app_module_path, "w") as am:
+                am.write("%s\n\n@NgModule%s" % (imports, config))
     return result
 
 

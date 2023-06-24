@@ -73,7 +73,7 @@ def html_formatter(
             html_content = html_content.replace("{{%s}}" % m, str(values[m.strip()]))
         else:
             js_variables.append(var_name)
-    return {"vars": js_variables, "template": html_content.strip()}
+    return {"vars": set(js_variables), "template": html_content.strip()}
 
 
 def html_template_loader(

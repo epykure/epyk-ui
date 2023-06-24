@@ -881,7 +881,10 @@ class Report:
         """
 
         class DOMContentLoaded:
-            def get_event(self):
+            def get_event(self) -> dict:
+                if profile:
+                    return {"window": {"content": js_funcs}, "profile": {"name": "DOMContentLoaded"}}
+
                 return {"window": {"content": js_funcs}}
 
         self.properties.js.add_event("DOMContentLoaded", DOMContentLoaded())
