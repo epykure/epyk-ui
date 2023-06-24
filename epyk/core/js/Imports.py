@@ -4015,10 +4015,16 @@ class ImportManager:
                 mod_type = self.jsImports[js_alias]['type'].get(url_module, "text/javascript")
                 if os.path.isabs(url_module) and not url_module.startswith("/static"):
                     with open(url_module, "rb") as fp:
-                        js_content = fp.read()
-                        if js_content.startswith(b"export "):
+                        if mod_type == "text/javascript":
                             # export cannot be used in javascript scripts not set as modules
-                            js_content = js_content.replace(b"export ", b"")
+                            tmp_file = []
+                            for line in fp.readlines():
+                                for m_expr, m_rep in {b"^export ": b""}.items():
+                                    line = re.sub(m_expr, m_rep, line)
+                                tmp_file.append(line)
+                            js_content = b"".join(tmp_file)
+                        else:
+                            js_content = fp.read()
                         base64_bytes = base64.b64encode(js_content)
                         base64_message = base64_bytes.decode('ascii')
                         url_module = "data:text/js;base64,%s" % base64_message
@@ -4037,8 +4043,8 @@ class ImportManager:
                             base64_message = base64_bytes.decode('ascii')
                             url_module = "data:text/js;base64,%s" % base64_message
                     except Exception as err:
-                        print(url_module)
-                        print(traceback.format_exc())
+                        logging.error(url_module)
+                        logging.error(traceback.format_exc())
                 if self.pkgs.get(js_alias).defer:
                     js.append(
                         '<script language="javascript" type="%s" src="%s%s" defer></script>' % (

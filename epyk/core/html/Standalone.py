@@ -1,4 +1,5 @@
 import json
+import logging
 from pathlib import Path
 from typing import Optional, List, Tuple, Any, Dict
 from epyk.core.py import primitives, types
@@ -15,6 +16,100 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.html import JsHtml
 from epyk.core.js.packages import JsPackage
+
+
+def resolve_attributes(attributes: list, result: dict = None):
+    """
+    Convert initial options defined in the component.json structure file to valid
+    attributes automatically loaded by the Python.
+
+    Component must have the below structure in the json component file:
+
+        "attributes": [
+        {
+          "name": "type",
+          "value": "line"
+        },
+        {
+          "name": "option",
+          "values": [
+            {
+              "name": "responsive",
+              "value": true
+            }
+          ]
+        ...
+
+    :param attributes: Component's attributes
+    :param result: Resolved attributes
+    """
+    for attr in attributes:
+        if "values" in attr:
+            if isinstance(attr["values"][0], dict):
+                result[attr["name"]] = {}
+                resolve_attributes(attr["values"], result[attr["name"]])
+            else:
+                result[attr["name"]] = attr["values"]
+        else:
+            result[attr["name"]] = attr["value"]
+
+
+def load_component(component_path: Path, raise_exception: bool = True) -> dict:
+    """
+    Load a component from the static file definition.
+
+    Component folder structure:
+
+        /<folder_name>
+            - component.json
+            - <selector>.css
+            - <selector>.html
+            - <selector>.js
+
+    :param component_path: The root path for the component definition
+    :param raise_exception: Flag to stop the process and raise an exception
+    """
+    if component_path.is_dir():
+        component_config_path = Path(component_path, "component.json")
+        if not component_config_path.exists():
+            if raise_exception:
+                raise ValueError("Component file does not exist: %s" % component_path)
+
+            logging.error("Component file does not exist: %s" % component_path)
+            return {}
+
+        with open(component_config_path) as fp:
+            content = json.load(fp)
+            component_attrs = {}
+            resolve_attributes(content.get("attributes", []), component_attrs)
+            for prop, f_type in [("component_url", "js"), ("style_urls", "css"), ("template_url", "html")]:
+                if prop not in content:
+                    struct_name = "%s.%s" % (content["selector"], f_type)
+                    struct_file = Path(component_path, struct_name)
+                    if struct_file.exists():
+                        if prop.endswith("s"):
+                            content[prop] = [str(struct_file)]
+                        else:
+                            content[prop] = str(struct_file)
+                else:
+                    if prop.endswith("s"):
+                        nf = []
+                        for f in content[prop]:
+                            fp = Path(f)
+                            if not fp.exists():
+                                nf.append(str(Path(component_path, fp)))
+                            else:
+                                nf.append(f)
+                        content[prop] = nf
+                    else:
+                        fp = Path(content[prop])
+                        if not fp.exists():
+                            content[prop] = str(Path(component_path, fp))
+            class_name = "".join(map(lambda x: x.capitalize(), content["selector"].split("-")))
+            cls = type(class_name, (Component,), content)
+            if component_attrs:
+                cls._init__options = component_attrs
+            return {"class": cls, "content": content}
 
 
 class DomComponent(JsHtml.JsHtml):
@@ -184,6 +279,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     template: str = None
 
     _option_cls = SdOptions
+    _init__options: dict = None
 
     def __init__(self, page: primitives.PageModel, vals: Any = None, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
@@ -196,6 +292,8 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         self.style.no_class()  # Clear all default CSS Classes.
         self.items, self.__metadata = [], {}
         self.prepare(**kwargs)
+        if self._init__options:
+            self.options.for_construct(self._init__options)
 
     @property
     def options(self) -> SdOptions:
@@ -353,7 +451,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                         self.js.objectId, self.__class__.__name__, self.dom.varId,
                         JsUtils.jsConvertData(self._vals, None), self.options.config_attrs())])
             else:
-                raise ValueError("Component file was not loaded correctly")
+                raise ValueError("Component file - %s - was not loaded correctly" % self.__class__.__name__)
 
         if self.style_urls is not None:
             css_content = css_files_loader(self.style_urls, self.selector, style_vars=self.page.theme.all())
@@ -396,50 +494,11 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         components = {}
         if is_parent:
             for folder in Path(path).iterdir():
-                if folder.is_dir():
-                    component_path = Path(folder, "component.json")
-                    if not component_path.exists():
-                        if raise_exception:
-                            raise ValueError("Component file does not exist: %s" % path)
-
-                        continue
-
-                    with open(component_path) as fp:
-                        content = json.load(fp)
-                        for prop, f_type in [("component_url", "js"), ("style_urls", "css"), ("template_url", "html")]:
-                            if prop not in content:
-                                struct_name = "%s.%s" % (content["selector"], f_type)
-                                struct_file = Path(folder, struct_name)
-                                if struct_file.exists():
-                                    if prop.endswith("s"):
-                                        content[prop] = [str(struct_file)]
-                                    else:
-                                        content[prop] = str(struct_file)
-                            else:
-                                if prop.endswith("s"):
-                                    nf = []
-                                    for f in content[prop]:
-                                        fp = Path(f)
-                                        if not fp.exists():
-                                            nf.append(str(Path(folder, fp)))
-                                        else:
-                                            nf.append(f)
-                                    content[prop] = nf
-                                else:
-                                    fp = Path(content[prop])
-                                    if not fp.exists():
-                                        content[prop] = str(Path(folder, fp))
-                        class_name = "".join(map(lambda x: x.capitalize(), content["selector"].split("-")))
-                        cls = type(class_name, (Component,), content)
-                        components[cls] = content
+                result = load_component(folder, raise_exception=raise_exception)
+                if result:
+                    components[result["class"]] = result["content"]
         else:
-            if not str(path).endswith(".json"):
-                path = Path(path, "component.json")
-            if not path.exists() and raise_exception:
-                raise ValueError("Component file does not exist: %s" % path)
-
-            with open(path) as fp:
-                content = json.load(fp)
-                class_name = "".join(map(lambda x: x.capitalize(), content["selector"].split("-")))
-                type(class_name, (Component,), content)
+            result = load_component(path, raise_exception=raise_exception)
+            if result:
+                components[result["class"]] = result["content"]
         return components
