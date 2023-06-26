@@ -1,11 +1,106 @@
-
 import subprocess
 import sys
 import os
 import json
+import zipfile
+from typing import Any, List, Dict
+from pathlib import Path
 
-from epyk.core import Page
-from epyk.web import node
+from ..core.css import css_files_loader
+from ..core.html import Standalone, html_template_loader
+from ..core import Page
+from . import node, npm, templates
+
+
+def to_component(
+        component: Standalone.Component, name: str = "ek-vue-{selector}-{version}", out_path: str = None,
+        version: str = None, init_value: Any = "", init_options: dict = None) -> Dict[str, str]:
+    """
+    Convert a Standalone component to a valid Vue component.
+
+    Usage::
+
+        class MyComponent(ek.standalone):
+            selector = "bs-my-comp"
+            requirements = ("bootstrap", )
+            component_url = "./assets/awesome/bs-my-comp.js"
+            style_urls = ["./assets/awesome/bs-my-comp.css"]
+            template_url = "./assets/awesome/bs-my-comp.html"
+
+        result = ek.helpers.to_vue_component(MyComponent, version="0.0.1")
+
+    """
+    if out_path is None:
+        out_path = Path().cwd()
+    out_path = Path(out_path, component.selector)
+    out_path.mkdir(parents=True, exist_ok=True)
+    init_options = init_options or {}
+
+    component_files = {"js": name.format(selector=component.selector, version=version) + ".js"}
+    with open(Path(out_path, component_files["js"]), "w") as jf:
+        js_path = Path(component.component_url)
+        with open(js_path) as hf:
+            jf.write(npm.to_module(hf.read(), component.requirements))
+
+    component_files["css"] = name.format(selector=component.selector, version=version) + ".css"
+    with open(Path(out_path, component_files["css"]), "w") as cf:
+        css_styles = css_files_loader(component.style_urls, minify=False)
+        if css_styles:
+            cf.write(css_styles)
+
+    # Then add the component definition to the root
+    component_files["html"] = name.format(selector=component.selector, version=version) + ".html"
+    with open(Path(out_path, component_files["html"]), "w") as hf:
+        html_def = html_template_loader(
+            component.template_url, new_var_format="{ this.state.%s }", ref_expr="ref={ this.dom }")
+        hf.write(html_def["template"])
+
+    component_files["component"] = name.format(selector=component.selector, version=version) + ".component.vue"
+    with open(Path(Path(out_path).parent, component_files["component"]), "w") as sf:
+        sf.write(templates.VUE_COMPONENT % {
+            "asset_path": "./%s/%s" % (Path(out_path).name, name.format(selector=component.selector, version=version)),
+        })
+
+    if version is not None:
+        out_zip_name = name.format(selector=component.selector, version=version) + ".zip"
+        with zipfile.ZipFile(out_zip_name, 'w') as zip_object:
+            zip_object.write(str(Path(component.selector, component_files["js"])), str(Path(component.selector, component_files["js"])))
+            zip_object.write(str(Path(component.selector, component_files["css"])), str(Path(component.selector, component_files["css"])))
+            zip_object.write(str(Path(component.selector, component_files["html"])), str(Path(component.selector, component_files["html"])))
+            zip_object.write(component_files["component"], component_files["component"])
+            # delete files in the folder
+            Path(out_path, component_files["js"]).unlink()
+            Path(out_path, component_files["css"]).unlink()
+            Path(out_path, component_files["html"]).unlink()
+            Path(Path(out_path).parent, component_files["component"]).unlink()
+    return component_files
+
+
+def add_to_app(
+        components: List[Standalone.Component],
+        app_path: str,
+        folder: str = "assets",
+        name: str = "{selector}",
+        raise_exception: bool = False
+) -> dict:
+    """
+    This will add the component directly tp the src folder in the linked application.
+    All components generated will be put in a sub folder.
+
+    :param components: List of components to add to a Vue application
+    :param app_path: Vue application path (root)
+    :param folder: Components' folder
+    :param name: Component's files name format
+    :param raise_exception: Flag to raise exception if error
+    """
+    result = {"dependencies": {}}
+    for component in components:
+        result[component.selector] = npm.check_component_requirements(component, app_path, raise_exception)
+        result["dependencies"].update(result[component.selector])
+        assets_path = Path(app_path, "src", folder)
+        assets_path.mkdir(parents=True, exist_ok=True)
+        to_component(component, name=name, out_path=str(assets_path))
+    return result
 
 
 JS_MODULES_IMPORTS = {

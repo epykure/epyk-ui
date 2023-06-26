@@ -16,7 +16,7 @@ from epyk.core.html.Standalone import Component as standalone
 
 from epyk.core.css import themes
 from epyk.core.css import Defaults as settings_css
-from epyk.core.css import Colors as colors
+from epyk.core.css import Colors as colors, scss_colors, scss_icons, css_files_loader
 from epyk.core.css.themes import palettes
 from epyk.core.css.styles.attributes import CssInline
 
@@ -29,8 +29,7 @@ from epyk.core.js.JsUtils import jsWrap as js_callback
 from epyk.core.js.Imports import Package as package
 from epyk.core.js.Imports import PACKAGE_STATUS, JS_IMPORTS, CSS_IMPORTS
 
-from epyk.web import jupyter
-from epyk import helpers
+from epyk.web import jupyter, npm, react, angular, svelte, vue
 
 Page = Rpt.Report
 

@@ -1,6 +1,7 @@
 import re
 from typing import Optional, Any
-from epyk.core.css import Defaults_css
+from . import Defaults as Defaults_css
+
 
 _ICON_MAPPINGS = {
     "font-awesome": {
