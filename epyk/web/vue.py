@@ -1,15 +1,51 @@
 import subprocess
-import sys
 import os
 import json
 import zipfile
+import logging
 from typing import Any, List, Dict
 from pathlib import Path
 
 from ..core.css import css_files_loader
 from ..core.html import Standalone, html_template_loader
-from ..core import Page
 from . import node, npm, templates
+
+# React system files / templates
+PROJECT_SRC_ALIAS = "src"
+
+
+def to_view(web_page, selector: str, app_path: Path):
+    result = web_page.outs.web()
+    result['alias'] = selector
+    result['js_module'] = node.selector_to_clss(selector)
+    result['builders'] = ", ".join(list(result['jsFrgsCommon'].keys()))
+    #  href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+    #  @import "https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+    result['cssImports'] = result['cssImports'].replace('<link rel="stylesheet" href=', "@import ").replace(
+        ' type="text/css">', "")
+    with open(Path(app_path, "%s.vue" % selector), "w") as f:
+        f.write('''
+<template>
+  %(body)s
+</template>\n\n
+<script>
+import { %(builders)s } from './%(js_module)s.js'
+
+export default {
+  name: '%(alias)s',
+  mounted: function() {%(jsFrgs)s}
+}
+</script>
+\n
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+%(cssStyle)s
+%(cssImports)s
+</style>
+    ''' % result)
+
+    with open(Path(app_path, selector, "%s.js" % result['js_module']), "w") as jf:
+        jf.write(npm.to_module(", ".join(list(result['jsFrgsCommon'].keys())), web_page.imports.requirements))
 
 
 def to_component(
@@ -64,9 +100,12 @@ def to_component(
     if version is not None:
         out_zip_name = name.format(selector=component.selector, version=version) + ".zip"
         with zipfile.ZipFile(out_zip_name, 'w') as zip_object:
-            zip_object.write(str(Path(component.selector, component_files["js"])), str(Path(component.selector, component_files["js"])))
-            zip_object.write(str(Path(component.selector, component_files["css"])), str(Path(component.selector, component_files["css"])))
-            zip_object.write(str(Path(component.selector, component_files["html"])), str(Path(component.selector, component_files["html"])))
+            zip_object.write(str(Path(component.selector, component_files["js"])),
+                             str(Path(component.selector, component_files["js"])))
+            zip_object.write(str(Path(component.selector, component_files["css"])),
+                             str(Path(component.selector, component_files["css"])))
+            zip_object.write(str(Path(component.selector, component_files["html"])),
+                             str(Path(component.selector, component_files["html"])))
             zip_object.write(component_files["component"], component_files["component"])
             # delete files in the folder
             Path(out_path, component_files["js"]).unlink()
@@ -79,7 +118,7 @@ def to_component(
 def add_to_app(
         components: List[Standalone.Component],
         app_path: str,
-        folder: str = "assets",
+        folder: str = node.ASSET_FOLDER,
         name: str = "{selector}",
         raise_exception: bool = False
 ) -> dict:
@@ -103,266 +142,254 @@ def add_to_app(
     return result
 
 
-JS_MODULES_IMPORTS = {
-  'showdown': '''
-import Showdown from 'showdown';
-var showdown = Showdown;
-''',
-  'jquery': "import $ from 'jquery';",
-  'jqueryui': '''
-import 'jquery-ui-dist/jquery-ui.min.css';
-import 'jquery-ui-dist/jquery-ui.min.js';
-''',
-}
-
-
 class VueCli:
-  def __init__(self, vue_app_path, env):
-    self._vue_app_path, self.envs = vue_app_path, env
+    def __init__(self, server, env):
+        self.server, self.envs = server, env
 
-  def version(self):
-    """
-    Return the version of Vue.js on the server
+    def version(self):
+        """
+        Return the version of Vue.js on the server
 
-    Related Pages:
+        Related Pages:
 
-      https://cli.vuejs.org/guide/installation.html
-    """
-    subprocess.run('vue --version', shell=True, cwd=self._vue_app_path)
+          https://cli.vuejs.org/guide/installation.html
+        """
+        subprocess.run('vue --version', shell=True, cwd=self.server.root_path)
 
-  def linter(self):
-    """
-    Updat the linter options and remove the no-unused-vars.
-    """
-    with open(os.path.join(self._vue_app_path, "package.json"), 'r') as f:
-      package = json.load(f)
-    # Remove some rules to Vue.js configuration
-    package['eslintConfig']['rules']['no-unused-vars'] = 'off'
-    package['eslintConfig']['rules']['no-extra-semi'] = 1
-    with open(os.path.join(self._vue_app_path, "package.json"), 'w') as f:
-      json.dump(package, f, indent=4)
+    def linter(self):
+        """ Update the linter options and remove the no-unused-vars. """
+        with open(Path(self.server.root_path, "package.json"), 'r') as f:
+            package = json.load(f)
+        # Remove some rules to Vue.js configuration
+        package['eslintConfig']['rules']['no-unused-vars'] = 'off'
+        package['eslintConfig']['rules']['no-extra-semi'] = 1
+        with open(Path(self._vue_app_path, "package.json"), 'w') as f:
+            json.dump(package, f, indent=4)
 
-  def ui(self):
-    """
-    You can also create and manage projects using a graphical interface with the vue ui command:
+    def ui(self):
+        """
+        You can also create and manage projects using a graphical interface with the vue ui command:
 
-    Related Pages:
+        Related Pages:
 
-      https://cli.vuejs.org/guide/creating-a-project.html#vue-create
-    """
-    subprocess.run('vue ui', shell=True, cwd=self._vue_app_path)
+          https://cli.vuejs.org/guide/creating-a-project.html#vue-create
+        """
+        subprocess.run('vue ui', shell=True, cwd=self.server.root_path)
 
-  def npm(self, packages):
-    """
+    def install(self, packages: List[str]):
+        """
+        Install packages to the Vue server.
 
-    :param packages:
-    """
-    if self.envs is not None:
-      for env in self.envs:
-        subprocess.run(env, shell=True, cwd=self._vue_app_path)
-    packages = node.npm_packages(packages)
-    subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self._vue_app_path)
+        :param packages: The list of packages
+        """
+        if self.envs is not None:
+            for env in self.envs:
+                subprocess.run(env, shell=True, cwd=self.server.root_path)
+        packages = node.npm_packages(packages)
+        subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self.server.root_path)
 
-  def add_router(self):
-    """
+    def add_router(self):
+        """
+        Add a router file via the CLI command.
 
-    Related Pages:
+        Related Pages:
 
-      https://router.vuejs.org/installation.html#npm
-    """
-    subprocess.run('vue add router', shell=True, cwd=self._vue_app_path)
+          https://router.vuejs.org/installation.html#npm
+        """
+        subprocess.run('vue add router', shell=True, cwd=self.server.root_path)
 
 
 class App:
-
-  def __init__(self, app_path, app_name, alias, name, page=None, target_folder="components"):
-    self.imports = {}
-    self.vars, self.__map_var_names, self.page = {}, {}, page
-    self._app_path, self._app_name = app_path, app_name
-    self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
-    self.comps, self.module_path = {}, None
-
-  @property
-  def name(self):
     """
-    Return the prefix of the component module (without any extension)
-    """
-    return self.className
+    Features associated to an application running on a Vue server.
+    This will get the underlying server in order to render a standard structure.
 
-  @property
-  def path(self):
-    """
-    Return the full path of the component modules
-    """
-    return os.path.join("./", self.__path, self.name).replace("\\", "/")
+    Expected structure for an Svelte application:
 
-  def route(self, component, alias, path):
+         /<svelteApp>
+            /src
+                /lib
+                /routes
+                    /app
+                        All the views / applications
+                    /assets
+                        All the components
     """
-    Add the app to the routing mechanism
- 
-    :param component: String. The module name
-    :param alias: String. The url route
-    :param path: String. The .vue module path
-    """
-    index_router = os.path.join(self._app_path, 'src', 'router', "index.js")
-    if not os.path.exists(index_router):
-      raise ValueError("Router is not installed, run: vue add router in the Vue app")
 
-    with open(index_router) as f:
-      route = f.read()  # .split("\n\n")
+    def __init__(self, app_path: Path, app_name: str, server):
+        self.vars, self.__map_var_names, self.server = {}, {}, server
+        self._app_path, self._app_name, self.__components = app_path, app_name, None
+        self.comps, self.module_path, self.imports = {}, None, {}
 
-    split_route = route.split("Vue.use(VueRouter)")
-    imports = split_route[0].strip()
-    if not "import %s from" % component in imports:
-      imports = "%s\nimport %s from '../views/%s.vue'" % (imports, component, component)
-      split_maps = split_route[1].split("const routes = [")
-      routes = split_maps[1].strip()
-      routes = "\n { path: '/%s', name: '%s', component: %s },\n %s" % (alias, alias, component, routes)
-      new_content = "%s\n\nVue.use(VueRouter)%s\n\nconst routes = [%s" % (imports, split_maps[0].strip(), routes)
-      with open(index_router, "w") as f:
-        f.write(new_content)
+    def route(self, component: str, alias: str):
+        """
+        Add the app to the routing mechanism
 
-  def export(self, path=None, target_path=None):
-    """
- 
-    :param path:
-    :param target_path: for example ['src', 'app']
-    """
-    self.__path = path or self.__path
-    if target_path is None:
-      target_path = []
-    target_path.append(self.__path)
-    self.module_path = os.path.join(self._app_path, *target_path)
-    if not os.path.exists(self.module_path):
-      os.makedirs(self.module_path)
-    page = self.page.outs.web()
-    page['alias'] = self.alias
-    page['js_module'] = self.alias.replace("-", "_")
-    page['builders'] = ", ".join(list(page['jsFrgsCommon'].keys()))
-    #  href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-    #  @import "https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-    page['cssImports'] = page['cssImports'].replace('<link rel="stylesheet" href=', "@import ").replace(' type="text/css">', "")
-    with open(os.path.join(self.module_path, "%s.vue" % self.name), "w") as f:
-      f.write('''
-<template>
-  %(body)s
-</template>\n\n
-<script>
-import { %(builders)s } from './%(js_module)s.js'
+        :param component: The module name
+        :param alias: The url route
+        """
+        index_router = Path(self.server.app_path, PROJECT_SRC_ALIAS, 'router', "index.js")
+        if not index_router.exists():
+            raise ValueError("Router is not installed, run: vue add router in the Vue app")
 
-export default {
-  name: '%(alias)s',
-  mounted: function() {%(jsFrgs)s}
-}
-</script>
-\n
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-%(cssStyle)s
-%(cssImports)s
-</style>
-''' % page)
+        with open(index_router) as f:
+            route = f.read()
 
-    with open(os.path.join(self.module_path, "%s.js" % page['js_module']), "w") as f:
-      for js_dep in JS_MODULES_IMPORTS:
-        if js_dep in self.page.jsImports:
-          f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
-      for buider in page['jsFrgsCommon'].values():
-        f.write("export %s;\n" % buider)
+        split_route = route.split("Vue.use(VueRouter)")
+        imports = split_route[0].strip()
+        if not "import %s from" % component in imports:
+            imports = "%s\nimport %s from '../%s/%s.vue'" % (imports, component, self.server.views_path.name, component)
+            split_maps = split_route[1].split("const routes = [")
+            routes = split_maps[1].strip()
+            routes = "\n { path: '/%s', name: '%s', component: %s },\n %s" % (alias, alias, component, routes)
+            new_content = "%s\n\nVue.use(VueRouter)%s\n\nconst routes = [%s" % (imports, split_maps[0].strip(), routes)
+            with open(index_router, "w") as f:
+                f.write(new_content)
+
+    def export(self, selector: str):
+        """
+        Export of view / application from Python to Svelte.
+
+        :param selector: The component alias / reference
+        """
+        logging.info("export %s to: %s" % (selector, self.server.views_path))
+        self.server.views_path.mkdir(parents=True, exist_ok=True)
+
+        # Write all the component
+        add_to_app(self.server.page._props["schema"].values(), self.server.app_path, folder=self.server.assets_path.name)
+
+        # Write the view
+        to_view(self.server.page, selector, self.server.views_path)
 
 
 class VueJs(node.Node):
 
-  def create(self, name):
-    """
-    To create a new project, run:
+    def __init__(self, root_path: str, name: str = None, page = None, app_folder: str = node.APP_FOLDER,
+                 assets_folder: str = node.ASSET_FOLDER):
+        super(VueJs, self).__init__(root_path, name, page)
+        self._app_folder, self._app_asset, self.__clis = app_folder, assets_folder, None
+        self.__app = None # The active application to the server
 
-    Related Pages:
+    @property
+    def views_path(self) -> Path:
+        """ The application views path """
+        return Path(self._app_path, self._app_name, PROJECT_SRC_ALIAS, self._app_folder)
 
-      https://cli.vuejs.org/guide/creating-a-project.html
- 
-    :param name: String. The application name
-    """
-    if name is None:
-      subprocess.run('vue create --help', shell=True, cwd=self._app_path)
-    else:
-      subprocess.run('vue create %s' % name, shell=True, cwd=self._app_path)
+    @property
+    def node_modules_path(self) -> Path:
+        """ The application node_modules path """
+        return Path(self._app_path, "node_modules")
 
-  def cli(self, app_name):
-    """
-    Vue specific command lines
+    def assets_path(self):
+        """ The application assets / components path """
+        return Path(self._app_path, self._app_name, PROJECT_SRC_ALIAS, self._app_asset)
 
-    Related Pages:
+    def create(self, name: str):
+        """
+        To create a new project, run:
 
-      https://vuejs.org/v2/guide/installation.html
-    """
-    path = os.path.join(self._app_path, app_name)
-    return VueCli(path, self.envs)
+        Related Pages:
 
-  def serve(self, app_name, port=8081):
-    """
-    Return the version of Vue.js on the server
+          https://cli.vuejs.org/guide/creating-a-project.html
 
-    Related Pages:
+        :param name: The application name
+        """
+        if name is None:
+            subprocess.run('vue create --help', shell=True, cwd=self._app_path)
+        else:
+            subprocess.run('vue create %s' % name, shell=True, cwd=self._app_path)
 
-      https://cli.vuejs.org/guide/cli-service.html#using-the-binary
+    def cli(self, app_name: str = None):
+        """
+        Vue specific command lines.
 
-    """
-    path = os.path.join(self._app_path, app_name)
-    subprocess.run('npm run serve -- --port %s' % port, shell=True, cwd=path)
+        Related Pages:
 
-  def router(self, app_name):
-    """
+          https://vuejs.org/v2/guide/installation.html
 
-    Related Pages:
+        :param app_name: The application name (folder name) in the Svelte project
+        """
+        if app_name is not None:
+            self._app_name = app_name
+        return VueCli(self, self.envs)
 
-      https://router.vuejs.org/installation.html#direct-download-cdn
- 
-    :param app_name:
-    """
-    path = os.path.join(self._app_path, app_name)
-    subprocess.run('npm install vue-router', shell=True, cwd=path)
+    def serve(self, app_name: str = None, port: int = 8081):
+        """
+        Return the version of Vue.js on the server
 
-  def help(self, app_name):
-    """
-    Return the version of Vue.js on the server
+        Related Pages:
 
-    Related Pages:
+          https://cli.vuejs.org/guide/cli-service.html#using-the-binary
 
-      https://cli.vuejs.org/guide/cli-service.html#using-the-binary
+        :param app_name: The application name (folder name) in the Svelte project
+        :param port: Port number
+        """
+        if app_name is not None:
+            self._app_name = app_name
+        subprocess.run('npm run serve -- --port %s' % port, shell=True, cwd=self.app_path)
 
-    """
-    subprocess.run('npx %s help' % app_name, shell=True, cwd=self._app_path)
+    def router(self, app_name: str = None, **kwargs):
+        """
 
-  def page(self, selector=None, name=None, report=None, auto_route=False, target_folder="apps"):
-    """
-    Create a specific Application as a component in the Angular framework.
+        Related Pages:
 
-    Unlike a basic component, the application will be routed to be accessed directly.
+          https://router.vuejs.org/installation.html#direct-download-cdn
 
-    :param report: Object. A report object
-    :param selector: String. The url route for this report in the Angular app
-    :param name: String. The component classname in the Angular framework
-    """
-    if name is None:
-      script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
-      name = "".join([s.capitalize() for s in script.split("_")])
-      if selector is None:
-        selector = script.replace("_", "-")
-    report = report or Page.Report()
-    self._page = App(self._app_path, self._app_name, selector, name, page=page, target_folder=target_folder)
-    self.__route = auto_route
-    return self._page
+        :param app_name: The application name (folder name) in the Svelte project
+        """
+        if app_name is not None:
+            self._app_name = app_name
+        subprocess.run('npm install vue-router', shell=True, cwd=self.app_path)
 
-  def publish(self, app_name=None, target_path=None):
-    """
-    Publish the Vue.js application
- 
-    :param app_name:
-    :param target_path: List  for example ['src', 'app']
-    """
-    if self._page is not None:
-      self._page.export(target_path=target_path)
-    node.requirements(self._page.page, self._page.module_path)
-    if self.__route:
-      self._page.route(self._page.name, self._page.alias, self._page.path)
+    def help(self, app_name: str = None):
+        """
+        Return the version of Vue.js on the server
+
+        Related Pages:
+
+          https://cli.vuejs.org/guide/cli-service.html#using-the-binary
+
+        :param app_name: The application name (folder name) in the Svelte project
+        """
+        if app_name is not None:
+            self._app_name = app_name
+        subprocess.run('npx %s help' % app_name, shell=True, cwd=self.app_path)
+
+    def app(self, page=None, target_folder: str = node.APP_FOLDER) -> App:
+        """
+        Create a specific Application as a component in the Angular framework.
+
+        Unlike a basic component, the application will be routed to be accessed directly.
+
+        :param page: The web page (Report) object to be converted
+        :param target_folder: The target sub folder for the applications (default app/)
+        """
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if page is not None:
+            self._page = page
+        if self.__app is None:
+            self.__app = App(self.root_path, self._app_name, server=self)
+        return self.__app
+
+    def publish(self, alias: str, selector: str = None, page=None, install: bool = False,
+                target_folder: str = node.APP_FOLDER):
+        """
+        Publish the Vue.js application
+
+        :param alias: The url endpoint for the new page
+        :param selector: Component / Application internal selector (name)
+        :param page: The web page (Report) object to be converted
+        :param install: Flag to force install of missing packages
+        :param target_folder: The target sub folder for the applications (default app/)
+        """
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if self.__app is None:
+           self.__app = self.app(page)
+        self.__app.export(selector=selector)
+        self.__app.route(selector, alias)
+        packages = node.requirements(self.page, self.node_modules_path)
+        missing_package = [k for k, v in packages.items() if not v]
+        if install and missing_package:
+            self.npm(missing_package)

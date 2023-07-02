@@ -1,8 +1,10 @@
-
 import sys
 import os
+from pathlib import Path
+from typing import Union
 
 from epyk.core.py import primitives
+from epyk.web import node
 from epyk.web import angular
 from epyk.web import svelte
 from epyk.web import vue
@@ -12,71 +14,134 @@ from epyk.web import jupyter
 
 class AppRoute:
 
-  def __init__(self, page: primitives.PageModel):
-    self.page = page
+    def __init__(self, page: primitives.PageModel):
+        self.page = page
 
-  def angular(self, server, app, selector: str = None, name: str = None) -> angular.Angular:
-    """ Entry point to a local Angular setup.
-    This will allow the framework to convert modules and integrate them to an external Angular App.
+    def _name(self, value: str = None) -> str:
+        """ Return the appropriate application name """
+        if value is not None:
+            return value
 
-    If selector or name is defined a page will be added to the app.
+        return os.path.split(sys.argv[0])[1][:-3]
 
-    :param server:
-    :param app:
-    :param str selector:
-    :param str name:
-    """
-    name = name or os.path.split(sys.argv[0])[1][:-3]
-    selector = selector or os.path.split(sys.argv[0])[1][:-3]
-    ang_app = angular.Angular(server, app, page=self.page)
-    if selector is not None or name is not None:
-      ang_app.page(selector, name)
-    return ang_app
+    def _selector(self, value: str = None) -> str:
+        """ Return the selector application name """
+        if value is not None:
+            return value
 
-  def react(self, server, app, selector: str = None, name: str = None) -> react.React:
-    """ Entry point to a local React setup.
-    This will allow the framework to convert modules and integrate them to an external React App.
+        return os.path.split(sys.argv[0])[1][:-3]
 
-    If selector or name is defined a page will be added to the app.
+    def nodejs(
+            self, root_path: Union[Path, str],
+            app_folder: str = node.APP_FOLDER, assets_folder: str = node.ASSET_FOLDER) -> node.Node:
+        """
+        Entry point to a local NodeJs setup.
+        This will allow the framework to convert modules and integrate them to an external Node App.
 
-    :param server:
-    :param app:
-    :param selector:
-    :param name:
-    """
-    name = name or os.path.split(sys.argv[0])[1][:-3]
-    selector = selector or os.path.split(sys.argv[0])[1][:-3]
-    react_app = react.React(app_path=server, name=app, page=self.page)
-    if selector is not None or name is not None:
-      react_app.page(selector, name)
-    return react_app
+        If selector or name is defined a page will be added to the app.
 
-  def vue(self, server, app, selector: str = None, name: str = None) -> vue.VueJs:
-    """ Entry point to a local Vue setup.
-    This will allow the framework to convert modules and integrate them to an external Vue App.
+        Usage::
 
-    If selector or name is defined a page will be added to the app.
+            import epyk as ek
+            cps = ek.standalone.from_json(r".\standalones\assets", is_parent=True)
 
-    :param server:
-    :param app:
-    :param selector:
-    :param name:
-    """
-    name = name or os.path.split(sys.argv[0])[1][:-3]
-    selector = selector or os.path.split(sys.argv[0])[1][:-3]
-    vue_app = vue.VueJs(app_path=server, name=app, page=self.page)
-    if selector is not None or name is not None:
-      vue_app.page(selector=selector, name=name)
-    return vue_app
+            page = ek.Page()
+            ...
 
-  def svelte(self, server, app, selector: str = None, name: str = None) -> svelte.Svelte:
-    ...
+            nodejs_app = page.apps.nodejs(r".\Dev\nodejs")
+            nodejs_app.publish("test", selector="node-app")
 
-  @property
-  def jupyter(self):
-    """ Entry point to a local Jupyter configuration.
-    This will provide some information concerning the configuration of the local Jupyter instance.
+        :param root_path: Root path for the NodeJs server
+        :param app_folder: The applications sub folder (default app)
+        :param assets_folder: The components sub folder (default assets)
+        """
+        node_srv = node.Node(root_path, page=self.page, app_folder=app_folder, assets_folder=assets_folder)
+        node_srv.app()
+        return node_srv
 
-    """
-    return jupyter.Jupyter(self.page)
+    def angular(
+            self, root_path: Union[Path, str], app_name: str,
+            app_folder: str = node.APP_FOLDER, assets_folder: str = node.ASSET_FOLDER) -> angular.Angular:
+        """
+        Entry point to a local Angular setup.
+        This will allow the framework to convert modules and integrate them to an external Angular App.
 
+        If selector or name is defined a page will be added to the app.
+
+        :param root_path: Root path for the Angular server
+        :param app_name: The application name (sub folder on the Angular server)
+        :param app_folder: The applications sub folder (default app)
+        :param assets_folder: The components sub folder (default assets)
+        """
+        ang_srv = angular.Angular(
+            root_path, app_name, page=self.page, app_folder=app_folder, assets_folder=assets_folder)
+        ang_srv.create(app_name)
+        ang_srv.app()
+        return ang_srv
+
+    def react(self, root_path: Union[Path, str], app_name: str,
+              app_folder: str = node.APP_FOLDER, assets_folder: str = node.ASSET_FOLDER) -> react.React:
+        """
+        Entry point to a local React setup.
+        This will allow the framework to convert modules and integrate them to an external React App.
+
+        If selector or name is defined a page will be added to the app.
+
+        :param root_path: Root path for the React server
+        :param app_name: The application name (sub folder on the Angular server)
+        :param app_folder: The applications sub folder (default app)
+        :param assets_folder: The components sub folder (default assets)
+        """
+        react_srv = react.React(
+            root_path=root_path, page=self.page, app_folder=app_folder, assets_folder=assets_folder)
+        react_srv.create(app_name.lower())
+        react_srv.app()
+        return react_srv
+
+    def vue(
+            self, root_path: Union[Path, str], app_name: str,
+            app_folder: str = node.APP_FOLDER, assets_folder: str = node.ASSET_FOLDER) -> vue.VueJs:
+        """
+        Entry point to a local Vue setup.
+        This will allow the framework to convert modules and integrate them to an external Vue App.
+
+        If selector or name is defined a page will be added to the app.
+
+        :param root_path: Root path for the vue server
+        :param app_name: The application name (sub folder on the vue server)
+        :param app_folder: The applications sub folder (default app)
+        :param assets_folder: The components sub folder (default assets)
+        """
+        vue_srv = vue.VueJs(
+            root_path=root_path, name=app_name, page=self.page, app_folder=app_folder, assets_folder=assets_folder)
+        vue_srv.create(app_name)
+        vue_srv.app()
+        return vue_srv
+
+    def svelte(self, root_path: Union[Path, str], app_name: str,
+               app_folder: str = node.APP_FOLDER, assets_folder: str = node.ASSET_FOLDER) -> svelte.Svelte:
+        """
+        Entry point to a local Svelte setup.
+        This will allow the framework to convert modules and integrate them to an external Svelte App.
+
+        If selector or name is defined a page will be added to the app.
+
+        :param root_path: Root path for the Svelte server
+        :param app_name: The application name (sub folder on the Svelte server)
+        :param app_folder: The applications sub folder (default app)
+        :param assets_folder: The components sub folder (default assets)
+        """
+        svelte_srv = svelte.Svelte(
+            root_path=root_path, name=app_name, page=self.page, app_folder=app_folder, assets_folder=assets_folder)
+        # svelte_srv.create(app_name)
+        svelte_srv.init(app_name)
+        svelte_srv.app()
+        return svelte_srv
+
+    @property
+    def jupyter(self):
+        """
+        Entry point to a local Jupyter configuration.
+        This will provide some information concerning the configuration of the local Jupyter instance.
+        """
+        return jupyter.Jupyter(self.page)

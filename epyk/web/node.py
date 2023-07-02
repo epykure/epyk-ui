@@ -1,17 +1,22 @@
 import os
-import sys
+import re
 import json
 import logging
 
 import collections
 import subprocess
-from typing import List, Dict
+from typing import List, Dict, Union
+from pathlib import Path
 
 from epyk.core.py import primitives
-from epyk.core import Page
 from epyk.core.js import Imports
 
+from . import templates
 
+
+# Default settings for the server components (application and components)
+APP_FOLDER = "app"
+ASSET_FOLDER = "assets"
 DEFAULT_PORT = 3000
 
 
@@ -20,7 +25,7 @@ def check_install(modules_path: str, package_json_path: str) -> Dict[str, str]:
     Check the status of the packages in the node setup,
     Some modules would require extra files in order to work correctly.
 
-    :param modules_path: Node modules path from the NodeJs setup
+    :param modules_path: Node modules path from the NodeJs set up
     :param package_json_path: The dependencies file
     """
     warnings = {}
@@ -35,49 +40,50 @@ def check_install(modules_path: str, package_json_path: str) -> Dict[str, str]:
                     else:
                         js_module = module["script"]
                     if "npm_path" in register_def:
-                        if not os.path.exists(os.path.join(modules_path, dependency, register_def["npm_path"], js_module)):
+                        npm_path = Path(modules_path, dependency, register_def["npm_path"], js_module)
+                        if not npm_path.exists():
                             warnings[dependency] = "Not installed"
                     elif "node_path" in module:
-                        if not os.path.exists(os.path.join(modules_path, dependency, module["node_path"][:-1], js_module)):
+                        node_path = Path(modules_path, dependency, module["node_path"][:-1], js_module)
+                        if not node_path.exists():
                             warnings[dependency] = "Not installed"
                     else:
-                        if not os.path.exists(os.path.join(modules_path, dependency, js_module)):
+                        other_path = Path(modules_path, dependency, js_module)
+                        if not other_path.exists():
                             warnings[dependency] = "Not installed"
                 elif "node_path" in module:
-                    if not os.path.exists(os.path.join(modules_path, dependency, module["node_path"], module["script"])):
+                    npm_path = Path(modules_path, dependency, module["node_path"], module["script"])
+                    if not npm_path.exists():
                         warnings[dependency] = "Not installed"
                 else:
-                    if not os.path.exists(os.path.join(modules_path, dependency, module["script"])):
+                    other_path = Path(modules_path, dependency, module["script"])
+                    if not other_path.exists():
                         warnings[dependency] = "Not installed"
     return warnings
 
 
-def requirements(page: primitives.PageModel, app_path: str = None) -> List[dict]:
+def requirements(page: primitives.PageModel, node_modules: Union[Path, str] = None) -> Dict[str, bool]:
     """
-    Get the list of all the packages required in the Node Application
+    Get the list of all the packages required in the Node Application.
 
     Packages can be installed in the app using the command
       > nmp install package1 package2 .....
 
     :param page: Python object. The report object
-    :param app_path:
+    :param node_modules: The application node_modules path
     """
-    npms = []
+    npms = {}
     import_mng = Imports.ImportManager(page=page)
     import_mng.online = True
-    for req in import_mng.cleanImports(page.jsImports, Imports.JS_IMPORTS):
-        if 'register' in Imports.JS_IMPORTS[req]:
-            if 'npm' in Imports.JS_IMPORTS[req]['register']:
-                npm_name = Imports.JS_IMPORTS[req]['register']['npm']
-                npms.append(npm_name)
-                if app_path is not None:
-                    npm_package_path = os.path.join(app_path, npm_name)
-                    if not os.path.exists(npm_package_path):
-                        print("Missing package: %s" % npm_name)
-            else:
-                print("No npm requirement defined for %s" % req)
-        else:
-            print("No npm requirement defined for %s" % req)
+    for npm_name in import_mng.cleanImports(page.jsImports, Imports.JS_IMPORTS):
+        if npm_name in Imports.JS_IMPORTS:
+            if not npm_name.startswith("local_") and not Path(Imports.JS_IMPORTS[npm_name]["modules"][0]["cdnjs"]).is_file():
+                npms[npm_name] = True
+                if node_modules is not None:
+                    npm_package_path = Path(node_modules, npm_name)
+                    if not npm_package_path.exists():
+                        logging.warning("Missing package: %s" % npm_name)
+                        npms[npm_name] = False
     return npms
 
 
@@ -98,15 +104,27 @@ def npm_packages(packages: List[str]) -> List[str]:
     return mapped_packages
 
 
+def selector_to_clss(selector: str) -> str:
+    """
+    Convert a component selector to a valid class name.
+    This is used in the App generation.
+
+    :param selector: The App selector
+    """
+    values = []
+    for frag in selector.split("-"):
+        for s in frag.split("_"):
+            values.append(s.capitalize())
+    return "".join(values)
+
+
 class App:
 
-    def __init__(self, app_path: str, app_name: str, alias: str, name: str, page: primitives.PageModel = None,
-                 target_folder: str = "views"):
+    def __init__(self, server):
         self.imports = collections.OrderedDict({"http": 'http', 'url': 'url', 'fs': 'fs'})
         self.import_launchers = []
-        self.vars, self.__map_var_names, self.page = {}, {}, page
-        self._app_path, self._app_name = app_path, app_name
-        self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
+        self.vars, self.__map_var_names, self.server = {}, {}, server
+        self.__components = None
         self.comps = {}
 
     def require(self, module: str, alias: str = None, launcher: str = ""):
@@ -125,23 +143,13 @@ class App:
         if launcher:
             self.import_launchers.append(launcher)
 
-    @property
-    def name(self):
-        """ Return the prefix of the component module (without any extension). """
-        return self.className
-
-    @property
-    def path(self):
-        """ Return the full path of the component modules. """
-        return os.path.join("./", self.__path, self.name).replace("\\", "/")
-
     def checkImports(self, app_path: str = None):
         """
         Check if the npm modules are defined on the server for the defined application.
 
         :param app_path: Optional. the Path of the NodeJs application
         """
-        app_path = app_path or self._app_path
+        app_path = app_path or self.server.app_path
         node_modules = os.path.join(app_path, "node_modules")
         self.imports = {"showdown": "showdown"}
         for imp, alias in self.imports.items():
@@ -151,32 +159,30 @@ class App:
                             os.path.join(node_modules, Imports.JS_IMPORTS[imp]['register'].get('npm', imp))):
                         logging.warning("Missing module - %s - on the nodeJsServer" % imp)
 
-    def export(self, path: str = None, target_path: str = None):
+    def export(self, name: str, out_path: Path = None, port: int = DEFAULT_PORT):
         """
         Export the NodeJs application.
 
-        :param path: The NodeJs server path
-        :param target_path: The folder location on the server. for example ['src', 'app']
+        :param name: The component name / reference
+        :param out_path: The target path for the views
+        :param port: The application's port
         """
-        self.__path = path or self.__path
-        if target_path is None:
-            target_path = []
-        target_path.append(self.__path)
-        module_path = os.path.join(self._app_path, *target_path)
-        if not os.path.exists(module_path):
-            os.makedirs(module_path)
-        self.page.outs.html_file(path=module_path, name=self.name)
-        requirements = []
+        if out_path is None:
+            out_path = Path(self.server.root_path.parent, APP_FOLDER)
+        if not out_path.exists():
+            out_path.mkdir(parents=True, exist_ok=True)
+        self.server.page.outs.html_file(path=out_path, name=name)
+        requires = []
         for imp, alias in self.imports.items():
             if imp in Imports.JS_IMPORTS:
                 if 'register' in Imports.JS_IMPORTS[imp]:
                     imp = Imports.JS_IMPORTS[imp]['register'].get('npm', imp)
                     alias = Imports.JS_IMPORTS[imp]['register'].get('alias', alias)
-            requirements.append("var %s = require('%s')" % (alias, imp))
-        js_reqs = ";\n".join(requirements)
+            requires.append("var %s = require('%s')" % (alias, imp))
+        js_reqs = ";\n".join(requires)
 
         # Write the JavaScript launcher
-        with open(os.path.join(module_path, "%s.js" % self.name), "w") as f:
+        with open(os.path.join(out_path, "%s.js" % name), "w") as f:
             f.write('''
 %s;
 
@@ -186,30 +192,31 @@ fs.readFile('./%s.html', function (err, html) {
         response.writeHeader(200, {"Content-Type": "text/html"});  
         response.write(html);  
         response.end();  
-    }).listen(8000);
-}); ''' % (js_reqs, self.name))
+    }).listen(%s);
+}); ''' % (js_reqs, name, port))
 
 
 class Cli:
 
-    def __init__(self, app_path: str, env: str):
-        self._app_path, self.envs = app_path, env
+    def __init__(self, server, env: str):
+        self.server, self.envs = server, env
 
     def angular(self):
         """
+        Add Angular CLI to the node setup.
 
         Related Pages:
 
           https://cli.angular.io/
-
         """
         if self.envs is not None:
             for env in self.envs:
-                subprocess.run(env, shell=True, cwd=self._app_path)
-        subprocess.run('npm install -g @angular/cli', shell=True, cwd=self._app_path)
+                subprocess.run(env, shell=True, cwd=self.server.app_path)
+        subprocess.run('npm install -g @angular/cli', shell=True, cwd=self.server.app_path)
 
     def vue(self):
         """
+        Add Vue CLI to the node setup.
 
         Related Pages:
 
@@ -217,8 +224,8 @@ class Cli:
         """
         if self.envs is not None:
             for env in self.envs:
-                subprocess.run(env, shell=True, cwd=self._app_path)
-        subprocess.run('npm install -g @vue/cli', shell=True, cwd=self._app_path)
+                subprocess.run(env, shell=True, cwd=self.server.app_path)
+        subprocess.run('npm install -g @vue/cli', shell=True, cwd=self.server.app_path)
 
     def react(self):
         """
@@ -234,29 +241,54 @@ class Cli:
         """
         if self.envs is not None:
             for env in self.envs:
-                subprocess.run(env, shell=True, cwd=self._app_path)
-        subprocess.run('npm install react.cli -g', shell=True, cwd=self._app_path)
+                subprocess.run(env, shell=True, cwd=self.server.app_path)
+        subprocess.run('npm install react.cli -g', shell=True, cwd=self.server.app_path)
 
 
 class Node:
 
-    def __init__(self, app_path: str, name: str = None, page=None):
-        self._app_path, self._app_name = app_path, name
-        self._route, self._fmw_modules = None, None
+    HOST: str = "localhost"
+    PORT: int = 8081
+
+    def __init__(self, root_path: str, name: str = None, page=None, app_folder: str = APP_FOLDER,
+                 assets_folder: str = ASSET_FOLDER):
+        self._app_path, self._app_name = root_path, name
+        self._route, self._fmw_modules, self.__app = None, None, None
         self._page, self.envs = page, None
+        self._app_folder, self._app_asset = app_folder, assets_folder
+
+    @property
+    def page(self):
+        """ Underlying page object """
+        return self._page
+
+    @property
+    def root_path(self) -> Path:
+        """ The node server root path """
+        return Path(self._app_path)
+
+    @property
+    def app_path(self) -> Path:
+        """ The application root path """
+        return Path(self._app_path, self._app_name)
+
+    @property
+    def app_name(self) -> str:
+        return self._app_name
+
+    @property
+    def node_modules_path(self) -> Path:
+        """ The application node_modules path """
+        return Path(self._app_path, "node_modules")
 
     @property
     def clis(self) -> Cli:
         """ All the CLI for the most popular web frameworks. """
-        if self._app_name is not None:
-            path = os.path.join(self._app_path, self._app_name)
-        else:
-            path = self._app_path
-        return Cli(path, self.envs)
+        return Cli(self, self.envs)
 
     def proxy(self, username: str, password: str, proxy_host: str, proxy_port: int, protocols: list = None):
         """
-        Set NPM proxy
+        Set NPM proxy.
 
         :param username:
         :param password:
@@ -273,7 +305,7 @@ class Node:
             self.envs.append('npm config set %s "http://%s:%s@%s:%s"' % (
                 protocol, username, password, proxy_host, proxy_port))
 
-    def npm(self, packages: list):
+    def npm(self, packages: List[str], check_first: bool = False):
         """
         Use npm install on a package.
 
@@ -281,85 +313,98 @@ class Node:
           npm install package1 package2 .....
 
         :param packages: The list of packages to install retrieved from requirements()
+        :param check_first: Check first if packages are already in the npm node_module folder
         """
-        if self.envs is not None:
-            for env in self.envs:
-                subprocess.run(env, shell=True, cwd=self._app_path)
-        packages = npm_packages(packages)
-        subprocess.run('npm install %s --save' % " ".join(packages), shell=True, cwd=self._app_path)
-        print("%s packages installed" % len(packages))
+        if check_first:
+            tmp_packages = []
+            for package in packages:
+                if not Path(self.node_modules_path, package).exists():
+                    tmp_packages.append(package)
+            packages = tmp_packages
+        if packages:
+            if self.envs is not None:
+                for env in self.envs:
+                    subprocess.run(env, shell=True, cwd=self.node_modules_path.parent)
+            packages = npm_packages(packages)
+            subprocess.run('npm install %s --save' % " ".join(packages), shell=True, cwd=self.node_modules_path.parent)
+            logging.info("%s packages installed" % len(packages))
 
     def ls(self):
         """ Search the registry for packages matching terms """
-        subprocess.run('npm ls', shell=True, cwd=self._app_path)
+        subprocess.run('npm ls', shell=True, cwd=self.node_modules_path.parent)
 
-    def launcher(self, app_name: str, target_path: str, port: int = 3000):
+    def launcher(self, app_name: str, port: int = DEFAULT_PORT, target_folder: Union[str, Path] = APP_FOLDER):
         """
         Create a single launcher for the application.
 
-        :param app_name: The deno path (This should contain the deno.exe file)
-        :param target_path: The target path for the views
+        :param app_name: The application name
+        :param port: The application's port
+        :param target_folder: The target folder for the launcher
+        """
+        launcher_path = Path(self.root_path.parent, "launchers")
+        if not launcher_path.exists():
+            launcher_path.mkdir(parents=True, exist_ok=True)
+        router_path = Path(launcher_path, "launcher_%s.js" % app_name)
+        with open(Path(self.root_path.parent, "run_%s.bat" % app_name), "w") as f:
+            f.write("node.exe ./launchers/launcher_%s.js\n" % app_name)
+            f.write("PAUSE")
+        with open(router_path, "w") as f:
+            f.write(templates.NODE_LAUNCHER % {"app_path": target_folder, "selector": app_name, "port": port})
+
+    def launch(self, app_name: str, out_path: Path = None, port: int = DEFAULT_PORT):
+        """
+
+        :param app_name: The application name
+        :param out_path: The target path for the views
         :param port: The application's port
         """
-        out_path = os.path.join(self._app_path, "launchers")
-        if not os.path.exists(out_path):
-            os.makedirs(out_path)
-        router_path = os.path.join(out_path, "launcher_%s.js" % app_name)
-        with open(os.path.join(self._app_path, "run_%s.bat" % app_name), "w") as f:
-            f.write("node.exe ./launchers/launcher_%s.js" % app_name)
-        with open(router_path, "w") as f:
-            f.write('''
-var http = require('http');
-var url = require('url');
-var fs = require('fs');
-
-fs.readFile('./%s/%s.html', function (err, html) {
-    if (err) {throw err;}       
-    http.createServer(function(request, response) {  
-        response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);  
-        response.end();  
-    }).listen(%s);
-}); ''' % (target_path, app_name, port))
-
-    def launch(self, app_name: str, target_folder: str = None, port: int = DEFAULT_PORT):
-        """
-
-        :param app_name:
-        :param target_folder:
-        :param port:
-        """
-        out_path = os.path.join(self._app_path, "launchers")
-        router_path = os.path.join(out_path, "launcher_%s.js" % app_name)
-        target_folder = target_folder or self.target_folder
-        if not os.path.exists(router_path) and target_folder is not None:
-            self.launcher(app_name, target_folder, port)
+        launcher_path = Path(self.root_path.parent, "launchers")
+        if not launcher_path.exists():
+            launcher_path.mkdir(parents=True, exist_ok=True)
+        router_path = Path(launcher_path, "launcher_%s.js" % app_name)
+        target_folder = out_path or Path(self.root_path.parent, APP_FOLDER)
+        if not router_path.exists() and target_folder is not None:
+            self.launcher(app_name, port, out_path)
         self.run(name="./launchers/launcher_%s.js" % app_name)
 
-    def router(self, target_folder: str, port: int = DEFAULT_PORT):
+    def router(self, component: str, alias: str, target_folder: str, port: int = DEFAULT_PORT,
+               requires: Dict[str, str] = None):
         """
         Create a simple router file for your different views on your server.
 
+        :param component: The component name
+        :param alias: The endpoint url starting with /
         :param target_folder: The target path where the views are stored
-        :param port:
+        :param port: The port number for the node server
+        :param requires: Extra package required for the router
         """
-        router_path = os.path.join(self._app_path, "server.js")
-        with open(router_path, "w") as f:
-            f.write('''
-var http = require('http');
-var fs = require('fs');
-var parser = require('url');
+        if not alias.startswith("/"):
+            raise ValueError("Route alias must start with /")
 
-http.createServer(function(request, response) {
-    url = parser.parse(request.url, true);  
-    fs.readFile('./%s'+ url.path +'.html', function (err, html) {
-      if (err) {throw err;} 
-      response.writeHeader(200, {"Content-Type": "text/html"});  
-      response.write(html);  
-      response.end();  
-    });
-}).listen(%s);
- ''' % (target_folder, port))
+        if requires is None:
+            requires = {}
+        requires.update({"http": "http", "url": "parser", "fs": "fs"})
+        server_file = Path(self.root_path.parent, "server.js")
+        urls_map = {alias: component}
+        if server_file.exists():
+            with open(server_file, "r") as fs:
+                result = json.loads('{%s}' % re.findall("var MAP_ROUTES = {(.*)};", fs.read())[0])
+                for a, v in result.items():
+                    urls_map[a.strip()] = v.strip()
+        with open(server_file, "w") as f:
+            f.write(templates.NODE_ROUTER % {
+                "require": "\n".join(["var %s = require('%s');" % (v, k) for k, v in requires.items()]),
+                "map": json.dumps(urls_map), "app_path": target_folder, "port": port})
+        router_file = Path(self.root_path.parent, "node_router.bat")
+        with open(router_file, "w") as r:
+            r.write("ECHO ON \n")
+            r.write("ECHO http://%s:%s\n" % (self.HOST, port))
+            r.write("ECHO ---\n")
+            for url in urls_map:
+                r.write("ECHO http://%s:%s%s\n" % (self.HOST, port, url))
+            r.write("ECHO ---\n\n")
+            r.write("node.exe server.js\n")
+            r.write("PAUSE")
 
     def run(self, name: str, port: int = DEFAULT_PORT):
         """
@@ -372,20 +417,20 @@ http.createServer(function(request, response) {
         :param name: The script name
         :param port: The port number for the node server
         """
-        print("Node server url: 127.0.0.1:%s" % port)
+        logging.info("Node server url: %s:%s" % (self.HOST, port))
         subprocess.run('node %s --port %s' % (name, port), shell=True, cwd=self._app_path)
 
     def inspect(self, name: str, from_launcher: bool = False):
         """
 
-        :param name:
+        :param name: The script name
         :param from_launcher:
         """
         if from_launcher:
             subprocess.run(
                 'node --inspect ./launchers/launcher_%s.js' % name, shell=True, cwd=self._app_path)
         else:
-            subprocess.run('node --inspect %s ' % name, shell=True, cwd=self._app_path)
+            subprocess.run('node --inspect %s ' % name, shell=True, cwd=self.node_modules_path.parent)
 
     def docs(self, package: str):
         """
@@ -393,7 +438,7 @@ http.createServer(function(request, response) {
 
         :param package: The package alias
         """
-        subprocess.run('npm docs %s' % package, shell=True, cwd=self._app_path)
+        subprocess.run('npm docs %s' % package, shell=True, cwd=self.node_modules_path.parent)
 
     def update(self, packages: List[str]):
         """
@@ -405,9 +450,9 @@ http.createServer(function(request, response) {
         """
         if self.envs is not None:
             for env in self.envs:
-                subprocess.run(env, shell=True, cwd=self._app_path)
-        subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=self._app_path)
-        print("%s packages updated" % len(packages))
+                subprocess.run(env, shell=True, cwd=self.node_modules_path.parent)
+        subprocess.run('npm update %s' % " ".join(packages), shell=True, cwd=self.node_modules_path.parent)
+        logging.info("%s packages updated" % len(packages))
 
     def uninstall(self, packages: List[str]):
         """
@@ -415,41 +460,36 @@ http.createServer(function(request, response) {
 
         :param packages: The list of packages to be installed
         """
-        subprocess.run('npm uninstall %s' % " ".join(packages), shell=True, cwd=self._app_path)
-        print("%s packages uninstalled" % len(packages))
+        subprocess.run('npm uninstall %s' % " ".join(packages), shell=True, cwd=self.node_modules_path.parent)
+        logging.info("%s packages uninstalled" % len(packages))
 
-    def page(self, selector: str = None, name: str = None, page: primitives.PageModel = None, auto_route: bool = False,
-             target_folder: str = "views"):
+    def app(self, page=None, target_folder: str = APP_FOLDER) -> App:
         """
         Create a specific Application as a component in the Angular framework.
 
         Unlike a basic component, the application will be routed to be accessed directly.
 
-        :param page: A report object
-        :param selector: The url route for this report in the Angular app
-        :param name: The component classname in the Angular framework
-        :param auto_route:
-        :param target_folder:
+        :param page: The web page (Report) object to be converted
+        :param target_folder: The target sub folder for the applications (default app/)
         """
-        if name is None:
-            script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
-            if selector is None:
-                selector = script.replace("_", "-")
-        page = page or Page.Report()
-        page.framework("NODE")
-        self._page = App(self._app_path, self._app_name, selector, name, page=page)
-        self.auto_route = auto_route
-        self.target_folder = target_folder
-        return self._page
+        if page is not None:
+            self._page = page
+        if self.__app is None:
+            self.__app = App(server=self)
+        return self.__app
 
-    def publish(self, target_folder: str = None):
+    def publish(self, alias: str, selector: str = None, page=None, target_folder: str = APP_FOLDER):
         """
         Publish the Node.js application
 
-        :param target_folder: The target path for the transpiled views
+        :param alias: The url endpoint for the new page
+        :param selector: The view reference / selector name
+        :param page: The web page (Report) object to be converted
+        :param target_folder: The application target folder for the transpiled views
         """
-        out_path = os.path.join(self._app_path, target_folder or self.target_folder)
-        if self._page is not None:
-            self._page.export(target_path=target_folder)
-        if self.auto_route:
-            self.launcher(self.name, out_path)
+        selector = selector or alias
+        if self.__app is None:
+            self.app(page, target_folder)
+        self.__app.export(name=selector)
+        self.router(selector, alias, target_folder=target_folder)
+        self.launcher(selector, target_folder=target_folder)

@@ -54,8 +54,8 @@ class Package:
 
 class Components:
 
-  def __init__(self, page: primitives.PageModel, app):
-    self.page, self.app = page, app
+  def __init__(self, app):
+    self.page, self.app = app.server.page, app
     self.path = os.path.join(self.app._node_path, self.app._app_name)
     self.check()
 

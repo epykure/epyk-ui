@@ -1,5 +1,3 @@
-from ..core.py import primitives
-from ..core import Page
 from ..core.js import JsUtils
 from ..core.css import css_files_loader
 from ..core.html import Standalone, html_template_loader
@@ -7,29 +5,44 @@ from . import npm, node, templates
 
 import logging
 import zipfile
-import sys
 import re
 import os
 import json
 import subprocess
 from collections import OrderedDict
-from typing import Any, Dict, List
+from typing import Any, Dict, List, Union
 from pathlib import Path
 
 
-def to_component(
-        component: Standalone.Component, name: str = "ek-angular-{selector}-{version}", out_path: str = None,
-        version: str = None, init_value: Any = "", init_options: dict = None) -> Dict[str, str]:
+# Angular system files / templates
+COMPONENT_NAME_TEMPLATE = "app.%s.component"
+ANGULAR_JSON_CONFIG = "angular.json"
+APP_FILE = 'app.module.ts'
+APP_ROUTE_FILE = "app-routing.module.ts"
+PROJECT_SRC_ALIAS = "src"
+
+
+def to_view(web_page, selector: str, app_path: Path) -> Dict[str, str]:
     """
 
-    :param component:
-    :param name:
-    :param out_path:
-    :param version:
-    :param init_value:
-    :param init_options:
     """
-    component_files = {}
+    class_name = node.selector_to_clss(selector)
+    return to_component(web_page.outs.component(selector=selector), name="", out_path=app_path)
+
+
+def to_component(
+        component: Standalone.Component, name: str = "ek-angular-{selector}-{version}", out_path: Union[str, Path] = None,
+        version: str = None, init_value: Any = "", init_options: dict = None) -> Dict[str, str]:
+    """
+    Export of a standalone component to an Angular one.
+
+    :param component: Component object
+    :param name: Component's name
+    :param out_path: Output path for component
+    :param version: Version number for the component
+    :param init_value: Values to be passed to the constructor
+    :param init_options: Default options for the component
+    """
     # Write component definition to the assets folder
     if out_path is None:
         out_path = Path().cwd()
@@ -57,12 +70,12 @@ def to_component(
     component_files["spec"] = name.format(selector=component.selector, version=version) + ".component.spec.ts"
     with open(Path(Path(out_path).parent, component_files["spec"]), "w") as sf:
         sf.write(templates.ANGULAR_COMPONENT_SPEC % {
+            "selector": component.selector,
             "asset_class": component.__name__,
         })
 
     component_files["component"] = name.format(selector=component.selector, version=version) + ".component.ts"
     js_frgs = ["@Input() %s" % var for var in html_def['vars']]
-    # @Input() label;
     with open(Path(Path(out_path).parent, component_files["component"]), "w") as sf:
         sf.write(templates.ANGULAR_COMPONENT % {
             "asset_class": component.__name__,
@@ -97,11 +110,11 @@ def to_component(
 
 def add_to_app(
         components: List[Standalone.Component],
-        app_path: str,
+        app_path: Union[str, Path],
         folder: str = "assets",
         name: str = "{selector}",
         raise_exception: bool = False,
-        view_path: str = "app"
+        view_path: str = node.APP_FOLDER
 ) -> dict:
     """
       This will add the component directly tp the src folder in the linked application.
@@ -111,7 +124,7 @@ def add_to_app(
 
       This will also update the required angular system files accordingly
 
-      :param components: List of components to add to a Angular application
+      :param components: List of components to add to an Angular application
       :param app_path: Angular application path (root)
       :param folder: Components' folder
       :param name: Component's files name format
@@ -129,8 +142,8 @@ def add_to_app(
         result["scripts"].extend(npm.get_scripts(component.requirements))
         result["modules"][component.__name__] = component.get_import(
             "../%s/%s" % (folder, component_files["component"][:-3]), suffix="Component",
-            root_path=Path(app_path, "src", view_path))
-    angular_config_path = Path(app_path, "angular.json")
+            root_path=Path(app_path, PROJECT_SRC_ALIAS, view_path))
+    angular_config_path = Path(app_path, ANGULAR_JSON_CONFIG)
     if angular_config_path.exists():
         app_path = Path(app_path)
         with open(angular_config_path) as ap:
@@ -146,7 +159,7 @@ def add_to_app(
         count_scripts = len(result["scripts"])
         logging.warning("%s styles and %s scripts not added" % (count_styles, count_scripts))
         logging.warning("Cannot locate file: %s" % angular_config_path)
-    app_module_path = Path(app_path, "src", view_path, "app.module.ts")
+    app_module_path = Path(app_path, PROJECT_SRC_ALIAS, view_path, "app.module.ts")
     if app_module_path.exists():
         auto_update = False
         with open(app_module_path) as am:
@@ -166,29 +179,21 @@ def add_to_app(
 # strictPropertyInitialization: True
 
 
-def app(path: str, name: str = None):
+def app(root_path: Union[Path, str], name: str = None):
     """
+    Get the Angular server path.
 
-    :param path: The server path
+    :param root_path: The server path
     :param name: Optional. The application name on the server
     """
-    return Angular(path, name)
-
-
-JS_MODULES_IMPORTS = {
-    'showdown': '''
-import Showdown from 'showdown';
-var showdown = Showdown;
-'''
-}
-
-COMPONENT_NAME_TEMPLATE = "app.%s.component"
+    return Angular(root_path, name)
 
 
 class NGModule:
 
-    def __init__(self, ang_app_path: str):
-        self._ang_app_path = ang_app_path
+    def __init__(self, server):
+        """ This will run CLI in the Angular project """
+        self.server = server
 
     def class_(self, name: str):
         """
@@ -200,7 +205,7 @@ class NGModule:
 
         :param name: The name of the interface
         """
-        subprocess.run('ng generate class %s' % name, shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate class %s' % name, shell=True, cwd=self.server.app_path)
 
     def component(self, name: str):
         """
@@ -212,7 +217,7 @@ class NGModule:
 
         :param name: The name of the interface
         """
-        subprocess.run('ng generate component %s' % name, shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate component %s' % name, shell=True, cwd=self.server.app_path)
 
     def directive(self, name: str):
         """
@@ -224,7 +229,7 @@ class NGModule:
 
         :param name: The name of the interface
         """
-        subprocess.run('ng generate directive %s' % name, shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate directive %s' % name, shell=True, cwd=self.server.app_path)
 
     def enum(self, name: str):
         """
@@ -236,7 +241,7 @@ class NGModule:
 
         :param name: The name of the interface
         """
-        subprocess.run('ng generate enum %s' % name, shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate enum %s' % name, shell=True, cwd=self.server.app_path)
 
     def guard(self, name: str):
         """
@@ -248,7 +253,7 @@ class NGModule:
 
         :param name: The name of the new route guard
         """
-        subprocess.run('ng generate guard %s' % name, shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate guard %s' % name, shell=True, cwd=self.server.app_path)
 
     def interceptor(self, name: str):
         """
@@ -260,7 +265,7 @@ class NGModule:
 
         :param name: The name of the interceptor
         """
-        subprocess.run('ng generate interceptor %s' % name, shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate interceptor %s' % name, shell=True, cwd=self.server.app_path)
 
     def interface(self, name: str, type: str):
         """
@@ -273,7 +278,7 @@ class NGModule:
         :param name: The name of the interface
         :param type: Adds a developer-defined type to the filename, in the format "name.type.ts"
         """
-        subprocess.run('ng generate interface %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate interface %s %s' % (name, type), shell=True, cwd=self.server.app_path)
 
     def library(self, name: str, type: str):
         """
@@ -286,7 +291,7 @@ class NGModule:
         :param name: The name of the interface
         :param type:
         """
-        subprocess.run('ng generate library %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate library %s %s' % (name, type), shell=True, cwd=self.server.app_path)
 
     def module(self, name: str, type: str):
         """
@@ -299,7 +304,7 @@ class NGModule:
         :param name: The name of the interface
         :param type:
         """
-        subprocess.run('ng generate module %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate module %s %s' % (name, type), shell=True, cwd=self.server.app_path)
 
     def service(self, name: str, type: str):
         """
@@ -312,12 +317,13 @@ class NGModule:
         :param name: The name of the interface
         :param type:
         """
-        subprocess.run('ng generate service %s %s' % (name, type), shell=True, cwd=self._ang_app_path)
+        subprocess.run('ng generate service %s %s' % (name, type), shell=True, cwd=self.server.app_path)
 
 
 class NG:
-    def __init__(self, app_path: str, app_name: str = None, env: str = None):
-        self._app_path, self._app_name, self.envs = app_path, app_name, env
+
+    def __init__(self, server, env: str = None):
+        self.server, self.envs = server, env
 
     def e2e(self, app_name: str = None):
         """
@@ -329,11 +335,12 @@ class NG:
 
         :param app_name: The application name
         """
-        app_name = app_name or self._app_name
+        if app_name:
+            self._app_name = app_name
         if app_name is None:
             raise ValueError("An Angular application name is required!")
 
-        subprocess.run('ng e2e %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
+        subprocess.run('ng e2e %s' % app_name, shell=True, cwd=self.server.app_path)
 
     def lint(self, app_name: str = None):
         """
@@ -345,11 +352,8 @@ class NG:
 
         :param app_name: The application name
         """
-        app_name = app_name or self._app_name
-        if app_name is None:
-            raise ValueError("An Angular aplication name is required!")
-
-        subprocess.run('ng lint %s' % app_name, shell=True, cwd=os.path.join(self._app_path, self._app_name))
+        app_name = app_name or self.server.app_path.name
+        subprocess.run('ng lint %s' % app_name, shell=True, cwd=self.server.root_path)
 
     def new(self, name: str, path: str = None):
         """
@@ -363,22 +367,22 @@ class NG:
         :param path: The server path
         """
         if path is not None:
-            subprocess.run('ng new %s --directory %s' % (name, path), shell=True, cwd=self._app_path)
+            subprocess.run('ng new %s --directory %s' % (name, path), shell=True, cwd=self.server.app_path)
         else:
-            subprocess.run('ng new %s' % name, shell=True, cwd=self._app_path)
-        print('ng new %s' % name)
+            subprocess.run('ng new %s' % name, shell=True, cwd=self.server.app_path)
+        logging.info('ng new %s' % name)
 
     def doc(self, keyword: str):
         """
-    Opens the official Angular documentation (angular.io) in a browser, and searches for a given keyword.
+        Opens the official Angular documentation (angular.io) in a browser, and searches for a given keyword.
 
-    Related Pages:
+        Related Pages:
 
-      https://angular.io/cli
+          https://angular.io/cli
 
-    :param keyword:
-    """
-        subprocess.run('ng doc %s' % keyword, shell=True, cwd=self._app_path)
+        :param keyword:
+        """
+        subprocess.run('ng doc %s' % keyword, shell=True, cwd=self.server.app_path)
 
     def add(self, package: str):
         """
@@ -392,9 +396,9 @@ class NG:
         """
         if self.envs is not None:
             for env in self.envs:
-                subprocess.run(env, shell=True, cwd=os.path.join(self._app_path, self._app_name))
-        subprocess.run('ng add %s' % package, shell=True, cwd=os.path.join(self._app_path, self._app_name))
-        print("%s packages installed" % package)
+                subprocess.run(env, shell=True, cwd=self.server.app_path)
+        subprocess.run('ng add %s' % package, shell=True, cwd=self.server.app_path)
+        logging.info("%s packages installed" % package)
 
     def analytics(self):
         """
@@ -416,24 +420,25 @@ class NG:
         :param options:
         """
         if options is None:
-            subprocess.run('ng help', shell=True, cwd=self._app_path)
+            subprocess.run('ng help', shell=True, cwd=self.server.app_path)
         else:
-            subprocess.run('ng help %s' % options, shell=True, cwd=os.path.join(self._app_path, self._app_name))
+            subprocess.run('ng help %s' % options, shell=True, cwd=self.server.app_path)
 
     def test(self, app_name: str = None):
         """
+        Run the set of tests for the given application.
 
         Related Pages:
 
           https://angular.io/cli
 
-        :param app_name:
+        :param app_name: The application name (folder name)
         """
         app_name = app_name or self._app_name
         if app_name is None:
             raise ValueError("An Angular application name is required!")
 
-        subprocess.run('ng test %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
+        subprocess.run('ng test %s' % app_name, shell=True, cwd=self.server.app_path)
 
     def build(self, app_name: str = None):
         """
@@ -444,17 +449,17 @@ class NG:
 
           https://angular.io/cli
 
-        :param app_name:
+        :param app_name: The application name (folder name)
         """
         app_name = app_name or self._app_name
         if app_name is None:
             raise ValueError("An Angular application name is required!")
 
-        subprocess.run('ng build %s' % app_name, shell=True, cwd=os.path.join(self._app_path, app_name))
+        subprocess.run('ng build %s' % app_name, shell=True, cwd=self.server.app_path)
 
     def version(self):
         """ Builds and serves an Angular app, then runs end-to-end tests using Protractor """
-        subprocess.run('ng version', shell=True, cwd=os.path.join(self._app_path, self._app_name))
+        subprocess.run('ng version', shell=True, cwd=self.server.app_path)
 
     def serve(self, host: str = "localhost", port: int = 8081):
         """
@@ -467,47 +472,41 @@ class NG:
         :param host: The server url
         :param port: The server port
         """
-        subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True,
-                       cwd=os.path.join(self._app_path, self._app_name))
+        subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True, cwd=self.server.app_path)
 
-    def npm(self, packages: list):
+    def npm(self, packages: List[str], styles: List[str] = None, scripts: List[str] = None):
         """
         This will add the npm requirements to the Angular app but also update directly the angular.json for anything
         needed at the start of the application.
 
         This is mainly used for generic and common libraries like Jquery and Jquery UI
 
-        :param packages: The packages names to install
+        :param packages: The package's names to install
+        :param styles: All the bespoke styles to be added to the global configuration
+        :param scripts: All the bespoke scripts to be added to the global configuration
         """
         if self.envs is not None:
             for env in self.envs:
-                subprocess.run(env, shell=True, cwd=os.path.join(self._app_path, self._app_name))
+                subprocess.run(env, shell=True, cwd=self.server.app_path)
         packages = node.npm_packages(packages)
-        subprocess.run('npm install %s' % " ".join(packages), shell=True,
-                       cwd=os.path.join(self._app_path, self._app_name))
-        map_modules = {
-            "jquery": "./node_modules/jquery/dist/jquery.min.js",
-            "chart.js": "./node_modules/chart.js/dist/Chart.js",
-            "jquery-ui-dist": "./node_modules/jquery-ui-dist/jquery-ui.js",
-        }
-        angular_conf_path = os.path.join(self._app_path, self._app_name, "angular.json")
-        with open(angular_conf_path) as f:
-            angular_conf = json.load(f)
-        config_updated = False
-        scripts = angular_conf["projects"][self._app_name]["architect"]['build']['options']["scripts"]
-        for mod, path in map_modules.items():
-            if mod in packages:
-                if path not in scripts:
-                    config_updated = True
-                    scripts.append(path)
-        if config_updated:
-            with open(angular_conf_path, "w") as f:
-                json.dump(angular_conf, f, indent=2)
+        subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self.server.app_path)
+        angular_config_path = Path(self.server.app_path, ANGULAR_JSON_CONFIG)
+        if angular_config_path.exists():
+            with open(angular_config_path) as ap:
+                angular_config = json.loads(ap.read(), object_pairs_hook=OrderedDict)
+                if styles is not None:
+                    for style in styles:
+                        angular_config["projects"][self.server.app_path.name]["architect"]["build"]["options"]["styles"].insert(0, style)
+                if scripts is not None:
+                    for script in scripts:
+                        angular_config["projects"][self.server.app_path.name]["architect"]["build"]["options"]["scripts"].insert(0, script)
+            with open(angular_config_path, "w") as ap:
+                json.dump(angular_config, ap, indent=2)
 
     @property
     def create(self) -> NGModule:
         """ Shortcut to the various generate entry points in the Angular Framework. """
-        return NGModule(os.path.join(self._app_path, self._app_name))
+        return NGModule(self.server)
 
     def generate(self, schematic: str, name: str):
         """
@@ -520,31 +519,29 @@ class NG:
         :param schematic:
         :param name:
         """
-        subprocess.run(
-            'ng generate %s %s' % (schematic, name), shell=True, cwd=os.path.join(self._app_path, self._app_name))
+        subprocess.run('ng generate %s %s' % (schematic, name), shell=True, cwd=self.server.app_path)
 
 
 class RouteModule:
 
-    def __init__(self, app_path: str, app_name: str, file_name: str = None):
-        self._app_path, self._app_name = app_path, app_name
-        self.file_name = file_name or 'app-routing.module.ts'
+    def __init__(self, component: str, alias: str, server):
+        self.component, self.alias, self.server = component, alias, server
         self.modules, self.routes, self.ng_modules = {}, {}, None
 
         # parse the Angular route module
         imported_module_pattern = re.compile("import { (.*) } from '(.*)';")
         imported_route_pattern = re.compile("{ path: '(.*)', component: (.*) }")
-
-        self.ngModule = "@NgModule"
-        with open(os.path.join(self._app_path, app_name, 'src', 'app', 'app-routing.module.ts')) as f:
-            content = f.read()
-            split_content = content.split("@NgModule")
-            for module_def in imported_module_pattern.findall(split_content[0]):
-                self.modules[module_def[0]] = module_def[1]
-
-            for alias, component in imported_route_pattern.findall(split_content[0]):
-                self.routes[component] = alias
-            self.ngModule = "%s%s" % (self.ngModule, split_content[1])
+        router_file = Path(server.views_path, APP_ROUTE_FILE)
+        if router_file.exists():
+            self.ngModule = "@NgModule"
+            with open(router_file) as f:
+                content = f.read()
+                split_content = content.split("@NgModule")
+                for module_def in imported_module_pattern.findall(split_content[0]):
+                    self.modules[module_def[0]] = module_def[1]
+                for alias, component in imported_route_pattern.findall(split_content[0]):
+                    self.routes[component] = alias
+                self.ngModule = "%s%s" % (self.ngModule, split_content[1])
 
     def add(self, component: str, alias: str, path: str):
         """
@@ -555,24 +552,23 @@ class RouteModule:
         :param path: The component relative path
         """
         if self.ng_modules is None:
-            self.ng_modules = NgModules(self._app_path, self._app_name)
+            self.ng_modules = NgModules(self.server)
             self.ng_modules.modules[component] = "../../%s/%s" % (
                 path.replace("\\", "/"), COMPONENT_NAME_TEMPLATE % alias)
         self.modules[component] = "../../%s/%s" % (path.replace("\\", "/"), COMPONENT_NAME_TEMPLATE % alias)
         self.routes[component] = alias
 
-    def export(self, file_name=None, target_path: str = None):
+    def export(self, folder: str = None):
         """
         Publish the new Angular routing Application.
 
-        :param file_name: Optional. The filename
-        :param target_path: Optional. The new routing file
+        :param folder: Optional. The new routing file
         """
-        file_name = 'app-routing.module.ts' or self.file_name
-        if target_path is None:
-            target_path = []
-        target_path.append(file_name)
-        with open(os.path.join(self._app_path, self._app_name, 'src', 'app', *target_path), "w") as f:
+        if folder is not None:
+            target_path = Path(self.server.views_path, folder, APP_ROUTE_FILE)
+        else:
+            target_path = Path(self.server.views_path, APP_ROUTE_FILE)
+        with open(target_path, "w") as f:
             for k, v in self.modules.items():
                 f.write("import { %s } from '%s';\n" % (k, v))
             f.write("\n\n")
@@ -582,19 +578,18 @@ class RouteModule:
             f.write("]\n\n")
             f.write("\n")
             f.write(self.ngModule)
-        self.ng_modules.export(file_name)
+        self.ng_modules.export(APP_ROUTE_FILE)
 
 
 class NgModules:
 
-    def __init__(self, app_path: str, app_name: str, file_name: str = None):
-        self._app_path, self._app_name = app_path, app_name
-        self.file_name = file_name or 'app.module.ts'
+    def __init__(self, server):
+        self.server = server
         self.modules, self.imports, self.declarations, self.providers, self.bootstrap = {}, [], [], [], []
 
         # parse the Angular route module
         imported_module_pattern = re.compile("import { (.*) } from '(.*)';")
-        with open(os.path.join(self._app_path, self._app_name, 'src', 'app', self.file_name)) as f:
+        with open(Path(self.server.views_path, APP_ROUTE_FILE)) as f:
             content = f.read()
             for module_def in imported_module_pattern.findall(content):
                 self.modules[module_def[0]] = module_def[1]
@@ -630,17 +625,12 @@ class NgModules:
         if component not in self.imports:
             self.imports.append(component)
 
-    def export(self, file_name: str = None, target_path: str = None):
+    def export(self, file_name: Path = None):
         """
 
         :param file_name: Optional. The filename
-        :param target_path:
         """
-        file_name = 'app.module.ts' or self.file_name
-        if target_path is None:
-            target_path = []
-        target_path.append(file_name)
-        with open(os.path.join(self._app_path, self._app_name, 'src', 'app', *target_path), "w") as f:
+        with open(Path(self.server.views_path, file_name or APP_FILE), "w") as f:
             for k, v in self.modules.items():
                 f.write("import { %s } from '%s';\n" % (k, v))
             f.write("\n\n")
@@ -658,140 +648,79 @@ class NgModules:
 
 class ComponentSpec:
 
-    def __init__(self, app_path: str, app_name: str, alias: str, name: str):
-        self.imports, self.vars = {}, {}
-        self._app_path, self._app_name, self.__path = app_path, app_name, 'apps'
-        self.alias, self.name = alias, name
+    def __init__(self, server):
+        self.imports, self.vars, self.server = {}, {}, server
         self.__comp_structure = {}
 
-    def export(self, path: str = None, target_path: str = None):
+    def export(self, selector: str):
         """
         Export the spec of the component.
 
         TODO: make this generation more flexible
 
-        :param path:
-        :param target_path: for example ['src', 'app']
+        :param selector:
         """
-        self.__path = path or self.__path
-        if target_path is None:
-            target_path = []
-        target_path.append(self.__path)
-        module_path = os.path.join(self._app_path, self._app_name, *target_path)
-        if not os.path.exists(module_path):
-            os.makedirs(module_path)
-
-        with open(os.path.join(module_path, "%s.spec.ts" % COMPONENT_NAME_TEMPLATE % self.alias), "w") as f:
-            f.write('''
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
-import { %(name)s } from './app.component';
-
-describe('%(name)s', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
-      ],
-      declarations: [
-        %(name)s
-      ],
-    }).compileComponents();
-  }));
-
-  it('should create the app', () => {
-    const fixture = TestBed.createComponent(%(name)s);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
-  });
-
-  it(`should have as title '%(alias)s'`, () => {
-    const fixture = TestBed.createComponent(%(name)s);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('%(alias)s');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(%(name)s);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('%(alias)s app is running!');
-  });
-});
-''' % {"path": module_path, 'name': self.name, 'alias': self.alias})
+        if not self.server.views_path.exists():
+            self.server.views_path.mkdir(parents=True, exist_ok=True)
+        with open(Path(self.server.views_path, "%s.spec.ts" % COMPONENT_NAME_TEMPLATE % selector), "w") as f:
+            f.write(templates.ANGULAR_COMPONENT_SPEC % {"asset_class": selector, "selector": "app"})
 
 
 class Components:
 
-    def __init__(self, app: str, count: int = 0, page: primitives.PageModel = None):
-        self._app, self.count_comp, self.page = app, count, page
+    def __init__(self, app: str, count: int = 0):
+        self._app, self.count_comp, self.page = app, count, app.server.page
 
     def router(self):
-        """
-
-    """
+        """ """
         from epyk.web.components.angular import standards
-
         return standards.Router(self.page, None)
 
     @property
     def materials(self):
-        """
-
-        """
+        """ The Angular Material components """
         from epyk.web.components.angular import materials
-
         return materials.Components(app=self._app, page=self.page)
 
     @property
     def primeng(self):
-        """
-
-        """
+        """ The PrimeNG Angular components """
         from epyk.web.components.angular import primeng
-
-        return primeng.Components(self.page)
+        return primeng.Components(self)
 
 
 class App:
 
-    def __init__(self, app_path: str, app_name: str, alias: str, name: str,
-                 page: primitives.PageModel = None, target_folder: str = "views"):
+    def __init__(self, server):
         self.imports = {'Component': '@angular/core',
                         # 'HttpClient': '@angular/common/http',
                         # 'HttpHeaders': '@angular/common/http', 'Injectable': '@angular/core',
                         # 'ViewChild': '@angular/core'
                         }
-        self.vars, self.__map_var_names, self.page, self.file_name = {}, {}, page, None
-        self._app_path, self._app_name, self._node_path = app_path, app_name, app_path
-        self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
+        self.vars, self.__map_var_names, self.server, self.file_name = {}, {}, server, None
+        self.__components = None
         self.__comp_structure, self.htmls, self.__fncs, self.__injectable_prop = {}, [], {}, {'providedIn': 'root'}
-        self.spec = ComponentSpec(app_path, app_name, alias, name)
+        self.spec = ComponentSpec(server)
         self.comps, self.module_path = {}, None
 
     @property
     def clarity(self):
-        """
-
-        """
+        """ Load Angular Clarity components """
         from epyk.web.components.angular import clarity
-
-        return clarity.Package(self.page, self)
+        return clarity.Package(self.server.page, self)
 
     @property
     def bootstrap(self):
-        """
-
-        """
+        """ Load Angular Bootstrap components """
         from epyk.web.components.angular import bootstrap
+        return bootstrap.Package(self.server.page, self)
 
-        return bootstrap.Package(self.page, self)
-
-    def add_var(self, name: str, value=None):
+    def add_var(self, name: str, value: Any = None):
         """
+        Add a global variable name.
 
-        :param name:
-        :param value:
+        :param name: Variable's name
+        :param value: Variable's content
         """
         if value is not None:
             if 'constructor' not in self.__comp_structure:
@@ -817,11 +746,9 @@ class App:
 
     @property
     def components(self) -> Components:
-        """
-
-        """
+        """  Shortcut to prefined framework components """
         if self.__components is None:
-            self.__components = Components(self, page=self.page)
+            self.__components = Components(self)
         return self.__components
 
     def constructor(self):
@@ -833,107 +760,66 @@ class App:
     def ngAfterViewInit(self):
         return
 
-    @property
-    def name(self):
-        """ Return the prefix of the component module (without any extension) """
-        return self.file_name or COMPONENT_NAME_TEMPLATE % self.alias
-
-    def http(self, end_point: str, js_funcs, profile):
+    def http(self, end_point: str, js_funcs, profile, server: str, port: int):
         """
 
         :param end_point:
         :param js_funcs:
         :param profile:
+        :param server:
+        :param port:
         """
         js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
         end_point = JsUtils.jsConvertData(end_point, None)
-        return "this.httpClient.post('http://127.0.0.1:5000/' + %s, {}).subscribe((data)=>{ %s });" % (
-            end_point, js_funcs)
+        return "this.httpClient.post('%(server)s:%(port)s/' + %(end_point)s, {}).subscribe((data)=>{ %(funcs)s });" % {
+            "funcs": js_funcs, "end_point": end_point, "server": server, "port": port}
 
-    @property
-    def path(self) -> str:
-        """ Return the full path of the component modules """
-        return os.path.join("../../", self.__path, self.name).replace("\\", "/")
-
-    def export(self, path: str = None, target_path: str = None):
+    def export(self, selector: str):
         """
 
-        :param path:
-        :param target_path: for example ['src', 'app']
+        :param selector:
         """
-        self.__path = path or self.__path
-        if target_path is None:
-            target_path = []
-        target_path.append(self.__path)
-        self.module_path = os.path.join(self._app_path, *target_path)
-        print("export  to: %s" % self.module_path)
-        if not os.path.exists(self.module_path):
-            os.makedirs(self.module_path)
-        page = self.page.outs.web()
-        self.spec.export(path=self.module_path, target_path=None)
-        self.__fncs['ngAfterViewInit'] = [page['jsFrgs']]
 
-        with open(os.path.join(self.module_path, "%s.ts" % self.name), "w") as f:
-            for comp, path in self.imports.items():
-                f.write("import { %s } from '%s';\n" % (comp, path))
-            for path, classNames in self.page._props.get('web', {}).get('modules', {}).items():
-                f.write("import { %s } from '%s';\n" % (",".join(classNames), path))
-            if page['jsFrgsCommon']:
-                f.write("import { %s } from './module_%s.js';" % (
-                    ", ".join(list(page['jsFrgsCommon'].keys())), self.alias.replace("-", "_")))
-            f.write("\n")
-            if 'jquery' in self.page.jsImports:
-                f.write("\ndeclare var $: any;")
-                f.write("\n")
-            # All applications need this as they will interact with a Flask backend
-            # f.write("@Injectable({\n")
-            # for k , v in self.__injectable_prop.items():
-            #  f.write(" %s: %s\n" % (k, json.dumps(v)))
-            # f.write("})\n")
-            f.write("\n")
-            f.write("@Component({\n")
-            f.write("  selector: '%s',\n" % self.alias)
-            f.write("  templateUrl: '%s',\n" % "./%s.html" % self.name)
-            f.write("  styleUrls: ['%s']\n" % "./%s.css" % self.name)
-            f.write("})\n")
-            f.write("\n")
-            f.write("export class %s {\n" % self.className)
-            f.write("  // Component link section\n")
-            for k, v in self.comps.items():
-                f.write("  @ViewChild('%s') %s: any;;\n" % (k, k))
+        logging.info("export %s to: %s" % (selector, self.server.views_path))
+        self.server.views_path.mkdir(parents=True, exist_ok=True)
 
-            f.write("  // Variable section\n")
-            for var in self.vars.keys():
-                f.write("  %s;\n" % var)
-            f.write("\n")
-            if 'constructor' in self.__comp_structure:
-                f.write("  constructor(private httpClient: HttpClient){\n")
-                f.write("    %s" % "; ".join(self.__comp_structure['constructor']))
-                f.write("  }\n")
-            f.write("\n")
-            for name, fnc_def in self.__fncs.items():
-                f.write("  %s(){ %s } \n" % (name, ";".join(fnc_def)))
-            f.write("}\n")
+        # Write all the component
+        add_to_app(self.server.page._props["schema"].values(), self.server.app_path, folder=self.server.assets_path.name)
 
-        if page['jsFrgsCommon']:
-            with open(os.path.join(self.module_path, "module_%s.js" % self.alias.replace("-", "_")), "w") as f:
-                for js_dep in JS_MODULES_IMPORTS:
-                    if js_dep in self.page.jsImports:
-                        f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
-                for buider in page['jsFrgsCommon'].values():
-                    f.write("export %s;\n" % buider)
-
-        with open(os.path.join(self.module_path, "%s.html" % self.name), "w") as f:
-            f.write("%(cssImports)s\n\n%(body)s" % page)
-
-        with open(os.path.join(self.module_path, "%s.css" % self.name), "w") as f:
-            f.write(page['cssStyle'])
+        # Write the view
+        to_view(self.server.page, selector, self.server.views_path)
 
 
 class Angular(node.Node):
 
+    def __init__(self, root_path: str, name: str = None, page = None, app_folder: str = node.APP_FOLDER,
+                 assets_folder: str = node.ASSET_FOLDER):
+        super(Angular, self).__init__(root_path, name, page)
+        self._app_folder, self._app_asset, self.__clis = app_folder, assets_folder, None
+        self.__app = None # The active application to the server
+
+    @property
+    def routing(self) -> str:
+        """ The system routing file name """
+        return APP_ROUTE_FILE
+
+    @property
+    def views_path(self) -> Path:
+        """ The application views path """
+        return Path(self._app_path, self._app_name, PROJECT_SRC_ALIAS, self._app_folder)
+
+    @property
+    def node_modules_path(self) -> Path:
+        """ The application node_modules path """
+        return Path(self._app_path, self._app_name, "node_modules")
+
+    def assets_path(self):
+        """ The application assets / components path """
+        return Path(self._app_path, self._app_name, PROJECT_SRC_ALIAS, self._app_asset)
+
     def create(self, name: str):
-        """ To create a new project, run:
+        """
+        To create a new project, run:
 
         Related Pages:
 
@@ -941,9 +827,15 @@ class Angular(node.Node):
 
         :param name: The application name
         """
-        subprocess.run('ng new %s' % name, shell=True, cwd=self._app_path)
+        project_path = Path(self.root_path, name)
+        self._app_name = name
+        if not project_path.exists():
+            logging.info("Creating %s to this location %s" % (name, self.root_path))
+            subprocess.run('ng new %s' % name, shell=True, cwd=str(self.root_path))
+        else:
+            logging.info("Application %s already available here %s" % (name, self.root_path))
 
-    def serve(self, app_name: str, host: str = "localhost", port: int = 8081):
+    def serve(self, name: str = None, host: str = None, port: int = None):
         """
         Builds and serves an Angular app, then runs end-to-end tests using Protractor.
 
@@ -951,41 +843,34 @@ class Angular(node.Node):
 
           https://angular.io/cli/serve
 
-        :param app_name:
-        :param host:
-        :param port:
+        :param name: The application name
+        :param host: The url name
+        :param port: the server port
         """
-        path = os.path.join(self._app_path, app_name)
-        subprocess.run('ng serve --open --host=%s --port=%s' % (host, port), shell=True, cwd=path)
+        if name is not None:
+            self._app_name = name
+        subprocess.run('ng serve --open --host=%s --port=%s' % (
+            host or self.HOST, port or self.PORT), shell=True, cwd=str(self.app_path))
 
-    def router(self, app_name: str):
+    def router(self, name: str = None, **kwargs):
         """
+        Create a routing file in the Angular application if is does not exist yet.
 
         Related Pages:
 
           https://stackoverflow.com/questions/44990030/how-to-add-a-routing-module-to-an-existing-module-in-angular-cli-version-1-1-1
 
-        :param app_name:
+        :param name: The application / view name to be added to the Angular server
         """
-        path = os.path.join(self._app_path, app_name)
-        subprocess.run('ng generate module app-routing --module app --flat', shell=True, cwd=path)
-        with open(os.path.join(self._app_path, app_name, "src", "app", "app-routing.module.ts"), "w") as f:
-            f.write('''
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
-
-
-const routes: Routes = [
-]
-
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
-
-''')
+        if name is not None:
+            self._app_name = name
+        routing_file = Path(self.app_path, self.routing)
+        if not routing_file.exists():
+            subprocess.run('ng generate module app-routing --module app --flat', shell=True, cwd=str(self.app_path))
+            with open(Path(self.app_path, self.routing), "w") as f:
+                f.write(templates.ANGULAR_ROUTER)
+        else:
+            logging.warning("Router already exist please update it manually with the above content")
 
     def ng(self, app_name: str = None):
         """
@@ -997,10 +882,11 @@ export class AppRoutingModule { }
 
         :param app_name: The angular application name
         """
-        app_name = app_name or self._app_name
-        return NG(self._app_path, app_name, self.envs)
+        if app_name is not None:
+            self._app_name = app_name
+        return NG(self, self.envs)
 
-    def cli(self, app_name: str):
+    def cli(self, app_name: str = None):
         """
         Angular specific command lines
 
@@ -1010,32 +896,30 @@ export class AppRoutingModule { }
 
         :param app_name: The angular application name
         """
-        app_name = app_name or self._app_name
-        return NG(self._app_path, app_name, self.envs)
+        if app_name is not None:
+            self._app_name = app_name
+        return NG(self, self.envs)
 
-    def page(self, selector: str = None, name: str = None, page: primitives.PageModel = None, auto_route: bool = False,
-             target_folder: str = "apps"):
+    def get_view(self, name: str = "") -> Path:
+        """ Get the path for a specific view in the Application """
+        return Path(self.views_path, name)
+
+    def app(self, page=None, target_folder: str = node.APP_FOLDER) -> App:
         """
         Create a specific Application as a component in the Angular framework.
 
         Unlike a basic component, the application will be routed to be accessed directly.
 
-        :param page: A report object
-        :param selector: The url route for this report in the Angular app
-        :param name: The component classname in the Angular framework
-        :param auto_route:
-        :param target_folder:
+        :param page: The web page (Report) object to be converted
+        :param target_folder: The target sub folder for the applications (default app/)
         """
-        if name is None:
-            script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
-            name = "".join([s.capitalize() for s in script.split("_")])
-            if selector is None:
-                selector = script.replace("_", "-")
-        page = page or Page.Report()
-        self._page = App(self._app_path, self._app_name, selector, name, page=page, target_folder=target_folder)
-        if auto_route:
-            self.route().add(self._app_name, self._page.alias, self._page.path)
-        return self._page
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if page is not None:
+            self._page = page
+        if self.__app is None:
+            self.__app = App(server=self)
+        return self.__app
 
     def ng_modules(self, app_name: str = None, file_name: str = None) -> NgModules:
         """
@@ -1048,48 +932,58 @@ export class AppRoutingModule { }
             if self._route is not None and self._route.ng_modules is not None:
                 self._fmw_modules = self._route.ng_modules
             else:
-                self._fmw_modules = NgModules(self._app_path, app_name or self._app_name, file_name)
+                self._fmw_modules = NgModules(self)
         return self._fmw_modules
 
-    def route(self, app_name: str = None, file_name: str = None) -> RouteModule:
+    def route(self, component: str, alias: str) -> RouteModule:
         """
         Read the file app-routing.module.ts from the Angular app
 
-        :param app_name: Optional. THe Angular application name
-        :param file_name: Optional.
+        :param component: The component reference / selector
+        :param alias: The url alias
         """
         if self._route is None:
-            path, name = os.path.split(self._app_path)
-            self._route = RouteModule(path, name, file_name)
+            self._route = RouteModule(component, alias, self)
         return self._route
 
-    def publish(self, app_name: str = None, target_path: list = None):
+    def publish(self, alias: str, selector: str = None, page=None, install: bool = False,
+                target_folder: str = node.APP_FOLDER):
         """
+        This will create the View / Application to the Angular server.
+        It will also create all the underlying components used to render the different items to the page.
 
-        :param app_name:
-        :param target_path: List for example ['src', 'app']
+        :param alias: The url endpoint for the new page
+        :param selector: Component / Application internal selector (name)
+        :param page: The web page (Report) object to be converted
+        :param install: Flag to force install of missing packages
+        :param target_folder: The target sub folder for the applications (default app/)
         """
-        if self._page is not None:
-            self._page.export(target_path=target_path)
-        node.requirements(self._page.page, self._page.module_path)
-        if self._route is not None:
-            self._route.export()
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if self.__app is None:
+           self.__app = self.app(page)
+        self.__app.export(selector=selector)
+        self.route(selector, alias)
+        packages = node.requirements(self.page, self.node_modules_path)
+        missing_package = [k for k, v in packages.items() if not v]
+        if install and missing_package:
+            self.npm(missing_package)
 
-    def home_page(self, page, app_name: str = None, with_router: bool = False):
+    def home_page(self, page=None, app_name=None, install: bool = False,
+                  target_folder: str = node.APP_FOLDER):
         """
         Change the Angular App home page
 
-        :param page:
+        :param page: The web page (Report) object to be converted
         :param app_name:
-        :param with_router:
+        :param install: Flag to force install of missing packages
+        :param target_folder: The target sub folder for the applications (default app/)
         """
-        with open(os.path.join(self._app_path, app_name, "src", "app", "app.component.html")) as f:
-            html_home = f.read()
-        self._app_name = app_name
-        router_outlet = "<router-outlet></router-outlet>" in html_home
-        self._app_path = os.path.join(self._app_path, self._app_name)
-        home = self.page("app-root", name="AppComponent", page=page, target_folder="src/app")
-        if with_router:
-            home.components.router()
-        home.file_name = "app.component"
-        home.export()
+        if app_name is not None:
+            self._app_name = app_name
+        self.__app = self.app(page)
+        self.__app.export(selector="app-root")
+        packages = node.requirements(self.page, self.node_modules_path)
+        missing_package = [k for k, v in packages.items() if not v]
+        if install and missing_package:
+            self.npm(missing_package)

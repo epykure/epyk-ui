@@ -1,12 +1,25 @@
 import subprocess
 import json
 import zipfile
+import logging
 from typing import Any, Dict, List
 from pathlib import Path
 
 from . import node, npm, templates
 from ..core.css import css_files_loader
 from ..core.html import Standalone, html_template_loader
+
+
+# React system files / templates
+PROJECT_SRC_ALIAS = "src"
+
+
+def to_view(web_page, selector: str, app_path: Path):
+    """
+
+    """
+    resource_path = Path(app_path, selector)
+    resource_path.mkdir(parents=True, exist_ok=True)
 
 
 def to_component(
@@ -93,9 +106,67 @@ def add_to_app(
     return result
 
 
+class App:
+
+    def __init__(self, app_path, app_name, server):
+        self.imports = {}
+        self.vars, self.__map_var_names, self.server, self.__components = {}, {}, server, None
+        self._app_path, self._app_name = app_path, app_name
+        self.comps = {}
+
+    def route(self, component: str, alias: str):
+        """
+        Add the app to the routing mechanism.
+        By default all the views are in a view folder within the React App.
+
+        :param component: The module name
+        :param alias: The url route
+        """
+        index_router = Path(self.server.app_path, "index.js")
+        if not index_router.exists():
+            logging.warning("Creating a router file...")
+
+    def export(self, selector: str):
+        """
+
+        :param selector: Component / Application internal selector (name)
+        """
+        logging.info("export %s to: %s" % (selector, self.server.views_path))
+        self.server.views_path.mkdir(parents=True, exist_ok=True)
+
+        # Write all the component
+        add_to_app(
+            self.server.page._props["schema"].values(), self.server.app_path, folder=self.server.assets_path.name)
+
+        # Write the view
+        to_view(self.server.page, selector, self.server.views_path)
+
 
 class Svelte(node.Node):
-    def create(self, name: str):
+
+    def __init__(self, root_path: str, name: str = None, page = None, app_folder: str = node.APP_FOLDER,
+                 assets_folder: str = node.ASSET_FOLDER):
+        super(Svelte, self).__init__(root_path, name, page)
+        self._app_folder, self._app_asset, self.__clis = app_folder, assets_folder, None
+        self.__app = None # The active application to the server
+
+
+    @property
+    def views_path(self) -> Path:
+        """ The application views path """
+        return Path(self.root_path, self._app_name, PROJECT_SRC_ALIAS, "routes", self._app_folder)
+
+    @property
+    def node_modules_path(self) -> Path:
+        """ The application node_modules path """
+        return Path(self.root_path, self._app_name, "node_modules")
+
+    @property
+    def assets_path(self):
+        """ The application assets / components path """
+        return Path(self.root_path, self._app_name, PROJECT_SRC_ALIAS, "routes", self._app_asset)
+
+    def create(self, name: str = None):
         """
         To create a new project, run:
 
@@ -103,24 +174,103 @@ class Svelte(node.Node):
 
           https://svelte.dev/docs
 
-        :param name: String. The application name
+        :param name: The application name
         """
-        if name is None:
-            subprocess.run('npm create svelte@latest --help', shell=True, cwd=self._app_path)
+        if name is not None:
+            self._app_name = name
+            if Path(self.root_path, name).exists():
+                logging.info("React app %s already available" % name)
+            else:
+                subprocess.run('npm create svelte@latest %s' % name, shell=True, cwd=self.root_path)
         else:
-            subprocess.run('npm create svelte@latest %s' % name, shell=True, cwd=self._app_path)
+            subprocess.run('npm create svelte@latest --help', shell=True, cwd=self.root_path)
 
     def install(self, name: str = None):
+        """
+
+        :param name: The application name
+        """
         if not name:
-            subprocess.run('npm install', shell=True, cwd=self._app_path)
+            subprocess.run('npm install', shell=True, cwd=self.app_path)
         else:
-            subprocess.run('cd %s;npm install' % name, shell=True, cwd=self._app_path)
+            self._app_name = name
+            subprocess.run('cd %s;npm install' % name, shell=True, cwd=self.root_path)
+
+    def init(self, name: str = None):
+        """
+        To create a new project, run:
+
+        Related Pages:
+
+          https://svelte.dev/docs
+
+        :param name: The application name
+        """
+        if name is not None:
+            self._app_name = name
+            if Path(self.root_path, name).exists():
+                logging.info("React app %s already available" % name)
+            else:
+                subprocess.run('npm init svelte@next %s' % name, shell=True, cwd=self.root_path)
+        else:
+            subprocess.run('npm init svelte@next --help', shell=True, cwd=self.root_path)
 
     def serve(self, name: str = None):
         """
 
+        :param name: The application name
         """
         if not name:
-            subprocess.run('npm run dev', shell=True, cwd=self._app_path)
+            subprocess.run('npm run dev', shell=True, cwd=self.app_path)
         else:
-            subprocess.run('cd %s;npm run dev' % name, shell=True, cwd=self._app_path)
+            self._app_name = name
+            subprocess.run('cd %s;npm run dev' % name, shell=True, cwd=self.root_path)
+
+    def app(self, page=None, target_folder: str = node.APP_FOLDER) -> App:
+        """
+        Create a specific Application as a component in the Angular framework.
+
+        Unlike a basic component, the application will be routed to be accessed directly.
+
+        :param page: The web page (Report) object to be converted
+        :param target_folder: The target sub folder for the applications (default app/)
+        """
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if page is not None:
+            self._page = page
+        if self.__app is None:
+            self.__app = App(self.root_path, self._app_name, server=self)
+        return self.__app
+
+    def publish(self, alias: str, selector: str = None, page=None, install: bool = False,
+                target_folder: str = node.APP_FOLDER):
+        """
+        Publish the React application.
+        This will also add the page to the router automatically.
+
+        :param alias: The url endpoint for the new page
+        :param selector: Component / Application internal selector (name)
+        :param page: The web page (Report) object to be converted
+        :param install: Flag to force install of missing packages
+        :param target_folder: The target sub folder for the applications (default app/)
+        """
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if self.__app is None:
+           self.__app = self.app(page)
+        self.__app.export(selector=selector)
+        self.__app.route(selector, alias)
+        packages = node.requirements(self.page, self.node_modules_path)
+        missing_package = [k for k, v in packages.items() if not v]
+        if install and missing_package:
+            self.npm(missing_package)
+
+    def home_page(self, page, app_name=None, with_router=False):
+        """
+        Change the Angular App home page
+
+        :param page:
+        :param app_name:
+        :param with_router:
+        """

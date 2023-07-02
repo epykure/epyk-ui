@@ -122,3 +122,23 @@ def scss_icons(out_file_path: str = "ICONS.SCSS"):
         fp.write("/* Auto generated SCSS files for icons definition */ \n\n")
         for k, v in Icons._ICON_MAPPINGS["font-awesome"].items():
             fp.write("$%s: %s;\n" % (k, v))
+
+
+def inline_to_dict(value: str, no_hyphen: bool = True) -> Dict[str, str]:
+    """
+    Convert an inline CSS String to a dictionary.
+
+    :param value: Inline CSS content
+    :param no_hyphen: Flag to remove the - from the CSS keys
+    """
+    results = {}
+    for props in value.split(";"):
+        if props.strip():
+            k, val = props.split(":", 1)
+            if no_hyphen:
+                if "-" in k:
+                    ks = k.split("-")
+                    cks = [v.capitalize() for v in ks[1:]]
+                    k = "".join([ks[0]] + cks)
+            results[k.strip()] = val.strip()
+    return results

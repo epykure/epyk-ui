@@ -834,6 +834,7 @@ class Report:
         Usage::
 
           page = Report()
+          page.apps.react
         """
         self._props['web'] = {
             'modules': {}

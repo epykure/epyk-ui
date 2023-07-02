@@ -1,7 +1,7 @@
 import json
 import logging
 from pathlib import Path
-from typing import Optional, List, Tuple, Any, Dict
+from typing import Optional, List, Tuple, Any, Dict, Union
 from epyk.core.py import primitives, types
 
 from epyk.core.html import html_template_loader, html_formatter
@@ -418,7 +418,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         return self
 
     @classmethod
-    def get_import(cls, path: str, suffix: str = "", root_path: str = None, is_ts: bool = True) -> str:
+    def get_import(cls, path: str, suffix: str = "", root_path: Union[Path, str] = None, is_ts: bool = True) -> str:
         """
         Get the import statement to be added to a module.
         This would work with ts or js files.

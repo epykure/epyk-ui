@@ -1,27 +1,71 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
-import os
-import sys
+import logging
 import re
 import json
 import zipfile
 from pathlib import Path
-from typing import List, Union, Any, Dict
+from typing import List, Union, Any, Dict, Tuple
 import subprocess
 
 from ..core.html import Standalone, html_template_loader
-from ..core.css import css_files_loader
-from ..core import Page
+from ..core.css import css_files_loader, inline_to_dict
 from . import node, npm, templates
 
 
-JS_MODULES_IMPORTS = {
-    'showdown': '''
-import Showdown from 'showdown';
-var showdown = Showdown;
-'''
-}
+# React system files / templates
+PROJECT_SRC_ALIAS = "src"
+
+
+def clean_html(html_template: str, js_frags: str) -> Tuple[str, str]:
+    """
+
+    :param html_template:
+    :param js_frags:
+    """
+    html = html_template.replace("class=", "className=").replace("for=", "htmlFor=").replace(
+        '"{ this.state.cssStyle }"', "{ this.state.cssStyle }")
+
+    css_maps = set()
+    for style in re.findall('style="([a-zA-Z0-9%;: -]*)"', html):
+        css_maps.add(style)
+    for style in re.findall("style='([a-zA-Z0-9%;: -]*)'", html):
+        css_maps.add(style)
+    js_vars = []
+    for i, k in enumerate(css_maps):
+        js_vars.append("const cssStyle%s = %s" % (i, json.dumps(inline_to_dict(k))))
+        html = html.replace('style="%s"' % k, 'style={ cssStyle%s }' % i).replace("style='%s'" % k, 'style={ cssStyle%s }' % i)
+    js_frags = js_frags + ";\n  ".join(js_vars)
+    return "<>%s</>" % html, js_frags
+
+
+def to_view(web_page, selector: str, app_path: Path):
+    """
+
+    """
+    class_name = node.selector_to_clss(selector)
+    result = web_page.outs.web()
+    # with open(Path(resource_path, component_files["js"]), "w") as jf:
+    #     jf.write(npm.to_module(", ".join(list(result['jsFrgsCommon'].keys())), web_page.imports.requirements))
+
+    component_files = {"css": class_name + ".css"}
+    with open(Path(app_path, component_files["css"]), "w") as cf:
+        cf.write(result['cssStyle'])
+
+    init_value = {}
+    init_options = {}
+    component_files["component"] = class_name + ".js"
+    js_frags = ""
+    html_content, js_frags = clean_html(result["content"], js_frags)
+    with open(Path(app_path, component_files["component"]), "w") as sf:
+        sf.write(templates.REACT_APP % {
+            "app_class": class_name,
+            "js": js_frags,
+            "require": '',
+            "init_value": json.dumps(init_value),
+            "init_options": init_options,
+            "html": html_content,
+        })
 
 
 def to_component(
@@ -94,8 +138,8 @@ def to_component(
 
 def add_to_app(
         components: List[Standalone.Component],
-        app_path: str,
-        folder: str = "assets",
+        app_path: Union[Path, str],
+        folder: str = node.ASSET_FOLDER,
         name: str = "{selector}",
         raise_exception: bool = False
 ) -> dict:
@@ -106,7 +150,7 @@ def add_to_app(
     To start the React application: npm serve
 
     :param components: List of components to add to a React application
-    :param app_path: React application path (root)
+    :param app_path: React application path (root + name)
     :param folder: Components' folder
     :param name: Component's files name format
     :param raise_exception: Flag to raise exception if error
@@ -115,7 +159,7 @@ def add_to_app(
     for component in components:
         result[component.selector] = npm.check_component_requirements(component, app_path, raise_exception)
         result["dependencies"].update(result[component.selector])
-        assets_path = Path(app_path, "src", folder)
+        assets_path = Path(app_path, PROJECT_SRC_ALIAS, folder)
         assets_path.mkdir(parents=True, exist_ok=True)
         to_component(component, name=name, out_path=str(assets_path))
     return result
@@ -164,8 +208,9 @@ def to_library(
 
 
 class NpxCli:
-    def __init__(self, app_path, app_name, env):
-        self._react_app_path, self.envs = os.path.join(app_path, app_name), env
+
+    def __init__(self, server, env: str):
+        self.server, self.envs = server, env
 
     def create(self, name: str = None):
         """
@@ -179,9 +224,9 @@ class NpxCli:
         :param name: The application name to create
         """
         if name is None:
-            subprocess.run('npx create-react-app --help', shell=True, cwd=self._react_app_path)
+            subprocess.run('npx create-react-app --help', shell=True, cwd=self.server.root_path)
         else:
-            subprocess.run('npx create-react-app %s' % name, shell=True, cwd=self._react_app_path)
+            subprocess.run('npx create-react-app %s' % name, shell=True, cwd=self.server.root_path)
 
     def build(self):
         """
@@ -192,7 +237,7 @@ class NpxCli:
 
           https://create-react-app.dev/docs/getting-started/
         """
-        subprocess.run('npm run build', shell=True, cwd=self._react_app_path)
+        subprocess.run('npm run build', shell=True, cwd=self.server.app_path)
 
     def start(self):
         """
@@ -202,7 +247,7 @@ class NpxCli:
 
           https://create-react-app.dev/docs/getting-started/
         """
-        subprocess.run('npm test', shell=True, cwd=self._react_app_path)
+        subprocess.run('npm start', shell=True, cwd=self.server.app_path)
 
     def test(self):
         """
@@ -213,7 +258,7 @@ class NpxCli:
 
           https://create-react-app.dev/docs/getting-started/
         """
-        subprocess.run('npm test', shell=True, cwd=self._react_app_path)
+        subprocess.run('npm test', shell=True, cwd=self.server.app_path)
 
     def npm(self, packages: List[str]):
         """
@@ -224,113 +269,101 @@ class NpxCli:
         """
         if self.envs is not None:
             for env in self.envs:
-                subprocess.run(env, shell=True, cwd=self._react_app_path)
+                subprocess.run(env, shell=True, cwd=self.server.app_path)
         packages = node.npm_packages(packages)
-        subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self._react_app_path)
+        subprocess.run('npm install %s' % " ".join(packages), shell=True, cwd=self.server.app_path)
 
 
 class App:
 
-    def __init__(self, app_path, app_name, alias, name, page=None, target_folder="views"):
-        self.imports = {}
-        self.vars, self.__map_var_names, self.page = {}, {}, page
-        self._app_path, self._app_name = app_path, app_name
-        self.alias, self.__path, self.className, self.__components = alias, target_folder, name, None
-        self.comps = {}
+    def __init__(self, server):
+        self.imports, self.comps = {}, {}
+        self.vars, self.__map_var_names, self.server, self.__components = {}, {}, server, None
 
-    @property
-    def name(self):
-        """ Return the prefix of the component module (without any extension) """
-        return self.className
-
-    @property
-    def path(self):
-        """ Return the full path of the component modules """
-        return os.path.join("./", self.__path, self.name).replace("\\", "/")
-
-    def route(self, component: str, alias: str, path: str):
+    def route(self, component: str, alias: str):
         """
         Add the app to the routing mechanism.
-        By default all the views are in a view folder within the Raact App.
+        By default all the views are in a view folder within the React App.
 
         :param component: The module name
         :param alias: The url route
-        :param path: The .js module path
         """
-        index_router = os.path.join(self._app_path, 'src', "index.js")
-        if not os.path.exists(index_router):
-            raise ValueError("Problem with the React app")
+        index_router = Path(self.server.app_path, "index.js")
+        if not index_router.exists():
+            logging.warning("Creating a router file...")
 
-        with open(index_router) as f:
-            route = f.read()  # .split("\n\n")
-
+        route = ""
+        if index_router.exists():
+            with open(index_router) as f:
+                route = f.read()
         if component not in route:
             routes = route.split("import { Route, Link, BrowserRouter as Router } from 'react-router-dom';")
-            routes[0] = "%s\nimport %s from '%s';\n" % (routes[0].strip(), component, path.replace("./src", "."))
-            dis_route = routes[1].split("\n")
+            if routes:
+                routes[0] = "%s\nimport %s from '%s';\n" % (routes[0].strip(), component, "./%s/%s.component" % (
+                    self.server.app_path.name, component))
+                dis_route = routes[1].split("\n")
+            else:
+                routes.append("import %s from '%s';\n" % (component, "./%s/%s.component" % (
+                    self.server.app_path.name, component)))
+                dis_route = []
             for i, line in enumerate(dis_route):
                 if line.strip().startswith("<Route "):
                     break
 
             else:
-                raise ValueError("Issue with file, please udpate the index.js manually")
+                raise ValueError("Issue with file, please update the index.js manually")
 
-            route_end = dis_route[:i] + ['      <Route path="/%s" component={%s} />' % (alias, component)] + dis_route[
-                                                                                                             i:]
+            route_end = dis_route[:i] + ['      <Route path="/%s" component={%s} />' % (
+                alias, component)] + dis_route[i:]
             with open(index_router, "w") as f:
                 f.write("\n".join([routes[0]] + [
                     "import { Route, Link, BrowserRouter as Router } from 'react-router-dom';"] + route_end))
 
-    def export(self, path: str = None, target_path: List[str] = None):
+    def export(self, selector: str):
         """
+        Export the web application from Python to a React Application.
 
-        :param path:
-        :param target_path: for example ['src', 'app']
+        :param selector: The application reference / name
         """
-        self.__path = path or self.__path
-        if target_path is None:
-            target_path = []
-        target_path.append(self.__path)
-        module_path = os.path.join(self._app_path, *target_path)
-        if not os.path.exists(module_path):
-            os.makedirs(module_path)
+        logging.info("export %s to: %s" % (selector, self.server.views_path))
+        self.server.views_path.mkdir(parents=True, exist_ok=True)
 
-        page = self.page.outs.web()
-        page['alias'] = self.alias
-        page['name'] = self.name
-        page['js_module'] = self.alias.replace("-", "_")
-        page['builders'] = ", ".join(list(page['jsFrgsCommon'].keys()))
-        with open(os.path.join(module_path, "%s.css" % self.name), "w") as f:
-            f.write(page['cssStyle'])
-        # export default %(alias)s
-        with open(os.path.join(module_path, "%s.js" % self.name), "w") as f:
-            f.write('''
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { %(builders)s } from './%(js_module)s_modules.js'
-import './%(name)s.css';
+        # Write all the component
+        add_to_app(self.server.page._props["schema"].values(), self.server.app_path, folder=self.server.assets_path.name)
 
-class %(alias)s extends React.Component {
-  render() {
-    return %(body)s;
-  }
-}
-
-export default AppRoot;
-ReactDOM.render(<%(alias)s />, document.getElementById('root'); %(jsFrgs)s);
-''' % page)
-
-        with open(os.path.join(module_path, "%s_modules.js" % page['js_module']), "w") as f:
-            for js_dep in JS_MODULES_IMPORTS:
-                if js_dep in self.page.jsImports:
-                    f.write("%s\n" % JS_MODULES_IMPORTS[js_dep])
-            for buider in page['jsFrgsCommon'].values():
-                f.write("export %s;\n" % buider)
+        # Write the view
+        to_view(self.server.page, selector, self.server.views_path)
 
 
 class React(node.Node):
 
-    def create(self, name: str):
+    def __init__(self, root_path: str, name: str = None, page = None, app_folder: str = node.APP_FOLDER,
+                 assets_folder: str = node.ASSET_FOLDER):
+        super(React, self).__init__(root_path, name, page)
+        self._app_folder, self._app_asset, self.__clis = app_folder, assets_folder, None
+        self.__app = None # The active application to the server
+
+    @property
+    def index_path(self) -> Path:
+        """ The application views path """
+        return Path(self.root_path, self._app_name, PROJECT_SRC_ALIAS)
+
+    @property
+    def views_path(self) -> Path:
+        """ The application views path """
+        return Path(self.root_path, self._app_name, PROJECT_SRC_ALIAS, self._app_folder)
+
+    @property
+    def node_modules_path(self) -> Path:
+        """ The application node_modules path """
+        return Path(self.root_path, self._app_name, "node_modules")
+
+    @property
+    def assets_path(self):
+        """ The application assets / components path """
+        return Path(self.root_path, self._app_name, PROJECT_SRC_ALIAS, self._app_asset)
+
+    def create(self, name: str = None):
         """
         To create a new project, run:
 
@@ -338,14 +371,19 @@ class React(node.Node):
 
           https://create-react-app.dev/docs/getting-started/
 
-        :param name: String. The application name
+        :param name: The application name
         """
-        if name is None:
-            subprocess.run('npx create-react-app --help', shell=True, cwd=self._app_path)
+        if name is not None:
+            self._app_name = name
+        if Path(self.root_path, name).exists():
+            logging.info("React app %s already available" % name)
         else:
-            subprocess.run('npx create-react-app %s' % name, shell=True, cwd=self._app_path)
+            if name is None:
+                subprocess.run('npx create-react-app --help', shell=True, cwd=str(self.root_path))
+            else:
+                subprocess.run('npx create-react-app %s' % name, shell=True, cwd=str(self.root_path))
 
-    def serve(self, app_name: str, port: int = 8081):
+    def serve(self, app_name: str = None, port: int = None):
         """
         Return the version of React.js on the server
 
@@ -353,13 +391,14 @@ class React(node.Node):
 
           https://create-react-app.dev/docs/getting-started/
 
-        :param app_name:
-        :param port:
+        :param app_name: Application name / folder on the React server
+        :param port:  Port to run the application
         """
-        path = os.path.join(self._app_path, app_name)
-        subprocess.run('npm start --port %s' % port, shell=True, cwd=path)
+        if app_name is not None:
+            self._app_name = app_name
+        subprocess.run('npm start --port %s' % (port or self.PORT), shell=True, cwd=str(self.app_path))
 
-    def cli(self, app_name: str = None):
+    def cli(self, app_name: str = None) -> NpxCli:
         """
         Create React App is an officially supported way to create single-page React applications.
         It offers a modern build setup with no configuration.
@@ -370,10 +409,13 @@ class React(node.Node):
 
         :param app_name: The React.js application name
         """
-        app_name = app_name or self._app_name
-        return NpxCli(self._app_path, app_name, self.envs)
+        if app_name is not None:
+            self._app_name = app_name
+        if self.__clis is None:
+            self.__clis = NpxCli(self, self.envs)
+        return self.__clis
 
-    def router(self, app_name: str, **kwargs):
+    def router(self, app_name: str = None, **kwargs):
         """
         React Router is the de-facto React routing library, and it’s one of the most popular projects built on top of React.
         This function will also update the module index.js in order to add the router automatically is missing
@@ -382,77 +424,88 @@ class React(node.Node):
 
           https://flaviocopes.com/react-router/
 
-        :param app_name:
+        :param app_name: The application name
         """
-        path = os.path.join(self._app_path, app_name, 'src', 'index.js')
+        if app_name is not None:
+            self._app_name = app_name
+        path = Path(self.app_path, PROJECT_SRC_ALIAS, 'index.js')
         # subprocess.run('npm install react-router-dom', shell=True, cwd=path)
-        with open(path) as f:
-            content = f.read()
-        if 'react-router-dom' not in content:
-            new_files, with_router = [], False
-            for line in content.split("\n"):
-                if line.strip() and not line.startswith("import") and not with_router:
-                    with_router = True
-                    new_files.append("import { Route, Link, BrowserRouter as Router } from 'react-router-dom';")
-                    new_files.append('''
+        self.npm(['react-router-dom'], check_first=True)
+        if path.exists():
+            with open(path) as f:
+                content = f.read()
+            if 'react-router-dom' not in content:
+                new_files, with_router = [], False
+                for line in content.split("\n"):
+                    if line.strip() and not line.startswith("import") and not with_router:
+                        with_router = True
+                        new_files.append("import { Route, Link, BrowserRouter as Router } from 'react-router-dom';")
+                        new_files.append('''
 const routing = (
   <Router>
     <div>
       <Route exact path="/" component={App} />
     </div>
   </Router>
-)
-''')
-                new_files.append(line)
-            new_files.append('''
+)''')
+                    new_files.append(line)
+                new_files.append('''
 ReactDOM.render(
   routing,
   document.getElementById('root')
-);
-''')
-            with open(path, "w") as f:
-                f.write("\n".join(new_files))
+);''')
+                with open(path, "w") as f:
+                    f.write("\n".join(new_files))
 
-    def page(self, selector: str = None, name: str = None, page=None, auto_route: bool = False,
-             target_folder: str = "apps"):
+    def app(self, page=None, target_folder: str = node.APP_FOLDER) -> App:
         """
         Create a specific Application as a component in the Angular framework.
 
         Unlike a basic component, the application will be routed to be accessed directly.
 
-        :param page:  A report object
-        :param selector: The url route for this report in the Angular app
-        :param name: The component classname in the Angular framework
-        :param auto_route:
-        :param target_folder:
+        :param page: The web page (Report) object to be converted
+        :param target_folder: The target sub folder for the applications (default app/)
         """
-        if name is None:
-            script = os.path.split(sys._getframe().f_back.f_code.co_filename)[1][:-3]
-            name = "".join([s.capitalize() for s in script.split("_")])
-            if selector is None:
-                selector = script.replace("_", "-")
-        page = page or Page.Report()
-        self._page = App(self._app_path, self._app_name, selector, name, page=page, target_folder=target_folder)
-        self.__route = auto_route
-        return self._page
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if page is not None:
+            self._page = page
+        if self.__app is None:
+            self.__app = App(server=self)
+        return self.__app
 
-    def publish(self, app_name: str = None, target_path: str = None):
+    def publish(self, alias: str, selector: str = None, page=None, install: bool = False,
+                target_folder: str = node.APP_FOLDER):
         """
-        Publish the React application
+        Publish the React application.
+        This will also add the page to the router automatically.
 
-        :param app_name:
-        :param target_path: List  for example ['src', 'app']
+        :param alias: The url endpoint for the new page
+        :param selector: Component / Application internal selector (name)
+        :param page: The web page (Report) object to be converted
+        :param install: Flag to force install of missing packages
+        :param target_folder: The target sub folder for the applications (default app/)
         """
-        # if self._page is not None:
-        #  self._page.export(target_path=target_path)
-        if self.__route:
-            self._page.route(self._page.name, self._page.alias, self._page.path)
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if self.__app is None:
+           self.__app = self.app(page)
+        self.__app.export(selector=selector)
+        self.__app.route(selector, alias)
+        packages = node.requirements(self.page, self.node_modules_path)
+        missing_package = [k for k, v in packages.items() if not v]
+        if install and missing_package:
+            self.npm(missing_package)
 
-    def home_page(self, page, app_name=None, with_router=False):
+    def home_page(self, page=None, app_name=None):
         """
         Change the Angular App home page
 
-        :param page:
         :param app_name:
-        :param with_router:
+        :param app_name:
         """
+        if app_name is not None:
+            self._app_name = app_name
+        if page is not None:
+            self._page = page
+        to_view(self._page, "App", self.index_path)

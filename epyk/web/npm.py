@@ -125,7 +125,7 @@ PACKAGES = {
 
     'showdown': {
         "imports": [
-            'import showdown from "showdown"'
+            'import * as showdown from "showdown"'
         ]
     }
 
@@ -311,7 +311,8 @@ def check_component_requirements(
                 with open(Path(package_path, "package.json")) as fp:
                     content = json.load(fp)
                     packages_status[req] = content["version"]
-            except:
+            except Exception as err:
+                logging.error(err)
                 packages_status[req] = "NA"
         else:
             packages_status[req] = False
