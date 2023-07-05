@@ -17,6 +17,7 @@ from pathlib import Path
 # Angular system files / templates
 COMPONENT_NAME_TEMPLATE = "app.%s.component"
 ANGULAR_JSON_CONFIG = "angular.json"
+TS_JSON_CONFIG = "tsconfig.json"
 APP_FILE = 'app.module.ts'
 APP_ROUTE_FILE = "app-routing.module.ts"
 PROJECT_SRC_ALIAS = "src"
@@ -702,6 +703,7 @@ class App:
         self.__comp_structure, self.htmls, self.__fncs, self.__injectable_prop = {}, [], {}, {'providedIn': 'root'}
         self.spec = ComponentSpec(server)
         self.comps, self.module_path = {}, None
+        self.ts_config({"compilerOptions": {"noImplicitAny": False, "allowJs": False, "strictNullChecks": False}})
 
     @property
     def clarity(self):
@@ -727,6 +729,25 @@ class App:
                 self.__comp_structure['constructor'] = []
             self.__comp_structure['constructor'].append("this.%s = %s" % (name, json.dumps(value)))
         self.vars[name] = value
+
+    def ts_config(self, attrs: dict = None):
+        """
+        Update the global ts_config for the Angular application.
+
+        :param attrs: A dictionary with attributes
+        """
+        ts_config_path = Path(self.server.app_path, TS_JSON_CONFIG)
+        if ts_config_path.exists():
+            with open(ts_config_path) as ap:
+                first_line = ap.readline()
+                ts_config = json.loads("".join(ap.readlines()), object_pairs_hook=OrderedDict)
+                for k, v in attrs.items():
+                    if isinstance(v, dict):
+                        ts_config[k].update(v)
+                    else:
+                        ts_config[k] = v
+            with open(ts_config_path, "w") as ap:
+                ap.write("%s%s" % (first_line, json.dumps(ts_config, indent=2)))
 
     def add_fnc(self, name: str, funcs):
         """
@@ -813,6 +834,7 @@ class Angular(node.Node):
         """ The application node_modules path """
         return Path(self._app_path, self._app_name, "node_modules")
 
+    @property
     def assets_path(self):
         """ The application assets / components path """
         return Path(self._app_path, self._app_name, PROJECT_SRC_ALIAS, self._app_asset)
@@ -983,6 +1005,24 @@ class Angular(node.Node):
             self._app_name = app_name
         self.__app = self.app(page)
         self.__app.export(selector="app-root")
+        packages = node.requirements(self.page, self.node_modules_path)
+        missing_package = [k for k, v in packages.items() if not v]
+        if install and missing_package:
+            self.npm(missing_package)
+
+    def sync_components(self, page=None, install: bool = True, target_folder: str = node.APP_FOLDER):
+        """
+        Sync components from the web page to the Angular defined assets.
+
+        :param page: The web page (Report) object to be converted
+        :param install: Flag to force install of missing packages
+        :param target_folder: The target sub folder for the applications (default app/)
+        """
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if self.__app is None:
+           self.__app = self.app(page)
+        add_to_app(self.page._props["schema"].values(), self.app_path, folder=self.assets_path.name)
         packages = node.requirements(self.page, self.node_modules_path)
         missing_package = [k for k, v in packages.items() if not v]
         if install and missing_package:

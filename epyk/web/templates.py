@@ -27,7 +27,7 @@ export class %(asset_class)sComponent {
 
 ANGULAR_COMPONENT_SPEC = """
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { %(asset_class)s } from './%(selector)s.component';
+import { %(asset_class)sComponent } from './%(selector)s.component';
 """
 
 ANGULAR_ROUTER = '''

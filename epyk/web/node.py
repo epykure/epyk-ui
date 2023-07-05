@@ -321,6 +321,7 @@ class Node:
                 if not Path(self.node_modules_path, package).exists():
                     tmp_packages.append(package)
             packages = tmp_packages
+            
         if packages:
             if self.envs is not None:
                 for env in self.envs:

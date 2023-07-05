@@ -509,3 +509,21 @@ ReactDOM.render(
         if page is not None:
             self._page = page
         to_view(self._page, "App", self.index_path)
+
+    def sync_components(self, page=None, install: bool = True, target_folder: str = node.APP_FOLDER):
+        """
+        Sync components from the web page to the Angular defined assets.
+
+        :param page: The web page (Report) object to be converted
+        :param install: Flag to force install of missing packages
+        :param target_folder: The target sub folder for the applications (default app/)
+        """
+        if target_folder is not None:
+            self._app_folder = target_folder
+        if self.__app is None:
+           self.__app = self.app(page)
+        add_to_app(self.page._props["schema"].values(), self.app_path, folder=self.assets_path.name)
+        packages = node.requirements(self.page, self.node_modules_path)
+        missing_package = [k for k, v in packages.items() if not v]
+        if install and missing_package:
+            self.npm(missing_package)
