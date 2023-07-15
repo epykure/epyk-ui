@@ -759,7 +759,7 @@ JS_IMPORTS = {
 
     # The script allows you to take "screenshots" of webpages or parts of it, directly on the users browser.
     'html2canvas': {
-        'version': '0.4.1',
+        'version': '1.4.1',
         'website': 'https://html2canvas.hertzen.com/',
         'repository': 'https://github.com/niklasvh/html2canvas',
         'modules': [

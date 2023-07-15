@@ -525,14 +525,35 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.destroy()" % self.toStr())
 
-  def download(self, format: str, filename: str, options: types.OPTION_TYPE = None):
+  def download(self, filename: str = "export.csv", options: dict = None):
     """
+    Download data in a CSV file.
 
-    :param format: The file format
-    :param filename: The file name
-    :param options: Optional. Specific Python options available for this component
+    :param filename: filename
+    :param options: export options
     """
-    return self.toBase64Image()
+    return r'''
+var data, filename, link; var columnDelimiter = ",";
+  var csv = [%(chartId)s.data.labels.join(columnDelimiter)];
+  for (var i = 0; i < %(chartId)s.data.datasets.length; i++) {
+    csv.push(%(chartId)s.data.datasets[i].data.join(columnDelimiter))
+  }
+  var csvContent = csv.join("\n");
+  filename = '%(filename)s';
+  if (!csvContent.match(/^data:text\/csv/i)) {csvContent = 'data:text/csv;charset=utf-8,' + csvContent}
+  data = encodeURI(csvContent); link = document.createElement('a');
+  link.setAttribute('href', data); link.setAttribute('download', filename);
+  document.body.appendChild(link); link.click();
+  document.body.removeChild(link);
+''' % {"chartId": self.component.chartId, "filename": filename}
+
+  def capture(self):
+    """
+    """
+    return '''
+navigator.clipboard.write([
+  new ClipboardItem({1'0image/png': new Blob([atob(decodeURIComponent(%s))],  {type: 'image/png'})})])
+''' % self.toBase64Image('image/png', 1)
 
   def clearData(self):
     """

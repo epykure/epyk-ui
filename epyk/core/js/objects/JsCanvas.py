@@ -10,6 +10,7 @@ from epyk.core.js.primitives import JsNumber
 from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import JsQueryUi
+from epyk.core.js.packages import packageImport
 from epyk.core.js import JsUtils
 
 
@@ -701,3 +702,8 @@ class Canvas(JsNodeDom.JsDoms):
     """
     return JsObjects.JsObjects.get("%s.restore()" % self.varName)
 
+  def capture(self):
+    """ Copy the component to the clipboard """
+    return '''
+  %(id)s.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]))
+''' % {"id": self.component.dom.varId}

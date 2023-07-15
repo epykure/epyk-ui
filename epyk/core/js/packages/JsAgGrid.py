@@ -458,7 +458,7 @@ class AgGrid(JsPackage):
     """ Empty the table """
     return self.setRowData([])
 
-  def download(self, format: str, filename: str, options: dict = None):
+  def download(self, filename: str = "export.csv", options: dict = None):
     """
     Common download feature for tables.
 
@@ -466,11 +466,13 @@ class AgGrid(JsPackage):
 
       http://tabulator.info/docs/4.0/download
 
-    :param format: File format
     :param filename: Filename
     :param options: Download option
     """
-    return self.exportDataAsCsv()
+    if not options:
+      options = {}
+    options["fileName"] = filename
+    return self.exportDataAsCsv(options)
 
   def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False, dataflows: List[dict] = None):
     row = JsUtils.dataFlows(data, dataflows, self.page)
@@ -633,11 +635,21 @@ class AgGrid(JsPackage):
     return JsObjects.JsVoid("%s.api.applyTransaction(%s, %s)" % (
       self.varId, JsUtils.jsConvertData(transaction, None), callback))
 
-  def exportDataAsCsv(self):
+  def exportDataAsCsv(self, csv_export_params: dict = None):
     """
+    The grid data can be exported to CSV with an API call, or using the right-click context menu
+    (Enterprise only) on the Grid.
 
-    https://www.ag-grid.com/javascript-data-grid/csv-export/
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/csv-export/
+      https://www.ag-grid.com/javascript-data-grid/csv-export/#csvexportparams
+
+    :param csv_export_params: CSV export options
     """
+    if csv_export_params is not None:
+      return JsObjects.JsVoid("%s.api.exportDataAsCsv(%s)" % (self.varId, JsUtils.jsConvertData(csv_export_params, None)))
+
     return JsObjects.JsVoid("%s.api.exportDataAsCsv()" % self.varId)
 
   def getDisplayedRowCount(self):
