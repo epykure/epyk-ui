@@ -10,112 +10,113 @@ from epyk.core.js.primitives import JsObjects
 
 class JsHtmlTabulatorCell(JsHtml.JsHtml):
 
-  def _init__(self, js_code: str, page: primitives.PageModel, component: primitives.HtmlModel = None):
-    self.tableId = js_code
-    self.js_code = js_code
-    self.page = page
-    self.component = component
+    def _init__(self, js_code: str, page: primitives.PageModel, component: primitives.HtmlModel = None):
+        self.tableId = js_code
+        self.js_code = js_code
+        self.page = page
+        self.component = component
 
-  def getElement(self):
-    """ The getElement function returns the DOM node for the cell.
+    def getElement(self):
+        """
+        The getElement function returns the DOM node for the cell.
 
-    Related Pages:
+        Related Pages:
 
-      https://tabulator.info/docs/5.4/components#component-row
-    """
-    return JsNodeDom.JsDoms.get("cell.getElement()")
+          https://tabulator.info/docs/5.4/components#component-row
+        """
+        return JsNodeDom.JsDoms.get("cell.getElement()")
 
-  def getColumnField(self):
-    """ The getField function returns the field name for the column.
+    def getColumnField(self):
+        """
+        The getField function returns the field name for the column.
 
-    Related Pages:
+        Related Pages:
 
-      https://tabulator.info/docs/5.4/components
-    """
-    return JsObjects.JsObject.JsObject.get("cell.getColumn().getField()")
+          https://tabulator.info/docs/5.4/components
+        """
+        return JsObjects.JsObject.JsObject.get("cell.getColumn().getField()")
 
-  def getColumnTitle(self):
-    """
+    def getColumnTitle(self):
+        """ """
+        return JsObjects.JsObject.JsObject.get("cell.getColumn().getDefinition().title")
 
-    """
-    return JsObjects.JsObject.JsObject.get("cell.getColumn().getDefinition().title")
+    def getValue(self):
+        """
+        The getValue function returns the current value for the cell.
 
-  def getValue(self):
-    """ The getValue function returns the current value for the cell.
+        Related Pages:
 
-    Related Pages:
+          https://tabulator.info/docs/5.4/components#component-cell
+        """
+        return JsObjects.JsObject.JsObject.get("cell.getValue()")
 
-      https://tabulator.info/docs/5.4/components#component-cell
-    """
-    return JsObjects.JsObject.JsObject.get("cell.getValue()")
+    def getRow(self):
+        """
+        The getRow function returns the RowComponent for the row that contains the cell.
 
-  def getRow(self):
-    """ The getRow function returns the RowComponent for the row that contains the cell.
+        Related Pages:
 
-    Related Pages:
+          https://tabulator.info/docs/5.4/components#component-group
+        """
+        return JsObjects.JsObject.JsObject.get("cell.getRow()")
 
-      https://tabulator.info/docs/5.4/components#component-group
-    """
-    return JsObjects.JsObject.JsObject.get("cell.getRow()")
+    def getData(self):
+        """
+        The getData function returns the data object for the row.
 
-  def getData(self):
-    """ The getData function returns the data object for the row.
+        Related Pages:
 
-    Related Pages:
-
-      https://tabulator.info/docs/5.4/components#component-calc
-    """
-    return JsObjects.JsObject.JsObject.get("cell.getRow().getData()")
+          https://tabulator.info/docs/5.4/components#component-calc
+        """
+        return JsObjects.JsObject.JsObject.get("cell.getRow().getData()")
 
 
 class JsHtmlTabulator(JsHtml.JsHtml):
 
-  @property
-  def val(self):
-    """ Return a Javascript val object
-    """
-    return JsObjects.JsObjects.get(
-      "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-        self.htmlCode, self.content.toStr()))
+    @property
+    def val(self):
+        """ Return a Javascript val object """
+        return JsObjects.JsObjects.get(
+            "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+                self.htmlCode, self.content.toStr()))
 
-  @property
-  def content(self):
-    """ Get Tabulator table content.
-    """
-    return JsHtml.ContentFormatters(self.page, "%s.getData()" % self.component.tableId)
+    @property
+    def content(self):
+        """ Get Tabulator table content. """
+        return JsHtml.ContentFormatters(self.page, "%s.getData()" % self.component.tableId)
 
-  @property
-  def headers(self):
-    """ Get Tabulator table headers.
+    @property
+    def headers(self):
+        """
+        Get Tabulator table headers.
 
-    Related Pages:
+        Related Pages:
 
-      https://tabulator.info/docs/5.4/columns#get-definition
-    """
-    return JsObjects.JsObjects.get("%s.getColumnDefinitions()" % self.component.tableId)
+          https://tabulator.info/docs/5.4/columns#get-definition
+        """
+        return JsObjects.JsObjects.get("%s.getColumnDefinitions()" % self.component.tableId)
 
-  def empty(self):
-    """ You can remove all data from the table using the clearData function:
+    def empty(self):
+        """
+        You can remove all data from the table using the clearData function:
 
-    Related Pages:
+        Related Pages:
 
-      https://tabulator.info/docs/5.4/update#alter-empty
-    """
-    return self.component.js.clearData()
+          https://tabulator.info/docs/5.4/update#alter-empty
+        """
+        return self.component.js.clearData()
 
 
 class JsHtmlAggrid(JsHtml.JsHtml):
 
-  @property
-  def content(self):
-    """ Get the AgGrid table content
-    """
-    return JsHtml.ContentFormatters(self.page, self.component.js.getRowsData().toStr())
+    @property
+    def content(self):
+        """ Get the AgGrid table content """
+        return JsHtml.ContentFormatters(self.page, self.component.js.getRowsData().toStr())
 
-  def empty(self):
-    """   Empty the AgGrid table.
-    """
-    return self.component.js.empty()
+    def empty(self):
+        """ Empty the AgGrid table. """
+        return self.component.js.empty()
 
-  def selection(self):
-    return self.component.js.getSelectedRows()
+    def selection(self):
+        return self.component.js.getSelectedRows()
