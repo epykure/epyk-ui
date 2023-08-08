@@ -130,7 +130,8 @@ class ColumnApi:
     return JsObjects.JsVoid("%s.getColumn(%s)" % (self.varId, JsUtils.jsConvertData(name, None)))
 
   def getColumnState(self):
-    """   Gets the state of the columns. It is used when saving column state.
+    """
+    Gets the state of the columns. It is used when saving column state.
 
     Related Pages:
 
@@ -194,7 +195,7 @@ class ColumnApi:
     """
     return JsObjects.JsVoid("%s.isPinningRight()" % self.varId)
 
-  def setColumnVisible(self, col_name, visible):
+  def setColumnVisible(self, col_name: str, visible: bool):
     """
     Sets the visibility of a column. Key can be the column ID or Column object.
 
@@ -202,7 +203,7 @@ class ColumnApi:
 
       https://www.ag-grid.com/javascript-grid-column-api/
 
-    :param col_name:
+    :param col_name: The column name
     :param visible:
     """
     col_name = JsUtils.jsConvertData(col_name, None)
@@ -222,7 +223,7 @@ class ColumnApi:
     visible = JsUtils.jsConvertData(visible, None)
     return JsObjects.JsVoid("%s.setColumnsVisible(%s. %s)" % (self.varId, col_names, visible))
 
-  def setColumnPinned(self, col_name, pinned):
+  def setColumnPinned(self, col_name: str, pinned: bool):
     """
     Sets the column pinned / unpinned. Key can be the column ID, field, ColDef object or Column object.
 
@@ -434,12 +435,12 @@ class ColumnApi:
     finished = JsUtils.jsConvertData(finished, None)
     return JsObjects.JsVoid("%s.setColumnWidth(%s, %s)" % (self.varId, column_widths, finished))
 
-  def custom(self, func_nam, *argv):
+  def custom(self, func_nam: str, *argv):
     """
     Generic function to call any missing function form a package.
     This will automatically convert the object to JavaScript and also put the right object reference.
 
-    :param func_nam: String. The function name
+    :param func_nam: The function name
     :param argv: Objects. Optional. The function arguments on the JavasScript side
     """
     js_args = []
