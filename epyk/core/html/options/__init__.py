@@ -160,7 +160,10 @@ class Options(DataClass):
     :param attrs: The attributes to set
     """
     for k, v in attrs.items():
-      setattr(self, k, v)
+      if hasattr(self, k):
+        setattr(self, k, v)
+      else:
+        self._config(v, name=k)
     return self
 
   def custom_config(self, name: str, value: Any, js_type: bool = False):

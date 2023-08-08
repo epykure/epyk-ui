@@ -908,14 +908,60 @@ class Column(Options):
     self._config(val)
 
   @property
-  def sort(self):
-    """   Cell editing format
+  def sorts(self):
+    """
+    Cell editing format
 
     Related Pages:
 
       https://www.ag-grid.com/javascript-grid-sorting/
     """
     return ColOrder(self, 'sort')
+
+  @property
+  def comparator(self):
+    """
+    Custom sorting is provided at a column level by configuring a comparator on the column definition.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-sorting/
+    """
+    return self._config_get()
+
+  @comparator.setter
+  def comparator(self, val: str):
+    self._config(val)
+
+  @property
+  def sort(self):
+    """
+    Custom sorting is provided at a column level.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-sorting/
+    """
+    return self._config_get()
+
+  @sort.setter
+  def sort(self, val: str):
+    self._config(val)
+
+  @property
+  def unSortIcon(self):
+    """
+    Custom sorting is provided at a column level.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-sorting/
+    """
+    return self._config_get()
+
+  @unSortIcon.setter
+  def unSortIcon(self, flag: bool):
+    self._config(flag)
 
   @property
   def title(self):
