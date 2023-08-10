@@ -82,7 +82,9 @@ def load_component(component_path: Path, raise_exception: bool = True) -> dict:
             content = json.load(fp)
             component_attrs = {}
             resolve_attributes(content.get("attributes", []), component_attrs)
-            for prop, f_type in [("component_url", "js"), ("style_urls", "css"), ("template_url", "html")]:
+            for prop, f_type in [
+                ("component_url", "js"), ("style_urls", "css"), ("template_url", "html"),
+                ("toml_directives_url", "toml")]:
                 if prop not in content:
                     struct_name = "%s.%s" % (content["selector"], f_type)
                     struct_file = Path(component_path, struct_name)
@@ -278,6 +280,10 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     template_url: str = None
     template: str = None
 
+    # Structural directives to build template from Virtual DOM (or Python)
+    toml_directives_url: str = None
+    toml_directives: str = None
+
     _option_cls = SdOptions
     _init__options: dict = None
 
@@ -290,7 +296,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs)
         self.style.clear_style(persist_attrs=css_attrs)  # Clear all default CSS styles.
         self.style.no_class()  # Clear all default CSS Classes.
-        self.items, self.__metadata = [], {}
+        self.items, self.__metadata, self.__directives, self.__html_content = [], {}, None, None
         self.prepare(**kwargs)
         if self._init__options:
             self.options.for_construct(self._init__options)
@@ -332,6 +338,30 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         if self._js is None:
             self._js = JsComponents(self, page=self.page, js_code=self.html_code)
         return self._js
+
+    @classmethod
+    def directives(cls, framework: str = None) -> dict:
+        """
+        Load structure directives for the HTML templates
+
+        :param framework: The JavaScript framework
+        """
+        import tomllib
+        framework = framework or "python"
+        if cls.toml_directives_url is not None:
+            with open(cls.toml_directives_url, 'rb') as fp:
+                rules = tomllib.load(fp)
+        elif cls.toml_directives is not None:
+            rules = tomllib.loads(cls.toml_directives)
+        else:
+            rules = {}
+        directives = rules.get("epyk", {}).get("directives", {}).get(framework, {})
+        if framework == "angular":
+            directives["content"] = "<ng-content></ng-content>"
+            for t in ["class", "style"]:
+                if t not in directives:
+                    directives[t] = ""
+        return directives
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
@@ -393,6 +423,14 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             event, js_funcs=js_funcs, profile=profile,
             source_event=self.dom.get_child_by_tag(tag).toStr(),
             on_ready=on_ready)
+
+    def html_extension(self, html: str):
+        """
+        Update the HTML content of a component
+
+        :param html: The HTML string expression
+        """
+        self.__html_content = str(html)
 
     def prepare(self, **kwargs):
         """
@@ -467,10 +505,17 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
         values["htmlCode"] = self.htmlCode
         values["id"] = self.htmlCode
+        directives = self.directives()
+        directives["style"] = 'style="%s"' % values["cssStyle"]
+        directives["class"] = 'class="%s"'  % values["cssClass"]
+        if self.__html_content is not None:
+            # Override the [content] section in the case of a standard Python web component
+            directives["class"] = self.__html_content
         if self.template_url is not None:
-            html_def = html_template_loader(self.template_url, values, ref_expr='id="{{ id }}"')
+            html_def = html_template_loader(
+                self.template_url, values, ref_expr='id="{{ id }}"', directives=directives)
         elif self.template is not None:
-            html_def = html_formatter(self.template, values, ref_expr='id="{{ id }}"')
+            html_def = html_formatter(self.template, values, ref_expr='id="{{ id }}"', directives=directives)
         else:
             raise ValueError("Missing template definition")
 

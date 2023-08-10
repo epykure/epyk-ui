@@ -6,7 +6,6 @@ from . import npm, node, templates
 import logging
 import zipfile
 import re
-import os
 import json
 import subprocess
 from collections import OrderedDict
@@ -23,9 +22,21 @@ APP_ROUTE_FILE = "app-routing.module.ts"
 PROJECT_SRC_ALIAS = "src"
 
 
+def __format_cls_variables(items: List[str]) -> str:
+    """
+    Format the variable section of the TypeScript module
+
+    :param items: Variables definition
+    """
+    return "// Class variables\n%s " % ";\n".join(map(lambda x: "  %s" % x, items))
+
+
 def to_view(web_page, selector: str, app_path: Path) -> Dict[str, str]:
     """
 
+    :param web_page:
+    :param selector:
+    :param app_path:
     """
     class_name = node.selector_to_clss(selector)
     return to_component(web_page.outs.component(selector=selector), name="", out_path=app_path)
@@ -65,7 +76,8 @@ def to_component(
 
     component_files["html"] = name.format(selector=component.selector, version=version) + ".html"
     with open(Path(out_path, component_files["html"]), "w") as hf:
-        html_def = html_template_loader(component.template_url, ref_expr="#%s" % component.__name__.lower())
+        html_def = html_template_loader(
+            component.template_url, ref_expr="#%s" % component.__name__.lower(), directives=component.directives("angular"))
         hf.write(html_def["template"])
 
     component_files["spec"] = name.format(selector=component.selector, version=version) + ".component.spec.ts"
@@ -76,14 +88,13 @@ def to_component(
         })
 
     component_files["component"] = name.format(selector=component.selector, version=version) + ".component.ts"
-    js_frgs = ["@Input() %s" % var for var in html_def['vars']]
+    js_frgs = ["@Input() %s" % var for var in html_def['inputs']] + list(map(lambda x: "@Input() %s" % x, html_def['css']))
     with open(Path(Path(out_path).parent, component_files["component"]), "w") as sf:
         sf.write(templates.ANGULAR_COMPONENT % {
             "asset_class": component.__name__,
             "selector": component.selector,
             "asset_path": "./%s/%s" % (Path(out_path).name, name.format(selector=component.selector, version=version)),
-            "js": '%s ; component; @ViewChild("%s", { static: true }) input;' % (
-                ";".join(js_frgs), component.__name__.lower()),
+            "js": __format_cls_variables(js_frgs + ["component", '@ViewChild("%s", { static: true }) input' % component.__name__.lower()]),
             "init_value": json.dumps(init_value),
             "init_options": init_options,
             "html": html_def["template"],
@@ -118,20 +129,20 @@ def add_to_app(
         view_path: str = node.APP_FOLDER
 ) -> dict:
     """
-      This will add the component directly tp the src folder in the linked application.
-      All components generated will be put in a sub folder.
+    This will add the component directly tp the src folder in the linked application.
+    All components generated will be put in a sub folder.
 
-      To start the angular application: ng serve --open
+    To start the angular application: ng serve --open
 
-      This will also update the required angular system files accordingly
+    This will also update the required angular system files accordingly
 
-      :param components: List of components to add to an Angular application
-      :param app_path: Angular application path (root)
-      :param folder: Components' folder
-      :param name: Component's files name format
-      :param raise_exception: Flag to raise exception if error
-      :param view_path: The path for the Angular view (the app file). default app/
-      """
+    :param components: List of components to add to an Angular application
+    :param app_path: Angular application path (root)
+    :param folder: Components' folder
+    :param name: Component's files name format
+    :param raise_exception: Flag to raise exception if error
+    :param view_path: The path for the Angular view (the app file). default app/
+    """
     result = {"dependencies": {}, "styles": [], "scripts": [], "modules": {}}
     for component in components:
         result[component.selector] = npm.check_component_requirements(component, app_path, raise_exception)
