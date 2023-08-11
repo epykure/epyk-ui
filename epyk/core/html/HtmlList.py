@@ -373,6 +373,15 @@ class Items(Html.Html):
                html_code: str, profile: Optional[Union[bool, dict]], helper: str):
     super(Items, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
                                 css_attrs={"width": width, 'height': height})
+    self._vals = records
+    if html_code in self.page.inputs:
+      inputs_vals = self.page.inputs[html_code]
+      if not isinstance(inputs_vals, list):
+        inputs_vals = inputs_vals.split(self.options.delimiter)
+      if self._vals:
+        for v in self._vals:
+          if v['value'] in inputs_vals:
+            v['selected'] = True
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.__external_item = False
 

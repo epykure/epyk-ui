@@ -72,7 +72,16 @@ class OptionsLi(Options):
 
 class OptionsItems(Options):
   component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable', 'prefix',
-                          'max_selected', 'text_click')
+                          'max_selected', 'text_click', "delimiter")
+
+  @property
+  def delimiter(self):
+    """ Value used to aggregate and split string values """
+    return self._config_get(",")
+
+  @delimiter.setter
+  def delimiter(self, value: str):
+    self._config(value)
 
   @property
   def style(self):
@@ -98,9 +107,7 @@ class OptionsItems(Options):
 
   @property
   def li_height(self):
-    """
-    List Item line height CSS Style
-    """
+    """ List Item line height CSS Style """
     return self.li_style.get("line-height")
 
   @li_height.setter
@@ -111,9 +118,7 @@ class OptionsItems(Options):
 
   @property
   def badge(self):
-    """
-    Get the badge style
-    """
+    """ Get the badge style """
     return self._config_get({})
 
   @badge.setter

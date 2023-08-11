@@ -261,7 +261,13 @@ class ContentFormatters:
 
     @property
     def dict(self):
+        """ Consider the object as a JavaScript Object """
         return JsObjects.JsObject.JsObject.get("%s" % self.selector)
+
+    @property
+    def array(self):
+        """ Consider the object as a JavaScript array """
+        return JsObjects.JsArray.JsArray.get("%s" % self.selector)
 
     @property
     def toJson(self):

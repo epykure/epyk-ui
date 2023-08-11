@@ -553,6 +553,11 @@ class JsItem(JsHtml.JsHtmlRich):
         return self.content
 
     @property
+    def selection(self):
+        """ Return a string with all the selected values. """
+        return self.content.array.join(self.component.options.delimiter)
+
+    @property
     def unselected(self):
         """ Return a list with all the unselected values. """
         return JsHtml.ContentFormatters(self.page, '''
@@ -614,7 +619,7 @@ document.body.removeChild(dummy)''' % self.all.toStr())
         """
         Select all the items in the list.
 
-        :param with_input_box: If the items have a dedicated input box for the check
+        :param with_input_box: Optional. If the items have a dedicated input box for the check
         """
         if self.component.options.items_type == "radio":
             raise ValueError("It is not possible to select all radios from a same group, use check instead")
@@ -637,7 +642,7 @@ document.body.removeChild(dummy)''' % self.all.toStr())
         """
         UnSelect all the items in the list.
 
-        :param with_input_box: If the items have a dedicated input box for the check
+        :param with_input_box: Optional. If the items have a dedicated input box for the check
         """
         if self.component.options.items_type in "check" or with_input_box:
             return JsObjects.JsVoid('''
@@ -669,10 +674,10 @@ document.body.removeChild(dummy)''' % self.all.toStr())
         Add items to the list.
 
         :param value:
-        :param css_attrs: All the CSS attributes to be added to the LI component
-        :param css_cls: The CSS class to be added to the LI component
-        :param before:
-        :param options:
+        :param css_attrs: Optional. All the CSS attributes to be added to the LI component
+        :param css_cls: Optional. The CSS class to be added to the LI component
+        :param before: Optional.
+        :param options: Optional.
         """
         if isinstance(value, dict):
             js_values = []
@@ -740,8 +745,8 @@ if(itemOptions.delete){
         Add tags to an item in the list.
 
         :param values: The tags to be added to the current item
-        :param css_attrs: All the CSS attributes to be added to the LI component
-        :param css_cls: The CSS class to be added to the LI component
+        :param css_attrs: Optional. All the CSS attributes to be added to the LI component
+        :param css_cls: Optional. The CSS class to be added to the LI component
         """
         return JsObjects.JsVoid('''
 var enumTags = %(values)s;
@@ -767,8 +772,8 @@ if(enumTags != ''){
         Add a context menu to an item in the list.
 
         :param menu:
-        :param menu_funcs:
-        :param js_funcs: The Javascript functions
+        :param menu_funcs: Optional.
+        :param js_funcs: Optional. The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         """
         if not hasattr(menu, 'source'):
@@ -817,10 +822,10 @@ var select_items = %(value)s;
 })''' % {'value': value, 'varName': self.varName})
 
         return JsObjects.JsVoid('''
-          %(varName)s.childNodes.forEach(function(dom, k){ 
-            var value = dom.querySelector('[name=value]').innerHTML;
-            if (value == %(value)s){dom.classList.add('list_%(styleSelect)s_selected')}
-          })''' % {'value': value, 'varName': self.varName, 'styleSelect': self.component.options.items_type})
+%(varName)s.childNodes.forEach(function(dom, k){ 
+    var value = dom.querySelector('[name=value]').innerHTML;
+    if (value == %(value)s){dom.classList.add('list_%(styleSelect)s_selected')}
+})''' % {'value': value, 'varName': self.varName, 'styleSelect': self.component.options.items_type})
 
 
 class Tags(JsHtml.JsHtmlRich):
@@ -829,21 +834,21 @@ class Tags(JsHtml.JsHtmlRich):
     def content(self):
         """ Returns the list of data available on the filters panel. """
         return JsHtml.ContentFormatters(self.page, '''
-      (function(dom){var content = {}; 
-        dom.childNodes.forEach(function(rec){
-          var label = rec.getAttribute('data-category');
-          if(!(label in content) && (label != null)){ content[label] = [] }; 
-          var listItem = rec.querySelector('span[name=chip_value]');
-          if (listItem != null && (label != null)){content[label].push(listItem.textContent)}}); 
-        return content})(%s)
-      ''' % self.querySelector("div[name=panel]"))
+(function(dom){var content = {}; 
+    dom.childNodes.forEach(function(rec){
+      var label = rec.getAttribute('data-category');
+      if(!(label in content) && (label != null)){ content[label] = [] }; 
+      var listItem = rec.querySelector('span[name=chip_value]');
+      if (listItem != null && (label != null)){content[label].push(listItem.textContent)}}); 
+    return content})(%s)
+''' % self.querySelector("div[name=panel]"))
 
     def is_duplicated(self, text: str, category: str = None):
         """
         Check the duplicates in the filter panel for a given category.
 
         :param text: The item text
-        :param category: The item category
+        :param category: Optional. The item category
         """
         return JsObjects.JsObjects.get(''' 
 (function(dom){var index = -1; var children = dom.childNodes; var count = 0; 
