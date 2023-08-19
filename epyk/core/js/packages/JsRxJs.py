@@ -9,8 +9,67 @@ from typing import Optional, Union, List, Any
 LIB_REF = "rxjs."
 
 
-def filter():
-    ...
+def filter(predicate, thisArg = None):
+    """
+    Filter items emitted by the source Observable by only emitting those that satisfy a specified predicate.
+
+    Related Pages:
+
+        https://rxjs.dev/api/operators/filter
+
+    :param predicate: A function that evaluates each value emitted by the source Observable.
+    :param thisArg: Optional. Undefined. An optional argument to determine the value of this in the predicate function.
+    """
+    if thisArg is None:
+        return JsUtils.jsWrap("%sfilter(%s)" % (LIB_REF, predicate))
+
+    thisArg = JsUtils.jsConvertData(thisArg, None)
+    return JsUtils.jsWrap("%sfilter(%s, %s)" % (LIB_REF, predicate, thisArg))
+
+
+def first(predicate = None, defaultValue = None):
+    """
+    Emits only the first value (or the first value that meets some condition) emitted by the source Observable.
+
+    Related Pages:
+
+        https://rxjs.dev/api/operators/first
+
+    :param predicate: Optional. Undefined. An optional function called with each item to test for condition matching.
+    :param defaultValue: Optional. Undefined. The default value emitted in case no valid value was found on the source.
+    """
+    if defaultValue is None:
+        if predicate is not None:
+            return JsUtils.jsWrap("%sfirst(%s)" % (LIB_REF, predicate))
+
+        return JsUtils.jsWrap("%sfirst()" % LIB_REF)
+
+    defaultValue = JsUtils.jsConvertData(defaultValue, None)
+    return JsUtils.jsWrap("%sfirst(%s, %s)" % (LIB_REF, predicate, defaultValue))
+
+
+def last(predicate = None, defaultValue = None):
+    """
+    Returns an Observable that emits only the last item emitted by the source Observable.
+    It optionally takes a predicate function as a parameter, in which case, rather than emitting the last item from
+    the source Observable, the resulting Observable will emit the last item from the source Observable that
+    satisfies the predicate.
+
+    Related Pages:
+
+        https://rxjs.dev/api/operators/first
+
+    :param predicate: Optional. Undefined. An optional function called with each item to test for condition matching.
+    :param defaultValue: Optional. Undefined. The default value emitted in case no valid value was found on the source.
+    """
+    if defaultValue is None:
+        if predicate is not None:
+            return JsUtils.jsWrap("%slast(%s)" % (LIB_REF, predicate))
+
+        return JsUtils.jsWrap("%slast()" % LIB_REF)
+
+    defaultValue = JsUtils.jsConvertData(defaultValue, None)
+    return JsUtils.jsWrap("%slast(%s, %s)" % (LIB_REF, predicate, defaultValue))
 
 
 def map(expr: types.JS_DATA_TYPES):
@@ -19,6 +78,45 @@ def map(expr: types.JS_DATA_TYPES):
     and emits the resulting values as an Observable.
     """
     return JsUtils.jsWrap("%smap(%s)" % (LIB_REF, expr))
+
+
+def skip(count: float):
+    """
+    Returns an Observable that skips the first count items emitted by the source Observable.
+
+    Related Pages:
+
+        https://rxjs.dev/api/operators/skip
+
+    :param count: The number of times, items emitted by source Observable should be skipped.
+    """
+    return JsUtils.jsWrap("%sskip(%s)" % (LIB_REF, count))
+
+
+def skipLast(count: float):
+    """
+    Skip a specified number of values before the completion of an observable.
+
+    Related Pages:
+
+        https://rxjs.dev/api/index/function/skipLast
+
+    :param count: Number of elements to skip from the end of the source Observable.
+    """
+    return JsUtils.jsWrap("%sskipLast(%s)" % (LIB_REF, count))
+
+
+def skipUntil(notifier):
+    """
+    Returns an Observable that skips items emitted by the source Observable until a second Observable emits an item.
+
+    Related Pages:
+
+        https://rxjs.dev/api/index/function/skipUntil
+
+    :param notifier: An ObservableInput that has to emit an item before the source Observable elements begin to be mirrored by the resulting Observable.
+    """
+    return JsUtils.jsWrap("%sskipUntil(%s)" % (LIB_REF, notifier))
 
 
 def scan(expr: types.JS_DATA_TYPES):
@@ -32,6 +130,44 @@ def scan(expr: types.JS_DATA_TYPES):
         https://rxjs.dev/api/index/function/scan
     """
     return JsUtils.jsWrap("%sscan(%s)" % (LIB_REF, expr))
+
+
+def startWith(values):
+    """
+    Returns an observable that, at the moment of subscription, will synchronously emit all values provided to this
+    operator, then subscribe to the source and mirror all of its emissions to subscribers.
+
+    Related Pages:
+
+        https://rxjs.dev/api/operators/startWith
+    """
+    return JsUtils.jsWrap("%sstartWith(%s)" % (LIB_REF, values))
+
+
+def take(count: int):
+    """
+    Emits only the first count values emitted by the source Observable.
+
+    Related Pages:
+
+        https://rxjs.dev/api/operators/take
+
+    :param count: The maximum number of next values to emit.
+    """
+    return JsUtils.jsWrap("%stake(%s)" % (LIB_REF, count))
+
+
+def takeLast(count: int):
+    """
+    Waits for the source to complete, then emits the last N values from the source, as specified by the count argument.
+
+    Related Pages:
+
+        https://rxjs.dev/api/operators/takeLast
+
+    :param count: The maximum number of values to emit from the end of the sequence of values emitted by the source Observable.
+    """
+    return JsUtils.jsWrap("%stakeLast(%s)" % (LIB_REF, count))
 
 
 def throttleTime(duration: int):

@@ -289,7 +289,7 @@ class JsBase:
     def rxjs(self):
         """
         Reactive Extensions Library for JavaScript.
-        
+
         Related Pages:
 
             https://rxjs.dev/
