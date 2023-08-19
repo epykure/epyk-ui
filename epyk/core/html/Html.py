@@ -1309,7 +1309,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             self._jsStyles[k] = v
         return self
 
-    def set_attrs(self, attrs: Optional[dict] = None, name: Optional[str] = None, value: Optional[Any] = None):
+    def set_attrs(self, attrs: Optional[dict] = None, name: Optional[str] = None, value: Optional[Any] = None,
+                  remove_if_none: bool = True):
         """
         Function to update the internal dictionary of object attributes. Those attributes will be used when the HTML
         component will be defined.
@@ -1329,6 +1330,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         :param attrs: Optional. All the HTML tags attributes
         :param name: Optional. A python string with the name of the attribute
         :param value: Optional. A python string with the value of the attribute
+        :param remove_if_none: Optional. Remove attribute if true
         """
         if attrs is None and name is None:
             raise ValueError("Either the attrs or the name should be specified")
@@ -1359,6 +1361,14 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 # Section for all the other attributes#
                 if v is not None:
                     self.attr[k] = v
+                elif remove_if_none:
+                    if k in self.attr:
+                        # Remove the None value if present in the component's attributes
+                        del self.attr[k]
+                else:
+                    # Set the non value anyway
+                    self.attr[k] = v
+
         return self
 
     def get_attrs(self, with_id: bool = True, css_class_names: List[str] = None):

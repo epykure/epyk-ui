@@ -286,6 +286,20 @@ class JsBase:
         return JsQuery.JQuery(self._jquery_ref)
 
     @property
+    def rxjs(self):
+        """
+        Reactive Extensions Library for JavaScript.
+        
+        Related Pages:
+
+            https://rxjs.dev/
+
+        """
+        self.page.jsImports.add("rxjs")
+        from epyk.core.js.packages import JsRxJs
+        return JsRxJs
+
+    @property
     def moment(self):
         """
         Parse, validate, manipulate, and display dates and times in JavaScript.

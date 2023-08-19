@@ -1,5 +1,6 @@
 
 
+
 function skillBar(htmlObj, data, options){
     var table = htmlObj.querySelector("table"); table.innerHTML = "";
       var thead = document.createElement("thead"); var tbody = document.createElement("tbody");

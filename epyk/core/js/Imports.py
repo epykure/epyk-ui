@@ -541,6 +541,15 @@ JS_IMPORTS = {
              'cdnjs': CDNJS_REPO},
         ]},
 
+    # Reactive Extensions Library for JavaScript
+    'rxjs': {
+        'website': 'https://rxjs.dev/',
+        'version': '7.8.1',
+        'modules': [
+            {'reqAlias': 'jszip', 'script': 'rxjs.umd.min.js', 'node_path': 'dist/', 'path': 'rxjs/%(version)s/',
+             'cdnjs': CDNJS_REPO},
+        ]},
+
     #
     'json-formatter-js': {
         'website': 'https://azimi.me/json-formatter-js/',

@@ -1061,6 +1061,11 @@ class InputCheckbox(Html.Html):
 
   def __init__(self, page: primitives.PageModel, flag, label, group_name, width, height, html_code, options,
                attrs, profile):
+    if html_code in page.inputs:
+      page.inputs[html_code] = True if page.inputs[html_code] == 'true' else False
+      if page.inputs[html_code]:
+        flag = True
+        attrs["checked"] = flag
     super(InputCheckbox, self).__init__(
       page, {"value": flag}, html_code=html_code, profile=profile, options=options,
       css_attrs={"width": width, "height": height})
@@ -1494,7 +1499,7 @@ class Search(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """   
+    """
 
     :param js_funcs: The Javascript functions
     :param profile: Optional. A flag to set the component performance storage
