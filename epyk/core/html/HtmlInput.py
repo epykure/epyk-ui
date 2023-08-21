@@ -325,7 +325,7 @@ class Input(Html.Html):
 
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
-                        with_cache: bool = True):
+                        with_cache: bool = True, dataflows: List[dict] = None):
     """
     Add autocomplete features on textarea from remote service.
 
@@ -345,6 +345,7 @@ class Input(Html.Html):
     :param min_length: The min length before querying the remove server
     :param options: Autocomplete extra options
     :param with_cache: Flag to cache the result to save server calls
+    :param dataflows: Chain of data transformations
     """
     if self.attr["type"] != "text":
       raise ValueError("Autocomplete can only be used with input text components")
@@ -352,8 +353,8 @@ class Input(Html.Html):
     cached_var = "cached%s" % self.html_code
     prefix_val = '%s + ui.item.value' % JsUtils.jsConvertData(prefix, None) if prefix is not None else 'ui.item.value'
     xml_http_request.onSuccess(['''
-  %s = data; resp($.ui.autocomplete.filter(data, request.term)) 
-  ''' % cached_var])
+  %s = %s; resp($.ui.autocomplete.filter(%s, request.term)) 
+  ''' % (cached_var, JsUtils.dataFlows(JsUtils.jsWrap("data"), dataflows, self.page), cached_var)])
     options = options or {}
     self.page.body.onReady('''
     var %(cachedVar)s; 
