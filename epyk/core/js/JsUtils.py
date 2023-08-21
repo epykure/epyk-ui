@@ -344,10 +344,13 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
     :param flow:
     :param page:
     """
-    if flow is None:
-        return jsConvertData(data, None)
-
     data_expr = jsConvertData(data, None)
+    if not flow:
+        if hasattr(data_expr, "toStr"):
+            return data_expr.toStr()
+
+        return data_expr
+
     for dataflow in flow:
         if "file" in dataflow:
             ext_js_file = Path(dataflow["file"])

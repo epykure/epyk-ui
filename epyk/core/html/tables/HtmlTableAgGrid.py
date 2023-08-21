@@ -232,7 +232,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
-            return "%s%s" % (self.js.setRowData(JsUtils.dataFlows(data, dataflows, self.page)).toStr(), state_expr)
+            return "%s%s" % (self.js.setRowData(data, dataflows=dataflows).toStr(), state_expr)
 
         return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
             'tableId': self.tableId, 'config': self.options.config_js(options),
