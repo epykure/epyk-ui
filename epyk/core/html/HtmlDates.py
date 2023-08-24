@@ -92,7 +92,7 @@ class DatePicker(Html.Html):
     return self
 
   def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: types.JS_FUNCS_TYPES = None,
-                     profile: types.PROFILE_TYPE = False):
+                     dataflows: List[dict] = None, profile: types.PROFILE_TYPE = False):
     """
     Exclude some dates from the date picker selection.
 
@@ -106,11 +106,12 @@ class DatePicker(Html.Html):
     :param dts: Optional. A list of dates format YYYY-MM-DD
     :param js_funcs: Optional. Javascript functions
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+    :param dataflows: Optional. Chain of data transformations
     """
-    return self.input.excluded_dates(dts, js_funcs, profile)
+    return self.input.excluded_dates(dts, js_funcs, dataflows, profile)
 
-  def included_dates(self, dts: List[str] = None, selected: str = None,
-                     js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = False):
+  def included_dates(self, dts: List[str] = None, selected: str = None, js_funcs: types.JS_FUNCS_TYPES = None,
+                     dataflows: List[dict] = None, profile: types.PROFILE_TYPE = False):
     """
     Include some date to be available for selection.
 
@@ -125,8 +126,9 @@ class DatePicker(Html.Html):
     :param selected: Optional. The selected date from the range. Default max
     :param js_funcs: Optional. Javascript functions
     :param profile: Optional. Set to true to get the profile or a function on the console
+    :param dataflows: Optional. Chain of data transformations
     """
-    return self.input.included_dates(dts, selected, js_funcs, profile)
+    return self.input.included_dates(dts, selected, js_funcs, dataflows, profile)
 
   def add_options(self, options: dict = None, name: str = None, value: str = None):
     """

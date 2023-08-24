@@ -297,7 +297,7 @@ class Input(Html.Html):
     return self
 
   @packages.packageImport('jqueryui', 'jqueryui')
-  def autocomplete(self, values: List[str], options: dict = None, dataflows: List[dict] = None):
+  def autocomplete(self, values: List[str], options: dict = None, dataflows: List[dict] = None, css: dict = None):
     """
 
     Usage::
@@ -317,15 +317,18 @@ class Input(Html.Html):
     if self.attr["type"] != "text":
       raise ValueError("Autocomplete can only be used with input text components")
 
+    css_attrs = ""
+    if css is not None:
+      css_attrs = ".css(%s)" % json.dumps(css)
     values = JsUtils.dataFlows(values, dataflows, self.page)
     options = options or {}
     self.page.body.onReady('''
-%s.autocomplete(Object.assign({source: %s}, %s))
-''' % (JsQuery.decorate_var(self.dom.varId, convert_var=False), values, options))
+%s.autocomplete(Object.assign({source: %s}, %s))%s
+''' % (JsQuery.decorate_var(self.dom.varId, convert_var=False), values, options, css_attrs))
 
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
-                        with_cache: bool = True, dataflows: List[dict] = None):
+                        with_cache: bool = True, dataflows: List[dict] = None, css: dict = None):
     """
     Add autocomplete features on textarea from remote service.
 
@@ -352,6 +355,9 @@ class Input(Html.Html):
 
     cached_var = "cached%s" % self.html_code
     prefix_val = '%s + ui.item.value' % JsUtils.jsConvertData(prefix, None) if prefix is not None else 'ui.item.value'
+    css_attrs = ""
+    if css is not None:
+        css_attrs = ".css(%s)" % json.dumps(css)
     xml_http_request.onSuccess(['''
   %s = %s; resp($.ui.autocomplete.filter(%s, request.term)) 
   ''' % (cached_var, JsUtils.dataFlows(JsUtils.jsWrap("data"), dataflows, self.page), cached_var)])
@@ -365,9 +371,9 @@ class Input(Html.Html):
           if(typeof %(cachedVar)s === 'undefined'){%(request)s}
           else{resp($.ui.autocomplete.filter(%(cachedVar)s, request.term))}}
         else{%(request)s}},
-      }, %(options)s))
+      }, %(options)s))%(css)s
     ''' % {"cachedVar": cached_var, "jqUI": JsQuery.decorate_var(self.dom.varId, convert_var=False),
-           "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length,
+           "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length, "css": css_attrs,
            "request": xml_http_request.toStr(), "options": options})
 
   def __str__(self):
@@ -648,38 +654,40 @@ class InputDate(Input):
     return self._dom
 
   def excluded_dates(self, dts: List[str] = None, js_funcs: types.JS_FUNCS_TYPES = None,
-                     profile: types.PROFILE_TYPE = None):
+                     dataflows: List[dict] = None, profile: types.PROFILE_TYPE = None):
     """
     List of dates to be excluded from the available dates in the DatePicker component.
 
     :param dts: Optional. Dates excluded format YYYY-MM-DD
     :param js_funcs: Optional. Javascript functions
+    :param dataflows: Optional. Chain of data transformations
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
+    dts = JsUtils.dataFlows(dts, dataflows, self.page)
     self.options.beforeShowDay([''' var utc = value.getTime() - value.getTimezoneOffset()*60000; 
       var newDate = new Date(utc); const dts = %(dts)s; %(jsFnc)s; 
       if(dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
       else {return [true, '', '']}''' % {
-        "dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}],
-                               profile=profile)
+        "dts": dts, 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}], profile=profile)
 
   def included_dates(self, dts: List[str] = None, selected: str = None, js_funcs: types.JS_FUNCS_TYPES = None,
-                     profile: types.PROFILE_TYPE = None):
+                     dataflows: List[dict] = None, profile: types.PROFILE_TYPE = None):
     """
     Define some specific date to be the only ones available from the DatePicker component.
 
     :param dts: Optional. Dates included format YYYY-MM-DD
     :param selected: Optional. The selected date from the range. Default max
     :param js_funcs: Optional. Javascript functions
+    :param dataflows: Optional. Chain of data transformations
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
     """
     self._vals = selected or sorted(dts)[-1]
+    dts = JsUtils.dataFlows(dts, dataflows, self.page)
     self.options.beforeShowDay(['''
       var utc = value.getTime() - value.getTimezoneOffset()*60000; var newDate = new Date(utc); const dts = %(dts)s;
       %(jsFnc)s; if(!dts.includes(newDate.toISOString().split('T')[0])){return [false, '', '']} 
       else {return [true, '', '']}''' % {
-        "dts": json.dumps(dts or []), 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}],
-                               profile=profile)
+        "dts": dts, 'jsFnc': JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)}], profile=profile)
 
   def format_dates(self, class_name: str, dts: List[str] = None, css: Optional[dict] = None, tooltip: str = "",
                    profile: types.PROFILE_TYPE = None, dataflows: List[dict] = None):
@@ -1193,7 +1201,7 @@ class TextArea(Html.Html):
 
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete(self, values: List[str], min_length: int = 0, prefix: str = None,
-                   options: dict = None, dataflows: List[dict] = None):
+                   options: dict = None, dataflows: List[dict] = None, css: dict = None):
     """
     Add autocomplete features on textarea.
 
@@ -1214,26 +1222,30 @@ class TextArea(Html.Html):
     :param min_length: The min length before displaying the result
     :param options: Autocomplete extra options
     :param dataflows: Chain of data transformations
+    :param css: Optional. CSS attributes
     """
     values = JsUtils.dataFlows(values, dataflows, self.page)
     options = options or {}
     prefix_val = '%s + ui.item.value' % JsUtils.jsConvertData(prefix, None) if prefix is not None else 'ui.item.value'
+    css_attrs = ""
+    if css is not None:
+        css_attrs = ".css(%s)" % json.dumps(css)
     self.page.body.onReady('''
-  %s.autocomplete(Object.assign({
-    minLength: %s,
-    source: function(request, response){
-      response($.ui.autocomplete.filter(%s, request.term.split("\\n").pop()))},
-    focus: function() {return false},
-    select: function(event, ui) {
-        var terms = this.value.split("\\n"); terms.pop();
-        terms.push(%s); terms.push("");
-        this.value = terms.join("\\r\\n"); return false}
-    }, %s))
-  ''' % (JsQuery.decorate_var(self.dom.varId, convert_var=False), min_length, values, prefix_val, options))
+%s.autocomplete(Object.assign({
+  minLength: %s,
+  source: function(request, response){
+    response($.ui.autocomplete.filter(%s, request.term.split("\\n").pop()))},
+  focus: function() {return false},
+  select: function(event, ui) {
+      var terms = this.value.split("\\n"); terms.pop();
+      terms.push(%s); terms.push("");
+      this.value = terms.join("\\r\\n"); return false}
+  }, %s))%s
+''' % (JsQuery.decorate_var(self.dom.varId, convert_var=False), min_length, values, prefix_val, options, css_attrs))
 
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
-                        with_cache: bool = True):
+                        with_cache: bool = True, dataflows: List[dict] = None, css: dict = None):
     """
     Add autocomplete features on textarea from remote service.
 
@@ -1249,36 +1261,42 @@ class TextArea(Html.Html):
       https://jqueryui.com/autocomplete/
 
     :param xml_http_request: The request object to the remote server. Returned data must be a list
-    :param prefix: The prefix to be added to the selected item
-    :param min_length: The min length before querying the remove server
-    :param options: Autocomplete extra options
-    :param with_cache: Flag to cache the result to save server calls
+    :param prefix: Optional. The prefix to be added to the selected item
+    :param min_length: Optional. The min length before querying the remove server
+    :param options: Optional. Autocomplete extra options
+    :param with_cache: Optional. Flag to cache the result to save server calls
+    :param dataflows: Optional. Chain of data transformations
+    :param css: Optional. CSS attributes
     """
     cached_var = "cached%s" % self.html_code
     prefix_val = '%s + ui.item.value' % JsUtils.jsConvertData(prefix, None) if prefix is not None else 'ui.item.value'
+    data_ref = JsUtils.dataFlows(JsUtils.jsWrap("data"), dataflows, self.page)
     xml_http_request.onSuccess(['''
-resp($.ui.autocomplete.filter(%s = data, request.term.split("\\n").pop())) 
-''' % cached_var])
+resp($.ui.autocomplete.filter(%s = %s, request.term.split("\\n").pop())) 
+''' % (cached_var, data_ref)])
     options = options or {}
+    css_attrs = ""
+    if css is not None:
+        css_attrs = ".css(%s)" % json.dumps(css)
     self.page.body.onReady('''
-  var %(cachedVar)s; 
-  %(jqUI)s.autocomplete(Object.assign({
-    minLength: %(minLength)s,
-    source: function(request, resp) {
-      if(%(useCache)s){
-        if(typeof %(cachedVar)s === 'undefined'){%(request)s}
-        else{resp($.ui.autocomplete.filter(%(cachedVar)s, request.term.split("\\n").pop()))}}
-      else{%(request)s}
-    },
-    focus: function() {return false},
-    select: function(event, ui){
-        var terms = this.value.split("\\n"); terms.pop();
-        terms.push(%(prefixVal)s); terms.push("");
-        this.value = terms.join("\\r\\n"); return false}
-    }, %(options)s))
-  ''' % {"cachedVar": cached_var, "jqUI": JsQuery.decorate_var(self.dom.varId, convert_var=False),
-         "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length,
-         "prefixVal": prefix_val, "request": xml_http_request.toStr(), "options": options})
+var %(cachedVar)s; 
+%(jqUI)s.autocomplete(Object.assign({
+  minLength: %(minLength)s,
+  source: function(request, resp) {
+    if(%(useCache)s){
+      if(typeof %(cachedVar)s === 'undefined'){%(request)s}
+      else{resp($.ui.autocomplete.filter(%(cachedVar)s, request.term.split("\\n").pop()))}}
+    else{%(request)s}
+  },
+  focus: function() {return false},
+  select: function(event, ui){
+      var terms = this.value.split("\\n"); terms.pop();
+      terms.push(%(prefixVal)s); terms.push("");
+      this.value = terms.join("\\r\\n"); return false}
+  }, %(options)s))%(css)s
+''' % {"cachedVar": cached_var, "jqUI": JsQuery.decorate_var(self.dom.varId, convert_var=False),
+       "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length, "css": css_attrs,
+       "prefixVal": prefix_val, "request": xml_http_request.toStr(), "options": options})
 
   def validation(self, pattern: str, required: bool = True):
     """

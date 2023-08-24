@@ -384,7 +384,8 @@ class Div(Html.Html):
 
   def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
            target: str = "_blank", source_event: Optional[str] = None):
-    """   Click event which redirect to another page.
+    """
+    Click event which redirect to another page.
 
     Related Pages:
 
