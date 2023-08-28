@@ -211,13 +211,13 @@ class JsHtmlTabs(JsHtml.JsHtml):
     else{return selectedTab.innerText}}
 })(%s)''' % self.varId)
 
-    def deselect_tabs(self):
+    def deselect_tabs(self, name: str = None):
         """ Deselect all the tabs in the component. """
         return JsFncs.JsFunctions([
             self.page.js.getElementsByName(self.component.tabs_name).all([
                 self.page.js.data.all.element.setAttribute("data-selected", False),
                 self.page.js.getElementsByName(self.component.tabs_name).all([
-                    self.page.js.data.all.element.css(self.component.options.tab_not_clicked_style())])
+                    self.page.js.data.all.element.css(self.component.options.tab_not_clicked_style(name))])
             ])
         ])
 

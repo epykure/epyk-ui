@@ -72,7 +72,7 @@ class HtmlNavBar(Html.Html):
     """
     Remove the default navigation bar background and remove the padding.
 
-    :param to_top: Optional. To define if the padding must be removed.
+    :param to_top: Optional. To define if the padding must be removed
     """
     self.background = False
     self.style.css.background_color = "#11ffee00"
@@ -133,7 +133,12 @@ class HtmlNavBar(Html.Html):
     """
     Add an item to the nav bar.
 
-    :param text: The link to be added to the navbar.
+    Usage::
+
+      n = page.ui.navbar()
+      n.add_text("Nav bar title")
+
+    :param text: The link to be added to the navbar
     """
     if not hasattr(text, 'options'):
       text = self.page.ui.text(text)

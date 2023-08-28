@@ -152,7 +152,7 @@ class OptionPanelTabs(Options):
   def css_tab_clicked(self, attrs: dict):
     self.set(attrs)
 
-  def tab_style(self, name, css_style=None):
+  def tab_style(self, name: str, css_style: dict = None):
     """  
 
     :param name:
@@ -180,7 +180,7 @@ class OptionPanelTabs(Options):
       self._attrs['tab_style_clicked'][name] = css
     return self._attrs['tab_style_clicked'].get(name, css)
 
-  def tab_not_clicked_style(self, name=None, css_style=None):
+  def tab_not_clicked_style(self, name: str = None, css_style: dict = None):
     """  
 
     :param name:

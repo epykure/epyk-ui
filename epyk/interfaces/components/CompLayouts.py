@@ -398,6 +398,11 @@ class Layouts:
           helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None,
           position: Union[bool, dict] = None) -> html.HtmlContainer.Div:
     """
+    Add a simple div container to the page.
+    The <div> tag defines a division or a section in an HTML document.
+
+    The <div> tag is used as a container for HTML elements - which is then styled with CSS or manipulated with
+    JavaScript.
 
     :tags:
     :categories:
@@ -419,18 +424,18 @@ class Layouts:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
 
-    :param components: The different HTML objects to be added to the component.
-    :param label:
-    :param color:
+    :param components: The different HTML objects to be added to the component
+    :param label: Optional.
+    :param color: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param icon:
+    :param icon: Optional.
     :param position: Optional.
-    :param editable:
+    :param editable: Optional.
     :param align: Optional. A string with the horizontal position of the component
-    :param padding:
+    :param padding: Optional.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param tag:
+    :param tag: Optional. The HTML tag (Default div)
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     :param helper: Optional.

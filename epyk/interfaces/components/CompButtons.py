@@ -212,7 +212,8 @@ class Buttons:
 
   def large(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "%"),
             height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
-            tooltip: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
+            tooltip: str = None, profile: types.PROFILE_TYPE = None,
+            options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
     """
     Large button.
 
@@ -263,7 +264,7 @@ class Buttons:
   def absolute(self, text: str, size_notch=None, icon: str = "", top: types.SIZE_TYPE = (50, "%"),
                left: types.SIZE_TYPE = (50, "%"), bottom=None, width: types.SIZE_TYPE = ('auto', ""),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
+               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlButton.Button:
     """
     Display a button on the page regardless the current layout of components.
     By default, the button will be center on the page.
@@ -318,7 +319,8 @@ class Buttons:
 
   def small(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "%"),
             height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
-            tooltip: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
+            tooltip: str = None, profile: types.PROFILE_TYPE = None,
+            options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
     """
     Standard button with a small layout.
 
@@ -359,7 +361,8 @@ class Buttons:
 
   def normal(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "%"),
              height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
-             tooltip: str = None, profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
+             tooltip: str = None, profile: types.PROFILE_TYPE = None,
+             options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
     """
     Standard button with a standard layout.
 
@@ -399,7 +402,8 @@ class Buttons:
 
   def important(self, text: str = "", icon: str = None, width: Union[tuple, int] = (None, "%"),
                 height: Union[tuple, int] = (None, "px"), align: str = "left", html_code: Optional[str] = None,
-                tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
+                tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
+                options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Same as Standard button but used to attract user attention.
 
@@ -448,7 +452,7 @@ class Buttons:
 
   def validate(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
                html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
-               profile: Union[dict, bool] = None, options: Optional[dict] = None):
+               profile: Union[dict, bool] = None, options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Add a validate button with a predefined icon from font awesome.
 
@@ -492,7 +496,7 @@ class Buttons:
 
   def run(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
           align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
-          profile: Union[dict, bool] = None, options: Optional[dict] = None):
+          profile: Union[dict, bool] = None, options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Add a run button with a predefined icon from font awesome.
 
@@ -553,7 +557,7 @@ class Buttons:
 
   def remove(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
              html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
-             profile: Union[dict, bool] = None, options: Optional[dict] = None):
+             profile: Union[dict, bool] = None, options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Button with cross icon.
 
@@ -599,7 +603,8 @@ class Buttons:
 
   def cancel(self, text: str = "Cancel", width: Union[tuple, int] = (None, "%"),
              height: Union[tuple, int] = (None, "px"), html_code: Optional[str] = None, align: str = "left",
-             tooltip: Optional[str] = None, profile: Union[dict, bool] = None, options: Optional[dict] = None):
+             tooltip: Optional[str] = None, profile: Union[dict, bool] = None,
+             options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Button with cross icon to cancellation actions.
 
@@ -645,7 +650,7 @@ class Buttons:
 
   def phone(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
             html_code: Optional[str] = None, align: str = "left", tooltip: Optional[str] = None,
-            profile: Union[dict, bool] = None, options: Optional[dict] = None):
+            profile: Union[dict, bool] = None, options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Add a phone button with a predefined icon from font-awesome.
 
@@ -689,7 +694,7 @@ class Buttons:
 
   def mail(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
            html_code: Optional[str] = None, align: str = "left", tooltip=None,
-           profile: Union[dict, bool] = None, options: Optional[dict] = None):
+           profile: Union[dict, bool] = None, options: Optional[dict] = None) -> html.HtmlButton.Button:
     """
     Add a mail button with a predefined icon from font-awesome.
 
@@ -939,7 +944,7 @@ class Buttons:
   def menu(self, record: list = None, text: str = "", icon: Optional[Union[str, bool]] = None,
            width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
            html_code: str = None, tooltip: str = None,
-           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None):
+           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None) -> html.HtmlButton.ButtonMenu:
     """
     Button with underlying items menu.
 

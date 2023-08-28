@@ -1126,7 +1126,7 @@ class Components:
              refresh: str = "fas fa-redo-alt", visible: tuple = ('fas fa-eye-slash', "fas fa-eye"), post: dict = None,
              height: tuple = (18, 'px'), save_funcs: types.JS_FUNCS_TYPES = None,
              update_funcs: types.JS_FUNCS_TYPES = None, menu_items=None, options: types.OPTION_TYPE = None,
-             profile: types.PROFILE_TYPE = None):
+             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
         """
 
 

@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import logging
+from typing import List, Optional
 from epyk.core.html.options import Options
+from epyk.core.html import Defaults as html_defaults
 
 
 class OptionsButton(Options):
@@ -338,8 +340,19 @@ class OptionsButtonMenu(Options):
 
     @property
     def css_child(self):
-        return self.get({"padding": "5px", "cursor": "pointer"})
+        """ CSS Style for the sub menu """
+        return self.get({"padding": "5px", "cursor": "pointer", "display": "block", "white-space": "nowrap",
+                         "line-height": "%spx" % html_defaults.LINE_HEIGHT})
 
     @css_child.setter
     def css_child(self, values: dict):
+        self._config(values)
+
+    @property
+    def css_cls_child(self) -> Optional[List[str]]:
+        """ Add class to sub menu """
+        return self.get(None)
+
+    @css_cls_child.setter
+    def css_cls_child(self, values: List[str]):
         self._config(values)

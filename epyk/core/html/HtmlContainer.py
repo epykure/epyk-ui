@@ -1235,9 +1235,10 @@ class Tabs(Html.Html):
       yield tab_obj["tab"]
 
   def add_panel(self, name: str, div: Html.Html, icon: str = None, selected: bool = False,
-                css_tab: dict = None, css_tab_clicked: dict = None, width: tuple = None):
+                css_tab: dict = None, css_tab_clicked: dict = None, width: tuple = None,
+                tooltip: str = None):
     """  
-
+    Add a panel / tab to a tabs container.
 
     :param name: The panel name.
     :param div: HTML Component.
@@ -1245,7 +1246,8 @@ class Tabs(Html.Html):
     :param selected: Optional. Flag to set the selected panel
     :param css_tab: Optional. The CSS attributes to be added to the HTML component
     :param css_tab_clicked: Optional. The CSS attributes to be added to the HTML component
-    :param width: Optional. A tuple with the integer for the component width and its unit.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param tooltip: Optional. Add a tooltip to the tab
     """
     width = Arguments.size(width or self.options.width, unit="px")
     if not hasattr(div, 'options'):
@@ -1281,8 +1283,12 @@ class Tabs(Html.Html):
     tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
     tab_container = self.page.ui.div(tab, width=width)
     tab_container.options.managed = False
+    if css_tab:
+      tab_container.css(css_tab)
     tab_container.css({'display': 'inline-block'})
     css_cls_name = None
+    if tooltip:
+      tab.tooltip(tooltip)
     tab.click([
       self.dom.deselect_tabs(),
       tab.dom.setAttribute("data-selected", True).r,

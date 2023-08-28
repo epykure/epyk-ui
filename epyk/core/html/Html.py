@@ -1880,6 +1880,8 @@ class Body(Html):
                 k, v = attrs.split(":")
                 self.css(key=k, value=v)
         self._template = None
+        # header and footer.
+        self.header, self.footer = None, None
 
     @property
     def style(self) -> GrpCls.ClassPage:
@@ -2137,6 +2139,24 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
             self._template.options.managed = False
             self._template.style.clear_all()
         return self._template
+
+    def add_header(self, components: Html, **kwargs):
+        """
+        Add a header to the page.
+
+        :param components:
+        """
+        self.header = self.page.ui.div(components, tag="header", **kwargs)
+        return self.header
+
+    def add_footer(self, components: Html, **kwargs):
+        """
+        Add a footer to the page.
+
+        :param components:
+        """
+        self.footer = self.page.ui.div(components, tag="footer", **kwargs)
+        return self.footer
 
     def __str__(self):
         if getattr(self, '_template', None) is not None:
