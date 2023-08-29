@@ -334,7 +334,7 @@ class Checkbox(Html.Html):
             self._dom = JsHtml.JsHtmlButtonChecks(self, page=self.page)
         return self._dom
 
-    def tooltip(self, value: str, location: str = 'top', options: Optional[dict] = None):
+    def tooltip(self, value: Optional[str], location: str = 'top', options: Optional[dict] = None):
         """
         Add the Tooltip feature when the mouse is over the component.
 
@@ -351,8 +351,9 @@ class Checkbox(Html.Html):
         :param location: Optional. The location of the tooltip compared to the HTML component
         :param options: Optional. The tooltip options (not used yet)
         """
-        self.options.tooltip = value
-        self.options.tooltip_options = options
+        if value is not None:
+            self.options.tooltip = value
+            self.options.tooltip_options = options
         return self
 
     def click(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
@@ -370,12 +371,12 @@ class Checkbox(Html.Html):
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
         agg_js_fncs = '''
-      if(($(this).find("i").attr("class") !== undefined) && ($(this).find("i").attr("class").includes('fas fa-times'))){
-        return {}};
-      var useAsync = false; var isChecked = false; var htmlContent = $(this).find('span').find('i').length; 
-      if (htmlContent == 0) {$(this).find('span').html('<i class="%(icon)s" style="padding:2px"></i>'); 
-      isChecked = true} else {$(this).find('span').html('<div style="width:16px;display:inline-block">&nbsp;</div>')};
-      %(jsFnc)s
+if(($(this).find("i").attr("class") !== undefined) && ($(this).find("i").attr("class").includes('fas fa-times'))){
+    return {}};
+var useAsync = false; var isChecked = false; var htmlContent = $(this).find('span').find('i').length; 
+if (htmlContent == 0) {$(this).find('span').html('<i class="%(icon)s" style="padding:2px"></i>'); 
+isChecked = true} else {$(this).find('span').html('<div style="width:16px;display:inline-block">&nbsp;</div>')};
+%(jsFnc)s
     ''' % {"jsFnc": JsUtils.jsConvertFncs(js_funcs, toStr=True), "icon": self.options.icon}
         self._browser_data['mouse'].setdefault("click", {}).setdefault(source_event, {}).setdefault("content",
                                                                                                     []).extend(
@@ -457,7 +458,7 @@ class CheckButton(Html.Html):
 
         :param js_fnc_true: Js function or a list of JsFunction to be triggered when checked
         :param js_fnc_false: Optional. Js function or a list of JsFunction to be triggered when unchecked
-        :param with_colors: Optional. Add default colors to the icons.
+        :param with_colors: Optional. Add default colors to the icons
         :param profile: Optional. A flag to set the component performance storage
         :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
 
