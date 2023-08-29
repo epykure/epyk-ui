@@ -1074,7 +1074,8 @@ class InputCheckbox(Html.Html):
       page.inputs[html_code] = True if page.inputs[html_code] == 'true' else False
       if page.inputs[html_code]:
         flag = True
-        attrs["checked"] = flag
+    if flag:
+      attrs["checked"] = flag
     super(InputCheckbox, self).__init__(
       page, {"value": flag}, html_code=html_code, profile=profile, options=options,
       css_attrs={"width": width, "height": height})

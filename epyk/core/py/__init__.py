@@ -1,5 +1,5 @@
 
-from typing import Any
+from typing import Any, List
 
 
 class OrderedSet(list):
@@ -34,3 +34,13 @@ class OrderedSet(list):
     self.clear()
     for cls in classes:
       self.append(cls)
+
+  def extend(self, keys: List[Any]):
+    """
+    Append keys to the OrderSet.
+
+    :param keys: list of keys to be added to the object
+    """
+    for key in keys:
+      if key not in self:
+        self.append(key)
