@@ -375,13 +375,18 @@ class Items(Html.Html):
                                 css_attrs={"width": width, 'height': height})
     self._vals = records
     if html_code in self.page.inputs:
-      inputs_vals = self.page.inputs[html_code]
+      if not isinstance(self.page.inputs[html_code], list):
+        inputs_vals = self.page.inputs[html_code].split(",")
+      else:
+        inputs_vals = self.page.inputs[html_code]
       if not isinstance(inputs_vals, list):
         inputs_vals = inputs_vals.split(self.options.delimiter)
       if self._vals:
         for v in self._vals:
           if v['value'] in inputs_vals:
-            v['selected'] = True
+            v[self.options.checked_key] = True
+          else:
+            v[self.options.checked_key] = False
     self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
     self.__external_item = False
 

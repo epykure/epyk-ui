@@ -84,6 +84,20 @@ class OptionsItems(Options):
     self._config(value)
 
   @property
+  def inline(self):
+    """ inline property for the items """
+    return self.li_style.get("display") == "inline-block"
+
+  @inline.setter
+  def inline(self, flag: bool):
+    if flag:
+      self.li_style["display"] = "inline-block"
+      self.li_style["margin-left"] = "2px"
+      self.li_style["margin-right"] = "2px"
+    else:
+      self.li_style["display"] = "block"
+
+  @property
   def style(self):
     """
     Item CSS Style

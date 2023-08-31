@@ -359,8 +359,10 @@ if (options.text_click){
   };  
 }
 span.setAttribute('name', 'value'); span.setAttribute('data-valid', false); span.style.marginLeft = "5px";
+
 if(typeof data === 'object'){ 
-  span.innerHTML = data.text; var checkedCol = "checked";
+  if(typeof data.text !== 'undefined'){span.innerHTML = data.text} else {span.innerHTML = data.value};
+  var checkedCol = "checked";
   if (typeof options.checked_key !== 'undefined'){checkedCol = options.checked_key};
   if(data[checkedCol]){
     input.setAttribute('checked', data[checkedCol]); span.setAttribute('data-valid', data[checkedCol]);

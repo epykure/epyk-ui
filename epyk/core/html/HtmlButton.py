@@ -498,6 +498,8 @@ class IconEdit(Html.Html):
             self.tooltip(tooltip)
         # Add the internal components icons and helper
         self.add_span(text)
+        if self._vals:
+            icon = self._vals
         notches = options.get("font-factor", 0)
         if width[0] is not None and width[1] == 'px':
             self.add_icon(icon, {"margin-right": "None", "margin": "2px",
