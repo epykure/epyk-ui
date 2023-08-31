@@ -273,15 +273,16 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         return super().options
 
-    def define(self, options: etypes.JS_DATA_TYPES = None) -> str:
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
         """
         Set the chart options.
 
-        :param options:
+        :param options: The apex chart option
+        :param dataflows: Chain of config transformations
         """
         defined_options = "window.%s_options" % self.html_code
         js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
-            defined_options, defined_options, self.options.config_js(), JsUtils.jsConvertData(options, None))
+            defined_options, defined_options, self.options.config_js(), JsUtils.dataFlows(options, dataflows, self.page))
         self.__defined_options = defined_options
         return js_expr
 

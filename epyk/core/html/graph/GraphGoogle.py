@@ -75,7 +75,7 @@ return chart
             'options': self.options.config_js(options), 'data': JsUtils.dataFlows(data, dataflows, self.page),
             'type': self.options.type}
 
-    def define(self, options: types.JS_DATA_TYPES = None) -> str:
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
         """ Not yet defined for this chart """
         return ""
 

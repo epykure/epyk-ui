@@ -53,7 +53,7 @@ class Code:
       "lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(
+    component = html.HtmlTextEditor.CodeEditor(
       self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
@@ -94,7 +94,7 @@ class Code:
       "lineNumbers": True, 'mode': 'xml', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(
+    component = html.HtmlTextEditor.CodeEditor(
       self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
@@ -135,7 +135,7 @@ class Code:
       "lineNumbers": True, 'mode': 'sql', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
 
@@ -175,7 +175,7 @@ class Code:
       "lineNumbers": True, 'mode': 'r', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
 
@@ -214,7 +214,7 @@ class Code:
     dfl_options = {"lineNumbers": True, 'mode': 'python', 'styleActiveLine': True, 'autoRefresh': False}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(
+    component = html.HtmlTextEditor.CodeEditor(
       self.page, text.strip(), color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
@@ -254,7 +254,7 @@ class Code:
     dfl_options = {"lineNumbers": True, 'mode': 'javascript', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
 
@@ -290,7 +290,7 @@ class Code:
     dfl_options = {"lineNumbers": True, 'mode': 'markdown', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
 
@@ -326,7 +326,7 @@ class Code:
     dfl_options = {"lineNumbers": True, 'mode': 'rst', 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component
 
@@ -363,6 +363,6 @@ class Code:
     dfl_options = {"lineNumbers": True, 'mode': language, 'autoRefresh': True, 'styleActiveLine': True}
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlTextEditor.Code(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+    component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options, helper, profile)
     html.Html.set_component_skin(component)
     return component

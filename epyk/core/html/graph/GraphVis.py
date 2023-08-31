@@ -73,7 +73,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     def labels(self, labels: list, series_id: str = None):
         ...
 
-    def define(self, options: etypes.JS_DATA_TYPES = None) -> str:
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
         """ Not yet defined for this chart """
         return ""
 

@@ -77,7 +77,7 @@ class Script(Html.Html):
               profile: etypes.PROFILE_TYPE = False, component_id: str = None, dataflows: List[dict] = None) -> str:
         return super().build(data, options, profile, component_id=self.dom.d3.varId, dataflows=dataflows)
 
-    def define(self, options: etypes.JS_DATA_TYPES = None) -> str:
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
         """ Not yet defined for this chart """
         return ""
 

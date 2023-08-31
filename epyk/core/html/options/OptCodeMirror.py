@@ -270,6 +270,7 @@ class OptionsHints(Options):
 
 
 class OptionsCode(Options):
+  component_properties = ('stringify', )
 
   @property
   def addons(self) -> OptionCMAddons:
@@ -902,3 +903,11 @@ class OptionsCode(Options):
     """
     self.addons.hint()
     return self._config_sub_data("hintOptions", OptionsHints)
+
+  @property
+  def stringify(self):
+    return self._config_get(True)
+
+  @stringify.setter
+  def stringify(self, flag: bool):
+    self._config(flag)

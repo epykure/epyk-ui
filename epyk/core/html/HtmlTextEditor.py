@@ -241,15 +241,15 @@ class Cell(Html.Html):
                    'actions': actions, "textarea": self.textarea.html()}
 
 
-class Code(Html.Html):
+class CodeEditor(Html.Html):
   name = 'Code'
   requirements = ('codemirror', )
   _option_cls = OptCodeMirror.OptionsCode
 
   def __init__(self, page: primitives.PageModel, vals: str, color: str, width: tuple, height: tuple,
                html_code: Optional[str], options: Optional[dict], helper: str, profile: Optional[Union[dict, bool]]):
-    super(Code, self).__init__(page, vals, html_code=html_code, options=options,
-                               css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+    super(CodeEditor, self).__init__(page, vals, html_code=html_code, options=options,
+                                     css_attrs={"width": width, "height": height, "color": color}, profile=profile)
     self.add_helper(helper)
     self.css({'display': 'block', 'margin': '5px 0'})
 
@@ -315,7 +315,7 @@ class Code(Html.Html):
     self.attr["placeholder"] = text
     return self
 
-  def build(self, data: str  =None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
+  def build(self, data: str = None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
             component_id: Optional[str] = None, dataflows: List[dict] = None, **kwargs):
     """
     This is a specific version of the common build as the function is not applied to the dom ID but
@@ -327,28 +327,8 @@ class Code(Html.Html):
     :param component_id: Optional.
     :param dataflows: Chain of data transformations
     """
-    return super().build(data, options, profile, component_id=self.htmlCode, dataflows=dataflows)
-
-    # if not self.builder_name or self._js__builder__ is None:
-    #   raise Exception("No builder defined for this HTML component %s" % self.__class__.__name__)
-    #
-    # self.page.properties.js.add_constructor(self.builder_name, "function %s(htmlObj, data, options){%s}" % (
-    #   self.builder_name, self._js__builder__))
-    # self.options.builder = self.builder_name
-    #
-    # # check if there is no nested HTML components in the data
-    # if isinstance(data, dict):
-    #   tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in data.items()]
-    #   js_data = "{%s}" % ",".join(tmp_data)
-    # else:
-    #   js_data = JsUtils.jsConvertData(data, None)
-    # fnc_call = "%s(%s, %s, %s)" % (self.builder_name, self.htmlCode, js_data, self.options.config_js(options))
-    # profile = self.with_profile(profile, event="Builder")
-    # if profile:
-    #   fnc_call = JsUtils.jsConvertFncs(
-    #     ["var result = %s(htmlObj, data, options)" % fnc_call], toStr=True, profile=profile)
-    #   fnc_call = "(function(htmlObj, data, options){%s; return result})" % fnc_call
-    # return fnc_call
+    print(super().build(data, options, profile, component_id="window['%s']" % self.editorId, dataflows=dataflows))
+    return super().build(data, options, profile, component_id="window['%s']" % self.editorId, dataflows=dataflows)
 
   @property
   def editorId(self):
@@ -356,10 +336,11 @@ class Code(Html.Html):
     return "editor_%s" % self.htmlCode
 
   def __str__(self):
-    self.page.properties.js.add_builders(self.refresh())
-    self.page.body.onReady(
-      'window["%(editor)s"].setSize("%(width)s", "%(height)s"); window["%(editor)s"].refresh()' % {
-        "editor": self.editorId, "width": self.css("width"), "height": self.css("height")})
+    self.page.body.onReady('''
+window["%(editor)s"] = CodeMirror.fromTextArea(document.getElementById('%(htmlId)s'),%(options)s); 
+window["%(editor)s"].setSize("%(width)s", "%(height)s"); window["%(editor)s"].refresh()''' % {
+      "editor": self.editorId, "width": self.css("width"), "height": self.css("height"),
+      "options": self.options.config_js(), "htmlId": self.htmlCode})
     return '<div><textarea %s></textarea><div id="%s_loading"></div>%s</div>' % (
       self.get_attrs(css_class_names=self.style.get_classes()), self.htmlCode, self.helper)
 

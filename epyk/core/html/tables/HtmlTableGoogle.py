@@ -32,7 +32,7 @@ class Table(Html.Html):
     def add_column(self, c):
         raise NotImplementedError("Not yet available")
 
-    def define(self, options: dict):
+    def define(self, options: dict, dataflows: List[dict] = None):
         raise NotImplementedError("Not yet available")
 
     def build(self, data=None, options=None, profile=None, component_id=None, dataflows: List[dict] = None):

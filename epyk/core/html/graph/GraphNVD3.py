@@ -185,7 +185,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             self.d3.datum(self._datasets).call(self.dom.var),
             "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]
 
-    def define(self, options: types.JS_DATA_TYPES = None) -> str:
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
         """
         Override the chart settings on the JavaScript side.
         This will allow ot set specific styles for some series or also add commons properties.
@@ -195,10 +195,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
           chart.onReady([chart.define({"commons": {"backgroundColor": ["pink"], "label": "Other series"}})])
 
         :param options: JavaScript of Python attributes
+        :param dataflows: Chain of config transformations
         """
         defined_options = "window.%s_options" % self.html_code
         js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
-            defined_options, defined_options, self.options.config_js(), JsUtils.jsConvertData(options, None))
+            defined_options, defined_options, self.options.config_js(), JsUtils.dataFlows(options, dataflows, self.page))
         self.__defined_options = defined_options
         return js_expr
 

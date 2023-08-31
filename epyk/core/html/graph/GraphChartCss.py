@@ -80,7 +80,7 @@ class ChartCss(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         self._datasets.append([label] + data)
 
-    def define(self, options: etypes.JS_DATA_TYPES = None) -> str:
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
         """ Not yet defined for this chart """
         return ""
 

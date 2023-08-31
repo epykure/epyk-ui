@@ -90,10 +90,11 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             self._js = JsDatatable.DatatableAPI(page=self.page, selector=self.tableId, set_var=False, component=self)
         return self._js
 
-    def define(self, options: types.JS_DATA_TYPES = None):
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
         """
 
         :param options:
+        :param dataflows:
         :return:
         """
 

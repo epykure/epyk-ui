@@ -542,7 +542,7 @@ class Texts:
                     'autoRefresh': True, 'readOnly': True}
     if options is not None:
       dflt_options.update(options)
-    html_code = html.HtmlTextEditor.Code(
+    html_code = html.HtmlTextEditor.CodeEditor(
       self.page, text, color, width, height, html_code, dflt_options, helper, profile)
     html.Html.set_component_skin(html_code)
     return html_code

@@ -199,13 +199,14 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         return "%s_obj" % self.htmlCode
 
-    def define(self, options: types.JS_DATA_TYPES = None):
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
         """
         Common JavaScript function to set the table columns definition.
 
         :param options: Optional. The header attributes
+        :param dataflows: Chain of config transformations
         """
-        return self.js.setColumnDefs(options)
+        return self.js.setColumnDefs(JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page)))
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,

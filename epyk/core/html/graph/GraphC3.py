@@ -173,10 +173,15 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
         return '%s = c3.generate(%s)' % (self.chartId, self.options.config_js(options).toStr())
 
-    def define(self, options: etypes.JS_DATA_TYPES = None) -> str:
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
+        """
+
+        :param options:
+        :param dataflows: Chain of config transformations:
+        """
         defined_options = "window.%s_options" % self.html_code
         js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
-            defined_options, defined_options, self.options.config_js(), JsUtils.jsConvertData(options, None))
+            defined_options, defined_options, self.options.config_js(), JsUtils.dataFlows(options, dataflows, self.page))
         self.__defined_options = defined_options
         return js_expr
 

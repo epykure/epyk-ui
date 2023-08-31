@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Any
+from typing import Any, Callable
 from epyk.core.py import primitives
 import json
 
@@ -163,7 +163,8 @@ class DataFile:
 class DataEvents:
 
   def __getitem__(self, alias: str):
-    """ Get a bespoke variable.
+    """
+    Get a bespoke variable.
 
     Examples::
 
@@ -177,8 +178,7 @@ class DataEvents:
 
   @property
   def tabulator(self) -> TabulatorEvents:
-    """ Interface to the Tabulator events.
-    """
+    """ Interface to the Tabulator events. """
     return TabulatorEvents()
 
   @property
@@ -198,7 +198,8 @@ class DataEvents:
 
   @property
   def data(self):
-    """ Interface to a standard data object available in any Event.
+    """
+    Interface to a standard data object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
     """
     from epyk.core.js.primitives import JsObjects
@@ -206,7 +207,8 @@ class DataEvents:
 
   @property
   def target(self):
-    """ Interface to a standard data object available in any Event.
+    """
+    Interface to a standard data object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
     """
     from epyk.core.js.objects import JsNodeDom
@@ -214,7 +216,8 @@ class DataEvents:
 
   @property
   def value(self):
-    """ Interface to a standard value object available in any Event.
+    """
+    Interface to a standard value object available in any Event.
     This is the default variable name in all the JavaScript embedded methods.
     """
     from epyk.core.js.primitives import JsObjects
@@ -233,31 +236,29 @@ class DataEvents:
 
   @property
   def event(self):
-    """ Interface to the standard event.
-    """
+    """ Interface to the standard event. """
     from epyk.core.js.objects import JsEvents
 
     return JsEvents.Event()
 
   @property
   def mouse(self):
-    """ Interface to the standard mouse event.
-    """
+    """ Interface to the standard mouse event. """
     from epyk.core.js.objects import JsEvents
 
     return JsEvents.MouseEvent()
 
   @property
   def ui(self):
-    """ Interface to the UI generic event.
-    """
+    """ Interface to the UI generic event. """
     from epyk.core.js.objects import JsEvents
 
     return JsEvents.UIEvent()
 
   @property
   def touch(self):
-    """ Interface to a standard touch event.
+    """
+    Interface to a standard touch event.
     This object is available in any event specific to touch screens.
     """
     from epyk.core.js.objects import JsEvents
@@ -266,7 +267,8 @@ class DataEvents:
 
   @property
   def key(self):
-    """ Interface to a standard keyboard event.
+    """
+    Interface to a standard keyboard event.
     This object is available in any keyup, keydown... events
     """
     from epyk.core.js.objects import JsEvents
@@ -275,7 +277,8 @@ class DataEvents:
 
   @property
   def d3(self):
-    """ Get a D3 component. Wrap the d3.select(this) statement.
+    """
+    Get a D3 component. Wrap the d3.select(this) statement.
 
     Related Pages:
 
@@ -301,12 +304,35 @@ class DataEvents:
     """
     return GeolocationCoordinates("navPos")
 
+  def callback(self, fnc: Callable, builder: bool = False, with_data: bool = True, **kwargs):
+    """
+    A special data callback for promise or chained expressions.
+
+    :param fnc: JavaScript function
+    :param builder: Special case for builder function. Run function and return data for the chaining
+    :param with_data: A data as fist attribute
+    :param kwargs: Any other parameter for the function
+    """
+    from epyk.core.js.primitives import JsObjects
+    from epyk.core.js import JsUtils
+    if builder:
+      if not with_data:
+        return JsObjects.JsObjects.get("(data) => {%s; return data}" % fnc(**kwargs))
+
+      return JsObjects.JsObjects.get("(data) => {%s; return data}" % fnc(JsUtils.jsWrap("data"), **kwargs))
+
+    if not with_data:
+      return JsObjects.JsObjects.get("(data) => %s" % JsUtils.jsConvertData(fnc(**kwargs), None))
+
+    return JsObjects.JsObjects.get("(data) => %s" % JsUtils.jsConvertData(fnc(JsUtils.jsWrap("data"), **kwargs), None))
+
 
 class DataLoops:
 
   @property
   def value(self):
-    """ The value returned by forEach statement.
+    """
+    The value returned by forEach statement.
 
     Note. For nested loop make sure you store the important information in new variable names.
     """
@@ -331,8 +357,7 @@ class DataLoops:
 
   @property
   def i(self):
-    """ The index value return in loop statement.
-    """
+    """ The index value return in loop statement. """
     from epyk.core.js.primitives import JsObjects
     return JsObjects.JsNumber.JsNumber.get("index")
 
@@ -433,7 +458,8 @@ class GeolocationCoordinates:
 
   @property
   def coords(self):
-    """ Returns a GeolocationCoordinates object defining the current location.
+    """
+    Returns a GeolocationCoordinates object defining the current location.
 
     This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
 
@@ -447,7 +473,8 @@ class GeolocationCoordinates:
 
   @property
   def accuracy(self):
-    """ Returns a double representing the accuracy of the latitude and longitude properties, expressed in meters.
+    """
+    Returns a double representing the accuracy of the latitude and longitude properties, expressed in meters.
 
     Related Pages:
 
@@ -460,7 +487,8 @@ class GeolocationCoordinates:
 
   @property
   def altitudeAccuracy(self):
-    """ Returns a double representing the accuracy of the altitude expressed in meters. This value can be null
+    """
+    Returns a double representing the accuracy of the altitude expressed in meters. This value can be null
 
     Related Pages:
 
@@ -473,7 +501,8 @@ class GeolocationCoordinates:
 
   @property
   def heading(self):
-    """ Returns a double representing the direction towards which the device is facing. This value, specified in
+    """
+    Returns a double representing the direction towards which the device is facing. This value, specified in
     degrees, indicates how far off from heading true north the device is.
 
     Related Pages:
@@ -487,7 +516,8 @@ class GeolocationCoordinates:
 
   @property
   def altitude(self):
-    """ Returns a double representing the position's altitude in meters, relative to sea level.
+    """
+    Returns a double representing the position's altitude in meters, relative to sea level.
     This value can be null if the implementation cannot provide the data.
 
     Related Pages:
@@ -501,7 +531,8 @@ class GeolocationCoordinates:
 
   @property
   def latitude(self):
-    """ Returns a double representing the position's latitude in decimal degrees.
+    """
+    Returns a double representing the position's latitude in decimal degrees.
 
     Related Pages:
 
@@ -513,7 +544,8 @@ class GeolocationCoordinates:
 
   @property
   def longitude(self):
-    """ Returns a double representing the position's longitude in decimal degrees.
+    """
+    Returns a double representing the position's longitude in decimal degrees.
 
     Related Pages:
 
@@ -525,7 +557,8 @@ class GeolocationCoordinates:
 
   @property
   def speed(self):
-    """ Returns a double representing the velocity of the device in meters per second. This value can be null.
+    """
+    Returns a double representing the velocity of the device in meters per second. This value can be null.
 
     Related Pages:
 
@@ -537,7 +570,8 @@ class GeolocationCoordinates:
 
   @property
   def timestamp(self):
-    """ Returns a DOMTimeStamp representing the time at which the location was retrieved.
+    """
+    Returns a DOMTimeStamp representing the time at which the location was retrieved.
 
     Related Pages:
 

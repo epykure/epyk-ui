@@ -159,7 +159,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.rowClick(["var %s = row.getData()" % data_ref] + js_funcs)
         return self
 
-    def define(self, options: types.JS_DATA_TYPES = None):
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
         """
         Common JavaScript function to set the table columns definition.
 
@@ -170,8 +170,9 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             tab.define([{"field": "col1", "title": "Column 1"}]),])
 
         :param options: Optional. The header attributes
+        :param dataflows: Chain of config transformations
         """
-        return self.js.setColumns(options)
+        return self.js.setColumns(JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page)))
 
     _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'
 
