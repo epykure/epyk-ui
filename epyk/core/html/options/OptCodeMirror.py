@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from epyk.core.py import primitives
-from epyk.core.html.options import Options
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.js import Imports
 from epyk.core.js.packages import packageImport
 from epyk.core.js import JsUtils
@@ -269,7 +269,7 @@ class OptionsHints(Options):
     """
 
 
-class OptionsCode(Options):
+class OptionsCode(OptionsWithTemplates):
   component_properties = ('stringify', )
 
   @property
