@@ -14,8 +14,8 @@ function chartBubble(data, options){
         data.forEach(function(rec){
           options.y_columns.forEach(function(name){
             if(rec[options.x_axis] !== undefined){
-              labels.push(rec[options.x_axis]); var r = 2;
-              if((options.rDim != undefined) && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
+              labels.push(rec[options.x_axis]); var r = options.r(rec);
+              if((typeof options.rDim !== 'undefined') && (rec[options.rDim] != undefined)){r = rec[options.rDim]};
               temp[name].push({y: rec[name], x: rec[options.x_axis], r: r})}})});
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){

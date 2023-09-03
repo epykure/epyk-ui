@@ -364,6 +364,38 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
     return data_expr
 
 
+def convertOptions(options: Any, varId: str) -> str:
+    """
+    Convert options to valid objects for JavaScript to pick up.
+    Base on the input data transformation will be either performed in Python or in JavaScript.
+
+    :param options: The new options for the JavaScript object
+    :param varId: The JavaScript object to be updated
+    """
+    if isJsData(options):
+        return '''(function (ops, obj){
+function dictToExpr(a, b){Object.entries(a).forEach(([k, v]) => {if (
+typeof v == "object" && !Array.isArray(v)){if(b[k]){dictToExpr(v, b[k])}} else {b[k] = v}})}; return dictToExpr(ops, obj)
+})(%s, %s)''' % (options.toStr(), varId)
+
+    result = []
+
+    def dict_to_expr(options, result, varId: str):
+        for k, v in options.items():
+            if isinstance(v, dict):
+                if isinstance(k, int):
+                    dict_to_expr(v, result, "%s[%s]" % (varId, k))
+                else:
+                    dict_to_expr(v, result, "%s.%s" % (varId, k))
+            else:
+                if isinstance(k, int):
+                    result.append("%s[%s] = %s" % (varId, k, json.dumps(v)))
+                else:
+                    result.append("%s.%s = %s" % (varId, k, json.dumps(v)))
+    dict_to_expr(options, result, varId)
+    return ";".join(result)
+
+
 class JsFile:
 
     def __init__(self, script_name: Optional[str] = None, path: Optional[str] = None):

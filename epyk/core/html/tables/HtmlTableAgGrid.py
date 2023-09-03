@@ -203,9 +203,11 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         Common JavaScript function to set the table columns definition.
 
-        :param options: Optional. The header attributes
+        :param options: Optional. The header attributes. If None return current definition.
         :param dataflows: Chain of config transformations
         """
+        if options is None:
+            options = self.js.getColumnDefs()
         return self.js.setColumnDefs(JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page)))
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,

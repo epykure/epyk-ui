@@ -164,7 +164,6 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.maintainAspectRatio = False
         self._attrs["type"] = self._chart__type
         self.attr["class"].add("chart-container")
-        self.__defined_options = None
 
     def activePoints(self, i: int = None) -> ChartJsActivePoints:
         """
@@ -455,11 +454,15 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param options: JavaScript of Python attributes
         :param dataflows: Chain of config transformations:
         """
-        defined_options = "window.%s_options" % self.html_code
-        js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
-            defined_options, defined_options, self.options.config_js(), JsUtils.dataFlows(options, dataflows, self.page))
-        self.__defined_options = defined_options
-        return js_expr
+        if options is None:
+            if dataflows is not None:
+                return "%s;%s" % (
+                    JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap("window['%s']" % self.chartId), dataflows, self.page)),
+                    self.js.update())
+
+        if dataflows is not None:
+            options = JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
+        return self.js.update(options)
 
     @Html.jformatter("chartjs")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
@@ -478,7 +481,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
                 self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
-                self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
+                self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)

@@ -310,11 +310,8 @@ class ChartJs(JsPackage):
     if config is None:
       return JsObjects.JsObject.JsObject("%s.update()" % self.toStr())
 
-    if mode is not None:
-      return JsObjects.JsObject.JsObject("%s.update(%s)" % (self.toStr(), JsUtils.jsConvertData(mode, None)))
-
-    config = JsUtils.jsConvertData(config, None)
-    return JsObjects.JsObject.JsObject("%s.update(%s)" % (self.toStr(), config))
+    config = JsUtils.convertOptions(config, self.component.chartId)
+    return JsUtils.jsWrap('''%s;%s.update(%s)''' % (config, self.toStr(), JsUtils.jsConvertData(mode, None)))
 
   def hide(self, dataset_index: int, data_index: int = None):
     """
@@ -534,9 +531,25 @@ class ChartJs(JsPackage):
     """
     return r'''
 var data, filename, link; var columnDelimiter = ",";
-  var csv = [%(chartId)s.data.labels.join(columnDelimiter)];
-  for (var i = 0; i < %(chartId)s.data.datasets.length; i++) {
-    csv.push(%(chartId)s.data.datasets[i].data.join(columnDelimiter))
+  if (["scatter", "bubble"].includes(%(chartId)s.config.type)){
+    var labels = []; var dims = [];
+    for (var i = 0; i < %(chartId)s.data.labels.length; i++) {
+      labels.push(%(chartId)s.data.labels[i] + columnDelimiter + columnDelimiter);
+      dims.push("x"+ columnDelimiter + "y"+ columnDelimiter + "r");
+    }
+    var csv = ["Series" + columnDelimiter + labels.join(columnDelimiter)];
+    csv.push("" + columnDelimiter + dims.join(columnDelimiter));
+    for (var i = 0; i < %(chartId)s.data.datasets.length; i++) {
+      var series = [];
+      for (var j=0; j < %(chartId)s.data.datasets[i].data.length; j++){ 
+        var point = %(chartId)s.data.datasets[i].data[j];
+        series.push(point.x + columnDelimiter + point.y + columnDelimiter + point.r)
+      };
+      csv.push(%(chartId)s.data.datasets[i].label + columnDelimiter + series.join(columnDelimiter))}
+  } else{
+    var csv = ["Series" + columnDelimiter + %(chartId)s.data.labels.join(columnDelimiter)];
+    for (var i = 0; i < %(chartId)s.data.datasets.length; i++) {
+      csv.push(%(chartId)s.data.datasets[i].label + columnDelimiter + %(chartId)s.data.datasets[i].data.join(columnDelimiter))}
   }
   var csvContent = csv.join("\n");
   filename = '%(filename)s';

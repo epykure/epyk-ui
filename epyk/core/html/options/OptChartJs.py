@@ -2313,6 +2313,16 @@ class OptionsPie(ChartJsOptions):
 
 
 class OptionsBubble(ChartJsOptions):
+  component_properties = ('r', )
+
+  @property
+  def r(self):
+    """ The radius value. Default: (v) => 2 """
+    return self._config_get(JsUtils.jsWrap("(v) => 2"))
+
+  @r.setter
+  def r(self, value):
+    self._config(value)
 
   @property
   def datasets(self) -> OptChartJsDataSets.Bubble:

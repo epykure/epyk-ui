@@ -318,7 +318,17 @@ class ChartJs(JsCanvas.Canvas):
 
     def active(self):
         """ Return the active clicked point. """
-        return JsObjects.JsObject.JsObject.get("{x: %s, y: %s}" % (
+        if self.component._chart__type in ["scatter", "bubble"]:
+            active_points = self.component.activePoints()
+            return JsObjects.JsObject.JsObject.get("{x: %s, y: %s, label: %s}" % (
+                active_points.label,
+                JsUtils.jsWrap("%s.data.datasets[%s].data[activePoints[0].index].y" % (
+                    active_points.chartId, active_points.num)),
+                active_points.x,
+            ))
+
+        return JsObjects.JsObject.JsObject.get("{x: %s, y: %s, label: %s}" % (
             self.component.activePoints().label,
             self.component.activePoints().y,
+            self.component.activePoints().x,
         ))
