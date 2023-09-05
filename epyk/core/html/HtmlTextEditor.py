@@ -329,7 +329,6 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
     :param component_id: Optional.
     :param dataflows: Chain of data transformations
     """
-    print(super().build(data, options, profile, component_id="window['%s']" % self.editorId, dataflows=dataflows))
     return super().build(data, options, profile, component_id="window['%s']" % self.editorId, dataflows=dataflows)
 
   @property
@@ -338,11 +337,15 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
     return "editor_%s" % self.htmlCode
 
   def __str__(self):
+    set_val = ""
+    if self._vals:
+      set_val = 'window["%(editor)s"].setValue(%(content)s)' % {
+        "editor": self.editorId, "content": JsUtils.jsConvertData(self._vals, None)}
     self.page.body.onReady('''
 window["%(editor)s"] = CodeMirror.fromTextArea(document.getElementById('%(htmlId)s'),%(options)s); 
-window["%(editor)s"].setSize("%(width)s", "%(height)s"); window["%(editor)s"].refresh()''' % {
+window["%(editor)s"].setSize("%(width)s", "%(height)s"); %(setVal)s; window["%(editor)s"].refresh()''' % {
       "editor": self.editorId, "width": self.css("width"), "height": self.css("height"),
-      "options": self.options.config_js(), "htmlId": self.htmlCode})
+      "options": self.options.config_js(), "htmlId": self.htmlCode, "setVal": set_val})
     return '<div><textarea %s></textarea><div id="%s_loading"></div>%s</div>' % (
       self.get_attrs(css_class_names=self.style.get_classes()), self.htmlCode, self.helper)
 
