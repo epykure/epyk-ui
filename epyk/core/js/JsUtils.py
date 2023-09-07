@@ -389,9 +389,9 @@ typeof v == "object" && !Array.isArray(v)){if(b[k]){dictToExpr(v, b[k])}} else {
                     dict_to_expr(v, result, "%s.%s" % (varId, k))
             else:
                 if isinstance(k, int):
-                    result.append("%s[%s] = %s" % (varId, k, json.dumps(v)))
+                    result.append("%s[%s] = %s" % (varId, k, jsConvertData(v, None)))
                 else:
-                    result.append("%s.%s = %s" % (varId, k, json.dumps(v)))
+                    result.append("%s.%s = %s" % (varId, k, jsConvertData(v, None)))
     dict_to_expr(options, result, varId)
     return ";".join(result)
 

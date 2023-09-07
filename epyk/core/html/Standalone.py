@@ -178,25 +178,42 @@ class JsComponents(JsPackage):
         """ JavaScript underlying object reference (Proxy Js class) """
         return "window['%s']" % self.component.html_code
 
-    def build(self, data: types.JS_DATA_TYPES, options: types.JS_DATA_TYPES = None):
+    def build(self, data: types.JS_DATA_TYPES, options: types.JS_DATA_TYPES = None, fnc: str = "build"):
         """
 
         :param data: Optional. Component data
         :param options: Optional. Specific Python options available for this component
+        :param fnc: Optional. The underlying method used in the template
         """
-        return JsObjects.JsObject.JsObject.get("%s.build(%s, %s)" % (
-            self.varName, JsUtils.jsConvertData(data, None), JsUtils.jsConvertData(options or {}, None)))
+        return JsObjects.JsObject.JsObject.get("%s.%s(%s, %s)" % (
+            self.varName, fnc, JsUtils.jsConvertData(data, None), JsUtils.jsConvertData(options or {}, None)))
 
-    def empty(self, options: types.JS_DATA_TYPES = None):
+    def empty(self, options: types.JS_DATA_TYPES = None, fnc: str = "empty"):
         """
         Empty the content of the container.
 
         This will call the underlying empty function which must be defined in the JavaScript component.
 
         :param options: Optional. Specific Python options available for this component
+        :param fnc: Optional. The underlying method used in the template
         """
-        return JsObjects.JsObject.JsObject.get("%s.empty(%s)" % (
-            self.varName, JsUtils.jsConvertData(options, None)))
+        return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (
+            self.varName, fnc, JsUtils.jsConvertData(options, None)))
+
+    def set(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None, fnc: str = "set"):
+        """
+        Set the content of the container.
+        This method usually is used fto init / reset the component.
+
+        This will call the underlying set function which must be defined in the JavaScript component.
+
+        :param data: Optional. The value
+        :param options: Optional. Specific Python options available for this component
+        :param fnc: Optional. The underlying method used in the template
+        """
+        return JsObjects.JsObject.JsObject.get("%s.%s(%s, %s)" % (
+            self.varName, fnc, JsUtils.jsConvertData(data, None),
+            JsUtils.jsConvertData(options, None)))
 
     def custom(self, func_name: str, **kwargs):
         """
