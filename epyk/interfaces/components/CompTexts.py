@@ -131,6 +131,14 @@ class Texts:
 
       page.ui.text("this is a test")
 
+      txt = page.ui.text('''
+        This text is ___really important___.
+        This text is __*really important*__.
+        This text is **_really important_**.  
+        This is really***very***important text.
+      ''')
+      txt.options.markdown = True
+
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlText.Text`
