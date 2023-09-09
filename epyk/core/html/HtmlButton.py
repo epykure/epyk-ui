@@ -147,7 +147,7 @@ class Button(Html.Html):
         return self
 
     def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
-              profile: types.PROFILE_TYPE = None, on_ready: bool = False):
+              profile: types.PROFILE_TYPE = None, pressed_class: str = None, on_ready: bool = False):
         """
         Special click event to keep in memory the state of the component.
 
@@ -158,17 +158,26 @@ class Button(Html.Html):
         :param js_press_funcs: Optional. Javascript functions
         :param js_release_funcs: Optional. Javascript functions
         :param profile: Optional. A flag to set the component performance storage
+        :param pressed_class: Optional. The CSS class when component's status is pressed
         :param on_ready: Optional. Event when component is ready on HTML side
         """
         str_fnc = ""
+        if pressed_class is None:
+            self.page.properties.css.add_text(
+                ".event-pressed {background-color: %s; color: %s; border: 1px solid %s}" % (
+                    self.page.theme.notch(), self.page.theme.greys[0], self.page.theme.notch()), "event-pressed")
+            pressed_class = "event-pressed"
+        self.aria.pressed = False
         if js_press_funcs is not None:
             if not isinstance(js_press_funcs, list):
                 js_press_funcs = [js_press_funcs]
             if self.options.group is not None and not self.options.multiple:
                 js_press_funcs.append(self.dom.release(by_name=True))
             js_press_funcs.append(self.dom.lock(not_allowed=js_release_funcs is None))
-            str_fnc = "if(%s == 'pointer'){%s}" % (
-            self.dom.css('cursor'), JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
+            js_press_funcs.append(self.dom.setAttribute("aria-pressed", True))
+            js_press_funcs.append(self.dom.addClass(pressed_class))
+            str_fnc = "if(%s.getAttribute('aria-pressed') == 'false'){%s}" % (
+                self.dom.varId, JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
         if js_release_funcs is not None:
             if js_press_funcs is None:
                 raise ValueError("Press Event must be defined")
@@ -176,6 +185,8 @@ class Button(Html.Html):
             if not isinstance(js_release_funcs, list):
                 js_release_funcs = [js_release_funcs]
             js_release_funcs.append(self.dom.release())
+            js_release_funcs.append(self.dom.setAttribute("aria-pressed", False))
+            js_release_funcs.append(self.dom.removeClass(pressed_class))
             str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
         return self.on("click", str_fnc, profile, on_ready=on_ready)
 

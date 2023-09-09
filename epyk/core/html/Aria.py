@@ -657,11 +657,11 @@ class Aria:
 
       https://www.w3.org/TR/wai-aria-1.1/#aria-pressed
     """
-    return self.component.attr.get("aria-pressed", False)
+    return self.component.attr.get("aria-pressed", 'false') == 'true'
 
   @pressed.setter
-  def pressed(self, flag):
-    self.component.attr["aria-pressed"] = flag
+  def pressed(self, flag: bool):
+    self.component.attr["aria-pressed"] = json.dumps(flag)
 
   @property
   def readonly(self):

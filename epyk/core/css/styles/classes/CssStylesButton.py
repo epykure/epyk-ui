@@ -8,7 +8,7 @@ class CssBorderRadius(CssStyle.Style):
 
 
 class CssButtonBasic(CssStyle.Style):
-  _attrs = {'font-weight': 'bold', 'padding': '2px 20px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
+  _attrs = {'font-weight': 'bold', 'padding': '4px', 'margin': '2px 0 2px 0', 'text-decoration': 'none',
             'border-radius': '4px', 'white-space': 'nowrap', 'display': 'inline-block',
             '-webkit-appearance': 'none', '-moz-appearance': 'none'}
   _hover = {'text-decoration': 'none', 'cursor': 'pointer'}
@@ -18,8 +18,8 @@ class CssButtonBasic(CssStyle.Style):
   def customize(self):
     self.css({'border': '1px solid %s' % self.page.theme.colors[0], 'color': 'inherit'})
     self.hover.css(
-      {'background-color': self.page.theme.greys[0],
-       'color': "inherit",  'border': '1px solid %s' % self.page.theme.notch()}, important=True)
+      {"background-color": self.page.theme.notch(), 'color': self.page.theme.greys[0],
+          'border': '1px solid %s' % self.page.theme.notch()}, important=True)
     self.disabled.css({
         'background-color': self.page.theme.greys[0],
         'border-color': self.page.theme.greys[0],
