@@ -186,6 +186,64 @@ class Inputs(JsHtml.JsHtml):
         data = JsUtils.jsConvertData(data, None)
         return JsUtils.jsWrap("%s.name = %s" % (self.component.dom.varName, data))
 
+    @property
+    def valid(self):
+        """ Return the overall input validity flag """
+        return JsObjects.JsBoolean.JsBoolean.get("%s.validity.valid" % self.component.dom.varName)
+
+    @property
+    def validationMessage(self):
+        """ Contains the message a browser will display when the validity is false. """
+        return JsObjects.JsObject.JsObject.get("%s.validationMessage" % self.component.dom.varName)
+
+    @property
+    def validity(self):
+        """ Get the input validity object """
+        return JsObjects.JsObject.JsObject.get("%s.validity" % self.component.dom.varName)
+
+    def checkValidity(self):
+        """
+        The HTMLSelectElement.checkValidity() method checks whether the element has any constraints and whether
+        it satisfies them. If the element fails its constraints, the browser fires a cancelable invalid event at the
+        element, and then returns false.
+
+        Related Pages:
+
+          https://developer.mozilla.org/en-US/docs/Web/API/HTMLSelectElement/checkValidity
+        """
+        return JsObjects.JsObject.JsObject.get("%s.checkValidity()" % self.component.dom.varName)
+
+    def reportValidity(self):
+        """
+        The HTMLFormElement.reportValidity() method returns true if the element's child controls satisfy their
+        validation constraints. When false is returned, cancelable invalid events are fired for each invalid child and
+        validation problems are reported to the user.
+
+        Related Pages:
+
+          https://developer.mozilla.org/en-US/docs/Web/API/HTMLFormElement/reportValidity
+        """
+        return JsObjects.JsObject.JsObject.get("%s.reportValidity()" % self.component.dom.varName)
+
+    def validity_state(self):
+        """ Get the input validity state """
+        return JsObjects.JsString.JsString.get("(function(inpForm){for (var key in inpForm.validity){if(inpForm.validity[key]){return key}}})(%s)" % self.component.dom.varName)
+
+    def setCustomValidity(self, label: types.JS_DATA_TYPES = None, invalid_cls: str = None):
+        """
+        Sets the validationMessage property of an input element
+
+        Related Pages:
+
+          https://www.w3schools.com/js/js_validation_api.asp
+        """
+        if invalid_cls is None:
+            invalid = "invalid"
+            self.page.properties.css.add_text(".invalid {border-color: red !important}", "inval_input")
+        return JsUtils.jsWrap("if(%(text)s){%(id)s.classList.add(%(cls)s); %(id)s.setCustomValidity(%(text)s)} else {%(id)s.classList.remove(%(cls)s); %(id)s.setCustomValidity('')}" % {
+            "id": self.component.dom.varName, "text": JsUtils.jsConvertData(label, None),
+            "cls": JsUtils.jsConvertData(invalid, None)})
+
 
 class InputFileDom:
 
