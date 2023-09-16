@@ -172,6 +172,11 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param options: Optional. The header attributes
         :param dataflows: Chain of config transformations
         """
+
+        if options is None:
+            options = JsUtils.jsWrap(self.js.varId)
+            return JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
+
         return self.js.setColumns(JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page)))
 
     _js__builder__ = 'var %(tableId)s = new Tabulator("#%(htmlCode)s", Object.assign(%(config)s, %(options)s))'
