@@ -658,7 +658,7 @@ JS_IMPORTS = {
         'website': 'http://jquery.com/',
         'repository': "https://github.com/jquery/jquery",
         'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
-        'version': '3.7.0',
+        'version': '3.7.1',
         'modules': [
             {'script': 'jquery.min.js', 'node_path': 'dist/', 'path': 'jquery/%(version)s/', 'cdnjs': CDNJS_REPO}
         ],
