@@ -201,13 +201,20 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
         """
-        Common JavaScript function to set the table columns definition.
+        Common JavaScript function to set the table definition.
+        If options are defined the definition will be specific to the column definition.
 
-        :param options: Optional. The header attributes. If None return current definition.
+        Related Pages:
+
+          https://www.ag-grid.com/javascript-data-grid/row-selection/
+
+        :param options: Optional. The table API attributes. If None return current definition.
         :param dataflows: Chain of config transformations
         """
         if options is None:
-            options = self.js.getColumnDefs()
+            options = JsUtils.jsWrap("%s.api" % self.js.varId)
+            return JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
+
         return self.js.setColumnDefs(JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page)))
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
