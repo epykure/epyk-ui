@@ -269,3 +269,28 @@ def or_(*args):
 break_ = JsObjects.JsObject.JsObject.get("break")
 
 continue_ = JsObjects.JsObject.JsObject.get("continue")
+
+
+def url_param(value: str) -> JsUtils.jsWrap:
+    """
+    Get value from url.
+
+    :param value: The parameter key in the url
+    """
+    return JsUtils.jsWrap('''(function(param){
+let paramValue; const queryString = window.location.search; const urlParams = new URLSearchParams(queryString);
+if (urlParams.has(param)){paramValue = urlParams.get(param)}; return paramValue;
+})(%s)''' % JsUtils.jsConvertData(value, None))
+
+
+def if_url_param(value: str, py_func) -> JsUtils.jsWrap:
+    """
+    Set value from url for a component build method.
+
+    :param value: The parameter key in the url
+    :param py_func: A callable object
+    """
+    return JsUtils.jsWrap('''(function(param){
+const queryString = window.location.search; const urlParams = new URLSearchParams(queryString);
+if (urlParams.has(param)){paramValue = urlParams.get(param); %s}; 
+})(%s)''' % (py_func(JsUtils.jsWrap("paramValue")), JsUtils.jsConvertData(value, None)))

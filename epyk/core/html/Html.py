@@ -1749,6 +1749,33 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 fnc_call, self.dom.varId, js_data, self.options.config_js(options))
         return fnc_call
 
+    def build_from_url(self, options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
+              dataflows: List[dict] = None):
+        """
+        Return the JavaScript fragment to refresh the component content from url parameters.
+        This could be usually used at the start when component is loaded.
+
+        Data will come from the url from the html_code defined for this component.
+
+        Usage::
+
+          dt = page.ui.rich.update(html_code='updt')
+          page.ui.button("Update").onReady([dt.build_from_url()])
+
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        :param component_id: Optional. The object reference ID
+        :param dataflows: Chain of data transformations
+        """
+        return JsUtils.jsWrap('''(function(param){
+const queryString = window.location.search; const urlParams = new URLSearchParams(queryString);
+if (urlParams.has(param)){paramValue = urlParams.get(param); %s}; 
+})(%s)''' % (self.build(
+            JsUtils.jsWrap("paramValue"), options=options, profile=profile, component_id=component_id,
+            dataflows=dataflows),
+             JsUtils.jsConvertData(self.html_code, None)))
+
     def refresh(self):
         """
         Component refresh function. Javascript function which can be called in any Javascript event.
