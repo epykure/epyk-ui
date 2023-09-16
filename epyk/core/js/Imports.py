@@ -1698,7 +1698,7 @@ JS_IMPORTS = {
 
     # Leaflet
     'leaflet': {
-        'version': '1.9.3',
+        'version': '1.9.4',
         'website': 'https://leafletjs.com/',
         'repository': 'https://github.com/Leaflet/Leaflet',
         'register': {'alias': 'L', 'module': 'leaflet', 'npm': 'leaflet'},
