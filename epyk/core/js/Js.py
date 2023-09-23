@@ -1,4 +1,5 @@
 #!/usr/bin/python
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import json
@@ -515,6 +516,26 @@ class JsBase:
         """
         return JsFncs.JsFunction("return %s" % data)
 
+    def and_(self, *args) -> JsUtils.jsWrap:
+        """ Create a Javascript and statement. """
+        vals = []
+        for a in args:
+            if hasattr(a, "html_code"):
+                vals.append(a.dom.content.toStr())
+            else:
+                vals.append(JsUtils.jsConvertData(a, None, force=True))
+        return JsUtils.jsWrap(" && " .join(vals))
+
+    def or_(self, *args) -> JsUtils.jsWrap:
+        """ Create a Javascript Or statement. """
+        vals = []
+        for a in args:
+            if hasattr(a, "html_code"):
+                vals.append(a.dom.content.toStr())
+            else:
+                vals.append(JsUtils.jsConvertData(a, None, force=True))
+        return JsUtils.jsWrap(" || " .join(vals))
+
     def switch(self, variable: Union[str, primitives.JsDataModel, primitives.HtmlModel],
                js_conv_func: Optional[Union[str, list]] = None) -> JsSwitch.JsSwitch:
         """
@@ -785,7 +806,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             for c in components:
                 if c.__class__.__name__ == 'InputFile':
                     stringify = False
-            if data is None:
+            if not data:
                 data = components
             else:
                 for c in components:

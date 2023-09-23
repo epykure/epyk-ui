@@ -120,7 +120,7 @@ def isJsData(js_data: Union[str, primitives.JsDataModel, float, dict, list]):
 
 
 def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list], js_funcs: Optional[Union[list, str]],
-                  depth: bool = False) -> Union[str, JsObject.JsObject]:
+                  depth: bool = False, force: bool = False) -> Union[str, JsObject.JsObject]:
     """
     Generic conversion function for any data in the internal framework.
     This will convert to String any data coming from the Javascript Python interface.
@@ -131,8 +131,9 @@ def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list]
     :param js_data: The Python Javascript data
     :param js_funcs: Optional. The conversion function (not used)
     :param depth: Optional. Set to true of it is a nested object
+    :param force: Optional. Whatever the object received force the string conversion
     """
-    if not hasattr(js_data, 'varData') and not hasattr(js_data, 'fncName'):
+    if (not hasattr(js_data, 'varData') and not hasattr(js_data, 'fncName')) or force:
         if hasattr(js_data, 'toStr'):
             return js_data.toStr()
 
@@ -340,9 +341,33 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
     """
     All the chaining of data flow transformation to feed the various widgets.
 
-    :param data:
-    :param flow:
-    :param page:
+    flow must point to function with the following signature (data, {obj1, obj2, .... objN=0})
+
+    usage::
+
+        i_var = page.ui.inputs.input("test", html_code="invar")
+        i_var2 = page.ui.inputs.input(html_code="invar2")
+        i_var2.validation(required=True)
+        i_var3 = page.ui.inputs.input(html_code="invar3")
+        btn = page.ui.button("ok")
+
+        page.properties.js.add_text('''function TestFunc(data, {d=1, a, b=0, c=0}){
+            console.log('a='+ a);console.log('b='+ b);console.log('c='+ c);console.log('d='+ d);
+            return c}''')
+
+        btn.click([
+            i_var.build(15, dataflows=[
+                {"name": "TestFunc", "parameters": {
+                    "a": 1,
+                    "c": i_var2.dom.valid,
+                    "d": i_var3.dom.content,
+                }}
+            ])
+        ])
+
+    :param data: Input data
+    :param flow: Data flow processes (name and parameters)
+    :param page: Page object with the full context
     """
     data_expr = jsConvertData(data, None)
     if not flow:
@@ -357,8 +382,16 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
             if page is not None:
                 page.js.customFile(ext_js_file.name, path=ext_js_file.parent)
         if "parameters" in dataflow:
-            data_expr = "%s(%s, %s)" % (dataflow["name"], data_expr, ", ".join(
-                ["%s=%s" % (k, v) for k, v in dataflow["parameters"].items()]))
+            pmt_expr = []
+            # simple parameter translation for methods or components
+            for k, v in dataflow["parameters"].items():
+                if hasattr(v, "dom"):
+                    pmt_expr.append("%s:%s" % (k, v.dom.content.toStr()))
+                elif hasattr(v, "toStr"):
+                    pmt_expr.append("%s:%s" % (k, v.toStr()))
+                else:
+                    pmt_expr.append("%s:%s" % (k, v))
+            data_expr = "%s(%s, {%s})" % (dataflow["name"], data_expr, ", ".join(pmt_expr))
         else:
             data_expr = "%s(%s)" % (dataflow["name"], data_expr)
     return data_expr

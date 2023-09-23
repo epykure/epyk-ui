@@ -123,36 +123,49 @@ class Input(Html.Html):
       js_funcs.append(self.dom.select())
     return self.on("focus", js_funcs, profile, source_event, on_ready)
 
-  def validation(self, pattern: str, required: bool = True):
+  def validation(self, pattern: str = None, required: bool = True):
     """
     Add validation rules on the input component.
+
+    Related Pages:
+
+      https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
+      https://www.w3schools.com/tags/att_input_pattern.asp
 
     Usage::
 
       input.validation(pattern="[0-9]{5}")
 
-    :param pattern:
-    :param required: Optional.
+    :param pattern: Optional. Specifies a regular expression that the <input> element's value is checked against
+    :param required: Optional. The Boolean required attribute, if present, indicates that the user must specify a
+      value for the input before the owning form can be submitted.
 
     :return: Self to allow the chaining
     """
+    if pattern is None and required:
+      self.attr["required"] = True
+      return self
+
     self.attr["pattern"] = pattern
     if required:
       self.attr["required"] = None
     self.style.add_classes.input.is_valid()
     return self
 
-  def validation_from(self, values, css_cls = None, disclaimer="&#9888; Error - Invalid value",
+  def validation_from(self, values, css_cls = None, disclaimer: str = "&#9888; Error - Invalid value",
                       css_disclaimer: dict = None, on_enter: bool = True):
     """
     Run more sophisticated validation checks using list or remote services.
+
+    Related Pages:
+    
+      https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/setCustomValidity
 
     Usage::
 
       inp = page.ui.input(html_code="auto")
       request = page.js.post("/validation", components=[inp])
       inp.validation_from(request)
-
 
     :param values: Can be a list of items or a XMLHttp request
     :param css_cls: The CSS class for the input when validation error
