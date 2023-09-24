@@ -1228,9 +1228,7 @@ class Tabs(Html.Html):
     return self.__panel_objs[name]["tab"]
 
   def tabs(self):
-    """  
-    Get the tab container.
-    """
+    """ Get the tab container. """
     for tab_obj in self.__panel_objs.values():
       yield tab_obj["tab"]
 
@@ -1259,7 +1257,7 @@ class Tabs(Html.Html):
         show_div = [div.dom.show()]
     else:
       show_div = [div.dom.show()]
-    div.css({"display": 'none'})
+    div.css({"display": 'none', "width": "100%"})
     div.options.managed = False
     div.set_attrs(name="name", value=self.panels_name)
 
@@ -1305,7 +1303,7 @@ class Tabs(Html.Html):
 
   def __str__(self):
     if self.__selected is not None:
-      self.__panel_objs[self.__selected]["content"].style.css.display = 'flex'
+      self.__panel_objs[self.__selected]["content"].style.css.display = self.options.display
       self.__panel_objs[self.__selected]["tab"][0].css(self.options.tab_clicked_style(self.__selected))
       self.__panel_objs[self.__selected]["tab"][0].attr["data-selected"] = 'true'
     content = []

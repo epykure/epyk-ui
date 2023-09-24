@@ -158,7 +158,7 @@ class Input(Html.Html):
     Run more sophisticated validation checks using list or remote services.
 
     Related Pages:
-    
+
       https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/setCustomValidity
 
     Usage::

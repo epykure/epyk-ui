@@ -115,6 +115,14 @@ class OptionPanelSliding(Options):
 class OptionPanelTabs(Options):
 
   @property
+  def display(self):
+    return self.get("inline-block")
+
+  @display.setter
+  def display(self, value: str):
+    self.set(value)
+
+  @property
   def width(self):
     """  
     Set the with in pixel for the tabs.
