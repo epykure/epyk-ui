@@ -742,6 +742,19 @@ class Report:
 
         return [self.components[html_code] for html_code in html_codes]
 
+    def get_components_by_ref(self, ref: str) -> list:
+        """
+        Get all components defined in the current context by reference.
+        Reference can be associated to multiple components.
+
+        :param ref: The reference value
+        """
+        results = []
+        for component in self.components.values():
+            if component.ref == ref:
+                results.append(component)
+        return results
+
     def framework(self, name: str):
         """
         Flag to change the way code is transpiled in order to fit with the destination framework.

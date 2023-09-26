@@ -6,7 +6,8 @@ from epyk.fwk.bs.dom import DomBsDatePicker
 
 
 class BsDatePicker(Component):
-  requirements = ('tempusdominus-bootstrap-4', )
+  #requirements = ('tempusdominus-bootstrap-4', )
+  requirements = ('tempus-dominus', )
   css_classes = ["input-group", "date"]
   name = "Bootstrap DatePicker"
   _option_cls = OptBsDT.DT
@@ -21,22 +22,17 @@ class BsDatePicker(Component):
     </div>
 </div>'''
 
-  _js__builder__ = '''%(jqId)s.datetimepicker(options)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+  #_js__builder__ = '''%(jqId)s.datetimepicker(options)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+  _js__builder__ = '''console.log(htmlObj); new tempusDominus.TempusDominus(htmlObj, {dateRange: true})'''
 
   @property
   def options(self) -> OptBsDT.DT:
-    """   The component options.
-
-    :rtype: OptBsDT.DT
-    """
+    """ The component options. """
     return super().options
 
   @property
   def dom(self) -> DomBsDatePicker.DomDate:
-    """   The common DOM properties.
-
-    :rtype: DomBsDatePicker.DomDate
-    """
+    """ The common DOM properties. """
     if self._dom is None:
       self._dom = DomBsDatePicker.DomDate(component=self, page=self.page)
     return self._dom

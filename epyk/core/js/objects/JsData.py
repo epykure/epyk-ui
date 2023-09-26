@@ -217,14 +217,14 @@ class Datamap(primitives.JsDataModel):
       if component.__class__.__name__ == "InputFile":
         if component.options.multiple:
           self.__post_process.append("Array.from(%s).forEach(function(f, i){mapToFormData.append('%s['+ i +']', f)})" % (
-            component.dom.files.toStr(), component.html_code))
+            component.dom.files.toStr(), component.ref))
         else:
           self._data.append((html_code or component.attr["name"], JsUtils.jsConvertData(component.dom.files[0], None)))
       else:
-        self._data.append((html_code or component.htmlCode, JsUtils.jsConvertData(component.dom.content, None)))
+        self._data.append((html_code or component.ref, JsUtils.jsConvertData(component.dom.content, None)))
     else:
       self._data.append((
-        JsUtils.jsConvertData(html_code or component.htmlCode, None),
+        JsUtils.jsConvertData(html_code or component.ref, None),
         JsUtils.jsConvertData(component.dom.content.stringify(), None)))
     return self
 

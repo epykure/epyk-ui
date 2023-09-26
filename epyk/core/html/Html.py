@@ -418,7 +418,7 @@ class Html(primitives.HtmlModel):
                 self.require.add(package)
 
         self.profile = profile
-        self._on_ready_js, self._sort_propagate, self._sort_options = {}, False, None
+        self._on_ready_js, self._sort_propagate, self._sort_options, self.__aliasCode = {}, False, None, None
         self._dom, self._sub_htmls, self._js, self.helper, self._styleObj, self.__htmlCode = None, [], None, "", None, None
 
         self._browser_data = {"mouse": collections.OrderedDict(), 'component_ready': [],
@@ -448,7 +448,15 @@ class Html(primitives.HtmlModel):
                     raise ValueError(
                         "Duplicated Html code '%s', this is used internally in the framework !" % html_code)
 
-                raise ValueError("Duplicated Html code '%s' in the script !" % html_code)
+                # Move to reference instead of HTML_code because not unique for component in the page context
+                # Component can still be retrieved using ths code by using explicitly the get_components_by_ref method/
+                self.__aliasCode = html_code
+                i = 1
+                temp_html_code = "%s_%s" % (html_code, i)
+                while temp_html_code in self.page.components:
+                    i += 1
+                    temp_html_code = "%s_%s" % (html_code, i)
+                html_code = temp_html_code
 
             self.__htmlCode = html_code
             if html_code in self.page.inputs:
@@ -597,6 +605,11 @@ class Html(primitives.HtmlModel):
             return self.__htmlCode
 
         return "%s_%s" % (self.__class__.__name__.lower(), id(self))
+
+    @property
+    def ref(self) -> str:
+        """ The component ref used in REST calls when html_code is not unique in current context"""
+        return self.__aliasCode or self.html_code
 
     @property
     def htmlCode(self) -> str:

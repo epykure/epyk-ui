@@ -50,6 +50,7 @@ class HtmlModel:
   _browser_data = None
   var = None
   is_range = None # For slider component
+  ref: None
 
   @property
   @abstractmethod

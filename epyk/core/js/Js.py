@@ -755,7 +755,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
                     else:
                         url_params.append('"%s=" + %s' % (component[1], component[0].dom.content.toStr()))
                 else:
-                    url_params.append('"%s=" + %s' % (component.htmlCode, component.dom.content.toStr()))
+                    url_params.append('"%s=" + %s' % (component.ref, component.dom.content.toStr()))
         if data is not None:
             for k, v in data.items():
                 url_params.append('"%s=" + %s' % (k, JsUtils.jsConvertData(v, None)))
