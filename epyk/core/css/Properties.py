@@ -7,7 +7,8 @@ from epyk.interfaces import Arguments
 
 
 def autoPrefixer(prop: str):
-  """ CSS Style function to return the different attributes names for the compatibility with the main browsers.
+  """
+  CSS Style function to return the different attributes names for the compatibility with the main browsers.
   This function is used everytime there is a need for a CSS extension.
 
   The main browsers supported are IE, Chrome, Firefox and Opera

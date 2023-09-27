@@ -310,14 +310,21 @@ class Input(Html.Html):
     return self
 
   @packages.packageImport('jqueryui', 'jqueryui')
-  def autocomplete(self, values: List[str], options: dict = None, dataflows: List[dict] = None, css: dict = None):
+  def autocomplete(self, values: List[str], options: dict = None, dataflows: List[dict] = None, css: dict = None,
+                   literal: str = None):
     """
+    Add autocompletion for the input html component.
+    Autocompletion is coming from a list of values.
 
     Usage::
 
       input = page.ui.inputs.input("test autocomplete")
       input.autocomplete(["AAAAA", "AAABBB", "AAACCC"])
       input.focus(options={"reset": True})
+
+      input.autocomplete(["AUDDDD"], dataflows=[
+          {"name": "(function(data){return [{value: 'USDDD', label: 'toto',  desc: 'This is a description'} ]})"}
+      ], css={"color": "red"}, literal="<div>${item.label} <br> ${item.desc}</div>")
 
     Related Pages:
 
@@ -326,6 +333,8 @@ class Input(Html.Html):
     :param values:
     :param options:
     :param dataflows: Chain of data transformations
+    :param css: The CSS attributes for the component
+    :param literal: The literal expression for the autocompletion items
     """
     if self.attr["type"] != "text":
       raise ValueError("Autocomplete can only be used with input text components")
@@ -335,13 +344,23 @@ class Input(Html.Html):
       css_attrs = ".css(%s)" % json.dumps(css)
     values = JsUtils.dataFlows(values, dataflows, self.page)
     options = options or {}
-    self.page.body.onReady('''
-%s.autocomplete(Object.assign({source: %s}, %s))%s
-''' % (JsQuery.decorate_var(self.dom.varId, convert_var=False), values, options, css_attrs))
+    if literal is not None:
+      self.page.body.onReady('''
+%(jqId)s.autocomplete(Object.assign({source: %(vals)s}, %(options)s))%(css)s;
+%(jqId)s.autocomplete("instance")._renderItem = function( ul, item ) {
+      return $( "<li>" ).append(`<div>%(literal)s</div>`).appendTo(ul)}''' % {
+        "jqId": JsQuery.decorate_var(self.dom.varId, convert_var=False), "vals": values, "options": options,
+        "css": css_attrs, "literal": literal})
+    else:
+      self.page.body.onReady('''
+%(jqId)s.autocomplete(Object.assign({source: %(vals)s}, %(options)s))%(css)s''' % {
+        "jqId": JsQuery.decorate_var(self.dom.varId, convert_var=False), "vals": values, "options": options,
+        "css": css_attrs})
+
 
   @packages.packageImport('jqueryui', 'jqueryui')
   def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
-                        with_cache: bool = True, dataflows: List[dict] = None, css: dict = None):
+                        with_cache: bool = True, dataflows: List[dict] = None, css: dict = None, literal: str = None):
     """
     Add autocomplete features on textarea from remote service.
 
@@ -362,6 +381,8 @@ class Input(Html.Html):
     :param options: Autocomplete extra options
     :param with_cache: Flag to cache the result to save server calls
     :param dataflows: Chain of data transformations
+    :param css: The CSS attributes for the component
+    :param literal: The literal expression for the autocompletion items
     """
     if self.attr["type"] != "text":
       raise ValueError("Autocomplete can only be used with input text components")
@@ -375,19 +396,36 @@ class Input(Html.Html):
   %s = %s; resp($.ui.autocomplete.filter(%s, request.term)) 
   ''' % (cached_var, JsUtils.dataFlows(JsUtils.jsWrap("data"), dataflows, self.page), cached_var)])
     options = options or {}
-    self.page.body.onReady('''
-    var %(cachedVar)s; 
-    %(jqUI)s.autocomplete(Object.assign({
-      minLength: %(minLength)s,
-      source: function(request, resp) {
-        if(%(useCache)s){
-          if(typeof %(cachedVar)s === 'undefined'){%(request)s}
-          else{resp($.ui.autocomplete.filter(%(cachedVar)s, request.term))}}
-        else{%(request)s}},
-      }, %(options)s))%(css)s
-    ''' % {"cachedVar": cached_var, "jqUI": JsQuery.decorate_var(self.dom.varId, convert_var=False),
-           "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length, "css": css_attrs,
-           "request": xml_http_request.toStr(), "options": options})
+    if literal is not None:
+      self.page.body.onReady('''
+var %(cachedVar)s; 
+%(jqUI)s.autocomplete(Object.assign({
+  minLength: %(minLength)s,
+  source: function(request, resp) {
+    if(%(useCache)s){
+      if(typeof %(cachedVar)s === 'undefined'){%(request)s}
+      else{resp($.ui.autocomplete.filter(%(cachedVar)s, request.term))}}
+    else{%(request)s}},
+  }, %(options)s))%(css)s;
+%(jqUI)s.autocomplete("instance")._renderItem = function( ul, item ) {
+  return $("<li>").append(`<div>%(literal)s</div>`).appendTo(ul)}
+''' % {"cachedVar": cached_var, "jqUI": JsQuery.decorate_var(self.dom.varId, convert_var=False),
+       "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length, "css": css_attrs,
+       "request": xml_http_request.toStr(), "options": options, "literal": literal})
+    else:
+      self.page.body.onReady('''
+var %(cachedVar)s; 
+%(jqUI)s.autocomplete(Object.assign({
+  minLength: %(minLength)s,
+  source: function(request, resp) {
+    if(%(useCache)s){
+      if(typeof %(cachedVar)s === 'undefined'){%(request)s}
+      else{resp($.ui.autocomplete.filter(%(cachedVar)s, request.term))}}
+    else{%(request)s}},
+  }, %(options)s))%(css)s
+''' % {"cachedVar": cached_var, "jqUI": JsQuery.decorate_var(self.dom.varId, convert_var=False),
+       "useCache": JsUtils.jsConvertData(with_cache, None), "minLength": min_length, "css": css_attrs,
+       "request": xml_http_request.toStr(), "options": options})
 
   def __str__(self):
     if not self.__focus and (self.options.reset or self.options.select):
