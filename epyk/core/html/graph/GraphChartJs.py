@@ -327,10 +327,14 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             if h.upper() in Colors.defined:
                 h = Colors.defined[h.upper()]['hex']
             if not isinstance(h, tuple):
-                line_colors.append(h)
-                bg_colors.append("rgba(%s, %s, %s, %s" % (
-                    Colors.getHexToRgb(h)[0], Colors.getHexToRgb(h)[1],
-                    Colors.getHexToRgb(h)[2], self.options.opacity))
+                if h.startswith("#"):
+                    line_colors.append(h)
+                    bg_colors.append("rgba(%s, %s, %s, %s" % (
+                        Colors.getHexToRgb(h)[0], Colors.getHexToRgb(h)[1],
+                        Colors.getHexToRgb(h)[2], self.options.opacity))
+                else:
+                    line_colors.append(h)
+                    bg_colors.append(h)
             else:
                 line_colors.append(h[0])
                 bg_colors.append(h[0])
@@ -1026,7 +1030,12 @@ class ChartTreeMap(Chart):
             data.borderColor = self.options.colors[index]
         for k, v in kwargs.items():
             if hasattr(data, k):
-                setattr(data, k, v)
+                data_attr = getattr(data, k)
+                if isinstance(v, dict) and hasattr(data_attr, '_attrs'):
+                    for w, x in v.items():
+                        setattr(data_attr, w, x)
+                else:
+                    setattr(data, k, v)
             else:
                 data._attrs[k] = v
         return data

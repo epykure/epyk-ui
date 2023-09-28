@@ -398,7 +398,8 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
 
   @packageImport("accounting")
   def toNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
-    """   Convert to number using the accounting Javascript module-
+    """
+    Convert to number using the accounting Javascript module-
 
     Related Pages:
 
@@ -412,7 +413,7 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
       digit, thousand_sep), name="callback", js_type=True)
     return self
 
-  def callback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
+  def fcallback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     """
 
 
@@ -426,6 +427,24 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
     self._config('''function(val, index) {return (
 function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().split('T')[0]}''', js_type=True)
     return self
+
+  @property
+  def callback(self):
+    """
+
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/samples/scale-options/ticks.html
+
+    :param js_funcs:
+    :param profile:
+    """
+    return self._config_get()
+
+  @callback.setter
+  def callback(self, val: str):
+    self._config(val)
 
   def userCallback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
     """   Convert to number using the accounting Javascript module-

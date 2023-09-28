@@ -1951,6 +1951,27 @@ class TableConfig(OptionsWithTemplates):
       str_func = "function(param){%s}" % str_func
     self._config(str_func, js_type=True)
 
+  def onSelectionChanged(
+          self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+    """
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-selection/
+
+    :param js_funcs: The Javascript functions
+    :param profile: Optional. A flag to set the component performance storage
+    :param func_ref: Optional. Specify if js_funcs point to an external function
+    """
+    if self.rowSelection is None:
+        self.rowSelection = 'single'
+    if not isinstance(js_funcs, list):
+      js_funcs = [js_funcs]
+    str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+    if not str_func.startswith("function(param)") and not func_ref:
+      str_func = "function(param){%s}" % str_func
+    self._config(str_func, js_type=True)
+
   def onColumnResized(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                       func_ref: bool = False):
     """

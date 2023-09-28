@@ -270,15 +270,14 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
         :param data_ref: Optional. Data reference on the Js side
         """
-        if self.options.rowSelection is None:
-            self.options.rowSelection = 'single'
         row_style = self.options.rowStyle
         if row_style is None:
             self.options.rowStyle = {"cursor": 'pointer'}
         else:
             row_style.update({"cursor": 'pointer'})
             self.options.rowStyle = row_style
-        return super(Table, self).click(js_funcs, profile, source_event, on_ready)
+        self.options.onSelectionChanged(js_funcs, profile)
+        return self
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())

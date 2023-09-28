@@ -768,10 +768,11 @@ class ChartJs:
       'commons': {
         "opacity": self.opacity, "colors": {"base": self.page.theme.notch(), "light": self.page.theme.notch(-3)}}})
     groups = groups or x_axis
-    if len(groups) == 1:
-      options["x_axis"] = groups[0]
-    else:
-      options["groups"] = groups
+    if groups is not None:
+      if len(groups) == 1:
+        options["x_axis"] = groups[0]
+      else:
+        options["groups"] = groups
     data = self.page.data.chartJs.y(record, y_columns, None)
     treemap_chart = graph.GraphChartJs.ChartTreeMap(self.page, width, height, html_code, options, profile)
     treemap_chart.colors(self.page.theme.charts)

@@ -69,6 +69,32 @@ class Options(DataClass):
       else:
         self._config(v, k, hasattr(v, "toStr"))
 
+  def rset(self, vals: dict, js_check: bool = True):
+    """
+    recursive options setter
+
+    :param vals: The input schema
+    :param js_check: Flag to automatically check the JavaScript expression starting with function
+    """
+    def deep_set(object, rval: dict):
+      for k, v in rval.items():
+        if hasattr(object, k):
+          if isinstance(v, dict):
+            sub_object = getattr(object, k)
+            if issubclass(sub_object.__class__, Options):
+              deep_set(sub_object, v)
+            else:
+              setattr(object, k, v)
+          else:
+            if js_check and isinstance(v, str) and v.startswith("function"):
+              setattr(object, k, JsUtils.jsWrap(v))
+            else:
+              setattr(object, k, v)
+        else:
+          object._config(v, k)
+
+    deep_set(self, vals)
+
   def _config_get(self, dflt: Any = None, name: str = None):
     """
     Get the option attribute to be added on the Javascript side during the component build.

@@ -899,7 +899,7 @@ class AgGrid(JsPackage):
 
       https://www.ag-grid.com/javascript-grid-api/
     """
-    return JsObjects.JsVoid("%s.api.getSelectedRows()" % self.varId)
+    return JsObjects.JsArray.JsArray.get("%s.api.getSelectedRows()" % self.varId)
 
   def getCellRanges(self):
     """
