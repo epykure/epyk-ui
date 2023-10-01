@@ -95,6 +95,19 @@ class Options(DataClass):
 
     deep_set(self, vals)
 
+  def remove(self, name: str = None) -> bool:
+    """
+    remove a field from the option configuration if it exists.
+
+    :param name: Optional. The attribute name
+    """
+    name = name or sys._getframe().f_back.f_code.co_name
+    if name in self.js_tree:
+      del self.js_tree[name]
+      return True
+
+    return False
+
   def _config_get(self, dflt: Any = None, name: str = None):
     """
     Get the option attribute to be added on the Javascript side during the component build.

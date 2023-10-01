@@ -672,14 +672,14 @@ class Icon(Html.Html):
             pressed_class = "event-pressed"
         if not isinstance(js_press_funcs, list):
             js_press_funcs = [js_press_funcs]
-        js_press_funcs.append(self.dom.setAttribute("aria-pressed", True))
+        js_press_funcs.insert(0, self.dom.setAttribute("aria-pressed", True))
         js_press_funcs.append(self.dom.addClass(pressed_class))
         str_fnc = "if(%s.getAttribute('aria-pressed') == 'false'){%s}" % (
             self.dom.varId, JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
         if js_release_funcs is not None:
             if not isinstance(js_release_funcs, list):
                 js_release_funcs = [js_release_funcs]
-            js_release_funcs.append(self.dom.setAttribute("aria-pressed", False))
+            js_release_funcs.insert(0, self.dom.setAttribute("aria-pressed", False))
             js_release_funcs.append(self.dom.removeClass(pressed_class))
             str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
         return self.on("click", str_fnc, profile, on_ready=on_ready)

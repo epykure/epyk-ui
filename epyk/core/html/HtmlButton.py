@@ -174,7 +174,7 @@ class Button(Html.Html):
             if self.options.group is not None and not self.options.multiple:
                 js_press_funcs.append(self.dom.release(by_name=True))
             js_press_funcs.append(self.dom.lock(not_allowed=js_release_funcs is None))
-            js_press_funcs.append(self.dom.setAttribute("aria-pressed", True))
+            js_press_funcs.insert(0, self.dom.setAttribute("aria-pressed", True))
             js_press_funcs.append(self.dom.addClass(pressed_class))
             str_fnc = "if(%s.getAttribute('aria-pressed') == 'false'){%s}" % (
                 self.dom.varId, JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
@@ -185,7 +185,7 @@ class Button(Html.Html):
             if not isinstance(js_release_funcs, list):
                 js_release_funcs = [js_release_funcs]
             js_release_funcs.append(self.dom.release())
-            js_release_funcs.append(self.dom.setAttribute("aria-pressed", False))
+            js_release_funcs.insert(0, self.dom.setAttribute("aria-pressed", False))
             js_release_funcs.append(self.dom.removeClass(pressed_class))
             str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
         return self.on("click", str_fnc, profile, on_ready=on_ready)
@@ -644,7 +644,7 @@ class IconEdit(Html.Html):
         if js_press_funcs is not None:
             if not isinstance(js_press_funcs, list):
                 js_press_funcs = [js_press_funcs]
-            js_press_funcs.append(self.dom.setAttribute("aria-pressed", True))
+            js_press_funcs.insert(0, self.dom.setAttribute("aria-pressed", True))
             js_press_funcs.append(self.dom.addClass(pressed_class))
             str_fnc = "if(%s.getAttribute('aria-pressed') == 'false'){%s}" % (
                 self.dom.varId, JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
@@ -654,7 +654,7 @@ class IconEdit(Html.Html):
 
             if not isinstance(js_release_funcs, list):
                 js_release_funcs = [js_release_funcs]
-            js_release_funcs.append(self.dom.setAttribute("aria-pressed", False))
+            js_release_funcs.insert(0, self.dom.setAttribute("aria-pressed", False))
             js_release_funcs.append(self.dom.removeClass(pressed_class))
             str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
         return self.on("click", str_fnc, profile, on_ready=on_ready)

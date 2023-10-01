@@ -2242,11 +2242,23 @@ class TableConfig(OptionsWithTemplates):
 
       https://www.ag-grid.com/javascript-data-grid/row-height/
     """
-    return self._config_get(25)
+    return self._config_get(42)
 
   @rowHeight.setter
-  def rowHeight(self, num: int):
-    self._config(int(num))
+  def rowHeight(self, num: Union[bool, int]):
+    if not num:
+      self.remove()
+      self.page.properties.css.remove_text('aggrid_row_height')
+    else:
+      row_height_px = int(num)
+      if row_height_px < 42:
+        theme = self.component.style.theme_name or "alpine"
+        self.page.properties.css.add_text('''
+.ag-theme-%s {
+  --ag-grid-size: 3px;
+  --ag-list-item-height: %spx;
+}''' % (theme, row_height_px), map_id='aggrid_row_height', replace=True)
+      self._config(row_height_px)
 
   @property
   def rowStyle(self):
@@ -2319,6 +2331,36 @@ class TableConfig(OptionsWithTemplates):
 
   @suppressPaginationPanel.setter
   def suppressPaginationPanel(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def suppressRowHoverHighlight(self):
+    """
+    Highlighting Rows is on by default. To turn it off, set the grid property.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-styles/
+    """
+    return self._config_get()
+
+  @suppressRowHoverHighlight.setter
+  def suppressRowHoverHighlight(self, flag: bool):
+    self._config(flag)
+
+  @property
+  def columnHoverHighlight(self):
+    """
+    Highlighting Columns is off by default. To turn it on, set the grid property.
+
+    Related Pages:
+
+      https://www.ag-grid.com/javascript-data-grid/row-styles/
+    """
+    return self._config_get()
+
+  @columnHoverHighlight.setter
+  def columnHoverHighlight(self, flag: bool):
     self._config(flag)
 
   @property

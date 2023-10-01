@@ -195,14 +195,14 @@ class CssProperties:
 
     def __init__(self, context):
         self._context = context
-        self.__map_css = set()
+        self.__map_css = {}
 
     @property
     def text(self) -> str:
         """ Return the extra CSS styles manually added. """
         return "\n".join(self._context['css']["text"])
 
-    def add_text(self, text: str, map_id: str = None):
+    def add_text(self, text: str, map_id: str = None, replace: bool = False):
         """
         Add CSS style from String.
 
@@ -215,12 +215,35 @@ class CssProperties:
           page.outs.html_file(name="test", print_paths=True)
 
         :param text: CSS Style to be directly included to the page
-        :param map_id: Internal ID to avoid loading the same content multiple time
+        :param map_id: Optional. Internal ID to avoid loading the same content multiple time
+        :param replace: Optional. replace the CSS text if already defined
         """
         if map_id is None or map_id not in self.__map_css:
             self._context['css']["text"].append(text)
             if map_id is not None:
-                self.__map_css.add(map_id)
+                self.__map_css[map_id] = len(self._context['css']["text"]) - 1
+        elif map_id in self.__map_css and replace:
+            self._context['css']["text"][self.__map_css[map_id]] = text
+
+    def remove_text(self, map_id: str):
+        """
+        Remove th text from the mapping.
+        This will also reset the following indices.
+
+        :param map_id: Optional. Internal ID to avoid loading the same content multiple time
+        """
+        if  map_id  in self.__map_css:
+            i = self.__map_css[map_id]
+            self._context['css']["text"].pop(i)
+            tmp_css_context = {}
+            del self.__map_css[map_id]
+            # Reset existing stored indices
+            for k, v in self.__map_css.items():
+                if v > i:
+                    tmp_css_context[k] = v - 1
+                else:
+                    tmp_css_context[k] = v
+            self.__map_css = tmp_css_context
 
     def add_builders(self, builder_def: str):
         """

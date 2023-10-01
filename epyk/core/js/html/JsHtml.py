@@ -695,6 +695,14 @@ html2canvas(%(id)s).then((canvas) => {
   canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]))
 })''' % {"id": self.component.dom.varId}
 
+    def press(self):
+        """ DOM event to trigger a click based on the pressed' aria tag """
+        return self.page.js.if_(self.component.aria.js_is("pressed", "false"), [self.trigger("click")])
+
+    def unpress(self):
+        """ DOM event to trigger a click based on the pressed' aria tag """
+        return self.page.js.if_(self.component.aria.js_is("pressed", "true"), [self.trigger("click")])
+
 
 class JsHtmlRich(JsHtml):
 

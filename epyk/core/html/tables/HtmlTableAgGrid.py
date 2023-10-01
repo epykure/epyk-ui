@@ -30,13 +30,14 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         if records is not None:
             self.options.data = records
 
-    def theme(self, name: str, custom_cls_name: bool = False, row_height: int = None):
+    def theme(self, name: str, custom_cls_name: bool = False, row_height: int = None, css_overrides: dict = None):
         """
         Define the theme to be used for the Aggrid table.
 
         Related Pages:
 
             https://www.ag-grid.com/javascript-data-grid/themes/
+            https://www.ag-grid.com/javascript-data-grid/global-style-customisation-variables/
 
         Usage::
 
@@ -47,8 +48,9 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             table.theme("ag-theme-mycustomtheme", custom_cls_name=True)
 
         :param name: Aggrid theme name or Custom CSS class name
-        :param custom_cls_name: Flag to specify if the theme is coming from the prdefined ones in Ag Grid
-        :param row_height: To change the row height value to match the new theme definition (35px)
+        :param custom_cls_name: Optional. Flag to specify if the theme is coming from the prdefined ones in Ag Grid
+        :param row_height: Optional. To change the row height value to match the new theme definition (35px)
+        :param css_overrides: Optional. Global Styling customisation
         """
         if not custom_cls_name:
             if row_height is not None:
@@ -68,6 +70,16 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             self.attr["class"].add("ag-theme-%s" % name)
         else:
             self.attr["class"].add(name)
+        self.style.theme_name = name
+        if css_overrides is not None:
+            css_props = []
+            for k, v in css_overrides.items():
+                if not k.startswith("--ag-"):
+                    css_props.append("--ag-%s:%s" % (k, v))
+                else:
+                    css_props.append("%s:%s" % (k, v))
+            self.page.properties.css.add_text(
+                ".ag-theme-%s {%s}" % (name, ";".join(css_props)), "aggrid_theme_ovr", replace=True)
 
     def headers(self, cols_def: Dict[str, dict]):
         """

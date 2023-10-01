@@ -2,6 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import json
+from epyk.core.js.primitives import JsBoolean
+from epyk.core.js import JsUtils
 from epyk.core.py import primitives
 
 
@@ -20,10 +22,10 @@ class Aria:
             k = k.replace("aria-", "")
             setattr(self, k, v)
 
-    def custom(self, key, val):
+    def custom(self, key: str, val):
         """
 
-        :param key:
+        :param key: The key definition of the aria
         :param val:
         """
         self.component.attr["aria-%s" % key] = val
@@ -32,10 +34,29 @@ class Aria:
         """
         Get the value of a custom aria.
 
-        :param key: The key definition of the aria.
-        :param dfl: The default value.
+        :param key: The key definition of the aria
+        :param dfl: The default value
         """
         return self.component.attr.get("aria-%s" % key, dfl)
+
+    def has(self, key: str) -> bool:
+        """
+        Check is key existing in the component's aria.
+
+        :param key: The key definition of the aria
+        """
+        return "aria-%s" % key in self.component.attr
+
+    def js_is(self, key: str, value) -> JsBoolean.JsBoolean:
+        """
+        Check the value of the component's aria on the JavaScript side.
+        Returns a Boolean to be used in a JavaScript expression.
+
+        :param key: The key definition of the aria
+        :param value: Aria's value - default string
+        """
+        return JsBoolean.JsBoolean.get("%s.getAttribute('aria-%s') == %s" % (
+            self.component.dom.varId, key, JsUtils.jsConvertData(value, None)))
 
     @property
     def role(self):

@@ -770,6 +770,9 @@ class Tags:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
+    Usage::
+
+
     Related Pages:
 
       https://www.w3schools.com/tags/tag_i.asp
