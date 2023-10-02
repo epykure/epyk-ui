@@ -56,17 +56,17 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             if row_height is not None:
                 self.options.rowHeight = row_height
             if self.page.imports.pkgs.ag_grid.community_version:
-                Imports.CSS_IMPORTS['ag-grid-community']["modules"].append(
-                    {'script': 'ag-theme-%s.min.css' % name, 'path': 'ag-grid/%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
-                     'cdnjs': Imports.CSS_IMPORTS['ag-grid-community']["modules"][0]['cdnjs']}
-                )
+                self.page.imports.extend(
+                    "ag-grid-community", [
+                        {'script': 'ag-theme-%s.min.css' % name,
+                         'path': 'ag-grid/%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
+                         'node_path': 'styles/'}])
             else:
-                Imports.CSS_IMPORTS['ag-grid-community']["modules"].append(
-                    {'script': 'ag-theme-%s.min.css' % name,
-                     'path': 'ag-grid-enterprise@%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
-                     'cdnjs': Imports.CSS_IMPORTS['ag-grid-community']["modules"][0]['cdnjs']}
-                )
-            self.page.imports.reload()
+                self.page.imports.extend(
+                    "ag-grid-community", [
+                        {'script': 'ag-theme-%s.min.css' % name,
+                         'path': 'ag-grid-enterprise@%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
+                         'node_path': 'styles/'}])
             self.attr["class"].add("ag-theme-%s" % name)
         else:
             self.attr["class"].add(name)
@@ -80,6 +80,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
                     css_props.append("%s:%s" % (k, v))
             self.page.properties.css.add_text(
                 ".ag-theme-%s {%s}" % (name, ";".join(css_props)), "aggrid_theme_ovr", replace=True)
+        self.options.rowHeight = self.options.rowHeight
 
     def headers(self, cols_def: Dict[str, dict]):
         """
