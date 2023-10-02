@@ -4545,11 +4545,35 @@ class ImportManager:
 
         return JS_IMPORTS[alias].get('website', "")
 
-    def extend(self, alias: str, js_modules: List[dict] = None, css_modules: List[dict] = None, version: str = None):
+    def append_to(self, alias: str, js_modules: List[dict] = None, css_modules: List[dict] = None, version: str = None):
+        """
+        Update an existing configuration by adding addon scripts or styles.
+
+        :param alias: NPM package alias
+        :param js_modules: JavaScript modules extension
+        :param css_modules: CSS styles extension
+        :param version: The package version (if different)
+        """
         if js_modules is not None:
             version = version or JS_IMPORTS[alias]["version"]
+            cdnjs = None
+            if JS_IMPORTS[alias]['modules']:
+                cdnjs = JS_IMPORTS[alias]['modules'][0].get("cdnjs")
             for js_module in js_modules:
+                if "cdnjs" not in js_module and cdnjs is not None:
+                    js_module["cdnjs"] = cdnjs
                 self.jsImports[alias]["main"][script_cdnjs_path(alias, js_module)] = version
+                self.jsImports[alias]["type"][script_cdnjs_path(alias, js_module)] = 'text/javascript'
+        if css_modules is not None:
+            version = version or CSS_IMPORTS[alias].get("version") or JS_IMPORTS[alias]["version"]
+            cdnjs = None
+            if CSS_IMPORTS[alias]['modules']:
+                cdnjs = CSS_IMPORTS[alias]['modules'][0].get("cdnjs")
+            for css_module in css_modules:
+                if "cdnjs" not in css_module and cdnjs is not None:
+                    css_module["cdnjs"] = cdnjs
+                self.jsImports[alias]["main"][script_cdnjs_path(alias, css_module)] = version
+                self.jsImports[alias]["type"][script_cdnjs_path(alias, css_module)] = 'stylesheet'
 
 
 class Package:

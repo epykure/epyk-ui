@@ -314,7 +314,7 @@ class OptionsCode(OptionsWithTemplates):
     def mode(self, value):
         MAP_MODES = {"html": "htmlmixed", "yaml": "yaml-frontmatter", "json": "javascript"}
         value = MAP_MODES.get(value, value)
-        self.page.imports.extend(
+        self.page.imports.append_to(
             "codemirror", [{"script": '%s.js' % value, "path": 'codemirror/%%(version)s/mode/%s/' % value}])
         self._config(value)
 
@@ -862,7 +862,7 @@ class OptionsCode(OptionsWithTemplates):
 
     @matchBrackets.setter
     def matchBrackets(self, value):
-        self.page.imports.extend(
+        self.page.imports.append_to(
             "codemirror", [{"script": 'matchbrackets.min.js', "path": 'codemirror/%(version)s/addon/edit/'}])
         self._config(value)
 
@@ -883,8 +883,8 @@ class OptionsCode(OptionsWithTemplates):
 
     @styleActiveLine.setter
     def styleActiveLine(self, value):
-        self.page.imports.extend("codemirror",
-                                 [{"script": 'active-line.min.js', "path": 'codemirror/%(version)s/addon/selection/'}])
+        self.page.imports.append_to(
+            "codemirror", [{"script": 'active-line.min.js', "path": 'codemirror/%(version)s/addon/selection/'}])
         self._config(value)
 
     @property

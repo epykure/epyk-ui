@@ -56,13 +56,13 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             if row_height is not None:
                 self.options.rowHeight = row_height
             if self.page.imports.pkgs.ag_grid.community_version:
-                self.page.imports.extend(
+                self.page.imports.append_to(
                     "ag-grid-community", [
                         {'script': 'ag-theme-%s.min.css' % name,
                          'path': 'ag-grid/%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
                          'node_path': 'styles/'}])
             else:
-                self.page.imports.extend(
+                self.page.imports.append_to(
                     "ag-grid-community", [
                         {'script': 'ag-theme-%s.min.css' % name,
                          'path': 'ag-grid-enterprise@%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
