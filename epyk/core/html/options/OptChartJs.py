@@ -3,7 +3,7 @@
 
 import logging
 
-from typing import List, Optional
+from typing import List, Optional, Union
 from epyk.core.py import types as etypes
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport, until_version, from_version
@@ -906,9 +906,11 @@ class OptionTitle(Options):
   @property
   def align(self):
     """
+    Alignment of the title
 
     Related Pages:
 
+      https://www.chartjs.org/docs/latest/configuration/title.html
       https://www.chartjs.org/docs/latest/samples/title/alignment.html
     """
     return self._config_get()
@@ -950,7 +952,7 @@ class OptionTitle(Options):
     return self._config_get()
 
   @text.setter
-  def text(self, val: str):
+  def text(self, val: Union[str, List[str]]):
     self._config(val)
 
   @property
@@ -969,10 +971,17 @@ class OptionTitle(Options):
 
   @property
   def position(self):
-    return self._config_get()
+    """
+
+    Related Pages:
+
+      https://www.chartjs.org/docs/latest/configuration/title.html
+
+    """
+    return self._config_get("top")
 
   @position.setter
-  def position(self, val):
+  def position(self, val: str):
     self._config(val)
 
   @property
@@ -1946,10 +1955,13 @@ class OptionChartJsPlugins(Options):
   @property
   def subtitle(self) -> OptionTitle:
     """  
+    Subtitle is a second title placed under the main title, by default. It has exactly the same configuration options
+    with the main title
 
     Related Pages:
 
       https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+      https://www.chartjs.org/docs/latest/configuration/subtitle.html
     """
     return self._config_sub_data("subtitle", OptionTitle)
 

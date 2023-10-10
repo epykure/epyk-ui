@@ -7,8 +7,8 @@ function chartBubble(data, options){
           if(typeof dataset.backgroundColor === "undefined"){dataset.backgroundColor = options.background_colors[i]};
           if(typeof dataset.borderColor === "undefined"){dataset.borderColor = options.colors[i]};
           if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)}
-          result.datasets.push(dataset) })
-      } else {
+          result.datasets.push(dataset) })}
+    else {
         var temp = {}; var labels = [];
         options.y_columns.forEach(function(series){temp[series] = []});
         data.forEach(function(rec){
