@@ -20,7 +20,9 @@ function chartBubble(data, options){
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
           dataSet = {label: series, type: options.type, data: [], backgroundColor: options.colors[i]};
-          if(typeof options.commons !== 'undefined'){
+          if ((typeof options.props !== 'undefined') && (typeof options.props[i] !== 'undefined')){
+           for(var attr in options.props[i]){dataSet[attr] = options.props[i][attr]}}
+          else if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){dataSet.data = temp[series]});
           if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){

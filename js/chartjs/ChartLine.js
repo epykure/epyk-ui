@@ -22,11 +22,14 @@ function chartLine(data, options){
         });
         result = {datasets: [], labels: labels};
         options.y_columns.forEach(function(series, i){
-            dataSet = {label: series, data: [], backgroundColor: options.background_colors[i], type: options.type,
-                 hoverBackgroundColor: options.colors[i], borderColor: options.colors[i],
-                 borderColor: options.colors[i], borderWidth: 1, hoverBorderColor: options.colors[i]};
+            dataSet = {
+                label: series, data: [], backgroundColor: options.background_colors[i], type: options.type,
+                hoverBackgroundColor: options.colors[i], borderColor: options.colors[i],
+                borderColor: options.colors[i], borderWidth: 1, hoverBorderColor: options.colors[i]};
             if ((typeof options.props !== 'undefined') && (typeof options.props[series] !== 'undefined')){
               for(var attr in options.props[series]){dataSet[attr] = options.props[series][attr]}}
+            else if ((typeof options.props !== 'undefined') && (typeof options.props[i] !== 'undefined')){
+              for(var attr in options.props[i]){dataSet[attr] = options.props[i][attr]}}
             else if(typeof options.commons !== 'undefined'){
               for(var attr in options.commons){dataSet[attr] = options.commons[attr]}}
               labels.forEach(function(x){

@@ -369,7 +369,7 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
     :param flow: Data flow processes (name and parameters)
     :param page: Page object with the full context
     """
-    data_expr = jsConvertData(data, None)
+    data_expr = jsConvertData(data, None, force=True)
     if not flow:
         if hasattr(data_expr, "toStr"):
             return data_expr.toStr()

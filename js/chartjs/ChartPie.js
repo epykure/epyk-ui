@@ -23,7 +23,9 @@ function chartPie(data, options){
         options.y_columns.forEach(function(series){
           dataSet = {label: series, data: [], backgroundColor: options.background_colors, type: options.type,
                      borderColor: options.colors, hoverBackgroundColor: options.colors};
-          if(typeof options.commons !== 'undefined'){
+          if ((typeof options.props !== 'undefined') && (typeof options.props[i] !== 'undefined')){
+           for(var attr in options.props[i]){dataSet[attr] = options.props[i][attr]}}
+          else if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}
           labels.forEach(function(x, i){
             dataSet.backgroundColor.push(options.colors);

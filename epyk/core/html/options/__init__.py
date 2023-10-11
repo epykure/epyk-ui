@@ -442,6 +442,19 @@ class Options(DataClass):
  
     :param attrs: Optional. The extra or overridden options
     """
+
+    def _process_sub_items(v: dict) -> str:
+      """ Allow recursive check for sub components """
+      items = []
+      for sk, sv in v.items():
+        if isinstance(sv, dict):
+          items.append("%s: %s" % (sk, _process_sub_items(sv)))
+        elif hasattr(sv, 'toStr'):
+          items.append("%s: %s" % (sk, JsUtils.jsConvertData(sv, None)))
+        else:
+          items.append("%s: %s" % (sk, json.dumps(sv)))
+      return "{%s}" % ",".join(items)
+
     js_attrs, attrs = [], attrs or {}
     if self.__config_sub_levels:
       tmp_tree = dict(self.js_tree)
@@ -472,10 +485,7 @@ class Options(DataClass):
               js_attrs.append("%s: %s" % (k, v))
           else:
             if isinstance(v, dict):
-              v_items = []
-              for k1, v1 in v.items():
-                v_items.append("%s: %s" % (k1, JsUtils.jsConvertData(v1, None)))
-              js_attrs.append("%s: {%s}" % (k, ", ".join(v_items)))
+              js_attrs.append("%s: %s" % (k, _process_sub_items(v)))
             else:
               js_attrs.append("%s: %s" % (k, json.dumps(v)))
       return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
