@@ -20,10 +20,12 @@ function chartPie(data, options){
                 labels.push(rec[options.x_axis]); uniqLabels[rec[options.x_axis]] = true};
               temp[name][rec[options.x_axis]] = rec[name]}})});
         result = {datasets: [], labels: labels};
-        options.y_columns.forEach(function(series){
+        options.y_columns.forEach(function(series, i){
           dataSet = {label: series, data: [], backgroundColor: options.background_colors, type: options.type,
                      borderColor: options.colors, hoverBackgroundColor: options.colors};
-          if ((typeof options.props !== 'undefined') && (typeof options.props[i] !== 'undefined')){
+          if ((typeof options.props !== 'undefined') && (typeof options.props[series] !== 'undefined')){
+              for(var attr in options.props[series]){dataSet[attr] = options.props[series][attr]}}
+          else if ((typeof options.props !== 'undefined') && (typeof options.props[i] !== 'undefined')){
            for(var attr in options.props[i]){dataSet[attr] = options.props[i][attr]}}
           else if(typeof options.commons !== 'undefined'){
             for(var attr in options.commons){dataSet[attr] = options.commons[attr]};}

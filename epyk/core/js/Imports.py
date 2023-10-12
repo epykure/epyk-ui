@@ -276,6 +276,7 @@ JS_IMPORTS = {
         'website': 'https://www.ag-grid.com/javascript-grid/',
         'repository': 'https://github.com/ag-grid/ag-grid',
         'version': '25.1.0',
+        'enterprise': '30.2.0',
         "register": {"alias": "agGrid", "module": "ag-grid-community.min", "npm": 'ag-grid-community'},
         'modules': [
             {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/',
@@ -2613,7 +2614,7 @@ class ImportModule:
         self.community_version = False
         self.page.imports.add(self._name)
         if self._name == 'ag-grid-community':
-            version = version or "30.1.0"
+            version = version or JS_IMPORTS['ag-grid-community']["enterprise"]
             JS_IMPORTS['ag-grid-community']["version"] = version
             JS_IMPORTS['ag-grid-community']["register"]["module"] = "ag-grid-enterprise.min"
             JS_IMPORTS['ag-grid-community']["register"]["npm"] = "ag-grid-enterprise"
