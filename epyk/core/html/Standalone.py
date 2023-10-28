@@ -109,6 +109,34 @@ def load_component(component_path: Path, raise_exception: bool = True) -> dict:
                             content[prop] = str(Path(component_path, fp))
             class_name = "".join(map(lambda x: x.capitalize(), content["selector"].split("-")))
             cls = type(class_name, (Component,), content)
+            if "dependencies" in content:
+                requirements = []
+                for dep, dep_version in content["dependencies"].items():
+                    if dep_version:
+                        requirements.append((dep, dep_version))
+                    else:
+                        requirements.append(dep)
+                cls.requirements = requirements
+            cls.js_funcs_map = content.get("defined_functions", {})
+            if "additional_functions" in content:
+                cls_js = type(class_name, (JsComponents,), {})
+                for add_func, func_prop in content["additional_functions"].items():
+                    func_name = "%s%s" % (cls_js.__name__, add_func)
+                    args, js_args = ["self"], []
+                    for k, props in func_prop.get("properties", {}).items():
+                        js_args.append(k)
+                        if "default" in props:
+                            args.append("%s=%s" % (k, props["default"]))
+                        else:
+                            args.append(k)
+                    func_expr = '''
+def %s(%s): 
+    return JsObjects.JsObject.JsObject.get("%%s.%s({%%s})" %% (self.varName, ", ".join([
+        "%%s: %%s" %% (k, JsUtils.jsConvertData(v, None)) for k, v in {%s}.items()])))''' % (
+                        func_name, ",".join(args), add_func, ",".join(["'%s': %s" % (k, k) for k in js_args] ))
+                    exec(func_expr.strip())
+                    setattr(cls_js, add_func, eval(func_name))
+                cls._def_js_cls = cls_js
             if component_attrs:
                 cls._init__options = component_attrs
             return {"class": cls, "content": content}
@@ -129,7 +157,10 @@ class DomComponent(JsHtml.JsHtml):
 
     @property
     def content(self) -> JsHtml.ContentFormatters:
-        """ Get the component content. """
+        """ Get the component content. - can be overriden with js mapping value: getComponentValue() for instance """
+        if "value" in self.component.js_funcs_map:
+            return JsHtml.ContentFormatters(self.page, "%s.%s()" % (self.component.js.objectId, self.component.js_funcs_map["value"]))
+
         return JsHtml.ContentFormatters(self.page, "(function(){if(%(object)s.value != undefined){return %(object)s.value()} else {return %(code)s.innerHTML}})()" % {
             "object": self.component.js.objectId, "code": self.varName})
 
@@ -152,7 +183,7 @@ class DomComponent(JsHtml.JsHtml):
         return JsNodeDom.JsDoms.get("document.querySelector('#%s').closest('div[name=%s]').querySelector(%s)" % (
             self.component.html_code, self.component.selector, JsUtils.jsConvertData(tag, None)))
 
-    def querySelector(self, tag):
+    def querySelector(self, tag: str):
         """
         Get the dom based on a specific tag.
 
@@ -185,6 +216,7 @@ class JsComponents(JsPackage):
         :param options: Optional. Specific Python options available for this component
         :param fnc: Optional. The underlying method used in the template
         """
+        fnc = self.component.js_funcs_map.get(fnc, fnc)
         return JsObjects.JsObject.JsObject.get("%s.%s(%s, %s)" % (
             self.varName, fnc, JsUtils.jsConvertData(data, None), JsUtils.jsConvertData(options or {}, None)))
 
@@ -197,6 +229,7 @@ class JsComponents(JsPackage):
         :param options: Optional. Specific Python options available for this component
         :param fnc: Optional. The underlying method used in the template
         """
+        fnc = self.component.js_funcs_map.get(fnc, fnc)
         return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (
             self.varName, fnc, JsUtils.jsConvertData(options, None)))
 
@@ -211,6 +244,7 @@ class JsComponents(JsPackage):
         :param options: Optional. Specific Python options available for this component
         :param fnc: Optional. The underlying method used in the template
         """
+        fnc = self.component.js_funcs_map.get(fnc, fnc)
         return JsObjects.JsObject.JsObject.get("%s.%s(%s, %s)" % (
             self.varName, fnc, JsUtils.jsConvertData(data, None),
             JsUtils.jsConvertData(options, None)))
@@ -304,13 +338,16 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     _option_cls = SdOptions
     _init__options: dict = None
 
+    js_funcs_map: dict = {}   # Internal mapping for Js functions
+    _def_js_cls = JsComponents
+
     def __init__(self, page: primitives.PageModel, vals: Any = None, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
-                 css_attrs: Optional[dict] = None, **kwargs):
+                 css_attrs: Optional[dict] = None, verbose: bool = None, **kwargs):
         if self.selector is None:
             raise ValueError("selector must be defined for a standalone component")
 
-        super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs)
+        super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs, verbose=verbose)
         self.style.clear_style(persist_attrs=css_attrs)  # Clear all default CSS styles.
         self.style.no_class()  # Clear all default CSS Classes.
         self.items, self.__metadata, self.__directives, self.__html_content = [], {}, None, None
@@ -353,7 +390,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         :return: A Javascript Dom object.
         """
         if self._js is None:
-            self._js = JsComponents(self, page=self.page, js_code=self.html_code)
+            self._js = self._def_js_cls(self, page=self.page, js_code=self.html_code)
         return self._js
 
     @classmethod

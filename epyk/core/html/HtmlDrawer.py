@@ -20,9 +20,9 @@ class Drawer(Html.Html):
     _option_cls = OptPanel.OptionDrawer
 
     def __init__(self, page: primitives.PageModel, width: tuple, height: tuple, options: Optional[dict],
-                 helper: Optional[str], profile: Optional[Union[dict, bool]]):
+                 helper: Optional[str], profile: Optional[Union[dict, bool]], verbose: bool = False):
         super(Drawer, self).__init__(page, None, profile=profile, options=options,
-                                     css_attrs={"width": width, "height": height})
+                                     css_attrs={"width": width, "height": height}, verbose=verbose)
         self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
         self.style.css.position = 'relative'
 
@@ -123,9 +123,10 @@ class DrawerMulti(Html.Html):
     _option_cls = OptPanel.OptionDrawer
 
     def __init__(self, page: primitives.PageModel, component: Html.Html, width: tuple, height: tuple,
-                 options: Optional[dict], helper: Optional[str], profile: Optional[Union[bool, dict]]):
+                 options: Optional[dict], helper: Optional[str], profile: Optional[Union[bool, dict]],
+                 verbose: bool = False):
         super(DrawerMulti, self).__init__(page, None, options=options, css_attrs={"width": width, "height": height},
-                                          profile=profile)
+                                          profile=profile, verbose=verbose)
         self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
         self.style.css.position = 'relative'
 

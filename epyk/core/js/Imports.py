@@ -3679,14 +3679,15 @@ class ImportManager:
                     for req in JS_IMPORTS[dependency].get("req", []):
                         temp_js[req["alias"]] = JS_IMPORTS[req["alias"]]
                 if dependency in CSS_IMPORTS:
-                    if version.startswith("^"):
-                        CSS_IMPORTS[dependency]["version"] = version[1:]
-                        for module in CSS_IMPORTS[dependency]["modules"]:
-                            module["version"] = version[1:]
-                    else:
-                        CSS_IMPORTS[dependency]["version"] = version
-                        for module in CSS_IMPORTS[dependency]["modules"]:
-                            module["version"] = version
+                    if version:
+                        if version.startswith("^"):
+                            CSS_IMPORTS[dependency]["version"] = version[1:]
+                            for module in CSS_IMPORTS[dependency]["modules"]:
+                                module["version"] = version[1:]
+                        else:
+                            CSS_IMPORTS[dependency]["version"] = version
+                            for module in CSS_IMPORTS[dependency]["modules"]:
+                                module["version"] = version
                     temp_css[dependency] = CSS_IMPORTS[dependency]
                     for req in CSS_IMPORTS[dependency].get("req", []):
                         temp_css[req["alias"]] = CSS_IMPORTS[req["alias"]]
@@ -4016,12 +4017,13 @@ class ImportManager:
         return "\n".join(css)
 
     def cssURLs(self, css_str: str):
-        """ Retrieve the list of CSS dependencies URL from a header.
+        """
+        Retrieve the list of CSS dependencies URL from a header.
 
-    :param css_str: The CSS String in the page
+        :param css_str: The CSS String in the page
 
-    :return: A Python list with all the CSS external URL to be imported.
-    """
+        :return: A Python list with all the CSS external URL to be imported.
+        """
         return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
 
     def jsResolve(self, js_aliases: List[str], local_js: Optional[dict] = None, excluded: Optional[List[str]] = None):
@@ -4255,7 +4257,8 @@ class ImportManager:
                 logging.warning("  < Package %s already loaded " % alias)
         return self
 
-    def setVersion(self, alias: str, version: str, js: Optional[dict] = None, css: Optional[dict] = None):
+    def setVersion(self, alias: str, version: str, js: Optional[dict] = None, css: Optional[dict] = None,
+                   verbose: bool = None) -> bool:
         """
         Allow the use of different version of a package.
 
@@ -4269,11 +4272,25 @@ class ImportManager:
         :param version: The new version to be used globally
         :param js: Optional. The JavaScript packages to be added
         :param css: Optional. The CSS packages to be added
+        :param verbose: Optional. Display version details (default True).
         """
+        global CSS_IMPORTS, JS_IMPORTS
+
         self.reqVersion[alias] = version
-        for mod_type in [CSS_IMPORTS, JS_IMPORTS]:
-            if alias in mod_type:
-                mod_type[alias]['version'] = version
+        current_version = JS_IMPORTS.get(alias, CSS_IMPORTS.get(alias, {})).get('version')
+        if version == current_version:
+            return False
+
+        if verbose:
+            print("Moving %s from %s to %s" % (alias, current_version, version))
+        if alias in CSS_IMPORTS:
+            CSS_IMPORTS[alias]['version'] = version
+            for module in CSS_IMPORTS[alias].get('modules', []):
+                module['version'] = version
+        if alias in JS_IMPORTS:
+            JS_IMPORTS[alias]['version'] = version
+            for module in JS_IMPORTS[alias].get('modules', []):
+                module['version'] = version
         if js is not None:
             if not js:
                 if alias in JS_IMPORTS:
@@ -4300,6 +4317,7 @@ class ImportManager:
                     module["path"] = module["path"] % {"version": version}
                     self.cssImports.setdefault(alias, {}).setdefault('main', {})[
                         "%(cdnjs)s/%(path)s%(script)s" % module] = version
+        return True
 
     def addPackage(self, alias: str, config: dict):
         """

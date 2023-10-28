@@ -14,8 +14,9 @@ class Popup(Html.Html):
   name = 'Popup Container'
 
   def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: tuple, height: tuple,
-               options: Optional[dict], profile: Optional[Union[bool, dict]]):
-    super(Popup, self).__init__(page, [], css_attrs={"width": width, "height": height}, profile=profile)
+               options: Optional[dict], profile: Optional[Union[bool, dict]], verbose: bool = False):
+    super(Popup, self).__init__(
+      page, [], css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
     self.__options = OptPanel.OptionPopup(self, options)
     if self.options.background:
       bg_color = Colors.rgba(*Colors.getHexToRgb(page.theme.greys[-1]), 0.4)

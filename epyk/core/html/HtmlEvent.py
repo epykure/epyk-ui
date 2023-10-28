@@ -34,10 +34,11 @@ class ProgressBar(Html.Html):
 
     def __init__(self, page: primitives.PageModel, number: float, total, width: tuple,
                  height: tuple, helper: Optional[str], options: Optional[dict], html_code: Optional[str],
-                 profile: Optional[Union[dict, bool]]):
+                 profile: Optional[Union[dict, bool]], verbose: bool = False):
         options['max'] = total
         super(ProgressBar, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
-                                          css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
+                                          css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'},
+                                          verbose=verbose)
         self.add_helper(helper)
         self.options.background = self.page.theme.success.base
         self.style.css.background = self.page.theme.greys[0]
@@ -128,9 +129,9 @@ class Menu(Html.Html):
     name = 'Menu'
     _option_cls = OptSliders.OptionsMenu
 
-    def __init__(self, page, records, width, height, helper, options, html_code, profile):
+    def __init__(self, page, records, width, height, helper, options, html_code, profile, verbose: bool = False):
         super(Menu, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
-                                   css_attrs={"width": width, "height": height})
+                                   css_attrs={"width": width, "height": height}, verbose=verbose)
         self.add_helper(helper)
         self.style.css.display = 'block'
         self.style.css.position = 'relative'
@@ -199,9 +200,10 @@ class Dialog(Html.Html):
 
     def __init__(self, report: primitives.PageModel, text: Union[Html.Html, str], width: tuple, height: tuple,
                  helper: str,
-                 options: Optional[dict], html_code: Optional[str], profile: Optional[Union[bool, dict]]):
+                 options: Optional[dict], html_code: Optional[str], profile: Optional[Union[bool, dict]],
+                 verbose: bool = False):
         super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, html_code=html_code,
-                                     profile=profile, options=options)
+                                     profile=profile, options=options, verbose=verbose)
         self.add_helper(helper)
         if hasattr(text, "options"):
             self.components[text.htmlCode] = text
@@ -279,10 +281,10 @@ class Slider(Html.Html):
 
     def __init__(self, page: primitives.PageModel, number: int, min_val: float, max_val: float,
                  width: tuple, height: tuple, helper: Optional[str], options: Optional[dict],
-                 html_code: Optional[str], profile: Optional[Union[bool, dict]]):
+                 html_code: Optional[str], profile: Optional[Union[bool, dict]], verbose: bool = False):
         options.update({'max': max_val, 'min': min_val})
         super(Slider, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
-                                     css_attrs={"width": width, "height": height})
+                                     css_attrs={"width": width, "height": height}, verbose=verbose)
         if self.options.show_min_max:
             self.style.css.padding = "0 10px"
         self.style.css.margin = "15px 0"
@@ -505,9 +507,9 @@ class SliderDate(Slider):
 
     def __init__(self, page: primitives.PageModel, number: Union[float, list], min_val: float, max_val: float,
                  width: Union[tuple, int], height: Union[tuple, int], helper: str, options: dict, html_code: str,
-                 profile: Union[dict, bool]):
+                 profile: Union[dict, bool], verbose: bool = False):
         super(SliderDate, self).__init__(page, number, min_val, max_val, width, height, helper, options, html_code,
-                                         profile)
+                                         profile, verbose=verbose)
         self.options.min, self.options.max, self.options.step = min_val, max_val, 86400
 
     _js__builder__ = '''
@@ -545,9 +547,9 @@ class SkillBar(Html.Html):
     _option_cls = OptSliders.OptionsSkillbars
 
     def __init__(self, page: primitives.PageModel, data, y_column, x_axis, title, width, height, html_code,
-                 options, profile):
+                 options, profile, verbose: bool = False):
         super(SkillBar, self).__init__(page, "", html_code=html_code, profile=profile, options=options,
-                                       css_attrs={"width": width, "height": height})
+                                       css_attrs={"width": width, "height": height}, verbose=verbose)
         self.add_title(title, options={'content_table': False})
         self.innerPyHTML = page.ui.layouts.table(options={"header": False})
         self.innerPyHTML.options.managed = False
@@ -621,9 +623,9 @@ class OptionsBar(Html.Html):
     _option_cls = OptSliders.OptionBar
 
     def __init__(self, page: primitives.PageModel, records, width: tuple, height: tuple, color: str,
-                 options: Optional[dict], profile: Optional[Union[bool, dict]]):
+                 options: Optional[dict], profile: Optional[Union[bool, dict]], verbose: bool = False):
         super(OptionsBar, self).__init__(page, [], css_attrs={"width": width, 'height': height},
-                                         profile=profile, options=options)
+                                         profile=profile, options=options, verbose=verbose)
         self.css({'padding': '0', 'display': 'block', 'text-align': 'middle', 'color': color, 'margin-left': '5px',
                   'background': self.page.theme.greys[0]})
         for rec in records:
@@ -664,8 +666,9 @@ class SignIn(Html.Html):
     requirements = (cssDefaults.ICON_FAMILY,)
     name = 'SignIn'
 
-    def __init__(self, page: primitives.PageModel, text: Optional[str], size: tuple, icon: Optional[str]):
-        super(SignIn, self).__init__(page, text, css_attrs={"width": size, 'height': size})
+    def __init__(self, page: primitives.PageModel, text: Optional[str], size: tuple, icon: Optional[str],
+                 verbose: bool = False):
+        super(SignIn, self).__init__(page, text, css_attrs={"width": size, 'height': size}, verbose=verbose)
         self.size, self.icon = "%s%s" % (size[0] - 8, size[1]), icon
         self.css({"text-align": "center", "padding": 0, 'color': self.page.theme.colors[3],
                   "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "display": "inline-block",
@@ -693,9 +696,10 @@ class Filters(Html.Html):
     requirements = (cssDefaults.ICON_FAMILY,)
     _option_cls = OptList.OptionsTagItems
 
-    def __init__(self, page: primitives.PageModel, items, width, height, html_code, helper, options, profile):
+    def __init__(self, page: primitives.PageModel, items, width, height, html_code, helper, options, profile,
+                 verbose: bool = False):
         super(Filters, self).__init__(page, items, html_code=html_code, profile=profile, options=options,
-                                      css_attrs={"width": width, "min-height": height})
+                                      css_attrs={"width": width, "min-height": height}, verbose=verbose)
         self.input = self.page.ui.input()
         self.input.style.css.text_align = 'left'
         self.input.style.css.padding = '0 5px'

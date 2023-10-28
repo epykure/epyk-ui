@@ -17,9 +17,10 @@ class ExternalLink(Html.Html):
   _option_cls = OptText.OptionsLink
 
   def __init__(self, page: primitives.PageModel, text: str, url: str, icon: str, helper: str, height: tuple,
-               decoration: bool, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
+               decoration: bool, html_code: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]],
+               verbose: bool = False):
     super(ExternalLink, self).__init__(page, {"text": text, "url": url}, html_code=html_code, options=options,
-                                       css_attrs={'height': height}, profile=profile)
+                                       css_attrs={'height': height}, profile=profile, verbose=verbose)
     # Add the internal components icon and helper
     self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
     self.add_helper(helper)
@@ -149,9 +150,9 @@ class DataLink(Html.Html):
   _option_cls = OptText.OptionsLink
 
   def __init__(self, page: primitives.PageModel, text: str, value: Any, width: tuple, height: tuple, fmt: str,
-               options: Optional[str], profile: Optional[Union[bool, dict]]):
+               options: Optional[str], profile: Optional[Union[bool, dict]], verbose: bool = False):
     super(DataLink, self).__init__(page, {"text": text, 'value': value}, profile=profile, options=options,
-                                   css_attrs={"width": width, 'height': height})
+                                   css_attrs={"width": width, 'height': height}, verbose=verbose)
     self.format = fmt
 
   @property

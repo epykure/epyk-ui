@@ -219,7 +219,7 @@ class Required:
         self.js, self.css = {}, {}
         self._page = page
 
-    def add(self, package: str, version: Optional[str] = None, verbose: bool = True):
+    def add(self, package: str, version: Optional[str] = None, verbose: bool = None):
         """   Add the package to the main page context.
 
     TODO: Use the version number
@@ -249,6 +249,9 @@ class Required:
                 self._page.cssImport.add(package)
         if not html_types and verbose and package != "other-icons":
             logging.warning("%s - Not defined in neither JS nor CSS configurations" % package)
+        if version:
+            if self._page.imports.setVersion(package, version, verbose=verbose):
+                self._page.imports.reload()
 
 
 class EventTouch:
@@ -405,7 +408,7 @@ class Html(primitives.HtmlModel):
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.JS_FUNCS_TYPES = None,
-                 css_attrs: Optional[dict] = None):
+                 css_attrs: Optional[dict] = None, verbose: bool = False):
         """ Create an python HTML object """
         # Child component for this component
         self.components = Components()
@@ -413,9 +416,9 @@ class Html(primitives.HtmlModel):
         self.require = Required(page)
         for package in self.requirements or []:
             if isinstance(package, tuple):
-                self.require.add(package[0], package[1])
+                self.require.add(package[0], package[1], verbose=verbose)
             else:
-                self.require.add(package)
+                self.require.add(package, verbose=verbose)
 
         self.profile = profile
         self._on_ready_js, self._sort_propagate, self._sort_options, self.__aliasCode = {}, False, None, None
@@ -1913,8 +1916,8 @@ class Body(Html):
     name = "Body"
 
     def __init__(self, report, vals, html_code: Optional[str] = None, options: types.OPTION_TYPE = None,
-                 profile: types.PROFILE_TYPE = None, css_attrs: dict = None):
-        super(Body, self).__init__(report, vals, html_code, options, profile, css_attrs)
+                 profile: types.PROFILE_TYPE = None, css_attrs: dict = None, verbose: bool = False):
+        super(Body, self).__init__(report, vals, html_code, options, profile, css_attrs, verbose=verbose)
         if Defaults_css.BODY_STYLE is not None:
             for attrs in Defaults_css.BODY_STYLE.split(";"):
                 k, v = attrs.split(":")
@@ -2231,8 +2234,8 @@ class Component(Html):
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
-                 css_attrs: Optional[dict] = None):
-        super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs)
+                 css_attrs: Optional[dict] = None, verbose: bool = False):
+        super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs, verbose=verbose)
         self.style.clear_style(persist_attrs=css_attrs)  # Clear all default CSS styles.
         if self.css_classes is not None:
             self.add_style(self.css_classes, clear_first=True, css_attrs=css_attrs, keep_css_keys=None)
@@ -2312,8 +2315,8 @@ class StructComponent(Html):
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
-                 css_attrs: Optional[dict] = None):
-        super(StructComponent, self).__init__(page, vals, html_code, options, profile, css_attrs)
+                 css_attrs: Optional[dict] = None, verbose: bool = False):
+        super(StructComponent, self).__init__(page, vals, html_code, options, profile, css_attrs, verbose=verbose)
         if self.css_classes is not None:
             self.add_style(self.css_classes, clear_first=True)
         self.items = {}

@@ -25,7 +25,7 @@ class Button(Html.Html):
 
     def __init__(self, page: primitives.PageModel, text: str = None, icon: str = None, width: Optional[tuple] = None,
                  height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: Optional[str] = None,
-                 profile: Optional[Union[dict, bool]] = None, options: Optional[dict] = None):
+                 profile: Optional[Union[dict, bool]] = None, options: Optional[dict] = None, verbose: bool = False):
         text = text or []
         if not isinstance(text, list):
             text = [text]
@@ -34,7 +34,7 @@ class Button(Html.Html):
                 obj.options.managed = False
         super(Button, self).__init__(
             page, text, html_code=html_code, options=options, profile=profile,
-            css_attrs={"width": width, "height": height})
+            css_attrs={"width": width, "height": height}, verbose=verbose)
         self.add_icon(icon, html_code=self.htmlCode)
         if icon is not None and not text:
             self.icon.style.css.margin_right = None
@@ -306,14 +306,14 @@ class Checkbox(Html.Html):
 
     def __init__(self, page: primitives.PageModel, records, color: Optional[str], width: Optional[tuple],
                  height: Optional[tuple], align: Optional[str], html_code: Optional[str], tooltip: Optional[str],
-                 options: Optional[dict], profile: Optional[Union[dict, bool]]):
+                 options: Optional[dict], profile: Optional[Union[dict, bool]], verbose: bool = False):
         if page.inputs.get(html_code) is not None:
             selected_vals = set(page.inputs[html_code].split(","))
             for rec in records:
                 if rec["value"] in selected_vals:
                     rec["checked"] = True
         super(Checkbox, self).__init__(page, records, html_code=html_code, options=options,
-                                       css_attrs={"width": width, "height": height}, profile=profile)
+                                       css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
         self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
         if tooltip:
             self.tooltip(tooltip)
@@ -411,9 +411,10 @@ class CheckButton(Html.Html):
     def __init__(self, page: primitives.PageModel, flag: bool = False, tooltip: Optional[str] = None,
                  width: Optional[tuple] = None, height: Optional[tuple] = None, icon: Optional[str] = None,
                  label: Optional[str] = None, html_code: Optional[str] = None,
-                 options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None):
-        super(CheckButton, self).__init__(page, 'Y' if flag else 'N', html_code=html_code, options=options,
-                                          css_attrs={"width": width, "height": height}, profile=profile)
+                 options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None, verbose: bool = False):
+        super(CheckButton, self).__init__(
+            page, 'Y' if flag else 'N', html_code=html_code, options=options,
+            css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
         self.input = page.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
             {"width": page.body.style.globals.font.normal()})
         self.input.style.css.color = self.page.theme.success.base if flag else self.page.theme.danger.base
@@ -501,10 +502,11 @@ class IconEdit(Html.Html):
     name = 'Icon'
 
     def __init__(self, page: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
-                 tooltip: Optional[str], width, height, html_code, options, profile: Optional[Union[bool, dict]]):
+                 tooltip: Optional[str], width, height, html_code, options,
+                 profile: Optional[Union[bool, dict]], verbose: bool = False):
         super(IconEdit, self).__init__(
             page, '', html_code=html_code, profile=profile, css_attrs={
-                "width": width, 'height': height, 'float': 'left' if position is None else position})
+                "width": width, 'height': height, 'float': 'left' if position is None else position}, verbose=verbose)
         if tooltip is not None:
             self.tooltip(tooltip)
         # Add the internal components icons and helper
@@ -689,9 +691,10 @@ class Buttons(Html.Html):
 
     def __init__(self, page: primitives.PageModel, data, color: Optional[str], width: tuple, height: tuple,
                  html_code: Optional[str], helper: Optional[str], options: Optional[dict],
-                 profile: Optional[Union[bool, dict]]):
+                 profile: Optional[Union[bool, dict]], verbose: bool = False):
         super(Buttons, self).__init__(page, [], html_code=html_code,
-                                      css_attrs={"width": width, "height": height, 'color': color}, profile=profile)
+                                      css_attrs={"width": width, "height": height, 'color': color},
+                                      profile=profile, verbose=verbose)
         for b in data:
             bt = page.ui.button(b, options={"group": "group_%s" % self.htmlCode}).css({"margin-right": '5px'})
             bt.css(options.get("button_css", {}))
@@ -759,9 +762,9 @@ class ButtonMenu(Html.Html):
 
     def __init__(self, page: primitives.PageModel, record, text: str, icon: Optional[str], width: Optional[tuple],
                  height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
-                 profile: Optional[Union[bool, dict]], options: Optional[dict]):
+                 profile: Optional[Union[bool, dict]], options: Optional[dict], verbose: bool = False):
         super(ButtonMenu, self).__init__(page, record, html_code=html_code, profile=profile,
-                                         css_attrs={"width": width, "height": height})
+                                         css_attrs={"width": width, "height": height}, verbose=verbose)
         self.button = page.ui.button(text, icon, width, height, html_code, tooltip, profile, options)
         self.button.options.managed = False
         self.set_attrs(name="data-count", value=0)
@@ -817,10 +820,10 @@ class ButtonMore(Html.Html):
 
     def __init__(self, page: primitives.PageModel, record, text: Optional[str], width: Optional[tuple],
                  height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
-                 profile: Optional[Union[bool, dict]], options: Optional[dict]):
+                 profile: Optional[Union[bool, dict]], options: Optional[dict], verbose: bool = False):
         super(ButtonMore, self).__init__(
             page, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
-        self.text = self.page.ui.text(text, width=("auto", ''), profile=profile)
+        self.text = self.page.ui.text(text, width=("auto", ''), profile=profile, verbose=verbose)
         self.text.style.css.font_factor(-4)
         self.text.style.css.italic()
         self.text.style.css.display = "inline-block"
@@ -890,10 +893,10 @@ class ButtonFilter(Html.Html):
     _option_cls = OptButton.OptionsButtonFilter
 
     def __init__(self, page: primitives.PageModel, text: str, width: tuple, height: tuple, html_code: str,
-                 tooltip: str, profile: Optional[Union[bool, dict]], options: Optional[dict]):
+                 tooltip: str, profile: Optional[Union[bool, dict]], options: Optional[dict], verbose: bool = False):
         super(ButtonFilter, self).__init__(
             page, "", html_code=html_code, profile=profile, options=options,
-            css_attrs={"width": width, "height": height})
+            css_attrs={"width": width, "height": height}, verbose=verbose)
         self.text = self.page.ui.text(text, tooltip=tooltip)
         self.text.draggable()
         self.text.style.css.margin_right = 5
@@ -1025,8 +1028,9 @@ class ButtonData(Button):
 
     def __init__(self, page: primitives.PageModel, text: Optional[str] = None, icon: Optional[str] = None,
                  width: Optional[tuple] = None, height: Optional[tuple] = None, html_code: Optional[str] = None,
-                 tooltip: Optional[str] = None, profile=None, options: Optional[dict] = None):
-        super(ButtonData, self).__init__(page, text, icon, width, height, html_code, tooltip, profile, options)
+                 tooltip: Optional[str] = None, profile=None, options: Optional[dict] = None, verbose: bool = False):
+        super(ButtonData, self).__init__(page, text, icon, width, height, html_code, tooltip, profile,
+                                         options, verbose=verbose)
         self.set_attrs(name="data-content", value="")
         self.filename = None
 

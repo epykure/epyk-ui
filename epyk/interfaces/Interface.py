@@ -1400,7 +1400,7 @@ class Components:
         """
         return CompAnimations.Animations(self)
 
-    def component(self, alias: str, **kwargs):
+    def component(self, alias: str, verbose: bool = None, **kwargs):
         """
         Load a standalone component inheriting from `Standalone.Component`.
 
@@ -1412,7 +1412,7 @@ class Components:
 
         :param alias: The component selector
         """
-        return self.page._props["schema"][alias](self.page, **kwargs)
+        return self.page._props["schema"][alias](self.page, verbose=verbose, **kwargs)
 
     @property
     def selectors(self):

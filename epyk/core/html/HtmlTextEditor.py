@@ -24,9 +24,10 @@ class Console(Html.Html):
   _option_cls = OptText.OptionsConsole
 
   def __init__(self, page: primitives.PageModel, data: Union[str, list], width: tuple, height: tuple, html_code: Optional[str],
-               helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+               helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]],
+               verbose: bool = False):
     super(Console, self).__init__(page, data, html_code=html_code, options=options,
-                                  css_attrs={"width": width, "height": height}, profile=profile)
+                                  css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
     self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self.page.theme.greys[-1],
               'background': self.page.theme.colors[0]})
     self.add_helper(helper)
@@ -70,10 +71,11 @@ class Editor(Html.Html):
   name = 'Code Editor'
   requirements = ('codemirror', )
 
-  def __init__(self, page: primitives.PageModel, vals, language, width, height, html_code, options, profile):
+  def __init__(self, page: primitives.PageModel, vals, language, width, height, html_code, options, profile,
+               verbose: bool = False):
     super(Editor, self).__init__(page, vals, html_code=html_code, profile=profile,
                                  css_attrs={"width": width, "height": height, 'box-sizing': 'border-box',
-                                            'margin': '5px 0'})
+                                            'margin': '5px 0'}, verbose=verbose)
     self.textarea = self.page.ui.texts.code(vals, height=height, language=language, options=options)
     self.textarea.options.managed = False
     self.actions = []
@@ -183,9 +185,10 @@ class Cell(Html.Html):
   requirements = ('codemirror', )
 
   def __init__(self, page: primitives.PageModel, vals: Union[list, str], language: str, width: tuple, height: tuple,
-               html_code: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+               html_code: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]],
+               verbose: bool = False):
     super(Cell, self).__init__(page, vals, html_code=html_code, options=options,
-                               css_attrs={"width": width, "height": height}, profile=profile)
+                               css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
     self.textarea = self.page.ui.texts.code(vals, language, height=height, options=options)
     self.textarea.options.managed = False
     self.textarea.style.add_classes.input.textarea()
@@ -248,9 +251,11 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
   _option_cls = OptCodeMirror.OptionsCode
 
   def __init__(self, page: primitives.PageModel, vals: str, color: str, width: tuple, height: tuple,
-               html_code: Optional[str], options: Optional[dict], helper: str, profile: Optional[Union[dict, bool]]):
+               html_code: Optional[str], options: Optional[dict], helper: str,
+               profile: Optional[Union[dict, bool]], verbose: bool = False):
     super(CodeEditor, self).__init__(page, vals, html_code=html_code, options=options,
-                                     css_attrs={"width": width, "height": height, "color": color}, profile=profile)
+                                     css_attrs={"width": width, "height": height, "color": color},
+                                     profile=profile, verbose=verbose)
     self.add_helper(helper)
     self.css({'display': 'block', 'margin': '5px 0'})
 
@@ -354,9 +359,9 @@ class Tags(Html.Html):
   name = 'Tags'
 
   def __init__(self, page: primitives.PageModel, vals: list, title: str, icon: str, size: tuple, width: tuple,
-               height: tuple, html_code: Optional[str], profile: Optional[Union[bool, dict]]):
+               height: tuple, html_code: Optional[str], profile: Optional[Union[bool, dict]], verbose: bool = False):
     super(Tags, self).__init__(page, vals, css_attrs={"width": width, "height": height},
-                               html_code=html_code, profile=profile)
+                               html_code=html_code, profile=profile, verbose=verbose)
     self.title, self.icon = title, icon
     self.css({"margin-top": "5px", "font-size": "%s%s" % (size[0], size[1]),
               "font-family": page.style.defaults.font.family})
@@ -406,9 +411,10 @@ class MarkdownReader(Html.Html):
   _option_cls = OptText.OptionsText
 
   def __init__(self, page: primitives.PageModel, vals: Union[str, list], width: tuple, height: tuple, html_code: Optional[str],
-               options: Optional[dict], profile: Optional[Union[bool, dict]]):
+               options: Optional[dict], profile: Optional[Union[bool, dict]], verbose: bool = False):
     super(MarkdownReader, self).__init__(page, vals, html_code=html_code, profile=profile, options=options,
-                                         css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
+                                         css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'},
+                                         verbose=verbose)
     self.actions = []
 
   @property

@@ -20,12 +20,13 @@ class Tree(Html.Html):
   builder_name = "HtmlTree"
 
   def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
-               helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
+               helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]],
+               verbose: bool = False):
     icon_details = page.icons.get("folder_open")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
     super(Tree, self).__init__(page, records, profile=profile, options=options, html_code=html_code,
-                               css_attrs={"width": width, 'height': height})
+                               css_attrs={"width": width, 'height': height}, verbose=verbose)
     self.options.icon_open = icon_details["icon"]
     self.options.style = {"list-style": 'none', 'margin': '0 5px', 'padding-left': 0}
     self.add_helper(helper)
@@ -195,12 +196,13 @@ class DropDown(Html.Html):
   _option_cls = OptTrees.OptDropDown
 
   def __init__(self, page: primitives.PageModel, data: list, text: Optional[str], width: tuple, height: tuple,
-               html_code: Optional[str], helper: str, options: Optional[dict], profile: Optional[Union[bool, dict]]):
+               html_code: Optional[str], helper: str, options: Optional[dict],
+               profile: Optional[Union[bool, dict]], verbose: bool = False):
     options.update({"a": {'text-decoration': 'none', 'line-height': '%spx' % Defaults.LINE_HEIGHT,
                           'padding': '0 10px', "min-width": '%spx' % options.get("width")},
                     "ul": {"left": "%spx" % options.get("width")}})
     super(DropDown, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
-                                   css_attrs={"width": width, "height": height})
+                                   css_attrs={"width": width, "height": height}, verbose=verbose)
     self.add_helper(helper)
     self._vals, self.text = data, text
     self.attr["class"].add("menu")

@@ -25,8 +25,9 @@ class DatePicker(Html.Html):
 
     def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str], width: tuple,
                  height: tuple, color: Optional[str], html_code: Optional[str],
-                 profile: Optional[Union[dict, bool]], options: Optional[dict], helper: Optional[str]):
-        super(DatePicker, self).__init__(page, value, html_code=html_code, profile=profile)
+                 profile: Optional[Union[dict, bool]], options: Optional[dict], helper: Optional[str],
+                 verbose: bool = False):
+        super(DatePicker, self).__init__(page, value, html_code=html_code, profile=profile, verbose=verbose)
         # Add all the internal components input, label, icon and helper
         if width[0] is not None and width[1] == 'px':
             width = (width[0] - 30, width[1])
@@ -164,8 +165,8 @@ class TimePicker(Html.Html):
 
     def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str],
                  color: Optional[str], html_code: Optional[str], profile: Optional[Union[bool, dict]],
-                 options: Optional[dict], helper: Optional[str]):
-        super(TimePicker, self).__init__(page, None, html_code=html_code, profile=profile)
+                 options: Optional[dict], helper: Optional[str], verbose: bool = False):
+        super(TimePicker, self).__init__(page, None, html_code=html_code, profile=profile, verbose=verbose)
         self.input = self.page.ui.inputs.d_time(
             value, options=options, html_code="%s_input" % html_code if html_code is not None else html_code)
         self.input.set_attrs(name="class", value='time').css({"padding": 0})
@@ -231,10 +232,11 @@ class CountDownDate(Html.Html):
 
     def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, hour: int, minute: int, second: int,
                  label: Optional[str], icon: Optional[str], timestamp, width, height, html_code, helper, options,
-                 profile):
+                 profile, verbose: bool = False):
         super(CountDownDate, self).__init__(page, {'day': day, 'month': month, 'year': year, 'hour': hour,
                                                    'minute': minute, 'second': second}, html_code=html_code,
-                                            profile=profile, css_attrs={"width": width, "height": height})
+                                            profile=profile, css_attrs={"width": width, "height": height},
+                                            verbose=verbose)
         self._jsStyles = {"delete": True, 'reload': False}
         # timestamp in milliseconds
         self.timeInMilliSeconds = timestamp
@@ -272,12 +274,12 @@ class LastUpdated(Html.Html):
 
     def __init__(self, page: primitives.PageModel, label: Optional[str], color: Optional[str], width: tuple,
                  height: tuple, html_code: Optional[str], options: Optional[dict],
-                 profile: Optional[Union[bool, dict]]):
+                 profile: Optional[Union[bool, dict]], verbose: bool = False):
         self._label = "Last update: " if label is None else label
         super(LastUpdated, self).__init__(
             page, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())), html_code,
             profile=profile,
-            options=options, css_attrs={"width": width, "height": height, "color": color})
+            options=options, css_attrs={"width": width, "height": height, "color": color}, verbose=verbose)
         self.attr["data-value"] = None
 
     @property
@@ -329,9 +331,9 @@ class Calendar(Html.Html):
 
     def __init__(self, page: primitives.PageModel, content: Optional[str], width: tuple, height: tuple,
                  align: Optional[str], options: Optional[dict], html_code: Optional[str],
-                 profile: Optional[Union[bool, dict]]):
+                 profile: Optional[Union[bool, dict]], verbose: bool = False):
         super(Calendar, self).__init__(page, content, html_code, css_attrs={"width": width, "height": height},
-                                       profile=profile, options=options)
+                                       profile=profile, options=options, verbose=verbose)
         self.labels = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
         self.tasks, self.caption = {}, ""
         self.style.css.border_collapse = "collapse"
@@ -505,9 +507,9 @@ class Timer(Html.Html):
 
     def __init__(self, page: primitives.PageModel, minutes: int, text: Optional[str], width: tuple, height: tuple,
                  align: Optional[str], options: Optional[dict], html_code: Optional[str],
-                 profile: Optional[Union[dict, bool]]):
+                 profile: Optional[Union[dict, bool]], verbose: bool = False):
         super(Timer, self).__init__(page, {"minutes": minutes, 'text': text}, html_code, options=options,
-                                    css_attrs={"width": width, "height": height}, profile=profile)
+                                    css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
         if align is not None:
             if align == 'center':
                 self.style.css.margin_left = 'auto'
@@ -536,9 +538,9 @@ class Elapsed(Html.Html):
     def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, label: Optional[str],
                  icon: Optional[str], width: tuple, height: tuple,
                  html_code: Optional[str], helper: Optional[str], options: Optional[dict],
-                 profile: Optional[Union[bool, dict]]):
+                 profile: Optional[Union[bool, dict]], verbose: bool = False):
         super(Elapsed, self).__init__(page, {'day': day, 'month': month, 'year': year}, html_code=html_code,
-                                      profile=profile, css_attrs={"width": width, "height": height})
+                                      profile=profile, css_attrs={"width": width, "height": height}, verbose=verbose)
         # Add the underlying components
         self.add_label(label, html_code=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
         self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))

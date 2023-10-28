@@ -25,8 +25,8 @@ class Option(Html.Html):
   builder_name = False
 
   def __init__(self, page: primitives.PageModel, value, text: str, icon: Optional[str], selected: bool,
-               options: Optional[dict] = None):
-    super(Option, self).__init__(page, text)
+               options: Optional[dict] = None, verbose: bool = False):
+    super(Option, self).__init__(page, text, verbose=verbose)
     self.set_attrs(name="value", value=value)
     if selected:
       self.set_attrs(name="selected", value=selected)
@@ -44,8 +44,8 @@ class Optgroup(Html.Html):
   name = 'Select Option'
   builder_name = False
 
-  def __init__(self, page: primitives.PageModel, data: list, label: str):
-    super(Optgroup, self).__init__(page, data)
+  def __init__(self, page: primitives.PageModel, data: list, label: str, verbose: bool = False):
+    super(Optgroup, self).__init__(page, data, verbose=verbose)
     self.set_attrs(name="label", value=label)
 
   def __str__(self):
@@ -60,9 +60,9 @@ class Select(Html.Html):
   _option_cls = OptSelect.OptionsSelectJs
 
   def __init__(self, page: primitives.PageModel, records: list, html_code: str, width: tuple, height: tuple,
-               profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict]):
+               profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict], verbose: bool = False):
     super(Select, self).__init__(page, records, html_code=html_code, css_attrs={"width": width, "height": height},
-                                 profile=profile, options=options)
+                                 profile=profile, options=options, verbose=verbose)
     self._vals, self.button_css = records, None
     if html_code in self.page.inputs:
       for v in self._vals:
@@ -258,8 +258,8 @@ class Lookup(Select):
   requirements = ('bootstrap-select',)
 
   def __init__(self, page: primitives.PageModel, records: list, html_code: Optional[str], width: tuple, height: tuple,
-               profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict]):
-    super(Lookup, self).__init__(page, records, html_code, width, height, profile, multiple, options)
+               profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict], verbose: bool = False):
+    super(Lookup, self).__init__(page, records, html_code, width, height, profile, multiple, options, verbose=verbose)
     self._jsStyles['lookups'] = records
 
   _js__builder__ = '''

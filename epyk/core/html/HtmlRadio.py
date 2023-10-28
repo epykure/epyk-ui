@@ -20,9 +20,10 @@ class Radio(Html.Html):
 
   def __init__(self, page: primitives.PageModel, vals: List[dict], html_code: Optional[str],
                group_name: Optional[str], width: tuple, height: tuple, options: Optional[dict],
-               profile: Optional[Union[bool, dict]]):
+               profile: Optional[Union[bool, dict]], verbose: bool = False):
     super(Radio, self).__init__(page, [], html_code=html_code,
-                                css_attrs={"width": width, "height": height}, profile=profile, options=options)
+                                css_attrs={"width": width, "height": height}, profile=profile, options=options,
+                                verbose=verbose)
     self.group_name = group_name or self.htmlCode
     for v in vals:
       self.add(v['value'], v.get('checked', False))
@@ -81,11 +82,11 @@ class Tick(Html.Html):
 
   def __init__(self, page: primitives.PageModel, position: str, icon: str, text: str, tooltip: str,
                width: tuple, height: tuple, html_code: str, options: Optional[dict],
-               profile: Optional[Union[bool, dict]]):
+               profile: Optional[Union[bool, dict]], verbose: bool = False):
     self._options = options
     super(Tick, self).__init__(page, '', html_code=html_code, profile=profile,
                                css_attrs={"width": width, 'height': height,
-                                          'float': 'left' if position is None else position})
+                                          'float': 'left' if position is None else position}, verbose=verbose)
     if tooltip is not None:
       self.tooltip(tooltip)
     # Add the internal components icons and helper
@@ -121,10 +122,10 @@ class Switch(Html.Html):
   builder_name = "HtmlSwitch"
 
   def __init__(self, page: primitives.PageModel, records: dict, color: str, width: types.SIZE_TYPE,
-               height: types.SIZE_TYPE, html_code: str, options: dict, profile: types.PROFILE_TYPE):
+               height: types.SIZE_TYPE, html_code: str, options: dict, profile: types.PROFILE_TYPE, verbose: bool = False):
     self.width = width[0]
     super(Switch, self).__init__(page, records, html_code=html_code, options=options, profile=profile,
-                                 css_attrs={"width": width, "height": height, 'color': color})
+                                 css_attrs={"width": width, "height": height, 'color': color}, verbose=verbose)
     self.style.add_classes.radio.switch_checked()
     self._clicks = {'on': [], 'off': [], "profile": False}
 
