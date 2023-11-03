@@ -400,13 +400,22 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
         :param framework: The JavaScript framework
         """
-        import tomllib
         framework = framework or "python"
         if cls.toml_directives_url is not None:
-            with open(cls.toml_directives_url, 'rb') as fp:
-                rules = tomllib.load(fp)
+            try:
+                import tomllib
+                with open(cls.toml_directives_url, 'rb') as fp:
+                    rules = tomllib.load(fp)
+            except:
+                return {}
+            
         elif cls.toml_directives is not None:
-            rules = tomllib.loads(cls.toml_directives)
+            try:
+                import tomllib
+                rules = tomllib.loads(cls.toml_directives)
+            except:
+                return {}
+
         else:
             rules = {}
         directives = rules.get("epyk", {}).get("directives", {}).get(framework, {})
@@ -449,9 +458,8 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             fnc_call = "%s;%s" % (fnc_call, self.hide_state(component_id))
         profile = self.with_profile(profile, event="Builder")
         if profile:
-            fnc_call = ["var result = %s" % self.js.build(js_data, self.options.config_js(options))]
-            fnc_call = "(function(data, options){%s; return result})(%s, %s)" % (
-                fnc_call, js_data, self.options.config_js(options))
+            fnc_call = "(function(data, options){var result = %s; return result})(%s, %s)" % (
+                self.js.build(js_data, self.options.config_js(options)), js_data, self.options.config_js(options))
         return self.page.js.console.tryCatch(fnc_call, self.error(
             JsUtils.jsWrap("err"), label="`<i class='fas fa-exclamation-triangle' style='margin-right:5px;color:red'></i>Error during the processing: <b>${err}</b>`"), profile=profile)
 
