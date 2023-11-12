@@ -3615,6 +3615,7 @@ class ImportManager:
     online: bool = True
     self_contained: bool = False
     _static_path: Optional[str] = None
+    set_exports: bool = False
 
     def __init__(self, page=None):
         """
@@ -4043,6 +4044,8 @@ class ImportManager:
         :return: The string to be added to the header
         """
         js = []
+        if self.set_exports:
+            js.append("<script>var exports = {};</script>")
         # self.__add_imports([(None, None, self._report.ext_packages)])
         js_aliases = self.cleanImports(js_aliases, JS_IMPORTS)
         for js_alias in js_aliases:

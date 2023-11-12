@@ -56,3 +56,4 @@ doc/*
 
 #
 epyk/core/js/native/*
+ts/*/node_modules/*

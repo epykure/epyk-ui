@@ -408,7 +408,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                     rules = tomllib.load(fp)
             except:
                 return {}
-            
+
         elif cls.toml_directives is not None:
             try:
                 import tomllib
