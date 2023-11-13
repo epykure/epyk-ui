@@ -109,6 +109,8 @@ def load_component(component_path: Path, raise_exception: bool = True) -> dict:
                             content[prop] = str(Path(component_path, fp))
             class_name = "".join(map(lambda x: x.capitalize(), content["selector"].split("-")))
             cls = type(class_name, (Component,), content)
+            if "package_config" in content:
+                cls.set_exports = content["package_config"].get("set_exports", False)
             if "dependencies" in content:
                 requirements = []
                 for dep, dep_version in content["dependencies"].items():
@@ -341,6 +343,14 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     js_funcs_map: dict = {}   # Internal mapping for Js functions
     _def_js_cls = JsComponents
 
+    # Package details to define the use
+    set_exports: bool = False
+    library: Optional[str] = None
+
+    # Constructor arguments
+    arg_init_value: str = "initValue"
+    arg_init_options: str = "options"
+
     def __init__(self, page: primitives.PageModel, vals: Any = None, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
                  css_attrs: Optional[dict] = None, verbose: bool = None, **kwargs):
@@ -352,8 +362,21 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         self.style.no_class()  # Clear all default CSS Classes.
         self.items, self.__metadata, self.__directives, self.__html_content = [], {}, None, None
         self.prepare(**kwargs)
+        if self.set_exports:
+            page.imports.set_exports = self.set_exports
         if self._init__options:
             self.options.for_construct(self._init__options)
+
+    @property
+    def proxy_class(self):
+        """ Underlying class name used to build the object """
+        if self.set_exports:
+            if self.library:
+                return "exports.%s.%s" % (self.library, self.__class__.__name__)
+
+            return "exports.%s" % self.__class__.__name__
+
+        return self.__class__.__name__
 
     @property
     def options(self) -> SdOptions:
@@ -547,11 +570,12 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                 else:
                     self.page.js.customFile(self.component_url, absolute_path=True, authorize=True)
                 self.page.properties.js.add_builders([
-                    "%s = new %s(%s, initValue=%s, options=%s)" % (
-                        self.js.objectId, self.__class__.__name__, self.dom.varId,
-                        JsUtils.jsConvertData(self._vals, None), self.options.config_attrs())])
+                    "%s = new %s(%s, %s=%s, %s=%s)" % (
+                        self.js.objectId, self.proxy_class, self.dom.varId,
+                        self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
+                        self.arg_init_options, self.options.config_attrs())])
             else:
-                raise ValueError("Component file - %s - was not loaded correctly" % self.__class__.__name__)
+                raise ValueError("Component file - %s - was not loaded correctly" % self.proxy_class)
 
         if self.style_urls is not None:
             css_content = css_files_loader(self.style_urls, self.selector, style_vars=self.page.theme.all())
