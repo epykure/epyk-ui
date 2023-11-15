@@ -459,7 +459,7 @@ class AgGrid(JsPackage):
     """ Empty the table """
     return self.setRowData([])
 
-  def download(self, filename: str = "export.csv", options: dict = None):
+  def download(self, format: str, filename: str = "export.csv", options: dict = None):
     """
     Common download feature for tables.
 
@@ -467,6 +467,7 @@ class AgGrid(JsPackage):
 
       http://tabulator.info/docs/4.0/download
 
+    :param format: The file format (not used for this module)
     :param filename: Filename
     :param options: Download option
     """
