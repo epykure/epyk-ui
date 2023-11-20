@@ -141,6 +141,18 @@ def installed_packages():
     subprocess.call(["pip", 'list', '-o'])
 
 
+def string_to_base64(content: str, is_binary: bool = False) -> str:
+    """ Format a String content to a base64 object.
+
+    :param content: String content
+    :param is_binary: Flag to specify if content need to be encoded
+    """
+    if not is_binary:
+        content = content.encode()
+    base64_bytes = base64.b64encode(content)
+    return base64_bytes.decode('ascii')
+
+
 # Module variable to be updated in environment to share info related to packages.
 PACKAGE_STATUS = {}
 
@@ -180,6 +192,18 @@ JS_IMPORTS = {
             {'script': 'accounting.min.js', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
         ],
         'website': 'https://openexchangerates.github.io/accounting.js/'},
+
+    # highcharts
+    'highcharts': {
+        'version': '11.2.0',
+        "unpkg": False,
+        'modules': [
+            {'script': 'highcharts.min.js', 'path': 'highcharts/%(version)s/', 'cdnjs': CDNJS_REPO},
+            {'script': 'accessibility.min.js', 'path': 'highcharts/%(version)s/modules/', 'cdnjs': CDNJS_REPO},
+        ],
+        'repository': 'https://github.com/highcharts/highcharts',
+        "website": "https://www.highcharts.com/demo"
+    },
 
     # Chartist
     'chartist': {
