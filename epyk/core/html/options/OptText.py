@@ -44,15 +44,19 @@ class OptionsText(Options):
 
   @property
   def reset(self):
-    """
-
-    Related Pages:
-    """
     return self._config_get(False)
 
   @reset.setter
   def reset(self, flag: bool):
     self._config(flag)
+
+  @property
+  def maxlength(self):
+    return self._config_get(None)
+
+  @maxlength.setter
+  def maxlength(self, num: int):
+    self._config(num)
 
   @property
   def markdown(self):

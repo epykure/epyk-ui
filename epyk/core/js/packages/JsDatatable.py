@@ -635,13 +635,14 @@ class DatatableAPI(JsPackage):
     """
     return self.clear(True)
 
-  def download(self, format: str, filename: str, options: dict = None):
-    """   Common download feature for tables.
+  def download(self, filename: str = None, options: dict = None, *args, **kwargs):
+    """
+    Common download feature for tables.
 
-    :param format: File format
     :param filename: Filename
     :param options: Download option
     """
+    filename = filename or self.component.html_code
     pass
 
   def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):

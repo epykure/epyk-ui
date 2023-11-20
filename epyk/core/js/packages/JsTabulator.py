@@ -692,7 +692,7 @@ class Tabulator(JsPackage):
     #  -----------------------------------------
     #  Common table javascript interface
     #  -----------------------------------------
-    def download(self, format: str, filename: str, options: dict = None):
+    def download(self, filename: str = None, options: dict = None, format: str = "csv", *args, **kwargs):
         """
         Common download feature for tables.
 
@@ -704,6 +704,7 @@ class Tabulator(JsPackage):
         :param filename: Filename
         :param options: Download option
         """
+        filename = filename or "%s.%s" % (self.component.html_code, format)
         if format == "pdf":
             self.page.jsImports.add("jspdf")
         format = JsUtils.jsConvertData(format, None)
@@ -715,10 +716,6 @@ class Tabulator(JsPackage):
         return JsObjects.JsVoid("%s.download(%s, %s, %s)" % (self.varId, format, filename, options))
 
     def empty(self):
-        """
-
-        :return:
-        """
         return self.clearData()
 
     def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):

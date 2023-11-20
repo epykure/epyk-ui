@@ -403,6 +403,7 @@ class Html(primitives.HtmlModel):
   the same signature and return).
   """
     requirements = None
+    defined_code = False
     builder_name, _js__builder__, async_builder = None, None, False
     _option_cls = Options
 
@@ -462,6 +463,7 @@ class Html(primitives.HtmlModel):
                 html_code = temp_html_code
 
             self.__htmlCode = html_code
+            self.defined_code = True
             if html_code in self.page.inputs:
                 vals = self.page.inputs[html_code]
 
@@ -818,6 +820,7 @@ class Html(primitives.HtmlModel):
             html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
             self.icon = self.page.ui.images.icon(
                 text, html_code=html_code_icon, family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
+            self.icon.defined_code = self.defined_code
             if position == "before":
                 self.prepend_child(self.icon)
             else:
@@ -846,6 +849,7 @@ class Html(primitives.HtmlModel):
         if text is not None:
             html_code_label = "%s_label" % html_code if html_code is not None else html_code
             self.label = self.page.ui.texts.label(text, options=options, html_code=html_code_label)
+            self.label.defined_code = self.defined_code
             if for_ is not None:
                 # Attach the label to another HTML component based on the ID
                 self.label.attr['for'] = for_
@@ -1423,6 +1427,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
 
         if with_id:
             self.attr['id'] = self.html_code
+            self.attr['data-builder'] = self.builder_name
         html_tags = ['%s="%s"' % (key, str(val).replace('"', "'")) if val is not None else key for key, val in
                      self.attr.items() if key not in ('css', 'class')]
         for tag in [css_style, css_class]:
@@ -1891,6 +1896,8 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
         for css in self.require.css:
             self.page.cssImport.add(css)
 
+        if self.defined_code:
+            self.page.properties.js.set_init_options(self.html_code, self.options.config_js().toStr())
         str_result.append(str(self))
         return "".join(str_result)
 

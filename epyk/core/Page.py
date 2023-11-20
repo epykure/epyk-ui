@@ -190,6 +190,17 @@ class JsProperties:
             func = self._context['functions'][name]
             return "function %s(%s){%s}" % (name, ", ".join(func['pmt']), func['content'])
 
+    def set_init_options(self, html_code: str, options: str):
+        """ Set init options to the main scope of the report """
+        self._context['init'][html_code] = options
+
+    def get_init_options(self, html_code: str = None) -> dict:
+        """ get init option of a component """
+        if html_code is None:
+            return self._context['init']
+
+        return self._context['init'].get(html_code, {})
+
 
 class CssProperties:
 
@@ -400,6 +411,8 @@ class Report:
             # Trigger the component generation using the Js Constructor
             'builders': OrderedSet(),
             'text': [],
+            # The components state options
+            'init': {}
         },
             # Used on the Python side to make some decisions
             'context': {'framework': 'JS', "script": script},

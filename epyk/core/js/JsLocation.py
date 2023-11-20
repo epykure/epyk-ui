@@ -13,6 +13,7 @@ from typing import Any, Optional, List, Union
 from epyk.core.py import primitives
 
 from epyk.core.js import JsUtils
+from epyk.core.js import JsGlobals
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -30,9 +31,7 @@ class URLSearchParams:
         """
         Get the value of a request parameter in the url.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
         :param key: The url parameter
         :param default: Optional. The default value
@@ -47,9 +46,7 @@ class URLSearchParams:
         """
         Set the value of a request parameter in the url.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+        Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
         :param key: The url parameter
         :param value: The value to set
@@ -67,9 +64,7 @@ class URLSearchParams:
         """
         Get all the values of a request parameter in the url.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+        Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
         :param key: The url parameter
         """
@@ -80,9 +75,7 @@ class URLSearchParams:
         """
         Check if a given parameter is in the url.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+        Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
         :param key: The url parameter
         """
@@ -93,9 +86,7 @@ class URLSearchParams:
         """
         Append a key, value to the url parameter object.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
+        Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
         :param key: The url parameter
         :param value: The value to be appended to the URL
@@ -110,9 +101,7 @@ class URLSearchParams:
         The delete() method of the URLSearchParams interface deletes the given search parameter and all its associated
         values, from the list of all search parameters.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/delete
+        Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/delete>`_
 
         :param key:
         """
@@ -125,6 +114,9 @@ class URLSearchParams:
 class JsLocation:
     """  JavaScript Location module. """
 
+    def __init__(self, page: primitives.PageModel = None):
+        self.page = page
+
     @property
     def hostname(self) -> JsString.JsString:
         """
@@ -134,9 +126,7 @@ class JsLocation:
 
           page.location.hostname
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/obj_location.asp
+        `Related Pages <https//www.w3schools.com/jsref/obj_location.asp>`_
 
         :return: Return the hostname property.
         """
@@ -151,9 +141,7 @@ class JsLocation:
 
           jsObj.location.pathname
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/obj_location.asp
+        `Related Pages <https//www.w3schools.com/jsref/obj_location.asp>`_
 
         :return: Return the pathname property.
         """
@@ -168,9 +156,7 @@ class JsLocation:
 
           jsObj.location.host
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/prop_loc_host.asp
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_host.asp>`_
 
         :return: Return the hostname and port of the current URL.
         """
@@ -185,9 +171,7 @@ class JsLocation:
 
           jsObj.location.hash
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/prop_loc_hash.asp
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_hash.asp>`_
 
         :return: A String, representing the anchor part of the URL, including the hash sign (#).
         """
@@ -198,9 +182,7 @@ class JsLocation:
         """
         The search property sets or returns the querystring part of a URL, including the question mark (?).
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/prop_loc_search.asp
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_search.asp>`_
 
         :return: A String, representing the querystring part of a URL, including the question mark (?).
         """
@@ -211,9 +193,7 @@ class JsLocation:
         """
         The URLSearchParams() constructor creates and returns a new URLSearchParams object.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams>`_
         """
         return URLSearchParams("location.search")
 
@@ -222,9 +202,7 @@ class JsLocation:
         """
         The port property sets or returns the port number the server uses for a URL.
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/prop_loc_port.asp
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_port.asp>`_
 
         :return: A String, representing the port number of a URL.
         """
@@ -239,9 +217,7 @@ class JsLocation:
 
           page.js.location.origin + page.js.location.pathname
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/prop_loc_origin.asp
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_origin.asp>`_
 
         :return: A String, representing the protocol (including ://), the domain name (or IP address) and port number
           (including the colon sign (:) of the URL. For URL's using the "file:" protocol, the return value differs
@@ -258,9 +234,7 @@ class JsLocation:
 
           page.js.location.href("https://www.w3schools.com/howto/howto_js_fullscreen.asp")
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_loc_href.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_loc_href.asp>`_
 
         :param href: Optional. Set the href property
         :param secured: Optional. The secured flag
@@ -286,9 +260,7 @@ class JsLocation:
 
           page.js.location.open_new_tab("www.google.fr")
 
-        Related Pages:
-
-          https://www.w3schools.com/Jsref/met_win_open.asp
+        `Related Pages <https://www.w3schools.com/Jsref/met_win_open.asp>`_
 
         :param url: Optional. Specifies the URL of the page to open.
           If no URL is specified, a new window/tab with about:blank is opened
@@ -341,9 +313,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
 
           page.js.location.mail(["test@gmail.com"], "This is a test", "This is the email's content")
 
-        Related Pages:
-
-          http://www.tutorialspark.com/html5/HTML5_email_mailto.php
+        `Related Pages <http://www.tutorialspark.com/html5/HTML5_email_mailto.php>`_
 
         :param mails: The email addresses
         :param subject: The email's subject
@@ -363,9 +333,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
 
         The reload() method does the same as the reload button in your browser.
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/met_loc_reload.asp
+        `Related Pages <https//www.w3schools.com/jsref/met_loc_reload.asp>`_
 
         :param force_get: Optional. Specifies the type of reloading:
               false - Default. Reloads the current page from the cache
@@ -379,9 +347,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
         """
         The assign() method loads a new document.
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/met_loc_assign.asp
+        `Related Pages <https//www.w3schools.com/jsref/met_loc_assign.asp>`_
 
         :param url: Specifies the URL of the page to navigate to
         """
@@ -397,9 +363,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
         from the document history, meaning that it is not possible to use the "back" button to navigate back to the
         original document.
 
-        Related Pages:
-
-          https//www.w3schools.com/jsref/met_loc_replace.asp
+        `Related Pages <https//www.w3schools.com/jsref/met_loc_replace.asp>`_
 
         :param url: Specifies the URL of the page to navigate to
         :param secured: Optional. If the http is missing. This will be used to fix the url
@@ -414,9 +378,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
         """
         This method will create an internal form and submit the response exactly like a post of a form to another page.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/dom_obj_form.asp
+        `Related Pages <https://www.w3schools.com/jsref/dom_obj_form.asp>`_
 
         :param url: The target url
         :param data: The url parameters
@@ -439,9 +401,7 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
         """
         Convert data to a URL.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/Blob
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Blob>`_
 
         :param data: Input data to be converted
         :param options: Optional. Blob definition properties
@@ -488,8 +448,7 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
         removed_params = removed_params or []
         return JsString.JsString('''
 (function(params, removedParams){
-  var url = new URL(window.location.href);
-  var newParams = [];
+  var url = new URL(window.location.href); var newParams = [];
   for (k in params){newParams.push(k +"="+ params[k]) }
   for(const entry of url.searchParams.entries()) {
     if (!removedParams.includes(entry[0]) && params[entry[0]] === undefined){
@@ -499,3 +458,42 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
   return url.origin + url.pathname + "?"+ newParams.join("&")
 })(%s, %s)
 ''' % (JsUtils.jsConvertData(params, None), JsUtils.jsConvertData(removed_params, None)), is_py_data=False)
+
+    def update_components(self) -> JsFncs.JsFunction:
+        """ Update all components using the default / init configurations. """
+        # This will require to add all builders to the resources in the page
+        for component in self.page.components.values():
+            if component.defined_code and component._js__builder__:
+                # TODO find a way to add loader without having to call build method
+                component.build(None)
+        return JsFncs.JsFunction('''
+(function(){let params = new URLSearchParams(location.search); 
+    for (const [key, value] of params) {
+      let componentBuilder = document.getElementById(key);
+      if (componentBuilder){
+        let componentOptions = %(gOptions)s[key] || {}; 
+        window[componentBuilder.getAttribute('data-builder')](componentBuilder, value, componentOptions);
+      }
+    }
+ })()''' % {'gOptions': JsGlobals.EXPORT_INIT_OPTIONS})
+
+    def animate_anchor(self, class_name: str, time: int = 3000) -> JsFncs.JsFunction:
+        """ Animate the selected component when the page.
+
+        :param class_name: The new class name
+        :param time: The time the class will be using in (ms)
+        """
+        return JsFncs.JsFunction('''
+(function(){        
+    urlParts = document.URL.split('#');
+    let anchor = (urlParts.length > 1) ? urlParts[1] : null;
+    if (anchor){
+        let anchorComponent = document.getElementById(anchor);
+        if (anchorComponent){
+            anchorComponent.classList.add("%(class)s");
+            if ('scrollRestoration' in window.history) {window.history.scrollRestoration = 'manual'};
+            anchorComponent.scrollIntoView();
+            setTimeout(function(){anchorComponent.classList.remove("%(class)s");}, %(time)s);
+      }
+    }
+})()''' % {"class": class_name, "time": time})

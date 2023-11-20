@@ -522,13 +522,14 @@ class ChartJs(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.destroy()" % self.toStr())
 
-  def download(self, filename: str = "export.csv", options: dict = None):
+  def download(self, filename: str = None, options: dict = None, *args, **kwargs):
     """
     Download data in a CSV file.
 
     :param filename: filename
     :param options: export options
     """
+    filename = filename or "%s.csv" % self.component.html_code
     return r'''
 var data, filename, link; var columnDelimiter = ",";
   if (["scatter", "bubble"].includes(%(chartId)s.config.type)){

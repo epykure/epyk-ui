@@ -19,13 +19,14 @@ class JsPlotly(JsPackage):
     """
     pass
 
-  def download(self, format: str, filename: str, options: dict = None):
-    """   Common download feature for tables.
+  def download(self, filename: str = None, options: dict = None, *args, **kwargs):
+    """
+    Common download feature for tables.
 
-    :param format: File format
     :param filename: Filename
     :param options: Download option
     """
+    filename = filename or self.component.html_code
     pass
 
   def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False):
@@ -352,7 +353,7 @@ class JsPlotly(JsPackage):
     img_format = JsUtils.jsConvertData(img_format, None)
     return JsObjects.JsPromise("Plotly.toImage(%s, %s)" % (html_code or self.component.dom.varName, img_format))
 
-  def downloadImage(self, img_format: str, html_code: str = None):
+  def downloadImage(self, img_format: str, html_code: str = None, *args, **kwargs):
     """
     downloadImage will trigger a request to download the image of a Plotly plot.
 

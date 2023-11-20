@@ -43,9 +43,9 @@ class OptionModel:
 
 
 class HtmlModel:
-  htmlCode = None
   style = None
   name = None
+  html_code = None
   options = None
   _browser_data = None
   var = None

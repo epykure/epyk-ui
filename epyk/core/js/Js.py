@@ -92,7 +92,7 @@ class JsBreadCrumb:
     @property
     def url(self):
         """ Get the full URL. """
-        js_location = JsLocation.JsLocation()
+        js_location = JsLocation.JsLocation(self.page)
         origin = js_location.origin
         pathname = js_location.pathname
         return JsString.JsString(origin + pathname + "?" + JsObject.JsObject(self.toStr(), page=self.page),
@@ -199,7 +199,7 @@ class JsBase:
           https://www.w3schools.com/jsref/obj_location.asp
         """
         if self.__location is None:
-            self.__location = JsLocation.JsLocation()
+            self.__location = JsLocation.JsLocation(self.page)
         return self.__location
 
     @property

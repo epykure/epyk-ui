@@ -9,6 +9,7 @@ from epyk.core.py import primitives
 from epyk.core.js import Imports
 from epyk.core.js import Js
 from epyk.core.js import JsUtils
+from epyk.core.js import JsGlobals
 from epyk.core.js import JsLinter
 
 from epyk.core.html.templates import HtmlTmplBase
@@ -160,13 +161,6 @@ class PyOuts:
             pmt = "(%s)" % ", ".join(list(v["pmt"])) if "pmt" in v else "{}"
             onloadParts.append("function %s%s{%s}" % (k, pmt, v["content"].strip()))
 
-        if split_js:
-            onloadPartsCommon = self.page._props.get('js', {}).get("constructors", {})
-        else:
-            for c, d in self.page._props.get('js', {}).get("constructors", {}).items():
-                if d is not None:
-                    # Do not put None values (when definition is defined in Native files).
-                    onloadParts.append(d)
         for c, d in self.page._props.get('js', {}).get("configs", {}).items():
             onloadParts.append(str(d))
 
@@ -226,6 +220,10 @@ class PyOuts:
             import_mng = self.page.imports
         else:
             import_mng = Imports.ImportManager(page=self.page)
+        self.page.jsLocalImports.add(
+            "data:text/js;base64,%s" % Imports.string_to_base64(JsGlobals.set_global_options(
+                self.page._props.get('js', {}).get("constructors", {}),
+                self.page.properties.js.get_init_options())))
         results = {
             'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self.page.properties.css.text),
             'cssContainer': ";".join(
