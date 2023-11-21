@@ -25,6 +25,7 @@ from epyk.interfaces.graphs import CompChartsSvg
 from epyk.interfaces.graphs import CompChartsCanvas
 from epyk.interfaces.graphs import CompChartsGoogle
 from epyk.interfaces.graphs import CompChartsSparkline
+from epyk.interfaces.graphs import CompChartsHighcharts
 
 
 class Graphs:
@@ -44,8 +45,6 @@ class Graphs:
     """
     Generic shortcut to plot a chart in the framework.
     Family and kind of chart are passed in parameter.
-
-    Usage::
 
     :param pkg: Optional. The external chart package reference. Default ApexCharts
     :param record: Optional. The list of dictionaries with the input data
@@ -81,9 +80,7 @@ class Graphs:
       s3 = page.ui.charts.skillbars(records, y_column='value', x_axis='label')
       s3.options.height = "10px"
 
-    Related Pages:
-
-      https://www.w3schools.com/howto/howto_css_skill_bar.asp
+    `Related Pages <https://www.w3schools.com/howto/howto_css_skill_bar.asp>`_
  
     :param records: Optional. The Python list of dictionaries
     :param y_column: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -125,9 +122,7 @@ class Graphs:
         page.js.console.log(chart.dom.offset)
       ])
 
-    Related Pages:
-
-      https://omnipotent.net/jquery.sparkline/#s-about
+    `Related Pages <https://omnipotent.net/jquery.sparkline/#s-about>`_
 
     :param chart_type: The type of chart (bullet, line, bar, tristate, discrete, pie, box)
     :param data: A String corresponding to a JavaScript object
@@ -149,6 +144,19 @@ class Graphs:
     return html_chart
 
   @property
+  def highcharts(self) -> CompChartsHighcharts.Highcharts:
+    """
+    Highcharts JS is a JavaScript charting library based on SVG and some canvas/WebGL.
+
+    Usage::
+
+      chart = page.ui.charts.highcharts.line()
+
+    `Related Pages <https://github.com/highcharts/highcharts>`_
+    """
+    return CompChartsHighcharts.Highcharts(self)
+
+  @property
   def chartist(self) -> CompChartist.Chartist:
     """
     You may think that this is just yet an other charting library.
@@ -161,9 +169,7 @@ class Graphs:
 
       chart = page.ui.charts.chartist.line()
 
-    Related Pages:
-
-      https://gionkunz.github.io/chartist-js/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library
+    `Related Pages <https://gionkunz.github.io/chartist-js/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library>`_
     """
     return CompChartist.Chartist(self)
 
@@ -179,9 +185,7 @@ class Graphs:
       page.ui.charts.sparklinea.box([1, 2, 3, 4, 5, 4, 3, 2, 1])
       page.ui.charts.sparklines.bar([1, 2, 3, 4, 5, 4, 3, 2, 10])
 
-    Related Pages:
-
-      https://plotly.com/javascript/
+    `Related Pages <https://plotly.com/javascript/>`_
     """
     return CompChartsSparkline.Sparkline(self)
 
@@ -193,11 +197,7 @@ class Graphs:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://plotly.com/javascript/
+    `Related Pages <https://plotly.com/javascript/>`_
 
     :return: A Python Plotly object
     """
@@ -210,11 +210,7 @@ class Graphs:
 
     :Category: Web Application
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/
+    `Related Pages <https://www.chartjs.org/>`_
 
     :return: A Python ChartJs object
     """
@@ -227,11 +223,7 @@ class Graphs:
 
     :Category: Web application
 
-    Usage::
-
-    Related Pages:
-
-      https://apexcharts.com/
+    `Related Pages <https://apexcharts.com/>`_
     """
     return CompChartsApex.ApexChart(self)
 
@@ -247,9 +239,7 @@ class Graphs:
       data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
       c3 = page.ui.charts.c3.line(results, y_columns=['Value'], x_axis="Year")
 
-    Related Pages:
-
-      https://c3js.org/
+    `Related Pages <https://c3js.org/>`_
     """
     return CompChartsC3.C3(self)
 
@@ -272,9 +262,7 @@ class Graphs:
 
       c = page.ui.charts.bb.line(languages, y_columns=["rating", 'change'], x_axis='name')
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/
+    `Related Pages <https://naver.github.io/billboard.js/>`_
     """
     return CompChartsBillboard.Billboard(self)
 
@@ -293,9 +281,7 @@ class Graphs:
       data = page.py.requests.csv(data_urls.DEMO_COUNTRY)
       c3 = page.ui.charts.billboard.bar(results, y_columns=['Value'], x_axis="Year")
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/
+    `Related Pages <https://naver.github.io/billboard.js/>`_
     """
     return CompChartsBillboard.Billboard(self)
 
@@ -306,11 +292,7 @@ class Graphs:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://visjs.org/
+    `Related Pages <https://visjs.org/>`_
     """
     return CompChartsVis.Vis(self)
 
@@ -321,11 +303,7 @@ class Graphs:
 
     :Category: Analytics, Web application
 
-    Usage::
-
-    Related Pages:
-
-      http://nvd3.org/
+    `Related Pages <http://nvd3.org/>`_
     """
     return CompChartsNvd3.Nvd3(self)
 
@@ -337,11 +315,7 @@ class Graphs:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://dc-js.github.io/dc.js/
+    `Related Pages <https://dc-js.github.io/dc.js/>`_
     """
     return CompChartsDc.DC(self)
 
@@ -352,11 +326,7 @@ class Graphs:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://d3js.org/
+    `Related Pages <https://d3js.org/>`_
     """
     return CompChartsD3.D3(self)
 
@@ -368,11 +338,7 @@ class Graphs:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://developers.google.com/chart
+    `Related Pages <https://developers.google.com/chart>`_
     """
     if not getattr(self.page, '_with_google_imports', False):
       raise ValueError("Google produce must be added using for example page.imports.google_products(['charts'])")
@@ -384,11 +350,7 @@ class Graphs:
     """
     SVG defines vector-based graphics in XML format.
 
-    Usage::
-
-    Related Pages:
-
-      https://www.w3schools.com/graphics/svg_intro.asp
+    `Related Pages <https://www.w3schools.com/graphics/svg_intro.asp>`_
     """
     return CompChartsSvg.SVG(self)
 
@@ -400,11 +362,7 @@ class Graphs:
     The graphic to the left is created with <canvas>.
     It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
 
-    Usage::
-
-    Related Pages:
-
-      https://www.w3schools.com/html/html5_canvas.asp
+    `Related Pages <https://www.w3schools.com/html/html5_canvas.asp>`_
     """
     return CompChartsCanvas.Canvas(self)
 
@@ -415,9 +373,7 @@ class Graphs:
 
     :Category: Web application
 
-    Related Pages:
-
-      https://github.com/jwilber/roughViz
+    `Related Pages <https://github.com/jwilber/roughViz>`_
     """
     return CompChartsRoughViz.CompRoughViz(self)
 
@@ -428,9 +384,7 @@ class Graphs:
 
     :Category: Web application
 
-    Related Pages:
-
-      https://frappe.io/charts
+    `Related Pages <https://frappe.io/charts>`_
     """
     return CompChartsFrappe.CompChartFrappe(self)
 
@@ -441,9 +395,7 @@ class Graphs:
 
     :Category: Web application
 
-    Related Pages:
-
-      https://chartscss.org/
+    `Related Pages <https://chartscss.org/>`_
     """
     return CompChartsChartCss.CompChartCss(self)
 
@@ -452,13 +404,9 @@ class Graphs:
     """
     Vega – A Visualization Grammar.
 
-    :Category: Analytics, Dataviz
+    :Category: Analytics, Vega
 
-    Usage::
-
-    Related Pages:
-
-      https://vega.github.io/vega/
+    `Related Pages <https://vega.github.io/vega/>`_
 
     :return: A Python Vega object
     """
@@ -488,7 +436,7 @@ class Graphs:
         r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         if typ == "Csv":
-          r.click([chart.js.download("csv", "data.csv")])
+          r.click([chart.js.download(filename="data.csv", format="csv")])
           r.icon.style.add_classes.div.color_hover()
         elif typ == "Clear":
           r.click([chart.js.clearData()])
@@ -512,13 +460,9 @@ class Chart2d:
     Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
-    :Category: Analytics, Dataviz
+    :Category: Analytics, Plotly
 
-    Usage::
-
-    Related Pages:
-
-      https://plotly.com/javascript/
+    `Related Pages <https://plotly.com/javascript/>`_
 
     :return: A Python Plotly object
     """
@@ -532,11 +476,7 @@ class Chart2d:
 
     :Category: Analytics, Web application
 
-    Usage::
-
-    Related Pages:
-
-      http://nvd3.org/
+    `Related Pages <http://nvd3.org/>`_
 
     :return: A Python NVD3 object
     """
@@ -550,11 +490,7 @@ class Chart2d:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://dc-js.github.io/dc.js/
+    `Related Pages <https://dc-js.github.io/dc.js/>`_
     """
     return CompChartsDc.DC(self)
 
@@ -565,11 +501,7 @@ class Chart2d:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://d3js.org/
+    `Related Pages <https://d3js.org/>`_
     """
     return CompChartsD3.D3(self)
 
@@ -580,11 +512,7 @@ class Chart2d:
 
     SVG defines vector-based graphics in XML format.
 
-    Usage::
-
-    Related Pages:
-
-      https://www.w3schools.com/graphics/svg_intro.asp
+    `Related Pages <https://www.w3schools.com/graphics/svg_intro.asp>`_
     """
     return CompChartsSvg.SVG(self)
 
@@ -596,26 +524,18 @@ class Chart2d:
     The graphic to the left is created with <canvas>.
     It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
 
-    Usage::
-
-    Related Pages:
-
-      https://www.w3schools.com/html/html5_canvas.asp
+    `Related Pages <https://www.w3schools.com/html/html5_canvas.asp>`_
     """
     return CompChartsCanvas.Canvas(self)
 
   @property
   def chartJs(self) -> CompChartsChartJs.ChartJs:
     """
-    Interface for the ChartJs library
+    Interface for the ChartJs library.
 
     :Category: Web application
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/
+    `Related Pages <https://www.chartjs.org>`_
 
     :return: A Python ChartJs object
     """
@@ -628,11 +548,7 @@ class Chart2d:
 
     :Category: Web application
 
-    Usage::
-
-    Related Pages:
-
-      https://apexcharts.com/
+    `Related Pages <https://apexcharts.com>`_
 
     :return: A Python ChartJs object
     """
@@ -645,11 +561,7 @@ class Chart2d:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://c3js.org/
+    `Related Pages <ttps://c3js.org>`_
 
     :return: A Python C3 object
     """
@@ -663,13 +575,9 @@ class Chart2d:
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from Billboard.js.
 
-    :Category: Analytics, Dataviz
+    :Category: Analytics, Bilboard
 
-    Usage::
-
-    Related Pages:
-
-      https://naver.github.io/billboard.js/
+    `Related Pages <https://naver.github.io/billboard.js>`_
 
     :return: A Python Billboard Object
     """
@@ -680,13 +588,9 @@ class Chart2d:
     """
     Interface for the Vis library.
 
-    :Category: Analytics, Dataviz
+    :Category: Analytics, Vis
 
-    Usage::
-
-    Related Pages:
-
-      https://visjs.org/
+    `Related Pages <https://visjs.org>`_
 
     :return: A Python Vis object
     """
@@ -704,13 +608,9 @@ class Chart3d:
     Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
-    :Category: Analytics, Dataviz
+    :Category: Analytics, Plotly
 
-    Usage::
-
-    Related Pages:
-
-      https://plotly.com/javascript/
+    `Related Pages <https://plotly.com/javascript>`_
 
     :return: A Python Plolty object
     """
@@ -723,11 +623,7 @@ class Chart3d:
 
     :Category: Analytics, Dataviz
 
-    Usage::
-
-    Related Pages:
-
-      https://visjs.org/
+    `Related Pages <https://visjs.org/>`_
 
     :return: A Python Vis object
     """
