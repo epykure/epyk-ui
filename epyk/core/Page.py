@@ -206,7 +206,7 @@ class CssProperties:
 
     def __init__(self, context):
         self._context = context
-        self.__map_css = {}
+        self.__map_css, self._dyn_cls = {}, set()
 
     @property
     def text(self) -> str:

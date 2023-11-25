@@ -596,6 +596,13 @@ class ClassHtml:
                         css_frgs[c.get_ref()] = str(c)
         return css_frgs
 
+    def add(self, class_name: str):
+        """Shortcut to add a Class class defined with a string.
+
+        :param class_name: CSS class reference (selector)
+        """
+        self.classList["main"].add(class_name)
+
     @property
     def bs(self) -> BsCssClasses.Style:
         """

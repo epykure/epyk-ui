@@ -244,7 +244,7 @@ class Tables:
         r.icon.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         r.style.css.font_factor(options.get("icon_size", Defaults_css.MENU_ICON_SIZE))
         if typ == "Csv" and hasattr(table.js, 'download'):
-          r.click([table.js.download("csv", "data.csv")])
+          r.click([table.js.download(format="csv", filename="data.csv")])
           r.icon.style.add_classes.div.color_hover()
         elif typ == "New" and hasattr(table.js, 'addRow'):
           r.click([table.js.addRow(options.get("add", {}), True)])

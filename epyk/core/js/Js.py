@@ -1282,6 +1282,29 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsObject.JsObject(
             "document.createTextNode(%s)" % JsUtils.jsConvertData(text, js_conv_func), is_py_data=False)
 
+    def createElementStyle(self, content, map_id: str = None, js_conv_func: Optional[Union[str, list]] = None,
+                           override: bool = False):
+        """
+        Add a CSS element from the JavaScript.
+
+        :Related Pages: https://gist.github.com/sagarpanda/ed583b408a38c56f33ba
+
+        :param content: CSS full content (selector + CSS content)
+        :param map_id: CSS Class reference (to avoid adding multiple times the same one to the head
+        :param js_conv_func: String conversion function
+        :param override: Force the page to apply again the function to update a CSS class
+        """
+        if map_id is None:
+            if hasattr(content, "classname"):
+                map_id = content.classname
+            else:
+                map_id = "dyn_cls_%s" % hash(content)
+        if map_id not in self.page.properties.css._dyn_cls or override:
+            self.page.properties.css._dyn_cls.add(map_id)
+            return JsObject.JsObject('''(function(content){let cssStyle = document.createElement('style'); 
+    cssStyle.type = 'text/css'; cssStyle.innerHTML = content; document.getElementsByTagName('head')[0].appendChild(cssStyle); 
+    return cssStyle})(%s)''' % JsUtils.jsConvertData(content, js_conv_func), is_py_data=False)
+
     def encodeURIComponent(self, uri: Union[str, primitives.JsDataModel],
                            js_conv_func: Union[str, list] = None) -> JsObject.JsObject:
         """
