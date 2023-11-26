@@ -189,17 +189,18 @@ class PyOuts:
 
             for event, source_funcs in component._browser_data['mouse'].items():
                 for source, event_funcs in source_funcs.items():
+                    func_args = ["event"] + event_funcs.get('args', []) # Mandatory first argument for an event
                     str_funcs = JsUtils.jsConvertFncs(
                         event_funcs['content'], toStr=True, profile=event_funcs.get("profile", False))
                     if 'sub_items' in event_funcs:
                         # This is using jquery
                         # TODO: Find a way to replace Jquery
                         onloadParts.append(
-                            "%s.on('%s', '%s', function(event){%s})" % (
-                            source, event, event_funcs['sub_items'], str_funcs))
+                            "%s.on('%s', '%s', function(%s){%s})" % (
+                            source, event, event_funcs['sub_items'], ", ".join(func_args), str_funcs))
                     else:
-                        onloadParts.append("%s.%s('%s', function(event){%s})" % (
-                            source, event_funcs.get("fncType", "addEventListener"), event, str_funcs))
+                        onloadParts.append("%s.%s('%s', function(%s){%s})" % (
+                            source, event_funcs.get("fncType", "addEventListener"), event, ", ".join(func_args), str_funcs))
 
             for event, source_funcs in component._browser_data['keys'].items():
                 for source, event_funcs in source_funcs.get_event().items():

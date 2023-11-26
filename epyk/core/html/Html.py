@@ -1442,7 +1442,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return str_tag.strip()
 
     def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
-           source_event: Optional[str] = None, on_ready: bool = False):
+           source_event: Optional[str] = None, on_ready: bool = False, func_args: List[str] = None,
+           method: str = "addEventListener"):
         """
         Add an event to the document ready function.
 
@@ -1475,6 +1476,9 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(
             JsUtils.jsConvertFncs(js_funcs))
         self._browser_data['mouse'][event][source_event]['profile'] = profile
+        self._browser_data['mouse'][event][source_event]['fncType'] = method
+        if func_args:
+            self._browser_data['mouse'][event][source_event]['args'] = func_args
         if on_ready:
             self.page.body.onReady([self.dom.events.trigger(event)])
         return self

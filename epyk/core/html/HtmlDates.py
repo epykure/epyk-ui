@@ -53,7 +53,7 @@ class DatePicker(Html.Html):
 
     @property
     def options(self) -> OptCalendars.OptionDatePicker:
-        """ Property to set all the DatePicker properties. """
+        """Property to set all the DatePicker properties. """
         return super().options
 
     @property
@@ -137,9 +137,7 @@ class DatePicker(Html.Html):
         """
         Add DatePicker options.
 
-        Related Pages:
-
-          https://timepicker.co/options/
+        `Related Pages <https://timepicker.co/options/>`_
 
         :param options: Optional. Specific Python options available for this component
         :param name: Optional. Python dictionary with the options to set
@@ -211,9 +209,7 @@ class TimePicker(Html.Html):
             page.js.alert("time", skip_data_convert=True)
           ])
 
-        Related Pages:
-
-          https://timepicker.co/options/
+        `Related Pages <https://timepicker.co/options/>`_
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -284,7 +280,7 @@ class LastUpdated(Html.Html):
 
     @property
     def options(self) -> OptText.OptionsUpdate:
-        """ Property to set all the DatePicker properties. """
+        """Property to set all the DatePicker properties. """
         return super().options
 
     @property
@@ -436,7 +432,6 @@ class Calendar(Html.Html):
 
     def weekly(self, name, start, capacity, frequency: int = 1, weekend: bool = False, options: Optional[dict] = None):
         """
-
 
         :param name:
         :param start:
