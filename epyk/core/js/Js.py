@@ -65,7 +65,7 @@ class JsBreadCrumb:
 
     def get(self, key: Optional[str] = None):
         """
-        returns the object stored in the breadcrumb dictionary.
+        Returns the object stored in the breadcrumb dictionary.
 
         :param key: Optional. The key in the Breadcrumb dictionary
 
@@ -80,9 +80,7 @@ class JsBreadCrumb:
         """
         Add an anchor to the URL after the hashtag.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_loc_hash.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_loc_hash.>`_
 
         :param data: A String corresponding to a JavaScript object
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -128,13 +126,12 @@ class JsBase:
         """
         Shortcut to accounting properties.
 
+        `Related Pages <http://openexchangerates.github.io/accounting.js>`_
+
         Usages::
 
           page.js.accounting.add_to_imports()
 
-        Related Pages:
-
-          http://openexchangerates.github.io/accounting.js/
         """
         from epyk.core.js.packages import JsAccounting
 
@@ -144,7 +141,7 @@ class JsBase:
 
     @property
     def viewHeight(self):
-        """ Return the current View port height visible in the browser. """
+        """Return the current View port height visible in the browser. """
         return JsNumber.JsNumber("Math.max(%s, %s)" % (self.documentElement.clientHeight, self.window.innerHeight))
 
     @property
@@ -153,9 +150,7 @@ class JsBase:
         Document.documentElement returns the Element that is the root element of the document (for example,
         the <html> element for HTML documents).
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement>`_
         """
         return JsNodeDom.JsDoms.get("document.documentElement")
 
@@ -164,9 +159,7 @@ class JsBase:
         """
         The screen object contains information about the visitor's screen.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/obj_screen.asp
+        `Related Pages <https://www.w3schools.com/jsref/obj_screen.asp>`_
         """
         return JsScreen()
 
@@ -194,9 +187,7 @@ class JsBase:
             page.js.location.open_new_tab(page.js.location.getUrlFromArrays([
               ["AAA", "BBB"], ["111", "222"]], end_line="\r\n"))])
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/obj_location.asp
+        `Related Pages <https://www.w3schools.com/jsref/obj_location.asp>`_
         """
         if self.__location is None:
             self.__location = JsLocation.JsLocation(self.page)
@@ -208,9 +199,7 @@ class JsBase:
         The MediaRecorder interface of the MediaStream Recording API provides functionality to easily record media.
         It is created using the MediaRecorder() constructor.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder>`_
         """
         if self.__media_recorder is None:
             self.__media_recorder = JsMediaRecorder.MediaRecorder(self.page)
@@ -221,9 +210,7 @@ class JsBase:
         The SpeechRecognition interface of the Web Speech API is the controller interface for the recognition service;
         this also handles the SpeechRecognitionEvent sent from the recognition service.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition>`_
 
         Usage::
 
@@ -266,6 +253,8 @@ class JsBase:
         With a combination of versatility and extensibility, jQuery has changed the way that millions of
         people write JavaScript.
 
+        `Related Pages <https://jquery.com/>`_
+
         Usage::
 
           btn = page.ui.button("Click")
@@ -273,10 +262,6 @@ class JsBase:
             page.js.alert("It works"),
             btn.js.jquery.after('<div style="background-color:yellow"> New div </div>'),
           ])
-
-        Related Pages:
-
-          https://jquery.com/
         """
         from epyk.core.js.packages import JsQuery
 
@@ -291,10 +276,7 @@ class JsBase:
         """
         Reactive Extensions Library for JavaScript.
 
-        Related Pages:
-
-            https://rxjs.dev/
-
+        `Related Pages <https://rxjs.dev>`_
         """
         self.page.jsImports.add("rxjs")
         from epyk.core.js.packages import JsRxJs
@@ -312,10 +294,8 @@ class JsBase:
           page.js.console.log(page.js.moment.var("momentTime").weekYear()),
           page.js.console.log(page.js.moment.new("2021-08-05")),
 
-        Related Pages:
-
-          https://momentjs.com/
-          https://github.com/you-dont-need/You-Dont-Need-Momentjs
+        `Website <https://momentjs.com/>`_
+        `Related Pages <https://github.com/you-dont-need/You-Dont-Need-Momentjs>`_
         """
         from epyk.core.js.packages import JsMoment
 
@@ -328,9 +308,7 @@ class JsBase:
         Warning: Executing JavaScript from a string is an enormous security risk.
         It is far too easy for a bad actor to run arbitrary code when you use eval(). See Never use eval()!, below.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/eval>`_
 
         :param data: Data to be evaluated
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -344,9 +322,7 @@ class JsBase:
         The various function will be the one generating the Javascript string.
         This is just a Python wrapper on top of the library.
 
-        Related Pages:
-
-          https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm
+        `Related Pages <https://www.tutorialspoint.com/socket.io/socket.io_event_handling.htm>`_
 
         :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side
         """
@@ -359,10 +335,8 @@ class JsBase:
         WebSocket client applications use the WebSocket API to communicate with WebSocket servers
         using the WebSocket protocol.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications
-          https://javascript.info/websocket
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications>`_
+        `WebSocket <https://javascript.info/websocket>`_
 
         :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side
         :param secured: Optional. To define the right protocol for the WebSocket connection we or wss
@@ -373,9 +347,7 @@ class JsBase:
         """
         A web worker is a JavaScript running in the background, without affecting the performance of the page.
 
-        Related Pages:
-
-          https://www.w3schools.com/html/html5_webworkers.asp
+        `Related Pages <https://www.w3schools.com/html/html5_webworkers.asp>`_
 
         :param html_code: Optional. The WebSocket id (variable name) on the JavaScript side
         :param server: Optional. Specify if the page is running on a server
@@ -389,11 +361,9 @@ class JsBase:
         Server-sent Streaming is really ideal for server-push notifications, device monitoring and all other tasks
         that do not require real-time push back from the client.
 
-        Related Pages:
-
-          https://medium.com/code-zen/python-generator-and-html-server-sent-events-3cdf14140e56
-          https://www.w3schools.com/html/html5_serversentevents.asp
-          https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events
+        `Related Pages <https://medium.com/code-zen/python-generator-and-html-server-sent-events-3cdf14140e56>`_
+        `Related Pages <https://www.w3schools.com/html/html5_serversentevents.asp>`_
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events>`_
 
         :param html_code: The EventSource id (variable name) on the JavaScript side
         """
@@ -408,9 +378,7 @@ class JsBase:
         D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a
         proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
 
-        Related Pages:
-
-          https://d3js.org/
+        `Related Pages <https://d3js.org/>`_
         """
         from epyk.core.js.packages import JsD3
         return JsD3.JsD3(page=self.page, component=self.component)
@@ -424,9 +392,7 @@ class JsBase:
 
           jsObj.not_(jsObj.objects.boolean.get("weekend"))
 
-        Related Pages:
-
-          https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques
+        `Related Pages <https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Op%C3%A9rateurs/Op%C3%A9rateurs_logiques>`_
 
         :param data: A String corresponding to a JavaScript object
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -446,9 +412,7 @@ class JsBase:
             page.js.console.log(icon.icon.dom.content),
           ])
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_if_else.asp
+        `Related Pages <https://www.w3schools.com/js/js_if_else.asp>`_
 
         :param condition: The Javascript condition. Can be a JsBoolean object
         :param js_funcs: Optional. The Javascript functions
@@ -464,9 +428,7 @@ class JsBase:
         """
         The while loop loops through a block of code as long as a specified condition is true.
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_loop_while.asp
+        `Related Pages <https://www.w3schools.com/js/js_loop_while.asp>`_
 
         :param condition: The JavaScript condition
         :param js_funcs: Javascript functions
@@ -488,9 +450,7 @@ class JsBase:
           js_for = page.js.for_(end=30)
           js_for.fncs([page.js.console.log(js_for.i)])
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_loop_for.asp
+        `Related Pages <https://www.w3schools.com/js/js_loop_for.asp>`_
 
         :param js_funcs: Javascript functions
         :param step: Optional. The value to increment. Default 1
@@ -512,7 +472,7 @@ class JsBase:
         """
         Javascript return keyword.
 
-        :param data: The Javascript expression.
+        :param data: The Javascript expression
         """
         return JsFncs.JsFunction("return %s" % data)
 
@@ -541,9 +501,7 @@ class JsBase:
         """
         switch statement is used to perform different actions based on different conditions.
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_switch.asp
+        `Related Pages <https://www.w3schools.com/js/js_switch.asp>`_
 
         :param variable: Variable on which we will apply the switch
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -558,9 +516,7 @@ class JsBase:
         """
         Copy the full URL to rhe clipboard.
 
-        Related Pages:
-
-          https://isabelcastillo.com/hidden-input-javascript
+        `Related Pages <https://isabelcastillo.com/hidden-input-javascript>`_
 
         :param data: The Javascript expression
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -586,9 +542,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The typeof function.
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_datatypes.asp
+        `Related Pages <https://www.w3schools.com/js/js_datatypes.asp>`_
 
         :param data: A String corresponding to a JavaScript object
         :param var_type: Optional. The type of object
@@ -679,9 +633,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         Usual this function should be used in a wrapper function with the same name in order to have a coherent
         bridge between Python and Javascript.
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_object_prototypes.asp
+        `Related Pages <https://www.w3schools.com/js/js_object_prototypes.asp>`_
 
         :param py_class: PyJs class name
         :param func_name: The Javascript function name
@@ -701,9 +653,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         All modern browsers have a built-in XMLHttpRequest object to request data from a server.
 
-        Related Pages:
-
-          https://www.w3schools.com/xml/xml_http.asp
+        `Related Pages <https://www.w3schools.com/xml/xml_http.asp>`_
 
         Usage::
 
@@ -831,9 +781,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Create a POST HTTP request.
 
-        Related Pages:
-
-          https://pythonise.com/series/learning-flask/flask-http-methods
+        `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
         :param url: The url path of the HTTP request
         :param data: Optional. Corresponding to a JavaScript object
@@ -859,9 +807,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Create a PUT HTTP request.
 
-        Related Pages:
-
-          https://pythonise.com/series/learning-flask/flask-http-methods
+        `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
         :param url: The url path of the HTTP request
         :param data: Optional. Corresponding to a JavaScript object
@@ -887,9 +833,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Create a PATH HTTP request.
 
-        Related Pages:
-
-          https://pythonise.com/series/learning-flask/flask-http-methods
+        `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
         :param url: The url path of the HTTP request
         :param data: Optional. Corresponding to a JavaScript object
@@ -915,9 +859,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Create a DELETE HTTP request.
 
-        Related Pages:
-
-          https://pythonise.com/series/learning-flask/flask-http-methods
+        `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
         :param url: The url path of the HTTP request
         :param data: Optional. Corresponding to a JavaScript object
@@ -945,9 +887,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
               page.js.queueMicrotask([page.js.alert("ok")])
             ])
 
-        Related Pages:
-
-          https://developer.mozilla.org/fr/docs/Web/API/queueMicrotask
+        `Related Pages <https://developer.mozilla.org/fr/docs/Web/API/queueMicrotask>`_
 
         :param js_funcs: The Javascript function definition
         :param profile: Optional. A flag to set the component performance storage
@@ -961,11 +901,11 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Internal RPC to trigger services.
 
-        :param js_code: The variable name created in the Javascript.
+        :param js_code: The variable name created in the Javascript
         :param method_type: The method type
-        :param fnc: Python function.
+        :param fnc: Python function
         :param url: The service url
-        :param extra_params: Optional.
+        :param extra_params: Optional
         """
         if not extra_params:
             extra_params = {}
@@ -996,9 +936,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             ])
           ])
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch>`_
 
         :param url: The target url
         :param options: Optional. Specific Python options available for this component
@@ -1039,9 +977,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Create an internal Breadcrumb to keep track of the user journey within your page.
 
-        Related Pages:
-
-          https://www.w3schools.com/howto/howto_css_breadcrumbs.asp
+        `Related Pages <https://www.w3schools.com/howto/howto_css_breadcrumbs.asp>`_
 
         :return: A Python breadcrumb object.
         """
@@ -1057,9 +993,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
           icon.click([self.context.page.js.navigateTo(url)])
 
-        Related Pages:
-
-          https://redfin.github.io/react-server/annotated-src/navigateTo.html
+        `Related Pages <https://redfin.github.io/react-server/annotated-src/navigateTo.html>`_
 
         :param url: The target url
         :param options: Optional. The property of the location object
@@ -1096,9 +1030,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
           page.js.keydown.enter(pk.js_std.alert('Hello World'), profile=True)
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_onkeydown.asp
+        `Related Pages <https://www.w3schools.com/jsref/event_onkeydown.asp>`_
         """
         keydown = KeyCodes.KeyCode(page=self.page, source_event='document')
         self.page.properties.js.add_event('keydown', keydown)
@@ -1113,9 +1045,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
           page.js.keypress.enter(pk.js_std.alert('Hello World'), profile=True)
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_onkeypress.asp
+        `Related Pages <https://www.w3schools.com/jsref/event_onkeypress.asp>`_
         """
         keypress = KeyCodes.KeyCode(page=self.page, source_event='document')
         self.page.properties.js.add_event('keypress', keypress)
@@ -1130,9 +1060,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
           page.js.keyup.enter(pk.js_std.alert('Hello World'), profile=True)
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_onkeypress.asp
+        `Related Pages <https://www.w3schools.com/jsref/event_onkeypress.asp>`_
         """
         keyup = KeyCodes.KeyCode(page=self.page, source_event='document')
         self.page.properties.js.add_event('keyup', keyup)
@@ -1142,9 +1070,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The ready event occurs when the body DOM (document object model) has been loaded.
 
-        Related Pages:
-
-          https://www.w3schools.com/jquery/event_ready.asp
+        `Related Pages <https://www.w3schools.com/jquery/event_ready.asp>`_
 
         :param js_funcs: The Javascript functions to be added to this section
         :param profile: Optional. A flag to set the component performance storage
@@ -1172,12 +1098,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The getElementById() method returns the element that has the ID attribute with the specified value.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/met_document_getelementbyid.asp>`_
 
-          https://www.w3schools.com/jsref/met_document_getelementbyid.asp
-
-        :param id_name: The ID attribute's value of the element you want to get.
-        :param js_conv_func: Optional. A specific JavaScript data conversion function.
+        :param id_name: The ID attribute's value of the element you want to get
+        :param js_conv_func: Optional. A specific JavaScript data conversion function
 
         :return: An Element Object, representing an element with the specified ID. Returns null if no elements with
         the specified ID exists
@@ -1195,9 +1119,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers.
         The index starts at 0.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_doc_getelementsbyname.asp>`_
 
         :param name: The name attribute value of the element you want to access/manipulate.
         :param js_conv_func: Optional. A specific JavaScript data conversion function.
@@ -1218,9 +1140,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers.
         The index starts at 0.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_element_getelementsbytagname.asp>`_
 
         :param tag_name: The tag name of the child elements you want to get
         :param i: Optional. The index of the element
@@ -1235,11 +1155,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         The getElementsByClassName() method returns a collection of all elements in the document with the specified
         class name, as a NodeList object.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp>`_
 
-          https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp
-
-        :param cls_name: The class name of the elements you want to get.
+        :param cls_name: The class name of the elements you want to get
 
         :return: A NodeList object, representing a collection of elements with the specified class name.
                  The elements in the returned collection are sorted as they appear in the source code.
@@ -1250,9 +1168,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The createElement() method creates an Element Node with the specified name.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_document_createelement.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_document_createelement.asp>`_
 
         :param tag_name: The name of the element you want to create
         :param js_code: The variable name to be set. Default random name
@@ -1270,9 +1186,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The createTextNode() method creates a Text Node with the specified text.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_document_createtextnode.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_document_createtextnode.asp>`_
 
         :param text: Optional. The text of the Text node
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -1282,14 +1196,35 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsObject.JsObject(
             "document.createTextNode(%s)" % JsUtils.jsConvertData(text, js_conv_func), is_py_data=False)
 
+    def createElementStyle(self, content, map_id: str = None, js_conv_func: Optional[Union[str, list]] = None,
+                           override: bool = False):
+        """
+        Add a CSS element from the JavaScript.
+
+        `Related Pages <https://gist.github.com/sagarpanda/ed583b408a38c56f33ba>`_
+
+        :param content: CSS full content (selector + CSS content)
+        :param map_id: CSS Class reference (to avoid adding multiple times the same one to the head
+        :param js_conv_func: String conversion function
+        :param override: Force the page to apply again the function to update a CSS class
+        """
+        if map_id is None:
+            if hasattr(content, "classname"):
+                map_id = content.classname
+            else:
+                map_id = "dyn_cls_%s" % hash(content)
+        if map_id not in self.page.properties.css._dyn_cls or override:
+            self.page.properties.css._dyn_cls.add(map_id)
+            return JsObject.JsObject('''(function(content){let cssStyle = document.createElement('style'); 
+    cssStyle.type = 'text/css'; cssStyle.innerHTML = content; document.getElementsByTagName('head')[0].appendChild(cssStyle); 
+    return cssStyle})(%s)''' % JsUtils.jsConvertData(content, js_conv_func), is_py_data=False)
+
     def encodeURIComponent(self, uri: Union[str, primitives.JsDataModel],
                            js_conv_func: Union[str, list] = None) -> JsObject.JsObject:
         """
         The encodeURIComponent() function encodes a URI component.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp
+        `Related Pages <https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp>`_
 
         :param uri: The URI to be encoded
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -1303,9 +1238,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The decodeURIComponent() function decodes a URI component.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp
+        `Related Pages <https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp>`_
 
         :param url_enc: The URI to be decoded
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -1388,12 +1321,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
         as a static NodeList object.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/met_document_queryselectorall.asp>`_
 
-          https://www.w3schools.com/jsref/met_document_queryselectorall.asp
-
-        :param selector: CSS selectors.
-        :param js_conv_func: Optional. A specific JavaScript data conversion function.
+        :param selector: CSS selectors
+        :param js_conv_func: Optional. A specific JavaScript data conversion function
         """
         return JsNodeDom.JsDomsList(
             "document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, js_conv_func), is_py_data=False)
@@ -1402,12 +1333,10 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/met_document_queryselector.asp>`_
 
-          https://www.w3schools.com/jsref/met_document_queryselector.asp
-
-        :param selector: CSS selectors.
-        :param js_conv_func: Optional. A specific JavaScript data conversion function.
+        :param selector: CSS selectors
+        :param js_conv_func: Optional. A specific JavaScript data conversion function
         """
         return JsNodeDom.JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, js_conv_func))
 
@@ -1415,9 +1344,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The activeElement property returns the currently focused element in the document.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_document_activeelement.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_document_activeelement.asp>`_
 
         :return: A reference to the element object in the document that has focus.
         """
@@ -1429,9 +1356,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The title property sets or returns the title of the current document (the text inside the HTML title element).
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_doc_title.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_doc_title.asp>`_
 
         :param text: Optional. Representing the title of the document
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -1445,9 +1370,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The execCommand() method executes the specified command for the selected part of an editable section.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_document_execcommand.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_document_execcommand.asp>`_
 
         :param command:. Specifies the name of the command to execute on the selected section
         :param show_ui: specifies if the UI should be shown or not
@@ -1463,9 +1386,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
         The event can be of any legal event type, and must be initialized before use.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_createevent.asp
+        `Related Pages <https://www.w3schools.com/jsref/event_createevent.asp>`_
 
         :param event_type: A String that specifies the type of the event.
 
@@ -1482,11 +1403,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         The createAttribute() method creates an attribute with the specified name, and returns the attribute as an
         Attr object.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/met_document_createattribute.asp>`_
 
-          https://www.w3schools.com/jsref/met_document_createattribute.asp
-
-        :param attribute_name: The name of the attribute you want to create.
+        :param attribute_name: The name of the attribute you want to create
 
         :return: A Node object, representing the created attribute.
         """
@@ -1497,9 +1416,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         The writeln() method is identical to the document.write() method, with the addition of writing a newline character
         after each statement.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_doc_writeln.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_doc_writeln.asp>`_
 
         :param value: What to write to the output stream. Multiple arguments can be listed and they will be appended
           to the document in order of occurrence
@@ -1513,11 +1430,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The parseFloat() function parses a string and returns a floating point number.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/jsref_parseint.asp>`_
 
-          https://www.w3schools.com/jsref/jsref_parseint.asp
-
-        :param value: The string to be parsed.
+        :param value: The string to be parsed
 
         :return: A Number. If the first character cannot be converted to a number, NaN is returned.
         """
@@ -1528,11 +1443,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         The parseInt() function parses a string and returns an integer.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/jsref_parseint.asp>`_
 
-          https://www.w3schools.com/jsref/jsref_parseint.asp
-
-        :param value: The string to be parsed.
+        :param value: The string to be parsed
 
         :return: A Number. If the first character cannot be converted to a number, NaN is returned.
         """
@@ -1544,11 +1457,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         The parse() method parses a date string and returns the number of milliseconds between the date string and midnight
         of January 1, 1970.
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/jsref_parse.asp>`_
 
-          https://www.w3schools.com/jsref/jsref_parse.asp
-
-        :param value: A string representing a date.
+        :param value: A string representing a date
 
         :return: Number. Representing the milliseconds between the specified date-time and midnight January 1, 1970.
         """
@@ -1574,9 +1485,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Display a message.
 
-        Related Pages:
-
-          https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+        `Related Pages <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
 
         :param data: A String corresponding to a JavaScript object
         :param css_style: Optional. The CSS attributes to be added to the HTML component
@@ -1631,9 +1540,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         Create an email.
 
-        Related Pages:
-
-          https://www.w3docs.com/snippets/html/how-to-create-mailto-links.html
+        `Related Pages <https://www.w3docs.com/snippets/html/how-to-create-mailto-links.html>`_
 
         :param mails:
         :param subject:
@@ -1686,10 +1593,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
           icon = page.ui.icons.clock().css({"color": 'blue'})
           icon.click([ page.js.import_js("utils.js", ["testImport()"])])
 
-        Related Pages:
-
-          https://cleverbeagle.com/blog/articles/tutorial-how-to-load-third-party-scripts-dynamically-in-javascript
-          https://stackoverflow.com/questions/950087/how-do-i-include-a-javascript-file-in-another-javascript-file
+        `Related Pages <https://cleverbeagle.com/blog/articles/tutorial-how-to-load-third-party-scripts-dynamically-in-javascript>`_
+        `Related Pages <https://stackoverflow.com/questions/950087/how-do-i-include-a-javascript-file-in-another-javascript-file>`_
 
         :param script: A script name. A Js extension
         :param js_funcs: Callback function when module loaded. The Javascript functions
@@ -1728,9 +1633,7 @@ else {%(fncs)s}  ''' % {"script": abs(hash(script)), "content": url_module, "fnc
         """
         Add a CSS file on the fly from a JavaScript event.
 
-        Related Pages:
-
-          https://stackoverflow.com/questions/19844545/replacing-css-file-on-the-fly-and-apply-the-new-style-to-the-page
+        `Related Pages <https://stackoverflow.com/questions/19844545/replacing-css-file-on-the-fly-and-apply-the-new-style-to-the-page>`_
 
         :param css_file: A script name with a CSS extension
         :param self_contained: Optional. A flag to specify where the import will be done
@@ -1778,9 +1681,7 @@ class JsConsole:
     """
     This is a wrapper to the Console.
 
-    Related Pages:
-
-      https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d
+    `Related Pages <https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d>`_
     """
 
     def __init__(self, page: primitives.PageModel = None):
@@ -1796,9 +1697,7 @@ class JsConsole:
 
           page.js.console.debugger
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_debugger.asp
+        `Related Pages <https://www.w3schools.com/jsref/jsref_debugger.asp>`_
 
         :return: The Javascript Keyword to trigger the browser debugger.
         """
@@ -1813,9 +1712,7 @@ class JsConsole:
 
           page.js.console.clear
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_clear.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_clear.asp>`_
 
         :return: The Javascript String used to clear the console (F12 in standard browsers).
         """
@@ -1830,13 +1727,11 @@ class JsConsole:
 
           page.js.console.log("Test")
 
-        Related Pages:
+        `Related Pages <https://www.w3schools.com/jsref/met_console_log.asp>`_
 
-          https://www.w3schools.com/jsref/met_console_log.asp
-
-        :param data: The Javascript fragment.
-        :param js_conv_func: Optional. A specific JavaScript data conversion function.
-        :param skip_data_convert: Optional. Flag to specify to the framework if a Json conversion is needed.
+        :param data: The Javascript fragment
+        :param js_conv_func: Optional. A specific JavaScript data conversion function
+        :param skip_data_convert: Optional. Flag to specify to the framework if a Json conversion is needed
 
         :return: The Javascript String used to clear the console (F12 in standard browsers)
         """
@@ -1855,9 +1750,7 @@ class JsConsole:
         """
         The console.info() method writes a message to the console.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_info.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_info.asp>`_
 
         :param data: The Javascript fragment
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -1870,9 +1763,7 @@ class JsConsole:
         """
         The console.warn() method writes a warning to the console.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_warn.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_warn.asp>`_
 
         :param data: The Javascript fragment
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -1885,9 +1776,7 @@ class JsConsole:
         """
         The console.error() method writes an error message to the console.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_error.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_error.asp>`_
 
         :param data: The Javascript fragment
         :param js_conv_func: Optional. A specific JavaScript data conversion function
@@ -1900,9 +1789,7 @@ class JsConsole:
         """
         The console.table() method writes a table in the console view.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_table.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_table.asp>`_
 
         :param data: The data to fill the table with
         :param js_header: Optional. An array containing the names of the columns to be included in the table
@@ -1918,9 +1805,7 @@ class JsConsole:
         """
         The console.time() method starts a timer in the console view.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_time.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_time.asp>`_
 
         :param html_code: Use the label parameter to give the timer a name
 
@@ -1932,9 +1817,7 @@ class JsConsole:
         """
         The console.timeEnd() method ends a timer, and writes the result in the console view.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_timeend.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_timeend.asp>`_
 
         :param html_code: The name of the timer to end
 
@@ -1947,9 +1830,7 @@ class JsConsole:
         """
         The console.assert() method writes a message to the console, but only if an expression evaluates to false.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/met_console_assert.asp
+        `Related Pages <https://www.w3schools.com/jsref/met_console_assert.asp>`_
 
         :param data: The Javascript fragment
         :param info: The JavaScript result
@@ -1962,9 +1843,7 @@ class JsConsole:
         """
         Javascript Try Catch Exceptions.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_obj_error.asp
+        `Related Pages <https://www.w3schools.com/jsref/jsref_obj_error.asp>`_
 
         :param js_funcs: The Javascript functions
         :param js_funcs_errs: The Javascript functions
@@ -1982,8 +1861,8 @@ class JsConsole:
         Shortcut function to display performances from a variable.
         The variable must be global. Namely the name should start with window.
 
-        :param js_code: The variable var name use to compute the performance.
-        :param label: Optional. The description.
+        :param js_code: The variable var name use to compute the performance
+        :param label: Optional. The description
         """
         if label is not None:
             return JsFncs.JsFunction("console.log('%s' + (performance.now() - %s) + 'ms')" % (label, js_code))
@@ -2012,9 +1891,7 @@ class JsJson:
     This wrapper will only wrapper the different functions available in the underlying library.
     The documentation can be found in each function or are available on the Javascript Official documentation.
 
-    Related Pages:
-
-      https://www.w3schools.com/js/js_json_intro.asp
+    `Related Pages <https://www.w3schools.com/js/js_json_intro.asp>`_
     """
 
     def parse(self, data: Union[str, primitives.JsDataModel],
@@ -2022,10 +1899,8 @@ class JsJson:
         """
         Parses a JSON string and returns a JavaScript object.
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_json_parse.asp
-          https://www.w3schools.com/jsref/jsref_parse_json.asp
+        `Related Pages <https://www.w3schools.com/js/js_json_parse.asp>`_
+        `Related Pages <https://www.w3schools.com/jsref/jsref_parse_json.asp>`_
 
         :param data: A String corresponding to a JavaScript object
         :param js_result_func: Optional. A function used to transform the result. The function is called for each item.
@@ -2045,9 +1920,7 @@ class JsJson:
         """
         The JSON.stringify() method converts JavaScript objects into strings.
 
-        Related Pages:
-
-          https://www.w3schools.com/js/js_json_stringify.asp
+        `Related Pages <https://www.w3schools.com/js/js_json_stringify.asp>`_
 
         :param data: The value to convert to a string.
         :param replacer: Optional. Either a function or an array used to transform the result.
@@ -2067,68 +1940,50 @@ class JsScreen:
 
     @property
     def availHeight(self) -> JsNumber.JsNumber:
-        """
-        The availHeight property returns the height of the user's screen, in pixels, minus interface features
+        """The availHeight property returns the height of the user's screen, in pixels, minus interface features
         like the Windows Task bar.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_screen_availheight.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_screen_availheight.asp>`_
         """
         return JsNumber.JsNumber("screen.availHeight")
 
     @property
     def availWidth(self) -> JsNumber.JsNumber:
-        """
-        The availWidth property returns the width of the user's screen, in pixels, minus interface features like the
+        """The availWidth property returns the width of the user's screen, in pixels, minus interface features like the
         Windows Task bar.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_screen_availwidth.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_screen_availwidth.asp>`_
         """
         return JsNumber.JsNumber("screen.availWidth")
 
     @property
     def colorDepth(self) -> JsNumber.JsNumber:
-        """
-        The colorDepth property returns the bit depth of the color palette for displaying images (in bits per pixel).
+        """The colorDepth property returns the bit depth of the color palette for displaying images (in bits per pixel).
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_screen_colordepth.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_screen_colordepth.asp>`_
         """
         return JsNumber.JsNumber("screen.colorDepth")
 
     @property
     def height(self) -> JsNumber.JsNumber:
-        """
-        The height property returns the total height of the user's screen, in pixels.
+        """The height property returns the total height of the user's screen, in pixels.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_screen_height.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_screen_height.asp>`_
         """
         return JsNumber.JsNumber("screen.height")
 
     @property
     def pixelDepth(self) -> JsNumber.JsNumber:
-        """
-        The pixelDepth property returns the color resolution (in bits per pixel) of the visitor's screen.
+        """The pixelDepth property returns the color resolution (in bits per pixel) of the visitor's screen.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_screen_pixeldepth.asp>`_
         """
         return JsNumber.JsNumber("screen.pixelDepth")
 
     @property
     def width(self) -> JsNumber.JsNumber:
-        """
-        The width property returns the total width of the user's screen, in pixels.
+        """The width property returns the total width of the user's screen, in pixels.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/prop_screen_width.asp
+        `Related Pages <https://www.w3schools.com/jsref/prop_screen_width.asp>`_
         """
         return JsNumber.JsNumber("screen.width")

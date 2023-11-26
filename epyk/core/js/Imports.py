@@ -583,6 +583,15 @@ JS_IMPORTS = {
              'path': 'colreorder/%(version)s/js/',
              'cdnjs': 'https://cdn.datatables.net'}]},
 
+    # gridstack Build interactive dashboards in minute
+    'gridstack': {
+        'unpkg': False,
+        'version': '9.5.1',
+        'website': 'https://gridstackjs.com/',
+        'modules': [
+            {'script': 'gridstack-all.min.js', 'path': 'gridstack.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
+    },
+
     #
     'jszip': {
         'website': 'https://datatables.net/extensions/buttons/',
@@ -2028,14 +2037,6 @@ CSS_IMPORTS = {
         ]
     },
 
-    # bootstrap icons
-    'bootstrap-icons': {
-        'website': 'https://icons.getbootstrap.com/',
-        'version': '1.10.3',
-        'repository': 'https://github.com/twbs/icons?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
-        'modules': [
-            {'script': 'bootstrap-icons.min.css', 'path': 'bootstrap-icons/%(version)s/font/', 'cdnjs': CDNJS_REPO}]},
-
     # Font awesome style width CDN links
     'font-awesome': {
         'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free',
@@ -2209,6 +2210,14 @@ CSS_IMPORTS = {
     'tiny-slider': {
         'modules': [
             {'script': 'tiny-slider.min.css', 'node_path': 'dist/', 'path': 'tiny-slider/%(version)s/',
+             'cdnjs': CDNJS_REPO},
+        ],
+    },
+
+    # gridstack Build interactive dashboards in minute
+    'gridstack': {
+        'modules': [
+            {'script': 'gridstack.min.css', 'node_path': 'dist/', 'path': 'gridstack.js/%(version)s/',
              'cdnjs': CDNJS_REPO},
         ],
     }

@@ -184,6 +184,11 @@ return data}
     """ """
     return self.then("(data) => %s" % JsUtils.jsConvertData(callback(JsObject.JsObject.get("data")), None))
 
+  def onSuccess(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
+    """Shortcut to replicated post and get requests """
+    return self.json().then("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
+
+
   @property
   def r(self):
     return self.toStr()

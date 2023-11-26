@@ -33,6 +33,7 @@ def css_files_loader(
                     css_formatted.append("/* CSS From file %s */" % css_file)
                     with open(css_file) as fp:
                         css_data = " ".join([line.strip() for line in fp])
+                        css_data = css_data.replace(":host", "")
                         for k, v in style_vars.items():
                             css_data = css_data.replace("$%s" % k, v)
                         for m in regex.findall(css_data):
@@ -45,7 +46,7 @@ def css_files_loader(
 
             else:
                 for k, v in style_vars.items():
-                    css_file = css_file.replace("$%s" % k, v)
+                    css_file = css_file.replace("$%s" % k, v).replace(":host", "")
                 for m in regex.findall(css_data):
                     if selector is not None:
                         css_formatted.append("div[name=%s] > %s { %s }" % (selector, m[0], m[1]))

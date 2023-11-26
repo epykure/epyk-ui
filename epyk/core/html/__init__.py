@@ -55,7 +55,10 @@ def html_formatter(
     js_variables, inputs, css = [], [], []
     regex_tmpl = re.compile(r"{{([a-zA-Z_\.\ 0-9]*)}}")
     for ref, content in directives.items():
-        html_content = html_content.replace("[%s]" % ref, content.strip())
+        directive_def = "[%s]" % ref
+        if directive_def not in html_content:
+            print("-- Directive [%s] missing, in template\n %s" % (ref, html_content))
+        html_content = html_content.replace(directive_def, content.strip())
         if ref in ["class", "style"]:
             # special template directives
             # slice to remove the quotes

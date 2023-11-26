@@ -793,6 +793,15 @@ class Layouts:
     html.Html.set_component_skin(component)
     return component
 
+  def gridstack(self, rows=None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+           options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.GridStack:
+    component = html.HtmlContainer.GridStack(
+      self.page, rows=rows, width=width, height=height, html_code=html_code, options=options, profile=profile)
+    html.Html.set_component_skin(component)
+    return component
+
+
+
 
 class Delimiter:
 
