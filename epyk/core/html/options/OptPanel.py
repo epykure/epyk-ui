@@ -512,6 +512,7 @@ class OptionsStepper(Options):
 
 
 class OptionGrid(Options):
+  component_properties = ('columns',)
 
   @property
   def autoSize(self):
@@ -522,6 +523,15 @@ class OptionGrid(Options):
   @autoSize.setter
   def autoSize(self, flag: bool):
     self.set(flag)
+
+  @property
+  def columns(self):
+    """ Fix number of columns in the grid builder """
+    return self._config_get(4)
+
+  @columns.setter
+  def columns(self, num: int):
+    self._config(num)
 
   @property
   def responsive(self):
