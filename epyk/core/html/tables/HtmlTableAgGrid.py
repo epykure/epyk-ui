@@ -210,7 +210,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
           table.tableId
         """
-        return "%s_obj" % self.htmlCode
+        return "%s_obj" % self.html_code
 
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
         """
@@ -251,6 +251,10 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        table_id = self.tableId
+        if component_id is not None:
+            table_id = "%sId" % component_id
+            self.js._selector = table_id
         if data is not None:
             state_expr = ""
             if stop_state:
@@ -258,7 +262,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             return "%s%s" % (self.js.setRowData(data, dataflows=dataflows).toStr(), state_expr)
 
         return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
-            'tableId': self.tableId, 'config': self.options.config_js(options),
+            'tableId': table_id, 'config': self.options.config_js(options),
             'htmlCode': component_id or self.dom.varName}
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,

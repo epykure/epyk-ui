@@ -669,6 +669,19 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         method_type = JsUtils.jsConvertData(method_type, None)
         return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url)
 
+    def flows(self, data, dataflows, js_code: str = None) -> JsObjects.JsObject.JsObject:
+        """
+        Allow isolated data process.
+        Those data processes are running in JavaScript.
+
+        :param data: Input data
+        :param js_code: Optional. The variable to use (to allow the chaining).
+        """
+        if js_code is not None:
+            return JsObjects.JsObject.JsObject.get("%s = %s" % (js_code, JsUtils.dataFlows(data, dataflows, self.page)))
+
+        return JsObjects.JsObject.JsObject.get(data, dataflows, self.page)
+
     def get(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
             js_code: str = "response", is_json: bool = True,
             components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
