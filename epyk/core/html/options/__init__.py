@@ -157,6 +157,30 @@ class Options(DataClass):
         if js_type:
             self.js_type[name or sys._getframe().f_back.f_code.co_name] = True
 
+    def _config_func(self, js_funcs, profile = None, func_ref: bool = False, name: str = None, append: bool = True,
+                     params_expr = "param"):
+        """
+        Add a JavaScript expression to the configuration.
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        :param name: Optional. The attribute name. Default is the parent function name
+        :param append: Optional.
+        :param params_expr: Optional. String with the list of arguments for the JavaScript callback
+        """
+        name = name or sys._getframe().f_back.f_code.co_name
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+        if self.js_tree.get(name) is not None and append:
+            opt_func = self.js_tree[name]
+            self.js_tree[name] = opt_func[:-1] + ";" + str_func + "}"
+        else:
+            if not str_func.startswith("function(%s)" % params_expr) and not func_ref:
+                str_func = "function(%s){%s}" % (params_expr, str_func)
+            self._config(str_func, js_type=True, name=name)
+
     def _config_group_get(self, group: str, dflt: Any = None, name: str = None):
         """
         Get second level configuration options.

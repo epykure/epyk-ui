@@ -12,7 +12,6 @@ from epyk.core.html.options import OptTableAgGrid
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsAgGrid
 from epyk.core.js.html import JsHtmlTables
-from epyk.core.js import Imports
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable
@@ -217,9 +216,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         Common JavaScript function to set the table definition.
         If options are defined the definition will be specific to the column definition.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-selection/>`_
 
         :param options: Optional. The table API attributes. If None return current definition.
         :param dataflows: Chain of config transformations
@@ -277,9 +274,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             page.js.alert("This is a test")
           ])
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_onclick.asp
+        `Related Pages <https://www.w3schools.com/jsref/event_onclick.asp>`_
 
         :param js_funcs: A Javascript Python function
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console

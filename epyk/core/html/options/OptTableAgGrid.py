@@ -29,10 +29,7 @@ class CellEditor(Enums):
 
     def agRichSelectCellEditor(self, values, **kwargs):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
 
         :param values:
         """
@@ -56,21 +53,13 @@ class AggFnc(Enums):
 
     def null(self):
         """
-
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-definitions/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
         """
         return self._set_value(value=None)
 
     def sum(self):
         """
-
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-definitions/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
         """
         return self._set_value()
 
@@ -79,55 +68,39 @@ class ColType(Enums):
 
     def nonEditableColumn(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._set_value()
 
     def dateColumn(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._set_value()
 
     def numericColumn(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._set_value()
 
     def numberColumn(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._set_value()
 
     def medalColumn(self):
         """
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._set_value()
 
     def rightAligned(self):
         """
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._set_value()
 
@@ -144,9 +117,7 @@ class ColumnFilter(Enums):
         """
         A Text Filter for string comparisons.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-filtering/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
         """
         if kwargs:
             self._set_value(value=kwargs, name="filterParams")
@@ -156,9 +127,7 @@ class ColumnFilter(Enums):
         """
         A Date Filter for date comparisons.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-filter-date/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-filter-date/>`_
         """
         if kwargs:
             self._set_value(value=kwargs, name="filterParams")
@@ -168,9 +137,7 @@ class ColumnFilter(Enums):
         """
         A Number Filter for number comparisons.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-filtering/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
         """
         return self._set_value()
 
@@ -178,9 +145,7 @@ class ColumnFilter(Enums):
         """
         A Set Filter, influenced by how filters work in Microsoft Excel. This is an ag-Grid-Enterprise feature.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-filter-component/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-filter-component/>`_
         """
         return self._set_value(value=filter_name)
 
@@ -212,9 +177,7 @@ class Column(Options):
         Rules that return true will have the class applied the second time.
         Rules that return false will have the class removed second time.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/cell-styles/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-styles/>`_
         """
         return self._config_get()
 
@@ -225,10 +188,7 @@ class Column(Options):
     @property
     def cellRenderers(self) -> CellRenderer:
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+        `Related Pages <https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/>`_
         """
         return CellRenderer(self, "cellRenderer")
 
@@ -243,9 +203,7 @@ class Column(Options):
           c.cellRenderer = ''' function(param){
           return '<span><i class="far fa-comments"></i>Test '+ param.value +'</span>'} '''
 
-        Related Pages:
-
-          https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+        `Related Pages <https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/>`_
         """
         return self._config_get()
 
@@ -260,9 +218,7 @@ class Column(Options):
         This is useful if you want to 'configure' your Cell Renderer. For example, you might have a Cell
         Renderer for formatting currency but you need to provide what currency for your cell renderer to use.
 
-        Related Pages:
-
-          https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+        `Related Pages <https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/>`_
         """
         return self._config_get()
 
@@ -279,9 +235,7 @@ class Column(Options):
         Rules that return true will have the class applied the second time.
         Rules that return false will have the class removed second time.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/cell-styles/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-styles/>`_
         """
         return self._config_get()
 
@@ -295,10 +249,7 @@ class Column(Options):
     @property
     def children(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-grouping-headers/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-grouping-headers/>`_
         """
         return self._config_get()
 
@@ -319,10 +270,7 @@ class Column(Options):
     @property
     def colId(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-grouping-headers/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-grouping-headers/>`_
         """
         return self._config_get()
 
@@ -335,9 +283,7 @@ class Column(Options):
         """
         values closed, open.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-grouping-headers/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-grouping-headers/>`_
         """
         return self._config_get()
 
@@ -350,9 +296,7 @@ class Column(Options):
         """
         Cell editing format
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
         return CellEditor(self, "cellEditor")
 
@@ -370,9 +314,7 @@ class Column(Options):
         """
         Allow every column to be grouped.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-definitions/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
         """
         return self._config_get()
 
@@ -395,9 +337,7 @@ class Column(Options):
         Set filtering on a column using the column definition property filter. The property can have one of the following
         values:
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-filtering/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
         """
         return ColumnFilter(self, 'filter')
 
@@ -406,9 +346,7 @@ class Column(Options):
         """
         Function or expression. Gets the value for filtering purposes.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/value-getters/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-getters/>`_
         """
         return self._config_get()
 
@@ -431,9 +369,7 @@ class Column(Options):
         To enable sticky groups, set the groupRowsSticky property to true.
         This behaviour applies to all row group levels.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/>`_
         """
         return self._config_get()
 
@@ -446,9 +382,7 @@ class Column(Options):
         """
         To display each row group using group rows set groupDisplayType = 'groupRows' as shown below:
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/>`_
         """
         return self._config_get()
 
@@ -461,9 +395,7 @@ class Column(Options):
         """
         True if the column is hidden, otherwise false.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-definitions/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
         """
         return self._config_get()
 
@@ -477,9 +409,7 @@ class Column(Options):
         Similarly to styling cells, the grid will use the result of headerClass
         from the column definition to style the grid headers.
 
-        Related Pages:
-
-          https://ag-grid.com/javascript-data-grid/excel-export-styles/#styling-headers
+        `Related Pages <https://ag-grid.com/javascript-data-grid/excel-export-styles/#styling-headers>`_
         """
         return self._config_get()
 
@@ -493,9 +423,7 @@ class Column(Options):
         The name to render in the column header.
         If not specified and field is specified, the field name will be used as the header name.
 
-        Related Pages:
-
-          https://ag-grid.com/javascript-data-grid/column-properties/#reference-header
+        `Related Pages <https://ag-grid.com/javascript-data-grid/column-properties/#reference-header>`_
         """
         return self._config_get()
 
@@ -509,9 +437,7 @@ class Column(Options):
         If true or the callback returns true, a 'select all' checkbox will be put into the header.
         See Header Checkbox Selection.
 
-        Related Pages:
-
-          https://ag-grid.com/javascript-data-grid/column-properties/#reference-header
+        `Related Pages <https://ag-grid.com/javascript-data-grid/column-properties/#reference-header>`_
         """
         return self._config_get()
 
@@ -522,9 +448,7 @@ class Column(Options):
     @property
     def headerCheckboxSelectionCurrentPageOnly(self):
         """
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-selection/>`_
         """
         return self._config_get()
 
@@ -538,9 +462,7 @@ class Column(Options):
         When we want to display a header tooltip, we set the headerTooltip config as a string,
         and that string will be displayed as the tooltip.
 
-        Related Pages:
-
-          https://ag-grid.com/javascript-data-grid/component-tooltip/#header-tooltip-with-custom-tooltip
+        `Related Pages <https://ag-grid.com/javascript-data-grid/component-tooltip/#header-tooltip-with-custom-tooltip>`_
         """
         return self._config_get()
 
@@ -553,9 +475,7 @@ class Column(Options):
         """
         Function or expression. Gets the value for display in the header.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/value-getters/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-getters/>`_
         """
         return self._config_get()
 
@@ -569,9 +489,7 @@ class Column(Options):
         If you do not want the user to be able to pin using the UI, set the property lockPinned=true.
         This will block the UI in the following way:
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-pinning/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-pinning/>`_
         """
         return self._config_get()
 
@@ -584,7 +502,6 @@ class Column(Options):
         """
         Sometimes you want columns of the group to always stick together.
         To achieve this, set the column group property marryChildren=true. The example below demonstrates the following:
-
         """
         return self._config_get()
 
@@ -604,10 +521,7 @@ class Column(Options):
     @property
     def suppressColumnsToolPanel(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example>`_
         """
         return self._config_get()
 
@@ -618,10 +532,7 @@ class Column(Options):
     @property
     def suppressMenu(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/>`_
         """
         return self._config_get()
 
@@ -632,10 +543,7 @@ class Column(Options):
     @property
     def floatingFilterComponent(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/>`_
         """
         return self._config_get()
 
@@ -646,10 +554,7 @@ class Column(Options):
     @property
     def floatingFilterComponentParams(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/>`_
         """
         return self._config_get()
 
@@ -660,10 +565,7 @@ class Column(Options):
     @property
     def tooltipField(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/component-tooltip/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-tooltip/>`_
         """
         return self._config_get()
 
@@ -674,10 +576,7 @@ class Column(Options):
     @property
     def toolPanelClass(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example>`_
         """
         return self._config_get()
 
@@ -702,9 +601,7 @@ class Column(Options):
         it is possible to use the flex config.
         Some columns could be set with a regular width config, while other columns would have a flex config.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-resizing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-resizing/>`_
         """
         return self._config_get()
 
@@ -726,9 +623,7 @@ class Column(Options):
         """
         The column property suppressMovable changes whether the column can be dragged.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-moving/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-moving/>`_
         """
         return self._config_get()
 
@@ -750,9 +645,7 @@ class Column(Options):
         """
         The column property lockPosition locks columns to the first position in the grid.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-moving/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-moving/>`_
         """
         return self._config_get()
 
@@ -785,9 +678,7 @@ class Column(Options):
         Turn column resizing on for the grid by setting resizable=true for each column.
         To set resizing for each column, set resizable=true on the default column definition.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-resizing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-resizing/>`_
         """
         return self._config_get()
 
@@ -819,9 +710,7 @@ class Column(Options):
         The index of the row group. If the column is not grouped, this field is null.
         If multiple columns are used to group, this index provides the order of the grouping.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-definitions/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
         """
         return self._config_get()
 
@@ -835,9 +724,7 @@ class Column(Options):
         By default, each cell will take up the height of one row. You can change this behaviour to allow cells to
         span multiple rows. This feature is similar to 'cell merging' in Excel or 'row spanning' in HTML tables.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-spanning/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-spanning/>`_
         """
         return self._config_get()
 
@@ -850,9 +737,7 @@ class Column(Options):
         Set a rowSpan function. This can be a callback function or even a string pointing to a
         JavaScript function.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-spanning/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-spanning/>`_
 
         :param data: JavaScript expression
         """
@@ -865,9 +750,7 @@ class Column(Options):
         suppressSizeToFit=true. This is helpful if, for example, you want the first column to remain fixed width,
         but all other columns to fill the width of the table.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-sizing/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-sizing/
         """
         return self._config_get()
 
@@ -878,10 +761,7 @@ class Column(Options):
     @property
     def types(self) -> ColType:
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._config_sub_data("type", ColType)
 
@@ -900,10 +780,8 @@ class Column(Options):
         The grid can flash cells to highlight data changes. This is a great visual indicator to users of the grid who
         want data changes to be noticed.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-refresh/
-          https://www.ag-grid.com/angular-data-grid/flashing-cells/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-refresh/>`_
+        `Related Pages <https://www.ag-grid.com/angular-data-grid/flashing-cells/>`_
         """
         return self._config_get()
 
@@ -914,10 +792,7 @@ class Column(Options):
     @property
     def suppressCellFlash(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-refresh/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-refresh/>`_
         """
         return self._config_get()
 
@@ -933,9 +808,7 @@ class Column(Options):
         If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common
         default, and then tailoring per column.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-sorting/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-sorting/>`_
         """
         return self._config_get()
 
@@ -948,9 +821,7 @@ class Column(Options):
         """
         Cell editing format
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-sorting/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-sorting/>`_
         """
         return ColOrder(self, 'sort')
 
@@ -959,9 +830,7 @@ class Column(Options):
         """
         Custom sorting is provided at a column level by configuring a comparator on the column definition.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-sorting/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-sorting/>`_
         """
         return self._config_get()
 
@@ -974,9 +843,7 @@ class Column(Options):
         """
         Custom sorting is provided at a column level.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-sorting/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-sorting/>`_
         """
         return self._config_get()
 
@@ -989,9 +856,7 @@ class Column(Options):
         """
         Custom sorting is provided at a column level.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-sorting/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-sorting/>`_
         """
         return self._config_get()
 
@@ -1011,10 +876,7 @@ class Column(Options):
     @property
     def valueGetter(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._config_get()
 
@@ -1025,10 +887,7 @@ class Column(Options):
     @property
     def valueSetter(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/value-setters/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-setters/>`_
         """
         return self._config_get()
 
@@ -1042,9 +901,7 @@ class Column(Options):
         Value formatters allow you to format values for display. This is useful when data is one type (e.g. numeric)
         but needs to be converted for human reading (e.g. putting in currency symbols and number formatting).
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/value-formatters/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-formatters/>`_
         """
         return self._config_get()
 
@@ -1076,9 +933,7 @@ class Column(Options):
         If enabled then column header names that are too long for the column width will wrap onto the next line.
         Default false
 
-        Related Pages:
-
-          https://ag-grid.com/javascript-data-grid/column-properties/#reference-header
+        `Related Pages <https://ag-grid.com/javascript-data-grid/column-properties/#reference-header>`_
         """
         return self._config_get(False)
 
@@ -1092,10 +947,7 @@ class CellRendererParams(Options):
     @property
     def checkbox(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tree-data/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tree-data/>`_
         """
         return self._config_get()
 
@@ -1106,10 +958,7 @@ class CellRendererParams(Options):
     @property
     def suppressCount(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tree-data/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tree-data/>`_
         """
         return self._config_get()
 
@@ -1126,10 +975,7 @@ class DefaultColDef(Options):
     @property
     def cellRenderers(self) -> CellRenderer:
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+        `Related Pages <https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/>`_
         """
         return CellRenderer(self, "cellRenderer")
 
@@ -1144,9 +990,7 @@ class DefaultColDef(Options):
           c.cellRenderer = ''' function(param){
           return '<span><i class="far fa-comments"></i>Test '+ param.value +'</span>'} '''
 
-        Related Pages:
-
-          https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/
+        `Related Pages <https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/>`_
         """
         return self._config_get()
 
@@ -1174,9 +1018,7 @@ class DefaultColDef(Options):
         Set filtering on a column using the column definition property filter. The property can have one of the
         following values:
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-filtering/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
         """
         return ColumnFilter(self, 'filter')
 
@@ -1184,9 +1026,7 @@ class DefaultColDef(Options):
     def field(self):
         """
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
         """
         return self._config_get()
 
@@ -1201,9 +1041,7 @@ class DefaultColDef(Options):
         it is possible to use the flex config.
         Some columns could be set with a regular width config, while other columns would have a flex config.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-resizing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-resizing/>`_
         """
         return self._config_get()
 
@@ -1217,9 +1055,7 @@ class DefaultColDef(Options):
         Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
         Floating Filter Component to work alongside one of the grid's Provided Filters, or alongside a Custom Filter.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/>`_
         """
         return self._config_get()
 
@@ -1232,9 +1068,7 @@ class DefaultColDef(Options):
         """
         To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
         """
         return self._config_get()
 
@@ -1247,10 +1081,7 @@ class DefaultColDef(Options):
     @property
     def headerName(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/component-floating-filter/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/>`_
         """
         return self._config_get()
 
@@ -1282,9 +1113,7 @@ class DefaultColDef(Options):
         Turn column resizing on for the grid by setting resizable=true for each column.
         To set resizing for each column, set resizable=true on the default column definition.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-resizing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-resizing/>`_
         """
         return self._config_get()
 
@@ -1306,9 +1135,7 @@ class DefaultColDef(Options):
         """
         The column property suppressMovable changes whether the column can be dragged.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-moving/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-moving/>`_
         """
         return self._config_get()
 
@@ -1319,10 +1146,7 @@ class DefaultColDef(Options):
     @property
     def treeData(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/documentation/javascript/tree-data/
+        `Related Pages <https://www.ag-grid.com/documentation/javascript/tree-data/>`_
         """
         return self._config_get()
 
@@ -1338,9 +1162,7 @@ class DefaultColDef(Options):
         """
         set every column width.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._config_get()
 
@@ -1465,9 +1287,7 @@ class TableConfig(OptionsWithTemplates):
         To have one (the first) grid reflect column changes in another (the second), place the first grid's options in
         alignedGrids property of the second grids.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-aligned-grids/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-aligned-grids/>`_
         """
         return self._config_get()
 
@@ -1481,9 +1301,7 @@ class TableConfig(OptionsWithTemplates):
         If you always want the grid's context menu, even when Ctrl is pressed, then set
         allowContextMenuWithControlKey=true.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/context-menu/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/context-menu/>`_
         """
         return self._config_get()
 
@@ -1497,9 +1315,7 @@ class TableConfig(OptionsWithTemplates):
         Row animations occur after filtering, sorting, resizing height and expanding / collapsing a row group.
         Each of these animations is turned OFF by default. They are all turned on using the property animateRows=true.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-animation/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-animation/>`_
         """
         return self._config_get()
 
@@ -1514,10 +1330,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def cacheBlockSize(self):
         """
-
-        Related Pages:
-
-          http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+        `Related Pages <http://54.222.217.254/javascript-grid-server-side-model-tree-data/>`_
         """
         return self._config_get()
 
@@ -1535,9 +1348,7 @@ class TableConfig(OptionsWithTemplates):
         Set grid property colResizeDefault='shift' to have shift resizing as default and normal resizing to happen when
         shift key is pressed.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-resizing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-resizing/>`_
         """
         return self._config_get()
 
@@ -1550,9 +1361,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Set the columnDefs with all the column properties.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-groups/#column-definitions-vs-column-group-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-groups/#column-definitions-vs-column-group-definitions>`_
         """
         return self._config_sub_data_enum("columnDefs", Column)
 
@@ -1562,9 +1371,7 @@ class TableConfig(OptionsWithTemplates):
         Define a column type (you can define as many as you like.
         Expect a valid Json object.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
         return self._config_get()
 
@@ -1577,9 +1384,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Contains properties that all columns will inherit.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#custom-column-types
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#custom-column-types>`_
         """
         return self._config_sub_data("defaultColDef", DefaultColDef)
 
@@ -1589,9 +1394,7 @@ class TableConfig(OptionsWithTemplates):
         Update the Row Data inside the grid by updating the rowData grid property or by calling the grid API
         setRowData().
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/data-update-row-data/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/data-update-row-data/>`_
         """
         return self._config_get(name="rowData")
 
@@ -1602,10 +1405,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def debug(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/data-update-row-data/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/data-update-row-data/>`_
         """
         return self._config_get()
 
@@ -1634,10 +1434,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def enableColResize(self):
         """
-
-        Related Pages:
-
-          http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+        `Related Pages <http://54.222.217.254/javascript-grid-server-side-model-tree-data/>`_
         """
         return self._config_get()
 
@@ -1650,9 +1447,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Allow every column to be pivoted
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example>`_
         """
         return self._config_get()
 
@@ -1663,10 +1458,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def enableRangeSelection(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/context-menu/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/context-menu/>`_
         """
         return self._config_get()
 
@@ -1680,9 +1472,7 @@ class TableConfig(OptionsWithTemplates):
         This means you can drag the columns to the values section, but you cannot drag them to the group or pivot
         sections.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example>`_
         """
         return self._config_get()
 
@@ -1695,9 +1485,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Ensures the rows and columns in the DOM always appear in the same order as displayed in the grid.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
         return self._config_get()
 
@@ -1711,9 +1499,7 @@ class TableConfig(OptionsWithTemplates):
         Set to true to have Enter key move focus to the cell below if not editing.
         The default is Enter key starts editing the currently focused cell.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
         return self._config_get()
 
@@ -1727,9 +1513,7 @@ class TableConfig(OptionsWithTemplates):
         Set to true to have Enter key move focus to the cell below after Enter is pressed while editing.
         The default is editing will stop and focus will remain on the editing cell.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
         return self._config_get()
 
@@ -1744,9 +1528,7 @@ class TableConfig(OptionsWithTemplates):
         through the GUI. This is useful if you want to show the user the group, pivot and values panel,
         so they can see which columns are used, but prevent them from making changes to the selection.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
         return self._config_get()
 
@@ -1780,9 +1562,7 @@ class TableConfig(OptionsWithTemplates):
         Function should return either a string (class name), array of strings (array of class names) or undefined
         for no class.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-styles/#reference-styling-getRowClass
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/#reference-styling-getRowClass>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -1798,10 +1578,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def groupAggFiltering(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tree-data/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tree-data/>`_
         """
         return self._config_get()
 
@@ -1815,9 +1592,7 @@ class TableConfig(OptionsWithTemplates):
         If you want to include a footer with each group, set the property groupIncludeFooter to true.
         It is also possible to include a 'grand' total footer for all groups using the property groupIncludeTotalFooter.
 
-        Related Pages:
-
-          https://www.ag-grid.com/archive/26.0.0/javascript-data-grid/grouping-footers/
+        `Related Pages <https://www.ag-grid.com/archive/26.0.0/javascript-data-grid/grouping-footers/>`_
         """
         return self._config_get()
 
@@ -1828,11 +1603,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def groupIncludeTotalFooter(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/archive/26.0.0/javascript-data-grid/grouping-footers/
-
+        `Related Pages <https://www.ag-grid.com/archive/26.0.0/javascript-data-grid/grouping-footers/>`_
         """
         return self._config_get()
 
@@ -1848,12 +1619,7 @@ class TableConfig(OptionsWithTemplates):
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def isServerSideGroup(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                           func_ref: bool = False):
@@ -1875,10 +1641,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def maxBlocksInCache(self):
         """
-
-        Related Pages:
-
-          http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+        `Related Pages <http://54.222.217.254/javascript-grid-server-side-model-tree-data/>`_
         """
         return self._config_get()
 
@@ -1889,62 +1652,41 @@ class TableConfig(OptionsWithTemplates):
     def onGridReady(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
         """
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def on(self, event_type: str, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
            func_ref: bool = False):
         """
 
-        Related Pages:
-
-          https://ag-grid.com/angular-data-grid/grid-interface/
+        `Related Pages <https://ag-grid.com/angular-data-grid/grid-interface/>`_
 
         :param event_type: The event type
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
         if not event_type.startswith("on"):
             event_type = "on%s" % event_type.capitalize()
-        self._config(str_func, name=event_type, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref, name=event_type)
 
     def onCellEditingStopped(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                              func_ref: bool = False):
         """
         Editing a cell has stopped.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing/>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def onCellValueChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                            func_ref: bool = False):
@@ -1952,47 +1694,31 @@ class TableConfig(OptionsWithTemplates):
         Value has changed after editing (this event will not fire if editing was cancelled, eg ESC was pressed) or
         if cell value has changed as a result of paste operation.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing/>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def onRowClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                      func_ref: bool = False):
         """
 
-        Related Pages:
-
-          https://ag-grid.com/angular-data-grid/grid-interface/
+        `Related Pages <https://ag-grid.com/angular-data-grid/grid-interface/>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def onSelectionChanged(
             self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
         """
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-selection/>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -2000,59 +1726,38 @@ class TableConfig(OptionsWithTemplates):
         """
         if self.rowSelection is None:
             self.rowSelection = 'single'
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def onColumnResized(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                         func_ref: bool = False):
         """
 
-        Related Pages:
-
-          https://ag-grid.com/angular-data-grid/grid-interface/
+        `Related Pages <https://ag-grid.com/angular-data-grid/grid-interface/>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def onPaginationChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                             func_ref: bool = False):
         """
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-pagination/>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param func_ref: Optional. Specify if js_funcs point to an external function
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = [js_funcs]
-        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
-        if not str_func.startswith("function(param)") and not func_ref:
-            str_func = "function(param){%s}" % str_func
-        self._config(str_func, js_type=True)
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     @property
     def overlayLoadingTemplate(self):
         """
         Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/overlays/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/overlays/>`_
         """
         return self._config_get()
 
@@ -2065,9 +1770,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/overlays/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/overlays/>`_
         """
         return self._config_get()
 
@@ -2083,9 +1786,7 @@ class TableConfig(OptionsWithTemplates):
 
         Default: false
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-pagination/>`_
         """
         return self._config_get(False)
 
@@ -2100,9 +1801,7 @@ class TableConfig(OptionsWithTemplates):
         The following simple example shows this, the only difference to this and previous examples is the pagination=true
         property.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
         """
         return self._config_get()
 
@@ -2117,9 +1816,7 @@ class TableConfig(OptionsWithTemplates):
         See Customising Pagination.
         Default: 100
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
         """
         return self._config_get(100)
 
@@ -2135,9 +1832,7 @@ class TableConfig(OptionsWithTemplates):
         This is demonstrated below. Note if you resize the display area of the grid, the page size automatically changes.
         To view this, open the example up in a new tab and resize your browser.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
         """
         return self._config_get()
 
@@ -2151,19 +1846,14 @@ class TableConfig(OptionsWithTemplates):
         This is for pagination panel only, to format numbers inside the grid's cells (i.e. your data),
         then use valueFormatter in the column definitions.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-pagination/>`_
         """
         pass
 
     @property
     def popupParent(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/csv-export/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/csv-export/>`_
         """
         return self._config_get()
 
@@ -2174,10 +1864,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def pivotMode(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example>`_
         """
         return self._config_get()
 
@@ -2188,10 +1875,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def pivotPanelShow(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example>`_
         """
         return self._config_get()
 
@@ -2204,9 +1888,7 @@ class TableConfig(OptionsWithTemplates):
         """
         To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
         """
         return self._config_get()
 
@@ -2225,9 +1907,7 @@ class TableConfig(OptionsWithTemplates):
         (so the grid creates groups A and B for you), and then you change the patch to D->B->C,
         group B will not keep it's selection.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tree-data/#example-selecting-groups-and-children
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tree-data/#example-selecting-groups-and-children>`_
         """
         return self._config_get()
 
@@ -2238,10 +1918,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def rowModelType(self):
         """
-
-        Related Pages:
-
-          http://54.222.217.254/javascript-grid-server-side-model-tree-data/
+        `Related Pages <http://54.222.217.254/javascript-grid-server-side-model-tree-data/>`_
         """
         return self._config_get()
 
@@ -2254,9 +1931,7 @@ class TableConfig(OptionsWithTemplates):
         """
         The style properties to apply to all rows. Set to an object of key (style names) and values (style values).
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-styles/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
         return self._config_get(None)
 
@@ -2269,9 +1944,7 @@ class TableConfig(OptionsWithTemplates):
         """
         The following snippet shows rowClassRules applying classes to rows using expressions on an age column value:
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-styles/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
         return self._config_get(None)
 
@@ -2285,9 +1958,7 @@ class TableConfig(OptionsWithTemplates):
         By default, the grid will display rows with a height of 25px. You can change this for each row individually
         to give each row a different height.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-height/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-height/>`_
         """
         return self._config_get(42)
 
@@ -2319,9 +1990,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Property to set style for all rows. Set to an object of key (style names) and values (style values).
 
-        Related Pages:
-
-          http://54.222.217.254/javascript-grid-row-styles/#row-style
+        `Related Pages <http://54.222.217.254/javascript-grid-row-styles/#row-style>`_
         """
         return self._config_get(None)
 
@@ -2336,9 +2005,7 @@ class TableConfig(OptionsWithTemplates):
         This is useful when you want a cell to enter edit mode as soon as you click on it, similar to the experience you
         get when inside Excel.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
         return self._config_get()
 
@@ -2349,10 +2016,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def suppressAggFilteredOnly(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tree-data/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tree-data/>`_
         """
         return self._config_get()
 
@@ -2365,9 +2029,7 @@ class TableConfig(OptionsWithTemplates):
         """
         The grid configures a cellRenderer with a button to start editing.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-cell-editing/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
         return self._config_get()
 
@@ -2378,10 +2040,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def suppressCutToClipboard(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/clipboard/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/clipboard/>`_
         """
         return self._config_get()
 
@@ -2395,9 +2054,7 @@ class TableConfig(OptionsWithTemplates):
         If you set suppressPaginationPanel=true, the grid will not show the standard navigation controls for pagination.
         This is useful is you want to provide your own navigation controls.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
         """
         return self._config_get(False)
 
@@ -2411,9 +2068,7 @@ class TableConfig(OptionsWithTemplates):
         Pasting is on by default as long as cells are editable (non-editable cells cannot be modified,
         even with a paste operation). Set to true turn paste operations off.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/clipboard/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/clipboard/>`_
         """
         return self._config_get()
 
@@ -2426,9 +2081,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Set to true to copy rows instead of ranges when a range with only a single cell is selected.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/clipboard/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/clipboard/>`_
         """
         return self._config_get()
 
@@ -2441,9 +2094,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Highlighting Rows is on by default. To turn it off, set the grid property.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-styles/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
         return self._config_get()
 
@@ -2456,9 +2107,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Highlighting Columns is off by default. To turn it on, set the grid property.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-styles/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
         return self._config_get()
 
@@ -2472,9 +2121,7 @@ class TableConfig(OptionsWithTemplates):
         The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when
         the page changes.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-pagination/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
         """
         return self._config_get()
 
@@ -2487,9 +2134,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Ensures all columns are rendered, i.e. appears in the DOM.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-accessibility/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-accessibility/>`_
         """
         return self._config_get()
 
@@ -2506,9 +2151,7 @@ class TableConfig(OptionsWithTemplates):
         is to slow to manage the animations.
         To turn OFF column animations, set the grid property suppressColumnMoveAnimation=true.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-column-moving/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-column-moving/>`_
         """
         return self._config_get()
 
@@ -2519,10 +2162,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def suppressExcelExport(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/csv-export/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/csv-export/>`_
         """
         return self._config_get()
 
@@ -2540,9 +2180,7 @@ class TableConfig(OptionsWithTemplates):
         Clicking a selected row in this mode will deselect the row.
         This is useful for touch devices where Ctrl and Shift clicking is not an option.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-selection/>`_
         """
         return self._config_get()
 
@@ -2557,9 +2195,7 @@ class TableConfig(OptionsWithTemplates):
         By default, the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another
         row is selected in its place).
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-selection/>`_
         """
         return self._config_get()
 
@@ -2575,9 +2211,7 @@ class TableConfig(OptionsWithTemplates):
         unselected.
         'multiple' allows multiple rows to be selected.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-selection/>`_
         """
         return self._config_get()
 
@@ -2590,9 +2224,7 @@ class TableConfig(OptionsWithTemplates):
         """
         Sets the number of rows rendered outside of the scrollable viewable area.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-accessibility/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-accessibility/>`_
         """
         return self._config_get()
 
@@ -2603,10 +2235,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def rowGroupPanelShow(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/tool-panel-columns/#column-tool-panel-example>`_
         """
         return self._config_get()
 
@@ -2631,9 +2260,7 @@ class TableConfig(OptionsWithTemplates):
         If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't
         want to also select the row when the row is clicked.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-selection/>`_
         """
         return self._config_get()
 
@@ -2644,10 +2271,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def suppressAggFuncInHeader(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/row-selection/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-selection/>`_
         """
         return self._config_get()
 
@@ -2661,9 +2285,7 @@ class TableConfig(OptionsWithTemplates):
         The property suppressRowTransform=true is used to stop the grid positioning rows using CSS transform and
         instead the grid will use CSS top.
 
-        Related Pages:
-
-          https://www.ag-grid.com/angular-data-grid/row-spanning/
+        `Related Pages <https://www.ag-grid.com/angular-data-grid/row-spanning/>`_
         """
         return self._config_get()
 
@@ -2679,9 +2301,7 @@ class TableConfig(OptionsWithTemplates):
         If defined both in colDef and gridOptions, the colDef will get preference, allowing you to define a common
         default, and then tailoring per column.
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-grid-sorting/
+        `Related Pages <https://www.ag-grid.com/javascript-grid-sorting/>`_
         """
         return self._config_get()
 
@@ -2709,10 +2329,7 @@ class TableConfig(OptionsWithTemplates):
     @property
     def treeData(self):
         """
-
-        Related Pages:
-
-          https://www.ag-grid.com/documentation/javascript/tree-data/
+        `Related Pages <https://www.ag-grid.com/documentation/javascript/tree-data/>`_
         """
         return self._config_get()
 
@@ -2730,9 +2347,7 @@ class TableConfig(OptionsWithTemplates):
 
         Default: false
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/value-getters/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-getters/>`_
         """
         return self._config_get(False)
 
@@ -2747,9 +2362,7 @@ class TableConfig(OptionsWithTemplates):
 
         Default: false
 
-        Related Pages:
-
-          https://www.ag-grid.com/javascript-data-grid/value-getters/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-getters/>`_
         """
         return self._config_get(False)
 
