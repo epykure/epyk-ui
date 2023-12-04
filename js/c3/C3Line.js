@@ -24,5 +24,5 @@ function c3Line(data, options){
             else {dataSet.push(temp[series][x])}}); columns.push(dataSet)});
         var result = {columns: columns, type: options.type}
         if (typeof(options.axis) !== "undefined"){result.axis = options.axis}
-      }; console.log(result); return result
+      }; return result
 }

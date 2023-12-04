@@ -72,10 +72,8 @@ class Accounting(JsPackage):
     The most basic library function for formatting numbers as money values, with customisable currency symbol,
     precision (decimal places), and thousand / decimal separators
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
-      http://openexchangerates.github.io/accounting.js/#documentation
+    `Related Pages <http://openexchangerates.github.io/accounting.js/>`_
+    `Related Pages <http://openexchangerates.github.io/accounting.js/#documentation>`_
 
     :param value:
     :param symbol: default currency symbol is '$'
@@ -98,10 +96,8 @@ class Accounting(JsPackage):
     The base function of the library, which takes any number or array of numbers, runs accounting.unformat() to
     remove any formatting, and returns the number(s) formatted with separated thousands and custom precision
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
-      http://openexchangerates.github.io/accounting.js/#documentation
+    `Related Pages <http://openexchangerates.github.io/accounting.js/>`_
+    `Related Pages <http://openexchangerates.github.io/accounting.js/#documentation>`_
 
     :param value:
     :param digits: default precision on numbers is 0
@@ -117,10 +113,8 @@ class Accounting(JsPackage):
     The base function of the library, which takes any number or array of numbers, runs accounting.unformat()
     to remove any formatting, and returns the number(s) formatted with separated thousands and custom precision:
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
-      http://openexchangerates.github.io/accounting.js/#documentation
+    `Related Pages <http://openexchangerates.github.io/accounting.js/>`_
+    `Related Pages <http://openexchangerates.github.io/accounting.js/#documentation>`_
 
     :param value:
     :param digits: default precision on numbers is 0
@@ -136,9 +130,7 @@ class Accounting(JsPackage):
     Implementation of toFixed() that treats floats more like decimal values than binary,
     fixing inconsistent precision rounding in JavaScript (where some .05 values round up, while others round down)
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
+    `Related Pages <http://openexchangerates.github.io/accounting.js/>`_
 
     :param value:
     :param digits: default precision on numbers is 0
@@ -151,9 +143,7 @@ class Accounting(JsPackage):
     """
     Takes any number and removes all currency formatting. Aliased as accounting.parse()
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
+    `Related Pages <http://openexchangerates.github.io/accounting.js/>`_
 
     :param value:
     """
@@ -165,8 +155,6 @@ class Accounting(JsPackage):
     """
     Settings object that controls default parameters for library methods:
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/#documentation
+    `Related Pages <http://openexchangerates.github.io/accounting.js/#documentation>`_
     """
     return self.__settings

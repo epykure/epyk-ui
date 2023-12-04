@@ -6,6 +6,9 @@ from epyk.core.py import primitives
 from epyk.core.html import Defaults as defaultHtml
 
 
+REG_EXP_SECTOR = r"([A-Za-z0-9\.,\#\-\=\"'\[\]]*) {([#A-Za-z0-9\%\ \:\;\-]*) }"
+
+
 class Font:
     _size, header_size, unit = 12, 14, "px"
     _family = "Arial"

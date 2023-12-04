@@ -15,6 +15,7 @@ from epyk.core.html.options import OptPanel
 class Stepper(Html.Html):
   name = 'Stepper'
   _option_cls = OptPanel.OptionsStepper
+  tag = "ul"
 
   def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, color: Optional[str],
                options: Optional[dict], profile: Optional[Union[dict, bool]], verbose: bool = False):
@@ -39,9 +40,7 @@ class Stepper(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStepper.Stepper:
-    """
-    Return all the Javascript functions defined for an HTML Component.
-
+    """Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
     """
     if self._dom is None:
@@ -50,12 +49,11 @@ class Stepper(Html.Html):
 
   @property
   def options(self) -> OptPanel.OptionsStepper:
-    """ Property to set all the possible object for a button. """
+    """Property to set all the possible object for a button"""
     return super().options
 
   def add_shape(self, shape: str, shape_def: str, dependencies: Optional[list] = None):
-    """
-    Add a bespoke shape for the stepper component.
+    """Add a bespoke shape for the stepper component.
 
     :param shape: The reference of the shape
     :param shape_def: The shape JavaScript definition
@@ -78,7 +76,7 @@ class Stepper(Html.Html):
     shapes = JsHtmlStepper.JsShapes()
     for s in shapes.shapes:
       self.page.properties.js.add_constructor(s, "function %s(htmlObj, options, step){%s}" % (s, getattr(shapes, s)()))
-    return '<ul %s></ul>' % self.get_attrs(css_class_names=self.style.get_classes())
+    return '<%(t)s %(a)s></%(t)s>' % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
 
 
 class Step:
@@ -89,8 +87,7 @@ class Step:
     self._selector = selector
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-    """
-    Add a click event to the component.
+    """Add a click event to the component.
 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage

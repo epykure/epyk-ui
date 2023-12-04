@@ -36,7 +36,13 @@ class Options(DataClass):
         if attrs is not None:
             for k, v in attrs.items():
                 if hasattr(self, k):
-                    setattr(self, k, v)
+                    try:
+                        setattr(self, k, v)
+                    except AttributeError:
+                        if isinstance(v, dict):
+                            p = getattr(self, k)
+                            for w, x in v.items():
+                                setattr(p, w, x)
                 else:
                     self.js_tree[k] = v
 

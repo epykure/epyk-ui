@@ -16,5 +16,5 @@ class ChartGeoChoropleth(GraphDC.Chart):
         Those functions will use plain javascript by default.
         """
         if self._dom is None:
-            self._dom = JsDc.GeoChoropleth(self.page, js_code=self.chartId, component=self)
+            self._dom = JsDc.GeoChoropleth(self.page, js_code=self.js_code, component=self)
         return self._dom

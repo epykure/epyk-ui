@@ -13,51 +13,37 @@ class _Export:
 
   @property
   def options(self):
-    """
-
-    """
+    """ """
     return JsObjects.JsObject.JsObject.get("options")
 
   @property
   def event(self):
-    """
-
-    """
+    """ """
     return JsObjects.JsObject.JsObject.get("event")
 
   @property
   def config(self):
-    """
-
-    """
+    """ """
     return JsObjects.JsObject.JsObject.get("config")
 
   @property
   def chartContext(self):
-    """
-
-    """
+    """ """
     return JsObjects.JsObject.JsObject.get("chartContext")
 
   @property
   def seriesIndex(self):
-    """
-
-    """
+    """ """
     return JsObjects.JsNumber.JsNumber.get("seriesIndex")
 
   @property
   def x(self):
-    """
-
-    """
+    """ """
     return JsObjects.JsObject.JsObject.get("config.globals.labels[config.dataPointIndex]")
 
   @property
   def y(self):
-    """
-
-    """
+    """ """
     return JsObjects.JsNumber.JsNumber.get("config.globals.series[config.seriesIndex][config.dataPointIndex]")
 
 
@@ -90,13 +76,10 @@ class ApexChart(JsPackage):
     return JsObjects.JsVoid('new ApexCharts(%s, %s)' % (html_code, options))
 
   def render(self):
-    """
-    The render() method is responsible for drawing the chart on the page.
+    """The render() method is responsible for drawing the chart on the page.
     It is the primary method that has to be called after configuring the options.
 
-    Related Pages:
-
-      https://apexcharts.com/docs/methods/#render
+    `Package Doc <https://apexcharts.com/docs/methods/#render>`_
     """
     return JsObjects.JsVoid("%s.render()" % self.varName)
 
@@ -122,8 +105,7 @@ class ApexChart(JsPackage):
 
   def updateOptions(self, new_options: dict, redraw_paths: bool = False, animate: bool = True,
                     update_synced_charts: bool = True):
-    """
-    This method allows you to update the configuration object by passing the options as the first parameter.
+    """This method allows you to update the configuration object by passing the options as the first parameter.
     The new config object is merged with the existing config object preserving the existing configuration.
 
     Usage::
@@ -132,9 +114,7 @@ class ApexChart(JsPackage):
       label = page.ui.input(placeholder="Set chart title")
       but_title.click([chart.js.updateOptions({"title": {"text": label.dom.content}})])
 
-    Related Pages:
-
-      https://apexcharts.com/docs/methods/#updateOptions
+    `Package Doc <https://apexcharts.com/docs/methods/#updateOptions>`_
 
     :param new_options: The configuration object to merge on the existing one
     :param redraw_paths: Optional. When the chart is re-rendered, should it draw from the existing paths or
@@ -150,13 +130,10 @@ class ApexChart(JsPackage):
       self.varName, new_options, redraw_paths, animate, update_synced_charts))
 
   def updateSeries(self, new_series: list, animate: bool = True, dataflows: List[dict] = None):
-    """
-    Allows you to update the series array overriding the existing one.
+    """Allows you to update the series array overriding the existing one.
     If you want to append series to existing series, use the appendSeries() method
 
-    Related Pages:
-
-      https://apexcharts.com/docs/methods/#updateSeries
+    `Package Doc <https://apexcharts.com/docs/methods/#updateSeries>`_
 
     :param new_series: The series array to override the existing one
     :param animate: Optional. Should the chart animate on re-rendering
@@ -172,8 +149,7 @@ class ApexChart(JsPackage):
 
     Usage::
 
-      but_series.click([
-        chart.js.appendSeries({"name": 'newSeries', 'data': [23, 45, 23]})])
+      but_series.click([chart.js.appendSeries({"name": 'newSeries', 'data': [23, 45, 23]})])
 
     Related Pages:
 

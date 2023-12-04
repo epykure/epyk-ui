@@ -17,6 +17,7 @@ from epyk.core.html.options import OptChartC3
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'C3'
+    tag = "div"
     requirements = ('c3',)
     _option_cls = OptChartC3.C3
     _type = None
@@ -35,18 +36,15 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def options(self) -> OptChartC3.C3:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
 
     @property
     def dom(self) -> OptChartC3.C3:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object.
@@ -57,8 +55,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def shared(self) -> OptChartC3.OptionsChartSharedC3:
-        """
-        All the common properties shared between all the charts.
+        """All the common properties shared between all the charts.
         This will ensure a compatibility with the plot method.
 
         Usage::
@@ -69,29 +66,19 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return OptChartC3.OptionsChartSharedC3(self)
 
     @property
-    def chartId(self) -> str:
-        """ Return the Javascript variable of the chart. """
-        return "%s_obj" % self.htmlCode
-
-    @property
     def js(self) -> JsC3.C3:
-        """
-        JavaScript C3 reference API.
+        """JavaScript C3 reference API.
 
-        Related Pages:
-
-          https://c3js.org/reference.html#api-show
+        `Related Pages <https://c3js.org/reference.html#api-show>`_
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsC3.C3(js_code=self.chartId, page=self.page, component=self)
+            self._js = JsC3.C3(js_code=self.js_code, page=self.page, component=self)
         return self._js
 
     def colors(self, hex_values: List[str]):
-        """
-        Set the colors of the chart.
-
+        """Set the colors of the chart.
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
@@ -120,16 +107,13 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def click(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False,
               source_event: str = None, on_ready: bool = False):
-        """
-        Set a callback for click event on each data point.
+        """Set a callback for click event on each data point.
 
         Usage::
 
             chart.click([page.js.console.log(chart.js.content)])
 
-        Related Pages:
-
-          https://c3js.org/reference.html#data-onclick
+        `Related Pages <https://c3js.org/reference.html#data-onclick>`_
 
         :param js_funcs: List of Js Functions. A Javascript Python function
         :param profile: Boolean. Optional. Set to true to get the profile for the function on the Javascript console
@@ -141,18 +125,27 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def d3(self) -> JsD3.D3Select:
-        """ Property to the D3 library. """
+        """Property to the D3 library"""
         if self._d3 is None:
             self._d3 = JsD3.D3Select(page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False,
                                      component=self)
         return self._d3
 
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
+        """
+        self.options._config("'#' + %s" % JsUtils.jsConvertData(html_code, None), name="bindto", js_type=True)
+
     @Html.jformatter("c3")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
               profile: etypes.PROFILE_TYPE = False, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None) -> str:
-        """
-        Update the chart with context and / or data changes.
+        """Update the chart with context and / or data changes.
 
         :param data: Optional. The dataset to be added to the chart
         :param options: Optional. Specific Python options available for this component
@@ -161,6 +154,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
                 self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
@@ -169,16 +163,19 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
             return '%(chartId)s.unload({done: function() {%(chartId)s.load(%(builder)s)}});%(state)s' % {
-                'chartId': self.chartId, 'builder': builder_fnc, "state": state_expr}
+                'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
 
-        return '%s = c3.generate(%s)' % (self.chartId, self.options.config_js(options).toStr())
+        return '%s = c3.generate(%s)' % (self.js_code, self.options.config_js(options).toStr())
 
-    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None) -> str:
+        """Common JavaScript function to set the table definition.
+        If options are defined the definition will be specific to the column definition.
+
+        :param options: Optional. The table API attributes. If None return current definition.
+        :param dataflows: Chain of config transformations
+        :param component_id: Optional. The object reference ID
         """
-
-        :param options:
-        :param dataflows: Chain of config transformations:
-        """
+        self.js_code = component_id
         defined_options = "window.%s_options" % self.html_code
         js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
             defined_options, defined_options, self.options.config_js(), JsUtils.dataFlows(options, dataflows, self.page))
@@ -200,11 +197,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
 
         return '%(chartId)s = c3.generate(Object.assign(%(options)s, {data: %(builder)s}))' % {
-            "chartId": self.chartId, 'builder': builder_fnc, "options": self.options.config_js(options).toStr()}
+            "chartId": self.js_code, 'builder': builder_fnc, "options": self.options.config_js(options).toStr()}
 
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class ChartLine(Chart):
@@ -227,7 +224,7 @@ class ChartLine(Chart):
             self.options.axis.x.type = "category"
 
     def add_dataset(self, data: list, name: str, kind: str = None):
-        """ Add a new dataset.
+        """Add a new dataset.
 
         :param data: The series of numbers to be added to the chart
         :param name: The series name
@@ -240,7 +237,6 @@ class ChartLine(Chart):
 
     @property
     def data(self):
-        """  """
         return self.options.data
 
 
@@ -286,8 +282,7 @@ class ChartPie(ChartLine):
         self._labels = labels
 
     def add_dataset(self, values: list, name: str, kind: str = None):
-        """
-        Add a dataset to a pie chart.
+        """Add a dataset to a pie chart.
         If multiple datasets are added the value will be summed up in the resulting pue chart.
 
         :param values: The series of numbers to be added to the chart
@@ -323,9 +318,8 @@ class ChartGauge(ChartPie):
     _option_cls = OptChartC3.C3Gauge
 
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
-              profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True) -> str:
-        """
-        Update the chart with context and / or data changes.
+              profile: etypes.PROFILE_TYPE = False, component_id: str = None, stop_state: bool = True, **kwargs) -> str:
+        """Update the chart with context and / or data changes.
 
         :param data: Optional. The dataset to be added to the chart
         :param options: Optional. Specific Python options available for this component
@@ -333,14 +327,15 @@ class ChartGauge(ChartPie):
         :param component_id: Optional. The component reference (the htmlCode)
         :param stop_state: Remove the top panel for the component state (error, loading...)
         """
+        self.js_code = component_id
         if data:
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
             return '%(chartId)s.load({columns: [["data", %(value)s]]});%(state)s' % {
-                'chartId': self.chartId, 'value': data, "state": state_expr}
+                'chartId': self.js_code, 'value': data, "state": state_expr}
 
-        return '%s = c3.generate(%s)' % (self.chartId, self.options.config_js(options).toStr())
+        return '%s = c3.generate(%s)' % (self.js_code, self.options.config_js(options).toStr())
 
     def add_dataset(self, value: list, name: str, kind: str = None):
         """

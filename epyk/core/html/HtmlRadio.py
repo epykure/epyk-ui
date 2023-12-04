@@ -17,6 +17,7 @@ from epyk.core.html import Defaults as htmlDefaults
 
 class Radio(Html.Html):
   name = 'Radio Buttons'
+  tag = "div"
 
   def __init__(self, page: primitives.PageModel, vals: List[dict], html_code: Optional[str],
                group_name: Optional[str], width: tuple, height: tuple, options: Optional[dict],
@@ -29,8 +30,7 @@ class Radio(Html.Html):
       self.add(v['value'], v.get('checked', False))
 
   def add(self, val: Union[Html.Html, str], checked: bool = False):
-    """
-    Add a value to the radio component.
+    """Add a value to the radio component.
 
     :param val: The item to be added
     :param checked: Optional. Check the item
@@ -44,7 +44,6 @@ class Radio(Html.Html):
 
   def set_disable(self, text: str):
     """
-
     :param text: The item value to disable
     """
     for v in self.val:
@@ -54,7 +53,6 @@ class Radio(Html.Html):
 
   def set_checked(self, text: str):
     """
-
     :param text: The item value to set as checked
     """
     for v in self.val:
@@ -64,7 +62,7 @@ class Radio(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.Radio:
-    """ HTML Dom object. """
+    """HTML Dom object. """
     if self._dom is None:
       self._dom = JsHtmlSelect.Radio(self, page=self.page)
     return self._dom
@@ -73,12 +71,14 @@ class Radio(Html.Html):
     row = self.page.ui.layouts.div(self.val)
     row.options.managed = False
     row.style.css.text_align = "inherit"
-    return "<div %s>%s</div>%s" % (self.get_attrs(css_class_names=self.style.get_classes()), row.html(), self.helper)
+    return "<%s %s>%s</%s>%s" % (
+      self.tag, self.get_attrs(css_class_names=self.style.get_classes()), row.html(), self.tag, self.helper)
 
 
 class Tick(Html.Html):
   requirements = (cssDefaults.ICON_FAMILY, )
   name = 'Tick'
+  tag = "span"
 
   def __init__(self, page: primitives.PageModel, position: str, icon: str, text: str, tooltip: str,
                width: tuple, height: tuple, html_code: str, options: Optional[dict],
@@ -106,14 +106,14 @@ class Tick(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.Tick:
-    """ HTML Dom object. """
+    """HTML Dom object."""
     if self._dom is None:
       self._dom = JsHtmlSelect.Tick(self, page=self.page)
       self._dom.options = self._options
     return self._dom
 
   def __str__(self):
-    return "<span %s></span>" % (self.get_attrs(css_class_names=self.style.get_classes()))
+    return "<%(t)s %(a)s></%(t)s>" % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
 
 
 class Switch(Html.Html):
@@ -156,7 +156,7 @@ class Switch(Html.Html):
 
   @property
   def on(self):
-    """ Change the value displayed when switch on """
+    """Change the value displayed when switch on"""
     return self._vals["on"]
 
   @on.setter
@@ -167,7 +167,7 @@ class Switch(Html.Html):
 
   @property
   def off(self):
-    """ Change the value displayed when switch off """
+    """Change the value displayed when switch off"""
     return self._vals["off"]
 
   @off.setter
@@ -178,9 +178,7 @@ class Switch(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.JsHtmlSwitch:
-    """
-    Return all the Javascript functions defined for an HTML Component.
-
+    """Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     """
     if self._dom is None:
@@ -189,9 +187,7 @@ class Switch(Html.Html):
 
   @property
   def js(self) -> JsComponents.Switch:
-    """
-    The Javascript functions defined for this component.
-
+    """The Javascript functions defined for this component.
     Those can be specific ones for the module or generic ones from the language.
 
     :return: A Javascript Dom object.
@@ -201,9 +197,7 @@ class Switch(Html.Html):
     return self._js
 
   def event_fnc(self, event: str):
-    """
-    Function to get the generated JavaScript method in order to then reuse it in other components.
-
+    """Function to get the generated JavaScript method in order to then reuse it in other components.
     This will return the event function in a string already transpiled.
 
     :param event: The event function.
@@ -212,15 +206,12 @@ class Switch(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    Add click event to the switch component.
+    """Add click event to the switch component.
 
     Usage::
 
       mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
-      mode_switch.input.click([
-        page.js.console.log(mode_switch.input.dom.val)
-      ])
+      mode_switch.input.click([page.js.console.log(mode_switch.input.dom.val)])
 
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -233,17 +224,13 @@ class Switch(Html.Html):
 
   def toggle(self, on_funcs: types.JS_FUNCS_TYPES = None, off_funcs: types.JS_FUNCS_TYPES = None,
              profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-    """
-    Set the click property for the Switch.
-
+    """Set the click property for the Switch.
     The toggle event allow specifying different Javascript functions for each states of the component.
 
     Usage::
 
       sw = page.ui.buttons.switch({'on': "true", 'off': 'false'})
-      sw.toggle([
-        page.js.console.log(sw.content)
-      ])
+      sw.toggle([page.js.console.log(sw.content)])
 
     :param on_funcs: Optional. The Javascript functions
     :param off_funcs: Optional. The Javascript functions

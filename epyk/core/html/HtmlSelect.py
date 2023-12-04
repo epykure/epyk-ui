@@ -23,6 +23,7 @@ from epyk.core.js.packages import JsSelect
 class Option(Html.Html):
   name = 'Select Option'
   builder_name = False
+  tag = "option"
 
   def __init__(self, page: primitives.PageModel, value, text: str, icon: Optional[str], selected: bool,
                options: Optional[dict] = None, verbose: bool = False):
@@ -37,12 +38,13 @@ class Option(Html.Html):
             self.set_attrs(name="data-%s" % k, value=v)
 
   def __str__(self):
-    return "<option %s>%s</option>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val)
+    return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, self.tag)
 
 
 class Optgroup(Html.Html):
   name = 'Select Option'
   builder_name = False
+  tag = "optgroup"
 
   def __init__(self, page: primitives.PageModel, data: list, label: str, verbose: bool = False):
     super(Optgroup, self).__init__(page, data, verbose=verbose)
@@ -50,12 +52,13 @@ class Optgroup(Html.Html):
 
   def __str__(self):
     val = "".join([v.html() for v in self.val])
-    return "<optgroup %s>%s</optgroup>" % (self.get_attrs(css_class_names=self.style.get_classes()), val)
+    return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), val, self.tag)
 
 
 class Select(Html.Html):
   requirements = ('bootstrap-select',)
   name = 'Select'
+  tag = "select"
   builder_name = "SelectPicker"
   _option_cls = OptSelect.OptionsSelectJs
 
@@ -77,14 +80,12 @@ class Select(Html.Html):
 
   @property
   def options(self) -> OptSelect.OptionsSelectJs:
-    """ Property to set all the possible object for a button. """
+    """Property to set all the possible object for a button"""
     return super().options
 
   @property
   def style(self) -> GrpClsList.ClassSelect:
-    """
-    A property to the CSS style of the DOM component.
-
+    """A property to the CSS style of the DOM component.
     Each component will have default CSS style but they can be overridden.
     """
     if self._styleObj is None:
@@ -93,9 +94,7 @@ class Select(Html.Html):
 
   @property
   def dom(self) -> JsHtmlSelect.DomSelect:
-    """
-    Return all the Javascript functions defined for an HTML Component.
-
+    """Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
     :return: A Javascript Dom object
@@ -106,14 +105,10 @@ class Select(Html.Html):
 
   @property
   def js(self) -> JsSelect.JSelect:
-    """
-    Return all the Javascript functions defined for an HTML Component.
-
+    """Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript by default.
 
-    Related Pages:
-
-      https://developer.snapappointments.com/bootstrap-select/methods/
+    `Package Doc <https://developer.snapappointments.com/bootstrap-select/methods/>`_
 
     :return: A Javascript Dom object
     """
@@ -123,12 +118,12 @@ class Select(Html.Html):
 
   @property
   def parsers(self):
-    """ Set of functions to parse the data. """
+    """Set of functions to parse the data"""
     return SelectionBox
 
   @property
   def data(self):
-    """ Property to the underlying data from the select. """
+    """Property to the underlying data from the select"""
     return self._vals
 
   @data.setter
@@ -160,14 +155,13 @@ class Select(Html.Html):
   def change(self, js_funcs: types.JS_FUNCS_TYPES, empty_funcs: types.JS_FUNCS_TYPES = None,
              profile: types.PROFILE_TYPE = None, source_event: Optional[str] = None,
              on_ready: bool = False):
-    """
-    Javascript event triggered when the value has changed.
+    """Javascript event triggered when the value has changed.
 
-    :param js_funcs: Set of Javascript function to trigger on this event.
-    :param empty_funcs: Optional. Set of Js function to trigger if the value is empty.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item).
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded.
+    :param js_funcs: Set of Javascript function to trigger on this event
+    :param empty_funcs: Optional. Set of Js function to trigger if the value is empty
+    :param profile: Optional. A flag to set the component performance storage
+    :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
     """
     if not isinstance(js_funcs, list):
       js_funcs = [js_funcs]
@@ -179,12 +173,9 @@ class Select(Html.Html):
 
   def ajax(self, url: str, js_data="function (){return {q: '{{{q}}}'}}", is_json: bool = True,
            method: str = "POST", options: Optional[dict] = None):
-    """
-    Create a AJAX request.
+    """Create a AJAX request.
 
-    Related Pages:
-
-      https://github.com/truckingsim/Ajax-Bootstrap-Select
+    `Package Doc <https://github.com/truckingsim/Ajax-Bootstrap-Select>`_
 
     :param url: The request URL for the ajax call
     :param js_data: Optional. The value of the item to be removed from the list
@@ -251,11 +242,12 @@ class Select(Html.Html):
         self.htmlCode, ";".join(["%s: %s !IMPORTANT" % (k, v) for k, v in self.button_css.items()])))
       self.attr['class'].insert(0, "%s_button_bespoke" % self.htmlCode)
     data_cls = self.get_attrs(css_class_names=self.style.get_classes()).replace('class="', 'data-style="')
-    return "<select %s>%s</select>" % (data_cls, "".join(data))
+    return "<%s %s>%s</%s>" % (self.tag, data_cls, "".join(data), self.tag)
 
 
 class Lookup(Select):
   requirements = ('bootstrap-select',)
+  tag = "select"
 
   def __init__(self, page: primitives.PageModel, records: list, html_code: Optional[str], width: tuple, height: tuple,
                profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict], verbose: bool = False):
@@ -263,17 +255,17 @@ class Lookup(Select):
     self._jsStyles['lookups'] = records
 
   _js__builder__ = '''
-    var selectObj = %s; selectObj.empty(); const lookupData = options.lookups[data];
-    if (typeof lookupData !== 'undefined') {
-      for (var idx in lookupData) {
-          const text = (typeof lookupData[idx].text !== 'undefined')? lookupData[idx].text : lookupData[idx].value;
-          selectObj.append('<option value=' + lookupData[idx].value + '>' + text + '</option>'); }
-      selectObj.selectpicker(options).val(lookupData).selectpicker('refresh')}
-    else {
-      selectObj.selectpicker(options).selectpicker('refresh')}''' % JsQuery.decorate_var("htmlObj", convert_var=False)
+var selectObj = %s; selectObj.empty(); const lookupData = options.lookups[data];
+if (typeof lookupData !== 'undefined') {
+  for (var idx in lookupData) {
+      const text = (typeof lookupData[idx].text !== 'undefined')? lookupData[idx].text : lookupData[idx].value;
+      selectObj.append('<option value=' + lookupData[idx].value + '>' + text + '</option>'); }
+  selectObj.selectpicker(options).val(lookupData).selectpicker('refresh')}
+else {
+  selectObj.selectpicker(options).selectpicker('refresh')}''' % JsQuery.decorate_var("htmlObj", convert_var=False)
 
   def __str__(self):
     self.page.properties.js.add_builders(
       "%s.selectpicker().selectpicker('refresh')" % JsQuery.decorate_var(self.dom.varId, convert_var=False))
     data_cls = self.get_attrs(css_class_names=self.style.get_classes()).replace('class="', 'data-style="')
-    return "<select %s></select>" % data_cls
+    return "<%s %s></%s>" % (self.tag, data_cls, self.tag)

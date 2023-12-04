@@ -15,6 +15,7 @@ from epyk.core.html.options import OptChartNvd3
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'NVD3'
+    tag = "svg"
     requirements = ('nvd3',)
     _option_cls = OptChart.OptionsChart
 
@@ -29,9 +30,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def shared(self) -> OptChartNvd3.OptionsChartSharedNVD3:
-        """
-        All the common properties shared between all the charts.
-
+        """All the common properties shared between all the charts.
         This will ensure a compatibility with the plot method.
 
         Usage::
@@ -43,30 +42,21 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def options(self) -> OptChart.OptionsChart:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
 
     @property
-    def chartId(self) -> str:
-        """ Return the Javascript variable of the chart. """
-        return "%s_obj" % self.htmlCode
-
-    @property
     def data(self):
-        """
-        Property to the last dataset added to the NVD3 chart.
+        """Property to the last dataset added to the NVD3 chart.
         Use the function traces to get a specific series from the chart object.
         """
         return self._datasets[-1]
 
     def traces(self, i: int = None):
-        """
-        Get a specific series from the datasets attributes in the NVD3 chart.
+        """Get a specific series from the datasets attributes in the NVD3 chart.
 
         :param i: Optional. An Index number
         """
@@ -77,8 +67,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        This function is not implemented.
+        """This function is not implemented.
 
         :param js_funcs: Required. Javascript functions
         :param profile:  Optional. A flag to set the component performance storage
@@ -127,9 +116,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self._d3
 
     def colors(self, hex_values: list):
-        """
-        Set the colors of the chart.
-
+        """Set the colors of the chart.
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
@@ -154,31 +141,43 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             rec['color'] = self.options.colors[i]
         return self
 
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
+        """
+        self.js.varName = js_code
+        self.dom.varName = js_code # "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
+
     @Html.jformatter("nvd3")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Return the JavaScript fragment to refresh the component content.
+        """Return the JavaScript fragment to refresh the component content.
 
         :param data: Optional. Component data
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The object reference ID
-        :Param stop_state:
+        :param stop_state:
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
                 self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
                 self.__defined_options or self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:
-                state_expr = ";%s" % self.hide_state(component_id)
+                state_expr = ";%s" % self.hide_state(self.html_code)
             return '''
-        d3.select('#%(htmlCode)s').datum(%(builder)s).transition().duration(500).call(%(chart)s); 
-        nv.utils.windowResize(%(chart)s.update);%(state)s''' % {
-                'htmlCode': self.htmlCode, 'builder': builder_fnc, "state": state_expr, 'chart': self.dom.var}
+d3.select('#' + %(htmlCode)s).datum(%(builder)s).transition().duration(500).call(%(chart)s); 
+nv.utils.windowResize(%(chart)s.update);%(state)s''' % {
+                'htmlCode': JsUtils.jsConvertData(component_id or self.html_code, None),
+                'builder': builder_fnc, "state": state_expr, 'chart': self.dom.var}
 
         return JsUtils.jsConvertFncs([
             self.dom.set_var(True), self.dom.xAxis, self.dom.yAxis,
@@ -186,8 +185,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             "nv.utils.windowResize(function() { %s.update() })" % self.dom.var], toStr=True)[4:]
 
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
-        """
-        Override the chart settings on the JavaScript side.
+        """Override the chart settings on the JavaScript side.
         This will allow ot set specific styles for some series or also add commons properties.
 
         Usage:
@@ -208,8 +206,8 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
                 int(self.style.css.margin_left[:-2]) + int(self.style.css.margin_right[:-2]))
         self.page.properties.js.add_builders(self.build())
         str_items = "".join([h.html() for h in self.html_items])
-        return '<div>%s<svg %s></svg></div>' % (
-            str_items, self.get_attrs(css_class_names=self.style.get_classes()))
+        return '<div>%s<%s %s></%s></div>' % (
+            str_items, self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class ChartLine(Chart):
@@ -217,9 +215,9 @@ class ChartLine(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Line:
-        """ Interface to the Dom element of a NVD3 line chart. """
+        """Interface to the Dom element of a NVD3 line chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3Line(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3Line(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
 
@@ -227,15 +225,14 @@ class ChartScatter(ChartLine):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Scatter:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3Scatter(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3Scatter(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Add click event to the points in the chart.
+        """Add click event to the points in the chart.
 
         :param js_funcs: Required. Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -251,9 +248,9 @@ class ChartCumulativeLine(ChartLine):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3CumulativeLine:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3CumulativeLine(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3CumulativeLine(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
 
@@ -261,9 +258,9 @@ class ChartFocusLine(ChartLine):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3LineWithFocus:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3LineWithFocus(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3LineWithFocus(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
 
@@ -272,15 +269,13 @@ class ChartBar(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Bar:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3Bar(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3Bar(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def colors(self, hex_values: list):
-        """
-        Set the colors of the chart.
-
+        """Set the colors of the chart.
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
@@ -307,8 +302,7 @@ class ChartBar(Chart):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Add click event to the points in the chart.
+        """Add click event to the points in the chart.
 
         :param js_funcs: Required. Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -327,9 +321,9 @@ class ChartHorizontalBar(ChartBar):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3MultiBarHorizontal:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3MultiBarHorizontal(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3MultiBarHorizontal(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def add_dataset(self, data, label, colors=None, opacity=None, kind=None):
@@ -340,15 +334,13 @@ class ChartMultiBar(ChartBar):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3MultiBar:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3MultiBar(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3MultiBar(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def colors(self, hex_values: list):
-        """
-        Set the colors of the chart.
-
+        """Set the colors of the chart.
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
@@ -381,15 +373,14 @@ class ChartPie(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Pie:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3Pie(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3Pie(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Add click event to the points in the chart.
+        """Add click event to the points in the chart.
 
         :param js_funcs: Required. Javascript functions
         :param profile:  Optional. A flag to set the component performance storage
@@ -415,9 +406,9 @@ class ChartArea(ChartBar):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Area:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3Area(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3Area(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
 
@@ -425,9 +416,9 @@ class ChartHistoBar(ChartBar):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3HistoricalBar:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3HistoricalBar(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3HistoricalBar(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
 
@@ -436,9 +427,9 @@ class ChartParallelCoord(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3ParallelCoordinates:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3ParallelCoordinates(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3ParallelCoordinates(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def set_dimension_names(self, dimensions):
@@ -465,9 +456,9 @@ class ChartSunbrust(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Sunburst:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3Sunburst(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3Sunburst(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def set_rcolors(self, color: str, data):
@@ -499,13 +490,13 @@ class ChartBoxPlot(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3BoxPlot:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3BoxPlot(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3BoxPlot(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
     def add_box(self, q1, q3=None, outliers=None, maxRegularValue=None, mean=None, median=None, minRegularValue=None,
-                minOutlier=None, maxOutlier=None, title=None):
+                minOutlier=None, maxOutlier=None, title=None) -> 'ChartBoxPlot':
         """
 
         https://github.com/nvd3-community/nvd3/blob/gh-pages/examples/boxPlotCustomModel.html
@@ -538,7 +529,6 @@ class ChartBoxPlot(Chart):
     def add_trace(self, data, name: str = ""):
         """
 
-
         :param data:
         :param name:
         """
@@ -551,9 +541,9 @@ class ChartCandlestick(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3CandlestickBar:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3CandlestickBar(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3CandlestickBar(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
 
@@ -562,9 +552,9 @@ class ChartOhlcBar(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3OhlcBar:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3OhlcBar(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3OhlcBar(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
 
@@ -573,12 +563,12 @@ class ChartForceDirected(Chart):
 
     @property
     def dom(self) -> JsNvd3.JsNvd3ForceDirectedGraph:
-        """ Interface to the Dom element of a NVd3 Scatter chart. """
+        """Interface to the Dom element of a NVd3 Scatter chart"""
         if self._dom is None:
-            self._dom = JsNvd3.JsNvd3ForceDirectedGraph(page=self.page, js_code=self.chartId, component=self)
+            self._dom = JsNvd3.JsNvd3ForceDirectedGraph(page=self.page, js_code=self.js_code, component=self)
         return self._dom
 
-    def add_trace(self, data: dict, name: str = ""):
+    def add_trace(self, data: dict, name: str = "") -> 'ChartForceDirected':
         """
 
         :param data:

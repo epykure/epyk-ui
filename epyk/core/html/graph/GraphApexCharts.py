@@ -9,6 +9,7 @@ from epyk.core.css import Colors
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptChartApex
+from epyk.core.js.html import JsHtmlCharts
 from epyk.core.js.packages import JsApexChart
 from epyk.core.js import JsUtils
 
@@ -22,8 +23,7 @@ class ApexActivePoints:
 
     @property
     def index(self):
-        """
-        Get the active series index.
+        """Get the active series index.
 
         :return: A javaScript number.
         """
@@ -31,12 +31,9 @@ class ApexActivePoints:
 
     @property
     def config(self) -> JsUtils.jsWrap:
-        """
-        Get the event / chart detailed configuration.
+        """Get the event / chart detailed configuration.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :return: A Javascript dictionary.
         """
@@ -44,12 +41,9 @@ class ApexActivePoints:
 
     @property
     def datasetLabel(self) -> JsUtils.jsWrap:
-        """
-        Return the name of the selected dataset.
+        """Return the name of the selected dataset.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :return: A Javascript string
         """
@@ -57,12 +51,9 @@ class ApexActivePoints:
 
     @property
     def dataset(self) -> JsUtils.jsWrap:
-        """
-        Return the selected dataset.
+        """Return the selected dataset.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :return: A Javascript dictionary
         """
@@ -70,23 +61,17 @@ class ApexActivePoints:
 
     @property
     def value(self):
-        """
-        Return the value for the selected point of the dataset.
+        """Return the value for the selected point of the dataset.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
         """
         return JsUtils.jsWrap("config.config.series[%s].data[%s]" % (self.num, self.dataPointIndex))
 
     @property
     def label(self):
-        """
-        Return the x label for the selected point.
+        """Return the x label for the selected point.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :return: A Javascript object.
         """
@@ -94,12 +79,9 @@ class ApexActivePoints:
 
     @property
     def dataPointIndex(self) -> JsUtils.jsWrap:
-        """
-        Get the index of the selected point.
+        """Get the index of the selected point.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :return: A Javascript number
         """
@@ -107,12 +89,9 @@ class ApexActivePoints:
 
     @property
     def event(self) -> JsUtils.jsWrap:
-        """
-        Get the original JavaScript event object.
+        """Get the original JavaScript event object.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :return: A JavaScript event object.
         """
@@ -120,12 +99,9 @@ class ApexActivePoints:
 
     @property
     def chartContext(self) -> JsUtils.jsWrap:
-        """
-        Get the full chart context.
+        """Get the full chart context.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :return: A Javascript dictionary
         """
@@ -134,6 +110,7 @@ class ApexActivePoints:
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'ApexCharts'
+    tag = "div"
     requirements = ('apexcharts',)
     _option_cls = OptChartApex.OptionsLine
     builder_name = "ApCharts"
@@ -145,35 +122,40 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.chart.height = height[0]
         self.options.yaxis.labels.formatters.toNumber()
         self.style.css.margin_top = 10
-        self.chartId = "%s_obj" % self.htmlCode
         self.__defined_options = None
 
-    def activePoints(self, i: int = None) -> ApexActivePoints:
-        """
-        The current active points selected by an event on a chart.
+    def activePoints(self, i: int = None, component_id: str = None) -> ApexActivePoints:
+        """The current active points selected by an event on a chart.
 
         Usage::
 
             library = "apex"
             kind = "line"
             c = page.ui.charts.plot(library, data.to_dict('records'), kind=kind, y=["Value"], x="Year", height=(500, "px"))
+            c.click([page.js.console.log(c.activePoints().label)])
 
-            c.click([
-              page.js.console.log(c.activePoints().label)
-            ])
-
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :param i: Optional. The series index. Default it is the series clicked
+        :param component_id: Optional. The reference ID for the chart object
         """
-        return ApexActivePoints(self.chartId, i, self.page)
+        self.js_code = component_id
+        return ApexActivePoints(self.js_code, i, self.page)
+
+    @property
+    def dom(self) -> JsHtmlCharts.ChartJs:
+        """Return all the Javascript functions defined for an HTML Component.
+        Those functions will use plain javascript by default.
+
+        :return: A Javascript Dom object.
+        """
+        if self._dom is None:
+            self._dom = JsHtmlCharts.ChartApex(page=self.page, component=self, js_code=self.html_code)
+        return self._dom
 
     @property
     def shared(self) -> OptChartApex.OptionsChartSharedApex:
-        """
-        All the common properties shared between all the charts.
+        """All the common properties shared between all the charts.
         This will ensure a compatibility with the plot method.
 
         Usage::
@@ -185,12 +167,9 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def click(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Add a click event to the Apex chart.
+        """Add a click event to the Apex chart.
 
-        Related Pages:
-
-          https://apexcharts.com/docs/options/chart/events/
+        `Related Pages <https://apexcharts.com/docs/options/chart/events/>`_
 
         :param js_funcs: A Javascript Python function
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -203,8 +182,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def zoomable(self, flag: bool = True):
-        """
-        Set the chart zoomable.
+        """Set the chart zoomable.
 
         :param flag: Optional. Add the zoom option to the chart
         """
@@ -216,9 +194,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             self.options.chart.zoom.enabled = False
 
     def colors(self, hex_values: List[str]):
-        """
-        Set the colors of the chart.
-
+        """Set the colors of the chart.
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
@@ -252,34 +228,31 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def js(self) -> JsApexChart.ApexChart:
-        """
-        The Javascript functions defined for this component.
+        """The Javascript functions defined for this component.
         Those can be specific ones for the module or generic ones from the language.
 
         :return: A Javascript Dom object functions.
         """
         if self._js is None:
-            self._js = JsApexChart.ApexChart(selector="window['%s']" % self.chartId, component=self, page=self.page)
+            self._js = JsApexChart.ApexChart(selector=self.js_code, component=self, page=self.page)
         return self._js
 
     @property
     def options(self) -> OptChartApex.OptionsLine:
-        """
-        Property to the component options.
-
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
 
-    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
-        """
-        Set the chart options.
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None) -> str:
+        """Set the chart options.
 
         :param options: The apex chart option
         :param dataflows: Chain of config transformations
+        :param component_id: Optional. The reference ID for the chart object
         """
+        self.js_code = component_id
         defined_options = "window.%s_options" % self.html_code
         js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
             defined_options, defined_options, self.options.config_js(), JsUtils.dataFlows(options, dataflows, self.page))
@@ -287,8 +260,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return js_expr
 
     def labels(self, labels: List[str]):
-        """
-        Set the labels of the different series in the chart.
+        """Set the labels of the different series in the chart.
 
         :param labels: An array of labels
         """
@@ -310,29 +282,38 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         series.data = data
         return series
 
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
+        """
+        self.js.varName = js_code
+        self.dom.varName = "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
+
     @Html.jformatter("apex")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
               profile: etypes.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Update the chart with context and / or data changes.
+        """Update the chart with context and / or data changes.
 
         Usage::
 
             data = []
             component = page.ui.charts.apex.bar([], y_columns=["rating"], x_axis="progress")
             btn1 = page.ui.buttons.refresh("refresh")
-            btn1.click([
-                component.build(data)
-            ])
+            btn1.click([component.build(data)])
 
         :param data: Optional. The full datasets object expected by ChartJs
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
-        :param component_id: Not used
-        :param stop_state: Remove the top panel for the component state (error, loading...)
-        :param dataflows: Chain of data transformations
+        :param component_id: Optional. The reference ID for the chart object
+        :param stop_state: Optional. Remove the top panel for the component state (error, loading...)
+        :param dataflows: Optional. Chain of data transformations
         """
+        self.js_code = component_id
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
                 self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
@@ -341,15 +322,16 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
             return "%s.updateOptions(%s); %s.update();%s" % (
-                    "window['%s']" % self.chartId, builder_fnc, self.chartId, state_expr)
+                    self.js_code, builder_fnc, self.js_code, state_expr)
 
         return JsUtils.jsConvertFncs([self.js.new(
-            self.dom.varId, self.options.config_js(options), "window['%s']" % self.chartId), self.js.render()],
+            self.dom.varId, self.options.config_js(options), self.js_code), self.js.render()],
             toStr=True, profile=profile)
 
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        print(self.build())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class Bar(Chart):
@@ -358,11 +340,8 @@ class Bar(Chart):
 
     @property
     def options(self) -> OptChartApex.OptionsBar:
-        """
-        Property to the component options.
-
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -373,11 +352,8 @@ class Area(Chart):
 
     @property
     def options(self) -> OptChartApex.OptionsArea:
-        """
-        Property to the component options.
-
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -388,11 +364,8 @@ class Pie(Chart):
 
     @property
     def options(self) -> OptChartApex.OptionsPie:
-        """
-        Property to the component options.
-
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -404,11 +377,8 @@ class RadialBar(Chart):
 
     @property
     def options(self) -> OptChartApex.OptionsPie:
-        """
-        Property to the component options.
-
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -420,11 +390,8 @@ class Bubble(Chart):
 
     @property
     def options(self) -> OptChartApex.OptionsArea:
-        """
-        Property to the component options.
-
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options

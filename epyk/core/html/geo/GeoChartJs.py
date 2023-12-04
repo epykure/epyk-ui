@@ -13,6 +13,7 @@ from epyk.core.py import types
 
 class Choropleth(GraphChartJs.Chart):
     name = 'ChartJs Choropleth'
+    tag = "canvas"
     requirements = ('chartjs-chart-geo',)
     geo_map = "https://unpkg.com/world-atlas/countries-50m.json"
     # geo_map = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
@@ -22,10 +23,8 @@ class Choropleth(GraphChartJs.Chart):
 
     @property
     def options(self) -> OptChartJs.OptionsGeo:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -34,8 +33,7 @@ class Choropleth(GraphChartJs.Chart):
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Update the chart with context and / or data changes.
+        """Update the chart with context and / or data changes.
 
         :param data: Optional. The full datasets object expected by ChartJs
         :param options: Optional. Specific Python options available for this component
@@ -44,9 +42,10 @@ class Choropleth(GraphChartJs.Chart):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         callbacks = "(function(){})"
         if stop_state:
-            callbacks = "(function(){%s})" % self.hide_state(component_id)
+            callbacks = "(function(){%s})" % self.hide_state(self.html_code)
         return "%(builder)s(%(htmlObj)s, %(data)s, %(options)s, %(map)s, %(callbacks)s)" % {
             "data": data or [], "options": self.getCtx(),
             "builder": self.builder_name,
@@ -57,7 +56,8 @@ class Choropleth(GraphChartJs.Chart):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<div><canvas %s></canvas></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<div><%s %s></%s></div>' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class ChoroplethUs(Choropleth):
@@ -68,10 +68,8 @@ class ChoroplethUs(Choropleth):
 
     @property
     def options(self) -> OptChartJs.OptionsGeo:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -85,10 +83,8 @@ class ChoroplethCountry(Choropleth):
 
     @property
     def options(self) -> OptChartJs.OptionsGeo:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options

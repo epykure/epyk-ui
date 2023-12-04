@@ -28,10 +28,11 @@ from epyk.core.css.styles import GrpClsInput
 
 class Output(Html.Html):
   name = 'Output'
+  tag = "output"
 
   def __str__(self):
-    return '<output %(strAttr)s>%(val)s</output>' % {
-      'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val}
+    return '<%(tag)s %(strAttr)s>%(val)s</%(tag)s>' % {
+      'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val, "tag": self.tag}
 
 
 class Input(Html.Html):
@@ -57,21 +58,19 @@ class Input(Html.Html):
 
   @property
   def options(self) -> OptInputs.OptionsInput:
-    """ Property to set all the input component properties. """
+    """Property to set all the input component properties"""
     return super().options
 
   @property
   def js(self) -> JsHtmlField.InputText:
-    """ Specific Javascript function for the input object. """
+    """Specific Javascript function for the input object"""
     if self._js is None:
       self._js = JsHtmlField.InputText(self, page=self.page)
     return self._js
 
   @property
   def dom(self) -> JsHtmlInput.Inputs:
-    """
-    Return all the Javascript functions defined for an HTML Input Component.
-
+    """Return all the Javascript functions defined for an HTML Input Component.
     Those functions will use plain javascript available for a DOM element by default.
 
     Usage::
@@ -87,7 +86,7 @@ class Input(Html.Html):
 
   @property
   def style(self) -> GrpClsInput.ClassInput:
-    """ Property to the CSS Style of the component. """
+    """Property to the CSS Style of the component"""
     if self._styleObj is None:
       self._styleObj = GrpClsInput.ClassInput(self)
     return self._styleObj
@@ -98,8 +97,7 @@ class Input(Html.Html):
 
   def focus(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             options: dict = None, source_event: str = None, on_ready: bool = False):
-    """
-    Action on focus.
+    """Action on focus.
 
     :param js_funcs: Optional. Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -124,13 +122,10 @@ class Input(Html.Html):
     return self.on("focus", js_funcs, profile, source_event, on_ready)
 
   def validation(self, pattern: str = None, required: bool = True):
-    """
-    Add validation rules on the input component.
+    """Add validation rules on the input component.
 
-    Related Pages:
-
-      https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern
-      https://www.w3schools.com/tags/att_input_pattern.asp
+    `Doc Patterns <https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/pattern>`_
+    `Doc input Patterns <https://www.w3schools.com/tags/att_input_pattern.asp>`_
 
     Usage::
 
@@ -154,12 +149,9 @@ class Input(Html.Html):
 
   def validation_from(self, values, css_cls = None, disclaimer: str = "&#9888; Error - Invalid value",
                       css_disclaimer: dict = None, on_enter: bool = True):
-    """
-    Run more sophisticated validation checks using list or remote services.
+    """Run more sophisticated validation checks using list or remote services.
 
-    Related Pages:
-
-      https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/setCustomValidity
+    `Doc setCustomValidity <https://developer.mozilla.org/en-US/docs/Web/API/HTMLObjectElement/setCustomValidity>`_
 
     Usage::
 
@@ -231,8 +223,7 @@ class Input(Html.Html):
 
   def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
-    """
-    Add an javascript action when the key enter is pressed on the keyboard.
+    """Add an javascript action when the key enter is pressed on the keyboard.
 
     Usage::
 
@@ -253,8 +244,7 @@ class Input(Html.Html):
 
   def leave(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             source_event: str = None, on_ready: bool = False):
-    """
-    Add a javascript action when the key enter is pressed on the keyboard.
+    """Add a javascript action when the key enter is pressed on the keyboard.
 
     Usage::
 
@@ -278,9 +268,7 @@ class Input(Html.Html):
     """
     The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
 
-    Related Pages:
-
-      https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event
+    `Doc event input <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event>`_
 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -292,8 +280,7 @@ class Input(Html.Html):
     return self.on("input", js_funcs, profile, source_event)
 
   def readonly(self, flag: bool = True):
-    """
-    Set the input component to be readonly.
+    """Set the input component to be readonly.
 
     Related Pages:
 

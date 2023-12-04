@@ -19,15 +19,14 @@ from epyk.core.js.packages import JsChartJs
 
 class ChartJsActivePoints:
 
-    def __init__(self, chart_id, i, page: primitives.PageModel):
-        self.chartId = chart_id
+    def __init__(self, js_code, i, page: primitives.PageModel):
+        self.js_code = js_code
         self.page = page
         self.num = i or self.index
 
     @property
     def index(self) -> JsObject.JsObject:
-        """
-        Get the index of the clicked series in teh datasets.
+        """Get the index of the clicked series in teh datasets.
 
         Usage::
 
@@ -38,38 +37,35 @@ class ChartJsActivePoints:
         """
         if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
             return JsObject.JsObject.get(
-                "%s.getElementsAtEventForMode(event, 'nearest', {intersect: true}, true)[0].datasetIndex" % self.chartId)
+                "%s.getElementsAtEventForMode(event, 'nearest', {intersect: true}, true)[0].datasetIndex" % self.js_code)
 
-        return JsObject.JsObject.get("%s.getElementAtEvent(event)[0]._datasetIndex" % self.chartId)
+        return JsObject.JsObject.get("%s.getElementAtEvent(event)[0]._datasetIndex" % self.js_code)
 
     @property
     def x(self) -> JsObject.JsObject:
-        """
-        Get the name of the selected series.
+        """Get the name of the selected series.
 
         Usage::
 
           line = page.ui.charts.chartJs.line()
           line.click([line.activePoints().x])
         """
-        return JsObject.JsObject.get("%s.data.datasets[%s].label" % (self.chartId, self.num))
+        return JsObject.JsObject.get("%s.data.datasets[%s].label" % (self.js_code, self.num))
 
     @property
     def y(self) -> JsObject.JsObject:
-        """
-        Get the value of the selected series.
+        """Get the value of the selected series.
 
         Usage::
 
           line = page.ui.charts.chartJs.line()
           line.click([line.activePoints().y])
         """
-        return JsObject.JsObject.get("%s.data.datasets[%s].data[activePoints[0].index]" % (self.chartId, self.num))
+        return JsObject.JsObject.get("%s.data.datasets[%s].data[activePoints[0].index]" % (self.js_code, self.num))
 
     @property
     def labels(self) -> JsObject.JsObject:
-        """
-        Get the series label name.
+        """Get the series label name.
 
         Usage::
 
@@ -77,12 +73,11 @@ class ChartJsActivePoints:
           line.click([line.activePoints().labels])
         """
         return JsObject.JsObject.get("%s.data.labels[activePoints[Math.min(%s, activePoints.length - 1)]]" % (
-            self.chartId, self.num))
+            self.js_code, self.num))
 
     @property
     def model(self) -> JsObject.JsObject:
-        """
-        Get the series value.
+        """Get the series value.
 
         Usage::
 
@@ -93,8 +88,7 @@ class ChartJsActivePoints:
 
     @property
     def datasetLabel(self) -> JsObject.JsObject:
-        """
-        Get the series name.
+        """Get the series name.
 
         Usage::
 
@@ -115,20 +109,19 @@ class ChartJsActivePoints:
         """
         if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
             return JsObject.JsObject.get("%s.data.labels[activePoints[Math.min(%s, activePoints.length - 1)].index]" % (
-                self.chartId, self.num))
+                self.js_code, self.num))
 
         return JsObject.JsObject.get("%s.data.labels[activePoints[Math.min(%s, activePoints.length - 1)]._index]" % (
-            self.chartId, self.num))
+            self.js_code, self.num))
 
     @property
     def dataset(self) -> JsObject.JsObject:
-        """ Get the series dataset. """
+        """Get the series dataset"""
         return JsObject.JsObject.get("activePoints[Math.min(%s, activePoints.length - 1)]['_model'].label" % self.num)
 
     @property
     def value(self) -> JsObject.JsObject:
-        """
-        Get the point value.
+        """Get the point value.
 
         Usage::
 
@@ -137,15 +130,15 @@ class ChartJsActivePoints:
         """
         return JsObject.JsObject.get(
             "%s.data.datasets[activePoints[Math.min(%s, activePoints.length - 1)]._datasetIndex].data[activePoints[Math.min(%s, activePoints.length - 1)]._index]" % (
-            self.chartId, self.num, self.num))
+            self.js_code, self.num, self.num))
 
     def toStr(self):
-        """ """
         return JsObject.JsObject.get("activePoints")
 
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'ChartJs'
+    tag = "canvas"
     requirements = ('chart.js',)
     _option_cls = OptChartJs.ChartJsOptions
     _chart__type = None
@@ -159,27 +152,23 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self._chart, self._datasets, self._data_attrs, self._attrs = None, [], {}, {}
         self.style.css.margin_top = 10
         self.style.css.position = "relative"
-        self.chartId = "%s_obj" % self.htmlCode
         self.options.type = self._chart__type
         self.options.maintainAspectRatio = False
         self._attrs["type"] = self._chart__type
         self.attr["class"].add("chart-container")
 
     def activePoints(self, i: int = None) -> ChartJsActivePoints:
-        """
-        The current active points selected by an event on a chart.
+        """The current active points selected by an event on a chart.
 
         Usage::
 
             activePoints
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/api.html
+        `Related Pages <https://www.chartjs.org/docs/latest/developers/api.html>`_
 
         :param i: Optional. The series index. Default it is the series clicked
         """
-        return ChartJsActivePoints(self.chartId, i, self.page)
+        return ChartJsActivePoints(self.js_code, i, self.page)
 
     @property
     def type(self):
@@ -191,8 +180,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def shared(self):
-        """
-        All the common properties shared between all the charts.
+        """All the common properties shared between all the charts.
         This will ensure a compatibility with the plot method.
 
         Usage::
@@ -204,8 +192,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def js(self) -> JsChartJs.ChartJs:
-        """
-        Return all the Javascript functions defined in the framework.
+        """Return all the Javascript functions defined in the framework.
         THis is an entry point to the full Javascript ecosystem.
 
         Usage::
@@ -216,13 +203,12 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :return: A Javascript object.
         """
         if self._js is None:
-            self._js = JsChartJs.ChartJs(selector="window['%s']" % self.chartId, component=self, page=self.page)
+            self._js = JsChartJs.ChartJs(selector="window['%s']" % self.js_code, component=self, page=self.page)
         return self._js
 
     @property
     def dom(self) -> JsHtmlCharts.ChartJs:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object.
@@ -232,28 +218,34 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             self._dom._container = "%s.parentNode" % self._dom.element
         return self._dom
 
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
+        """
+        self.js.varName = js_code
+        self.dom.varName = "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
+
     @property
     def options(self) -> OptChartJs.ChartJsOptions:
-        """ Property to the series options. """
+        """Property to the series options"""
         return super().options
 
     @property
     def plugins(self):
-        """
-        Shortcut property to all the external plugins defined in the framework.
+        """Shortcut property to all the external plugins defined in the framework.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/2.7.2/notes/extensions.html
-          https://github.com/chartjs/awesome#charts
+        `Related Pages <https://www.chartjs.org/docs/2.7.2/notes/extensions.html>`_
+        `Related Pages <https://github.com/chartjs/awesome#charts>`_
         """
         return self.options.plugins
 
     @packageImport('chartjs-plugin-dragdata')
     def dragData(self):
-        """
-        A plugin for Chart.js >= 2.4.0.
-
+        """A plugin for Chart.js >= 2.4.0.
         Makes data points draggable. Supports touch events.
 
         Usage::
@@ -261,20 +253,15 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             chart = page.ui.charts.chartJs.line(randoms.languages, y_columns=["rating", 'change'], x_axis='name')
             chart.dragData()
 
-        Related Pages:
-
-          https://github.com/chrispahm/chartjs-plugin-dragdata
+        `Related Pages <https://github.com/chrispahm/chartjs-plugin-dragdata>`_
         """
         self.options.plugins.dragdata.dragX = True
         return self.options
 
     def labels(self, labels: list):
-        """
-        Set the labels of the different series in the chart.
+        """Set the labels of the different series in the chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/labelling.html
+        `Related Pages <https://www.chartjs.org/docs/latest/axes/labelling.html>`_
 
         :param labels: An array of labels
         """
@@ -282,8 +269,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def label(self, i: int, name: str):
-        """
-        Change the series name.
+        """Change the series name.
 
         :param i: The series index according to the y_columns
         :param name: The new name to be set
@@ -292,12 +278,9 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def dataset(self, i: int = None) -> JsChartJs.DataSetPie:
-        """
-        The data property of a ChartJs chart.
+        """The data property of a ChartJs chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/master/general/data-structures
+        `Related Pages <https://www.chartjs.org/docs/master/general/data-structures>`_
 
         :param i: Optional. The series index according to the y_columns
         """
@@ -307,8 +290,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self._datasets[i]
 
     def colors(self, hex_values: list):
-        """
-        Set the colors of the chart.
+        """Set the colors of the chart.
 
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
@@ -351,12 +333,9 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
               source_event: str = None, on_ready: bool = False):
-        """
-        Add a click event on the chart.
+        """Add a click event on the chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/general/interactions/events.html
+        `Related Pages <https://www.chartjs.org/docs/latest/general/interactions/events.html>`_
 
         :param js_funcs: Set of Javascript function to trigger on this event
         :param profile: Optional. A flag to set the component performance storage
@@ -367,22 +346,19 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             js_funcs = [js_funcs]
         if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
             tmp_js_funcs = [
-                "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.chartId,
+                "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.js_code,
                 "if(activePoints.length > 0){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
         else:
             tmp_js_funcs = [
-                "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
+                "var activePoints = %s.getElementsAtEvent(event)" % self.js_code,
                 "if(activePoints.length > 0){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
         return super(Chart, self).click(tmp_js_funcs, profile)
 
     def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False, source_event: str = None,
                  on_ready: bool = False):
-        """
-        Add a double click event on the chart.
+        """Add a double click event on the chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/general/interactions/events.html
+        `Related Pages <https://www.chartjs.org/docs/latest/general/interactions/events.html>`_
 
         :param js_funcs: Set of Javascript function to trigger on this event
         :param profile: Optional. A flag to set the component performance storage
@@ -391,21 +367,18 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
             tmp_js_funcs = [
-                "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.chartId,
+                "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.js_code,
                 "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
         else:
             tmp_js_funcs = [
-                "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
+                "var activePoints = %s.getElementsAtEvent(event)" % self.js_code,
                 "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
         return super(Chart, self).dblclick(tmp_js_funcs, profile)
 
     def hover(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False, source_event: str = None):
-        """
-        Add an on mouse hover event on the chart.
+        """Add an on mouse hover event on the chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/general/interactions/events.html
+        `Related Pages <https://www.chartjs.org/docs/latest/general/interactions/events.html>`_
 
         :param js_funcs: Set of Javascript function to trigger on this event
         :param profile: Optional. A flag to set the component performance storage
@@ -413,27 +386,24 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         if min(self.page.imports.pkgs.chart_js.version) > '3.0.0':
             tmp_js_funcs = [
-                "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.chartId,
+                "var activePoints = %s.getElementsAtEventForMode(event, 'nearest', { intersect: true }, true)" % self.js_code,
                 "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
         else:
             tmp_js_funcs = [
-                "var activePoints = %s.getElementsAtEvent(event)" % self.chartId,
+                "var activePoints = %s.getElementsAtEvent(event)" % self.js_code,
                 "if(activePoints.length > 0){ %s }" % JsUtils.jsConvertFncs(js_funcs, toStr=True)]
         return self.on("mouseover", tmp_js_funcs, profile)
 
     @property
     def datasets(self):
-        """ Get all the datasets defined for a chart. """
+        """Get all the datasets defined for a chart"""
         return self._datasets
 
     def getCtx(self, options: dict = None):
-        """
-        Get the ChartJs context. The internal configuration of the chart.
+        """Get the ChartJs context. The internal configuration of the chart.
         The context is a dictionary object with javascript fragments.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/
+        `Related Pages <https://www.chartjs.org/docs/latest/configuration/>`_
 
         :param options: Optional. The chart options
         """
@@ -447,8 +417,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         return str_ctx
 
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
-        """
-        Override the chart settings on the JavaScript side.
+        """Override the chart settings on the JavaScript side.
         This will allow ot set specific styles for some series or also add commons properties.
 
         Usage:
@@ -461,7 +430,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         if options is None:
             if dataflows is not None:
                 return "%s;%s" % (
-                    JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap("window['%s']" % self.chartId), dataflows, self.page)),
+                    JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap("window['%s']" % self.html_code), dataflows, self.page)),
                     self.js.update())
 
         if dataflows is not None:
@@ -472,8 +441,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Update the chart with context and / or data changes.
+        """Update the chart with context and / or data changes.
 
         :param data: Optional. The full datasets object expected by ChartJs
         :param options: Optional. Specific Python options available for this component
@@ -482,6 +450,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
                 self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
@@ -489,22 +458,22 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
-            return """Object.assign(window['%(chartId)s'].data, %(builder)s); 
-        window['%(chartId)s'].update();%(state)s""" % {
-                'chartId': self.chartId, 'builder': builder_fnc, "state": state_expr}
+            return """Object.assign(%(chartId)s.data, %(builder)s);%(chartId)s.update();%(state)s""" % {
+                'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
 
         return '%(chartId)s = new Chart(%(component)s.getContext("2d"), %(ctx)s)' % {
-            "chartId": self.chartId, "component": component_id or self.dom.varId, "ctx": self.getCtx(options)}
+            "chartId": self.js_code, "component": self.dom.varId, "ctx": self.getCtx(options)}
 
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
-        return '<div %s><canvas id="%s"></canvas></div>' % (
-            self.get_attrs(css_class_names=self.style.get_classes(), with_id=False), self.htmlCode)
+        return '<div %s><%s id="%s"></%s></div>' % (
+            self.get_attrs(css_class_names=self.style.get_classes(), with_id=False), self.tag, self.htmlCode, self.tag)
 
 
 class Fabric(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'ChartJs Fabric'
     requirements = ('chart.js',)
+    tag = "div"
 
     def __init__(self, page, width, height, html_code, options, profile):
         super(Fabric, self).__init__(page, [], html_code=html_code, options=options, profile=profile)
@@ -513,23 +482,19 @@ class Fabric(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.chart.colors(self.page.theme.charts)
         self.chart.options.scales.y_axis().ticks.toNumber()
         self.chart.options.managed = False
-        self.chart.chartId = "window['%s_' + %s]" % (self.htmlCode, self.dom.getAttribute("data-current"))
+        #self.chart.chartId = "window['%s_' + %s]" % (self.html_code, self.dom.getAttribute("data-current"))
 
     def new(self):
-        """
-
-        """
         return self.dom.appendChild(JsObject.JsObject.get('''(function(htmlObj){
-      var comp = document.createElement('canvas'); comp.id = htmlObj.id + "_" + htmlObj.getAttribute("data-next"); 
-      htmlObj.setAttribute("data-counter", parseInt(htmlObj.getAttribute("data-counter")) + 1);
-      htmlObj.setAttribute("data-current", htmlObj.getAttribute("data-next"));
-      htmlObj.setAttribute("data-next", parseInt(htmlObj.getAttribute("data-next")) + 1);
-      return comp})(%(htmlId)s)''' % {"htmlId": self.dom.varId}))
+var comp = document.createElement('canvas'); comp.id = htmlObj.id + "_" + htmlObj.getAttribute("data-next"); 
+htmlObj.setAttribute("data-counter", parseInt(htmlObj.getAttribute("data-counter")) + 1);
+htmlObj.setAttribute("data-current", htmlObj.getAttribute("data-next"));
+htmlObj.setAttribute("data-next", parseInt(htmlObj.getAttribute("data-next")) + 1);
+return comp})(%(htmlId)s)''' % {"htmlId": self.dom.varId}))
 
     def build(self, data=None, options: dict = None, profile=False, component_id=None,
               dataflows: List[dict] = None, **kwargs):
         """
-
 
         :param data:
         :param options: Optional. Specific Python options available for this component
@@ -538,18 +503,18 @@ class Fabric(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param dataflows: Chain of data transformations
         """
         return '''%(chartId)s = new Chart(%(dom)s.getContext('2d'), {type: 'bar'}); 
-      Object.assign(%(chartId)s.data, %(data)s); %(chartId)s.update()''' % {
-            "chartId": self.chart.chartId, "dom": component_id or self.chart.chartId,
+Object.assign(%(chartId)s.data, %(data)s); %(chartId)s.update()''' % {
+            "chartId": self.chart.js_code, "dom": component_id or self.chart.js_code,
             "data": self.chart.build(data, options, profile)}
 
     def create(self, data=None, options=None, attrs=None, profile=False):
         """
 
-    :param data:
-    :param options: Optional. Specific Python options available for this component
-    :param attrs: Optional.
-    :param profile: Optional. A flag to set the component performance storage
-    """
+        :param data:
+        :param options: Optional. Specific Python options available for this component
+        :param attrs: Optional.
+        :param profile: Optional. A flag to set the component performance storage
+        """
         return self.dom.appendChild(JsObject.JsObject.get('''(function(htmlObj){
 var comp = document.createElement('canvas'); comp.id = htmlObj.id + "_" + htmlObj.getAttribute("data-next"); 
 htmlObj.setAttribute("data-counter", parseInt(htmlObj.getAttribute("data-counter")) + 1);
@@ -558,11 +523,11 @@ htmlObj.setAttribute("data-next", parseInt(htmlObj.getAttribute("data-next")) + 
 %(chartId)s = new Chart(comp.getContext('2d'), %(options)s); 
 Object.assign(%(chartId)s.data, %(data)s); %(chartId)s.update()
 return comp})(%(htmlId)s)
-''' % {"htmlId": self.dom.varId, "options": options, "chartId": self.chart.chartId,
-             "data": self.chart.build(data, attrs, profile)}))
+''' % {"htmlId": self.dom.varId, "options": options, "chartId": self.chart.js_code,
+       "data": self.chart.build(data, attrs, profile)}))
 
     def __str__(self):
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class Datasets:
@@ -571,7 +536,7 @@ class Datasets:
         self.page, self.__data = page, []
 
     def add(self, data):
-        """ Add a series to an existing dataset.
+        """Add a series to an existing dataset.
 
         :param data: A list of numbers
         """
@@ -585,26 +550,18 @@ class ChartLine(Chart):
 
     @property
     def options(self) -> OptChartJs.OptionsLine:
-        """
-        Property to the specific ChartJs Line chart.
+        """Property to the specific ChartJs Line chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `Related Pages <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return super().options
 
     def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-        """
-        Add a new series to the chart datasets.
-
+        """Add a new series to the chart datasets.
         The dataset structure of a chart is a list of dataset.
-
         For a chart line the default Opacity is None which will set the fill to attribute to False.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/elements.html
+        `Related Pages <https://www.chartjs.org/docs/latest/configuration/elements.html>`_
 
         :param index: The index of the dataset in the chart list of datasets
         :param data: The list of points (float)
@@ -631,12 +588,9 @@ class ChartLine(Chart):
         return data
 
     def add_dataset(self, data, label: str = "", colors=None, opacity=None, kind=None, **kwargs):
-        """
-        Add a new Dataset to the chart list of Datasets.
+        """Add a new Dataset to the chart list of Datasets.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/updates.html
+        `Related Pages <https://www.chartjs.org/docs/latest/developers/updates.html>`_
 
         :param data: The list of points (float)
         :param label: Optional. The list of points (float)
@@ -655,14 +609,10 @@ class ChartBubble(Chart):
     builder_name = "ChartBubble"
 
     def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-        """
-        Add a new series to the chart datasets.
-
+        """Add a new series to the chart datasets.
         The dataset structure of a chart is a list of dataset.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/elements.html
+        `Related Pages <https://www.chartjs.org/docs/latest/configuration/elements.html>`_
 
         :param index: The index of the dataset in the chart list of datasets
         :param data: The list of points (float)
@@ -685,12 +635,9 @@ class ChartBubble(Chart):
         return data
 
     def add_dataset(self, data, label, colors=None, opacity=None, **kwargs):
-        """
-        Add a new Dataset to the chart list of Datasets.
+        """Add a new Dataset to the chart list of Datasets.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/updates.html
+        `Related Pages <https://www.chartjs.org/docs/latest/developers/updates.html>`_
 
         :param data: The list of points (float)
         :param label: The list of points (float)
@@ -708,25 +655,17 @@ class ChartBar(ChartLine):
 
     @property
     def options(self) -> OptChartJs.OptionsBar:
-        """
-        Property to the bar chart options.
+        """Property to the bar chart options.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/bar.html
-
+        `Related Pages <https://www.chartjs.org/docs/latest/charts/bar.html>`_
         """
         return super().options
 
     def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
-        """
-        Add a new series to the chart datasets.
-
+        """Add a new series to the chart datasets.
         The dataset structure of a chart is a list of dataset.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/elements.html
+        `Related Pages <https://www.chartjs.org/docs/latest/configuration/elements.html>`_
 
         :param index: The index of the dataset in the chart list of datasets
         :param data: The list of points (float)
@@ -753,12 +692,9 @@ class ChartBar(ChartLine):
 
     def add_dataset(self, data, label: str, kind: str = None, colors: List[str] = None, opacity: float = None,
                     alias: str = None, **kwargs) -> JsChartJs.DataSetScatterLine:
-        """
-        Add a new Dataset to the chart list of Datasets.
+        """Add a new Dataset to the chart list of Datasets.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/updates.html
+        `Related Pages <https://www.chartjs.org/docs/latest/developers/updates.html>`_
 
         :param data: The list of points (float)
         :param label: The series label (visible in the legend)
@@ -785,23 +721,17 @@ class ChartPolar(Chart):
 
     @property
     def options(self) -> OptChartJs.OptionsPolar:
-        """
-        Property to the Polar chart options.
+        """Property to the Polar chart options.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/polar.html
+        `Related Pages <https://www.chartjs.org/docs/latest/charts/polar.html>`_
         """
         return super().options
 
     def new_dataset(self, index: int, data, label: str, colors: List[str] = None,
                     kind: str = None, **kwargs) -> JsChartJs.DataSetPolar:
-        """
-        Add anew dataset.
+        """Add anew dataset.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/updates.html
+        `Related Pages <https://www.chartjs.org/docs/latest/developers/updates.html>`_
 
         :param index: The index of the dataset in the chart list of datasets
         :param data: The list of points (float)
@@ -829,9 +759,7 @@ class ChartPolar(Chart):
                     kind: str = None, **kwargs) -> JsChartJs.DataSetPolar:
         """
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/updates.html
+        `Related Pages <https://www.chartjs.org/docs/latest/developers/updates.html>`_
 
         :param data: The list of points (float)
         :param label: The series label (visible in the legend)
@@ -996,8 +924,7 @@ class ChartTreeMap(Chart):
         return super().options
 
     def add_dataset(self, tree: List[dict], label: str, colors: List[str] = None, **kwargs) -> JsChartJs.DataSetTreeMap:
-        """
-        Add a dataset for the tree map.
+        """Add a dataset for the tree map.
 
         :param tree: The list of points (float)
         :param label: Optional. The series label (visible in the legend)
@@ -1011,8 +938,7 @@ class ChartTreeMap(Chart):
 
     def new_dataset(self, index: int, data, label: str, colors: List[str] = None, kind: str = None,
                     **kwargs) -> JsChartJs.DataSetTreeMap:
-        """
-        Override an existing dataset.
+        """Override an existing dataset.
 
         :param index: The series index
         :param data: The list of points (float)
@@ -1041,8 +967,7 @@ class ChartTreeMap(Chart):
         return data
 
     def backgrounds(self, colors: Dict[str, str]):
-        """
-        Specific mapping rules for the background colors.
+        """Specific mapping rules for the background colors.
 
         :param colors: The color mapping based on the section label
         """
@@ -1054,9 +979,7 @@ if (item){
   if(item.l === 0){return Chart.helpers.color("%s").alpha(a).rgbString()}
   if(item.l === 1){return Chart.helpers.color("white").alpha(0.3).rgbString()}
   else{return Chart.helpers.color("%s").alpha(a).rgbString()}}
-}''' % (
-            colors, self.options['commons']["colors"]["light"], self.options['commons']["colors"]["base"])
-                                                                ))
+}''' % (colors, self.options['commons']["colors"]["light"], self.options['commons']["colors"]["base"])))
 
 
 class ChartMatrix(Chart):
@@ -1114,9 +1037,6 @@ class ChartSankey(Chart):
         return super().options
 
     def new_dataset(self, data: List[dict], label: str, **kwargs) -> JsChartJs.DataSetSankey:
-        """
-
-        """
         dataset = JsChartJs.DataSetSankey(self.page, attrs={"label": label, "data": data})
         for k, v in kwargs.items():
           if hasattr(dataset, k):

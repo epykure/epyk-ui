@@ -15,6 +15,7 @@ from epyk.core.py import types as etypes
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Vis'
+    tag = "div"
     requirements = ('vis',)
     _option_cls = OptVis.Options2D
 
@@ -27,25 +28,18 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.style.css.display = "inline-block"
 
     @property
-    def chartId(self) -> str:
-        """ Return the Javascript variable of the chart. """
-        return "%s_obj" % self.htmlCode
-
-    @property
     def options(self) -> OptVis.Options2D:
-        """ """
         return super().options
 
     @property
     def js(self) -> JsVis.VisGraph2D:
-        """
-        Return all the Javascript functions defined in the framework.
+        """Return all the Javascript functions defined in the framework.
         This is an entry point to the full Javascript ecosystem.
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsVis.VisGraph2D(selector="window['%s']" % self.chartId, page=self.page, component=self)
+            self._js = JsVis.VisGraph2D(selector=self.js_code, page=self.page, component=self)
         return self._js
 
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
@@ -60,12 +54,13 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state:
         :param dataflows:
         """
-        profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
+        self.js_code = component_id
+        profile = self.with_profile(profile, event="Builder", element_id=self.js_code)
         if data:
             return JsUtils.jsConvertFncs([self.js.setItems(data[0]), self.js.redraw()], toStr=True, profile=profile)
 
         return JsUtils.jsConvertFncs(
-            [self.groups.toStr(), "var %s = %s" % (self.chartId, self.getCtx())], toStr=True, profile=profile)
+            [self.groups.toStr(), "var %s = %s" % (self.js_code, self.getCtx())], toStr=True, profile=profile)
 
     def colors(self, hex_values: List[str]):
         ...
@@ -74,16 +69,15 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         ...
 
     def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
-        """ Not yet defined for this chart """
+        """Not yet defined for this chart"""
         return ""
 
     def getCtx(self):
-        """ """
         raise ValueError("Cannot create an object from the Vis base class directly")
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class ChartLine(Chart):
@@ -95,22 +89,20 @@ class ChartLine(Chart):
 
     @property
     def js(self) -> JsVis.VisGraph2D:
-        """
-        Return all the Javascript functions defined in the framework.
+        """Return all the Javascript functions defined in the framework.
         THis is an entry point to the full Javascript ecosystem.
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsVis.VisGraph2D(selector="window['%s']" % self.chartId, page=self.page, component=self)
+            self._js = JsVis.VisGraph2D(selector="window['%s']" % self.js_code, page=self.page, component=self)
         return self._js
 
     @property
     def groups(self) -> JsVis.VisGroups:
-        """ """
         if self.__grps is None:
             self.__grps = JsVis.VisGroups(component=self, page=self.page, set_var=True,
-                                          js_code="%s_group" % self.chartId)
+                                          js_code="%s_group" % self.js_code)
         return self.__grps
 
     def add_item(self, x, y, group, label=None, end=None):
@@ -135,7 +127,6 @@ class ChartLine(Chart):
         return self
 
     def getCtx(self):
-        """ """
         return "new vis.Graph2d(%s, %s, %s, %s)" % (self.dom.varId, self.items, self.groups.varId, self.options)
 
 
@@ -168,24 +159,19 @@ class Chart3D(Chart):
 
     @property
     def js(self) -> JsVis.VisGraph3D:
-        """
-        Return all the Javascript functions defined in the framework.
+        """Return all the Javascript functions defined in the framework.
         This is an entry point to the full Javascript ecosystem.
         """
         if self._js is None:
-            self._js = JsVis.VisGraph3D(component=self, page=self.page, js_code=self.chartId)
+            self._js = JsVis.VisGraph3D(component=self, page=self.page, js_code=self.js_code)
         return self._js
 
     @property
     def options(self) -> OptVis.Options3D:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
 
         Python can pass some options to the JavaScript layer.
-
-        Usage::
-
         """
         return super().options
 
@@ -193,8 +179,8 @@ class Chart3D(Chart):
     def groups(self) -> JsVis.VisGroups:
         """ """
         if self.__grps is None:
-            self.__grps = JsVis.VisGroups(page=self.page, set_var=True, js_code="%s_group" % self.chartId,
-                                          component=self)
+            self.__grps = JsVis.VisGroups(
+                page=self.page, set_var=True, js_code="%s_group" % self.js_code, component=self)
         return self.__grps
 
     def add_items(self, records):
@@ -231,12 +217,11 @@ class Chart3D(Chart):
         """
         if data:
             return "%(chartId)s.setData(%(data)s); %(chartId)s.redraw()" % {
-                'chartId': self.chartId, 'data': data[0]}
+                'chartId': self.js_code, 'data': data[0]}
 
-        return '''%s; var %s = %s''' % (self.groups.toStr(), self.chartId, self.getCtx())
+        return '''%s; var %s = %s''' % (self.groups.toStr(), self.js_code, self.getCtx())
 
     def getCtx(self):
-        """ """
         return "new vis.Graph3d(%s, %s, %s)" % (self.dom.varId, self.items, self.options)
 
 
@@ -278,21 +263,19 @@ class ChartNetwork(Chart):
 
     @property
     def js(self) -> JsVis.VisNetwork:
-        """
-        Return all the Javascript functions defined in the framework.
+        """Return all the Javascript functions defined in the framework.
         This is an entry point to the full Javascript ecosystem.
 
         :return: A Javascript object.
         """
         if self._js is None:
-            self._js = JsVis.VisNetwork(page=self.page, selector=self.chartId, set_var=False, component=self)
+            self._js = JsVis.VisNetwork(page=self.page, selector=self.js_code, set_var=False, component=self)
         return self._js
 
     @property
     def groups(self) -> JsVis.VisGroups:
-        """ """
         if self.__grps is None:
-            self.__grps = JsVis.VisGroups(page=self.page, set_var=True, js_code="%s_group" % self.chartId,
+            self.__grps = JsVis.VisGroups(page=self.page, set_var=True, js_code="%s_group" % self.js_code,
                                           component=self)
         return self.__grps
 
@@ -318,7 +301,6 @@ class ChartNetwork(Chart):
         return self
 
     def getCtx(self):
-        """ """
         return "new vis.Network(%s, %s, %s, %s)" % (
             self.dom.varId, {"nodes": self._nodes, 'edges': self._edges}, self.groups.varId, self.options)
 
@@ -350,51 +332,45 @@ class ChartTimeline(Chart):
 
     @property
     def style(self) -> GrpClsCharts.ClassVisTimeline:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpClsCharts.ClassVisTimeline(self)
         return self._styleObj
 
     @property
     def options(self) -> OptVis.OptionsTimeline:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
 
         Python can pass some options to the JavaScript layer.
-
-        Usage::
-
         """
         return super().options
 
     @property
     def js(self) -> JsVis.VisTimeline:
-        """
-        Return all the Javascript functions defined in the framework.
+        """Return all the Javascript functions defined in the framework.
         This is an entry point to the full Javascript ecosystem.
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsVis.VisTimeline(selector=self.chartId, component=self, page=self.page)
+            self._js = JsVis.VisTimeline(selector=self.js_code, component=self, page=self.page)
         return self._js
 
     @property
     def groups(self) -> JsVis.VisGroups:
         """ """
         if self.__grps is None:
-            self.__grps = JsVis.VisGroups(page=self.page, set_var=True, js_code="%s_group" % self.chartId,
+            self.__grps = JsVis.VisGroups(page=self.page, set_var=True, js_code="%s_group" % self.js_code,
                                           component=self)
         return self.__grps
 
     def setGroups(self, groups):
-        """
-        Add group labels to the timeline.
+        """Add group labels to the timeline.
 
         :param groups:
         """
-        self.__cats = "%s.setGroups(%s)" % (self.chartId, JsUtils.jsConvertData(groups, None))
+        self.__cats = "%s.setGroups(%s)" % (self.js_code, JsUtils.jsConvertData(groups, None))
         return self
 
     def add_items(self, records):
@@ -406,7 +382,6 @@ class ChartTimeline(Chart):
         return self
 
     def getCtx(self):
-        """ """
         # Remove the managed parameter to avoid issue with the library
         if self.__cats is not None:
             return "new vis.Timeline(%s, %s, (function(){let opt = %s; delete opt.managed; return opt})() ); %s" % (

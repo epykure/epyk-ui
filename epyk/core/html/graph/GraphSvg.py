@@ -6,6 +6,7 @@ from epyk.core.html import Html
 
 class SVG(Html.Html):
     name = 'SVG'
+    tag = "svg"
 
     def __init__(self, page, width, height, html_code=None, options=None, profile=None):
         super(SVG, self).__init__(
@@ -26,8 +27,7 @@ class SVG(Html.Html):
         return self.html_objs[i]
 
     def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
-        """
-        Add an event on the SVG.
+        """Add an event on the SVG.
 
         :param js_funcs: List of Js Functions. A Javascript Python function.
         :param profile: A Boolean. Set to true to get the profile for the function on the Javascript console.
@@ -38,8 +38,7 @@ class SVG(Html.Html):
         return self.on("click", js_funcs, profile, source_event)
 
     def defs(self):
-        """
-        The <defs> element is used to store graphical objects that will be used at a later time.
+        """The <defs> element is used to store graphical objects that will be used at a later time.
         Objects created inside a <defs> element are not rendered directly.
         To display them you have to reference them (with a <use> element for example
 
@@ -47,21 +46,16 @@ class SVG(Html.Html):
 
           defs = poly.defs()
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/defs>`_
         """
         self.html_objs.append(Defs(self.page))
         return self.html_objs[-1]
 
     def text(self, text, x, y, fill=None):
-        """
-        The <text> element can be arranged in any number of sub-groups with the <tspan> element.
+        """The <text> element can be arranged in any number of sub-groups with the <tspan> element.
         Each <tspan> element can contain different formatting and position.
 
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_text.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_text.asp>`_
 
         :param text: String. The text to be added to the container.
         :param x: Float. The x coordinate of the starting point of the text baseline.
@@ -74,14 +68,9 @@ class SVG(Html.Html):
         return self.html_objs[-1]
 
     def rect(self, x, y, width, height, fill, rx=0, ry=0):
-        """
-        The <rect> element is used to create a rectangle and variations of a rectangle shape.
+        """The <rect> element is used to create a rectangle and variations of a rectangle shape.
 
-        Usage::
-
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_rect.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_rect.asp>`_
 
         :param x:
         :param y:
@@ -97,13 +86,10 @@ class SVG(Html.Html):
         self.html_objs[-1].options.managed = False
         return self.html_objs[-1]
 
-    def line(self, x1, y1, x2, y2, stroke=None, stroke_width=None):
-        """
-        The <line> element is used to create a line.
+    def line(self, x1, y1, x2, y2, stroke=None, stroke_width=None) -> 'Line':
+        """The <line> element is used to create a line.
 
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_line.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_line.asp>`_
 
         :param x1: Float. The x1 attribute defines the start of the line on the x-axis.
         :param y1: Float. The y1 attribute defines the start of the line on the y-axis.
@@ -111,8 +97,6 @@ class SVG(Html.Html):
         :param y2: Float. The y2 attribute defines the end of the line on the y-axis.
         :param stroke:
         :param stroke_width:
-
-        :rtype: Line
         """
         line = Line(self.page, x1, y1, x2, y2)
         line.options.managed = False
@@ -121,13 +105,10 @@ class SVG(Html.Html):
             line.css({"stroke": stroke, "stroke-width": stroke_width or 1})
         return self.html_objs[-1]
 
-    def circle(self, x, y, r, fill="None", stroke=None, stroke_width=None):
-        """
-        The <circle> element is used to create a circle.
+    def circle(self, x, y, r, fill="None", stroke=None, stroke_width=None) -> 'Circle':
+        """The <circle> element is used to create a circle.
 
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_circle.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_circle.asp>`_
 
         :param x: Float. The x coordinate of the circle.
         :param y: Float. The y coordinate of the circle.
@@ -135,8 +116,6 @@ class SVG(Html.Html):
         :param fill:
         :param stroke:
         :param stroke_width:
-
-        :rtype: Circle
         """
         circle = Circle(self.page, x, y, r, fill)
         circle.options.managed = False
@@ -145,105 +124,77 @@ class SVG(Html.Html):
             circle.set_attrs({"stroke": stroke, "stroke-width": stroke_width or 1})
         return self.html_objs[-1]
 
-    def ellipse(self, cx, cy, rx, ry):
-        """
-        The <ellipse> element is used to create an ellipse.
+    def ellipse(self, cx, cy, rx, ry) -> 'Ellipse':
+        """The <ellipse> element is used to create an ellipse.
 
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_ellipse.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_ellipse.asp>`_
 
         :param cx: Float. The cx attribute defines the x coordinate of the center of the ellipse.
         :param cy: Float. The cy attribute defines the y coordinate of the center of the ellipse.
         :param rx: Float. The rx attribute defines the horizontal radius.
         :param ry: Float. The ry attribute defines the vertical radius.
-
-        :rtype: Ellipse
         """
         self.html_objs.append(Ellipse(self.page, cx, cy, rx, ry))
         self.html_objs[-1].options.managed = False
         return self.html_objs[-1]
 
-    def polygon(self, points, fill="None"):
-        """
-        The <polygon> element is used to create a graphic that contains at least three sides.
+    def polygon(self, points, fill="None") -> 'Polygone':
+        """The <polygon> element is used to create a graphic that contains at least three sides.
 
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_polygon.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_polygon.asp>`_
 
         :param points: String. The points attribute defines the x and y coordinates for each corner of the polygon.
         :param fill: String. Optional.
-
-        :rtype: Polygone
         """
         self.html_objs.append(Polygone(self.page, points, fill))
         self.html_objs[-1].options.managed = False
         return self.html_objs[-1]
 
-    def polyline(self, points, fill="None"):
-        """
-        The <polyline> element is used to create any shape that consists of only straight lines (that is connected at
+    def polyline(self, points, fill="None") -> 'Polyline':
+        """The <polyline> element is used to create any shape that consists of only straight lines (that is connected at
         several points).
 
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_polyline.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_polyline.asp>`_
 
         :param points:
         :param fill:
-
-        :rtype: Polyline
         """
         polygone = Polyline(self.page, points, height=None, width=None, fill=fill, options={})
         polygone.options.managed = False
         self.html_objs.append(polygone)
         return polygone
 
-    def triangle(self, points, fill="None", options=None):
-        """
-        A polyline element with three points.
+    def triangle(self, points, fill="None", options=None) -> 'Polyline':
+        """A polyline element with three points.
 
-        Related Pages:
-
-          https://www.w3schools.com/graphics/svg_polyline.asp
+        `SVG Doc <https://www.w3schools.com/graphics/svg_polyline.asp>`_
 
         :param points:
         :param fill:
         :param options:
-
-        :rtpye: Polyline
         """
         self.html_objs.append(Polyline(self.page, points, None, None, fill, options or {}))
         self.html_objs[-1].options.managed = False
         return self.html_objs[-1]
 
-    def g(self, fill="None", stroke=None, stroke_width=None):
-        """
-        The <g> SVG element is a container used to group other SVG elements.
+    def g(self, fill="None", stroke=None, stroke_width=None) -> 'G':
+        """The <g> SVG element is a container used to group other SVG elements.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/g>`_
 
         :param fill: String. Optional. The color for the component background.
         :param stroke: String. Optional. The color for the border.
         :param stroke_width: Float. Optional. The width of the component's border.
-
-        :rtype: G
         """
         self.html_objs.append(G(self.page, fill, stroke, stroke_width))
         self.html_objs[-1].options.managed = False
         return self.html_objs[-1]
 
-    def path(self, x=0, y=0, fill='none', from_origin=False, bespoke_path=None, stroke=None):
-        """
-        The <path> element is used to define a path.
+    def path(self, x=0, y=0, fill='none', from_origin=False, bespoke_path=None, stroke=None) -> 'Path':
+        """The <path> element is used to define a path.
 
-        Related Pages:
-
-          https://www.w3.org/TR/SVG/paths.html
-          https://www.w3.org/TR/svg-paths/
+        `SVG Doc <https://www.w3.org/TR/SVG/paths.html>`_
+        `SVG Path Doc <https://www.w3.org/TR/svg-paths/>`_
 
         :param x: Number.
         :param y: Number.
@@ -251,8 +202,6 @@ class SVG(Html.Html):
         :param from_origin:
         :param bespoke_path:
         :param stroke:
-
-        :rtype: Path
         """
         if from_origin:
             x += self.origine[0]
@@ -262,21 +211,16 @@ class SVG(Html.Html):
         self.html_objs.append(path)
         return self.html_objs[-1]
 
-    def foreignObject(self, x, y, width, height):
-        """
-        The <foreignObject> SVG element includes elements from a different XML namespace. In the context of a browser,
-        it is most likely (X)HTML.
+    def foreignObject(self, x, y, width, height) -> 'ForeignObject':
+        """The <foreignObject> SVG element includes elements from a different XML namespace. In the context of a
+        browser, it is most likely (X)HTML.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/foreignObject>`_
 
         :param x: Float. The x coordinate of the foreignObject.
         :param y: Float. The y coordinate of the foreignObject.
         :param width: Float or Percentage. The width of the foreignObject.
         :param height: Float or Percentage. The height of the foreignObject.
-
-        :rtype: ForeignObject
         """
         self.html_objs.append(ForeignObject(self.page, x, y, width, height))
         self.html_objs[-1].options.managed = False
@@ -284,7 +228,7 @@ class SVG(Html.Html):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<svg %s>%s</svg>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class LinearGradient(Html.Html):
@@ -295,7 +239,6 @@ class LinearGradient(Html.Html):
 
     @property
     def url(self):
-        """ """
         return "url(#%s)" % self.htmlCode
 
     def stop(self, offset, styles):
@@ -321,8 +264,7 @@ class RadialGradient(Html.Html):
         self.items = []
 
     @property
-    def url(self):
-        """ """
+    def url(self) -> str:
         return "url(#%s)" % self.htmlCode
 
     def stop(self, offset, styles):
@@ -341,6 +283,7 @@ class RadialGradient(Html.Html):
 
 
 class Marker(SVG):
+    tag = "marker"
 
     def __init__(self, page, html_code, viewBox, refX, refY):
         super(Marker, self).__init__(page, None, None, html_code=html_code)
@@ -351,9 +294,7 @@ class Marker(SVG):
     def url(self):
         """
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker>`_
         """
         return "url(#%s)" % self.htmlCode
 
@@ -384,9 +325,7 @@ class Marker(SVG):
     def arrow(self, size=None):
         """
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker>`_
 
         :param size:
         """
@@ -397,24 +336,23 @@ class Marker(SVG):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<marker %s>%s</marker>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class Defs(Html.Html):
     name = 'SVG Defs'
+    tag = 'defs'
 
     def __init__(self, page):
         super(Defs, self).__init__(page, "")
         self.html_objs = []
 
-    def linearGradient(self, html_code, x1="0%", y1="0%", x2="100%", y2="0%", gradient_transform=None):
-        """
-        The <linearGradient> element lets authors define linear gradients that can be applied to fill or stroke of
+    def linearGradient(
+            self, html_code, x1="0%", y1="0%", x2="100%", y2="0%", gradient_transform=None) -> 'LinearGradient':
+        """The <linearGradient> element lets authors define linear gradients that can be applied to fill or stroke of
         graphical elements.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/linearGradient>`_
 
         :param html_code: String. The HTML id of the component
         :param x1: Float.
@@ -422,53 +360,43 @@ class Defs(Html.Html):
         :param x2: Float.
         :param y2: Float.
         :param gradient_transform:
-
-        :rtype: LinearGradient
         """
         self.html_objs.append(LinearGradient(self.page, html_code, x1, y1, x2, y2, gradient_transform))
         return self.html_objs[-1]
 
-    def radialGradient(self, html_code):
-        """
-        The <radialGradient> element lets authors define radial gradients that can be applied to fill or stroke of
+    def radialGradient(self, html_code: str) -> 'radialGradient':
+        """The <radialGradient> element lets authors define radial gradients that can be applied to fill or stroke of
         graphical elements.
 
-        Related Pages:
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient>`_
 
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/radialGradient
-
-        :param html_code: String. The HTML id of the component.
-
-        :rtype: radialGradient
+        :param html_code: The HTML id of the component.
         """
         self.html_objs.append(RadialGradient(self.page, html_code))
         return self.html_objs[-1]
 
-    def marker(self, html_code, viewBox, refX, refY):
-        """
-        The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given
+    def marker(self, html_code, viewBox, refX, refY) -> 'Marker':
+        """The <marker> element defines the graphic that is to be used for drawing arrowheads or polymarkers on a given
         <path>, <line>, <polyline> or <polygon> element.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/marker>`_
 
         :param html_code:
         :param viewBox:
         :param refX:
         :param refY:
-
-        :rtype: Marker
         """
         self.html_objs.append(Marker(self.page, html_code, viewBox, refX, refY))
         return self.html_objs[-1]
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<defs %s>%s</defs>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class ForeignObject(SVG):
+    tag = "foreignObject"
+
     def __init__(self, page, x, y, width, height):
         super(ForeignObject, self).__init__(page, None, None)
         self.set_attrs({"x": x, "y": y, "width": width, "height": height})
@@ -487,11 +415,12 @@ class ForeignObject(SVG):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<foreignObject %s>%s</foreignObject>" % (
-        self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class G(SVG):
+    tag = 'g'
+
     def __init__(self, page, fill, stroke, stroke_width):
         super(G, self).__init__(page, None, None)
         self.set_attrs({"fill": fill, "stroke": stroke, "stroke-width": stroke_width})
@@ -499,7 +428,7 @@ class G(SVG):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<g %s>%s</g>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class SVGItem(Html.Html):
@@ -530,6 +459,7 @@ class SVGItem(Html.Html):
 
 class Polygone(SVGItem):
     name = 'SVG Polygone'
+    tag = "polygon"
 
     def __init__(self, page, points, fill):
         super(Polygone, self).__init__(page, points)
@@ -539,11 +469,12 @@ class Polygone(SVGItem):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<polygon %s>%s</polygon>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class Ellipse(SVGItem):
     name = 'SVG Epplipse'
+    tag = "ellipse"
 
     def __init__(self, page, cx, cy, rx, ry):
         super(Ellipse, self).__init__(page, "")
@@ -553,11 +484,12 @@ class Ellipse(SVGItem):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<ellipse %s>%s</ellipse>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class Line(SVGItem):
     name = 'SVG Line'
+    tag = "line"
 
     def __init__(self, page, x1, y1, x2, y2):
         super(Line, self).__init__(page, "")
@@ -598,11 +530,12 @@ class Line(SVGItem):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<line %s>%s</line>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class Polyline(SVGItem):
     name = 'SVG Polyline'
+    tag = "polyline"
 
     def __init__(self, page, points, height, width, fill, options):
         super(Polyline, self).__init__(page, points, css_attrs={"width": width, "height": height})
@@ -647,11 +580,12 @@ class Polyline(SVGItem):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<polyline %s>%s</polyline>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class Rectangle(SVGItem):
     name = 'SVG Rectangle'
+    tag = "rect"
 
     def __init__(self, page, x, y, width, height, fill, rx, ry):
         super(Rectangle, self).__init__(page, "", css_attrs={"width": width, "height": height})
@@ -661,11 +595,12 @@ class Rectangle(SVGItem):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<rect %s>%s</rect>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class Circle(SVGItem):
     name = 'SVG Circle'
+    tag = "circle"
 
     def __init__(self, report, x, y, r, fill):
         super(Circle, self).__init__(report, "")
@@ -674,42 +609,40 @@ class Circle(SVGItem):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<circle %s>%s</circle>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_c)
+        return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_c, self.tag)
 
 
 class Text(SVGItem):
     name = 'SVG Text'
+    tag = "text"
 
     def __init__(self, page, text, x, y, fill):
         super(Text, self).__init__(page, text)
         self.set_attrs({"x": x, "y": y, 'fill': fill})
         self.html_objs = []
 
-    def line(self, text, x, y):
-        """
-        The SVG <tspan> element defines a subtext within a <text> element or another <tspan> element.
+    def line(self, text: str, x: float, y: float) -> 'TSpan':
+        """The SVG <tspan> element defines a subtext within a <text> element or another <tspan> element.
         It allows for adjustment of the style and/or position of that subtext as needed.
 
-        Related Pages:
+        `SVG Doc <https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan>`_
 
-          https://developer.mozilla.org/en-US/docs/Web/SVG/Element/tspan
-
-        :param text: String. The text to be added to the container
-        :param x: Float. The x coordinate of the starting point of the text baseline.
-        :param y: Float. The y coordinate of the starting point of the text baseline.
-
-        :rtype: TSpan
+        :param text: The text to be added to the container
+        :param x: The x coordinate of the starting point of the text baseline.
+        :param y: The y coordinate of the starting point of the text baseline.
         """
         self.html_objs.append(TSpan(self.page, text, x, y))
         return self.html_objs[-1]
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<text %s>%s%s</text>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c)
+        return "<%s %s>%s%s</%s>" % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c, self.tag)
 
 
 class TSpan(SVGItem):
     name = 'SVG TSpan'
+    tag = "tspan"
 
     def __init__(self, page, text, x, y):
         super(TSpan, self).__init__(page, text)
@@ -718,11 +651,13 @@ class TSpan(SVGItem):
 
     def __str__(self):
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<tspan %s>%s%s</tspan>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c)
+        return "<%s %s>%s%s</%s>" % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c, self.tag)
 
 
 class Path(SVGItem):
     name = 'SVG Path'
+    tag = "path"
 
     def __init__(self, page, x, y, fill, origin, bespoke_path, stroke=None, options=None, profile=None):
         super(Path, self).__init__(page, "", options=options, profile=profile)
@@ -795,9 +730,7 @@ class Path(SVGItem):
     def curve_to(self, x1, y1, x2, y2):
         """
 
-        Related Pages:
-
-          https://www.w3.org/TR/svg-paths/
+        `SVG Doc <https://www.w3.org/TR/svg-paths/>`_
 
         :param x1: Number.
         :param y1: Number.
@@ -815,9 +748,7 @@ class Path(SVGItem):
     def smooth_curve_to(self, x1, y1, x2, y2):
         """
 
-        Related Pages:
-
-          https://www.w3.org/TR/svg-paths/
+        `SVG Doc <https://www.w3.org/TR/svg-paths/>`_
 
         :param x1: Number.
         :param y1: Number.
@@ -835,9 +766,7 @@ class Path(SVGItem):
     def quadratic_bezier_curve_to(self, x1, y1, x2, y2):
         """
 
-        Related Pages:
-
-          https://www.w3.org/TR/svg-paths/
+        `SVG Doc <https://www.w3.org/TR/svg-paths/>`_
 
         :param x1: Number.
         :param y1: Number.
@@ -855,9 +784,7 @@ class Path(SVGItem):
     def smooth_quadratic_bezier_curve_to(self, x, y, absolute=True):
         """
 
-        Related Pages:
-
-          https://www.w3.org/TR/svg-paths/
+        `SVG Doc <https://www.w3.org/TR/svg-paths/>`_
 
         :param x: Number.
         :param y: Number.
@@ -870,14 +797,14 @@ class Path(SVGItem):
         return self
 
     def close_path(self):
-        """ """
         self.__path.append("Z")
         return self
 
     def __str__(self):
         self.set_attrs(name="d", value="".join(self.__path))
         str_c = "".join([h.html() if hasattr(h, 'html') else str(h) for h in self.html_objs])
-        return "<path %s>%s%s</path>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c)
+        return "<%s %s>%s%s</%s>" % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, str_c, self.tag)
 
 
 class AnimateTransform(Html.Html):

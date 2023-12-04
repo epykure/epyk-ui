@@ -10,6 +10,7 @@ from typing import List
 
 class VegaEmdedCharts(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Vega-Lite charts'
+    tag = "div"
     requirements = ('vega-embed',)
     _option_cls = OptChartVega.OptionsChart
     _chart__type = "VegaChart"
@@ -23,46 +24,34 @@ class VegaEmdedCharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.schema = "https://vega.github.io/schema/vega-lite/v5.json"
 
     @property
-    def chartId(self):
-        """ Return the Javascript variable of the chart. """
-        return "window['%s_obj']" % self.htmlCode
-
-    @property
     def vega(self) -> JsVega.Vega:
-        """
-        JavaScript Vega Chart reference API.
+        """JavaScript Vega Chart reference API.
 
-        Related Pages:
-
-          https://c3js.org/reference.html#api-show
+        `Vega Doc <https://c3js.org/reference.html#api-show>`_
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsVega.Vega(self, js_code=self.chartId, page=self.page)
+            self._js = JsVega.Vega(self, js_code=self.js_code, page=self.page)
         return self._js
 
     @property
     def js(self) -> JsVega.VegaChart:
-        """
-        JavaScript Vega Chart reference API.
+        """JavaScript Vega Chart reference API.
 
-        Related Pages:
-
-          https://c3js.org/reference.html#api-show
+        `Vega Doc <https://c3js.org/reference.html#api-show>`_
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsVega.VegaChart(self, js_code=self.chartId, page=self.page)
+            self._js = JsVega.VegaChart(self, js_code=self.js_code, page=self.page)
         return self._js
 
     @Html.jformatter("vega")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.OPTION_TYPE = None,
               profile: etypes.PROFILE_TYPE = False, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None) -> str:
-        """
-        Update the chart with context and / or data changes.
+        """Update the chart with context and / or data changes.
 
         :param data: List. Optional. The full datasets object expected by ChartJs.
         :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -71,19 +60,21 @@ class VegaEmdedCharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
                 self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
                 self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:
-                state_expr = ";%s" % self.hide_state(component_id)
+                state_expr = ";%s" % self.hide_state(self.html_code)
             return """var changeSet = vega.changeset().remove(vega.truthy).insert(%(builder)s);
-        %(chartId)s.then(function (res) {res.view.change('table', changeSet).run();%(state)s})""" % {
-                'chartId': self.chartId, 'builder': builder_fnc, "state": state_expr}
+%(chartId)s.then(function (res) {res.view.change('table', changeSet).run();%(state)s})""" % {
+                'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
 
-        return '%(chartId)s = vegaEmbed("#%(htmlCode)s", %(options)s)' % {
-            "chartId": self.chartId, "htmlCode": self.htmlCode, "options": self.options.config_js(options)}
+        return '%(chartId)s = vegaEmbed("#" + %(htmlCode)s, %(options)s)' % {
+            "chartId": self.js_code, "htmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
+            "options": self.options.config_js(options)}
 
     def colors(self, hex_values: List[str]):
         ...
@@ -92,9 +83,9 @@ class VegaEmdedCharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         ...
 
     def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
-        """ Not yet defined for this chart """
+        """Not yet defined for this chart"""
         return ""
 
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)

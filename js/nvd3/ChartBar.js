@@ -22,5 +22,6 @@ function chartBar(data, options){
             if (isNaN(value)) { value = null};
             if (value !== undefined) {dataSet.values.push({y: value, x: i, label: x})}
           }); result.push(dataSet)})
-      }; return result
+      };
+    return result
 }

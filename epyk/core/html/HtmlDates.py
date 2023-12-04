@@ -58,30 +58,24 @@ class DatePicker(Html.Html):
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
-        """
-        The Javascript Dom proxy to the input object.
+        """The Javascript Dom proxy to the input object.
 
         Usage::
 
           today = page.ui.fields.today()
-          today.select([
-            page.js.console.log(today.dom.content)
-          ])
+          today.select([page.js.console.log(today.dom.content)])
         """
         if self._dom is None:
             self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
         return self._dom
 
     def select(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Event trigger when the DatePicker component changes.
+        """Event trigger when the DatePicker component changes.
 
         Usage::
 
           today = page.ui.fields.today()
-          today.select([
-            page.js.console.log(today.dom.content)
-          ])
+          today.select([page.js.console.log(today.dom.content)])
 
         :param js_funcs: The Javascript events when the DatePicker selection changes
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -96,8 +90,7 @@ class DatePicker(Html.Html):
 
     def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: types.JS_FUNCS_TYPES = None,
                        dataflows: List[dict] = None, profile: types.PROFILE_TYPE = False):
-        """
-        Exclude some dates from the date picker selection.
+        """Exclude some dates from the date picker selection.
 
         Those dates will be visible but no available for selection.
 
@@ -115,8 +108,7 @@ class DatePicker(Html.Html):
 
     def included_dates(self, dts: List[str] = None, selected: str = None, js_funcs: types.JS_FUNCS_TYPES = None,
                        dataflows: List[dict] = None, profile: types.PROFILE_TYPE = False):
-        """
-        Include some date to be available for selection.
+        """Include some date to be available for selection.
 
         All the other dates will be visible but not valid ones.
 
@@ -134,10 +126,9 @@ class DatePicker(Html.Html):
         return self.input.included_dates(dts, selected, js_funcs, dataflows, profile)
 
     def add_options(self, options: dict = None, name: str = None, value: str = None):
-        """
-        Add DatePicker options.
+        """Add DatePicker options.
 
-        `Related Pages <https://timepicker.co/options/>`_
+        `Package doc <https://timepicker.co/options/>`_
 
         :param options: Optional. Specific Python options available for this component
         :param name: Optional. Python dictionary with the options to set
@@ -160,6 +151,7 @@ class DatePicker(Html.Html):
 class TimePicker(Html.Html):
     requirements = ('timepicker',)
     name = 'Time Picker'
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str],
                  color: Optional[str], html_code: Optional[str], profile: Optional[Union[bool, dict]],
@@ -181,23 +173,19 @@ class TimePicker(Html.Html):
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlDateFieldPicker:
-        """
-        The Javascript Dom proxy to the input object.
+        """The Javascript Dom proxy to the input object.
 
         Usage::
 
           time_picker = page.ui.fields.time()
-          time_picker.change([
-            page.js.console.log(time_picker.dom.content)
-          ])
+          time_picker.change([page.js.console.log(time_picker.dom.content)])
         """
         if self._dom is None:
             self._dom = JsHtmlJqueryUI.JsHtmlDateFieldPicker(self, page=self.page)
         return self._dom
 
     def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-        """
-        Event triggered when the value of the input field changes.
+        """Event triggered when the value of the input field changes.
 
         A Date object containing the selected time is passed as the first argument of the callback.
         Note: the variable time is a function parameter received in the Javascript side.
@@ -205,11 +193,9 @@ class TimePicker(Html.Html):
         Usage::
 
           morning = page.ui.fields.time("8:13:00", label="Time field")
-          morning.change([
-            page.js.alert("time", skip_data_convert=True)
-          ])
+          morning.change([page.js.alert("time", skip_data_convert=True)])
 
-        `Related Pages <https://timepicker.co/options/>`_
+        `Package Doc <https://timepicker.co/options/>`_
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -219,12 +205,13 @@ class TimePicker(Html.Html):
         return self
 
     def __str__(self):
-        return '<div %(attr)s>%(helper)s</div>' % {
-            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper}
+        return '<%(tag)s %(attr)s>%(helper)s</%(tag)s>' % {
+            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper, "tag": self.tag}
 
 
 class CountDownDate(Html.Html):
     name = 'Countdown'
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, hour: int, minute: int, second: int,
                  label: Optional[str], icon: Optional[str], timestamp, width, height, html_code, helper, options,
@@ -244,8 +231,7 @@ class CountDownDate(Html.Html):
         self._jquery_ref = '#%s span' % self.htmlCode
 
     def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Events triggered at the end of the timer.
+        """Events triggered at the end of the timer.
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -258,15 +244,16 @@ class CountDownDate(Html.Html):
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
         self.page.properties.js.add_builders(
-            '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)
-          ''' % {'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds})
-        return '<div %s><span name="dt_time"></span>%s</div>' % (
-            self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+            '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)''' % {
+                'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds})
+        return '<%s %s><span name="dt_time"></span>%s</%s>' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.helper, self.tag)
 
 
 class LastUpdated(Html.Html):
     name = 'Last Update'
     _option_cls = OptText.OptionsUpdate
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, label: Optional[str], color: Optional[str], width: tuple,
                  height: tuple, html_code: Optional[str], options: Optional[dict],
@@ -274,8 +261,8 @@ class LastUpdated(Html.Html):
         self._label = "Last update: " if label is None else label
         super(LastUpdated, self).__init__(
             page, "%s%s" % (self._label, time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())), html_code,
-            profile=profile,
-            options=options, css_attrs={"width": width, "height": height, "color": color}, verbose=verbose)
+            profile=profile, options=options, css_attrs={"width": width, "height": height, "color": color},
+            verbose=verbose)
         self.attr["data-value"] = None
 
     @property
@@ -285,8 +272,7 @@ class LastUpdated(Html.Html):
 
     @property
     def dom(self) -> JsHtml.JsHtmlRich:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript available for a DOM element by default.
 
@@ -302,28 +288,26 @@ class LastUpdated(Html.Html):
         return self._dom
 
     def refresh(self):
-        """
-        Javascript shortcut to change the timestamp to this component.
+        """Javascript shortcut to change the timestamp to this component.
 
         Usage::
 
           update = page.ui.rich.update()
-          update.click([
-            update.refresh()
-          ])
+          update.click([update.refresh()])
         """
         return self.build(self.page.js.objects.date(
             local_time=self.options.local_time).getStrTimeStamp().prepend(self._label))
 
     def __str__(self):
-        return '<div %(strAttr)s>%(content)s</div>' % {
-            'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'content': self.val}
+        return '<%(tag)s %(strAttr)s>%(content)s</%(tag)s>' % {
+            'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'content': self.val, "tag": self.tag}
 
 
 class Calendar(Html.Html):
     name = 'Calendar'
     requirements = ('jquery',)
     _option_cls = OptCalendars.OptionDays
+    tag = "table"
 
     def __init__(self, page: primitives.PageModel, content: Optional[str], width: tuple, height: tuple,
                  align: Optional[str], options: Optional[dict], html_code: Optional[str],
@@ -348,8 +332,7 @@ class Calendar(Html.Html):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               source_event: str = None, on_ready: bool = False):
-        """
-        Add a click event to the Calendar component.
+        """Add a click event to the Calendar component.
 
         :param js_funcs: A Javascript Python function
         :param profile: Optional. Set to true to profile or a function on the Js console
@@ -492,13 +475,14 @@ class Calendar(Html.Html):
             body.append("<tr>%s</tr>" % "".join(row))
         # self.page.properties.js.add_on_ready(
         #  "%s.tooltip()" % JsQuery.decorate_var("'[data-toggle=tooltip]'", convert_var=False))
-        return '<table %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</table>' % {
+        return '<%(tag)s %(strAttr)s><caption style="text-align:right">%(caption)s</caption><tr>%(header)s</tr>%(content)s</%(tag)s>' % {
             'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'caption': self.caption,
-            'header': "".join(header), 'content': "".join(body)}
+            'header': "".join(header), 'content': "".join(body), "tag": self.tag}
 
 
 class Timer(Html.Html):
     name = 'Timer'
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, minutes: int, text: Optional[str], width: tuple, height: tuple,
                  align: Optional[str], options: Optional[dict], html_code: Optional[str],
@@ -511,8 +495,7 @@ class Timer(Html.Html):
                 self.style.css.margin_right = 'auto'
 
     def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Events triggered at the end of the timer.
+        """Events triggered at the end of the timer.
 
         :param js_funcs: Javascript functions
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -524,11 +507,13 @@ class Timer(Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
+        return '<%(tag)s %(attrs)s></%(tag)s>' % {
+            "attrs": self.get_attrs(css_class_names=self.style.get_classes()), "tag": self.tag}
 
 
 class Elapsed(Html.Html):
     name = 'elapsed'
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, label: Optional[str],
                  icon: Optional[str], width: tuple, height: tuple,
@@ -543,5 +528,5 @@ class Elapsed(Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %s><span name="clock"></span>%s</div>' % (
-            self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+        return '<%s %s><span name="clock"></span>%s</%s>' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.helper, self.tag)

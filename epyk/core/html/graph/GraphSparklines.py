@@ -19,6 +19,7 @@ from epyk.core.html.options import OptSparkline
 
 class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('jquery-sparkline',)
+    tag = "span"
     name = 'Sparkline'
     _option_cls = OptSparkline.OptionsSparkLine
 
@@ -32,8 +33,7 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def style(self) -> GrpClsChart.ClassBSpartlines:
-        """
-        Property to the sparkline style properties.
+        """Property to the sparkline style properties.
         This will group all the default CSS classes which are defined by default to a sparkline component.
         """
         if self._styleObj is None:
@@ -42,13 +42,12 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def options(self) -> OptSparkline.OptionsSparkLine:
-        """ Property to set all the possible object for a button. """
+        """Property to set all the possible object for a button"""
         return super().options
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlSparkline:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object
@@ -57,17 +56,14 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
             self._dom = JsHtmlJqueryUI.JsHtmlSparkline(component=self, page=self.page)
         return self._dom
 
-    def click(self, js_funcs, profile=False, source_event=None, on_ready=False):
-        """
-        When a user clicks on a sparkline, a sparklineClick event is generated.
+    def click(self, js_funcs, profile: bool = False, source_event=None, on_ready=False):
+        """When a user clicks on a sparkline, a sparklineClick event is generated.
 
         The event object contains a property called "sparklines" that holds an array of the sparkline objects under
         the mouse at the time of the click.
         For non-composite sparklines, this array will have just one entry.
 
-        Related Pages:
-
-          https://omnipotent.net/jquery.sparkline/#interactive
+        `Jquery Sparkline <https://omnipotent.net/jquery.sparkline/#interactive>`_
 
         :param js_funcs: List | String. Required. Javascript functions.
         :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
@@ -78,14 +74,11 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
             self.dom.jquery.varId, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
         return self
 
-    def hover(self, js_funcs, profile=False, source_event=None):
-        """
-        When the mouse moves over a different value in a sparkline a sparklineRegionChange event is generated.
+    def hover(self, js_funcs, profile: bool = False, source_event: str = None):
+        """When the mouse moves over a different value in a sparkline a sparklineRegionChange event is generated.
         This can be useful to hook in an alternate tooltip library.
 
-        Related Pages:
-
-          https://omnipotent.net/jquery.sparkline/#interactive
+        Jquery Sparkline <https://omnipotent.net/jquery.sparkline/#interactive>`_
 
         :param js_funcs: List | String. Required. Javascript functions.
         :param profile: Boolean | Dictionary. Required. A flag to set the component performance storage.
@@ -96,9 +89,7 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def color(self, hex_value: str, background: str = None):
-        """
-        Set the colors of the chart.
-
+        """Set the colors of the chart.
         hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
         If the background colors are not specified they will be deduced from the colors list changing the opacity.
 
@@ -119,7 +110,8 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.lineColor = hex_value
         self.options.spotColor = hex_value
 
-    _js__builder__ = '%s.sparkline(data, options)' % JsQuery.decorate_var("htmlObj", convert_var=False)
+    _js__builder__ = '%(htmlObj)s.sparkline(data, options)' % {
+        "htmlObj": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
@@ -127,7 +119,7 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
             return "<div style='display:inline-block;text-align:center'>%s<span %s></span></div>" % (
                 self.title, self.get_attrs(css_class_names=self.style.get_classes()))
 
-        return "<span %s>Loading..</span>" % self.get_attrs(css_class_names=self.style.get_classes())
+        return "<%s %s>Loading..</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class SparklinesBar(Sparklines):

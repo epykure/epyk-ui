@@ -512,7 +512,7 @@ class OptionsStepper(Options):
 
 
 class OptionGrid(Options):
-  component_properties = ('columns',)
+  component_properties = ('columns', 'class_col', 'class_row')
 
   @property
   def autoSize(self):
@@ -554,10 +554,30 @@ class OptionGrid(Options):
     self.set(cls)
 
   @property
+  def class_col(self):
+    """
+    """
+    return self._config_get("col")
+
+  @class_col.setter
+  def class_col(self, cls: str):
+    self._config(cls)
+
+  @property
+  def class_row(self):
+    """
+    """
+    return self._config_get("row")
+
+  @class_row.setter
+  def class_row(self, cls: str):
+    self._config(cls)
+
+  @property
   def noGutters(self):
     """  
 
-    https://getbootstrap.com/docs/4.0/layout/grid/
+    `Related Pages <https://getbootstrap.com/docs/4.0/layout/grid/>`_
     """
     return self.get(False)
 

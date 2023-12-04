@@ -22,6 +22,7 @@ from epyk.core.css.styles import GrpClsButton
 class Button(Html.Html):
     name = 'button'
     _option_cls = OptButton.OptionsButton
+    tag = "button"
 
     def __init__(self, page: primitives.PageModel, text: str = None, icon: str = None, width: Optional[tuple] = None,
                  height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: Optional[str] = None,
@@ -45,8 +46,7 @@ class Button(Html.Html):
 
     @property
     def options(self) -> OptButton.OptionsButton:
-        """
-        Property to set all the possible object for a button.
+        """Property to set all the possible object for a button.
 
         Usage::
 
@@ -57,8 +57,7 @@ class Button(Html.Html):
 
     @property
     def dom(self) -> JsHtml.JsHtmlButton:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript available for a DOM element by default.
 
@@ -72,8 +71,7 @@ class Button(Html.Html):
         return self._dom
 
     def no_background(self):
-        """
-        Remove the default button background and remove the padding.
+        """Remove the default button background and remove the padding.
 
         Usage::
 
@@ -85,8 +83,7 @@ class Button(Html.Html):
 
     def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
              target: str = "_blank", source_event: Optional[str] = None):
-        """
-        Click event which redirect to another page.
+        """Click event which redirect to another page.
 
         Usage::
 
@@ -111,8 +108,7 @@ class Button(Html.Html):
 
     @property
     def style(self) -> GrpClsButton.ClassButton:
-        """
-        Property to the CSS Style of the component.
+        """Property to the CSS Style of the component.
 
         Usage::
 
@@ -124,8 +120,7 @@ class Button(Html.Html):
         return self._styleObj
 
     def disable(self, background_color: Optional[str] = None, color: Optional[str] = None):
-        """
-        Add the HTML tag to disable the button.
+        """Add the HTML tag to disable the button.
 
         Usage::
 
@@ -148,8 +143,7 @@ class Button(Html.Html):
 
     def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
               profile: types.PROFILE_TYPE = None, pressed_class: str = None, on_ready: bool = False):
-        """
-        Special click event to keep in memory the state of the component.
+        """Special click event to keep in memory the state of the component.
 
         Usage::
 
@@ -191,8 +185,7 @@ class Button(Html.Html):
         return self.on("click", str_fnc, profile, on_ready=on_ready)
 
     def color(self, color: str):
-        """
-        Change the color of the button background when the mouse is hover.
+        """Change the color of the button background when the mouse is hover.
 
         Usage::
 
@@ -206,8 +199,7 @@ class Button(Html.Html):
         return self
 
     def properties(self) -> dict:
-        """
-        Return the full properties of the HTML component.
+        """Return the full properties of the HTML component.
 
         This property should allow another JavaScript framework to build the component.
 
@@ -221,19 +213,16 @@ class Button(Html.Html):
     def __str__(self):
         str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
         self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
-        return '<button {attrs}>{content}</button>'.format(
-            attrs=self.get_attrs(css_class_names=self.style.get_classes()), content=str_div)
+        return '<{tag} {attrs}>{content}</{tag}>'.format(
+            tag=self.tag, attrs=self.get_attrs(css_class_names=self.style.get_classes()), content=str_div)
 
     def loading(self, status: bool = True, label: str = None,
                 data: types.JS_DATA_TYPES = None, disable: bool = True):
-        """
-        Display a loading message in the component.
+        """Display a loading message in the component.
 
         Usage::
 
-          btn.click([
-              t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"}),
-          ])
+          btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
         :param status: The message status (true is active)
         :param label: The message template
@@ -262,15 +251,12 @@ class Button(Html.Html):
         return self.build(data)
 
     def error(self, status: bool = True, label: str = None,
-              data: types.JS_DATA_TYPES = None, disable: bool = True):
-        """
-        Display an error message in the component.
+              data: types.JS_DATA_TYPES = None, disable: bool = True) -> str:
+        """Display an error message in the component.
 
         Usage::
 
-          btn.click([
-              t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"}),
-          ])
+          btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
         :param status: The message status (true is active)
         :param label: The message template
@@ -303,6 +289,7 @@ class Checkbox(Html.Html):
     name = 'Check Box'
     requirements = ('font-awesome', 'bootstrap', 'jquery')
     _option_cls = OptButton.OptCheckboxes
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, records, color: Optional[str], width: Optional[tuple],
                  height: Optional[tuple], align: Optional[str], html_code: Optional[str], tooltip: Optional[str],
@@ -320,13 +307,12 @@ class Checkbox(Html.Html):
 
     @property
     def options(self) -> OptButton.OptCheckboxes:
-        """ Property to set all the possible object for check boxes. """
+        """Property to set all the possible object for check boxes. """
         return super().options
 
     @property
     def dom(self) -> JsHtml.JsHtmlButtonChecks:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript available for a DOM element by default.
 
@@ -334,10 +320,8 @@ class Checkbox(Html.Html):
 
           data = [
             {"value": "Test 1", "checked": True, "name": 'name'},
-            {"value": "Test 2", "dsc": 'description'},
-          ]
+            {"value": "Test 2", "dsc": 'description'}]
           cb = page.ui.buttons.checkboxes(data)
-
           b = page.ui.button("Add")
           b.click([cb.dom.add([{"value": "test"}])])
         """
@@ -346,8 +330,7 @@ class Checkbox(Html.Html):
         return self._dom
 
     def tooltip(self, value: Optional[str], location: str = 'top', options: Optional[dict] = None):
-        """
-        Add the Tooltip feature when the mouse is over the component.
+        """Add the Tooltip feature when the mouse is over the component.
 
         This tooltip version is coming from Bootstrap.
 
@@ -369,8 +352,7 @@ class Checkbox(Html.Html):
 
     def click(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
               source_event: str = "$(document)", on_ready: bool = False):
-        """
-        Add a click event on the checkbox component.
+        """Add a click event on the checkbox component.
 
         TODO: Find way to remove jquery
 
@@ -387,11 +369,9 @@ if(($(this).find("i").attr("class") !== undefined) && ($(this).find("i").attr("c
 var useAsync = false; var isChecked = false; var htmlContent = $(this).find('span').find('i').length; 
 if (htmlContent == 0) {$(this).find('span').html('<i class="%(icon)s" style="padding:2px"></i>'); 
 isChecked = true} else {$(this).find('span').html('<div style="width:16px;display:inline-block">&nbsp;</div>')};
-%(jsFnc)s
-    ''' % {"jsFnc": JsUtils.jsConvertFncs(js_funcs, toStr=True), "icon": self.options.icon}
-        self._browser_data['mouse'].setdefault("click", {}).setdefault(source_event, {}).setdefault("content",
-                                                                                                    []).extend(
-            [agg_js_fncs])
+%(jsFnc)s''' % {"jsFnc": JsUtils.jsConvertFncs(js_funcs, toStr=True), "icon": self.options.icon}
+        self._browser_data['mouse'].setdefault("click", {}).setdefault(
+            source_event, {}).setdefault("content", []).extend([agg_js_fncs])
         self._browser_data['mouse']["click"][source_event]['sub_items'] = '#%s label' % self.htmlCode
         self._browser_data['mouse']["click"][source_event]['profile'] = profile
         return self
@@ -400,13 +380,14 @@ isChecked = true} else {$(this).find('span').html('<div style="width:16px;displa
         if self.options.all_selected:
             self.page.body.onReady([self.dom.check(True)])
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %(strAttr)s><div name="checks"></div></div>' % {
+        return '<%(tag)s %(strAttr)s><div name="checks"></div></%(tag)s>' % {'tag': self.tag,
             'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class CheckButton(Html.Html):
     name = 'Check Button'
     _option_cls = OptButton.OptCheck
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, flag: bool = False, tooltip: Optional[str] = None,
                  width: Optional[tuple] = None, height: Optional[tuple] = None, icon: Optional[str] = None,
@@ -428,20 +409,19 @@ class CheckButton(Html.Html):
 
     @property
     def options(self) -> OptButton.OptCheck:
-        """ Property to set all the possible object for check button. """
+        """Property to set all the possible object for check button. """
         return super().options
 
     @property
     def dom(self) -> JsHtml.JsHtmlButtonMenu:
-        """ The Javascript Dom object. """
+        """The Javascript Dom object. """
         if self._dom is None:
             self._dom = JsHtml.JsHtmlButtonMenu(self, page=self.page)
         return self._dom
 
     @property
     def js(self) -> JsComponents.CheckButton:
-        """
-        The Javascript functions defined for this component.
+        """The Javascript functions defined for this component.
 
         Those can be specific ones for the module or generic ones from the language.
 
@@ -453,15 +433,14 @@ class CheckButton(Html.Html):
 
     @property
     def style(self) -> GrpClsButton.ClassButtonCheckBox:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component. """
         if self._styleObj is None:
             self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
         return self._styleObj
 
     def click(self, js_fnc_true: types.JS_FUNCS_TYPES, js_fnc_false: Optional[Union[list, str]] = None,
               with_colors: bool = True, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-        """
-        Click even on the checkbox item.
+        """Click even on the checkbox item.
 
         Usage::
 
@@ -495,11 +474,13 @@ class CheckButton(Html.Html):
         return super(CheckButton, self).click(js_fncs, profile, on_ready=on_ready)
 
     def __str__(self):
-        return '''<div %s>%s</div>''' % (self.get_attrs(css_class_names=self.style.get_classes()), self.input.html())
+        return '''<%(tag)s %(attrs)s>%(content)s</%(tag)s>''' % {"tag": self.tag,
+            "attrs": self.get_attrs(css_class_names=self.style.get_classes()), "content": self.input.html()}
 
 
 class IconEdit(Html.Html):
     name = 'Icon'
+    tag = "span"
 
     def __init__(self, page: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
                  tooltip: Optional[str], width, height, html_code, options,
@@ -525,65 +506,53 @@ class IconEdit(Html.Html):
         self.hover_color = True
 
     def spin(self):
-        """
-        Add a spin effect to the icon.
+        """Add a spin effect to the icon.
 
         Usage::
 
           icon = page.ui.icons.awesome("")
           icon.spin()
 
-        Related Pages:
-
-          https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+        `Learn more <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
         """
         self.icon.spin()
         return self
 
     def pulse(self):
-        """
-        Add a pulse effect to the icon.
+        """Add a pulse effect to the icon.
 
         Usage::
 
           icon = page.ui.icons.awesome("")
           icon.pulse()
 
-        Related Pages:
-
-          https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons
+        `Learn more <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
         """
         self.icon.pulse()
         return self
 
     def border(self):
-        """
-        Add a border to the icon.
+        """Add a border to the icon.
 
         Usage::
 
           icon = page.ui.icons.awesome("")
           icon.border()
 
-        Related Pages:
-
-          https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
+        `Learn more <https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons>`_
         """
         self.icon.border()
         return self
 
     def rotate(self, angle: int):
-        """
-        To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
+        """To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
         Usage::
 
           icon = page.ui.icons.awesome("")
           icon.rotate(90)
 
-        Related Pages:
-
-          https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons
+        `Learn more <https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons>`_
 
         :param angle: The rotation angle
         """
@@ -591,17 +560,14 @@ class IconEdit(Html.Html):
         return self
 
     def pull(self, position: str = 'left'):
-        """
-        Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
+        """Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
         Usage::
 
           icon = page.ui.icons.awesome("")
           icon.pull()
 
-        Related Pages:
-
-          https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons
+        `Learn more <https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons>`_
 
         :param position: Optional. The position of the icon in the page
         """
@@ -610,8 +576,7 @@ class IconEdit(Html.Html):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Add a JavaScript click event on this component.
+        """Add a JavaScript click event on this component.
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -627,8 +592,7 @@ class IconEdit(Html.Html):
 
     def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
               profile: types.PROFILE_TYPE = None, pressed_class: str = None, on_ready: bool = False):
-        """
-        Special click event to keep in memory the state of the component.
+        """Special click event to keep in memory the state of the component.
 
         :param js_press_funcs: Optional. Javascript functions
         :param js_release_funcs: Optional. Javascript functions
@@ -663,12 +627,9 @@ class IconEdit(Html.Html):
 
     def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
              target: str = "_blank", source_event: Optional[str] = None):
-        """
-        Create a link to a new page when component is clicked.
+        """Create a link to a new page when component is clicked.
 
-        Related Pages:
-
-          https://www.w3schools.com/tags/att_a_target.asp
+        `Learn more <https://www.w3schools.com/tags/att_a_target.asp>`_
 
         :param url: The target url
         :param js_funcs: Optional. Javascript functions
@@ -683,11 +644,13 @@ class IconEdit(Html.Html):
         return self.click(js_funcs, profile, source_event)
 
     def __str__(self):
-        return "<span %s></span>" % (self.get_attrs(css_class_names=self.style.get_classes()))
+        return "<%(tag)s %(content)s></%(tag)s>" % {
+            "tag": self.tag, "content": self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class Buttons(Html.Html):
     name = 'Buttons'
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, data, color: Optional[str], width: tuple, height: tuple,
                  html_code: Optional[str], helper: Optional[str], options: Optional[dict],
@@ -703,7 +666,8 @@ class Buttons(Html.Html):
 
     def __str__(self):
         str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
-        return '<div %s>%s</div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
+        return '<%s %s>%s</%s>%s' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.tag, self.helper)
 
 
 class ButtonMenuItem:
@@ -715,8 +679,7 @@ class ButtonMenuItem:
 
     @property
     def js(self) -> JsComponents.Menu:
-        """
-        Javascript module of the items in the menu.
+        """Javascript module of the items in the menu.
 
         :return: A Javascript Dom object
         """
@@ -726,8 +689,7 @@ class ButtonMenuItem:
 
     def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
            source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Javascript generic events of the items in the menu.
+        """Javascript generic events of the items in the menu.
 
         :param event: The JavaScript event
         :param js_funcs: The Javascript functions
@@ -745,8 +707,7 @@ class ButtonMenuItem:
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Javascript click events of the items in the menu.
+        """Javascript click events of the items in the menu.
 
         :param js_funcs: The Javascript functions
         :param profile: Boolean. Optional. A flag to set the component performance storage
@@ -759,6 +720,7 @@ class ButtonMenuItem:
 class ButtonMenu(Html.Html):
     name = 'Button Menu'
     _option_cls = OptButton.OptionsButtonMenu
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, record, text: str, icon: Optional[str], width: Optional[tuple],
                  height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
@@ -782,8 +744,7 @@ class ButtonMenu(Html.Html):
 
     @property
     def options(self) -> OptButton.OptionsButtonMenu:
-        """
-        Property to set all the possible object for a button.
+        """Property to set all the possible object for a button.
 
         Usage::
 
@@ -794,8 +755,7 @@ class ButtonMenu(Html.Html):
 
     @property
     def style(self) -> GrpClsButton.ClassButtonMenu:
-        """
-        Property to the CSS Style of the component.
+        """Property to the CSS Style of the component.
 
         Usage::
 
@@ -811,12 +771,14 @@ class ButtonMenu(Html.Html):
         for comp in self.components.values():
             events.extend(comp._events)
         self.onReady(events)
-        return '<div %s>%s%s</div>' % (
-            self.get_attrs(css_class_names=self.style.get_classes()), self.button.html(), self.container.html())
+        return '<%s %s>%s%s</%s>' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.button.html(),
+            self.container.html(), self.tag)
 
 
 class ButtonMore(Html.Html):
     name = 'Button More'
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, record, text: Optional[str], width: Optional[tuple],
                  height: Optional[tuple], html_code: Optional[str], tooltip: Optional[str],
@@ -864,8 +826,7 @@ class ButtonMore(Html.Html):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """
-        Add an event click to the component.
+        """Add an event click to the component.
 
         Usage::
 
@@ -884,13 +845,15 @@ class ButtonMore(Html.Html):
         return self.text.click(js_funcs, profile, source_event, on_ready)
 
     def __str__(self):
-        return '<div %s>%s%s</div>' % (
-            self.get_attrs(css_class_names=self.style.get_classes()), self.button.html(), self.menu.html())
+        return '<%s %s>%s%s</%s>' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.button.html(), self.menu.html(),
+            self.tag)
 
 
 class ButtonFilter(Html.Html):
     name = 'Button Filter'
     _option_cls = OptButton.OptionsButtonFilter
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, text: str, width: tuple, height: tuple, html_code: str,
                  tooltip: str, profile: Optional[Union[bool, dict]], options: Optional[dict], verbose: bool = False):
@@ -986,8 +949,7 @@ class ButtonFilter(Html.Html):
 
     @property
     def options(self) -> OptButton.OptionsButtonFilter:
-        """
-        Property to set all the possible object for a button.
+        """Property to set all the possible object for a button.
 
         Usage::
 
@@ -998,8 +960,7 @@ class ButtonFilter(Html.Html):
 
     @property
     def dom(self) -> JsHtml.JsHtmlButtonFilter:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript available for a DOM element by default.
 
@@ -1017,10 +978,10 @@ class ButtonFilter(Html.Html):
         for comp in self.components.values():
             events.extend(comp._events)
         self.onReady(events)
-        return '<div %s>%s%s%s%s</div>' % (
-            self.get_attrs(
+        return '<%s %s>%s%s%s%s</%s>' % (
+            self.tag, self.get_attrs(
                 css_class_names=self.style.get_classes()), self.text.html(), self.icon_filer.html(), self.icon.html(),
-            self.menu.html())
+            self.menu.html(), self.tag)
 
 
 class ButtonData(Button):

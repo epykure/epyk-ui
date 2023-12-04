@@ -61,8 +61,7 @@ class Panel(Html.Html):
 
     @property
     def dom(self) -> JsHtmlPanels.JsHtmlPanel:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object
@@ -72,8 +71,7 @@ class Panel(Html.Html):
         return self._dom
 
     def extend(self, components: List[Html.Html]):
-        """
-        Add multiple HTML components to the container.
+        """Add multiple HTML components to the container.
 
         :param components: The list of components.
         """
@@ -82,8 +80,7 @@ class Panel(Html.Html):
         return self
 
     def add_menu(self, close: bool = True, mini: bool = True, info: Optional[bool] = None, pin: Optional[bool] = False):
-        """
-        Add specific and predefined options to the panels.
+        """Add specific and predefined options to the panels.
 
         :param close: Optional. Add a close button to the panel
         :param mini: Optional. Add a minimize button to the panel
@@ -1060,6 +1057,7 @@ class Row(Html.Html):
 
 class Grid(Html.Html):
     name = 'Grid'
+    builder_name = 'BsGrid'
     requirements = ('bootstrap',)
     _option_cls = OptPanel.OptionGrid
 
@@ -1082,6 +1080,32 @@ class Grid(Html.Html):
 
     def __exit__(self, type, value, traceback):
         return True
+
+    def generate(self, data: types.JS_DATA_TYPES, template, options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None, stop_state: bool = True, dataflows: List[dict] = None):
+        template.options.managed = False
+        py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in template.attr["class"]]
+        return '''%(container)s.innerHTML = ""; let containerOptions = %(options)s; console.log(containerOptions);
+let results = {}; let componentsHolders = []; let i = 0;
+%(data)s.forEach(function(row){if (!results[row.name]){results[row.name] = []}; results[row.name].push(row)}); 
+let keys = Object.keys(results); let rowsNum = Math.ceil(keys.length / containerOptions.columns);
+for (let n=0; n < rowsNum; n++) {
+    let row = document.createElement("div"); row.setAttribute('class', containerOptions.class_row); 
+    for (let c=0; c < containerOptions.columns; c++) {
+        let k = keys[i];
+        if (k){
+            let col = document.createElement("div"); col.setAttribute('class', containerOptions.class_col); 
+            col.id = %(container)s.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++}};
+    %(container)s.appendChild(row);}
+    ; componentsHolders.forEach(function(col, i){let htmlObj = %(create)s; %(builder)s;})''' % {
+            "data": JsUtils.dataFlows(data, dataflows, self.page),
+            "options": self.options.config_js(options),
+            "create": template.dom.createWidget(
+                html_code=JsUtils.jsWrap("'%s_dyn_' + i +''" % self.html_code), container=JsUtils.jsWrap("col.id")),
+            "css": template.style.css, "class": py_cls_names,
+            "builder": template.build(
+                JsUtils.jsWrap("results[keys[i]]"), component_id=JsUtils.jsWrap("htmlObj.id"), profile=profile, stop_state=stop_state),
+            "container": self.dom.varId}
 
     def row(self, n: int):
         return self._vals[n]
@@ -1702,7 +1726,7 @@ class Points(Html.Html):
         return super().options
 
     def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
-           source_event: Optional[str] = None, on_ready: bool = False):
+           source_event: Optional[str] = None, on_ready: bool = False, **kwargs):
         """
         Add Javascript events to all the items in the component.
 

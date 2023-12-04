@@ -18,6 +18,7 @@ from epyk.core.js.packages import JsD3
 
 class Chart(Html.Html):
   name = 'Plotly'
+  tag = "div"
   requirements = ('plotly.js', )
   _option_cls = OptPlotly.OptionConfig
 
@@ -32,8 +33,7 @@ class Chart(Html.Html):
 
   @property
   def shared(self) -> OptPlotly.OptionsChartSharedPlotly:
-    """
-    All the common properties shared between all the charts.
+    """All the common properties shared between all the charts.
     This will ensure a compatibility with the plot method.
 
     Usage::
@@ -45,15 +45,13 @@ class Chart(Html.Html):
 
   @property
   def chartId(self) -> str:
-    """ Return the Javascript variable of the chart. """
+    """Return the Javascript variable of the chart"""
     return "%s_obj" % self.htmlCode
 
   def click_legend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
 
-    Related Pages:
-
-      https://plotly.com/javascript/plotlyjs-events/
+    `Plotly Doc <https://plotly.com/javascript/plotlyjs-events/>`_
 
     :param js_funcs: Javascript functions
     :param profile: Optional. A flag to set the component performance storage
@@ -64,12 +62,9 @@ class Chart(Html.Html):
 
   def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
             on_ready: bool = False):
-    """
-    The onclick event occurs when the user clicks on an element.
+    """The onclick event occurs when the user clicks on an element.
 
-    Related Pages:
-
-      https://plotly.com/javascript/click-events/
+    `Plotly Doc <https://plotly.com/javascript/click-events/>`_
 
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -82,12 +77,9 @@ class Chart(Html.Html):
 
   def dblclick(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
                on_ready: bool = False):
-    """
-    The onDblclick event occurs when the user double clicks on an element.
+    """The onDblclick event occurs when the user double clicks on an element.
 
-    Related Pages:
-
-      https://plotly.com/javascript/click-events/
+    `Plotly Doc <https://plotly.com/javascript/click-events/>`_
 
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -102,9 +94,7 @@ class Chart(Html.Html):
             on_ready: bool = False):
     """
 
-    Related Pages:
-
-      https://plotly.com/javascript/hover-events/
+    `Plotly Doc <https://plotly.com/javascript/hover-events/>`_
 
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -119,9 +109,7 @@ class Chart(Html.Html):
               on_ready: bool = False):
     """
 
-    Related Pages:
-
-      https://plotly.com/javascript/hover-events/
+    `Plotly Doc <https://plotly.com/javascript/hover-events/>`_
 
     :param js_funcs: A Javascript Python function
     :param profile: Optional. Set to true to get the profile for the function on the Javascript console
@@ -134,17 +122,13 @@ class Chart(Html.Html):
 
   @property
   def data(self) -> OptPlotly.DataChart:
-    """
-
-    """
     if not self._traces:
       self.add_trace([])
     return self._traces[-1]
 
   @property
   def options(self) -> OptPlotly.OptionConfig:
-    """
-    Property to the component options.
+    """Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -152,7 +136,6 @@ class Chart(Html.Html):
     return super().options
 
   def traces(self, i: int = None) -> OptPlotly.DataChart:
-    """ """
     if i is None:
       return self._traces[-1]
 
@@ -203,13 +186,10 @@ class Chart(Html.Html):
       }; return result'''
 
   def colors(self, hex_values: List[str]):
-    """
-    Set the colors of the chart.
+    """Set the colors of the chart.
 
     hex_values can be a list of string with the colors or a list of tuple to also set the bg colors.
     If the background colors are not specified they will be deduced from the colors list changing the opacity.
-
-    Usage::
 
     :param hex_values: An array of hexadecimal color codes.
     """
@@ -235,8 +215,7 @@ class Chart(Html.Html):
 
   @property
   def js(self) -> JsPlotly.JsPlotly:
-    """
-    Javascript base function.
+    """Javascript base function.
 
     Return all the Javascript functions defined in the framework.
     This is an entry point to the full Javascript ecosystem.
@@ -249,15 +228,12 @@ class Chart(Html.Html):
 
   @property
   def layout(self) -> OptPlotly.Layout:
-    """
-    """
     if self._layout is None:
       self._layout = OptPlotly.Layout(page=self.page, component=self)
     return self._layout
 
   @property
   def d3(self) -> JsD3.D3Select:
-    """ """
     if self._d3 is None:
       self._d3 = JsD3.D3Select(self.page, selector="d3.select('#%s')" % self.htmlCode, setVar=False)
     return self._d3
@@ -311,14 +287,13 @@ class Chart(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.build())
-    return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+    return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class Line(Chart):
 
   @property
   def dom(self) -> JsPlotly.Line:
-    """   """
     if self._dom is None:
       self._dom = JsPlotly.Line(component=self, js_code=self.chartId, page=self.page)
     return self._dom
@@ -354,18 +329,12 @@ class Pie(Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """
-
-    :rtype: JsPlotly.Pie
-    """
     if self._chart is None:
       self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.chartId)
     return self._chart
 
   @property
   def data(self) -> OptPlotly.DataPie:
-    """
-    """
     if not self._traces:
       self._traces.append(OptPlotly.DataPie(page=self.page, component=self))
     return self._traces[-1]
@@ -389,45 +358,40 @@ class Pie(Chart):
     current_trace.name = label
     return current_trace
 
-  _js__builder__ = '''
-      if(data.python){
-        result = []; 
-        dataSet = {label: [], values: [], name: data.series, type: options.type, mode: options.mode, marker: {}};
-        if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-        if(typeof options.marker !== undefined){
-          for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]}};
-        data.datasets.forEach(function(rec, i){
-          dataSet.label = rec.x; dataSet.values = rec.y}); result.push(dataSet)
-      } else {
-        var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
-        options.y_columns.forEach(function(series){temp[series] = {}});
-        data.forEach(function(rec){ 
-          options.y_columns.forEach(function(name){
-            if(rec[name] !== undefined){
-              if(!(rec[options.x_column] in uniqLabels)){
-                labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})});
-        options.y_columns.forEach(function(series){
-          dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
-          if(typeof options.attrs !== undefined){
-            for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]}};
-          if(typeof options.marker !== undefined){ 
-            for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
-          labels.forEach(function(x, i){
-            dataSet.label.push(x);
-            if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
-          }); result.push(dataSet)})
-      }; return result'''
+  _js__builder__ = '''if(data.python){
+  result = []; 
+  dataSet = {label: [], values: [], name: data.series, type: options.type, mode: options.mode, marker: {}};
+  if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+  if(typeof options.marker !== undefined){
+    for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]}};
+  data.datasets.forEach(function(rec, i){
+    dataSet.label = rec.x; dataSet.values = rec.y}); result.push(dataSet)
+} else {
+  var temp = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+  options.y_columns.forEach(function(series){temp[series] = {}});
+  data.forEach(function(rec){ 
+    options.y_columns.forEach(function(name){
+      if(rec[name] !== undefined){
+        if(!(rec[options.x_column] in uniqLabels)){
+          labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+        temp[name][rec[options.x_column]] = rec[name]}})});
+  options.y_columns.forEach(function(series){
+    dataSet = {label: [], values: [], name: series, type: options.type, mode: options.mode, marker: {}};
+    if(typeof options.attrs !== undefined){
+      for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]}};
+    if(typeof options.marker !== undefined){ 
+      for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+    labels.forEach(function(x, i){
+      dataSet.label.push(x);
+      if(temp[series][x] == undefined){dataSet.values.push(null)} else{dataSet.values.push(temp[series][x])}
+    }); result.push(dataSet)})
+}; return result'''
 
 
 class Surface(Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """
-
-    :rtype: JsPlotly.Pie
-    """
     if self._chart is None:
       self._chart = JsPlotly.Pie(page=self.page, js_code=self.chartId, component=self)
     return self._chart
@@ -445,28 +409,23 @@ class Surface(Chart):
     self._traces.append(OptPlotly.DataSurface(page=self.page, component=self, attrs=c_data))
     return self
 
-  _js__builder__ = '''
-      if(data.python){
-        result = []; 
-        data.datasets.forEach(function(dataset, i){
-          result.push( {z: dataset, type: options.type} ) 
-        }); console.log(result);
-      } else {
-        var labels = []; var result = [] ;
-        data.series.forEach(function(name, i){
-          result.push( {z: data.datasets[i], type: options.type} );
-        })
-      }; return result'''
+  _js__builder__ = '''if(data.python){
+  result = []; 
+  data.datasets.forEach(function(dataset, i){
+    result.push( {z: dataset, type: options.type} ) 
+  }); console.log(result);
+} else {
+  var labels = []; var result = [] ;
+  data.series.forEach(function(name, i){
+    result.push( {z: data.datasets[i], type: options.type} );
+  })
+}; return result'''
 
 
 class Scatter3D(Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """
-
-    :rtype: JsPlotly.Pie
-    """
     if self._chart is None:
       self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
@@ -491,35 +450,34 @@ class Scatter3D(Chart):
     return self
 
   _js__builder__ = '''
-      var temp = {}; var tempZ = {}; var labels = []; var uniqLabels = {}; var result = [] ;
-      options.y_columns.forEach(function(series){temp[series] = {}});
-      options.y_columns.forEach(function(series){tempZ[series] = {}});
-      data.forEach(function(rec){ 
-        options.y_columns.forEach(function(name){
-          if(rec[name] !== undefined){
-            if(!(rec[options.x_column] in uniqLabels)){
-              labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-            temp[name][rec[options.x_column]] = rec[name];
-            tempZ[name][rec[options.x_column]] = rec[options.z_axis];
-          }})});
-      options.y_columns.forEach(function(series){
-        dataSet = {x: [], y: [], z: [], name: series, type: options.type, mode: options.mode, marker: {}};
-        if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
-        if(typeof options.marker !== undefined){ 
-          for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
-        labels.forEach(function(x, i){
-          dataSet.x.push(x);
-          if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])};
-          if(tempZ[series][x] == undefined){dataSet.y.push(null)} else{dataSet.z.push(tempZ[series][x])};
-        }); result.push(dataSet)});
-      return result'''
+var temp = {}; var tempZ = {}; var labels = []; var uniqLabels = {}; var result = [] ;
+options.y_columns.forEach(function(series){temp[series] = {}});
+options.y_columns.forEach(function(series){tempZ[series] = {}});
+data.forEach(function(rec){ 
+  options.y_columns.forEach(function(name){
+    if(rec[name] !== undefined){
+      if(!(rec[options.x_column] in uniqLabels)){
+        labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
+      temp[name][rec[options.x_column]] = rec[name];
+      tempZ[name][rec[options.x_column]] = rec[options.z_axis];
+    }})});
+options.y_columns.forEach(function(series){
+  dataSet = {x: [], y: [], z: [], name: series, type: options.type, mode: options.mode, marker: {}};
+  if(typeof options.attrs !== undefined){ for(var attr in options.attrs){dataSet[attr] = options.attrs[attr]} };
+  if(typeof options.marker !== undefined){ 
+    for(var attr in options.marker){dataSet.marker[attr] = options.marker[attr]} };
+  labels.forEach(function(x, i){
+    dataSet.x.push(x);
+    if(temp[series][x] == undefined){dataSet.y.push(null)} else{dataSet.y.push(temp[series][x])};
+    if(tempZ[series][x] == undefined){dataSet.y.push(null)} else{dataSet.z.push(tempZ[series][x])};
+  }); result.push(dataSet)});
+return result'''
 
 
 class Mesh3d(Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """ """
     if self._chart is None:
       self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
@@ -542,7 +500,6 @@ class Indicator(Chart):
 
   @property
   def chart(self) -> JsPlotly.Pie:
-    """ """
     if self._chart is None:
       self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
     return self._chart
@@ -557,10 +514,10 @@ class Indicator(Chart):
     return self
 
   _js__builder__ = '''
-      var dataset = {value: data, type: options.type, mode: options.mode, delta: {}};
-      if(typeof options.delta !== undefined){
-        for(var attr in options.delta){dataset.delta[attr] = options.delta[attr]}};
-      return [dataset]'''
+var dataset = {value: data, type: options.type, mode: options.mode, delta: {}};
+if(typeof options.delta !== undefined){
+  for(var attr in options.delta){dataset.delta[attr] = options.delta[attr]}};
+return [dataset]'''
 
 
 class ScatterPolar(Chart):

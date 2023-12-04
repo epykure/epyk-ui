@@ -20,9 +20,7 @@ class HtmlStates:
 
         Usage::
 
-          btn.click([
-              t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"}),
-          ])
+          btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
         :param status: The message status (true is active)
         :param label: The message template
@@ -51,9 +49,7 @@ class HtmlStates:
 
         Usage::
 
-          btn.click([
-              t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"}),
-          ])
+          btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
         :param status: The message status (true is active)
         :param label: The message template
@@ -104,7 +100,10 @@ class HtmlOverlayStates:
         :param component_id: The component id if different
         """
         self._add_resource()
-        return "hideState(%s)" % (component_id or self.dom.container)
+        if component_id is None:
+            return "hideState(%s)" % self.dom.container
+
+        return "hideState(document.getElementById(%s))" % JsUtils.jsConvertData(component_id, None)
 
     def state(
             self,
@@ -171,8 +170,6 @@ class HtmlOverlayStates:
             component_id: Optional[str] = None
     ):
         """
-
-
         Usage::
 
           tabledata = []
@@ -206,7 +203,6 @@ class HtmlOverlayStates:
             component_id: Optional[str] = None
     ):
         """
-
 
         Usage::
 

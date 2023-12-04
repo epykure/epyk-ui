@@ -19,8 +19,7 @@ from epyk.core.js.packages import JsPackage
 
 
 def resolve_attributes(attributes: list, result: dict = None):
-    """
-    Convert initial options defined in the component.json structure file to valid
+    """Convert initial options defined in the component.json structure file to valid
     attributes automatically loaded by the Python.
 
     Component must have the below structure in the json component file:
@@ -55,8 +54,7 @@ def resolve_attributes(attributes: list, result: dict = None):
 
 
 def load_component(component_path: Path, raise_exception: bool = True) -> dict:
-    """
-    Load a component from the static file definition.
+    """Load a component from the static file definition.
 
     Component folder structure:
 
@@ -145,6 +143,7 @@ def %s(%s):
 
 
 class DomComponent(JsHtml.JsHtml):
+    arg_container_id = "containerId"
 
     @property
     def container(self):
@@ -172,8 +171,7 @@ class DomComponent(JsHtml.JsHtml):
         return JsNodeDom.JsDoms.get("document.getElementById('%s').lastChild" % self.component.html_code)
 
     def get_child_by_tag(self, tag: str):
-        """
-        Get a child by tag from the component container
+        """Get a child by tag from the component container
 
         Usage::
 
@@ -186,16 +184,29 @@ class DomComponent(JsHtml.JsHtml):
             self.component.html_code, self.component.selector, JsUtils.jsConvertData(tag, None)))
 
     def querySelector(self, tag: str):
-        """
-        Get the dom based on a specific tag.
-
-        Usage::
-
-            ...
+        """Get the dom based on a specific tag.
 
         :param tag: The specific tag
         """
         return JsNodeDom.JsDoms.get(tag)
+
+    def addTo(self, values = None, options=None, container: str = None, fnc: str = None):
+        """Remove the component from the page scope and attach it to the container.
+        The HTML builder is skipped here.
+
+        :param values: Initial values to build the JavaScript component
+        :param options: Options to set the JavaScript component
+        :param container: Anchor for the component
+        :param fnc: Append method in the component
+        """
+        self.component.options.managed = False
+        if fnc is None:
+            fnc = "append%sTo" % self.component.__class__.__name__
+        return JsUtils.jsWrap("%s = %s(%s=%s, %s=%s, %s=%s)" % (
+            self.objectId, fnc,
+            self.component.arg_init_value, JsUtils.jsConvertData(values, None),
+            self.component.arg_init_options, JsUtils.jsConvertData(options, None),
+            self.arg_container_id, JsUtils.jsConvertData(container, None)))
 
 
 class JsComponents(JsPackage):
@@ -223,8 +234,7 @@ class JsComponents(JsPackage):
             self.varName, fnc, JsUtils.jsConvertData(data, None), JsUtils.jsConvertData(options or {}, None)))
 
     def empty(self, options: types.JS_DATA_TYPES = None, fnc: str = "empty"):
-        """
-        Empty the content of the container.
+        """Empty the content of the container.
 
         This will call the underlying empty function which must be defined in the JavaScript component.
 
@@ -236,8 +246,7 @@ class JsComponents(JsPackage):
             self.varName, fnc, JsUtils.jsConvertData(options, None)))
 
     def set(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None, fnc: str = "set"):
-        """
-        Set the content of the container.
+        """Set the content of the container.
         This method usually is used fto init / reset the component.
 
         This will call the underlying set function which must be defined in the JavaScript component.
@@ -252,8 +261,7 @@ class JsComponents(JsPackage):
             JsUtils.jsConvertData(options, None)))
 
     def custom(self, func_name: str, **kwargs):
-        """
-        Map a custom method not yet defined in the Python schema.
+        """Map a custom method not yet defined in the Python schema.
 
         This will accept also any kwargs in order to pass this to the JavaScript underlying method.
 
@@ -262,19 +270,25 @@ class JsComponents(JsPackage):
             # JavaScript side
             Component.prototype.testFnc = function(data){ console.log(data) }
 
-            # Python
-
         :param func_name: The function name
         """
         _args = ["%s=%s" % (k, JsUtils.jsConvertData(v, None)) for k, v in kwargs.items()]
         return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (self.varName, func_name, ", ".join(_args)))
+
+    def trim(self, fnc: str = None):
+        """Trim a JavaScript component with the specific features of the component.
+
+        :param fnc: Static method to define / pain the component
+        """
+        fnc = fnc or "trim%s" % self.component.__class__.__name__
+        return JsUtils.jsWrap("%s(%s)" % (fnc, self.element))
 
 
 class SdOptions(OptionsWithTemplates):
 
     @property
     def container(self):
-        """ Button category to specify the style. """
+        """Button category to specify the style. """
         return self.get({"display": "inline-block"})
 
     @container.setter
@@ -282,8 +296,7 @@ class SdOptions(OptionsWithTemplates):
         self.set(values)
 
     def for_construct(self, values: dict):
-        """
-        Set of options used to build the components (on the HTML side).
+        """Set of options used to build the components (on the HTML side).
         Those options will mainly remain on the Python side to decide the component structure.
 
         :param values: A dictionary of options
@@ -294,8 +307,7 @@ class SdOptions(OptionsWithTemplates):
         return self.component
 
     def for_build(self, values: dict, js_keys: List[str] = None):
-        """
-        Set of options passed to the JavaScript layer to build / update the component.
+        """Set of options passed to the JavaScript layer to build / update the component.
 
         :param values: The dictionary to be passed to the JavaScript layer within the builder
         :param js_keys: The list of keys coming from JavaScript
@@ -310,8 +322,7 @@ class SdOptions(OptionsWithTemplates):
 
 
 class Component(MixHtmlState.HtmlOverlayStates, Html):
-    """
-    A Standalone component class must be an interface which will link Python functions to
+    """A Standalone component class must be an interface which will link Python functions to
         - A JavaScript class
         - A set of CSS specific styles
         - An HTML structure
@@ -369,7 +380,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @property
     def proxy_class(self):
-        """ Underlying class name used to build the object """
+        """Underlying class name used to build the object """
         if self.set_exports:
             if self.library:
                 return "exports.%s.%s" % (self.library, self.__class__.__name__)
@@ -380,13 +391,12 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @property
     def options(self) -> SdOptions:
-        """ Property to set all the possible object for a standalone component. """
+        """Property to set all the possible object for a standalone component. """
         return super().options
 
     @property
     def dom(self) -> DomComponent:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript available for a DOM element by default.
 
@@ -405,8 +415,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @property
     def js(self) -> JsComponents:
-        """
-        The Javascript functions defined for this component.
+        """The Javascript functions defined for this component.
 
         Those can be specific ones for the module or generic ones from the language.
 
@@ -418,8 +427,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @classmethod
     def directives(cls, framework: str = None) -> dict:
-        """
-        Load structure directives for the HTML templates
+        """Load structure directives for the HTML templates
 
         :param framework: The JavaScript framework
         """
@@ -452,8 +460,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Return the JavaScript fragment to refresh the component content.
+        """Return the JavaScript fragment to refresh the component content.
 
         Usage::
 
@@ -489,8 +496,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     def child_event(
             self, event: str, tag: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
             on_ready: bool = False):
-        """
-        Add an event on a specific child for a given component.
+        """Add an event on a specific child for a given component.
 
         Usage::
 
@@ -518,8 +524,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         self.__html_content = str(html)
 
     def prepare(self, **kwargs):
-        """
-        Prepare the data to be written to the html template.
+        """Prepare the data to be written to the html template.
 
         The below keys will be automatically added by the core framework:
             {{ cssStyle }} - The CSS styles properties
@@ -542,8 +547,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @classmethod
     def get_import(cls, path: str, suffix: str = "", root_path: Union[Path, str] = None, is_ts: bool = True) -> str:
-        """
-        Get the import statement to be added to a module.
+        """Get the import statement to be added to a module.
         This would work with ts or js files.
 
         If the root_path of the application file is added, the process will check if the component file exists.
@@ -612,8 +616,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @staticmethod
     def from_json(path: Path, is_parent: bool = False, raise_exception: bool = False) -> Dict[Any, dict]:
-        """
-        Load component definition from a json configuration file.
+        """Load component definition from a json configuration file.
         This can load a single component or all components within the folder using the parent flag.
 
         It is recommended to have each component definition segregated in a dedicated folder,

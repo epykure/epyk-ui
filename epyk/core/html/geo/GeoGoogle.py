@@ -13,6 +13,7 @@ from epyk.core.html.options import OptGoogle
 
 class ChartGeoGoogle(Html.Html):
     name = 'Google Chart'
+    tag = "div"
     requirements = ('google-maps',)
     _option_cls = OptGoogle.OptionMaps
 
@@ -22,30 +23,21 @@ class ChartGeoGoogle(Html.Html):
         self.style.css.margin = "10px 0"
 
     @property
-    def chartId(self):
-        """ Return the Javascript variable of the chart. """
-        return "%s_obj" % self.htmlCode
-
-    @property
     def js(self) -> JsGoogleAPI.GoogleMapsAPI:
-        """
-        Javascript base function.
-
+        """Javascript base function.
         Return all the Javascript functions defined in the framework.
         THis is an entry point to the full Javascript ecosystem.
 
         :return: A Javascript object.
         """
         if self._js is None:
-            self._js = JsGoogleAPI.GoogleMapsAPI(selector="window['%s']" % self.chartId, component=self, page=self.page)
+            self._js = JsGoogleAPI.GoogleMapsAPI(selector="window['%s']" % self.js_code, component=self, page=self.page)
         return self._js
 
     @property
     def options(self) -> OptGoogle.OptionMaps:
-        """
-        Property to the component options.
+        """Property to the component options.
         Options can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -53,8 +45,7 @@ class ChartGeoGoogle(Html.Html):
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Update the chart with context and / or data changes.
+        """Update the chart with context and / or data changes.
 
         :param data: Optional. The full datasets object expected by ChartJs
         :param options: Optional. Specific Python options available for this component
@@ -64,8 +55,8 @@ class ChartGeoGoogle(Html.Html):
         :param dataflows: Chain of data transformations
         """
         return '%s = new google.maps.Map(%s, {%s})' % (
-            self.chartId, component_id or self.dom.varId, self.options.config_js(options))
+            self.js_code, component_id or self.dom.varId, self.options.config_js(options))
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)

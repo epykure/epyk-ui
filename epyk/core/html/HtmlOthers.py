@@ -27,6 +27,7 @@ from epyk.core import data
 
 class Hr(Html.Html):
   name = 'Line delimiter'
+  tag = "hr"
 
   def __init__(self, page: primitives.PageModel, background_color: str, width: tuple, height: tuple, align: str,
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
@@ -37,8 +38,7 @@ class Hr(Html.Html):
       self.style.css.margin = "auto"
 
   def margin(self, left: int = 0, right: int = 0, unit: str = '%'):
-    """
-    Shortcut to set the margin let and right for this HTML component.
+    """Shortcut to set the margin let and right for this HTML component.
 
     :param left: Optional. The margin left.
     :param right: Optional. The margin right.
@@ -53,24 +53,26 @@ class Hr(Html.Html):
 
   @property
   def style(self) -> GrpClsLayout.ClassStandard:
-    """ Property to the CSS Style of the component. """
+    """Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassStandard(self)
     return self._styleObj
 
   def __str__(self):
-    return '<hr %s>' % (self.get_attrs(css_class_names=self.style.get_classes()))
+    return '<%s %s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()))
 
 
 class Newline(Html.Html):
   name = 'New line'
+  tag = "br"
 
   def __str__(self):
-    return "".join(['<br />'] * self.val)
+    return "".join(['<%s />' % self.tag] * self.val)
 
 
 class Stars(Html.Html):
   name = 'Stars'
+  tag = "div"
 
   def __init__(self, page: primitives.PageModel, val, label, color, align, best, html_code, helper, options, profile):
     icon_details = page.icons.get("star")
@@ -98,7 +100,7 @@ class Stars(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStars.Stars:
-    """ The JavaScript dom object to be used in any events. """
+    """The JavaScript dom object to be used in any events. """
     if self._dom is None:
       self._dom = JsHtmlStars.Stars(self, page=self.page)
     return self._dom
@@ -106,9 +108,7 @@ class Stars(Html.Html):
   def click(self, js_funcs: types.JS_FUNCS_TYPES = None,
             profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
-    """
-    Add the event click and double click to the starts item.
-
+    """Add the event click and double click to the starts item.
     The Javascript function will be triggered after the change of content of the component.
 
     Usage::
@@ -137,11 +137,12 @@ class Stars(Html.Html):
     return self
 
   def __str__(self):
-    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+    return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.helper, self.tag)
 
 
 class Help(Html.Html):
   name = 'Info'
+  tag = "i"
 
   def __init__(self, page: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
                options: Optional[dict]):
@@ -155,17 +156,18 @@ class Help(Html.Html):
 
   @property
   def style(self) -> GrpClsLayout.ClassHelp:
-    """ Property to the CSS Style of the component. """
+    """Property to the CSS Style of the component. """
     if self._styleObj is None:
       self._styleObj = GrpClsLayout.ClassHelp(self)
     return self._styleObj
 
   def __str__(self):
-    return '<i %s></i>' % self.get_attrs(css_class_names=self.style.get_classes())
+    return '<%(t)s %(a)s></%(t)s>' % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
 
 
 class Loading(Html.Html):
   name = 'Loading'
+  tag = "div"
 
   def __init__(self, page: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
                profile: Optional[Union[bool, dict]]):
@@ -186,9 +188,7 @@ class Loading(Html.Html):
       self.add_span("%s..." % text, position="after", css={"width": '100%', "margin": "5px"})
 
   def fixed(self, css: Optional[dict] = None, icon_css: Optional[dict] = None):
-    """
-    Set css attributes of the loading div to be fixed.
-
+    """Set css attributes of the loading div to be fixed.
     This can be done directly in options in the component constructor options={"fixed": True}.
 
     :param css: Optional. The css attributes
@@ -207,11 +207,12 @@ class Loading(Html.Html):
     return self
 
   def __str__(self):
-    return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
+    return '<%(t)s %(a)s></%(t)s>' % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
 
 
 class HtmlJson(Html.Html):
   name = 'Pretty Json'
+  tag = "div"
   requirements = ('json-formatter-js', )
   _option_cls = OptJsonFormatter.OptionsJsonFmt
 
@@ -221,9 +222,7 @@ class HtmlJson(Html.Html):
 
   @property
   def dom(self) -> JsHtmlJson.JsonFormatter:
-    """
-    Return all the Javascript functions defined for an HTML Component.
-
+    """Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     """
     if self._dom is None:
@@ -232,14 +231,12 @@ class HtmlJson(Html.Html):
 
   @property
   def jsonId(self):
-    """ Return the Javascript variable of the json object. """
+    """Return the Javascript variable of the json object. """
     return "%s_obj" % self.htmlCode
 
   @property
   def options(self) -> OptJsonFormatter.OptionsJsonFmt:
-    """
-    Property to the component options.
-
+    """Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -248,8 +245,7 @@ class HtmlJson(Html.Html):
 
   @property
   def js(self) -> JsJsonFormatter.Json:
-    """
-    Return the Javascript internal object.
+    """Return the Javascript internal object.
 
     :return: A Javascript object
     """
@@ -259,11 +255,12 @@ class HtmlJson(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
+    return '<%(t)s %(a)s></%(t)s>' % {"t": self.tag, "a": self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class Breadcrumb(Html.Html):
   name = 'Breadcrumb'
+  tag = "div"
   _option_cls = OptText.OptBreadCrumb
 
   def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
@@ -289,11 +286,11 @@ class Breadcrumb(Html.Html):
 
   @property
   def options(self) -> OptText.OptBreadCrumb:
-    """ Property to set all the possible object for a breadcrumb definition. """
+    """Property to set all the possible object for a breadcrumb definition. """
     return super().options
 
   def __add__(self, component: Union[primitives.HtmlModel, str]):
-    """ Add items to a container """
+    """Add items to a container """
     if hasattr(component, 'htmlCode'):
       component.options.managed = False
     self.val.append(component)
@@ -301,12 +298,13 @@ class Breadcrumb(Html.Html):
 
   def __str__(self):
     rows = [component.html() if hasattr(component, 'html') else str(component) for component in self.val]
-    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()),
-                                 self.options.delimiter.join(rows))
+    return '<%s %s>%s</%s>' % (
+      self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.options.delimiter.join(rows), self.tag)
 
 
 class Legend(Html.Html):
   name = 'Legend'
+  tag = "div"
   _option_cls = OptJsonFormatter.OptionsLegend
 
   def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
@@ -316,9 +314,7 @@ class Legend(Html.Html):
 
   @property
   def options(self) -> OptJsonFormatter.OptionsLegend:
-    """
-    Property to the component options.
-
+    """Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -331,7 +327,8 @@ class Legend(Html.Html):
     for val in self.val:
       val["css_inline"] = css_inline
       divs.append("<div><div style='background:%(color)s;%(css_inline)s'></div>%(name)s</div>" % val)
-    return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(divs))
+    return '<%s %s>%s</%s>' % (
+      self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(divs), self.tag)
 
 
 class Slides(Html.Html):
@@ -418,9 +415,7 @@ class Slides(Html.Html):
 
   @property
   def options(self) -> OptText.OptionsText:
-    """
-    Property to the component options.
-
+    """Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -429,9 +424,7 @@ class Slides(Html.Html):
 
   @property
   def dom(self) -> JsHtmlStars.Slides:
-    """
-    Return all the Javascript functions defined for an HTML Component.
-
+    """Return all the Javascript functions defined for an HTML Component.
     Those functions will use plain javascript available for a DOM element by default.
     """
     if self._dom is None:
@@ -439,7 +432,7 @@ class Slides(Html.Html):
     return self._dom
 
   def add(self, component: Union[Html.Html, str]):
-    """ Add a component to the slide.
+    """Add a component to the slide.
 
     :param component: The HTML component to be added to this component
     """
@@ -463,8 +456,7 @@ class Slides(Html.Html):
     return self
 
   def add_slide(self, title: str, component: Union[Html.Html, str], options: Optional[dict] = None):
-    """
-    Add a slide.
+    """Add a slide.
 
     :param title: The title value in the slide
     :param component: The HTML component
@@ -503,6 +495,7 @@ class Slides(Html.Html):
 
 class HtmlQRCode(Html.Html):
   name = 'QR Code'
+  tag = "div"
   requirements = ('qrcodejs', )
   _option_cls = OptQrCode.OptionsQrCode
 
@@ -515,9 +508,7 @@ class HtmlQRCode(Html.Html):
 
   @property
   def options(self) -> OptQrCode.OptionsQrCode:
-    """
-    Property to the component options.
-
+    """Property to the component options.
     Options can either impact the Python side or the Javascript builder.
 
     Python can pass some options to the JavaScript layer.
@@ -526,13 +517,12 @@ class HtmlQRCode(Html.Html):
 
   @property
   def jsonId(self):
-    """ Return the Javascript variable of the json object. """
+    """Return the Javascript variable of the json object. """
     return "%s_obj" % self.htmlCode
 
   @property
   def js(self) -> JsQrCode.QrCode:
-    """
-    Return the Javascript internal object.
+    """Return the Javascript internal object.
 
     :return: A Javascript object
     """
@@ -542,11 +532,12 @@ class HtmlQRCode(Html.Html):
 
   def __str__(self):
     self.page.properties.js.add_builders(self.refresh())
-    return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
+    return '<%(t)s %(a)s></%(t)s>' % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
 
 
 class HtmlCaptcha(Html.Html):
   name = 'Google Catch'
+  tag = "button"
   requirements = ('google-captcha', )
 
   def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
@@ -558,4 +549,4 @@ class HtmlCaptcha(Html.Html):
     self.style.add_classes.external("g-recaptcha")
 
   def __str__(self):
-    return '<button %s>%s</button>' % (self.get_attrs(css_class_names=self.style.get_classes()), self._vals)
+    return '<%s %s>%s</%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)

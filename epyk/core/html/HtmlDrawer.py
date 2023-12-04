@@ -46,19 +46,18 @@ class Drawer(Html.Html):
 
     @property
     def dom(self) -> JsHtmlStepper.Drawer:
-        """ Property to get the common dom features. """
+        """Property to get the common dom features. """
         if self._dom is None:
             self._dom = JsHtmlStepper.Drawer(self, page=self.page)
         return self._dom
 
     @property
     def options(self) -> OptPanel.OptionDrawer:
-        """ Property to set all the possible object for a drawer. """
+        """Property to set all the possible object for a drawer. """
         return super().options
 
     def add_panel(self, link: Union[Html.Html, str], container: Html.Html, display: bool = False):
-        """
-        Add panel to the drawer object.
+        """Add panel to the drawer object.
 
         :param link: The value in the drawer
         :param container: The component to be displayed
@@ -77,14 +76,13 @@ class Drawer(Html.Html):
 
     @property
     def style(self) -> GrpClsContainer.ClassDrawer:
-        """ Get the CSS Style of the object. """
+        """Get the CSS Style of the object. """
         if self._styleObj is None:
             self._styleObj = GrpClsContainer.ClassDrawer(self)
         return self._styleObj
 
     def set_handle(self, component: Html.Html):
-        """
-        Set the handle used to trigger the open / close events.
+        """Set the handle used to trigger the open / close events.
 
         :param component: An HTML component.
         """
@@ -152,19 +150,18 @@ class DrawerMulti(Html.Html):
 
     @property
     def dom(self) -> JsHtmlStepper.Drawer:
-        """ Property to get the common dom features. """
+        """Property to get the common dom features. """
         if self._dom is None:
             self._dom = JsHtmlStepper.Drawer(self, page=self.page)
         return self._dom
 
     @property
     def options(self) -> OptPanel.OptionDrawer:
-        """ Property to set all the possible object for a drawer. """
+        """Property to set all the possible object for a drawer. """
         return super().options
 
     def add_drawer(self, link: Union[str, Html.Html], container: Html.Html):
-        """
-        Add panel to the drawer object.
+        """Add panel to the drawer object.
 
         :param link: The value in the drawer
         :param container: The component to be displayed
@@ -208,7 +205,7 @@ class DrawerMulti(Html.Html):
 
     @property
     def style(self) -> GrpClsContainer.ClassDrawer:
-        """ Get the CSS Style of the object. """
+        """Get the CSS Style of the object. """
         if self._styleObj is None:
             self._styleObj = GrpClsContainer.ClassDrawer(self)
         return self._styleObj

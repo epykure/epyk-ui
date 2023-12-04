@@ -19,6 +19,7 @@ from epyk.core.css.styles import GrpClsTable
 
 class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Ag Grid Table'
+    tag = "div"
     requirements = ('ag-grid-community',)
     _option_cls = OptTableAgGrid.TableConfig
 
@@ -30,13 +31,10 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             self.options.data = records
 
     def theme(self, name: str, custom_cls_name: bool = False, row_height: int = None, css_overrides: dict = None):
-        """
-        Define the theme to be used for the Aggrid table.
+        """Define the theme to be used for the Aggrid table.
 
-        Related Pages:
-
-            https://www.ag-grid.com/javascript-data-grid/themes/
-            https://www.ag-grid.com/javascript-data-grid/global-style-customisation-variables/
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/themes/>`_
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/global-style-customisation-variables/>`_
 
         Usage::
 
@@ -82,8 +80,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.rowHeight = self.options.rowHeight
 
     def headers(self, cols_def: Dict[str, dict]):
-        """
-        Set columns definition.
+        """Set columns definition.
 
         Usage::
 
@@ -105,19 +102,15 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def get_columns(self) -> Generator[OptTableAgGrid.Column, None, None]:
-        """
-        Get a generator with all the columns defined for the table on the Python side.
-
+        """Get a generator with all the columns defined for the table on the Python side.
         This function will only return columns defined from the Python side.
         """
         for c in self.options.js_tree.setdefault("columnDefs", []):
             yield c
 
     def get_column(self, by_field: str = None, by_title: str = None) -> OptTableAgGrid.Column:
-        """
-        Get the column from the underlying Tabulator object by field or by title.
+        """Get the column from the underlying Tabulator object by field or by title.
         Pointing by field is recommended as the title might change quite easily.
-
         This function will only get columns defined from the Python side.
 
         :param by_field: Optional. The field reference for the column
@@ -132,8 +125,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def style(self) -> GrpClsTable.Aggrid:
-        """
-        Add internal CSS classes.
+        """Add internal CSS classes.
 
         Usage::
 
@@ -146,8 +138,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def options(self) -> OptTableAgGrid.TableConfig:
-        """
-        Ag Grid table options.
+        """Ag Grid table options.
 
         Usage::
 
@@ -158,25 +149,23 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def js(self) -> JsAgGrid.AgGrid:
-        """
-        Return the Javascript internal object.
+        """Return the Javascript internal object.
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsAgGrid.AgGrid(page=self.page, selector=self.tableId, set_var=False, component=self)
+            self._js = JsAgGrid.AgGrid(page=self.page, selector=self.js_code, set_var=False, component=self)
         return self._js
 
     @property
     def dom(self) -> JsHtmlTables.JsHtmlAggrid:
-        """ HTML Dom object. """
+        """HTML Dom object"""
         if self._dom is None:
             self._dom = JsHtmlTables.JsHtmlAggrid(self, page=self.page)
         return self._dom
 
-    def add_column(self, field: str, title: str = None, attrs: dict = None):
-        """
-        Add a column to the column definition for the table.
+    def add_column(self, field: str, title: str = None, attrs: dict = None) -> OptTableAgGrid.Column:
+        """Add a column to the column definition for the table.
 
         Usage::
 
@@ -200,46 +189,44 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             col_def.update_config(attrs)
         return col_def
 
-    @property
-    def tableId(self) -> str:
-        """
-        Return the Javascript variable of the chart.
-
-        Usage::
-
-          table.tableId
-        """
-        return "%s_obj" % self.html_code
-
-    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
-        """
-        Common JavaScript function to set the table definition.
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None):
+        """Common JavaScript function to set the table definition.
         If options are defined the definition will be specific to the column definition.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-selection/>`_
 
         :param options: Optional. The table API attributes. If None return current definition.
         :param dataflows: Chain of config transformations
+        :param component_id: Optional. The object reference ID
         """
+        self.js_code = component_id
         if options is None:
             options = JsUtils.jsWrap("%s.api" % self.js.varId)
             return JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
 
         return self.js.setColumnDefs(JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page)))
 
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
+        """
+        self.dom.varName = "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
+        self.js.varName = js_code
+
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Common JavaScript function to add rows to the table.
+        """Common JavaScript function to add rows to the table.
 
         Usage::
 
           grid = page.ui.tables.aggrids.table()
           grid.add_column("col1", "Column")
-          btn_aggrid = page.ui.button("Aggrid").click([
-            grid.build([{"col1": "row %s" % i}for i in range(n)])
-          ])
+          btn_aggrid = page.ui.button("Aggrid").click([grid.build([{"col1": "row %s" % i}for i in range(n)])])
 
         :param data: Optional.
         :param options: Optional. Specific Python options available for this component
@@ -248,31 +235,24 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
-        table_id = self.tableId
-        if component_id is not None:
-            table_id = "%sId" % component_id
-            self.js._selector = table_id
+        self.js_code = component_id
         if data is not None:
             state_expr = ""
             if stop_state:
-                state_expr = ";%s" % self.hide_state(component_id)
+                state_expr = ";%s" % self.hide_state(self.html_code)
             return "%s%s" % (self.js.setRowData(data, dataflows=dataflows).toStr(), state_expr)
 
         return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
-            'tableId': table_id, 'config': self.options.config_js(options),
-            'htmlCode': component_id or self.dom.varName}
+            'tableId': self.js_code, 'config': self.options.config_js(options), 'htmlCode': self.dom.varName}
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
               on_ready: bool = False, data_ref: str = "data"):
-        """
-        The onclick event occurs when the user clicks on an element.
+        """The onclick event occurs when the user clicks on an element.
 
         Usage::
 
           div = page.ui.div()
-          div.click([
-            page.js.alert("This is a test")
-          ])
+          div.click([page.js.alert("This is a test")])
 
         `Related Pages <https://www.w3schools.com/jsref/event_onclick.asp>`_
 
@@ -293,4 +273,4 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return "<div %s></div>" % (self.get_attrs(css_class_names=self.style.get_classes()))
+        return "<%s %s></%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)

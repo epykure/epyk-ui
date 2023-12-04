@@ -13,6 +13,7 @@ from epyk.core.html.options import OptChartCss
 class ChartCss(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('charts.css',)
     name = 'ChartCss'
+    tag = "table"
     _chart__type = "line"
     _option_cls = OptChartCss.ChartCssOptions
 
@@ -26,30 +27,23 @@ class ChartCss(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def options(self) -> OptChartCss.ChartCssOptions:
-        """
-        Set the ChartCss options.
+        """Set the ChartCss options.
 
-        Related Pages:
-
-          https://chartscss.org/charts/area/
+        `Related Pages <https://chartscss.org/charts/area/>`_
         """
         return super().options
 
     def labels(self, values: List[str]):
-        """
-        Set the chart labels.
+        """Set the chart labels.
 
         :param values: The different values for the x-axis
         """
         self._labels = values
 
     def dataset(self, i: int = None) -> Optional[list]:
-        """
-        The data property of a ChartJs chart.
+        """The data property of a ChartJs chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/master/general/data-structures
+        `Related Pages <https://www.chartjs.org/docs/master/general/data-structures>`_
 
         :param i: Optional. The series index according to the y_columns
         """
@@ -64,14 +58,9 @@ class ChartCss(MixHtmlState.HtmlOverlayStates, Html.Html):
             opacity: float = None,
             kind: str = None
     ):
-        """
-        Add a new Dataset to the chart list of Datasets.
+        """Add a new Dataset to the chart list of Datasets.
 
-        Usage::
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/developers/updates.html
+        `Related Pages <https://www.chartjs.org/docs/latest/developers/updates.html>`_
 
         :param data: The list of points (float)
         :param label: The list of points (float)
@@ -80,8 +69,8 @@ class ChartCss(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         self._datasets.append([label] + data)
 
-    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
-        """ Not yet defined for this chart """
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None) -> str:
+        """Not yet defined for this chart"""
         return ""
 
     def __str__(self):
@@ -93,9 +82,9 @@ class ChartCss(MixHtmlState.HtmlOverlayStates, Html.Html):
                 html_frg[i].append('<td style="--start: %s; --size: %s"><span class="data"> %s </span></td>' % (
                     i / sections, y / 100, y))
         html_frg_trs = ["".join(frg) for frg in html_frg]
-        return '''<table %s><caption>%s</caption><thead>%s</thead><tbody><tr>%s</tr></tbody></table>
-      ''' % (self.get_attrs(css_class_names=self.style.get_classes()), self.options.title,
-             "".join(html_frg_head), "</tr><tr>".join(html_frg_trs))
+        return '''<%s %s><caption>%s</caption><thead>%s</thead><tbody><tr>%s</tr></tbody></%s>''' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.options.title,
+            "".join(html_frg_head), "</tr><tr>".join(html_frg_trs), self.tag)
 
 
 class ChartCssBar(ChartCss):

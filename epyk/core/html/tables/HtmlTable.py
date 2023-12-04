@@ -11,6 +11,7 @@ from epyk.core.html.options import OptTable
 
 class Row(Html.Html):
     name = 'Row'
+    tag = "tr"
     _option_cls = OptTable.OptionsTableRow
 
     def __init__(self, page: primitives.PageModel, cells, options: dict = None):
@@ -25,8 +26,7 @@ class Row(Html.Html):
 
     @property
     def dom(self) -> JsHtml.JsHtmlRich:
-        """
-        The DOM attributes.
+        """The DOM attributes.
 
         Usage::
 
@@ -38,15 +38,14 @@ class Row(Html.Html):
 
     @property
     def options(self) -> OptTable.OptionsTableRow:
-        """ All table options. """
+        """All table options"""
         return super().options
 
     def __getitem__(self, i: int):
         return self.val[i]
 
     def cell(self, i: int):
-        """
-        Get the cell value.
+        """Get the cell value.
 
         Usage::
 
@@ -58,7 +57,8 @@ class Row(Html.Html):
 
     def __str__(self):
         data = [v.html() for v in self.val]
-        return "<tr %s>%s</tr>" % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(data))
+        return "<%s %s>%s</%s>" % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(data), self.tag)
 
 
 class Cell(MixHtmlState.HtmlStates, Html.Html):
@@ -72,20 +72,23 @@ class Cell(MixHtmlState.HtmlStates, Html.Html):
         self.is_header = is_header
 
     @property
+    def tag(self):
+        return "th" if self.is_header else "td"
+
+    @property
     def dom(self) -> JsHtml.JsHtmlRich:
-        """ The cell Dom properties """
+        """The cell Dom properties"""
         if self._dom is None:
             self._dom = JsHtml.JsHtmlRich(self, page=self.page)
         return self._dom
 
     @property
     def options(self) -> OptTable.OptionsTableCell:
-        """ All table options. """
+        """All table options"""
         return super().options
 
     def set_html_content(self, component: primitives.HtmlModel):
-        """
-        Set the cell content to be an HTML object.
+        """Set the cell content to be an HTML object.
 
         :param component: Python HTML object
 
@@ -96,14 +99,13 @@ class Cell(MixHtmlState.HtmlStates, Html.Html):
         return self
 
     def __str__(self):
-        if self.is_header:
-            return "<th %s>%s</th>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.content)
-
-        return "<td %s>%s</td>" % (self.get_attrs(css_class_names=self.style.get_classes()), self.content)
+        return "<%s %s>%s</%s>" % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.content, self.tag)
 
 
 class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Basic Table'
+    tag = "table"
     _option_cls = OptTable.OptionsBasic
 
     def __init__(self, page: primitives.PageModel, records, cols, rows, width, height, html_code, options, profile):
@@ -121,22 +123,21 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def options(self) -> OptTable.OptionsBasic:
-        """ All table options. """
+        """All table options"""
         return super().options
 
     @property
     def tableId(self):
-        """ Return the Javascript variable of the bespoke. """
+        """Return the Javascript variable of the bespoke"""
         return self.dom.varId
 
     @property
     def header(self):
-        """ Get the header row. Returns none if missing. """
+        """Get the header row. Returns none if missing"""
         return self._header
 
     def set_header(self, values: list, css: dict = None):
-        """
-        Set the table header.
+        """Set the table header.
 
         :param values: A list of headers
         :param css: Specific CSS attributes
@@ -148,7 +149,7 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def set_items(self):
-        """ Set the table definition. """
+        """Set the table definition"""
         if self.items is None:
             self.items = []
         if self._fields is not None and self.options.with_header:
@@ -167,8 +168,7 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def __getitem__(self, i: int) -> Html.Html:
-        """
-        Get the table rows.
+        """Get the table rows.
 
         Usage::
 
@@ -179,8 +179,7 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self.items[i]
 
     def row(self, i: int, inc_header: bool = False):
-        """
-        Get the table rows.
+        """Get the table rows.
 
         Usage::
 
@@ -195,8 +194,7 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self[i]
 
     def col(self, header: Union[str, bool] = None, i: int = None):
-        """
-        Get the table column cells as a generator.
+        """Get the table column cells as a generator.
 
         Usage::
 
@@ -215,8 +213,7 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self
 
     def set_editable_cols(self, col_indices: List[int]):
-        """
-        Define columns as editable.
+        """Define columns as editable.
 
         :param col_indices: Column indices to be changed
         """
@@ -226,15 +223,14 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def dom(self) -> JsHtml.JsHtmlTable:
-        """ Dom properties for a table. """
+        """Dom properties for a table"""
         if self._dom is None:
             self._dom = JsHtml.JsHtmlTable(self, page=self.page)
             self._dom._container = "%s.parentNode" % self._dom.element
         return self._dom
 
     def add(self, row: Union[dict, list], missing: str = "", is_header: bool = False):
-        """
-        Add a row to the table.
+        """Add a row to the table.
 
         Usage::
 
@@ -259,8 +255,8 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def __str__(self):
         str_rows = [r.html() for r in self.items]
-        return "<div style='position:relative'><table %s>%s</table></div>" % (
-        self.get_attrs(css_class_names=self.style.get_classes()), "".join(str_rows))
+        return "<div style='position:relative'><%s %s>%s</%s></div>" % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(str_rows), self.tag)
 
 
 class Excel(Html.Html):
@@ -274,39 +270,31 @@ class Excel(Html.Html):
         self.css({'display': 'inline-block', 'overflow': 'auto', 'padding': 0, 'vertical-align': 'top'})
         self.add_title(title, options={'content_table': False})
 
-    _js__builder__ = '''
-var tr = $('<tr></tr>');
+    _js__builder__ = '''var tr = $('<tr></tr>');
 jsStyles.header.forEach(function(rec){tr.append("<th>"+ rec +"</th>")});
 htmlObj.append(tr); var tr = $('<tr></tr>'); var tbody = $('<tbody></tbody>');
 jsStyles.header.forEach(function(rec){tr.append("<td><input type='text' style='"+ jsStyles.cellwidth +"'/></td>")});
-tbody.append(tr);htmlObj.append(tbody)
-'''
+tbody.append(tr);htmlObj.append(tbody)'''
 
     def __str__(self):
-        self._browser_data['component_ready'].append('''
-      function tableData(tableObj){
-        res = [];
-        tableObj.find('tbody').find('tr').each(function(key, val){
-          var row = [];
-          $(this).find('td').each(function(key, cell) {row.push($(cell).find('input').val())});
-          res.push(row)}); return res};
+        self._browser_data['component_ready'].append('''function tableData(tableObj){
+    res = [];
+    tableObj.find('tbody').find('tr').each(function(key, val){
+      var row = []; $(this).find('td').each(function(key, cell) {row.push($(cell).find('input').val())});
+      res.push(row)}); return res};
 
-      function listToRec(data, header){
-          var res = [];
-          data.forEach(function(row){
-            rec = {}; header.forEach(function(h, i){rec[h] = row[i]}); res.push(rec)
-          }); return res}''')
+function listToRec(data, header){
+      var res = []; data.forEach(
+        function(row){rec = {}; header.forEach(function(h, i){rec[h] = row[i]}); res.push(rec)}); return res}''')
 
         self.paste('''
-      var tbody = $(this).find('tbody'); tbody.empty();
-      var tableId = $(this).parent().attr('id');
-      var lineDelimiter = $('#'+ tableId +'_delimiter').val();
-      if (lineDelimiter == 'TAB'){lineDelimiter = '\\t'};
-      data.split("\\n").forEach(function(line){
-        if (line !== ''){
-          var tr = $('<tr></tr>');
-          line.split(lineDelimiter).forEach(function(rec){tr.append("<td><input type='text'  value='"+ rec +"'/></td>")
-        }); tbody.append(tr)}}) ''')
+var tbody = $(this).find('tbody'); tbody.empty(); var tableId = $(this).parent().attr('id');
+var lineDelimiter = $('#'+ tableId +'_delimiter').val(); if (lineDelimiter == 'TAB'){lineDelimiter = '\\t'};
+data.split("\\n").forEach(function(line){
+if (line !== ''){
+  var tr = $('<tr></tr>');
+  line.split(lineDelimiter).forEach(function(rec){tr.append("<td><input type='text'  value='"+ rec +"'/></td>")
+}); tbody.append(tr)}}) ''')
         if self.delimiter is None:
             delimiter = '<input id="%s_delimiter" type="text" value="%s" placeholder="Line delimiter"/>' % (
                 self.htmlCode, self.delimiter)

@@ -15,9 +15,7 @@ class Billboard(JsC3.C3):
     """
     Export chart as an image.
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/release/latest/doc/Chart.html#export
+    `Related Pages <https://naver.github.io/billboard.js/release/latest/doc/Chart.html#export>`_
     """
     return JsObjects.JsVoid("%s.export()" % self._selector)
 
@@ -25,9 +23,7 @@ class Billboard(JsC3.C3):
     """
     Export chart as an image.
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/release/latest/doc/Chart.html#export
+    `Related Pages <https://naver.github.io/billboard.js/release/latest/doc/Chart.html#export>`_
 
     :param target: ids to be reverted.
     """

@@ -14,6 +14,7 @@ from epyk.core.html.options import OptChartHighcharts
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Highcharts'
+    tag = "div"
     requirements = ('highcharts',)
     _chart__type = None
     _option_cls = OptChartHighcharts.OptionsHighcharts
@@ -24,17 +25,15 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         super(Chart, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
         self.style.css.margin_top = 10
-        self.chartId = "%s_obj" % self.htmlCode
 
     @property
     def options(self) -> OptChartHighcharts.OptionsHighcharts:
-        """ Property to the series options. """
+        """Property to the series options"""
         return super().options
 
     @property
     def dom(self) -> JsHtmlHighCharts.HighCharts:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object.
@@ -47,7 +46,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         if options is None:
             if dataflows is not None:
                 return "%s;%s" % (
-                    JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap("window['%s']" % self.chartId), dataflows, self.page)),
+                    JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap("window['%s']" % self.js_code), dataflows, self.page)),
                     self.js.update())
 
         if dataflows is not None:
@@ -78,27 +77,28 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     @property
     def js(self) -> JsHighcharts.Highcharts:
         if self._js is None:
-            self._js = JsHighcharts.Highcharts(selector="window['%s']" % self.chartId, component=self, page=self.page)
+            self._js = JsHighcharts.Highcharts(selector="window['%s']" % self.js_code, component=self, page=self.page)
         return self._js
 
     @Html.jformatter("highcharts")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.JS_DATA_TYPES = None,
               profile: etypes.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-
+        self.js_code = component_id
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s.options)" % (
-                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page), self.chartId), profile).toStr()
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page), self.js_code), profile).toStr()
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
-            return """%(chartId)s = Highcharts.chart("%(htmlCode)s", %(builder)s)""" % {
-                'chartId': self.chartId, "htmlCode": self.html_code, 'builder': builder_fnc, "state": state_expr}
+            return """%(chartId)s = Highcharts.chart(%(htmlCode)s, %(builder)s)""" % {
+                'chartId': self.js_code, "htmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
+                'builder': builder_fnc, "state": state_expr}
 
-        return '%(chartId)s = Highcharts.chart("%(htmlCode)s", %(ctx)s)' % {
-            "chartId": self.chartId, "htmlCode": self.html_code,
+        return '%(chartId)s = Highcharts.chart(%(htmlCode)s, %(ctx)s)' % {
+            "chartId": self.js_code, "htmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
             "ctx": self.options.config_js(options)}
 
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
-        return '<div %s></div>' % (self.get_attrs(css_class_names=self.style.get_classes()))
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)

@@ -21,7 +21,6 @@ class PivotAggregator:
 
     def sumOverSum(self, cols: list):
         """
-
         :param cols: The columns to be added up.
         """
         cols = JsUtils.jsConvertData(cols, None)
@@ -29,13 +28,11 @@ class PivotAggregator:
         self.options.aggregatorName = "Sum over Sum"
 
     def count(self):
-        """ """
         self.options.aggregator = '$.pivotUtilities.aggregators["Count"]()'
         self.options.aggregatorName = "Count"
 
     def sum(self, col1: str):
         """
-
         :param col1: The column name.
         """
         col1 = JsUtils.jsConvertData(col1, None)
@@ -44,28 +41,24 @@ class PivotAggregator:
 
     def max(self, col1: str):
         """
-
         :param col1: The column name.
         """
         self.singleFactorFormulas(col1, "= Math.max(this.tmpVal, col1)", "Max")
 
     def min(self, col1: str):
         """
-
         :param col1: The column name.
         """
         self.singleFactorFormulas(col1, "= Math.min(this.tmpVal, col1)", "Min")
 
     def absSum(self, col1: str):
         """
- 
         :param col1:
         """
         self.singleFactorFormulas(col1, "+= Math.abs(col1)", "sum (abs)")
 
     def quick(self, col1: str, name: str, formula: str):
-        """
-        Add a fix formula without input options.
+        """Add a fix formula without input options.
 
         Usage::
 
@@ -95,7 +88,6 @@ return function(){
 
     def singleFactorFormulas(self, col1: str, formula: str, name: str):
         """
-
         TODO: Find way to set the column name on init
 
         Usage::
@@ -123,8 +115,7 @@ return function(data, rowKey, colKey) {
             "name": name, "fnc": fnc, "col": col1}
 
     def twoFactorFormulas(self, col1: str, col2: str, name: str, formula: str):
-        """
-        Create a two factor function.
+        """Create a two factor function.
 
         TODO: Find way to set the column name on init
 
@@ -157,7 +148,6 @@ return function(data, rowKey, colKey) {
 
     def diffAbsolute(self, col1: str, col2: str, formula: str = "+= col1 - col2"):
         """
-
         :param col1: The column name.
         :param col2: The column name.
         :param formula: The formula to be applied.
@@ -165,12 +155,9 @@ return function(data, rowKey, colKey) {
         self.twoFactorFormulas(col1, col2, "diff Abs Agg", formula)
 
     def custom(self, name: str, js_def: str):
-        """
-        Add a custom aggregator function.
+        """Add a custom aggregator function.
 
-        Related Pages:
-
-          https://github.com/nicolaskruchten/pivottable/wiki/Aggregators
+        'Package Doc <'https://github.com/nicolaskruchten/pivottable/wiki/Aggregators>`_
 
         :param name: The function name.
         :param js_def: The function definition
@@ -186,73 +173,54 @@ class PivotRendererC3:
         self.page, self.options = page, options
 
     def bar(self):
-        """
-        Horizontal bar chart from C3.
+        """Horizontal bar chart from C3.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
-
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-c3')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
         self.options.rendererName = "Bar Chart"
 
     def scatter(self):
-        """
-        Scatter chart from C3.
+        """Scatter chart from C3.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-c3')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
         self.options.rendererName = "Area Chart"
 
     def area(self):
-        """
-        Area chart from C3.
+        """Area chart from C3.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-c3')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
         self.options.rendererName = "Area Chart"
 
     def line(self):
-        """
-        Line chart from C3.
+        """Line chart from C3.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-c3')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
         self.options.rendererName = "Line Chart"
 
     def hbar(self):
-        """
-        Stacked bar chart from C3.
+        """Stacked bar chart from C3.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-c3')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
         self.options.rendererName = "Horizontal Stacked Bar Chart"
 
     def stacked(self):
-        """
-        Stacked bar chart from C3.
+        """Stacked bar chart from C3.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-c3')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.c3_renderers)"
@@ -265,72 +233,54 @@ class PivotRendererPlotly:
         self.page, self.options = page, options
 
     def pies(self):
-        """
-        Multiple Pies charts from Plotly.
+        """Multiple Pies charts from Plotly.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/plotly.html
+        `Package Doc <https://pivottable.js.org/examples/plotly.html>`_
         """
         self.page.jsImports.add('pivot-plotly')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
         self.options.rendererName = "Multiple Pie Chart"
 
     def area(self):
-        """
-        Area chart from Plotly.
+        """Area chart from Plotly.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-plotly')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
         self.options.rendererName = "Area Chart"
 
     def scatter(self):
-        """
-        Scatter chart from Plotly.
+        """Scatter chart from Plotly.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-plotly')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
         self.options.rendererName = "Scatter Chart"
 
     def line(self):
-        """
-        Line chart from Plotly.
+        """Line chart from Plotly.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-plotly')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
         self.options.rendererName = "Line Chart"
 
     def bar(self):
-        """
-        Bar chart from Plotly.
+        """Bar chart from Plotly.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-plotly')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
         self.options.rendererName = "Bar Chart"
 
     def hbar(self):
-        """
-        Horizontal Bar chart from Plotly.
+        """Horizontal Bar chart from Plotly.
 
-        Related Pages:
-
-          https://pivottable.js.org/examples/c3.html
+        `Package Doc <https://pivottable.js.org/examples/c3.html>`_
         """
         self.page.jsImports.add('pivot-plotly')
         self.options.renderers = "$.extend($.pivotUtilities.renderers, $.pivotUtilities.plotly_renderers)"
@@ -343,41 +293,35 @@ class PivotRenderer:
         self.page, self.options = page, options
 
     def table(self):
-        """ """
         self.options.renderer = '$.pivotUtilities.renderers["table"]'
 
     @property
     def plotly(self) -> PivotRendererPlotly:
-        """ Property to use the Plotly special renderers. """
+        """Property to use the Plotly special renderers"""
         return PivotRendererPlotly(self.page, self.options)
 
     @property
     def c3(self) -> PivotRendererC3:
-        """ Property to use the C3 special renderers. """
+        """Property to use the C3 special renderers"""
         return PivotRendererC3(self.page, self.options)
 
     def treemap(self):
         """
-
-        https://pivottable.js.org/examples/plotly.html
-
+        `Package Doc <https://pivottable.js.org/examples/plotly.html>`_
         """
         self.page.jsImports.add('pivot-d3')
         self.options.renderers = "$.pivotUtilities.d3_renderers"
         self.options.rendererName = "Treemap"
 
     def heatmap(self):
-        """ """
         self.options.renderer = '$.pivotUtilities.renderers["Heatmap"]'
 
     def bars(self):
-        """ """
         self.options.renderer = '$.pivotUtilities.renderers["Table Barchart"]'
 
     def custom(self, name, js_def):
         """
-
-        https://github.com/nicolaskruchten/pivottable/wiki/Renderers
+        `Package Doc <https://github.com/nicolaskruchten/pivottable/wiki/Renderers>`_
 
         :param name:
         :param js_def:
@@ -388,6 +332,7 @@ class PivotRenderer:
 class PivotTable(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('pivottable',)
     name = 'Pivot Table'
+    tag = "div"
     _option_cls = OptTable.OptionsPivot
 
     def __init__(self, page: primitives.PageModel, records, rows, cols, width, height, html_code, helper,
@@ -406,33 +351,28 @@ class PivotTable(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def style(self) -> GrpClsTable.Pivot:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpClsTable.Pivot(self)
         return self._styleObj
 
     @property
     def options(self) -> OptTable.OptionsPivot:
-        """ Pivot Table options. """
+        """Pivot Table options"""
         return super().options
 
     @property
     def aggregators(self) -> PivotAggregator:
-        """ """
         return PivotAggregator(self.page, self.options)
 
     @property
     def renderers(self) -> PivotRenderer:
-        """ """
         return PivotRenderer(self.page, self.options)
 
-    _js__builder__ = '''
-      if (options.showUI){%(jqId)s.pivotUI(data, options)}
-      else {%(jqId)s.pivot(data, options)}
-      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+    _js__builder__ = '''if (options.showUI){%(jqId)s.pivotUI(data, options)} else {%(jqId)s.pivot(data, options)}''' % {
+        "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
     def sub_total(self):
-        """ """
         self.page.jsImports.add('subtotal')
         self.options.dataClass = "$.pivotUtilities.SubtotalPivotData"
         self.options.renderers = "$.pivotUtilities.subtotal_renderers"
@@ -440,8 +380,8 @@ class PivotTable(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %(strAttr)s></div>%(helper)s' % {
-            'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), "helper": self.helper}
+        return '<%(tag)s %(strAttr)s></%(tag)s>%(helper)s' % {
+            "tag": self.tag, 'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), "helper": self.helper}
 
 
 class PivotUITable(PivotTable):
@@ -457,9 +397,8 @@ class PivotUITable(PivotTable):
 
     @property
     def options(self) -> OptTable.OptionsPivotUI:
-        """ Pivot Table options """
+        """Pivot Table options"""
         return super().options
 
-    _js__builder__ = '''
-      %(jqId)s.pivotUI(data, options)
-      ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+    _js__builder__ = '''%(jqId)s.pivotUI(data, options)''' % {
+        "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}

@@ -31,6 +31,7 @@ class ProgressBar(Html.Html):
     requirements = ('jqueryui',)
     name = 'Progress Bar'
     _option_cls = OptSliders.OptionsProgBar
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, number: float, total, width: tuple,
                  height: tuple, helper: Optional[str], options: Optional[dict], html_code: Optional[str],
@@ -46,20 +47,16 @@ class ProgressBar(Html.Html):
 
     @property
     def options(self) -> OptSliders.OptionsProgBar:
-        """
-        The progress bar is designed to display the current percent complete for a process.
+        """The progress bar is designed to display the current percent complete for a process.
 
         The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
-        Related Pages:
-
-          https://api.jqueryui.com/progressbar
+        `Package Doc <https://api.jqueryui.com/progressbar>`_
         """
         return super().options
 
     def to(self, number: float, timer: int = 10):
-        """
-        Move the progress bar to a defined level in a specific amount of time in millisecond.
+        """Move the progress bar to a defined level in a specific amount of time in millisecond.
 
         :param number: The final state for the progress bar
         :param timer: Optional. the appended of the increase in millisecond
@@ -78,8 +75,7 @@ class ProgressBar(Html.Html):
         ])
         return self
 
-    _js__builder__ = '''
-options.value = parseFloat(data);
+    _js__builder__ = '''options.value = parseFloat(data);
 var tooltip_val = ""+ (options.value / options.max * 100).toFixed(options.digits) +"%% ("+ options.value +" / "+ options.max +")";
 %(jqId)s.progressbar(options).find('div').attr("data-toggle", "tooltip").attr("title", tooltip_val).attr("alt", tooltip_val).css(options.css);
 if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
@@ -87,14 +83,11 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 
     @property
     def js(self) -> JsQueryUi.ProgressBar:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript by default.
 
-        Related Pages:
-
-          https://api.jqueryui.com/progressbar
+        `Package Doc <https://api.jqueryui.com/progressbar>`_
 
         :return: A Javascript Dom object
         """
@@ -104,8 +97,7 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript by default.
 
@@ -121,13 +113,15 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
             return '<div %s><span style="position: absolute;margin: -1px 0 0 5px; "></span></div>%s' % (
                 self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
 
-        return '<div %s></div>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+        return '<%s %s></%s>%s' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag, self.helper)
 
 
 class Menu(Html.Html):
     requirements = ('jqueryui',)
     name = 'Menu'
     _option_cls = OptSliders.OptionsMenu
+    tag = "ul"
 
     def __init__(self, page, records, width, height, helper, options, html_code, profile, verbose: bool = False):
         super(Menu, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
@@ -138,64 +132,59 @@ class Menu(Html.Html):
 
     @property
     def style(self) -> GrpClsJqueryUI.ClassMenu:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component."""
         if self._styleObj is None:
             self._styleObj = GrpClsJqueryUI.ClassMenu(self)
         return self._styleObj
 
     @property
     def options(self) -> OptSliders.OptionsMenu:
+        """Property to the comments component options.
+
+        Optional can either impact the Python side or the Javascript builder.
+
+        Python can pass some options to the JavaScript layer.
+
+        `Package Doc <https://api.jqueryui.com/menu>`_
         """
-    Property to the comments component options.
-
-    Optional can either impact the Python side or the Javascript builder.
-
-    Python can pass some options to the JavaScript layer.
-
-    Related Pages:
-
-      https://api.jqueryui.com/menu
-    """
         return super().options
 
     @property
     def js(self) -> JsQueryUi.Menu:
+        """The Javascript functions defined for this component.
+
+        Those can be specific ones for the module or generic ones from the language.
+
+        `Package Doc <https://api.jqueryui.com/menu>`_
+
+        :return: A Javascript Dom object
         """
-    The Javascript functions defined for this component.
-
-    Those can be specific ones for the module or generic ones from the language.
-
-    Related Pages:
-
-      https://api.jqueryui.com/menu
-
-    :return: A Javascript Dom object
-    """
         if self._js is None:
             self._js = JsQueryUi.Menu(self, page=self.page)
         return self._js
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
+        """Return all the Javascript functions defined for an HTML Component.
+
+        Those functions will use plain javascript by default.
+
+        :return: A Javascript Dom object
         """
-    Return all the Javascript functions defined for an HTML Component.
-
-    Those functions will use plain javascript by default.
-
-    :return: A Javascript Dom object
-    """
         if self._dom is None:
             self._dom = JsHtmlJqueryUI.JsHtmlProgressBar(self, page=self.page)
         return self._dom
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<ul %s></ul>%s' % (self.get_attrs(css_class_names=self.style.get_classes()), self.helper)
+        return '<%(tag)s %(attrs)s></%(tag)s>%(helper)s' % {
+            "attrs": self.get_attrs(css_class_names=self.style.get_classes()), "helper": self.helper, "tag": self.tag}
 
 
 class Dialog(Html.Html):
     requirements = ('jqueryui',)
     name = 'Menu'
+    tag = "div"
     _option_cls = OptSliders.OptionDialog
 
     def __init__(self, report: primitives.PageModel, text: Union[Html.Html, str], width: tuple, height: tuple,
@@ -213,31 +202,24 @@ class Dialog(Html.Html):
 
     @property
     def options(self) -> OptSliders.OptionDialog:
-        """
-        Property to the comments component options.
+        """Property to the comments component options.
 
         Optional can either impact the Python side or the Javascript builder.
 
         Python can pass some options to the JavaScript layer.
 
-        Related Pages:
-
-          https://jqueryui.com/dialog/
+        `Package Doc <https://jqueryui.com/dialog/>`_
         """
         return super().options
 
-    _js__builder__ = '''
-if(options.empty){%(jqId)s.empty()}; %(jqId)s.append('<p>'+ data +'</p>'); %(jqId)s.dialog(options)''' % {
-    "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+    _js__builder__ = '''if(options.empty){%(jqId)s.empty()}; %(jqId)s.append('<p>'+ data +'</p>'); %(jqId)s.dialog(options)''' % {
+        "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
     @property
     def js(self) -> JsQueryUi.Dialog:
-        """
-        Open content in an interactive overlay.
+        """Open content in an interactive overlay.
 
-        Related Pages:
-
-          https://jqueryui.com/dialog/
+        `Package Doc <https://jqueryui.com/dialog/>`_
 
         :return: A Javascript Dom object
         """
@@ -247,8 +229,7 @@ if(options.empty){%(jqId)s.empty()}; %(jqId)s.append('<p>'+ data +'</p>'); %(jqI
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript by default.
 
@@ -269,8 +250,9 @@ if(options.empty){%(jqId)s.empty()}; %(jqId)s.append('<p>'+ data +'</p>'); %(jqI
             logging.warning(
                 "More details https://stackoverflow.com/questions/8681707/jqueryui-modal-dialog-does-not-show-close-button-x")
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %s>%s%s</div>' % (
-            self.get_attrs(css_class_names=self.style.get_classes()), "".join(static_content), self.helper)
+        return '<%s %s>%s%s</%s>' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(static_content), self.helper,
+            self.tag)
 
 
 class Slider(Html.Html):
@@ -355,8 +337,7 @@ class Slider(Html.Html):
 
     @property
     def options(self) -> OptSliders.OptionsSlider:
-        """
-        Property to the comments component options.
+        """Property to the comments component options.
 
         Optional can either impact the Python side or the Javascript builder.
 
@@ -366,21 +347,18 @@ class Slider(Html.Html):
 
     @property
     def style(self) -> GrpClsJqueryUI.ClassSlider:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component. """
         if self._styleObj is None:
             self._styleObj = GrpClsJqueryUI.ClassSlider(self)
         return self._styleObj
 
     @property
     def js(self) -> JsQueryUi.Slider:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript by default.
 
-        Related Pages:
-
-          https://api.jqueryui.com/slider
+        `Related Pages <https://api.jqueryui.com/slider>`_
 
         :return: A Javascript Dom object
         """
@@ -389,13 +367,10 @@ class Slider(Html.Html):
         return self._js
 
     def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
-        """
-        Triggered after the user slides a handle, if the value has changed
+        """Triggered after the user slides a handle, if the value has changed
         or if the value is changed programmatically via the value method.
 
-        Related Pages:
-
-          https://api.jqueryui.com/slider/#event-change
+        `Related Pages <https://api.jqueryui.com/slider/#event-change>`_
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -407,12 +382,9 @@ class Slider(Html.Html):
         return self
 
     def start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Triggered when the user starts sliding.
+        """Triggered when the user starts sliding.
 
-        Related Pages:
-
-          https://api.jqueryui.com/slider/#event-start
+        `Related Pages <https://api.jqueryui.com/slider/#event-start>`_
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -424,37 +396,31 @@ class Slider(Html.Html):
         return self
 
     def slide(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Triggered when the user starts sliding.
+        """Triggered when the user starts sliding.
 
-        Related Pages:
-
-          https://api.jqueryui.com/slider/#event-slide
+        `Related Pages <https://api.jqueryui.com/slider/#event-slide>`_
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         """
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
-        self._jsStyles["slide"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True,
-                                                                                    profile=profile)
+        self._jsStyles["slide"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(
+            js_funcs, toStr=True, profile=profile)
         return self
 
     def stop(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Triggered after the user slides a handle.
+        """Triggered after the user slides a handle.
 
-        Related Pages:
-
-          https://api.jqueryui.com/slider/#event-stop
+        `Related Pages <https://api.jqueryui.com/slider/#event-stop>`_
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         """
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
-        self._jsStyles["stop"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True,
-                                                                                   profile=profile)
+        self._jsStyles["stop"] = "function(event, ui){%s}" % JsUtils.jsConvertFncs(
+            js_funcs, toStr=True, profile=profile)
         return self
 
     @property
@@ -476,29 +442,26 @@ if((typeof options.out_builder_fnc !== "undefined") && (typeof window[options.ou
             self.page.properties.js.add_builders(self.js.slide(self._vals))
 
         if self.options.show_min_max:
-            return '''
-        <div %(strAttr)s>
-          <div style="width:100%%;height:20px">
-            <span style="float:left;display:inline-block">%(min)s</span>
-            <span style="float:right;display:inline-block">%(max)s</span>
-          </div>
-          <div id="%(htmlCode)s"></div>
-        </div>%(helper)s''' % {"strAttr": self.get_attrs(with_id=False), "min": self.options.min,
-                               "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
-        return '''
-            <div %(strAttr)s>
-              <div id="%(htmlCode)s"></div>
-            </div>%(helper)s''' % {"strAttr": self.get_attrs(with_id=False), "min": self.options.min,
-                                   "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
+            return '''<div %(strAttr)s>
+  <div style="width:100%%;height:20px">
+    <span style="float:left;display:inline-block">%(min)s</span>
+    <span style="float:right;display:inline-block">%(max)s</span>
+  </div>
+  <div id="%(htmlCode)s"></div>
+</div>%(helper)s''' % {"strAttr": self.get_attrs(with_id=False), "min": self.options.min,
+                       "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
+        return '''<div %(strAttr)s>
+  <div id="%(htmlCode)s"></div>
+</div>%(helper)s''' % {"strAttr": self.get_attrs(with_id=False), "min": self.options.min,
+                       "htmlCode": self.htmlCode, "max": self.options.max, "helper": self.helper}
 
 
 class Range(Slider):
     name = "Slider Range"
     is_range = True
 
-    _js__builder__ = '''options.values = [Math.min(...data), Math.max(...data)]; %(jqId)s.slider(options).css(options.css)
-if (typeof options.handler_css !== 'undefined'){
-  %(jqId)s.find('.ui-slider-handle').css(options.handler_css)}
+    _js__builder__ = '''options.values = [Math.min(...data), Math.max(...data)]; %(jqId)s.slider(options).css(options.css);
+if (typeof options.handler_css !== 'undefined'){%(jqId)s.find('.ui-slider-handle').css(options.handler_css)}
 ''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
 
@@ -515,28 +478,27 @@ class SliderDate(Slider):
     _js__builder__ = '''
 const minDt = new Date(options.min).getTime() / 1000; const maxDt = new Date(options.max).getTime() / 1000;      
 options.min = minDt; options.max = maxDt; options.value = new Date(data).getTime() / 1000;
-%(jqId)s.slider(options).css(options.css)
-''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+%(jqId)s.slider(options).css(options.css)''' % {
+        "jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlSliderDate:
-        """ The Javascript Dom object. """
+        """The Javascript Dom object. """
         if self._dom is None:
             self._dom = JsHtmlJqueryUI.JsHtmlSliderDate(self, page=self.page)
         return self._dom
 
 
 class SliderDates(SliderDate):
-    _js__builder__ = '''
-const minDt = new Date(options.min).getTime() / 1000; const maxDt = new Date(options.max).getTime() / 1000;
-options.min = minDt; options.max = maxDt; 
+    _js__builder__ = '''const minDt = new Date(options.min).getTime() / 1000; 
+const maxDt = new Date(options.max).getTime() / 1000; options.min = minDt; options.max = maxDt; 
 options.values = [new Date(data[0]).getTime() / 1000, new Date(data[1]).getTime() / 1000];
-%(jqId)s.slider(options).css(options.css)
-''' % {"jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
+%(jqId)s.slider(options).css(options.css)''' % {
+        "jqId": JsQuery.decorate_var("jQuery(htmlObj)", convert_var=False)}
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlSliderDates:
-        """ The Javascript Dom object. """
+        """The Javascript Dom object. """
         if self._dom is None:
             self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, page=self.page)
         return self._dom
@@ -577,8 +539,7 @@ class SkillBar(Html.Html):
 
     @property
     def options(self) -> OptSliders.OptionsSkillbars:
-        """
-        Property to the comments component options.
+        """Property to the comments component options.
 
         Optional can either impact the Python side or the Javascript builder.
 
@@ -588,8 +549,7 @@ class SkillBar(Html.Html):
 
     @property
     def js(self) -> JsComponents.SkillBar:
-        """
-        The JavaScript predefined functions for this component.
+        """The JavaScript predefined functions for this component.
 
         :return: A Javascript object
         """
@@ -621,6 +581,7 @@ class OptionsBar(Html.Html):
     requirements = (cssDefaults.ICON_FAMILY,)
     name = 'Options'
     _option_cls = OptSliders.OptionBar
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, records, width: tuple, height: tuple, color: str,
                  options: Optional[dict], profile: Optional[Union[bool, dict]], verbose: bool = False):
@@ -635,8 +596,7 @@ class OptionsBar(Html.Html):
 
     @property
     def options(self) -> OptSliders.OptionBar:
-        """
-        Property to the comments component options.
+        """Property to the comments component options.
 
         Optional can either impact the Python side or the Javascript builder.
 
@@ -645,7 +605,7 @@ class OptionsBar(Html.Html):
         return super().options
 
     def __add__(self, icon):
-        """ Add items to a container """
+        """Add items to a container """
         icon = self.page.ui.icon(icon)
         icon.style.css.margin = "5px"
         super(OptionsBar, self).__add__(icon)
@@ -658,8 +618,8 @@ class OptionsBar(Html.Html):
 
     def __str__(self):
         str_html = "".join([v.html() for v in self.val])
-        return '<div %(attrs)s>%(icons)s</div>' % {
-            'attrs': self.get_attrs(css_class_names=self.style.get_classes()), 'icons': str_html}
+        return '<%(tag)s %(attrs)s>%(icons)s</%(tag)s>' % {
+            "tag": self.tag, 'attrs': self.get_attrs(css_class_names=self.style.get_classes()), 'icons': str_html}
 
 
 class SignIn(Html.Html):
@@ -684,11 +644,10 @@ class SignIn(Html.Html):
             return '<i title="Guest Mode" %(attrs)s></i>' % {
                 'size': self.size, 'attrs': self.get_attrs(css_class_names=self.style.get_classes())}
 
-        return '''
-      <div title="%(user)s" %(attrs)s>
-        <p style="font-size:%(size)s;line-height:%(height)s;margin:0;padding:0">%(letter)s</p>
-      </div> ''' % {'size': self.size, 'height': self.style.css.height, 'letter': self.page.user[0].upper(),
-                    'user': self.page.user, 'attrs': self.get_attrs(css_class_names=self.style.get_classes())}
+        return '''<div title="%(user)s" %(attrs)s>
+<p style="font-size:%(size)s;line-height:%(height)s;margin:0;padding:0">%(letter)s</p>
+</div> ''' % {'size': self.size, 'height': self.style.css.height, 'letter': self.page.user[0].upper(),
+              'user': self.page.user, 'attrs': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class Filters(Html.Html):
@@ -713,8 +672,7 @@ class Filters(Html.Html):
 
     @property
     def options(self) -> OptList.OptionsTagItems:
-        """
-        Property to the comments component options.
+        """Property to the comments component options.
 
         Optional can either impact the Python side or the Javascript builder.
 
@@ -723,8 +681,7 @@ class Filters(Html.Html):
         return super().options
 
     def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Javascript event triggered by the enter key.
+        """Javascript event triggered by the enter key.
 
         :param js_funcs: The JavaScript events.
         :param profile: Optional. A flag to set the component performance storage.
@@ -739,7 +696,6 @@ class Filters(Html.Html):
     def drop(self, js_funcs: types.JS_FUNCS_TYPES, prevent_default: bool = True, profile: types.PROFILE_TYPE = None):
         """
 
-
         :param js_funcs: The Javascript functions.
         :param prevent_default:
         :param profile: Optional. A flag to set the component performance storage.
@@ -750,7 +706,6 @@ class Filters(Html.Html):
 
     def delete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """
-
 
         :param js_funcs: The Javascript functions.
         :param profile: Optional. A flag to set the component performance storage.
@@ -768,7 +723,6 @@ class Filters(Html.Html):
                disabled: bool = False, fixed: bool = False):
         """
 
-
         :param value:
         :param category:
         :param name:
@@ -783,8 +737,7 @@ class Filters(Html.Html):
 
     def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: dict = None,
                   profile: types.PROFILE_TYPE = None, source_event: str = None):
-        """
-        Set the Filters component draggable.
+        """Set the Filters component draggable.
 
         :param js_funcs: Javascript functions
         :param options: Optional. Specific Python options available for this component
@@ -801,7 +754,7 @@ class Filters(Html.Html):
 
     @property
     def dom(self) -> JsHtmlList.Tags:
-        """ The Javascript Dom object. """
+        """The Javascript Dom object. """
         if self._dom is None:
             self._dom = JsHtmlList.Tags(self, page=self.page)
         return self._dom

@@ -1,8 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types as etypes
 
+from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
@@ -106,6 +107,31 @@ class JsHtmlTabulator(JsHtml.JsHtml):
         """
         return self.component.js.clearData()
 
+    def createWidget(self, html_code: str, container: str = None, options: etypes.JS_DATA_TYPES = None):
+        """Create a new widget derived from an existing one.
+        Using this method will make the main object as a template namely it will be removed from the page scope.
+
+        :param html_code: The widget HTML code
+        :param container: The widget container. Default the body
+        :param options: The specific widget options
+        """
+        self.component.options.managed = False
+        self.component.js_code = html_code
+        lib = "bb" if self.component.name == "Billboard" else 'c3'
+        return JsUtils.jsWrap('''
+(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
+    const newDiv = document.createElement(tag);
+    Object.keys(attrs).forEach(function(key) {newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    window[jsCode] = new Tabulator("#"+ htmlCode, ctx);
+})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
+            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(), "lib": lib,
+            "container": JsUtils.jsConvertData(container, None)
+        })
+
 
 class JsHtmlAggrid(JsHtml.JsHtml):
 
@@ -120,3 +146,28 @@ class JsHtmlAggrid(JsHtml.JsHtml):
 
     def selection(self):
         return self.component.js.getSelectedRows()
+
+    def createWidget(self, html_code: str, container: str = None, options: etypes.JS_DATA_TYPES = None):
+        """Create a new widget derived from an existing one.
+        Using this method will make the main object as a template namely it will be removed from the page scope.
+
+        :param html_code: The widget HTML code
+        :param container: The widget container. Default the body
+        :param options: The specific widget options
+        """
+        self.component.options.managed = False
+        self.component.js_code = html_code
+        return JsUtils.jsWrap('''
+(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
+    const newDiv = document.createElement(tag);
+    Object.keys(attrs).forEach(function(key) {newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode; 
+    if(!containerId){ document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    window[jsCode] = ctx; new agGrid.Grid(newDiv, window[jsCode]); return newDiv
+})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)
+        ''' % {
+            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "tag": self.component.tag, "ctx": self.component.options.config_js(options),
+            "container": JsUtils.jsConvertData(container, None),
+        })

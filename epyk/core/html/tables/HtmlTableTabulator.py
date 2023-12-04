@@ -19,6 +19,7 @@ from epyk.core.css.styles import GrpClsTable
 class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('tabulator-tables',)
     name = 'Tabulator Table'
+    tag = "div"
     _option_cls = OptTableTabulator.TableConfig
 
     def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
@@ -35,64 +36,54 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     @property
     @Html.deprecated("Should use .js._. instead to get table core components")
     def cell(self) -> JsHtmlTables.JsHtmlTabulatorCell:
-        return JsHtmlTables.JsHtmlTabulatorCell(js_code=self.tableId, page=self.page, component=self)
+        return JsHtmlTables.JsHtmlTabulatorCell(js_code=self.js_code, page=self.page, component=self)
 
     @property
     def style(self) -> GrpClsTable.Tabulator:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpClsTable.Tabulator(self)
         return self._styleObj
 
     @property
     def dom(self) -> JsHtmlTables.JsHtmlTabulator:
-        """ HTML Dom object. """
+        """HTML Dom object"""
         if self._dom is None:
             self._dom = JsHtmlTables.JsHtmlTabulator(self, page=self.page)
         return self._dom
 
     @property
-    def tableId(self):
-        """ Return the Javascript variable of the chart. """
-        return "%s_obj" % self.htmlCode
-
-    @property
     def options(self) -> OptTableTabulator.TableConfig:
-        """ Tabulator table options. """
+        """Tabulator table options"""
         return super().options
 
     @property
     @Html.deprecated("use self.options instead")
     def config(self) -> OptTableTabulator.TableConfig:
-        """
-        Tabulator configuration options.
-
+        """Tabulator configuration options.
         Deprecated and replaced by component options.
         """
         return self.options
 
     @property
     def js(self) -> JsTabulator.Tabulator:
-        """
-        Return the Javascript internal object specific to this package.
+        """Return the Javascript internal object specific to this package.
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsTabulator.Tabulator(page=self.page, selector=self.tableId, set_var=False, component=self)
+            self._js = JsTabulator.Tabulator(page=self.page, selector=self.js_code, set_var=False, component=self)
         return self._js
 
     def data(self, data):
-        """
-        Add data to the table.
+        """Add data to the table.
 
         :param data: Data object
         """
         self.options.data = data
 
     def add_column(self, field: str = None, title: str = None):
-        """
-        Add new column to the underlying Tabulator object.
+        """Add new column to the underlying Tabulator object.
 
         Usage::
 
@@ -110,11 +101,8 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self.options.add_column(field, title)
 
     def get_column(self, by_field: str = None, by_title: str = None) -> OptTableTabulator.Column:
-        """
-        Get the column from the underlying Tabulator object by field or by title.
-
+        """Get the column from the underlying Tabulator object by field or by title.
         Pointing by field is recommended as the title might change quite easily.
-
         This function will only get columns defined from the Python side.
 
         :param by_field: Optional. The field reference for the column
@@ -123,17 +111,14 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         return self.options.get_column(by_field, by_title)
 
     def get_columns(self) -> Generator[OptTableTabulator.Column, None, None]:
-        """
-        Get a generator with all the columns defined for the table on the Python side.
-
+        """Get a generator with all the columns defined for the table on the Python side.
         This function will only return columns defined from the Python side.
         """
         for c in self.options.columns:
             yield c
 
     def headers(self, cols_def: dict):
-        """
-        Update the header definition thanks to a static configuration.
+        """Update the header definition thanks to a static configuration.
 
         :param cols_def: The header definition
         """
@@ -143,9 +128,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
               on_ready: bool = False, data_ref: str = "data"):
-        """
-        Use a rowClick event as underlying click event.
-
+        """Use a rowClick event as underlying click event.
         Use the function row.getData() to make the data available.
 
         :param js_funcs: Javascript functions
@@ -159,20 +142,30 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.rowClick(["var %s = row.getData()" % data_ref] + js_funcs)
         return self
 
-    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
         """
-        Common JavaScript function to set the table columns definition.
+        self.dom.varName = "document.getElementById('%s')" % html_code
+        self.js.varName = js_code
+
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None):
+        """Common JavaScript function to set the table columns definition.
 
         Usage::
 
           tab = page.ui.tables.tabulators.table()
-          page.ui.button("Update Tabulator").click([
-            tab.define([{"field": "col1", "title": "Column 1"}]),])
+          page.ui.button("Update Tabulator").click([tab.define([{"field": "col1", "title": "Column 1"}]),])
 
         :param options: Optional. The header attributes
         :param dataflows: Chain of config transformations
+        :param component_id: Optional. Change the component id if specific
         """
-
+        self.js_code  = component_id
         if options is None:
             options = JsUtils.jsWrap(self.js.varId)
             return JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
@@ -184,8 +177,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Common JavaScript function to add data to the table.
+        """Common JavaScript function to add data to the table.
 
         Usage::
 
@@ -201,28 +193,25 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code  = component_id
         if data is not None:
             state_expr = ""
             if stop_state:
-                state_expr = ";%s" % self.hide_state(component_id)
+                state_expr = ";%s" % self.hide_state(self.html_code)
             return "%s%s" % (self.js.setData(JsUtils.dataFlows(data, dataflows, self.page)).toStr(), state_expr)
 
         return self._js__builder__ % {
-            "tableId": self.tableId, "htmlCode": self.htmlCode, "config": self._json_config,
+            "tableId": self.js_code, "htmlCode": self.html_code, "config": self._json_config,
             "options": self.options.config_js(options)}
 
     def extendModule(self, category: str, type: str, func_name: str, func_def: str):
-        """
-        Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality and a
-        series of modules that provide all of its wonderful features.
-
+        """Tabulator is built in a modular fashion with a core codebase providing basic table rendering functionality
+        and a series of modules that provide all of its wonderful features.
         All of the available modules are installed by default to ensure that you can provide your users with the richest
         experience possible with minimal setup.
 
-        Related Pages:
-
-          http://tabulator.info/docs/4.0/modules
-          http://tabulator.info/docs/4.2/modules#module-keybindings
+        `Tabulator Modules <http://tabulator.info/docs/4.0/modules>`_
+        `Tabulator keybindings <http://tabulator.info/docs/4.2/modules#module-keybindings>`_
 
         :param category: The name of the module. e.g format
         :param type: The name of the property you want to extend. e.g. formatters
@@ -237,7 +226,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return "<div %s></div>" % (self.get_attrs(css_class_names=self.style.get_classes()))
+        return "<%s %s></%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class TableTree(Table):
@@ -252,5 +241,5 @@ class TableTree(Table):
 
     @property
     def options(self) -> OptTableTabulator.TableTreeConfig:
-        """ Tabulator table options. """
+        """Tabulator table options"""
         return super().options

@@ -393,7 +393,7 @@ class Scatter(GraphPlotly.Chart):
     @property
     def chart(self) -> JsPlotly.Pie:
         if self._chart is None:
-            self._chart = JsPlotly.Pie(page=self.page, js_code=self.chartId, component=self)
+            self._chart = JsPlotly.Pie(page=self.page, js_code=self.js_code, component=self)
         return self._chart
 
     @property
@@ -424,7 +424,7 @@ class Chorolet(GraphPlotly.Chart):
     @property
     def chart(self) -> JsPlotly.Pie:
         if self._chart is None:
-            self._chart = JsPlotly.Pie(page=self.page, js_code=self.chartId, component=self)
+            self._chart = JsPlotly.Pie(page=self.page, js_code=self.js_code, component=self)
         return self._chart
 
     @property
@@ -455,7 +455,7 @@ class Choropleth(GraphPlotly.Chart):
     @property
     def chart(self) -> JsPlotly.Pie:
         if self._chart is None:
-            self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.chartId)
+            self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.js_code)
         return self._chart
 
     @property
@@ -491,7 +491,7 @@ class BubbleGeo(GraphPlotly.Chart):
     @property
     def chart(self) -> JsPlotly.Pie:
         if self._chart is None:
-            self._chart = JsPlotly.Pie(page=self.page, js_code=self.chartId, component=self)
+            self._chart = JsPlotly.Pie(page=self.page, js_code=self.js_code, component=self)
         return self._chart
 
     @property

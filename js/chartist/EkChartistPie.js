@@ -1,5 +1,5 @@
 
-function ekChartist(data, options){
+function ekChartistPie(data, options){
     let results = {labels: [], series: []};
     if (data){
         let labels = []; let temp = {};
@@ -14,10 +14,10 @@ function ekChartist(data, options){
         options.y_columns.forEach(function(series){
           let dataset = [];
           labels.forEach(function(x){dataset.push(temp[series][x])});
-          datasets.push({name: series, data:dataset});
+          datasets.push(dataset);
         })
         results.labels = labels;
-        results.series = datasets;
+        results.series = datasets[0];
     };
     return results
 }

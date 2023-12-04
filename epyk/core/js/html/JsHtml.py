@@ -161,11 +161,7 @@ class ContentFormatters:
 
           inp = page.ui.input()
           values = ["A", "B"]
-          inp.enter([
-            page.js.if_(self.dom.content.isIn(values), [
-              page.js.alert("Ok")
-            ]).else_([])
-          ])
+          inp.enter([page.js.if_(self.dom.content.isIn(values), [page.js.alert("Ok")]).else_([])])
 
         :param values: The values to use on the JavaScript side for the if statement
         """
@@ -284,7 +280,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     def __init__(self, component: primitives.HtmlModel, js_code: Optional[str] = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
+        self.htmlCode = js_code if js_code is not None else component.html_code
         self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
         self.component, self.page = component, page
         self._js, self._container = [], self.element
@@ -368,7 +364,7 @@ class JsHtml(JsNodeDom.JsDoms):
         """ Link to the JQuery functions. """
         if self._jquery is None:
             self._jquery = JsQuery.JQuery(
-                component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False)
+                component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.html_code), set_var=False)
         return self._jquery
 
     @property
@@ -376,7 +372,7 @@ class JsHtml(JsNodeDom.JsDoms):
         """ Wrapper to the D3 library. """
         if self._d3 is None:
             self._d3 = JsD3.D3Select(
-                component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.htmlCode)
+                component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.html_code)
         return self._d3
 
     @property
@@ -384,7 +380,7 @@ class JsHtml(JsNodeDom.JsDoms):
         """ Wrapper to the JqueryUI component. """
         if self._jquery_ui is None:
             self._jquery_ui = JsQueryUi.JQueryUI(
-                component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False,
+                component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.html_code), set_var=False,
                 page=self.page)
         return self._jquery_ui
 
@@ -518,9 +514,7 @@ class JsHtml(JsNodeDom.JsDoms):
         Usage::
 
           mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
-          mode_switch.input.click([
-            icon.dom.visible(mode_switch.input.dom.content)
-          ])
+          mode_switch.input.click([icon.dom.visible(mode_switch.input.dom.content)])
 
         :param flag: Optional. specify the state of the component. Default True
         :param inverse: Optional. To specify the effect of the data flag
@@ -642,8 +636,7 @@ class JsHtml(JsNodeDom.JsDoms):
           b = page.ui.button("test")
           b.click([
             page.js.console.debugger,
-            d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))
-          ])
+            d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))])
 
         :param components: The different HTML objects to be added to the component
         :param append: Mention if the component should replace or append the data
@@ -690,10 +683,9 @@ class JsHtml(JsNodeDom.JsDoms):
     @packageImport("html2canvas")
     def capture(self):
         """ Copy a screenshot of the component to the Clipboard """
-        return '''
-html2canvas(%(id)s).then((canvas) => {
-  canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]))
-})''' % {"id": self.component.dom.varId}
+        return '''html2canvas(%(id)s).then((canvas) => {
+  canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]))})''' % {
+            "id": self.component.dom.varId}
 
     def press(self):
         """ DOM event to trigger a click based on the pressed' aria tag """
@@ -702,6 +694,21 @@ html2canvas(%(id)s).then((canvas) => {
     def unpress(self):
         """ DOM event to trigger a click based on the pressed' aria tag """
         return self.page.js.if_(self.component.aria.js_is("pressed", "true"), [self.trigger("click")])
+
+    def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
+        if self.component.tag is None:
+            raise Exception("No JavaScript define to generate this component")
+
+        self.component.options.managed = False
+        return JsUtils.jsWrap('''
+(function(containerId, tag, htmlCode, attrs){
+    const newDiv = document.createElement(tag);
+    Object.keys(attrs).forEach(function(key) {newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    return newDiv })(%(container)s, "%(tag)s", %(html_code)s, %(attrs)s)''' % {
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "tag": self.component.tag, "container": JsUtils.jsConvertData(container, None)})
 
 
 class JsHtmlRich(JsHtml):
@@ -824,10 +831,7 @@ offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
           b = component.ui.button("test")
           b.click([
             b.dom.loading(True),
-            rptObj.js.window.setTimeout([
-              b.dom.loading(False)
-            ], 5000),
-          ])
+            rptObj.js.window.setTimeout([b.dom.loading(False)], 5000)])
 
         :param flag:
         :param multiple: Optional.
@@ -931,10 +935,8 @@ class JsHtmlButtonChecks(JsHtml):
 
           data = [
             {"value": "Test 1", "checked": True, "name": 'name'},
-            {"value": "Test 2", "dsc": 'description'},
-          ]
+            {"value": "Test 2", "dsc": 'description'}]
           cb = page.ui.buttons.checkboxes(data)
-
           a = page.ui.button("Add")
           a.click([cb.dom.add([{"value": "test"}])])
 
@@ -970,10 +972,8 @@ if (%(unique)s){%(jqId)s.find('span').each(function(){
 
           data = [
             {"value": "Test 1", "checked": True, "name": 'name'},
-            {"value": "Test 2", "dsc": 'description'},
-          ]
+            {"value": "Test 2", "dsc": 'description'}]
           cb = page.ui.buttons.checkboxes(data)
-
           d = page.ui.button("Empty")
           d.click([cb.dom.empty()])
         """
@@ -987,10 +987,8 @@ if (%(unique)s){%(jqId)s.find('span').each(function(){
 
           data = [
             {"value": "Test 1", "checked": True, "name": 'name'},
-            {"value": "Test 2", "dsc": 'description'},
-          ]
+            {"value": "Test 2", "dsc": 'description'}]
           cb = page.ui.buttons.checkboxes(data)
-
           d = page.ui.button("Delete")
           d.click([cb.dom.delete("test 2")])
 
@@ -1012,10 +1010,8 @@ else {%(jqId)s.find('span').each(function(){
 
           data = [
             {"value": "Test 1", "checked": True, "name": 'name'},
-            {"value": "Test 2", "dsc": 'description'},
-          ]
+            {"value": "Test 2", "dsc": 'description'}]
           cb = page.ui.buttons.checkboxes(data)
-
           d = page.ui.button("Check")
           d.click([cb.dom.check("test 2")])
 
@@ -1045,10 +1041,8 @@ var %(dataRef)s = %(jsData)s;
 
           data = [
             {"value": "Test 1", "checked": True, "name": 'name'},
-            {"value": "Test 2", "dsc": 'description'},
-          ]
+            {"value": "Test 2", "dsc": 'description'}]
           cb = page.ui.buttons.checkboxes(data)
-
           s = page.ui.button("Style")
           s.click([cb.dom.css_label("Test 2", {"color": 'orange'})])
 
@@ -1339,32 +1333,25 @@ class JsMedia(JsHtml):
 var mediaConfig =  { video: true };
 if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
     navigator.mediaDevices.getUserMedia(mediaConfig).then(function(stream) {
-%(varId)s.srcObject = stream; %(varId)s.play();});
-}
+%(varId)s.srcObject = stream; %(varId)s.play();});}
 else if(navigator.getUserMedia) { 
 navigator.getUserMedia(mediaConfig, function(stream) {
-  %(varId)s.src = stream; %(varId)s.play();
-}, errBack);
+  %(varId)s.src = stream; %(varId)s.play();}, errBack);
 } else if(navigator.webkitGetUserMedia) {
 navigator.webkitGetUserMedia(mediaConfig, function(stream){
-  %(varId)s.src = window.webkitURL.createObjectURL(stream); %(varId)s.play();
-}, errBack);
+  %(varId)s.src = window.webkitURL.createObjectURL(stream); %(varId)s.play();}, errBack);
 } else if(navigator.mozGetUserMedia) {
 navigator.mozGetUserMedia(mediaConfig, function(stream){
-  %(varId)s.src = window.URL.createObjectURL(stream); %(varId)s.play();
-}, errBack);
-} ''' % {"varId": self.varId}
+  %(varId)s.src = window.URL.createObjectURL(stream); %(varId)s.play();}, errBack);} ''' % {"varId": self.varId}
 
     def stop(self):
         """
-
 
         Related Pages::
 
           https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
         """
-        return '''
-var stream = %s.srcObject; var tracks = stream.getTracks();
+        return '''var stream = %s.srcObject; var tracks = stream.getTracks();
 for (var i = 0; i < tracks.length; i++) {var track = tracks[i]; track.stop()}
 video.srcObject = null;''' % self.varId
 
@@ -1374,18 +1361,15 @@ video.srcObject = null;''' % self.varId
     def takepicture(self, width: int = 50, height: int = 50):
         """
 
-
         Related Pages::
 
           https://developer.mozilla.org/fr/docs/WebRTC/Prendre_des_photos_avec_la_webcam
         """
         return '''
-var canvas = document.createElement("canvas");
-canvas.width = %(width)s; canvas.height = %(height)s;
+var canvas = document.createElement("canvas"); canvas.width = %(width)s; canvas.height = %(height)s;
 canvas.getContext('2d').drawImage(%(varId)s, 0, 0, canvas.width, canvas.height);
-var data = canvas.toDataURL('image/png');
-photo.setAttribute('src', data);
-''' % {"varId": self.varId, "width": width, "height": height}
+var data = canvas.toDataURL('image/png'); photo.setAttribute('src', data)''' % {
+            "varId": self.varId, "width": width, "height": height}
 
     def record(self, start: bool = True):
         """
@@ -1443,11 +1427,9 @@ class JsHtmlTable(JsHtml):
     def content(self):
         return JsObjects.JsArray.JsArray.get('''
 (function(){
-   var values = []; 
-   %(component)s.querySelectorAll("tr").forEach(function(row){
-      var rec = []; row.childNodes.forEach(function(cell){
-        rec.push(cell.innerText)}); values.push(rec)
-   });return values })()''' % {"component": self.component.dom.varName})
+   var values = []; %(component)s.querySelectorAll("tr").forEach(function(row){
+      var rec = []; row.childNodes.forEach(function(cell){rec.push(cell.innerText)}); values.push(rec)
+});return values })()''' % {"component": self.component.dom.varName})
 
 
 class JsHtmlLi(JsHtmlRich):

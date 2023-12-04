@@ -1,6 +1,18 @@
 
 
 BOOTSTRAP = {
+  'tempus-dominus': {
+    'version': '6.7.13',
+    'req': [
+      {'alias': 'font-awesome'},
+      {'alias': 'bootstrap'},
+      {'alias': 'moment'}],
+    'website': 'https://getdatepicker.com/6/',
+    'register': {'alias': 'datetimepicker', 'module': 'tempusdominus-bootstrap-4.min', 'npm': 'datetimepicker'},
+    'modules': [
+      {'script': 'tempus-dominus.min.js', 'path': 'tempus-dominus/%(version)s/js/'},
+      {'script': 'tempus-dominus.min.css', 'path': 'tempus-dominus/%(version)s/css/'},
+    ]},
   'tempusdominus-bootstrap-4': {
     'version': '5.39.0',
     'req': [

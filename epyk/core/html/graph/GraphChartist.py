@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import List
 from epyk.core.py import types as etypes
 
 from epyk.core.py import primitives
@@ -6,11 +6,13 @@ from epyk.core.css import Colors
 from epyk.core.html.options import OptChartist
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.js.html import JsHtmlCharts
 from epyk.core.js import JsUtils
 
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'ChartList'
+    tag = "div"
     _option_cls = OptChartist.OptionsChartistLine
     requirements = ('chartist',)
     builder_name = "EkChartist"
@@ -21,15 +23,51 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         super(Chart, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
         self.style.css.margin_top = 10
-        self.chartId = "%s_obj" % self.htmlCode
         self.__defined_options = None
+
+    @property
+    def options(self) -> OptChartist.OptionsChartistLine:
+        """Property to the component options.
+        Options can either impact the Python side or the Javascript builder.
+        Python can pass some options to the JavaScript layer.
+        """
+        return super().options
+
+    @property
+    def dom(self) -> JsHtmlCharts.ChartJs:
+        """Return all the Javascript functions defined for an HTML Component.
+        Those functions will use plain javascript by default.
+
+        :return: A Javascript Dom object.
+        """
+        if self._dom is None:
+            self._dom = JsHtmlCharts.Chartist(page=self.page, component=self, js_code=self.js_code)
+        return self._dom
+
+    def define(self, options: etypes.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None) -> str:
+        """Override the chart settings on the JavaScript side.
+        This will allow ot set specific styles for some series or also add commons properties.
+
+        :param options: JavaScript of Python attributes
+        :param dataflows: Chain of config transformations:
+        """
+        self.js_code = component_id
+        if options is None:
+            if dataflows is not None:
+                return "let chartCtx = %(config)s;window['%(chartId)s'].update(null, chartCtx)" % {
+                    "config": JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap("window['%s']" % self.js_code), dataflows, self.page)),
+                    'chartId': self.js_code}
+
+        if dataflows is not None:
+            options = JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
+        return """window['%(chartId)s'].update(null, %(ctx)s)""" % {
+            'chartId': self.js_code, "ctx": JsUtils.jsConvertData(options, None)}
 
     @Html.jformatter("chartist")
     def build(self, data: etypes.JS_DATA_TYPES = None, options: etypes.JS_DATA_TYPES = None,
               profile: etypes.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
-        Update the chart with context and / or data changes.
+        """Update the chart with context and / or data changes.
 
         :param data: Optional. The full datasets object expected by ChartJs
         :param options: Optional. Specific Python options available for this component
@@ -38,6 +76,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         if data is not None:
             builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
                 self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
@@ -45,20 +84,41 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
-            return """window['%(chartId)s'].update(%(builder)s);%(state)s""" % {
-                'chartId': self.chartId, 'builder': builder_fnc, "state": state_expr}
+            return """window['%(chartId)s'].update(%(builder)s, %(ctx)s);%(state)s""" % {
+                'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr,
+                "ctx": self.options.config_js(options).toStr()}
 
-        return '%(chartId)s = new Chartist.%(chartType)s("#%(htmlCode)s", {}, %(ctx)s)' % {
-            "chartId": self.chartId, "htmlCode": self.html_code, "ctx": {}, "chartType": self._chart__type}
+        return '%(chartId)s = new Chartist.%(chartType)s("#"+ %(htmlCode)s, %(ctx)s)' % {
+            "chartId": self.js_code, "htmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
+            "ctx": self.options.config_js(options).toStr(), "chartType": self._chart__type}
 
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class ChartBar(Chart):
     _chart__type = 'Bar'
+    _option_cls = OptChartist.OptionsChartistBar
+
+    @property
+    def options(self) -> OptChartist.OptionsChartistBar:
+        """Property to the component options.
+        Options can either impact the Python side or the Javascript builder.
+        Python can pass some options to the JavaScript layer.
+        """
+        return super().options
 
 
 class ChartPie(Chart):
     _chart__type = 'Pie'
+    builder_name = "EkChartistPie"
+    _option_cls = OptChartist.OptionsChartistPie
+
+    @property
+    def options(self) -> OptChartist.OptionsChartistPie:
+        """Property to the component options.
+        Options can either impact the Python side or the Javascript builder.
+        Python can pass some options to the JavaScript layer.
+        """
+        return super().options

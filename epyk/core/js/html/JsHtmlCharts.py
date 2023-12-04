@@ -27,7 +27,7 @@ class ChartJs(JsCanvas.Canvas):
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
+        self.htmlCode = js_code if js_code is not None else component.html_code
         self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
         self.component, self.page = component, page
         self._js = []
@@ -35,14 +35,14 @@ class ChartJs(JsCanvas.Canvas):
 
     @property
     def val(self):
-        """ Return a Javascript val object. """
+        """Return a Javascript val object"""
         return JsObjects.JsObjects.get(
             "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
                 self.htmlCode, self.content.toStr()))
 
     @property
     def by_name(self) -> JsNodeDom.JsDomsList:
-        """ Get Chart objects by name. """
+        """Get Chart objects by name"""
         if self.component.attr.get('name') is not None:
             return JsNodeDom.JsDomsList(
                 None, "document.getElementsByName('%s')" % self.component.attr.get('name'), page=self.page)
@@ -51,8 +51,7 @@ class ChartJs(JsCanvas.Canvas):
 
     @property
     def isInViewPort(self) -> JsObjects.JsObject.JsObject:
-        """
-        Check if the component is in the visible part of the page (the viewport).
+        """Check if the component is in the visible part of the page (the viewport).
 
         :return: A Javascript boolean
         """
@@ -64,8 +63,7 @@ class ChartJs(JsCanvas.Canvas):
         return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
     def onViewPort(self, js_funcs: types.JS_FUNCS_TYPES):
-        """
-        Trigger some code when the component is visible on the visible part of the page (the viewport).
+        """Trigger some code when the component is visible on the visible part of the page (the viewport).
 
         :param js_funcs: The Javascript events
         """
@@ -73,7 +71,7 @@ class ChartJs(JsCanvas.Canvas):
 
     @property
     def content(self):
-        """ The component content object. """
+        """The component content object"""
         return JsHtml.ContentFormatters(self.page, "%s.value" % self.varName)
 
     def empty(self):
@@ -81,12 +79,12 @@ class ChartJs(JsCanvas.Canvas):
 
     @property
     def events(self) -> JsNodeDom.JsDomEvents:
-        """ Link to the events attached to a Javascript DOM object. """
+        """Link to the events attached to a Javascript DOM object"""
         return JsNodeDom.JsDomEvents(self.component)
 
     @property
     def jquery(self) -> JsQuery.JQuery:
-        """ Link to the JQuery functions. """
+        """Link to the JQuery functions"""
         if self._jquery is None:
             self._jquery = JsQuery.JQuery(component=self.component,
                                           selector=JsQuery.decorate_var("#%s" % self.component.htmlCode), set_var=False)
@@ -94,14 +92,14 @@ class ChartJs(JsCanvas.Canvas):
 
     @property
     def d3(self) -> JsD3.D3Select:
-        """ Wrapper to the D3 library. """
+        """Wrapper to the D3 library"""
         if self._d3 is None:
             self._d3 = JsD3.D3Select(component=self.component, selector="d3.select('#%s')" % self.component.htmlCode)
         return self._d3
 
     @property
     def objects(self) -> JsObjects.JsObjects:
-        """ Interface to the main Javascript Classes and Primitives. """
+        """Interface to the main Javascript Classes and Primitives"""
         return JsObjects.JsObjects(self.page)
 
     @property
@@ -110,17 +108,14 @@ class ChartJs(JsCanvas.Canvas):
         return JsHtml.Formatters(self.page, self.content.toStr())
 
     def style(self, attrs: dict):
-        """
-        Style property to change from the javascript the CSS attributes of an HTML object.
+        """Style property to change from the javascript the CSS attributes of an HTML object.
 
         Usage::
 
           button.js.style({"backgroundColor": 'red'})
           button.js.style({"backgroundColor": None})
 
-        Related Pages:
-
-          https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
+        `CSS Doc <https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style>`_
 
         :param attrs: The CSS attributes
     """
@@ -134,8 +129,7 @@ class ChartJs(JsCanvas.Canvas):
 
     def registerFunction(self, func_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[dict] = None,
                          profile: types.PROFILE_TYPE = None):
-        """
-        Javascript Framework extension.
+        """Javascript Framework extension.
 
         Register a predefined Javascript function.
         This is only dedicated to specific Javascript transformation functions.
@@ -152,30 +146,24 @@ class ChartJs(JsCanvas.Canvas):
         return self
 
     def hide(self):
-        """
-        Hide the component.
+        """Hide the component.
 
         Usage::
 
           input.js.hide()
 
-        Related Pages:
-
-          https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+        `Hide Effect Doc <https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/>`_
         """
         return self.css("display", "none")
 
     def show(self, inline: Optional[str] = None, duration: Optional[int] = None, display_value: Optional[str] = None):
-        """
-        Display the component.
+        """Display the component.
 
         Usage::
 
           input.js.show()
 
-        Related Pages:
-
-          https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+        `Show Effect Doc <https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/>`_
 
         :param inline:
         :param duration: A time in second for the component display
@@ -203,17 +191,14 @@ class ChartJs(JsCanvas.Canvas):
         return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
     def toggle(self, attr: str = "display", js_val1: Optional[str] = None, js_val2: str = "none"):
-        """
-        Toggle (hide / show) the display of the component
+        """Toggle (hide / show) the display of the component
 
         Usage::
 
           input.js.toggle()
           input.js.toggle("background", "red", "blue")
 
-        Related Pages:
-
-          https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+        `Toggle Effect Doc <https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/>`_
 
         :param attr:
         :param js_val1:
@@ -262,8 +247,7 @@ class ChartJs(JsCanvas.Canvas):
 
     def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
                  profile: types.PROFILE_TYPE = None):
-        """
-        Load during a Javascript event a component within the one using this method.
+        """Load during a Javascript event a component within the one using this method.
         This cannot be tested during the Python execution and should be tested in the browser.
 
         Tip: It is possible to add a break point to debug in the browser by adding.
@@ -294,8 +278,7 @@ class ChartJs(JsCanvas.Canvas):
         return JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
     def options(self, options: Optional[dict] = None):
-        """
-        Return the builder options used to generate the object on the Javascript side.
+        """Return the builder options used to generate the object on the Javascript side.
         This is not necessarily the same object as the component options as some can be only used on the Python side.
 
         This will not change the original option object used during the first object creation.
@@ -317,7 +300,7 @@ class ChartJs(JsCanvas.Canvas):
             "(function(canvas){var image = new Image(); image.src = canvas.toDataURL('image/png'); return image})(%s)" % self.varName)
 
     def active(self):
-        """ Return the active clicked point. """
+        """Return the active clicked point"""
         if self.component._chart__type in ["scatter", "bubble"]:
             active_points = self.component.activePoints()
             return JsObjects.JsObject.JsObject.get("{x: %s, y: %s, label: %s}" % (
@@ -332,3 +315,140 @@ class ChartJs(JsCanvas.Canvas):
             self.component.activePoints().y,
             self.component.activePoints().x,
         ))
+
+    def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
+        """Create a new widget derived from an existing one.
+        Using this method will make the main object as a template namely it will be removed from the page scope.
+
+        :param html_code: The widget HTML code
+        :param container: The widget container. Default the body
+        :param options: The specific widget options
+        """
+        self.component.options.managed = False
+        self.component.js_code = html_code
+        return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
+    const newDiv = document.createElement(tag);Object.keys(attrs).forEach(
+        function(key) {newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    if(!containerId){ document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    window[jsCode] = new Chart(newDiv.getContext("2d"), ctx); return newDiv;
+})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
+            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "tag": self.component.tag, "ctx": self.component.getCtx(options),
+            "container": JsUtils.jsConvertData(container, None),
+        })
+
+
+class ChartFrappe(JsHtml.JsHtml):
+
+    def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
+        """Create a new widget derived from an existing one.
+        Using this method will make the main object as a template namely it will be removed from the page scope.
+
+        :param html_code: The widget HTML code
+        :param container: The widget container. Default the body
+        :param options: The specific widget options
+        """
+        self.component.options.managed = False
+        self.component.js_code = html_code
+        return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
+    const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
+        newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    window[jsCode] = new frappe.Chart('#'+ htmlCode, ctx); return newDiv
+})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
+            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(),
+            "container": JsUtils.jsConvertData(container, None),
+        })
+
+
+class ChartApex(JsHtml.JsHtml):
+
+    def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
+        """Create a new widget derived from an existing one.
+        Using this method will make the main object as a template namely it will be removed from the page scope.
+
+        :param html_code: The widget HTML code
+        :param container: The widget container. Default the body
+        :param options: The specific widget options
+        """
+        self.component.options.managed = False
+        self.component.js_code = html_code
+        return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
+    const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
+        newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    window[jsCode] = new ApexCharts(newDiv, ctx); window[jsCode].render(); return newDiv
+})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
+            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(),
+            "container": JsUtils.jsConvertData(container, None),
+        })
+
+
+class ChartC3(JsHtml.JsHtml):
+    ...
+
+
+class ChartBillboard(ChartC3):
+    ...
+
+
+class Chartist(JsHtml.JsHtml):
+
+    def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
+        """Create a new widget derived from an existing one.
+        Using this method will make the main object as a template namely it will be removed from the page scope.
+
+        :param html_code: The widget HTML code
+        :param container: The widget container. Default the body
+        :param options: The specific widget options
+        """
+        self.component.options.managed = False
+        self.component.js_code = html_code
+        return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, chartType, ctx, attrs){
+    const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
+        newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    window[jsCode] = new Chartist[chartType]("#"+ htmlCode, {}, ctx); return newDiv
+})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(chart_type)s, %(ctx)s, %(attrs)s)''' % {
+            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "chart_type": JsUtils.jsConvertData(self.component._chart__type, None),
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(),
+            "container": JsUtils.jsConvertData(container, None),
+        })
+
+
+class RoughViz(JsHtml.JsHtml):
+
+    def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
+        """Create a new widget derived from an existing one.
+        Using this method will make the main object as a template namely it will be removed from the page scope.
+
+        :param html_code: The widget HTML code
+        :param container: The widget container. Default the body
+        :param options: The specific widget options
+        """
+        self.component.options.managed = False
+        self.component.js_code = html_code
+        return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, chartType, ctx, attrs){
+    const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
+        newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    window[jsCode] = new roughViz[chartType](ctx); return newDiv
+})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(chart_type)s, %(ctx)s, %(attrs)s)''' % {
+            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
+            "chart_type": JsUtils.jsConvertData(self.component._chart__type, None),
+            "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
+            "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(),
+            "container": JsUtils.jsConvertData(container, None),
+        })

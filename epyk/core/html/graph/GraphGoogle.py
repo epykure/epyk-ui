@@ -12,6 +12,7 @@ from epyk.core.html.options import OptChartGoogle
 
 class Chart(Html.Html):
     name = 'Google Chart'
+    tag = "div"
     requirements = ('google-charts',)
     _option_cls = OptChartGoogle.OptionGoogle
 
@@ -24,8 +25,7 @@ class Chart(Html.Html):
 
     @property
     def shared(self) -> OptChartGoogle.OptionsChartSharedGoogle:
-        """
-        All the common properties shared between all the charts.
+        """All the common properties shared between all the charts.
         This will ensure a compatibility with the plot method.
 
           Usage::
@@ -37,12 +37,12 @@ class Chart(Html.Html):
 
     @property
     def options(self) -> OptChartGoogle.OptionGoogle:
-        """ Property to the series options. """
+        """Property to the series options"""
         return super().options
 
     @property
     def chartId(self):
-        """ Return the Javascript variable of the chart. """
+        """Return the Javascript variable of the chart"""
         return "%s_obj" % self.htmlCode
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
@@ -76,15 +76,14 @@ return chart
             'type': self.options.type}
 
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None) -> str:
-        """ Not yet defined for this chart """
+        """Not yet defined for this chart"""
         return ""
 
     def colors(self, colors):
         raise NotImplementedError()
 
     def labels(self, values: list):
-        """
-        Set the chart labels.
+        """Set the chart labels.
 
         :param values: The label values.
         """
@@ -108,7 +107,7 @@ return chart
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return '<div %s></div>' % self.get_attrs(css_class_names=self.style.get_classes())
+        return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 
 class ChartLine(Chart):

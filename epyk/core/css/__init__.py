@@ -24,7 +24,7 @@ def css_files_loader(
     :param minify: Optional. Flag to minify or not the CSS content
     """
     style_vars = style_vars or {}
-    regex = re.compile(r"([A-Za-z0-9\.,\-\=\"'\[\]]*) {([#A-Za-z0-9\ \:\;\-]*) }")
+    regex = re.compile(Defaults_css.REG_EXP_SECTOR)
     css_formatted = []
     if file_path is not None:
         for css_file in file_path:
@@ -38,7 +38,11 @@ def css_files_loader(
                             css_data = css_data.replace("$%s" % k, v)
                         for m in regex.findall(css_data):
                             if selector is not None:
-                                css_formatted.append("div[name=%s] %s { %s }" % (selector, m[0], m[1]))
+                                container_ref = "div[name=%s]" % selector
+                                if container_ref in m[0]:
+                                    css_formatted.append("%s { %s }" % (m[0], m[1]))
+                                else:
+                                    css_formatted.append("%s %s { %s }" % (container_ref, m[0], m[1]))
                             else:
                                 css_formatted.append("%s { %s }" % (m[0], m[1]))
                 else:

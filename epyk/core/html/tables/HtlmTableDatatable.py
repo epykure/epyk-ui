@@ -25,6 +25,7 @@ extensions = {
 class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('datatables',)
     name = 'Table'
+    tag = "table"
     _option_cls = OptTableDatatable.TableConfig
 
     def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
@@ -36,8 +37,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def dom(self) -> JsHtml.JsHtml:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
@@ -54,24 +54,18 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def style(self) -> GrpClsTable.Datatable:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpClsTable.Datatable(self)
         return self._styleObj
 
     @property
     def options(self) -> OptTableDatatable.TableConfig:
-        """ Datatable table options. """
+        """Datatable table options"""
         return super().options
 
-    @property
-    def tableId(self) -> str:
-        """ Return the Javascript variable of the chart. """
-        return "window['%s_obj']" % self.htmlCode
-
     def get_column(self, by_title: str):
-        """
-        Get the column object from it is title.
+        """Get the column object from it is title.
 
         :param by_title:
         """
@@ -81,22 +75,36 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def js(self) -> JsDatatable.DatatableAPI:
-        """
-        Return the Javascript internal object.
+        """Return the Javascript internal object.
 
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsDatatable.DatatableAPI(page=self.page, selector=self.tableId, set_var=False, component=self)
+            self._js = JsDatatable.DatatableAPI(page=self.page, selector=self.js_code, set_var=False, component=self)
         return self._js
 
-    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None):
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
+        """
+        self.js._selector = js_code
+        self.dom.varName = "document.getElementById('%s')" % html_code
+        self.dom.jquery.varName = '$("#%s")' % html_code
+        self._dom._container = "document.getElementById('%s').parentNode.parentNode" % html_code
+
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None):
         """
 
         :param options:
         :param dataflows:
+        :param component_id: Optional. The component reference (the htmlCode)
         :return:
         """
+        self.js_code = component_id
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = False, component_id: str = None,
@@ -110,6 +118,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         if data:
             state_expr = ""
             if stop_state:
@@ -120,8 +129,8 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
                  state_expr], toStr=True, profile=profile)
 
         return '%s = %s.DataTable(%s)' % (
-            self.tableId, component_id or self.dom.jquery.varId, self.options.config_js(options))
+            self.js_code, self.dom.jquery.varId, self.options.config_js(options))
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        return "<table %s></table>" % (self.get_attrs(css_class_names=self.style.get_classes()))
+        return "<%s %s></%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
