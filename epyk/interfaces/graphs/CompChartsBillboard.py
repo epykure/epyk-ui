@@ -17,10 +17,6 @@ class Billboard:
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -38,8 +34,7 @@ class Billboard:
 
   def line(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Display a line chart from Billboard.
+    """Display a line chart from Billboard.
 
     :tags:
     :categories:
@@ -52,9 +47,7 @@ class Billboard:
       chart = page.ui.charts.billboard.line(dataPoints, y_columns=["y", 'y1'], x_axis='x')
       page.ui.button("reset").click([chart.build(dataPoints2)])
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.LineChart
+    `Line <https://naver.github.io/billboard.js/demo/#Chart.LineChart>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -81,8 +74,7 @@ class Billboard:
 
   def line_range(self, record=None, y_columns=None, x_axis=None, range=5, profile=None, width=(100, "%"),
                  height=(330, "px"), options=None, html_code=None):
-    """
-    Display a line range chart from Billboard.
+    """Display a line range chart from Billboard.
 
     :tags:
     :categories:
@@ -97,9 +89,7 @@ class Billboard:
         {'x': 4, 'y': 28, 'y1': 10}]
       c = page.ui.charts.billboard.line_range(dataPoints, y_columns=["y", 'y1'], x_axis='x')
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.LineChart
+    `Line Range <https://naver.github.io/billboard.js/demo/#Chart.LineChart>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -124,8 +114,7 @@ class Billboard:
 
   def bubble(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
              options=None, html_code=None):
-    """
-    Display a bubble chart from Billboard.
+    """Display a bubble chart from Billboard.
 
     :tags:
     :categories:
@@ -135,9 +124,7 @@ class Billboard:
       c = page.ui.charts.bb.bubble(y_columns=["Value"], x_axis="Year", height=(500, "px"))
       c.options.axis.y.tick.formats.scale(1000000)
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.BubbleChart
+    `Bubble <https://naver.github.io/billboard.js/demo/#Chart.BubbleChart>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -161,17 +148,12 @@ class Billboard:
 
   def radar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """
-    Display a radar chart from Billboard.
+    """Display a radar chart from Billboard.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.RadarChart
+    `Radar <https://naver.github.io/billboard.js/demo/#Chart.RadarChart>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -195,8 +177,7 @@ class Billboard:
 
   def spline(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
              options=None, html_code=None):
-    """
-    Display a spline chart from Billboard.
+    """Display a spline chart from Billboard.
 
     :tags:
     :categories:
@@ -207,9 +188,7 @@ class Billboard:
       c = page.ui.charts.bb.spline(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
       c.options.axis.y.tick.formats.scale(1000000)
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.SplineChart
+    `Spline <https://naver.github.io/billboard.js/demo/#Chart.SplineChart>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -233,8 +212,7 @@ class Billboard:
 
   def step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Display a step chart from Billboard.
+    """Display a step chart from Billboard.
 
     :tags:
     :categories:
@@ -245,9 +223,7 @@ class Billboard:
       c = page.ui.charts.bb.step(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
       c.options.axis.y.tick.formats.scale(1000000)
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.StepChart
+    `Line Step <https://naver.github.io/billboard.js/demo/#Chart.StepChart>`_
 
     :param record: Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -272,8 +248,7 @@ class Billboard:
 
   def area(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Display a area chart from Billboard.
+    """Display an area chart from Billboard.
 
     :tags:
     :categories:
@@ -284,9 +259,7 @@ class Billboard:
       c = page.ui.charts.bb.area(data, y_columns=["Value"], x_axis="Year", height=(500, "px"))
       c.options.axis.y.tick.formats.scale(1000000)
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.AreaChart
+    `Area <https://naver.github.io/billboard.js/demo/#Chart.AreaChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -310,8 +283,7 @@ class Billboard:
 
   def area_step(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
                 options=None, html_code=None):
-    """
-    Display a area step chart from Billboard.
+    """Display a area step chart from Billboard.
 
     :tags:
     :categories:
@@ -323,9 +295,7 @@ class Billboard:
       data = randoms.getSeries(5, 40)
       area_step = page.ui.charts.billboard.area_step(data, y_columns=list(range(4)), x_axis='x')
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.AreaChart
+    `Area Step <https://naver.github.io/billboard.js/demo/#Chart.AreaChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -350,8 +320,7 @@ class Billboard:
 
   def timeseries(self, record=None, y_columns=None, x_axis=None, profile=None, options=None, width=(100, "%"),
                  height=(330, "px"), html_code=None):
-    """
-    Display a timeseries chart from Billboard.
+    """Display a timeseries chart from Billboard.
 
     :tags:
     :categories:
@@ -363,9 +332,7 @@ class Billboard:
       data_rest = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
       ts = page.ui.charts.billboard.timeseries(data_rest, y_columns=['AAPL.Open'], x_axis="Date")
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.LineChart
+    `Timeseries <https://naver.github.io/billboard.js/demo/#Chart.LineChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -383,8 +350,7 @@ class Billboard:
 
   def bar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """
-    Display a bar chart from Billboard.
+    """Display a bar chart from Billboard.
 
     :tags:
     :categories:
@@ -396,9 +362,7 @@ class Billboard:
       data = randoms.getSeries(5, 40)
       b = page.ui.charts.billboard.bar(data, y_columns=list(range(4)), x_axis='x')
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.BarChart
+    `Bar <https://naver.github.io/billboard.js/demo/#Chart.BarChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -425,8 +389,7 @@ class Billboard:
 
   def stacked(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """
-    Display a stacked bar chart from Billboard.
+    """Display a stacked bar chart from Billboard.
 
     :tags:
     :categories:
@@ -438,9 +401,7 @@ class Billboard:
       c.options.axis.y.tick.formats.scale(1000000)
       c.options.axis.x.tick.count = 5
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.StackedBarChart
+    'Stacked <https://naver.github.io/billboard.js/demo/#Chart.StackedBarChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -465,8 +426,7 @@ class Billboard:
 
   def hbar(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
            options=None, html_code=None):
-    """
-    Display a horizontal bar chart from Billboard.
+    """Display a horizontal bar chart from Billboard.
 
     :tags:
     :categories:
@@ -478,9 +438,7 @@ class Billboard:
       c.options.axis.y.tick.formats.scale(1000000)
       c.options.axis.x.tick.count = 5
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.BarChart
+    `Horizontal Bar <https://naver.github.io/billboard.js/demo/#Chart.BarChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -497,8 +455,7 @@ class Billboard:
 
   def scatter(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
               options=None, html_code=None):
-    """
-    Display a scatter chart from Billboard.
+    """Display a scatter chart from Billboard.
 
     :tags:
     :categories:
@@ -510,9 +467,7 @@ class Billboard:
       c.options.axis.y.tick.formats.scale(1000000)
       c.options.axis.x.tick.count = 5
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.ScatterPlot
+    `Scatter <https://naver.github.io/billboard.js/demo/#Chart.ScatterPlot>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -536,8 +491,7 @@ class Billboard:
 
   def pie(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
           options=None, html_code=None):
-    """
-    Display a pie chart from Billboard.
+    """Display a pie chart from Billboard.
 
     :tags:
     :categories:
@@ -549,9 +503,7 @@ class Billboard:
       data = randoms.getSeries(5, 40)
       p = page.ui.charts.billboard.pie(data, y_columns=[1], x_axis='g')
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.PieChart
+    `Pie <https://naver.github.io/billboard.js/demo/#Chart.PieChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -575,8 +527,7 @@ class Billboard:
 
   def donut(self, record=None, y_columns=None, x_axis=None, profile=None, width=(100, "%"), height=(330, "px"),
             options=None, html_code=None):
-    """
-    Display a donut chart from Billboard.
+    """Display a donut chart from Billboard.
 
     :tags:
     :categories:
@@ -588,9 +539,7 @@ class Billboard:
       data = randoms.getSeries(5, 40)
       p = page.ui.charts.billboard.donut(data, y_columns=[1], x_axis='g')
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.DonutChart
+    `Donut <https://naver.github.io/billboard.js/demo/#Chart.DonutChart>`_
 
     :param record: List of dict. Optional. The Python list of dictionaries.
     :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
@@ -613,8 +562,7 @@ class Billboard:
     return pie_chart
 
   def gauge(self, value: int = 0, text: str = "", profile=None, options=None, width=(100, "%"), height=(330, "px"), html_code=None):
-    """
-    Display a gauge chart from Billboard.
+    """Display a gauge chart from Billboard.
 
     :tags:
     :categories:
@@ -623,9 +571,7 @@ class Billboard:
 
       g = page.ui.charts.billboard.gauge(60)
 
-    Related Pages:
-
-      https://naver.github.io/billboard.js/demo/#Chart.GaugeChart
+    `Gauge <https://naver.github.io/billboard.js/demo/#Chart.GaugeChart`>_
 
     :param value: Integer. Optional. The gauge chart value.
     :param text: List. Optional. The columns corresponding to keys in the dictionaries in the record.

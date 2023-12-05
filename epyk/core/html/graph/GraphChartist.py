@@ -25,6 +25,30 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.style.css.margin_top = 10
         self.__defined_options = None
 
+    def colors(self, hex_values: list):
+        """Set chart colors.
+
+        :param hex_values: Colors list
+        """
+        line_colors, bg_colors = [], []
+        alphabet = list(map(chr, range(97, 123)))
+        styles = []
+        for h in hex_values:
+            if h.upper() in Colors.defined:
+                h = Colors.defined[h.upper()]['hex']
+            if not isinstance(h, tuple):
+                if h.startswith("#"):
+                    line_colors.append(h)
+                else:
+                    line_colors.append(h)
+            else:
+                line_colors.append(h[0])
+        for i, color in enumerate(line_colors):
+            if i >= len(alphabet):
+                break
+            styles.append(".ct-series-%s .ct-line, .ct-series-%s .ct-point {stroke: %s;}" % (alphabet[i], alphabet[i], color))
+        self.page.properties.css.add_text(" ".join(styles), "chartist-colors")
+
     @property
     def options(self) -> OptChartist.OptionsChartistLine:
         """Property to the component options.
@@ -84,7 +108,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)
-            return """window['%(chartId)s'].update(%(builder)s, %(ctx)s);%(state)s""" % {
+            return """%(chartId)s.update(%(builder)s, %(ctx)s);%(state)s""" % {
                 'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr,
                 "ctx": self.options.config_js(options).toStr()}
 

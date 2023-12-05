@@ -342,7 +342,7 @@ class JsHtmlSparkline(JsHtml.JsHtml):
     const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
         newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
     if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
-    return newDiv })(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
+    return newDiv})(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
             "js_code": JsUtils.jsConvertData(self.component.js_code, None),
             "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
             "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),

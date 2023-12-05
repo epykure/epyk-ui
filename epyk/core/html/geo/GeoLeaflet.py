@@ -48,7 +48,7 @@ class GeoLeaflet(Html.Html):
         :return: A Javascript Dom object functions.
         """
         if self._js is None:
-            self._js = JsLeaflet.LeafLet(selector="window['%s']" % self.js_code, component=self, page=self.page)
+            self._js = JsLeaflet.LeafLet(selector=self.js_code, component=self, page=self.page)
         return self._js
 
     @property

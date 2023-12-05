@@ -18,10 +18,6 @@ class CompChartFrappe:
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -39,9 +35,8 @@ class CompChartFrappe:
 
   def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-           options: types.OPTION_TYPE = None, html_code: str = None):
-    """
-    Create a line chart from Frappe Chart libraries.
+           options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphFrappe.Frappe:
+    """Create a line chart from Frappe Chart libraries.
 
     Usage::
 
@@ -55,9 +50,9 @@ class CompChartFrappe:
           c.build(pk.events.data)])
       ])
 
-    :param record:
-    :param y_columns:
-    :param x_axis:
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
@@ -77,8 +72,8 @@ class CompChartFrappe:
 
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-          options: types.OPTION_TYPE = None, html_code: str = None):
-    """ Create a bar chart from Frappe Chart libraries.
+          options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphFrappe.FrappeBar:
+    """Create a bar chart from Frappe Chart libraries.
 
     Usage::
 
@@ -92,9 +87,9 @@ class CompChartFrappe:
           c.build(pk.events.data)])
       ])
 
-    :param record:
-    :param y_columns:
-    :param x_axis:
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
@@ -114,7 +109,7 @@ class CompChartFrappe:
 
   def percentage(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                  width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-                 options: types.OPTION_TYPE = None, html_code: str = None):
+                 options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphFrappe.FrappePercentage:
     """
 
     Usage::
@@ -131,9 +126,9 @@ class CompChartFrappe:
         ])
       ])
 
-    :param record:
-    :param y_columns:
-    :param x_axis:
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
@@ -153,13 +148,13 @@ class CompChartFrappe:
 
   def donut(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-            options: types.OPTION_TYPE = None, html_code: str = None):
+            options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphFrappe.FrappeDonut:
     """
 
 
-    :param record:
-    :param y_columns:
-    :param x_axis:
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
@@ -179,12 +174,12 @@ class CompChartFrappe:
 
   def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-          options: types.OPTION_TYPE = None, html_code: str = None):
+          options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphFrappe.FrappePie:
     """
 
-    :param record:
-    :param y_columns:
-    :param x_axis:
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")
@@ -204,12 +199,12 @@ class CompChartFrappe:
 
   def heatmap(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-              options: types.OPTION_TYPE = None, html_code: str = None):
+              options: types.OPTION_TYPE = None, html_code: str = None) -> graph.GraphFrappe.FrappeHeatmap:
     """
 
-    :param record:
-    :param y_columns:
-    :param x_axis:
+    :param record: Optional. The Python list of dictionaries
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')
     :param height: Optional. The height of the component in the page, default (330, "px")

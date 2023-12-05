@@ -31,7 +31,7 @@ class ChartGeoGoogle(Html.Html):
         :return: A Javascript object.
         """
         if self._js is None:
-            self._js = JsGoogleAPI.GoogleMapsAPI(selector="window['%s']" % self.js_code, component=self, page=self.page)
+            self._js = JsGoogleAPI.GoogleMapsAPI(selector=self.js_code, component=self, page=self.page)
         return self._js
 
     @property
@@ -54,8 +54,9 @@ class ChartGeoGoogle(Html.Html):
         :param stop_state: Remove the top panel for the component state (error, loading...)
         :param dataflows: Chain of data transformations
         """
+        self.js_code = component_id
         return '%s = new google.maps.Map(%s, {%s})' % (
-            self.js_code, component_id or self.dom.varId, self.options.config_js(options))
+            self.js_code, self.dom.varId, self.options.config_js(options))
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())

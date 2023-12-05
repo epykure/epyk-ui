@@ -924,6 +924,30 @@ class Col(Html.Html):
                 self.attr["class"].add("col-12")
         return self
 
+    def generate(self, data: types.JS_DATA_TYPES, template, options: types.OPTION_TYPE = None,
+                 profile: types.PROFILE_TYPE = None, stop_state: bool = True, dataflows: List[dict] = None):
+        template.options.managed = False
+        py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in template.attr["class"]]
+        return '''%(container)s.innerHTML = ""; let containerOptions = %(options)s;
+let results = {}; let componentsHolders = []; let i = 0;
+%(data)s.forEach(function(row){if (!results[row.name]){results[row.name] = []}; results[row.name].push(row)}); 
+let keys = Object.keys(results);
+keys.forEach(function(key){
+    let row = document.createElement("div"); row.style.display = "block";
+    row.id = %(container)s.id + "_w_" + i; componentsHolders.push(row); i++
+    %(container)s.appendChild(row);
+}); componentsHolders.forEach(function(col, i){let htmlObj = %(create)s; %(builder)s;})
+''' % {
+            "data": JsUtils.jsConvertData(data, None),
+            "options": self.options.config_js(options),
+            "create": template.dom.createWidget(
+                html_code=JsUtils.jsWrap("'%s_dyn_' + i" % self.html_code), container=JsUtils.jsWrap("col.id")),
+            "css": template.style.css, "class": py_cls_names,
+            "builder": template.build(
+                JsUtils.jsWrap("results[keys[i]]"), dataflows=dataflows, component_id=JsUtils.jsWrap("htmlObj.id"),
+                profile=profile, stop_state=stop_state),
+            "container": self.dom.varId}
+
     def __str__(self):
         content = [htmlObj.html() for htmlObj in self.val]
         return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(content))
@@ -1098,13 +1122,14 @@ for (let n=0; n < rowsNum; n++) {
             col.id = %(container)s.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++}};
     %(container)s.appendChild(row);}
     ; componentsHolders.forEach(function(col, i){let htmlObj = %(create)s; %(builder)s;})''' % {
-            "data": JsUtils.dataFlows(data, dataflows, self.page),
+            "data": JsUtils.jsConvertData(data, None),
             "options": self.options.config_js(options),
             "create": template.dom.createWidget(
                 html_code=JsUtils.jsWrap("'%s_dyn_' + i" % self.html_code), container=JsUtils.jsWrap("col.id")),
             "css": template.style.css, "class": py_cls_names,
             "builder": template.build(
-                JsUtils.jsWrap("results[keys[i]]"), component_id=JsUtils.jsWrap("htmlObj.id"), profile=profile, stop_state=stop_state),
+                JsUtils.jsWrap("results[keys[i]]"), dataflows=dataflows, component_id=JsUtils.jsWrap("htmlObj.id"),
+                profile=profile, stop_state=stop_state),
             "container": self.dom.varId}
 
     def row(self, n: int):

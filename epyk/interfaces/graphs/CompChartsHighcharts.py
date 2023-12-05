@@ -21,6 +21,7 @@ class Highcharts:
       dfl_options.update(options)
     data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
     chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
+    chart.colors(self.page.theme.charts)
     #chart.colors(self.page.theme.charts)
     #chart.options.xaxis.categories = data['labels']
     #for i, d in enumerate(data['datasets']):
@@ -41,6 +42,7 @@ class Highcharts:
       dfl_options.update(options)
     data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
     chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
+    chart.colors(self.page.theme.charts)
     return chart
 
   def hbar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
@@ -54,4 +56,5 @@ class Highcharts:
       dfl_options.update(options)
     data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
     chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
+    chart.colors(self.page.theme.charts)
     return chart

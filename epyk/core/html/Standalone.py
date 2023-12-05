@@ -148,27 +148,28 @@ class DomComponent(JsHtml.JsHtml):
     @property
     def container(self):
         """ Get the DOM container created by the process """
-        return JsNodeDom.JsDoms.get('document.querySelector("#%s").closest("div[name=%s]")' % (
-            self.component.html_code, self.component.selector))
+        return JsNodeDom.JsDoms.get('document.querySelector("#" + %s).closest("div[name=%s]")' % (
+            JsUtils.jsConvertData(self.component.html_code, None), self.component.selector))
 
     @property
     def element(self):
         """ Return always the real DOM element. """
-        return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.component.html_code)
+        return JsNodeDom.JsDoms.get("document.getElementById(%s)" % JsUtils.jsConvertData(self.component.html_code, None))
 
     @property
     def content(self) -> JsHtml.ContentFormatters:
         """ Get the component content. - can be overriden with js mapping value: getComponentValue() for instance """
         if "value" in self.component.js_funcs_map:
-            return JsHtml.ContentFormatters(self.page, "%s.%s()" % (self.component.js.objectId, self.component.js_funcs_map["value"]))
+            return JsHtml.ContentFormatters(self.page, "%s.%s()" % (
+                self.component.js_code, self.component.js_funcs_map["value"]))
 
         return JsHtml.ContentFormatters(self.page, "(function(){if(%(object)s.value != undefined){return %(object)s.value()} else {return %(code)s.innerHTML}})()" % {
-            "object": self.component.js.objectId, "code": self.varName})
+            "object": self.component.js_code, "code": self.varName})
 
     @property
     def lastChild(self):
         """ Get the last child from the component container """
-        return JsNodeDom.JsDoms.get("document.getElementById('%s').lastChild" % self.component.html_code)
+        return JsNodeDom.JsDoms.get("document.getElementById(%s).lastChild" % JsUtils.jsConvertData(self.component.html_code, None))
 
     def get_child_by_tag(self, tag: str):
         """Get a child by tag from the component container
@@ -180,8 +181,9 @@ class DomComponent(JsHtml.JsHtml):
 
         :param tag: The tag definition
         """
-        return JsNodeDom.JsDoms.get("document.querySelector('#%s').closest('div[name=%s]').querySelector(%s)" % (
-            self.component.html_code, self.component.selector, JsUtils.jsConvertData(tag, None)))
+        return JsNodeDom.JsDoms.get("document.querySelector('#'+ %s).closest('div[name=%s]').querySelector(%s)" % (
+            JsUtils.jsConvertData(self.component.html_code, None), self.component.selector,
+            JsUtils.jsConvertData(tag, None)))
 
     def querySelector(self, tag: str):
         """Get the dom based on a specific tag.
@@ -190,20 +192,20 @@ class DomComponent(JsHtml.JsHtml):
         """
         return JsNodeDom.JsDoms.get(tag)
 
-    def addTo(self, values = None, options=None, container: str = None, fnc: str = None):
+    def addWidget(self, values = None, options=None, container: str = None, fnc: str = None):
         """Remove the component from the page scope and attach it to the container.
         The HTML builder is skipped here.
 
         :param values: Initial values to build the JavaScript component
         :param options: Options to set the JavaScript component
         :param container: Anchor for the component
-        :param fnc: Append method in the component
+        :param fnc: Append method in the component (default append%(className)sTo)
         """
         self.component.options.managed = False
         if fnc is None:
             fnc = "append%sTo" % self.component.__class__.__name__
         return JsUtils.jsWrap("%s = %s(%s=%s, %s=%s, %s=%s)" % (
-            self.objectId, fnc,
+            self.component.js_code, fnc,
             self.component.arg_init_value, JsUtils.jsConvertData(values, None),
             self.component.arg_init_options, JsUtils.jsConvertData(options, None),
             self.arg_container_id, JsUtils.jsConvertData(container, None)))
@@ -216,11 +218,6 @@ class JsComponents(JsPackage):
         self.varName, self.varData, self.__var_def = js_code, "", None
         self.component, self.page = component, page
         self._js, self._jquery = [], None
-
-    @property
-    def objectId(self) -> str:
-        """ JavaScript underlying object reference (Proxy Js class) """
-        return "window['%s']" % self.component.html_code
 
     def build(self, data: types.JS_DATA_TYPES, options: types.JS_DATA_TYPES = None, fnc: str = "build"):
         """
@@ -278,9 +275,15 @@ class JsComponents(JsPackage):
     def trim(self, fnc: str = None):
         """Trim a JavaScript component with the specific features of the component.
 
-        :param fnc: Static method to define / pain the component
+        :param fnc: Static method to define / pain the component (Default trim%(className)s)
         """
         fnc = fnc or "trim%s" % self.component.__class__.__name__
+        if self.component.set_exports:
+            if self.component.library:
+                return JsUtils.jsWrap("exports.%s.%s(%s)" % (self.component.library, fnc, self.element))
+
+            return JsUtils.jsWrap("exports.%s(%s)" % (fnc, self.element))
+
         return JsUtils.jsWrap("%s(%s)" % (fnc, self.element))
 
 
@@ -422,7 +425,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         :return: A Javascript Dom object.
         """
         if self._js is None:
-            self._js = self._def_js_cls(self, page=self.page, js_code=self.html_code)
+            self._js = self._def_js_cls(self, page=self.page, js_code=self.js_code)
         return self._js
 
     @classmethod
@@ -575,7 +578,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                     self.page.js.customFile(self.component_url, absolute_path=True, authorize=True)
                 self.page.properties.js.add_builders([
                     "%s = new %s(%s, %s=%s, %s=%s)" % (
-                        self.js.objectId, self.proxy_class, self.dom.varId,
+                        self.js_code, self.proxy_class, self.dom.varId,
                         self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
                         self.arg_init_options, self.options.config_attrs())])
             else:

@@ -20,8 +20,7 @@ class ChartJs:
     self.opacity = 0.6
 
   def set_version(self, v: str):
-    """
-    Change the version of the chartJs package.
+    """Change the version of the chartJs package.
     Use **self.page.imports.pkgs.chart_js.version** to get the current version.
 
     Usage::
@@ -49,17 +48,12 @@ class ChartJs:
            height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None, **kwargs
            ) -> graph.GraphChartJs.Chart:
-    """
-    Generic way to define ChartJs charts.
+    """Generic way to define ChartJs charts.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/
+    `ChartJs <https://www.chartjs.org/>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -80,8 +74,7 @@ class ChartJs:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None, **kwargs
            ) -> graph.GraphChartJs.ChartLine:
-    """
-    Display a line chart from ChartJs.
+    """Display a line chart from ChartJs.
 
     :tags:
     :categories:
@@ -93,10 +86,8 @@ class ChartJs:
       data = randoms.getSeries(5, 30)
       chart = page.ui.charts.chartJs.line(data, y_columns=[3, 4], x_axis='x')
 
-    Related Pages:
-
-      https://www.chartjs.org/
-      https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
+    `ChartJs <https://www.chartjs.org/>`_
+    `Line <https://www.chartjs.org/samples/latest/scales/logarithmic/line.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -125,8 +116,7 @@ class ChartJs:
                  height: types.SIZE_TYPE = (330, "px"), options: dict = None,
                  html_code: str = None, **kwargs
                  ) -> graph.GraphChartJs.ChartLine:
-    """
-    Display a line chart from ChartJs.
+    """Display a line chart from ChartJs.
 
     :tags:
     :categories:
@@ -138,10 +128,8 @@ class ChartJs:
       data_rest = page.py.requests.csv(data_urls.PLOTLY_APPLE_PRICES)
       ts = page.ui.charts.chartJs.timeseries(data_rest, y_columns=['AAPL.Open'], x_axis="Date")
 
-    Related Pages:
-
-      https://www.chartjs.org/
-      https://www.chartjs.org/samples/latest/scales/logarithmic/line.html
+    `ChartJs <https://www.chartjs.org/>`_
+    `Line <https://www.chartjs.org/samples/latest/scales/logarithmic/line.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -160,8 +148,7 @@ class ChartJs:
   def pie(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
           html_code: str = None) -> graph.GraphChartJs.ChartPie:
-    """
-    Display a pie chart from ChartJs.
+    """Display a pie chart from ChartJs.
 
     :tags:
     :categories:
@@ -173,12 +160,9 @@ class ChartJs:
       chart1 = page.ui.charts.chartJs.pie(df.to_dict("records"), y_columns=['Sales'], x_axis="Other")
       chart1.click([
         page.js.console.log(chart1.dom.active()),
-        chart1.build([{"Sales": 10, "Other": "A"}, {"Sales": 15, "Other": "B"}])
-      ])
+        chart1.build([{"Sales": 10, "Other": "A"}, {"Sales": 15, "Other": "B"}])])
 
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/charts/pie.html
+    `Pie <https://www.chartjs.org/samples/latest/charts/pie.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -205,8 +189,7 @@ class ChartJs:
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
             html_code: str = None, **kwargs
             ) -> graph.GraphChartJs.ChartPie:
-    """
-    Display a donut chart from ChartJs.
+    """Display a donut chart from ChartJs.
 
     :tags:
     :categories:
@@ -218,12 +201,9 @@ class ChartJs:
       chart1 = page.ui.charts.chartJs.donut(df.to_dict("records"), y_columns=['Sales'], x_axis="Other")
       chart1.click([
         page.js.console.log(chart1.dom.active()),
-        chart1.build([{"Sales": 10, "Other": "A"}, {"Sales": 15, "Other": "B"}])
-      ])
+        chart1.build([{"Sales": 10, "Other": "A"}, {"Sales": 15, "Other": "B"}])])
 
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/charts/doughnut.html
+    `Doughnut <https://www.chartjs.org/samples/latest/charts/doughnut.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -255,17 +235,12 @@ class ChartJs:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None, **kwargs
            ) -> graph.GraphChartJs.ChartLine:
-    """
-    Display a area chart from ChartJs.
+    """Display a area chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/charts/area/line-stacked.html
+    `Line Stacked <https://www.chartjs.org/samples/latest/charts/area/line-stacked.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -293,8 +268,7 @@ class ChartJs:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None, **kwargs
            ):
-    """
-    Display a step chart from ChartJs.
+    """Display a step chart from ChartJs.
 
     :tags:
     :categories:
@@ -307,9 +281,7 @@ class ChartJs:
       chart = page.ui.charts.chartJs.step(data, y_columns=list(range(4)), x_axis='x')
       chart.options.showLines = True
 
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/scales/linear/step-size.html
+    `Step size <https://www.chartjs.org/samples/latest/scales/linear/step-size.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -336,8 +308,7 @@ class ChartJs:
   def bar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
           html_code: str = None) -> graph.GraphChartJs.ChartBar:
-    """
-    Display a bar chart from ChartJs.
+    """Display a bar chart from ChartJs.
 
     :tags:
     :categories:
@@ -349,9 +320,7 @@ class ChartJs:
       data = randoms.getSeries(5, 30)
       page.ui.charts.chartJs.bar(data, y_columns=[1, 2, 3], x_axis='x')
 
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/scriptable/bar.html
+    `Bar <https://www.chartjs.org/samples/latest/scriptable/bar.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -382,9 +351,7 @@ class ChartJs:
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
              html_code: str = None, **kwargs
              ) -> graph.GraphChartJs.ChartExts:
-    """
-    Display a bespoke chart from ChartJs.
-
+    """Display a bespoke chart from ChartJs.
     It is important to get a NodeJs with the extra packages installed to use this interface.
     This will not download the external required resources and it will rely on the setup of the Node server.
 
@@ -397,9 +364,7 @@ class ChartJs:
                 options={"type": 'sankey', 'npm': 'chartjs-chart-sankey',
                          'npm_path': '../NodeJs/node_modules'})
 
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/scriptable/bar.html
+    `Custom <https://www.chartjs.org/samples/latest/scriptable/bar.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -467,8 +432,7 @@ class ChartJs:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
            html_code: str = None, **kwargs
            ) -> graph.GraphChartJs.ChartHBar:
-    """
-    Display a horizontal bar chart from ChartJs.
+    """Display a horizontal bar chart from ChartJs.
 
     :tags:
     :categories:
@@ -481,9 +445,7 @@ class ChartJs:
       chart = page.ui.charts.chartJs.hbar(data[:5], y_columns=list(range(4)), x_axis='x')
       chart.click([page.js.console.log(chart.js.value)])
 
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/scriptable/bar.html
+    `Horizontal Bar <https://www.chartjs.org/samples/latest/scriptable/bar.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -515,17 +477,12 @@ class ChartJs:
             profile: types.PROFILE_TYPE = None, options: dict = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (330, "px"), html_code: str = None, **kwargs
             ) -> graph.GraphChartJs.ChartBar:
-    """
-    Display a multi chart from ChartJs.
+    """Display a multi chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/charts/combo-bar-line.html
+    `Combo Bar Line <https://www.chartjs.org/samples/latest/charts/combo-bar-line.html>`_
 
     :param kind: The chart type
     :param record: Optional. The Python list of dictionaries
@@ -555,17 +512,12 @@ class ChartJs:
               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
               html_code: str = None, **kwargs
               ) -> graph.GraphChartJs.ChartScatter:
-    """
-    Display a scatter chart from ChartJs.
+    """Display a scatter chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/charts/scatter/basic.html
+    `Basic <https://www.chartjs.org/samples/latest/charts/scatter/basic.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -593,17 +545,12 @@ class ChartJs:
              height: types.SIZE_TYPE = (330, "px"), options: dict = None,
              html_code: str = None
              ) -> graph.GraphChartJs.ChartBubble:
-    """
-    Display a bubble chart from ChartJs.
+    """Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/scriptable/bubble.html
+    `Bubble <https://www.chartjs.org/samples/latest/scriptable/bubble.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -632,17 +579,12 @@ class ChartJs:
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
             options: dict = None, html_code: str = None, **kwargs
             ) -> graph.GraphChartJs.ChartPolar:
-    """
-    Display a bubble chart from ChartJs.
+    """Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/charts/polar-area.html
+    `Polar Area <https://www.chartjs.org/samples/latest/charts/polar-area.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -670,17 +612,12 @@ class ChartJs:
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
             html_code: str = None, **kwargs
             ) -> graph.GraphChartJs.ChartRadar:
-    """
-    Display a bubble chart from ChartJs.
+    """Display a bubble chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://www.chartjs.org/samples/latest/charts/radar.html
+    `Radar <https://www.chartjs.org/samples/latest/charts/radar.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -713,9 +650,6 @@ class ChartJs:
     :tags:
     :categories:
 
-    Usage::
-
-
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -734,17 +668,12 @@ class ChartJs:
               height: types.SIZE_TYPE = (330, "px"), options: dict = None,
               html_code: str = None, **kwargs
               ) -> graph.GraphChartJs.ChartTreeMap:
-    """
-    Display a treemap chart from ChartJs.
+    """Display a treemap chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://chartjs-chart-treemap.pages.dev/usage.html
+    `Usage <https://chartjs-chart-treemap.pages.dev/usage.html>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -762,9 +691,7 @@ class ChartJs:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    options.update({
-      'y_columns': y_columns or [],
-      "groups": groups,
+    options.update({'y_columns': y_columns or [], "groups": groups,
       'commons': {
         "opacity": self.opacity, "colors": {"base": self.page.theme.notch(), "light": self.page.theme.notch(-3)}}})
     groups = groups or x_axis
@@ -802,22 +729,17 @@ if (item){
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              options: dict = None, html_code: str = None, **kwargs
   ) -> graph.GraphChartJs.ChartSankey:
-    """
-    To create a sankey chart, include chartjs-chart-sankey.js after chart.js and then create the chart by setting the
+    """To create a sankey chart, include chartjs-chart-sankey.js after chart.js and then create the chart by setting the
     type attribute to 'sankey'
 
     Usage::
 
-      data = [
-              {"from": 'a', "to": 'b', "flow": 10},
+      data = [{"from": 'a', "to": 'b', "flow": 10},
               {"from": 'a', "to": 'c', "flow": 5},]
       chart = page.ui.charts.chartJs.sankey(data, label="series")
-      chart.click(
-          chart.build([{"from": 'a', "to": 'b', "flow": 10}]))
+      chart.click(chart.build([{"from": 'a', "to": 'b', "flow": 10}]))
 
-    Related Pages:
-
-      https://npm.io/package/chartjs-chart-sankey
+    `Sankey <https://npm.io/package/chartjs-chart-sankey>`_
     """
     sankey_chart = graph.GraphChartJs.ChartSankey(self.page, width, height, html_code, options, profile)
     sankey_chart.colors(self.page.theme.charts)
@@ -832,18 +754,13 @@ if (item){
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
              options: dict = None, html_code: str = None, **kwargs
              ) -> graph.GraphChartJs.ChartMatrix:
-    """
-    Display a matrix chart from ChartJs.
+    """Display a matrix chart from ChartJs.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://github.com/kurkle/chartjs-chart-matrix
-      https://chartjs-chart-matrix.pages.dev/
+    `Matrix >https://github.com/kurkle/chartjs-chart-matrix>`_
+    `ChartJs <https://chartjs-chart-matrix.pages.dev/>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -880,8 +797,7 @@ if (item){
                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
                 options: dict = None, html_code: str = None, **kwargs
                 ) -> graph.GraphChartJs.ChartWordCloud:
-    """
-    Chart.js module for charting word or tag clouds. Adding new chart type: wordCloud.
+    """Chart.js module for charting word or tag clouds. Adding new chart type: wordCloud.
 
     :tags:
     :categories:
@@ -894,9 +810,7 @@ if (item){
       page.ui.button("click").click([
         chart1.build([{"Sales": 40, "Other": 30}, {"Sales": 1, "Other": 1}, {"Sales": 15, "Other": 5}])])
 
-    Related Pages:
-
-      https://github.com/sgratzl/chartjs-chart-wordcloud
+    `WordCloud <https://github.com/sgratzl/chartjs-chart-wordcloud>`_
 
     :param record: Optional. The list of dictionaries with the input data
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -925,15 +839,12 @@ if (item){
                    options: dict = None, horizontal: bool = False, kind: str = "bar",
                    html_code: str = None, **kwargs
                    ) -> graph.GraphChartJs.ChartHyr:
-    """
-    Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
+    """Chart.js module for adding a new categorical scale which mimics a hierarchical tree.
 
-    Related Pages:
+    `Hierarchical <https://github.com/sgratzl/chartjs-plugin-hierarchical>`_
+    `Deep Hierarchical <https://github.com/sgratzl/chartjs-plugin-hierarchical/blob/main/samples/deep_hierarchy.html>`_
 
-      https://github.com/sgratzl/chartjs-plugin-hierarchical
-      https://github.com/sgratzl/chartjs-plugin-hierarchical/blob/main/samples/deep_hierarchy.html
-
-    :param record:
+    :param record: Optional. The list of dictionaries with the input data
     :param labels:
     :param profile: Optional. A flag to set the component performance storage
     :param width: Optional. The width of the component in the page, default (100, '%')

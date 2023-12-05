@@ -116,8 +116,8 @@ class Sparklines(MixHtmlState.HtmlOverlayStates, Html.Html):
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
         if self.title is not None:
-            return "<div style='display:inline-block;text-align:center'>%s<span %s></span></div>" % (
-                self.title, self.get_attrs(css_class_names=self.style.get_classes()))
+            return "<div style='display:inline-block;text-align:center'>%s<%s %s></%s></div>" % (
+                self.title, self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
         return "<%s %s>Loading..</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 

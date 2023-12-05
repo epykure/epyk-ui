@@ -42,8 +42,7 @@ class Graphs:
            profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
            height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
            html_code: str = None):
-    """
-    Generic shortcut to plot a chart in the framework.
+    """Generic shortcut to plot a chart in the framework.
     Family and kind of chart are passed in parameter.
 
     :param pkg: Optional. The external chart package reference. Default ApexCharts
@@ -66,8 +65,7 @@ class Graphs:
   def skillbars(self, records=None, y_column: str = None, x_axis: str = None, title: str = None,
                 width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
                 options: dict = None, profile: types.PROFILE_TYPE = False) -> html.HtmlEvent.SkillBar:
-    """
-    Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS.
+    """Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS.
 
     :Category: Web Application, Analytics
 
@@ -106,8 +104,7 @@ class Graphs:
   def sparkline(self, chart_type: str, data, title: str = None, options: dict = None,
                 width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
                 profile: types.PROFILE_TYPE = False) -> html.graph.GraphSparklines.Sparklines:
-    """
-    Display a sparkline component.
+    """Display a sparkline component.
 
     :Category: Web Application, Analytics
 
@@ -119,8 +116,7 @@ class Graphs:
       chart.click([
         page.js.console.log(chart.dom.val),
         page.js.console.log(chart.dom.content),
-        page.js.console.log(chart.dom.offset)
-      ])
+        page.js.console.log(chart.dom.offset)])
 
     `Related Pages <https://omnipotent.net/jquery.sparkline/#s-about>`_
 
@@ -145,21 +141,19 @@ class Graphs:
 
   @property
   def highcharts(self) -> CompChartsHighcharts.Highcharts:
-    """
-    Highcharts JS is a JavaScript charting library based on SVG and some canvas/WebGL.
+    """Highcharts JS is a JavaScript charting library based on SVG and some canvas/WebGL.
 
     Usage::
 
       chart = page.ui.charts.highcharts.line()
 
-    `Related Pages <https://github.com/highcharts/highcharts>`_
+    `Highcharts <https://github.com/highcharts/highcharts>`_
     """
     return CompChartsHighcharts.Highcharts(self)
 
   @property
   def chartist(self) -> CompChartist.Chartist:
-    """
-    You may think that this is just yet an other charting library.
+    """You may think that this is just yet an other charting library.
     But Chartist.js is the product of a community that was disappointed about the abilities provided by other
     charting libraries.
     Of course there are hundreds of other great charting libraries but after using them there were always tweaks you
@@ -169,7 +163,7 @@ class Graphs:
 
       chart = page.ui.charts.chartist.line()
 
-    `Related Pages <https://gionkunz.github.io/chartist-js/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library>`_
+    `Chartist <https://gionkunz.github.io/chartist-js/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library>`_
     """
     return CompChartist.Chartist(self)
 

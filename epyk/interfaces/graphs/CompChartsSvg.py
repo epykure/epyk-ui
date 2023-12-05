@@ -9,10 +9,8 @@ class SVG:
   def __init__(self, ui):
     self.page = ui.page
 
-  def new(self, width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px")):
-    """
-    SVG stands for Scalable Vector Graphics.
-
+  def new(self, width: types.SIZE_TYPE = (500, "px"), height: types.SIZE_TYPE = (300, "px")) -> graph.GraphSvg.SVG:
+    """SVG stands for Scalable Vector Graphics.
     SVG defines vector-based graphics in XML format.
 
     :tags:

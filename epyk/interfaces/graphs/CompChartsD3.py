@@ -19,14 +19,9 @@ class D3:
     :tags:
     :categories:
 
-    Usage::
-
     Related Pages:
 
       https://gramener.github.io/d3js-playbook/barchart.html
-
-    Templates:
-
 
     :param name: String. The module name.
     :param scripts: List. Optional. The list of scripts.
@@ -69,11 +64,6 @@ class D3:
 
     :tags:
     :categories:
-
-    Usage::
-
-    Related Pages:
-
 
     :param data: Object. Optional. The chart input data to be serialised.
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
@@ -241,14 +231,14 @@ chart.selectAll("text")
 
       https://gramener.github.io/d3js-playbook/barchart.html
 
-    :param record: Object. Optional. The chart input data to be serialised.
-    :param y_columns: List. Optional. The columns corresponding to keys in the dictionaries in the record.
-    :param x_axis: String. Optional. The column corresponding to a key in the dictionaries in the record.
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param record: Optional. The chart input data to be serialised
+    :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
+    :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     options = options or {}
     data = self.page.data.nvd3.xy(record or [], y_columns, x_axis, options={"agg":  options.get('agg', 'distinct')})
@@ -279,11 +269,11 @@ svg.selectAll("text")
   def svg(self, profile=None, width=(100, "%"), height=(330, "px"), options=None, html_code=None):
     """
 
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param html_code: String. Optional. An identifier for this component (on both Python and Javascript side).
+    :param profile: Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     d3_chart = GraphD3.Script(self.page, [], width, height, html_code, options or {}, profile)
     d3_chart.builder_name = "D3Svg"

@@ -1667,6 +1667,17 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         """
         return EventTouch(self)
 
+    def _set_js_code(self, html_code: str, js_code: str):
+        """Set a different code for the component.
+        This method will ensure both HTML and Js references will be properly changed for this component.
+        This method is used by the js_code property and should not be used directly.
+
+        :param html_code: The new HTML code
+        :param js_code: The new JavaScript code
+        """
+        self.js.varName = js_code
+        self.dom.varName = "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
+
     @jbuider()
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
@@ -1694,7 +1705,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         else:
             js_data = JsUtils.dataFlows(data, dataflows, self.page)
         fnc_call = "%s(%s, %s, %s)" % (
-            self.builder_name, component_id or self.dom.varId, js_data, self.options.config_js(options))
+            self.builder_name, self.dom.varId, js_data, self.options.config_js(options))
         profile = self.with_profile(profile, event="Builder")
         if profile:
             fnc_call = JsUtils.jsConvertFncs(

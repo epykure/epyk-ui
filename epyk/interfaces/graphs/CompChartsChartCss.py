@@ -18,10 +18,6 @@ class CompChartCss:
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record

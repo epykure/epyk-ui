@@ -111,8 +111,12 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     def d3(self) -> JsD3.D3Select:
         """ Property to the underlying D3 module. """
         if self._d3 is None:
-            self._d3 = JsD3.D3Select(
-                page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False, component=self)
+            if hasattr(self.htmlCode, 'toStr'):
+                self._d3 = JsD3.D3Select(
+                    page=self.page, selector="d3.select('#' + %s)" % self.htmlCode, set_var=False, component=self)
+            else:
+                self._d3 = JsD3.D3Select(
+                    page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False, component=self)
         return self._d3
 
     def colors(self, hex_values: list):

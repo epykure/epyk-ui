@@ -18,9 +18,6 @@ class DC:
     :tags:
     :categories:
 
-    Usage::
-
-
     :param record: Optional. The list of dictionaries with the input data
     :param y: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x: Optional. The column corresponding to a key in the dictionaries in the record
@@ -36,14 +33,11 @@ class DC:
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
 
-  def set_crossfilter(self, record, y_columns, x_axis: List[str], var_name: str, extra_cols: List[Any] = None):
-    """
-    Set a crossfilter object and add the dimensions which will be added to a chart.
+  def set_crossfilter(self, record, y_columns, x_axis: List[str], var_name: str, extra_cols: List[Any] = None) -> dict:
+    """Set a crossfilter object and add the dimensions which will be added to a chart.
 
     :tags:
     :categories:
-
-    Usage::
 
     :param record: The Python list of dictionaries
     :param y_columns: The columns corresponding to keys in the dictionaries in the record
@@ -71,7 +65,8 @@ class DC:
 
   def line(self, record=None, y_columns=None, x_axis: str = None, title: str = None,
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
-           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
+           width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None
+           ) -> GraphDC.ChartLine:
     """
 
     :tags:
@@ -84,10 +79,8 @@ class DC:
       data = randoms.getSeries(5, 30)
       line = page.ui.charts.dc.line(data, y_columns=[1, 2], x_axis='x')
 
-    Related Pages:
-
-      https://square.github.io/crossfilter/
-      https://dc-js.github.io/dc.js/
+    `Crossfilter <https://square.github.io/crossfilter/>`_
+    `DC <https://dc-js.github.io/dc.js/>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -113,18 +106,15 @@ class DC:
 
   def series(self, record=None, y_columns=None, x_axis=None, series_type: str = 'line', title: str = None,
              profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
-             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None):
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), html_code: str = None
+             ) -> GraphDC.ChartSeries:
     """
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://square.github.io/crossfilter/
-      https://dc-js.github.io/dc.js/
+    `Crossfilter <https://square.github.io/crossfilter/>`_
+    `DC <https://dc-js.github.io/dc.js/>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -163,7 +153,7 @@ class DC:
     return line_chart
 
   def scatter(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-              height=(330, "px"), html_code=None):
+              height=(330, "px"), html_code=None) -> GraphDC.ChartScatter:
     """
 
     :tags:
@@ -176,10 +166,8 @@ class DC:
       data = randoms.getSeries(5, 30)
       scatter = page.ui.charts.dc.scatter(data, y_columns=[2, 4], x_axis='x')
 
-    Related Pages:
-
-      https://square.github.io/crossfilter/
-      https://dc-js.github.io/dc.js/
+    `Crossfilter <https://square.github.io/crossfilter/>`_
+    `DC <https://dc-js.github.io/dc.js/>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -202,15 +190,11 @@ class DC:
     return line_chart
 
   def step(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+           height=(330, "px"), html_code=None) -> GraphDC.ChartLine:
     """
 
     :tags:
     :categories:
-
-    Usage::
-
-    Related Pages:
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -234,7 +218,7 @@ class DC:
     return line_chart
 
   def bar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-          height=(330, "px"), html_code=None):
+          height=(330, "px"), html_code=None) -> GraphDC.ChartBar:
     """
 
     :tags:
@@ -246,8 +230,6 @@ class DC:
 
       data = randoms.getSeries(5, 30)
       bar = page.ui.charts.dc.hbar(data[:10], y_columns=4, x_axis='x')
-
-    Related Pages:
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -270,7 +252,7 @@ class DC:
     return bar_chart
 
   def hbar(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-           height=(330, "px"), html_code=None):
+           height=(330, "px"), html_code=None) -> GraphDC.ChartRow:
     """
 
     :tags:
@@ -282,8 +264,6 @@ class DC:
 
       data = randoms.getSeries(5, 30)
       hbar = page.ui.charts.dc.hbar(data[:10], y_columns=4, x_axis='x')
-
-    Related Pages:
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -304,7 +284,7 @@ class DC:
     return bar_chart
 
   def pie(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-          height=(330, "px"), html_code=None):
+          height=(330, "px"), html_code=None) -> GraphDC.ChartPie:
     """
 
     :tags:
@@ -317,10 +297,8 @@ class DC:
       data = randoms.getSeries(5, 30)
       pie = page.ui.charts.dc.pie(data[:5], y_columns=3, x_axis='x')
 
-    Related Pages:
-
-      https://square.github.io/crossfilter/
-      https://dc-js.github.io/dc.js/
+    `Crossfilter <https://square.github.io/crossfilter/>`_
+    `DC <https://dc-js.github.io/dc.js/>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -340,18 +318,14 @@ class DC:
     return pie_chart
 
   def sunburst(self, record=None, y_columns=None, x_axis=None, title=None, profile=None, options=None, width=(100, "%"),
-               height=(330, "px"), html_code=None):
+               height=(330, "px"), html_code=None) -> GraphDC.ChartSunburst:
     """
 
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      https://square.github.io/crossfilter/
-      https://dc-js.github.io/dc.js/
+    `Crossfilter <https://square.github.io/crossfilter/>`_
+    `DC <https://dc-js.github.io/dc.js/>`_
 
     :param record:
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -370,7 +344,7 @@ class DC:
     return pie_chart
 
   def bubble(self, record=None, y_columns=None, x_axis=None, r_axis=None, title=None, profile=None, options=None,
-             width=(100, "%"), height=(330, "px"), html_code=None):
+             width=(100, "%"), height=(330, "px"), html_code=None) -> GraphDC.ChartBubble:
     """
 
     :tags:
@@ -383,11 +357,9 @@ class DC:
       data = randoms.getSeries(5, 30)
       bubble = page.ui.charts.dc.bubble(data, y_columns=3, x_axis='x', r_axis=4, options={'statc_factor': '/10'})
 
-    Related Pages:
-
-      https://square.github.io/crossfilter/
-      https://dc-js.github.io/dc.js/
-      https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm
+    `Crossfilter <https://square.github.io/crossfilter/>`_
+    `DC <https://dc-js.github.io/dc.js/>`_
+    `Bubble <https://www.tutorialspoint.com/dcjs/dcjs_bubble_chart.htm/>`_
 
     :param record: Optional. The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record

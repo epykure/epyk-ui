@@ -65,7 +65,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
                     line_colors.append(h)
             else:
                 line_colors.append(h[0])
-        self.options.colors = line_colors
+        self.options._config(line_colors, name="colors")
         for i, rec in enumerate(self.options.js_tree.get("series", [])):
             rec.color = line_colors[i]
 

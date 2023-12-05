@@ -15,6 +15,8 @@ class Chartist:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs):
     """
 
+    `Chartist <https://gionkunz.github.io/chartist-js/index.html>`_
+
     :param record: The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -38,12 +40,16 @@ class Chartist:
       for d in data['datasets']:
         recordsets.append({"name": d["label"], "data": d["data"]})
       chart.options._config(recordsets, name="series")
+    chart.colors(self.page.theme.charts)
     return chart
 
   def bar(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphChartist.Chart:
     """
+
+    `Chartist <https://gionkunz.github.io/chartist-js/index.html>`_
+    `Bar <https://gionkunz.github.io/chartist-js/examples.html#stacked-bar>`_
 
     :param record: The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -74,6 +80,9 @@ class Chartist:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphChartist.Chart:
     """
+
+    `Chartist <https://gionkunz.github.io/chartist-js/index.html>`_
+    `Horizontal Bar <https://gionkunz.github.io/chartist-js/examples.html#example-bar-horizontal>`_
 
     :param record: The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
@@ -106,6 +115,8 @@ class Chartist:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphChartist.ChartPie:
     """
 
+    `Pie <https://gionkunz.github.io/chartist-js/examples.html#simple-pie-chart>`_
+
     :param record: The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record
     :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
@@ -132,6 +143,8 @@ class Chartist:
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphChartist.ChartPie:
     """
+
+    `Chartist <https://gionkunz.github.io/chartist-js/index.html>`_
 
     :param record: The Python list of dictionaries
     :param y_columns: Optional. The columns corresponding to keys in the dictionaries in the record

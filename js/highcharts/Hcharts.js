@@ -14,7 +14,7 @@ function hcharts(data, options){
         options.y_columns.forEach(function(series){
           let dataset = [];
           labels.forEach(function(x){dataset.push(temp[series][x])});
-          datasets.push({name: series, data:dataset});
+          datasets.push({name: series, data: dataset});
         })
         options.series = datasets;
     };

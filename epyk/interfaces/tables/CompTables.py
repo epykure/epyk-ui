@@ -46,9 +46,7 @@ class Tables:
       ])
       table.attr["class"].add("ag-theme-alpine")
 
-    Related Pages:
-
-      https://www.ag-grid.com/javascript-grid/
+    `Aggrid <https://www.ag-grid.com/javascript-grid/>`_
     """
     return CompAgGrid.AgGrid(self)
 
@@ -59,11 +57,7 @@ class Tables:
     :tags:
     :categories:
 
-    Usage::
-
-    Related Pages:
-
-      http://tabulator.info/
+    `Tabulator <http://tabulator.info/>`_
     """
     return CompTabulator.Tabulators(self)
 
@@ -84,9 +78,7 @@ class Tables:
     :tags:
     :categories:
 
-    Related Pages:
-
-      https://pivottable.js.org/examples/
+    `Pivot <https://pivottable.js.org/examples/>`_
     """
     return CompPivot.Pivottable(self)
 
@@ -97,9 +89,7 @@ class Tables:
     :tags:
     :categories:
 
-    Related Pages:
-
-      https://github.com/d3/d3/wiki/Gallery
+    `D3 <https://github.com/d3/d3/wiki/Gallery>`_
     """
     return CompTableD3.D3(self)
 
@@ -110,9 +100,7 @@ class Tables:
     :tags:
     :categories:
 
-    Related Pages:
-
-      http://tabulator.info/
+    `Plotly <http://tabulator.info/>`_
     """
     return CompTablesPlotly.Plotly(self)
 
@@ -123,9 +111,7 @@ class Tables:
     :tags:
     :categories:
 
-    Related Pages:
-
-      https://datatables.net/
+    `Datatable <https://datatables.net/>`_
     """
     return CompDatatable.Datatables(self)
 
@@ -166,8 +152,6 @@ class Tables:
     :tags:
     :categories:
 
-    Usage::
-
     :param records: Optional. The list of dictionaries with the input data
     :param cols: Optional. The list of key from the record to be used as columns in the table
     :param rows: Optional. The list of key from the record to be used as rows in the table
@@ -202,8 +186,7 @@ class Tables:
   def menu(self, table: Html.Html = None, height: types.SIZE_TYPE = (18, 'px'), options: types.OPTION_TYPE = None,
            update_funcs: list = None, post: Union[list, str] = None, profile: types.PROFILE_TYPE = None,
            columns: dict = None, title: Union[str, dict] = None,):
-    """
-    Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
+    """Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
 
     :tags:
     :categories:

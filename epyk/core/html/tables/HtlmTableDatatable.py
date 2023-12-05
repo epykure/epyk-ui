@@ -10,6 +10,7 @@ from epyk.core.html.options import OptTableDatatable
 from epyk.core.js.packages import JsDatatable
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
+from epyk.core.js.html import JsHtmlTables
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsTable
@@ -36,7 +37,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             self.options.data = records
 
     @property
-    def dom(self) -> JsHtml.JsHtml:
+    def dom(self) -> JsHtmlTables.JsHtmlDatatable:
         """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript available for a DOM element by default.
 
@@ -48,7 +49,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :return: A Javascript Dom object.
         """
         if self._dom is None:
-            self._dom = JsHtml.JsHtml(component=self, page=self.page)
+            self._dom = JsHtmlTables.JsHtmlDatatable(component=self, page=self.page)
             self._dom._container = "%s.parentNode.parentNode" % self._dom.element
         return self._dom
 
@@ -92,9 +93,9 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param js_code: The new JavaScript code
         """
         self.js._selector = js_code
-        self.dom.varName = "document.getElementById('%s')" % html_code
-        self.dom.jquery.varName = '$("#%s")' % html_code
-        self._dom._container = "document.getElementById('%s').parentNode.parentNode" % html_code
+        self.dom.varName = "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
+        self.dom.jquery.varName = "$('#' + %s)" % JsUtils.jsConvertData(html_code, None)
+        self._dom._container = "document.getElementById(%s).parentNode.parentNode" % JsUtils.jsConvertData(html_code, None)
 
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None):
         """
@@ -122,10 +123,10 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         if data:
             state_expr = ""
             if stop_state:
-                state_expr = ";%s" % self.hide_state(component_id)
+                state_expr = ";%s" % self.hide_state(self.html_code)
             return JsUtils.jsConvertFncs(
                 [self.js.clear(),
-                 self.js.rows.add(JsUtils.dataFlows(data, dataflows, self.page), update=True),
+                 self.js.rows.add(JsUtils.jsWrap(JsUtils.dataFlows(data, dataflows, self.page)), update=True),
                  state_expr], toStr=True, profile=profile)
 
         return '%s = %s.DataTable(%s)' % (

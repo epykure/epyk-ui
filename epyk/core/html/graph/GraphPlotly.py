@@ -43,11 +43,6 @@ class Chart(Html.Html):
     """
     return OptPlotly.OptionsChartSharedPlotly(self)
 
-  @property
-  def chartId(self) -> str:
-    """Return the Javascript variable of the chart"""
-    return "%s_obj" % self.htmlCode
-
   def click_legend(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
     """
 
@@ -223,7 +218,7 @@ class Chart(Html.Html):
     :return: A Javascript object
     """
     if self._js is None:
-      self._js = JsPlotly.JsPlotly(selector="window['%s']" % self.chartId, component=self, page=self.page)
+      self._js = JsPlotly.JsPlotly(selector=self.js_code, component=self, page=self.page)
     return self._js
 
   @property
@@ -254,7 +249,7 @@ class Chart(Html.Html):
     return self
 
   def build(self, data=None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
-            component_id: str = None, dataflows: List[dict] = None):
+            component_id: str = None, stop_state: bool = True, dataflows: List[dict] = None):
     """   
 
     :param data:
@@ -263,12 +258,13 @@ class Chart(Html.Html):
     :param component_id:
     :param dataflows: Chain of data transformations
     """
+    self.js_code = component_id
     if data is not None:
       js_convertor = "%s%s" % (self.name, self.__class__.name)
       js_convertor = js_convertor.replace(" ", "")
       self.page.properties.js.add_constructor(
         js_convertor, "function %s(data, options){%s}" % (js_convertor, self._js__builder__))
-      profile = self.with_profile(profile, event="Builder", element_id=self.chartId)
+      profile = self.with_profile(profile, event="Builder", element_id=self.js_code)
       if profile:
         js_func_builder = JsUtils.jsConvertFncs(
           ["var result = %s(data, options)" % js_convertor], toStr=True, profile=profile)
@@ -282,7 +278,7 @@ class Chart(Html.Html):
     for t in self._traces:
       str_traces.append("{%s}" % ", ".join(["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in t.attrs()]))
     obj_datasets = JsObject.JsObject.get("[%s]" % ", ".join(str_traces))
-    return "%s = %s" % (self.chartId, JsUtils.jsConvertFncs([
+    return "%s = %s" % (self.js_code, JsUtils.jsConvertFncs([
       self.js.newPlot(obj_datasets, self.layout, self.options, html_code=self.html_code)], toStr=True))
 
   def __str__(self):
@@ -295,7 +291,7 @@ class Line(Chart):
   @property
   def dom(self) -> JsPlotly.Line:
     if self._dom is None:
-      self._dom = JsPlotly.Line(component=self, js_code=self.chartId, page=self.page)
+      self._dom = JsPlotly.Line(component=self, js_code=self.js_code, page=self.page)
     return self._dom
 
   def trace(self, data: types.JS_DATA_TYPES, type: str = None, mode: str = 'lines+markers'):
@@ -330,7 +326,7 @@ class Pie(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     if self._chart is None:
-      self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.chartId)
+      self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.js_code)
     return self._chart
 
   @property
@@ -393,7 +389,7 @@ class Surface(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     if self._chart is None:
-      self._chart = JsPlotly.Pie(page=self.page, js_code=self.chartId, component=self)
+      self._chart = JsPlotly.Pie(page=self.page, js_code=self.js_code, component=self)
     return self._chart
 
   @property
@@ -427,7 +423,7 @@ class Scatter3D(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     if self._chart is None:
-      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.js_code)
     return self._chart
 
   @property
@@ -479,7 +475,7 @@ class Mesh3d(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     if self._chart is None:
-      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.js_code)
     return self._chart
 
   @property
@@ -501,7 +497,7 @@ class Indicator(Chart):
   @property
   def chart(self) -> JsPlotly.Pie:
     if self._chart is None:
-      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.js_code)
     return self._chart
 
   def add_trace(self, data, type='indicator', mode=None):
@@ -526,7 +522,7 @@ class ScatterPolar(Chart):
   def chart(self) -> JsPlotly.Pie:
     """ """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.js_code)
     return self._chart
 
   def add_trace(self, data, type='scatterpolar', mode=None):
@@ -546,7 +542,7 @@ class Box(Chart):
   def chart(self) -> JsPlotly.Pie:
     """ """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.chartId)
+      self._chart = JsPlotly.Pie(page=self.page, component=self, js_code=self.js_code)
     return self._chart
 
   @property
@@ -575,7 +571,7 @@ class CandleStick(Chart):
   def chart(self) -> JsPlotly.Pie:
     """ """
     if self._chart is None:
-      self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.chartId)
+      self._chart = JsPlotly.Pie(component=self, page=self.page, js_code=self.js_code)
     return self._chart
 
   @property
@@ -601,7 +597,7 @@ class Bar(Chart):
   def chart(self) -> JsPlotly.Bar:
     """ """
     if self._chart is None:
-      self._chart = JsPlotly.Bar(page=self.page, js_code=self.chartId, component=self)
+      self._chart = JsPlotly.Bar(page=self.page, js_code=self.js_code, component=self)
     return self._chart
 
   @property
