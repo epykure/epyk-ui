@@ -198,7 +198,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(self.html_code)
-            return "%s%s" % (self.js.setData(JsUtils.dataFlows(data, dataflows, self.page)).toStr(), state_expr)
+            return "%s%s" % (self.js.setData(JsUtils.jsWrap(JsUtils.dataFlows(data, dataflows, self.page))).toStr(), state_expr)
 
         return self._js__builder__ % {
             "tableId": self.js_code, "htmlCode": self.html_code, "config": self._json_config,

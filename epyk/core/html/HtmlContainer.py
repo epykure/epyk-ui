@@ -1085,7 +1085,7 @@ class Grid(Html.Html):
               profile: types.PROFILE_TYPE = None, stop_state: bool = True, dataflows: List[dict] = None):
         template.options.managed = False
         py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in template.attr["class"]]
-        return '''%(container)s.innerHTML = ""; let containerOptions = %(options)s; console.log(containerOptions);
+        return '''%(container)s.innerHTML = ""; let containerOptions = %(options)s;
 let results = {}; let componentsHolders = []; let i = 0;
 %(data)s.forEach(function(row){if (!results[row.name]){results[row.name] = []}; results[row.name].push(row)}); 
 let keys = Object.keys(results); let rowsNum = Math.ceil(keys.length / containerOptions.columns);
@@ -1101,7 +1101,7 @@ for (let n=0; n < rowsNum; n++) {
             "data": JsUtils.dataFlows(data, dataflows, self.page),
             "options": self.options.config_js(options),
             "create": template.dom.createWidget(
-                html_code=JsUtils.jsWrap("'%s_dyn_' + i +''" % self.html_code), container=JsUtils.jsWrap("col.id")),
+                html_code=JsUtils.jsWrap("'%s_dyn_' + i" % self.html_code), container=JsUtils.jsWrap("col.id")),
             "css": template.style.css, "class": py_cls_names,
             "builder": template.build(
                 JsUtils.jsWrap("results[keys[i]]"), component_id=JsUtils.jsWrap("htmlObj.id"), profile=profile, stop_state=stop_state),

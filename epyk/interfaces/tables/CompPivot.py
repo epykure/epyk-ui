@@ -13,7 +13,8 @@ class Pivottable:
 
   def pivot(self, records: list = None, rows: list = None, cols: list = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
-            helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False):
+            helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False
+            ) -> html_tables.HtmlTablePivot.PivotTable:
     """ Create an HTML Pivot table.
 
     :tags:

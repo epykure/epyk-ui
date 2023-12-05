@@ -326,13 +326,16 @@ class ChartJs(JsCanvas.Canvas):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
+        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        if js_code.startswith("window"):
+            js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
     const newDiv = document.createElement(tag);Object.keys(attrs).forEach(
         function(key) {newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
     if(!containerId){ document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
     window[jsCode] = new Chart(newDiv.getContext("2d"), ctx); return newDiv;
 })(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
-            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "js_code": js_code,
             "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
             "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
             "tag": self.component.tag, "ctx": self.component.getCtx(options),
@@ -352,13 +355,16 @@ class ChartFrappe(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
+        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        if js_code.startswith("window"):
+            js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
     const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
         newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
     if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
     window[jsCode] = new frappe.Chart('#'+ htmlCode, ctx); return newDiv
 })(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
-            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "js_code": js_code,
             "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
             "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
             "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(),
@@ -378,13 +384,16 @@ class ChartApex(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
+        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        if js_code.startswith("window"):
+            js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
     const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
         newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
     if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
     window[jsCode] = new ApexCharts(newDiv, ctx); window[jsCode].render(); return newDiv
 })(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
-            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "js_code": js_code,
             "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
             "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
             "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(),
@@ -412,13 +421,16 @@ class Chartist(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
+        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        if js_code.startswith("window"):
+            js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, chartType, ctx, attrs){
     const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
         newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
     if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
     window[jsCode] = new Chartist[chartType]("#"+ htmlCode, {}, ctx); return newDiv
 })(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(chart_type)s, %(ctx)s, %(attrs)s)''' % {
-            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "js_code": js_code,
             "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
             "chart_type": JsUtils.jsConvertData(self.component._chart__type, None),
             "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),
@@ -439,13 +451,16 @@ class RoughViz(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
+        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        if js_code.startswith("window"):
+            js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, chartType, ctx, attrs){
     const newDiv = document.createElement(tag); Object.keys(attrs).forEach(function(key) {
         newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
     if(!containerId){document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
     window[jsCode] = new roughViz[chartType](ctx); return newDiv
 })(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(chart_type)s, %(ctx)s, %(attrs)s)''' % {
-            "js_code": JsUtils.jsConvertData(self.component.js_code, None),
+            "js_code": js_code,
             "attrs": self.component.get_attrs(css_class_names=self.component.style.get_classes(), to_str=False),
             "chart_type": JsUtils.jsConvertData(self.component._chart__type, None),
             "html_code": JsUtils.jsConvertData(html_code or self.component.html_code, None),

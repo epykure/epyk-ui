@@ -32,8 +32,7 @@ class Tables:
 
   @property
   def aggrids(self) -> CompAgGrid.AgGrid:
-    """
-    AG-Grid is the industry standard for JavaScript Enterprise Applications.
+    """AG-Grid is the industry standard for JavaScript Enterprise Applications.
     Developers using ag-Grid are building applications that would not be possible if ag-Grid did not exist.
 
     :tags:
@@ -55,8 +54,7 @@ class Tables:
 
   @property
   def tabulators(self) -> CompTabulator.Tabulators:
-    """
-    Interface to the different Tabulator configurations.
+    """Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -71,9 +69,7 @@ class Tables:
 
   @property
   def google(self) -> CompTableGoogle.Google:
-    """
-    Interface to the Google Table interface.
-
+    """Interface to the Google Table interface.
     In order to use it, the Google products need to be specially enabled.
     """
     if not getattr(self.page, '_with_google_imports', False):
@@ -83,8 +79,7 @@ class Tables:
 
   @property
   def pivots(self) -> CompPivot.Pivottable:
-    """
-    Interface to the different Pivot Table configurations.
+    """Interface to the different Pivot Table configurations.
 
     :tags:
     :categories:
@@ -97,8 +92,7 @@ class Tables:
 
   @property
   def d3(self) -> CompTableD3.D3:
-    """
-    Interface to the different Tabulator configurations.
+    """Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -111,8 +105,7 @@ class Tables:
 
   @property
   def plotlys(self) -> CompTablesPlotly.Plotly:
-    """
-    Interface to the different Tabulator configurations.
+    """Interface to the different Tabulator configurations.
 
     :tags:
     :categories:
@@ -125,8 +118,7 @@ class Tables:
 
   @property
   def datatables(self) -> CompDatatable.Datatables:
-    """
-    Interface to the different Datatable configurations.
+    """Interface to the different Datatable configurations.
 
     :tags:
     :categories:

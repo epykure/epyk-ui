@@ -589,7 +589,7 @@ the same signature and return).
     def js_code(self):
         if self.__htmlCode is not None:
             if hasattr(self.__htmlCode, "toStr"):
-                return JsUtils.jsWrap("%s + 'Id'" % self.__htmlCode)
+                return JsUtils.jsWrap("window[%s + 'Id']" % self.__htmlCode)
 
             return "%sId" % self.__htmlCode
 
@@ -1670,7 +1670,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     @jbuider()
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
-              dataflows: List[dict] = None):
+              stop_state: bool = True, dataflows: List[dict] = None):
         """Return the JavaScript fragment to refresh the component content.
 
         Usage::

@@ -531,6 +531,7 @@ class OptionGrid(Options):
 
   @columns.setter
   def columns(self, num: int):
+    self.class_col = "col col-%s" % round(12 / num)
     self._config(num)
 
   @property
