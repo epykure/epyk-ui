@@ -18,6 +18,9 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js.packages import JsPackage
 
 
+EXPORTS_VAR = "exports"
+
+
 def resolve_attributes(attributes: list, result: dict = None):
     """Convert initial options defined in the component.json structure file to valid
     attributes automatically loaded by the Python.
@@ -142,6 +145,20 @@ def %s(%s):
             return {"class": cls, "content": content}
 
 
+def get_static_method(func_name: str, library: str = None, set_exports: bool = False) -> str:
+    """ Get the appropriate function name based on the component definition.
+
+    :param func_name: The original function name
+    :param library: Component part of a specific library
+    :param set_exports: Use export module to get object properties
+    """
+    if library:
+        func_name = "%s.%s" % (library, func_name)
+    if set_exports:
+        func_name = "%s.%s" % (EXPORTS_VAR, func_name)
+    return func_name
+
+
 class DomComponent(JsHtml.JsHtml):
     arg_container_id = "containerId"
 
@@ -204,6 +221,7 @@ class DomComponent(JsHtml.JsHtml):
         self.component.options.managed = False
         if fnc is None:
             fnc = "append%sTo" % self.component.__class__.__name__
+        fnc = get_static_method(fnc, self.component.library, self.component.set_exports)
         return JsUtils.jsWrap("%s = %s(%s=%s, %s=%s, %s=%s)" % (
             self.component.js_code, fnc,
             self.component.arg_init_value, JsUtils.jsConvertData(values, None),
@@ -278,12 +296,7 @@ class JsComponents(JsPackage):
         :param fnc: Static method to define / pain the component (Default trim%(className)s)
         """
         fnc = fnc or "trim%s" % self.component.__class__.__name__
-        if self.component.set_exports:
-            if self.component.library:
-                return JsUtils.jsWrap("exports.%s.%s(%s)" % (self.component.library, fnc, self.element))
-
-            return JsUtils.jsWrap("exports.%s(%s)" % (fnc, self.element))
-
+        fnc = get_static_method(fnc, self.component.library, self.component.set_exports)
         return JsUtils.jsWrap("%s(%s)" % (fnc, self.element))
 
 
@@ -384,13 +397,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     @property
     def proxy_class(self):
         """Underlying class name used to build the object """
-        if self.set_exports:
-            if self.library:
-                return "exports.%s.%s" % (self.library, self.__class__.__name__)
-
-            return "exports.%s" % self.__class__.__name__
-
-        return self.__class__.__name__
+        return  get_static_method(self.__class__.__name__, self.library, self.set_exports)
 
     @property
     def options(self) -> SdOptions:
