@@ -330,9 +330,11 @@ class ChartJs(JsCanvas.Canvas):
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
-    const newDiv = document.createElement(tag);Object.keys(attrs).forEach(
-        function(key) {newDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
-    if(!containerId){ document.body.appendChild(newDiv)} else {document.getElementById(containerId).appendChild(newDiv)};
+    const contDiv = document.createElement("div");
+    const newDiv = document.createElement(tag);Object.keys(attrs).forEach( 
+        function(key) {contDiv.setAttribute(key, attrs[key]);}); newDiv.id = htmlCode;
+    contDiv.appendChild(newDiv);
+    if(!containerId){ document.body.appendChild(contDiv)} else {document.getElementById(containerId).appendChild(contDiv)};
     window[jsCode] = new Chart(newDiv.getContext("2d"), ctx); return newDiv;
 })(%(container)s, "%(tag)s", %(html_code)s, %(js_code)s, %(ctx)s, %(attrs)s)''' % {
             "js_code": js_code,

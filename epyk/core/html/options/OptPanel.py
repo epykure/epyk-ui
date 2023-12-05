@@ -512,7 +512,7 @@ class OptionsStepper(Options):
 
 
 class OptionGrid(Options):
-  component_properties = ('columns', 'class_col', 'class_row')
+  component_properties = ('columns', 'class_col', 'class_row', 'class_title', 'title_tag')
 
   @property
   def autoSize(self):
@@ -533,6 +533,26 @@ class OptionGrid(Options):
   def columns(self, num: int):
     self.class_col = "col col-%s" % round(12 / num)
     self._config(num)
+
+  @property
+  def class_title(self):
+    """
+    """
+    return self._config_get("text-center")
+
+  @class_title.setter
+  def class_title(self, value: str):
+    self._config(value)
+
+  @property
+  def title_tag(self):
+    """
+    """
+    return self._config_get("h4")
+
+  @title_tag.setter
+  def title_tag(self, value: str):
+    self._config(value)
 
   @property
   def responsive(self):

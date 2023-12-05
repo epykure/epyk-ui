@@ -934,7 +934,9 @@ let results = {}; let componentsHolders = []; let i = 0;
 let keys = Object.keys(results);
 keys.forEach(function(key){
     let row = document.createElement("div"); row.style.display = "block";
-    row.id = %(container)s.id + "_w_" + i; componentsHolders.push(row); i++
+    row.id = %(container)s.id + "_w_" + i; componentsHolders.push(row); i++;
+    let colLabel = document.createElement(containerOptions.title_tag); colLabel.innerHTML = key;
+    colLabel.setAttribute('class', containerOptions.class_title); row.appendChild(colLabel)
     %(container)s.appendChild(row);
 }); componentsHolders.forEach(function(col, i){let htmlObj = %(create)s; %(builder)s;})
 ''' % {
@@ -1119,7 +1121,11 @@ for (let n=0; n < rowsNum; n++) {
         let k = keys[i];
         if (k){
             let col = document.createElement("div"); col.setAttribute('class', containerOptions.class_col); 
-            col.id = %(container)s.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++}};
+            col.id = %(container)s.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++;
+            let colLabel = document.createElement(containerOptions.title_tag); colLabel.innerHTML = k;
+            colLabel.setAttribute('class', containerOptions.class_title);
+            col.appendChild(colLabel)
+        }};
     %(container)s.appendChild(row);}
     ; componentsHolders.forEach(function(col, i){let htmlObj = %(create)s; %(builder)s;})''' % {
             "data": JsUtils.jsConvertData(data, None),
