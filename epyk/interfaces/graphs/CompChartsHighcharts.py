@@ -40,7 +40,7 @@ class Highcharts:
 
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": kind}}
+    dfl_options = {"series": [], "chart": {"type": kind}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y or [], 'x_axis': x, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
@@ -54,7 +54,7 @@ class Highcharts:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphHighcharts.Chart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": "line"}}
+    dfl_options = {"series": [], "chart": {"type": "line"}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
@@ -75,7 +75,7 @@ class Highcharts:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphHighcharts.Chart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": "column"}}
+    dfl_options = {"series": [], "chart": {"type": "column"}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
@@ -89,7 +89,7 @@ class Highcharts:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphHighcharts.Chart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": "bar"}}
+    dfl_options = {"series": [], "chart": {"type": "bar"}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
@@ -103,7 +103,7 @@ class Highcharts:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphHighcharts.Chart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": "area"}}
+    dfl_options = {"series": [], "chart": {"type": "area"}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
@@ -117,7 +117,7 @@ class Highcharts:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphHighcharts.Chart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": "pie"}}
+    dfl_options = {"series": [], "chart": {"type": "pie"}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
@@ -131,7 +131,7 @@ class Highcharts:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphHighcharts.Chart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": "pie"}}
+    dfl_options = {"series": [], "chart": {"type": "pie"}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
@@ -146,7 +146,7 @@ class Highcharts:
            options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphHighcharts.Chart:
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"series": [], "chart": {"type": "pie"}}
+    dfl_options = {"series": [], "chart": {"type": "pie"}, "title": {"text": ""}}
     dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
     if options is not None:
       dfl_options.update(options)
