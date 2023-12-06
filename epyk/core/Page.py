@@ -364,8 +364,7 @@ class Report:
     _node_modules = None  # Path for the external packages (default to the CDNJS is not available)
 
     def __init__(self, inputs: dict = None, script: str = None):
-        """
-        Create a Report object.
+        """Create a Report object.
 
         This is the starting point for any web resource.
         This interface will create a generic ui schema which will be then converted.
@@ -452,8 +451,7 @@ class Report:
 
     @property
     def body(self) -> html.Html.Body:
-        """
-        Property that returns the Body element of the HTML page.
+        """Property that returns the Body element of the HTML page.
 
         Usage::
 
@@ -462,6 +460,7 @@ class Report:
         """
         if self.__body is None:
             self.__body = html.Html.Body(self, None, html_code='body')
+            self.__body.dom.varName = "document.body"
             self.__body.style.css.background = self.theme.greys[0]
             self.__body.style.css.color = self.theme.greys[-1]
         return self.__body
@@ -472,8 +471,7 @@ class Report:
 
     @property
     def theme(self) -> themes.Theme:
-        """
-        Return the currently used :doc:`report/theme` for the report.
+        """Return the currently used :doc:`report/theme` for the report.
 
         Usage::
 

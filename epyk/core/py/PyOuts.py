@@ -225,6 +225,10 @@ class PyOuts:
             "data:text/js;base64,%s" % Imports.string_to_base64(JsGlobals.set_global_options(
                 self.page._props.get('js', {}).get("constructors", {}),
                 self.page.properties.js.get_init_options())))
+        # Set the env variable if the exports is using to load packages
+        onloadParts.insert(
+          0,
+          'if(window.exports){Object.keys(window.exports).forEach(function(key){window[key] = window.exports[key]})}')
         results = {
             'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self.page.properties.css.text),
             'cssContainer': ";".join(

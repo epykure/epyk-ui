@@ -2667,7 +2667,7 @@ class ImportModule:
             self._css["dep"] = ["/static\\ag-grid/%s/styles/ag-theme-alpine.min.css" % version]
             self._css["versions"] = [version]
             if license_key is not None:
-                self.page.properties.js.add_text("agGrid.LicenseManager.setLicenseKey('%s')" % license_key)
+                self.page.properties.js.add_text("if(window['agGrid']){agGrid.LicenseManager.setLicenseKey('%s')}" % license_key)
 
     def set_access_token(self, value: str = None, name: str = ""):
         """
@@ -3971,7 +3971,13 @@ class ImportManager:
             if JS_IMPORTS.get(a, {}).get("polyfill"):
                 import_resolved.remove(a)
                 polyfills.append(a)
-        return polyfills + import_resolved[::-1]
+        local_pkgs, ext_pkgs = [], []
+        for pkg in import_resolved[::-1]:
+          if pkg.startswith("local_"):
+            local_pkgs.append(pkg)
+          else:
+            ext_pkgs.append(pkg)
+        return polyfills + ext_pkgs + local_pkgs
 
     def cssResolve(self, css_aliases: List[str], local_css: Optional[dict] = None, excluded: List[str] = None):
         """
@@ -4099,6 +4105,10 @@ class ImportManager:
                 #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
                 mod_type = self.jsImports[js_alias]['type'].get(url_module, "text/javascript")
                 if os.path.isabs(url_module) and not url_module.startswith("/static"):
+                    file_name, file_extension = os.path.splitext(url_module)
+                    if not file_extension.endswith(".js"):
+                        continue
+
                     with open(url_module, "rb") as fp:
                         if mod_type == "text/javascript":
                             # export cannot be used in javascript scripts not set as modules

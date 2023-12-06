@@ -310,7 +310,7 @@ class ChartJs(JsPackage):
     if config is None:
       return JsObjects.JsObject.JsObject("%s.update()" % self.toStr())
 
-    config = JsUtils.convertOptions(config, self.component.chartId)
+    config = JsUtils.convertOptions(config, self.component.js_code)
     return JsUtils.jsWrap('''%s;%s.update(%s)''' % (config, self.toStr(), JsUtils.jsConvertData(mode, None)))
 
   def hide(self, dataset_index: int, data_index: int = None):
@@ -559,7 +559,7 @@ var data, filename, link; var columnDelimiter = ",";
   link.setAttribute('href', data); link.setAttribute('download', filename);
   document.body.appendChild(link); link.click();
   document.body.removeChild(link);
-''' % {"chartId": self.component.chartId, "filename": filename}
+''' % {"chartId": self.component.js_code, "filename": filename}
 
   def capture(self):
     """
@@ -610,7 +610,7 @@ navigator.clipboard.write([
     :return:
     """
     return JsObjects.JsString.JsString.get("%s.options.plugins.title.text = %s" % (
-        self.component.chartId, JsUtils.jsConvertData(value, None)))
+        self.component.js_code, JsUtils.jsConvertData(value, None)))
 
   def toStr(self):
     """
