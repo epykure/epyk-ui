@@ -45,14 +45,14 @@ class Console(JsHtml.JsHtmlRich):
         return JsObjects.JsObjects.get("%s.innerHTML += ' > '+ %s +'<br/>'" % (self.component.dom.varId, js_data))
 
     def clear(self):
-        """ Clear the editor. """
+        """Clear the editor. """
         return JsObjects.JsObjects.get('%s.innerHTML = ""' % self.varName)
 
 
 class Editor(JsHtml.JsHtmlRich):
 
     def timestamp(self):
-        """ Update the editor timestamp. """
+        """Update the editor timestamp. """
         return self.querySelector("span").innerHTML(JsObjects.JsDate.JsDate().getStrTimeStamp())
 
 
@@ -60,8 +60,8 @@ class CodeMirror(JsHtml.JsHtmlRich):
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
-        self.varName, self.varData, self.__var_def = "%s.getWrapperElement()" % component.editorId, "", None
+        self.htmlCode = js_code if js_code is not None else component.html_code
+        self.varName, self.varData, self.__var_def = "%s.getWrapperElement()" % component.js_code, "", None
         self.component, self.page = component, page
         self._js = []
         self._jquery, self._jquery_ui, self._d3 = None, None, None
@@ -69,89 +69,74 @@ class CodeMirror(JsHtml.JsHtmlRich):
     @property
     def content(self):
         """ Get the editor content. """
-        return JsHtml.ContentFormatters(self.page, "%s.getValue()" % self.component.editorId)
+        return JsHtml.ContentFormatters(self.page, "%s.getValue()" % self.component.js_code)
 
     def select(self) -> JsObjects.JsObject:
-        """ Select the whole content of the editor.
+        """Select the whole content of the editor.
 
-        Related Pages:
-
-          https://codemirror.net/3/doc/manual.html#keymaps
+        `CodeMirror <https://codemirror.net/3/doc/manual.html#keymaps>`_
         """
-        return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self.component.editorId)
+        return JsObjects.JsObjects.get("%s.execCommand('selectAll')" % self.component.js_code)
 
     def singleSelection(self) -> JsObjects.JsObject:
-        """
-        When multiple selections are present, this deselects all but the primary selection.
+        """When multiple selections are present, this deselects all but the primary selection.
 
-        Related Pages:
-
-          https://codemirror.net/3/doc/manual.html#keymaps
+        `CodeMirror <https://codemirror.net/3/doc/manual.html#keymaps>`_
         """
-        return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self.component.editorId)
+        return JsObjects.JsObjects.get("%s.execCommand('singleSelection')" % self.component.js_code)
 
     def killLine(self) -> JsObjects.JsObject:
-        """
-        Emacs-style line killing. Deletes the part of the line after the cursor.
-
+        """Emacs-style line killing. Deletes the part of the line after the cursor.
         If that consists only of whitespace, the newline at the end of the line is also deleted.
 
-        Related Pages:
-
-          https://codemirror.net/3/doc/manual.html#keymaps
+        `CodeMirror <https://codemirror.net/3/doc/manual.html#keymaps>`_
         """
-        return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self.component.editorId)
+        return JsObjects.JsObjects.get("%s.execCommand('killLine')" % self.component.js_code)
 
     def deleteLine(self) -> JsObjects.JsObject:
-        """
-        Deletes the whole line under the cursor, including newline at the end.
+        """Deletes the whole line under the cursor, including newline at the end.
 
-        Related Pages:
-
-          https://codemirror.net/3/doc/manual.html#keymaps
+        `CodeMirror <https://codemirror.net/3/doc/manual.html#keymaps>`_
         """
-        return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self.component.editorId)
+        return JsObjects.JsObjects.get("%s.execCommand('deleteLine')" % self.component.js_code)
 
     def copy(self) -> JsObjects.JsObject:
-        """ Copy the editor content. """
-        return JsObjects.JsObjects.get("%s.execCommand('copy')" % self.component.editorId)
+        """Copy the editor content. """
+        return JsObjects.JsObjects.get("%s.execCommand('copy')" % self.component.js_code)
 
     def setValue(self, data: Union[str, primitives.JsDataModel, float, dict, list]) -> JsObjects.JsObject:
-        """
-        Set the editor content.
+        """Set the editor content.
 
         :param data: The value to put in the editor
         """
         data = JsUtils.jsConvertData(data, None)
-        return JsObjects.JsObjects.get("%s.setValue(%s)" % (self.component.editorId, data))
+        return JsObjects.JsObjects.get("%s.setValue(%s)" % (self.component.js_code, data))
 
     def setOption(self, name: Union[str, primitives.JsDataModel, float, dict, list],
                   value: Union[str, primitives.JsDataModel, float, dict, list]) -> JsObjects.JsObject:
-        """
-        Set specific options to the editor.
+        """Set specific options to the editor.
 
         :param name: The option's name
         :param value: The option's value
         """
         name = JsUtils.jsConvertData(name, None)
         value = JsUtils.jsConvertData(value, None)
-        return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self.component.editorId, name, value))
+        return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self.component.js_code, name, value))
 
     def refresh(self) -> JsUtils.jsWrap:
-        """ Refresh the Editor's content """
-        return JsUtils.jsWrap("%s.refresh()" % self.component.editorId)
+        """Refresh the Editor's content """
+        return JsUtils.jsWrap("%s.refresh()" % self.component.js_code)
 
     def clear(self) -> JsUtils.jsWrap:
-        """ Clear the editor's content. """
-        return JsUtils.jsWrap('%s.setValue("")' % self.component.editorId)
+        """Clear the editor's content. """
+        return JsUtils.jsWrap('%s.setValue("")' % self.component.js_code)
 
     def empty(self) -> JsUtils.jsWrap:
         """ Empty the editor. """
-        return JsUtils.jsWrap('%s.setValue("")' % self.component.editorId)
+        return JsUtils.jsWrap('%s.setValue("")' % self.component.js_code)
 
     def appendText(self, text: Union[str, primitives.JsDataModel], from_selection: bool = True) -> JsObjects.JsVoid:
-        """
-        Append test to the editor's content.
+        """Append test to the editor's content.
 
         :param text: The text to append
         :param from_selection: Optional
@@ -162,4 +147,4 @@ class CodeMirror(JsHtml.JsHtmlRich):
 var editContent = %(editor)s.getDoc(); var editCursor = editContent.getCursor();
 if (%(toEnd)s){editContent.replaceRange("\n" + %(text)s, {line: editContent.size})}
 else {editContent.replaceRange("\n" + %(text)s, {line: editCursor.line})}
-''' % {"editor": self.component.editorId, "text": text, "toEnd": from_selection})
+''' % {"editor": self.component.js_code, "text": text, "toEnd": from_selection})

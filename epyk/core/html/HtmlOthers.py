@@ -230,11 +230,6 @@ class HtmlJson(Html.Html):
     return self._dom
 
   @property
-  def jsonId(self):
-    """Return the Javascript variable of the json object. """
-    return "%s_obj" % self.htmlCode
-
-  @property
   def options(self) -> OptJsonFormatter.OptionsJsonFmt:
     """Property to the component options.
     Options can either impact the Python side or the Javascript builder.
@@ -250,7 +245,7 @@ class HtmlJson(Html.Html):
     :return: A Javascript object
     """
     if self._js is None:
-      self._js = JsJsonFormatter.Json(page=self.page, js_code=self.jsonId, set_var=False, component=self)
+      self._js = JsJsonFormatter.Json(page=self.page, js_code=self.js_code, set_var=False, component=self)
     return self._js
 
   def __str__(self):

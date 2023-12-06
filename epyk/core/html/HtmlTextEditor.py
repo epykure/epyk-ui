@@ -302,22 +302,17 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param component_id: Optional.
         :param dataflows: Chain of data transformations
         """
-        return super().build(data, options, profile, component_id="window['%s']" % self.editorId, dataflows=dataflows)
-
-    @property
-    def editorId(self) -> str:
-        """Return the Javascript variable of the bespoke"""
-        return "editor_%s" % self.htmlCode
+        return super().build(data, options, profile, component_id=self.js_code, dataflows=dataflows)
 
     def __str__(self):
         set_val = ""
         if self._vals:
-            set_val = 'window["%(editor)s"].setValue(%(content)s)' % {
-                "editor": self.editorId, "content": JsUtils.jsConvertData(self._vals, None)}
+            set_val = '%(editor)s.setValue(%(content)s)' % {
+                "editor": self.js_code, "content": JsUtils.jsConvertData(self._vals, None)}
         self.page.body.onReady('''
-window["%(editor)s"] = CodeMirror.fromTextArea(document.getElementById('%(htmlId)s'),%(options)s); 
-window["%(editor)s"].setSize("%(width)s", "%(height)s"); %(setVal)s; window["%(editor)s"].refresh()''' % {
-            "editor": self.editorId, "width": self.css("width"), "height": self.css("height"),
+%(editor)s = CodeMirror.fromTextArea(document.getElementById('%(htmlId)s'),%(options)s); 
+%(editor)s.setSize("%(width)s", "%(height)s"); %(setVal)s; %(editor)s.refresh()''' % {
+            "editor": self.js_code, "width": self.css("width"), "height": self.css("height"),
             "options": self.options.config_js(), "htmlId": self.htmlCode, "setVal": set_val})
         return '<%s><textarea %s></textarea><div id="%s_loading"></div>%s</%s>' % (
             self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.htmlCode, self.helper, self.tag)

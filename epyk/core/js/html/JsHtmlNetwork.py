@@ -78,7 +78,7 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
         """ Return the values of the items in the list. """
         return JsObjects.JsArray.JsArray.get(
             "(function(){if(typeof window['%(htmlCode)s_data'] !== 'undefined'){return window['%(htmlCode)s_data']} else {return []}})()" % {
-                "htmlCode": self.component.htmlCode})
+                "htmlCode": self.component.html_code})
 
     def store(self, delimiter: str = None, data_type: str = None, js_code: Union[str, primitives.JsDataModel] = None):
         """
@@ -91,7 +91,7 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
 
         delimiter = delimiter or self.component.options.delimiter
         data_type = data_type or self.component.options.format
-        js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.htmlCode, None)
+        js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.html_code, None)
         if data_type.endswith("json"):
             value = events.data.jsonParse()
         else:
@@ -99,18 +99,18 @@ class JsHtmlDropFiles(JsHtml.JsHtml):
         return JsObjects.JsVoid("window[%s] = %s" % (js_code, JsUtils.jsConvertData(value, None)))
 
     def load(self, data: Union[str, primitives.JsDataModel], js_code: Union[str, primitives.JsDataModel] = None):
-        js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.htmlCode, None)
+        js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.html_code, None)
         return JsObjects.JsVoid("window[%s] = %s" % (js_code, JsUtils.jsConvertData(data, None)))
 
     def get_data(self, js_code: Union[str, primitives.JsDataModel] = None):
-        js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.htmlCode, None)
+        js_code = JsUtils.jsConvertData(js_code or '%s_data' % self.component.html_code, None)
         return JsObjects.JsObjects.get("window[%s]" % js_code)
 
     @property
     def code(self):
         """ The default data reference. """
-        return "%s_data" % self.component.htmlCode
+        return "%s_data" % self.component.html_code
 
     @property
     def data(self):
-        return JsFileData("window['%s_data']" % self.component.htmlCode)
+        return JsFileData("window['%s_data']" % self.component.html_code)

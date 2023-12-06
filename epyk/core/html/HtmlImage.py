@@ -849,11 +849,6 @@ class SlideShow(Html.Html):
         return self._styleObj
 
     @property
-    def jsonId(self):
-        """Return the Javascript variable of the json object. """
-        return "%s_obj" % self.htmlCode
-
-    @property
     def js(self) -> JsTinySlider.TinySlider:
         """The tiny slider javascript events.
 
@@ -862,7 +857,7 @@ class SlideShow(Html.Html):
         :return: A Javascript object
         """
         if self._js is None:
-            self._js = JsTinySlider.TinySlider(page=self.page, js_code=self.jsonId, set_var=False, component=self)
+            self._js = JsTinySlider.TinySlider(page=self.page, js_code=self.js_code, set_var=False, component=self)
         return self._js
 
     @property
@@ -901,7 +896,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: The source target for the event
         """
-        return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile)
+        return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.js_code, profile)
 
     def rem_index_changed(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                           source_event: str = None):
@@ -910,7 +905,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: The source target for the event
         """
-        return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
+        return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.js_code, profile, add=False)
 
     def add_transition_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                              source_event: str = None):
@@ -919,7 +914,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile)
+        return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.js_code, profile)
 
     def rem_transition_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                              source_event: str = None):
@@ -928,7 +923,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
+        return self._events("transitionStart", js_funcs, source_event or "%s.events" % self.js_code, profile, add=False)
 
     def add_transition_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                            source_event: str = None):
@@ -937,7 +932,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile)
+        return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.js_code, profile)
 
     def rem_transition_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                            source_event: str = None):
@@ -946,7 +941,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.jsonId, profile, add=False)
+        return self._events("transitionEnd", js_funcs, source_event or "%s.events" % self.js_code, profile, add=False)
 
     def add_new_breakpoint_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                                  source_event: str = None):
@@ -955,7 +950,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile)
+        return self._events("newBreakpointStart", js_funcs, source_event or self.js_code, profile)
 
     def rem_new_breakpoint_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                                  source_event: str = None):
@@ -964,7 +959,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("newBreakpointStart", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("newBreakpointStart", js_funcs, source_event or self.js_code, profile, add=False)
 
     def add_new_breakpoint_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                                source_event: str = None):
@@ -973,7 +968,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile)
+        return self._events("newBreakpointEnd", js_funcs, source_event or self.js_code, profile)
 
     def rem_new_breakpoint_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                                source_event: str = None):
@@ -982,7 +977,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("newBreakpointEnd", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("newBreakpointEnd", js_funcs, source_event or self.js_code, profile, add=False)
 
     def add_touch_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                         source_event: str = None):
@@ -991,7 +986,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("touchStart", js_funcs, source_event or self.jsonId, profile)
+        return self._events("touchStart", js_funcs, source_event or self.js_code, profile)
 
     def rem_touch_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                         source_event: str = None):
@@ -1000,7 +995,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("touchStart", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("touchStart", js_funcs, source_event or self.js_code, profile, add=False)
 
     def add_touch_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                        source_event: str = None):
@@ -1009,7 +1004,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("touchMove", js_funcs, source_event or self.jsonId, profile)
+        return self._events("touchMove", js_funcs, source_event or self.js_code, profile)
 
     def rem_touch_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                        source_event: str = None):
@@ -1018,7 +1013,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("touchMove", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("touchMove", js_funcs, source_event or self.js_code, profile, add=False)
 
     def add_touch_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                       source_event: str = None):
@@ -1027,7 +1022,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile)
+        return self._events("touchEnd", js_funcs, source_event or self.js_code, profile)
 
     def rem_touch_dnd(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                       source_event: str = None):
@@ -1036,7 +1031,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("touchEnd", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("touchEnd", js_funcs, source_event or self.js_code, profile, add=False)
 
     def add_drag_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                        source_event: str = None):
@@ -1045,7 +1040,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("dragStart", js_funcs, source_event or self.jsonId, profile)
+        return self._events("dragStart", js_funcs, source_event or self.js_code, profile)
 
     def rem_drag_start(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                        source_event: str = None):
@@ -1054,7 +1049,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("dragStart", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("dragStart", js_funcs, source_event or self.js_code, profile, add=False)
 
     def add_drag_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                       source_event: str = None):
@@ -1063,7 +1058,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("dragMove", js_funcs, source_event or self.jsonId, profile)
+        return self._events("dragMove", js_funcs, source_event or self.js_code, profile)
 
     def rem_drag_move(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                       source_event: str = None):
@@ -1072,7 +1067,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("dragMove", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("dragMove", js_funcs, source_event or self.js_code, profile, add=False)
 
     def add_drag_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                      source_event: str = None):
@@ -1081,7 +1076,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile)
+        return self._events("dragEnd", js_funcs, source_event or self.js_code, profile)
 
     def rem_drag_end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                      source_event: str = None):
@@ -1090,7 +1085,7 @@ class SlideShow(Html.Html):
         :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. The source target for the event
         """
-        return self._events("dragEnd", js_funcs, source_event or self.jsonId, profile, add=False)
+        return self._events("dragEnd", js_funcs, source_event or self.js_code, profile, add=False)
 
     def refresh(self):
         """Component refresh function. Javascript function which can be called in any Javascript event. """

@@ -40,11 +40,6 @@ class Chart(Html.Html):
         """Property to the series options"""
         return super().options
 
-    @property
-    def chartId(self):
-        """Return the Javascript variable of the chart"""
-        return "%s_obj" % self.htmlCode
-
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
@@ -56,6 +51,7 @@ class Chart(Html.Html):
         :param component_id: String. Optional. A DOM component reference in the page.
         :param stop_state: Remove the top panel for the component state (error, loading...)
         """
+        self.js_code = component_id
         return '''
 %(chartId)s = google.charts.setOnLoadCallback( (function(){
 var data = new google.visualization.DataTable();
@@ -68,10 +64,8 @@ chartData.series.forEach(function(col){data.addColumn('number', col)})
 data.addRows(chartData.datasets);
 var chart = new google.visualization.%(type)s(%(varId)s);
 chart.draw(data, chartOptions);
-return chart
-}));
-''' % {
-            'chartId': self.chartId, 'varId': component_id or self.dom.varId,
+return chart}));''' % {
+            'chartId': self.js_code, 'varId': self.dom.varId,
             'options': self.options.config_js(options), 'data': JsUtils.dataFlows(data, dataflows, self.page),
             'type': self.options.type}
 

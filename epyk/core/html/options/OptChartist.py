@@ -1,5 +1,7 @@
 from typing import List
 from epyk.core.html.options import Options
+from epyk.core.html.options import OptChart
+
 
 class OptionsAxisY(Options):
 
@@ -34,7 +36,7 @@ class OptionsChartPadding(Options):
         self._config(value)
 
 
-class OptionsChartistLine(Options):
+class OptionsChartistLine(OptChart.OptionsChart):
 
     @property
     def high(self):

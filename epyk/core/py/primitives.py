@@ -46,6 +46,7 @@ class HtmlModel:
   style = None
   name = None
   html_code = None
+  js_code = None
   options = None
   _browser_data = None
   var = None

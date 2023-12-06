@@ -1,4 +1,4 @@
-from epyk.core.html.options import OptionsWithTemplates
+from epyk.core.html.options import OptChart
 from epyk.core.html.options.highcharts import oannotations
 from epyk.core.html.options.highcharts import onoData
 from epyk.core.html.options.highcharts import otime
@@ -30,7 +30,7 @@ from epyk.core.html.options.highcharts import olegend
 from epyk.core.html.options.highcharts import osonification
 
 
-class OptionsHighcharts(OptionsWithTemplates):
+class OptionsHighcharts(OptChart.OptionsChart):
 
     @property
     def defs(self) -> odefs.OptionDefs:

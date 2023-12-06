@@ -11,8 +11,7 @@ from epyk.core.js.primitives import JsObjects
 class Inputs(JsHtml.JsHtml):
 
     def autocomplete(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns the value of the autocomplete attribute of a text field.
+        """Sets or returns the value of the autocomplete attribute of a text field.
 
         Related Pages:
 
@@ -27,8 +26,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.autocomplete = %s" % (self.component.dom.varName, data))
 
     def autofocus(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns whether a text field should automatically get focus when the page loads.
+        """Sets or returns whether a text field should automatically get focus when the page loads.
 
         Related Pages:
 
@@ -43,8 +41,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.autofocus = %s" % (self.component.dom.varName, data))
 
     def defaultValue(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns the default value of a text field.
+        """Sets or returns the default value of a text field.
 
         Related Pages:
 
@@ -59,8 +56,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.defaultValue = %s" % (self.component.dom.varName, data))
 
     def disabled(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns whether the text field is disabled, or not.
+        """Sets or returns whether the text field is disabled, or not.
 
         Related Pages:
 
@@ -75,8 +71,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.disabled = %s" % (self.component.dom.varName, data))
 
     def maxLength(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns the value of the maxlength attribute of a text field.
+        """Sets or returns the value of the maxlength attribute of a text field.
 
         Related Pages:
 
@@ -91,8 +86,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.maxLength = %s" % (self.component.dom.varName, data))
 
     def pattern(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns the value of the pattern attribute of a text field.
+        """Sets or returns the value of the pattern attribute of a text field.
 
         Related Pages:
 
@@ -107,8 +101,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.pattern = %s" % (self.component.dom.varName, data))
 
     def placeholder(self, data: types.JS_DATA_TYPES = None):
-        """
-        Set or get the placeholder for an HTML component.
+        """Set or get the placeholder for an HTML component.
 
         Related Pages:
 
@@ -123,8 +116,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.placeholder = %s" % (self.component.dom.varName, data))
 
     def readOnly(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns whether a text field is read-only, or not.
+        """Sets or returns whether a text field is read-only, or not.
 
         Related Pages:
 
@@ -139,8 +131,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.readOnly = %s" % (self.component.dom.varName, data))
 
     def required(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns whether the text field must be filled out before submitting a form.
+        """Sets or returns whether the text field must be filled out before submitting a form.
 
         Related Pages:
 
@@ -155,8 +146,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.required = %s" % (self.component.dom.varName, data))
 
     def size(self, data: types.JS_DATA_TYPES = None):
-        """
-        Sets or returns the value of the size attribute of a text field.
+        """Sets or returns the value of the size attribute of a text field.
 
         Related Pages:
 
@@ -171,8 +161,7 @@ class Inputs(JsHtml.JsHtml):
         return JsUtils.jsWrap("%s.size = %s" % (self.component.dom.varName, data))
 
     def name(self, data: types.JS_DATA_TYPES = None):
-        """
-        Set or get the placeholder for an HTML component.
+        """Set or get the placeholder for an HTML component.
 
         Related Pages:
 
@@ -202,8 +191,7 @@ class Inputs(JsHtml.JsHtml):
         return JsObjects.JsObject.JsObject.get("%s.validity" % self.component.dom.varName)
 
     def checkValidity(self):
-        """
-        The HTMLSelectElement.checkValidity() method checks whether the element has any constraints and whether
+        """The HTMLSelectElement.checkValidity() method checks whether the element has any constraints and whether
         it satisfies them. If the element fails its constraints, the browser fires a cancelable invalid event at the
         element, and then returns false.
 
@@ -214,8 +202,7 @@ class Inputs(JsHtml.JsHtml):
         return JsObjects.JsObject.JsObject.get("%s.checkValidity()" % self.component.dom.varName)
 
     def reportValidity(self):
-        """
-        The HTMLFormElement.reportValidity() method returns true if the element's child controls satisfy their
+        """The HTMLFormElement.reportValidity() method returns true if the element's child controls satisfy their
         validation constraints. When false is returned, cancelable invalid events are fired for each invalid child and
         validation problems are reported to the user.
 
@@ -226,12 +213,11 @@ class Inputs(JsHtml.JsHtml):
         return JsObjects.JsObject.JsObject.get("%s.reportValidity()" % self.component.dom.varName)
 
     def validity_state(self):
-        """ Get the input validity state """
+        """Get the input validity state """
         return JsObjects.JsString.JsString.get("(function(inpForm){for (var key in inpForm.validity){if(inpForm.validity[key]){return key}}})(%s)" % self.component.dom.varName)
 
     def setCustomValidity(self, label: types.JS_DATA_TYPES = None, invalid_cls: str = None):
-        """
-        Sets the validationMessage property of an input element
+        """Sets the validationMessage property of an input element
 
         Related Pages:
 
@@ -254,8 +240,7 @@ class InputFileDom:
 
     @property
     def name(self):
-        """
-        Returns the name of the file referenced by the File object.
+        """Returns the name of the file referenced by the File object.
 
         Related Pages:
 
@@ -265,8 +250,7 @@ class InputFileDom:
 
     @property
     def lastModified(self):
-        """
-        Returns the last modified time of the file, in millisecond since the UNIX epoch (January 1st, 1970 at Midnight).
+        """Returns the last modified time of the file, in millisecond since the UNIX epoch (January 1st, 1970 at Midnight).
 
         Related Pages:
 
@@ -276,8 +260,7 @@ class InputFileDom:
 
     @property
     def lastModifiedDate(self):
-        """
-        Returns the last modified Date of the file referenced by the File object.
+        """Returns the last modified Date of the file referenced by the File object.
 
         Related Pages:
 
@@ -287,8 +270,7 @@ class InputFileDom:
 
     @property
     def size(self):
-        """
-        Returns the size of the file in bytes.
+        """Returns the size of the file in bytes.
 
         Related Pages:
 
@@ -298,8 +280,7 @@ class InputFileDom:
 
     @property
     def type(self):
-        """
-        Returns the MIME type of the file.
+        """Returns the MIME type of the file.
 
         Related Pages:
 
@@ -309,8 +290,7 @@ class InputFileDom:
 
     @property
     def webkitRelativePath(self):
-        """
-        Returns the path the URL of the File is relative to.
+        """Returns the path the URL of the File is relative to.
 
         Related Pages:
 
@@ -340,8 +320,7 @@ class InputFiles(Inputs):
 
     @property
     def files(self):
-        """
-        The files property returns a FileList object, representing the file or files selected with the file
+        """The files property returns a FileList object, representing the file or files selected with the file
         upload button.
 
         Related Pages:

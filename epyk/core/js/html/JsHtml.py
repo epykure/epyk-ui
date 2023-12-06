@@ -29,12 +29,9 @@ class FmtNumber:
         self.selector = selector
 
     def toFixed(self, value: Optional[int] = None):
-        """
-        The toFixed() method converts a number into a string, keeping a specified number of decimals.
+        """The toFixed() method converts a number into a string, keeping a specified number of decimals.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_tofixed.asp
+        `w3schools <https://www.w3schools.com/jsref/jsref_tofixed.asp>`_
 
         :param value: Optional. The number of digit to be displayed.
         """
@@ -44,12 +41,9 @@ class FmtNumber:
         return JsObjects.JsObjects.get("%s = %s.toFixed(%s)" % (self.selector, self._val, value))
 
     def toPrecision(self, value: Optional[int] = None):
-        """
-        The toPrecision() method formats a number to a specified length.
+        """The toPrecision() method formats a number to a specified length.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_toprecision.asp
+        `w3schools <https://www.w3schools.com/jsref/jsref_toprecision.asp>`_
 
         :param value: Optional. The number of digit to be displayed.
         """
@@ -59,12 +53,9 @@ class FmtNumber:
         return JsObjects.JsObjects.get("%s = %s.toPrecision(%s)" % (self.selector, self._val, value))
 
     def toExponential(self):
-        """
-        The toExponential() method converts a number into an exponential notation.
+        """The toExponential() method converts a number into an exponential notation.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_toexponential.asp
+        `w3schools <https://www.w3schools.com/jsref/jsref_toexponential.asp>`_
         """
         return JsObjects.JsObjects.get("%s = %s.toExponential()" % (self.selector, self._val))
 
@@ -77,23 +68,17 @@ class Formatters:
 
     @property
     def number(self):
-        """
-        Standard conversion to number.
+        """Standard conversion to number.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/jsref_obj_number.asp
+        `w3schools <https://www.w3schools.com/jsref/jsref_obj_number.asp>_
         """
         return FmtNumber(self.page, self.selector, "parseFloat(%s)" % self.selector)
 
     @packageImport("accounting")
     def toNumber(self, digit: int = 0, thousand_sep: List[Union[str, primitives.JsDataModel]] = "."):
-        """
-        Convert to number using the accounting Javascript module.
+        """Convert to number using the accounting Javascript module.
 
-        Related Pages:
-
-          https://openexchangerates.github.io/accounting.js/
+        `w3schools <https://openexchangerates.github.io/accounting.js/>`_
 
         :param digit: Optional. The number of digit to be displayed
         :param thousand_sep: Optional. The thousand symbol separator
@@ -104,12 +89,9 @@ class Formatters:
 
     @packageImport("accounting")
     def toMoney(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
-        """
-        Convert to number with a symbol using the accounting Javascript module.
+        """Convert to number with a symbol using the accounting Javascript module.
 
-        Related Pages:
-
-          https://openexchangerates.github.io/accounting.js/
+        `w3schools <https://openexchangerates.github.io/accounting.js/>`_
 
         :param symbol: Optional. The currency symbol
         :param digit: Optional. The number of digit to be displayed
@@ -154,8 +136,7 @@ class ContentFormatters:
         return JsObjects.JsObjects.get("%s // %s" % (self.selector, JsUtils.jsConvertData(obj, None)))
 
     def isIn(self, values: Union[list, primitives.JsDataModel]) -> JsObjects.JsBoolean.JsBoolean:
-        """
-        Check if value is in a list.
+        """Check if value is in a list.
 
         Usage::
 
@@ -173,16 +154,13 @@ class ContentFormatters:
 
     @packageImport("showdown")
     def fromMarkdown(self, options: dict = None):
-        """
-        Convert markdown to HTML string.
+        """Convert markdown to HTML string.
 
         Usage::
 
           t.dom.content.fromMarkdown()
 
-        Related Pages:
-
-          https://github.com/showdownjs/showdown
+        `showdown <https://github.com/showdownjs/showdown>`_
 
         :param options: Optional. Options allowed in the showdown module
         """
@@ -193,12 +171,9 @@ class ContentFormatters:
 
     @packageImport("accounting")
     def toNumber(self, digit: int = 0, thousand_sep: str = "."):
-        """
-        Convert to number using the accounting Javascript module.
+        """Convert to number using the accounting Javascript module.
 
-        Related Pages:
-
-          https://openexchangerates.github.io/accounting.js/
+        `accounting <https://openexchangerates.github.io/accounting.js/>`_
 
         :param digit: Optional. The number of digit to be displayed
         :param thousand_sep: Optional. The thousand symbol separator
@@ -208,12 +183,9 @@ class ContentFormatters:
 
     @packageImport("accounting")
     def toMoney(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ","):
-        """
-        Convert to number with a symbol using the accounting Javascript module.
+        """Convert to number with a symbol using the accounting Javascript module.
 
-        Related Pages:
-
-          https://openexchangerates.github.io/accounting.js/
+        `accounting <https://openexchangerates.github.io/accounting.js/>`_
 
         :param symbol: Optional. The currency symbol
         :param digit: Optional. The number of digit to be displayed
@@ -228,28 +200,25 @@ class ContentFormatters:
 
     @packageImport("accounting")
     def unformat(self):
-        """
-        parse a value from any formatted number/currency string.
+        """parse a value from any formatted number/currency string.
 
-        Related Pages:
-
-          http://openexchangerates.github.io/accounting.js/
+        `accounting <http://openexchangerates.github.io/accounting.js/>`_
         """
         return JsObjects.JsNumber.JsNumber("accounting.unformat(%s)" % self.selector)
 
     @property
     def number(self):
-        """ Standard conversion to number. """
+        """Standard conversion to number. """
         return JsObjects.JsNumber.JsNumber("parseFloat(%s)" % self.selector)
 
     @property
     def string(self):
-        """ Standard conversion to string. """
+        """Standard conversion to string. """
         return JsObjects.JsString.JsString("String(%s)" % self.selector, is_py_data=False)
 
     @property
     def date(self):
-        """ Standard conversion to Date object. """
+        """Standard conversion to Date object. """
         return JsObjects.JsDate.JsDate("new Date(%s)" % self.selector)
 
     def toStr(self):
@@ -257,21 +226,21 @@ class ContentFormatters:
 
     @property
     def dict(self):
-        """ Consider the object as a JavaScript Object """
+        """Consider the object as a JavaScript Object """
         return JsObjects.JsObject.JsObject.get("%s" % self.selector)
 
     @property
     def array(self):
-        """ Consider the object as a JavaScript array """
+        """Consider the object as a JavaScript array """
         return JsObjects.JsArray.JsArray.get("%s" % self.selector)
 
     @property
     def toJson(self):
-        """ Cast the Javascript object to a Json object """
+        """Cast the Javascript object to a Json object """
         return JsObjects.JsObject.JsObject.get("JSON.parse(%s)" % self.selector)
 
     def stringify(self):
-        """ Cast the Javascript object to a string object """
+        """Cast the Javascript object to a string object """
         return JsObjects.JsObject.JsObject.get("JSON.stringify(%s)" % self.selector)
 
 
@@ -288,19 +257,19 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def container(self):
-        """ Return the container level for the HTML component """
+        """Return the container level for the HTML component """
         if self.component is not None:
             return self._container
 
     @property
     def element(self):
-        """ Return always the real DOM element. """
+        """Return always the real DOM element. """
         if self.component is not None:
             return "document.getElementById('%s')" % self.component.html_code
 
     @property
     def val(self):
-        """ Return a Javascript val object. """
+        """Return a Javascript val object. """
         return JsObjects.JsObjects.get(
             "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
                 self.htmlCode, self.content.toStr()))
@@ -316,7 +285,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def isInViewPort(self) -> JsBoolean.JsBoolean:
-        """ Check if the component is in the visible part of the page (the viewport). """
+        """Check if the component is in the visible part of the page (the viewport). """
         flag = JsBoolean.JsBoolean(
             "!(rect.bottom < 0 || rect.top - viewHeight >= 0)", js_code="visibleFlag", set_var=True, is_py_data=False)
         flag._js.insert(0, self.page.js.viewHeight.setVar('viewHeight'))
@@ -324,16 +293,14 @@ class JsHtml(JsNodeDom.JsDoms):
         return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
     def onViewPort(self, js_funcs: types.JS_FUNCS_TYPES):
-        """
-        Trigger some code when the component is visible on the visible part of the page (the viewpport).
+        """Trigger some code when the component is visible on the visible part of the page (the viewpport).
 
         :param js_funcs: The Javascript events
         """
         return self.page.js.if_(self.isInViewPort, js_funcs)
 
     def copyToClipboard(self, include_html: bool = False):
-        """
-        Copy the component content to the clipboard.
+        """Copy the component content to the clipboard.
 
         :param include_html: Optional. Store the full HTML (Default False)
         """
@@ -344,24 +311,24 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def content(self) -> ContentFormatters:
-        """ Get the component content. """
+        """Get the component content. """
         if self.component.attr.get('type') == "number":
             return ContentFormatters(self.page, "parseFloat(%s.value)" % self.varName)
 
         return ContentFormatters(self.page, "%s.value" % self.varName)
 
-    def empty(self):
-        """ Empty the component. """
+    def empty(self) -> str:
+        """Empty the component. """
         return '%s.value = ""' % self.varName
 
     @property
     def events(self) -> JsNodeDom.JsDomEvents:
-        """ Link to the events attached to a Javascript DOM object. """
+        """Link to the events attached to a Javascript DOM object. """
         return JsNodeDom.JsDomEvents(self.component)
 
     @property
     def jquery(self) -> JsQuery.JQuery:
-        """ Link to the JQuery functions. """
+        """Link to the JQuery functions. """
         if self._jquery is None:
             self._jquery = JsQuery.JQuery(
                 component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.html_code), set_var=False)
@@ -369,7 +336,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def d3(self) -> JsD3.D3Select:
-        """ Wrapper to the D3 library. """
+        """Wrapper to the D3 library. """
         if self._d3 is None:
             self._d3 = JsD3.D3Select(
                 component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.html_code)
@@ -377,7 +344,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def jquery_ui(self) -> JsQueryUi.JQueryUI:
-        """ Wrapper to the JqueryUI component. """
+        """Wrapper to the JqueryUI component. """
         if self._jquery_ui is None:
             self._jquery_ui = JsQueryUi.JQueryUI(
                 component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.html_code), set_var=False,
@@ -386,37 +353,31 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def objects(self) -> JsObjects.JsObjects:
-        """ Interface to the main Javascript Classes and Primitives. """
+        """Interface to the main Javascript Classes and Primitives. """
         return JsObjects.JsObjects(page=self.page, component=self.component)
 
     @property
     def crossfilter(self):
-        """
-        Interface to CrossFilter package.
+        """Interface to CrossFilter package.
 
-        Related Pages:
-
-          https://github.com/square/crossfilter/wiki/API-Reference#group_all
+        `crossfilter <https://github.com/square/crossfilter/wiki/API-Reference#group_all>`_
         """
         return JsCrossFilter.CrossFilter
 
     @property
     def format(self) -> Formatters:
-        """ Specific formatters for the HTML components. """
+        """Specific formatters for the HTML components. """
         return Formatters(self.page, self.content.toStr())
 
     def style(self, attrs: dict):
-        """
-        Style property to change from the javascript the CSS attributes of an HTML object.
+        """Style property to change from the javascript the CSS attributes of an HTML object.
 
         Usage::
 
           button.js.style({"backgroundColor": 'red'})
           button.js.style({"backgroundColor": None})
 
-        Related Pages:
-
-          https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style
+        `w3 <https://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleRule-style>`_
 
         :param attrs: The CSS attributes
         """
@@ -430,9 +391,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     def registerFunction(self, fnc_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[list] = None,
                          profile: types.PROFILE_TYPE = None):
-        """
-        Javascript Framework extension.
-
+        """Javascript Framework extension.
         Register a predefined Javascript function.
         This is only dedicated to specific Javascript transformation functions.
 
@@ -447,8 +406,7 @@ class JsHtml(JsNodeDom.JsDoms):
         return self
 
     def hide(self):
-        """
-        Hide the component.
+        """Hide the component.
 
         Usage::
 

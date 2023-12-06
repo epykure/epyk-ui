@@ -306,7 +306,7 @@ class ChartJs(JsCanvas.Canvas):
             return JsObjects.JsObject.JsObject.get("{x: %s, y: %s, label: %s}" % (
                 active_points.label,
                 JsUtils.jsWrap("%s.data.datasets[%s].data[activePoints[0].index].y" % (
-                    active_points.chartId, active_points.num)),
+                    active_points.js_code, active_points.num)),
                 active_points.x,
             ))
 

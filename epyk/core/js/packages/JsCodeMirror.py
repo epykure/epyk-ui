@@ -15,19 +15,16 @@ class CM(JsPackage):
   def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = False,
                page: primitives.PageModel = None):
     super(CM, self).__init__(
-      component=component, js_code=js_code, selector=component.editorId, data=None, set_var=set_var, page=page)
+      component=component, js_code=js_code, selector=component.js_code, data=None, set_var=set_var, page=page)
 
   def setSize(self, width: Union[tuple, int, primitives.JsDataModel] = None,
               height: Union[tuple, int, primitives.JsDataModel] = None):
-    """
-    Programmatically set the size of the editor (overriding the applicable CSS rules).
+    """Programmatically set the size of the editor (overriding the applicable CSS rules).
 
     width and height can be either numbers (interpreted as pixels) or CSS units ("100%", for example).
     You can pass null for either of them to indicate that that dimension should not be changed.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#option_viewportMargin
+    `CodeMirror <https://codemirror.net/doc/manual.html#option_viewportMargin>`_
  
     :param width: The width of the component.
     :param height: The height of the component.
@@ -54,26 +51,19 @@ class CM(JsPackage):
     return self.fnc_closure("scrollTo(%s, %s)" % (x, y))
 
   def hasFocus(self):
-    """
-    Tells you whether the editor currently has focus.
+    """Tells you whether the editor currently has focus.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#option_viewportMargin
+    `CodeMirror <https://codemirror.net/doc/manual.html#option_viewportMargin>`_
 
     :return: A Boolean
     """
     return JsObjects.JsBoolean.JsBoolean.get("%s.hasFocus()" % self.varId)
 
   def setOption(self, option: Union[dict, primitives.JsDataModel], value: Any, dataflows: List[dict] = None):
-    """
-    Change the configuration of the editor.
-
+    """Change the configuration of the editor.
     option should the name of an option, and value should be a valid value for that option.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#option_viewportMargin
+    `CodeMirror <https://codemirror.net/doc/manual.html#option_viewportMargin>`_
  
     :param option: The editor option name
     :param Any value: The editor option value
@@ -86,38 +76,29 @@ class CM(JsPackage):
     return JsObjects.JsObjects.get("%s.setOption(%s, %s)" % (self.varId, option, value))
 
   def getOption(self):
-    """
-    Retrieves the current value of the given option for this editor instance.
+    """Retrieves the current value of the given option for this editor instance.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#api
+    `CodeMirror <https://codemirror.net/doc/manual.html#api>`_
 
     :return: The Javascript object
     """
     return JsObjects.JsObjects.get("%s.getOption()" % self.varId)
 
   def refresh(self):
-    """
-    If your code does something to change the size of the editor element (window resizes are already listened for),
+    """If your code does something to change the size of the editor element (window resizes are already listened for),
     or unhides it, you should probably follow up by calling this method to ensure CodeMirror is still looking as
     intended. See also the autorefresh addon.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#api
+    `CodeMirror <https://codemirror.net/doc/manual.html#api>`_
 
     :return: The Javascript string fragment
     """
     return self.fnc_closure("refresh()")
 
   def execCommand(self, command: Union[str, primitives.JsDataModel]):
-    """
-    Runs the command with the given name on the editor.
+    """Runs the command with the given name on the editor.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#commands
+    `CodeMirror <https://codemirror.net/doc/manual.html#commands>`_
 
     :return: The Javascript string fragment
  
@@ -127,12 +108,9 @@ class CM(JsPackage):
     return self.fnc_closure("execCommand(%s)" % command)
 
   def focus(self):
-    """
-    Give the editor focus.
+    """Give the editor focus.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#api
+    `CodeMirror <https://codemirror.net/doc/manual.html#api>`_
 
     :return: The Javascript string fragment
     """

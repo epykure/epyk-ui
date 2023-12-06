@@ -16,8 +16,8 @@ from epyk.core.js import JsUtils
 
 class ApexActivePoints:
 
-    def __init__(self, chart_id: str, i: int, page: primitives.PageModel):
-        self.chartId = chart_id
+    def __init__(self, js_code: str, i: int, page: primitives.PageModel):
+        self.js_code = js_code
         self.page = page
         self.num = i or self.index
 
