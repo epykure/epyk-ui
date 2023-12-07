@@ -168,7 +168,7 @@ class Layouts:
   def col(self, components: List[html.Html.Html] = None, position: str = 'middle',
           width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), align: str = None,
           helper: str = None, options: dict = None,
-          profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
+          profile: types.PROFILE_TYPE = None, html_code: str = None) -> html.HtmlContainer.Col:
     """Python wrapper for a column of HTML elements from Bootstrap.
 
     This component is a container and it is used to display multiple Ares components in column.
@@ -199,17 +199,19 @@ class Layouts:
     :param helper: Optional. A tooltip helper
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     options = options or {}
-    html_col = html.HtmlContainer.Col(self.page, components, position, width, height, align, helper, options, profile)
+    html_col = html.HtmlContainer.Col(
+      self.page, components, position, width, height, align, helper, options, profile, html_code=html_code)
     html.Html.set_component_skin(html_col)
     return html_col
 
   def row(self, components: List[html.Html.Html] = None, position: str = 'middle', width: types.SIZE_TYPE = (100, '%'),
           height: types.SIZE_TYPE = (None, 'px'), align: str = None, helper: str = None,
-          options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Row:
+          options: dict = None, profile: types.PROFILE_TYPE = None, html_code: str = None) -> html.HtmlContainer.Row:
     """Python wrapper for a column of HTML elements from Bootstrap.
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
@@ -240,6 +242,7 @@ class Layouts:
     :param helper: Optional. A tooltip helper
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -247,13 +250,13 @@ class Layouts:
     if options is not None:
       dft_option.update(options)
     html_col = html.HtmlContainer.Row(
-      self.page, components, position, width, height, align, helper, dft_option, profile)
+      self.page, components, position, width, height, align, helper, dft_option, profile, html_code=html_code)
     html.Html.set_component_skin(html_col)
     return html_col
 
   def table(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), helper: str = None, options: dict = None,
-            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Table:
+            profile: types.PROFILE_TYPE = None, html_code: str = None) -> html.HtmlContainer.Table:
     """Table layout for HTML components.
 
     :tags:
@@ -273,16 +276,18 @@ class Layouts:
     :param helper:  Optional. A tooltip helper
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_row = html.HtmlContainer.Table(self.page, components, width, height, helper, options, profile)
+    html_row = html.HtmlContainer.Table(
+      self.page, components, width, height, helper, options, profile, html_code=html_code)
     html.Html.set_component_skin(html_row)
     return html_row
 
   def grid(self, rows=None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
            align: str = None, position: str = None, options: dict = None,
-           profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
+           profile: types.PROFILE_TYPE = None, html_code: str = None) -> html.HtmlContainer.Grid:
     """Python wrapper to the HTML Bootstrap Grid.
 
     :tags:
@@ -306,10 +311,11 @@ class Layouts:
     :param position: Optional. A string with the vertical position of the component
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_grid = html.HtmlContainer.Grid(self.page, rows, width, height, align, position, options, profile)
+    html_grid = html.HtmlContainer.Grid(self.page, rows, width, height, align, position, options, profile, html_code)
     html.Html.set_component_skin(html_grid)
     return html_grid
 
@@ -683,7 +689,8 @@ class Layouts:
 
   def columns(self, components: List[html.Html.Html], cols, width: types.SIZE_TYPE = (100, '%'),
               height: types.SIZE_TYPE = (None, 'px'), align: str = None, position: str = None,
-              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
+              options: dict = None, profile: types.PROFILE_TYPE = None, html_code: str = None
+              ) -> html.HtmlContainer.Grid:
     """
 
     :tags:
@@ -697,6 +704,7 @@ class Layouts:
     :param position: Optional. A string with the vertical position of the component
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     rows, row = [], []
     dflt_options = {"responsive": False}
@@ -710,7 +718,8 @@ class Layouts:
     if len(row):
       rows.append(row)
     component = self.grid(
-      rows, width=width, height=height, align=align, position=position, options=dflt_options, profile=profile)
+      rows, width=width, height=height, align=align, position=position, options=dflt_options, profile=profile,
+      html_code=html_code)
     html.Html.set_component_skin(component)
     return component
 

@@ -3,6 +3,8 @@
 
 from typing import Union
 from epyk.core.html.options import Options
+from epyk.core.html.options import OptionsWithTemplates
+from epyk.core.js.packages import packageImport
 
 
 class OptionsPanelPoints(Options):
@@ -511,8 +513,8 @@ class OptionsStepper(Options):
     self._config(value)
 
 
-class OptionGrid(Options):
-  component_properties = ('columns', 'class_col', 'class_row', 'class_title', 'title_tag')
+class OptionGrid(OptionsWithTemplates):
+  component_properties = ('columns', 'class_col', 'class_row', 'class_title', 'title_tag', 'sortable')
 
   @property
   def autoSize(self):
@@ -536,8 +538,7 @@ class OptionGrid(Options):
 
   @property
   def pivot(self):
-    """
-    """
+    """ Column name for pivoting the records and building the grid """
     return self._config_get(None)
 
   @pivot.setter
@@ -546,8 +547,7 @@ class OptionGrid(Options):
 
   @property
   def class_title(self):
-    """
-    """
+    """ CSS class definition for the cell title """
     return self._config_get("text-center")
 
   @class_title.setter
@@ -556,8 +556,7 @@ class OptionGrid(Options):
 
   @property
   def title_tag(self):
-    """
-    """
+    """ Title HTML tag - default H4 """
     return self._config_get("h4")
 
   @title_tag.setter
@@ -576,8 +575,7 @@ class OptionGrid(Options):
 
   @property
   def template(self):
-    """
-    """
+    """ Component used as template to build the grid """
     return self.get(True)
 
   @template.setter
@@ -596,8 +594,7 @@ class OptionGrid(Options):
 
   @property
   def class_col(self):
-    """
-    """
+    """ Col / Cell CSS class  """
     return self._config_get("col")
 
   @class_col.setter
@@ -606,8 +603,7 @@ class OptionGrid(Options):
 
   @property
   def class_row(self):
-    """
-    """
+    """ Row CSS Class"""
     return self._config_get("row")
 
   @class_row.setter
@@ -625,6 +621,27 @@ class OptionGrid(Options):
   @noGutters.setter
   def noGutters(self, flag: bool):
     self.set(flag)
+
+  @property
+  def sortable(self):
+    """
+    """
+    return self._config_get(False)
+
+  @sortable.setter
+  @packageImport('sortablejs')
+  def sortable(self, values: Union[dict, bool]):
+    if values is True:
+      self.page.theme.notch()
+      self.page.properties.css.add_text(
+        '''.sortable-shadow-class {box-shadow: 5px 10px %s;}''' % self.page.theme.colors[0],
+        map_id="sortable-shadow-class")
+      values = {"animation": 150, "fallbackOnBody": True, "swapThreshold": 0.65,
+                "ghostClass": "sortable-shadow-class"}
+    if isinstance(values, dict) and "group" not in values:
+      values["group"] = self.component.html_code
+
+    self._config(values)
 
 
 class OptionPopup(Options):

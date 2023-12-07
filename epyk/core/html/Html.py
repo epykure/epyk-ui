@@ -1789,8 +1789,8 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
         if not propagate_only:
             if 'sortable' not in self._on_ready_js:
                 self._on_ready_js['sortable'] = JsSortable.Sortable(
-                    self, js_code="%s_sortable" % self.htmlCode, selector=self.dom.varId, page=self.page)
-                dfl_options = {"group": self.htmlCode}
+                    self, js_code="%s_sortable" % self.html_code, selector=self.dom.varId, page=self.page)
+                dfl_options = {"group": self.html_code}
                 dfl_options.update(options or {})
                 self._sort_options = dfl_options
                 self._on_ready_js['sortable'].create(self.dom.varId, dfl_options)

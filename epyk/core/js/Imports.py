@@ -1796,7 +1796,7 @@ JS_IMPORTS = {
     'sortablejs': {
         'register': {'alias': 'Sortable', 'npm': 'sortablejs'},
         'repository': 'https://github.com/SortableJS/Sortable',
-        'version': '1.15.0',
+        'version': '1.15.1',
         'modules': [
             {'script': 'Sortable.min.js', 'path': 'Sortable/%(version)s/', 'cdnjs': CDNJS_REPO},
         ],

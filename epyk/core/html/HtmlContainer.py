@@ -133,7 +133,7 @@ class Panel(Html.Html):
         str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
         if self.menu is None:
             return "<div %s>%s</div>%s" % (
-              self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
+                self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
 
         menu_width = "100%"
         if self.style.css.width.endswith('px'):
@@ -207,8 +207,8 @@ class PanelSplit(Html.Html):
   <div style="%(css_left)s" id="%(htmlCode)s_left" class="panel-left">%(left)s</div>
   <div style="%(css_right)s" id="%(htmlCode)s_right" class="panel-right">%(right)s</div>
 </div>%(helper)s''' % {"attrs": self.get_attrs(css_class_names=self.style.get_classes()), "htmlCode": self.htmlCode,
-             'left': self.html_left.html(), 'right': self.html_right.html(), "helper": self.helper,
-             'css_left': cssDefaults.inline(self.css_left), 'css_right': cssDefaults.inline(self.css_right)}
+                       'left': self.html_left.html(), 'right': self.html_right.html(), "helper": self.helper,
+                       'css_left': cssDefaults.inline(self.css_left), 'css_right': cssDefaults.inline(self.css_right)}
 
 
 class PanelSlide(Panel):
@@ -691,11 +691,11 @@ class Table(Html.Html):
     _option_cls = OptPanel.OptionPanelTable
 
     def __init__(self, page: primitives.PageModel, rows, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
-                 helper: Optional[str], options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
+                 helper: Optional[str], options: types.OPTION_TYPE, profile: types.PROFILE_TYPE, html_code: str = None):
         super(Table, self).__init__(page, [], css_attrs={
             "width": width, "height": height, 'table-layout': 'auto', 'white-space': 'nowrap',
             'border-collapse': 'collapse',
-            'box-sizing': 'border-box'}, profile=profile, options=options)
+            'box-sizing': 'border-box'}, profile=profile, options=options, html_code=html_code)
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
         self.header = TSection(self.page, 'thead', options=options)
         self.body = TSection(self.page, 'tbody', options=options)
@@ -925,34 +925,6 @@ class Col(MixHtmlState.HtmlOverlayStates, Html.Html):
                 self.attr["class"].add("col-12")
         return self
 
-    def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
-              stop_state: bool = True, dataflows: List[dict] = None):
-        template.options.managed = False
-
-        py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in template.attr["class"]]
-        return '''%(container)s.innerHTML = ""; let containerOptions = %(options)s;
-let results = {}; let componentsHolders = []; let i = 0;
-%(data)s.forEach(function(row){if (!results[row.name]){results[row.name] = []}; results[row.name].push(row)}); 
-let keys = Object.keys(results);
-keys.forEach(function(key){
-    let row = document.createElement("div"); row.style.display = "block";
-    row.id = %(container)s.id + "_w_" + i; componentsHolders.push(row); i++;
-    let colLabel = document.createElement(containerOptions.title_tag); colLabel.innerHTML = key;
-    colLabel.setAttribute('class', containerOptions.class_title); row.appendChild(colLabel)
-    %(container)s.appendChild(row);
-}); componentsHolders.forEach(function(col, i){let htmlObj = %(create)s; %(builder)s;})
-''' % {
-            "data": JsUtils.jsConvertData(data, None),
-            "options": self.options.config_js(options),
-            "create": template.dom.createWidget(
-                html_code=JsUtils.jsWrap("'%s_dyn_' + i" % self.html_code), container=JsUtils.jsWrap("col.id")),
-            "css": template.style.css, "class": py_cls_names,
-            "builder": template.build(
-                JsUtils.jsWrap("results[keys[i]]"), dataflows=dataflows, component_id=JsUtils.jsWrap("htmlObj.id"),
-                profile=profile, stop_state=stop_state),
-            "container": self.dom.varId}
-
     def __str__(self):
         content = [htmlObj.html() for htmlObj in self.val]
         return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(content))
@@ -964,7 +936,8 @@ class Row(Html.Html):
     _option_cls = OptPanel.OptionGrid
 
     def __init__(self, page, components, position: str, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
-                 align: str, helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE, html_code: str = None):
+                 align: str, helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE,
+                 html_code: str = None):
         self.position, self.align = position, align
         super(Row, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                   options=options, profile=profile, html_code=html_code)
@@ -1091,9 +1064,9 @@ class Grid(MixHtmlState.HtmlOverlayStates, Html.Html):
     _option_cls = OptPanel.OptionGrid
 
     def __init__(self, page: primitives.PageModel, rows: list, width: tuple, height: tuple, align: str, position: str,
-                 options: types.OPTION_TYPE, profile: Optional[Union[bool, dict]]):
+                 options: types.OPTION_TYPE, profile: Optional[Union[bool, dict]], html_code: str = None):
         super(Grid, self).__init__(
-            page, [], options=options, css_attrs={"width": width, "height": height}, profile=profile)
+            page, [], options=options, css_attrs={"width": width, "height": height}, profile=profile, html_code=html_code)
         self.position = position
         self.style.clear(no_default=True)
         self.css({'overflow-x': 'hidden', 'padding': 0})
@@ -1116,16 +1089,16 @@ class Grid(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.template.options.managed = False
         self.options.template.dom._container = self.dom.varId
         if self.options.pivot is None or self.options.template is None:
-          raise Exception("Template and Pivot must be defined to use the grid builder")
+            raise Exception("Template and Pivot must be defined to use the grid builder")
 
         comp_builder = "%(create)s; %(builder)s" % {
-          "create": self.options.template.dom.createWidget(
+            "create": self.options.template.dom.createWidget(
                 html_code=JsUtils.jsWrap("'%s_dyn_' + i" % self.html_code), container=JsUtils.jsWrap("col.id")),
-          "builder": self.options.template.build(
+            "builder": self.options.template.build(
                 JsUtils.jsWrap("results[keys[i]]"), dataflows=dataflows, component_id=JsUtils.jsWrap("htmlObj.id"),
                 profile=profile, stop_state=stop_state)}
-        funcs = "Grid%sBuilder" % abs(hash(comp_builder))
-        self.page.properties.js.add_constructor(funcs, '''function %(fnc)s(container, data, options){ 
+        func = "Grid%sBuilder" % abs(hash(comp_builder))
+        self.page.properties.js.add_constructor(func, '''function %(fnc)s(container, data, options){ 
 container.innerHTML = ""; let results = {}; let componentsHolders = []; let i = 0;
 data.forEach(function(row){
   if (!results[row[options.pivot]]){results[row[options.pivot]] = []}; results[row[options.pivot]].push(row)}); 
@@ -1138,12 +1111,13 @@ for (let n=0; n < rowsNum; n++) {
             col.id = container.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++;
             let colLabel = document.createElement(options.title_tag); colLabel.innerHTML = k;
             colLabel.setAttribute('class', options.class_title); col.appendChild(colLabel)}};
-    container.appendChild(row);}
-    ; componentsHolders.forEach(function(col, i){let htmlObj = %(comp_builder)s;})''' % {
-            "comp_builder": comp_builder, "fnc": funcs})
+    container.appendChild(row); if (options.sortable){Sortable.create(row, options.sortable)}
+    }; 
+    componentsHolders.forEach(function(col, i){let htmlObj = %(comp_builder)s;})}''' % {
+            "comp_builder": comp_builder, "fnc": func})
         return "%(fnc)s(%(container)s, %(data)s, %(options)s)" % {
-          "fnc": funcs, "container": self.dom.varId, "data": JsUtils.jsConvertData(data, None),
-          "options": self.options.config_js(options)}
+            "fnc": func, "container": self.dom.varId, "data": JsUtils.jsConvertData(data, None),
+            "options": self.options.config_js(options)}
 
     def row(self, n: int):
         return self._vals[n]
@@ -1507,7 +1481,7 @@ class IconsMenu(Html.Html):
         options = ["<option>%s</option>" % d for d in data]
         self._jsActions[
             action] = '<select id="inputState" class="form-control" style="width:%spx;display:inline-block">%s</select>' % (
-        width, "".join(options))
+            width, "".join(options))
         self._definedActions.append(action)
         return self
 
@@ -1864,7 +1838,7 @@ class Header(Html.Html):
     def __str__(self):
         str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
         return "<header %s>%s</header>%s" % (
-        self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
+            self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.helper)
 
 
 class Section(Html.Html):
