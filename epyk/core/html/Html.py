@@ -597,11 +597,7 @@ the same signature and return).
 
     @js_code.setter
     def js_code(self, value: str):
-        if value is not None:
-            if self.js_code == value:
-              # Trying to set the same code again
-              return
-
+        if value is not None and self.js_code != value:
             self.__htmlCode = value
             if hasattr(self.__htmlCode, "toStr"):
                 self._set_js_code(value, "window[%s + 'Id']" % self.__htmlCode)
