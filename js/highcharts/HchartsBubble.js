@@ -8,7 +8,7 @@ function hchartsBubble(data, options){
             if (!labels.includes(rec[options.x_axis])){labels.push(rec[options.x_axis]);}
             options.y_columns.forEach(function(series){
                 if (options.rDim){
-                     temp[series][rec[options.x_axis]] = {y: rec[series], x: rec[options.x_axis], z: rec[options.rDim[0]]
+                     temp[series][rec[options.x_axis]] = {y: rec[series], x: rec[options.x_axis], z: rec[options.rDim[0]]}
                 }
                 else {
                     temp[series][rec[options.x_axis]] = {y: rec[series], x: rec[options.x_axis], z: 2}

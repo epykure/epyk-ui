@@ -199,6 +199,8 @@ JS_IMPORTS = {
         "unpkg": False,
         'modules': [
             {'script': 'highcharts.min.js', 'path': 'highcharts/%(version)s/', 'cdnjs': CDNJS_REPO},
+            {'script': 'highcharts-more.min.js', 'path': 'highcharts/%(version)s/', 'cdnjs': CDNJS_REPO},
+            {'script': 'highcharts-3d.min.js', 'path': 'highcharts/%(version)s/', 'cdnjs': CDNJS_REPO},
             {'script': 'accessibility.min.js', 'path': 'highcharts/%(version)s/modules/', 'cdnjs': CDNJS_REPO},
         ],
         'repository': 'https://github.com/highcharts/highcharts',

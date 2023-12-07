@@ -20,8 +20,7 @@ PROFILE_COUNT = 0
 #                                                       DECORATORS
 #
 def incompatibleBrowser(browsers: List[str]):
-    """
-    Decorator to send a warning for functions or packages which are restricted to some browsers.
+    """Decorator to send a warning for functions or packages which are restricted to some browsers.
 
     :param browsers: Incompatible browsers
     """
@@ -37,8 +36,7 @@ def incompatibleBrowser(browsers: List[str]):
 
 
 def fromVersion(data: dict):
-    """
-    This system decorate will decorate a component function to specify during the Python execution
+    """This system decorate will decorate a component function to specify during the Python execution
     if a method is not yet available in the current state of the Javascript modules.
 
     Usage::
@@ -68,8 +66,7 @@ def fromVersion(data: dict):
 
 
 def untilVersion(data: dict, new_feature: str):
-    """
-    This system decorate will decorate a component function to specify during the Python execution
+    """This system decorate will decorate a component function to specify during the Python execution
     if a method is not available since the current state of the Javascript modules.
     Indeed as it is possible to override JS version on the fly it is also important to get notify with functions
     are not compatible anymore.
@@ -107,8 +104,7 @@ def untilVersion(data: dict, new_feature: str):
 #                                                       FUNCTIONS
 #
 def isJsData(js_data: Union[str, primitives.JsDataModel, float, dict, list]):
-    """
-    Common function to check if the object exists in Python.
+    """Common function to check if the object exists in Python.
 
     Usage::
 
@@ -121,8 +117,7 @@ def isJsData(js_data: Union[str, primitives.JsDataModel, float, dict, list]):
 
 def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list], js_funcs: Optional[Union[list, str]],
                   depth: bool = False, force: bool = False) -> Union[str, JsObject.JsObject]:
-    """
-    Generic conversion function for any data in the internal framework.
+    """Generic conversion function for any data in the internal framework.
     This will convert to String any data coming from the Javascript Python interface.
 
     Any pure Python object will be converted using the json function to be then written as a string
@@ -194,8 +189,7 @@ def jsConvert(data: Any, jsDataKey: Union[str, primitives.JsDataModel], isPyData
 
 
 def jsWrap(data: Any, profile: bool = None):
-    """
-    Shortcut to wrap a python object to a generic JavaScript object.
+    """Shortcut to wrap a python object to a generic JavaScript object.
     This will avoid the automatic conversion to string if it is a variable.
 
     :param data: Object. A python object to be serialised
@@ -220,8 +214,7 @@ def jsWrap(data: Any, profile: bool = None):
 
 
 def getJsValid(value: str, fail: bool = True):
-    """
-    Return an error if the variable name is not valid following the Javascript naming conventions.
+    """Return an error if the variable name is not valid following the Javascript naming conventions.
     Even if the function will fail it will propose a valid name to replace the one passed in input
 
     Usage::
@@ -237,9 +230,7 @@ def getJsValid(value: str, fail: bool = True):
           ...
       Exception: Javascript Variable name 234@test-js, for example you could use js234testjs instead
 
-    Related Pages:
-
-        https://www.w3schools.com/js/js_conventions.asp
+    `w3schools <https://www.w3schools.com/js/js_conventions.asp>`_
 
     :param value: The Javascript variable name
     :param fail: Optional. Flat to raise an exception if the name is not valid on the Javascript side
@@ -259,8 +250,7 @@ def getJsValid(value: str, fail: bool = True):
 
 def jsConvertFncs(js_funcs: types.JS_FUNCS_TYPES, is_py_data: bool = False,
                   jsFncVal=None, toStr: bool = False, profile: Optional[Union[bool, dict]] = False):
-    """
-    Generic conversion function for all the PyJs functions.
+    """Generic conversion function for all the PyJs functions.
 
     :param js_funcs: The PyJs functions.
     :param is_py_data: Optional. A flag to force the Python conversion using json
@@ -309,8 +299,7 @@ def jsConvertFncs(js_funcs: types.JS_FUNCS_TYPES, is_py_data: bool = False,
 
 
 def cleanFncs(fnc):
-    """
-    Try to remove as much as possible all the characters in order to speed up the javascript
+    """Try to remove as much as possible all the characters in order to speed up the javascript
     Indeed most of the browsers are using minify Javascript to make the page less heavy.
 
     Thus pre-stored function code can be written to be easier to read.
@@ -323,8 +312,7 @@ def cleanFncs(fnc):
 
 
 def isNotDefined(varName: str):
-    """
-    Check if a variable is defined.
+    """Check if a variable is defined.
 
     Usage::
 
@@ -338,9 +326,7 @@ def isNotDefined(varName: str):
 
 
 def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None) -> str:
-    """
-    All the chaining of data flow transformation to feed the various widgets.
-
+    """All the chaining of data flow transformation to feed the various widgets.
     flow must point to function with the following signature (data, {obj1, obj2, .... objN=0})
 
     usage::
@@ -398,8 +384,7 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
 
 
 def convertOptions(options: Any, varId: str) -> str:
-    """
-    Convert options to valid objects for JavaScript to pick up.
+    """Convert options to valid objects for JavaScript to pick up.
     Base on the input data transformation will be either performed in Python or in JavaScript.
 
     :param options: The new options for the JavaScript object
@@ -439,8 +424,7 @@ class JsFile:
         self.__data = []
 
     def writeJs(self, js_funcs: Union[list, str]):
-        """
-        Write the Javascript piece of code to the file.
+        """Write the Javascript piece of code to the file.
 
         Usage::
 
@@ -457,8 +441,7 @@ class JsFile:
         return self
 
     def writeReport(self, page: primitives.PageModel):
-        """
-        Write the Javascript content of a report to a structure .js file.
+        """Write the Javascript content of a report to a structure .js file.
         This could help on the investigation and can be directly used in Codepen for testing.
 
         :param primitives.PageModel page: The report object
@@ -488,12 +471,9 @@ class JsFile:
             self.__data.append("})")
 
     def codepen(self, js_base: Any, css_obj: primitives.CssClsModel = None, target: str = '_self'):
-        """
-        Send the piece of Javascript to Codepen for testing.
+        """Send the piece of Javascript to Codepen for testing.
 
-        Related Pages:
-
-          https://codepen.io/
+        `codepen <https://codepen.io/>`_
 
         :param js_base: A Js or out Browser object
         :param css_obj: The internal CSS object from the page
@@ -521,9 +501,8 @@ class JsFile:
         out_file.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
         webbrowser.open(out_file.name)
 
-    def close(self, js_obj=None):
-        """
-        Write the file and close the buffer.
+    def close(self, js_obj=None) -> str:
+        """Write the file and close the buffer.
 
         :param js_obj: The internal JsObject
         """
