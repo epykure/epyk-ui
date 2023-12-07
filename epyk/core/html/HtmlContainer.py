@@ -12,6 +12,7 @@ from epyk.interfaces import Arguments
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
+from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
 from epyk.core.html.options import OptGridstack
@@ -828,15 +829,15 @@ class Table(Html.Html):
                                                  self.header.html(), self.body.html(), self.footer.html(), self.helper)
 
 
-class Col(Html.Html):
+class Col(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Column'
     requirements = ('bootstrap',)
     _option_cls = OptPanel.OptionGrid
 
     def __init__(self, page, components, position: str, width: types.SIZE_TYPE, height: types.SIZE_TYPE, align: str,
-                 helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
+                 helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE, html_code: str = None):
         self.position, self.rows_css, self.row_css_dflt = position, {}, {}
-        super(Col, self).__init__(page, [], profile=profile, options=options)
+        super(Col, self).__init__(page, [], profile=profile, options=options, html_code=html_code)
         self.__set_size = None
         self.style.clear_all(no_default=True)
         self.css({"width": width, "height": height})
@@ -924,9 +925,11 @@ class Col(Html.Html):
                 self.attr["class"].add("col-12")
         return self
 
-    def generate(self, data: types.JS_DATA_TYPES, template, options: types.OPTION_TYPE = None,
-                 profile: types.PROFILE_TYPE = None, stop_state: bool = True, dataflows: List[dict] = None):
+    def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
         template.options.managed = False
+
         py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in template.attr["class"]]
         return '''%(container)s.innerHTML = ""; let containerOptions = %(options)s;
 let results = {}; let componentsHolders = []; let i = 0;
@@ -961,10 +964,10 @@ class Row(Html.Html):
     _option_cls = OptPanel.OptionGrid
 
     def __init__(self, page, components, position: str, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
-                 align: str, helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
+                 align: str, helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE, html_code: str = None):
         self.position, self.align = position, align
         super(Row, self).__init__(page, [], css_attrs={"width": width, "height": height},
-                                  options=options, profile=profile)
+                                  options=options, profile=profile, html_code=html_code)
         if components is not None:
             for component in components:
                 self.add(component)
@@ -1081,7 +1084,7 @@ class Row(Html.Html):
         return '<div %s>%s</div>' % (self.get_attrs(css_class_names=self.style.get_classes()), "".join(cols))
 
 
-class Grid(Html.Html):
+class Grid(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Grid'
     builder_name = 'BsGrid'
     requirements = ('bootstrap',)
@@ -1107,36 +1110,40 @@ class Grid(Html.Html):
     def __exit__(self, type, value, traceback):
         return True
 
-    def generate(self, data: types.JS_DATA_TYPES, template, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None, stop_state: bool = True, dataflows: List[dict] = None):
-        template.options.managed = False
-        py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in template.attr["class"]]
-        return '''%(container)s.innerHTML = ""; let containerOptions = %(options)s;
-let results = {}; let componentsHolders = []; let i = 0;
-%(data)s.forEach(function(row){if (!results[row.name]){results[row.name] = []}; results[row.name].push(row)}); 
-let keys = Object.keys(results); let rowsNum = Math.ceil(keys.length / containerOptions.columns);
-for (let n=0; n < rowsNum; n++) {
-    let row = document.createElement("div"); row.setAttribute('class', containerOptions.class_row); 
-    for (let c=0; c < containerOptions.columns; c++) {
-        let k = keys[i];
-        if (k){
-            let col = document.createElement("div"); col.setAttribute('class', containerOptions.class_col); 
-            col.id = %(container)s.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++;
-            let colLabel = document.createElement(containerOptions.title_tag); colLabel.innerHTML = k;
-            colLabel.setAttribute('class', containerOptions.class_title);
-            col.appendChild(colLabel)
-        }};
-    %(container)s.appendChild(row);}
-    ; componentsHolders.forEach(function(col, i){let htmlObj = %(create)s; %(builder)s;})''' % {
-            "data": JsUtils.jsConvertData(data, None),
-            "options": self.options.config_js(options),
-            "create": template.dom.createWidget(
+    def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
+              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
+        self.options.template.options.managed = False
+        self.options.template.dom._container = self.dom.varId
+        if self.options.pivot is None or self.options.template is None:
+          raise Exception("Template and Pivot must be defined to use the grid builder")
+
+        comp_builder = "%(create)s; %(builder)s" % {
+          "create": self.options.template.dom.createWidget(
                 html_code=JsUtils.jsWrap("'%s_dyn_' + i" % self.html_code), container=JsUtils.jsWrap("col.id")),
-            "css": template.style.css, "class": py_cls_names,
-            "builder": template.build(
+          "builder": self.options.template.build(
                 JsUtils.jsWrap("results[keys[i]]"), dataflows=dataflows, component_id=JsUtils.jsWrap("htmlObj.id"),
-                profile=profile, stop_state=stop_state),
-            "container": self.dom.varId}
+                profile=profile, stop_state=stop_state)}
+        funcs = "Grid%sBuilder" % abs(hash(comp_builder))
+        self.page.properties.js.add_constructor(funcs, '''function %(fnc)s(container, data, options){ 
+container.innerHTML = ""; let results = {}; let componentsHolders = []; let i = 0;
+data.forEach(function(row){
+  if (!results[row[options.pivot]]){results[row[options.pivot]] = []}; results[row[options.pivot]].push(row)}); 
+let keys = Object.keys(results); let rowsNum = Math.ceil(keys.length / options.columns);
+for (let n=0; n < rowsNum; n++) {
+    let row = document.createElement("div"); row.setAttribute('class', options.class_row); 
+    for (let c=0; c < options.columns; c++) {let k = keys[i];
+        if (k){
+            let col = document.createElement("div"); col.setAttribute('class', options.class_col); 
+            col.id = container.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++;
+            let colLabel = document.createElement(options.title_tag); colLabel.innerHTML = k;
+            colLabel.setAttribute('class', options.class_title); col.appendChild(colLabel)}};
+    container.appendChild(row);}
+    ; componentsHolders.forEach(function(col, i){let htmlObj = %(comp_builder)s;})''' % {
+            "comp_builder": comp_builder, "fnc": funcs})
+        return "%(fnc)s(%(container)s, %(data)s, %(options)s)" % {
+          "fnc": funcs, "container": self.dom.varId, "data": JsUtils.jsConvertData(data, None),
+          "options": self.options.config_js(options)}
 
     def row(self, n: int):
         return self._vals[n]

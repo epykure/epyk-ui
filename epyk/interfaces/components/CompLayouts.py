@@ -14,9 +14,7 @@ class Layouts:
     self.page = ui.page
 
   def br(self, count: int = 1, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Newline:
-    """
-    Wrapper around the Br html tag.
-
+    """Wrapper around the Br html tag.
     The <br> tag inserts a single line break.
 
     :tags:
@@ -30,21 +28,17 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlOthers.Newline`
 
-    Related Pages:
+    `w3schools <https://www.w3schools.com/tags/tag_br.asp>`_
 
-      https://www.w3schools.com/tags/tag_br.asp
-
-    :param count: Integer. Optional. The number of empty line to put. Default 1.
-    :param profile: Boolean | Dictionary. Optional. Activate the profiler.
+    :param count: Optional. The number of empty line to put. Default 1
+    :param profile: Optional. Activate the profiler
     """
     html_new_line = html.HtmlOthers.Newline(self.page, count, profile=profile)
     html.Html.set_component_skin(html_new_line)
     return html_new_line
 
   def new_line(self, count: int = 1, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Newline:
-    """
-    Wrapper around the Br html tag.
-
+    """Wrapper around the Br html tag.
     The <br> tag inserts a single line break.
 
     :tags:
@@ -58,17 +52,15 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlOthers.Newline`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_br.asp
+    `w3schools <https://www.w3schools.com/tags/tag_br.asp>`_
 
     Templates:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
       https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
 
-    :param count: Integer. Optional. The number of empty line to put. Default 1.
-    :param profile: Boolean | Dictionary. Optional. Activate the profiler.
+    :param count: Optional. The number of empty line to put. Default 1
+    :param profile: Optional. Activate the profiler
     """
     html_new_line = self.br(count, profile)
     html.Html.set_component_skin(html_new_line)
@@ -79,9 +71,7 @@ class Layouts:
          align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
     """
     Wrapper around the HT html tag.
-
     The <hr> tag defines a thematic break in an HTML page (e.g. a shift of topic).
-
     Tips: If background_color is True, the theme color will be used.
 
     :tags:
@@ -95,11 +85,7 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlOthers.Hr`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_hr.asp
-
-    Templates:
+    `w3schools <https://www.w3schools.com/tags/tag_hr.asp>`_
 
     :param count: Optional. The number of HR tag to be added.
     :param background_color: Optional. The component background color.
@@ -131,8 +117,7 @@ class Layouts:
 
   def underline(self, width: types.SIZE_TYPE = (10, '%'), height: types.SIZE_TYPE = (3, 'px'),
                 align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Add a styles hr component to underline another component.
+    """Add a style hr component to underline another component.
 
     :tags:
     :categories:
@@ -141,14 +126,11 @@ class Layouts:
 
       page.ui.layouts.underline()
 
-    Templates:
-
-
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. The content position. Values (left, right, center). Default center.
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     hr = self.hr(
       1, self.page.theme.colors[-1], 0, width=width, height=height, align=align, options=options, profile=profile)
@@ -160,8 +142,7 @@ class Layouts:
 
   def accentuate(self, width: types.SIZE_TYPE = (10, '%'), height: types.SIZE_TYPE = (1, 'px'), align: str = None,
                  options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Add a styles hr component to lightly underline another component.
+    """Add a style hr component to lightly underline another component.
 
     :tags:
     :categories:
@@ -170,13 +151,11 @@ class Layouts:
 
       page.ui.layouts.accentuate()
 
-    Templates:
-
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. The content position. Values (left, right, center). Default center.
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     hr = self.hr(
       1, self.page.theme.colors[6], 0, width=width, height=height, align=align, options=options, profile=profile)
@@ -190,8 +169,7 @@ class Layouts:
           width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), align: str = None,
           helper: str = None, options: dict = None,
           profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
-    """
-    Python wrapper for a column of HTML elements from Bootstrap.
+    """Python wrapper for a column of HTML elements from Bootstrap.
 
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
@@ -210,22 +188,17 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Col`
 
-    Related Pages:
+    `getbootstrap <https://getbootstrap.com/docs/4.0/layout/grid/>`_
+    `flexbox <https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html>`_
 
-      https://getbootstrap.com/docs/4.0/layout/grid/
-      https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
-
-    Templates:
-
-
-    :param components: The different HTML objects to be added to the component.
+    :param components: The different HTML objects to be added to the component
     :param position: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -237,9 +210,7 @@ class Layouts:
   def row(self, components: List[html.Html.Html] = None, position: str = 'middle', width: types.SIZE_TYPE = (100, '%'),
           height: types.SIZE_TYPE = (None, 'px'), align: str = None, helper: str = None,
           options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Row:
-    """
-    Python wrapper for a column of HTML elements from Bootstrap.
-
+    """Python wrapper for a column of HTML elements from Bootstrap.
     This component is a container and it is used to display multiple Ares components in column.
     You can first add a component in the data list then add the + operator to add more.
 
@@ -258,21 +229,17 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Row`
 
-    Templates:
+    `getbootstrap <https://getbootstrap.com/docs/4.0/layout/grid/>`_
+    `flexbox <https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html>`_
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/layout/grid/
-      https://www.alsacreations.com/tuto/lire/1493-css3-flexbox-layout-module.html
-
-    :param components: The different HTML objects to be added to the component.
+    :param components: The different HTML objects to be added to the component
     :param position: Optional. The CSS justify-content attribute
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -287,8 +254,7 @@ class Layouts:
   def table(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'), helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Table:
-    """
-    table layout for HTML components.
+    """Table layout for HTML components.
 
     :tags:
     :categories:
@@ -301,15 +267,12 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Table`
 
-    Templates:
-
-
-    :param components: The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param helper:  Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param helper:  Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -320,8 +283,7 @@ class Layouts:
   def grid(self, rows=None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
            align: str = None, position: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Grid:
-    """
-    Python wrapper to the HTML Bootstrap Grid.
+    """Python wrapper to the HTML Bootstrap Grid.
 
     :tags:
     :categories:
@@ -335,19 +297,15 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Grid`
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/layout/grid/
-
-    Templates:
+    `getbootstrap <https://getbootstrap.com/docs/4.0/layout/grid/>`_
 
     :param rows:
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. A string with the horizontal position of the component.
-    :param position: Optional. A string with the vertical position of the component.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param position: Optional. A string with the vertical position of the component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -373,15 +331,15 @@ class Layouts:
     Templates:
 
 
-    :param components: The different HTML objects to be added to the component.
+    :param components: The different HTML objects to be added to the component
     :param title:
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -397,8 +355,7 @@ class Layouts:
           editable: bool = False, align: str = 'left', padding: int = None, html_code: str = None, tag: str = 'div',
           helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None,
           position: Union[bool, dict] = None) -> html.HtmlContainer.Div:
-    """
-    Add a simple div container to the page.
+    """Add a simple div container to the page.
     The <div> tag defines a division or a section in an HTML document.
 
     The <div> tag is used as a container for HTML elements - which is then styled with CSS or manipulated with
@@ -416,9 +373,7 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Div`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_div.asp
+    `w3schools <https://www.w3schools.com/tags/tag_div.asp>`_
 
     Templates:
 
@@ -511,8 +466,7 @@ class Layouts:
   def popup(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
             height: types.SIZE_TYPE = (None, 'px'),
             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
-    """
-    Add a generic popup component to the page.
+    """Add a generic popup component to the page.
 
     :tags:
     :categories:
@@ -526,17 +480,13 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlPopup.Popup`
 
-    Related Pages:
+    `w3schools <https://www.w3schools.com/tags/tag_div.asp>`_
 
-      https://www.w3schools.com/tags/tag_div.asp
-
-    Templates:
-
-    :param components: The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -549,8 +499,7 @@ class Layouts:
 
   def iframe(self, url: str = "", width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (100, "%"),
              helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.IFrame:
-    """
-    Add a iframe component to the page.
+    """Add an iframe component to the page.
 
     :tags:
     :categories:
@@ -563,13 +512,11 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.IFrame`
 
-    Templates:
-
-    :param url: Optional. The link to the underlying page.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param url: Optional. The link to the underlying page
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
@@ -580,8 +527,7 @@ class Layouts:
   def dialogs(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (20, 'px'),
               html_code: str = None, helper: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlEvent.Dialog:
-    """
-    Simple Jquery UI modal with a text.
+    """Simple Jquery UI modal with a text.
 
     :tags:
     :categories:
@@ -590,20 +536,15 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlEvent.Dialog`
 
-    Related Pages:
+    `jqueryui <https://jqueryui.com/dialog/>`_
 
-      https://jqueryui.com/dialog/
-
-    Usage::
-
-
-    :param text: Optional. The value to be displayed to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param text: Optional. The value to be displayed to the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -629,17 +570,15 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.IconsMenu`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py
+    `icons <https://github.com/epykure/epyk-templates/blob/master/locals/components/icons.py>`_
+    `image <https://github.com/epykure/epyk-templates/blob/master/locals/components/image.py>`_
 
     :param icon_names:
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -656,13 +595,9 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage::
-
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Form`
-
-    Templates:
 
     :param components: The different HTML objects to be added to the component.
     :param helper: Optional. A tooltip helper.
@@ -674,9 +609,8 @@ class Layouts:
   def header(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Header:
-    """
-    The HTML <header> element represents introductory content, typically a group of introductory or navigational aids.
-    It may contain some heading elements but also a logo, a search form, an author name, and other elements.
+    """The HTML <header> element represents introductory content, typically a group of introductory or navigational
+    aids. It may contain some heading elements but also a logo, a search form, an author name, and other elements.
 
     :tags:
     :categories:
@@ -690,19 +624,15 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Header`
 
-    Related Pages:
+    `header <https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header>`_
 
-      https://developer.mozilla.org/en-US/docs/Web/HTML/Element/header
-
-    Templates:
-
-    :param components: The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
+    :param components: The different HTML objects to be added to the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param helper:
-    :param options: Optional. Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param options: Optional. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -717,8 +647,7 @@ class Layouts:
               height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
               helper: str = None, options: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Section:
-    """
-    The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections
+    """The <section> tag defines sections in a document, such as chapters, headers, footers, or any other sections
     of the document.
 
     :tags:
@@ -733,19 +662,15 @@ class Layouts:
 
       - :class:`epyk.core.html.HtmlContainer.Header`
 
-    Related Pages:
+    `w3schools <https://www.w3schools.com/tags/tag_section.asp>`_
 
-      https://www.w3schools.com/tags/tag_section.asp
-
-    Templates:
-
-    :param components: The different HTML objects to be added to the component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -764,18 +689,14 @@ class Layouts:
     :tags:
     :categories:
 
-    Usage::
-
-    Templates:
-
-    :param components: List. The different HTML objects to be added to the component.
+    :param components: The different HTML objects to be added to the component
     :param cols:
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
-    :param align: String. Optional. A string with the horizontal position of the component.
-    :param position: String. Optional. A string with the vertical position of the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean or Dictionary. Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. A string with the horizontal position of the component
+    :param position: Optional. A string with the vertical position of the component
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     rows, row = [], []
     dflt_options = {"responsive": False}
@@ -801,8 +722,6 @@ class Layouts:
     return component
 
 
-
-
 class Delimiter:
 
   def __init__(self, ui):
@@ -810,15 +729,10 @@ class Delimiter:
 
   def line(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = None, options: dict = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Wrapper around the HT html tag.
+    """Wrapper around the HT html tag.
 
     :tags:
     :categories:
-
-    Usage::
-
-    Templates:
 
     :param count: Optional. The number of HR tag to be added.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -834,21 +748,16 @@ class Delimiter:
 
   def double(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Wrapper around the HT html tag.
+    """Wrapper around the HT html tag.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Templates:
-
-    :param count: Optional. The number of HR tag to be added.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param align: Optional. The content position. Values (left, right, center). Default center.
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -859,21 +768,16 @@ class Delimiter:
 
   def dashed(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Wrapper around the HT html tag.
+    """Wrapper around the HT html tag.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Templates:
-
-    :param count: Optional. The number of HR tag to be added.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param align: Optional. The content position. Values (left, right, center). Default center.
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)
@@ -886,21 +790,16 @@ class Delimiter:
 
   def dotted(self, count: int = 1, width: types.SIZE_TYPE = (100, '%'), align: str = "center", options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Wrapper around the HT html tag.
+    """Wrapper around the HT html tag.
 
     :tags:
     :categories:
 
-    Usage::
-
-    Templates:
-
-    :param count: Optional. The number of HR tag to be added.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param align: Optional. The content position. Values (left, right, center). Default center.
-    :param options: Optional. Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param count: Optional. The number of HR tag to be added
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param align: Optional. The content position. Values (left, right, center). Default center
+    :param options: Optional. Dictionary. Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     hrs = self.page.ui.layouts.hr(count, width=width, align=align, options=options, profile=profile)

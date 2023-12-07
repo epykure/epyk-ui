@@ -192,7 +192,8 @@ class JsProperties:
 
     def set_init_options(self, html_code: str, options: str):
         """ Set init options to the main scope of the report """
-        self._context['init'][html_code] = options
+        if isinstance(html_code, str):
+            self._context['init'][html_code] = options
 
     def get_init_options(self, html_code: str = None) -> dict:
         """ get init option of a component """

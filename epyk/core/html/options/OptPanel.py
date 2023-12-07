@@ -535,6 +535,16 @@ class OptionGrid(Options):
     self._config(num)
 
   @property
+  def pivot(self):
+    """
+    """
+    return self._config_get(None)
+
+  @pivot.setter
+  def pivot(self, value: str):
+    self._config(value)
+
+  @property
   def class_title(self):
     """
     """
@@ -563,6 +573,16 @@ class OptionGrid(Options):
   @responsive.setter
   def responsive(self, flag: bool):
     self.set(flag)
+
+  @property
+  def template(self):
+    """
+    """
+    return self.get(True)
+
+  @template.setter
+  def template(self, component):
+    self.set(component)
 
   @property
   def classe(self):
