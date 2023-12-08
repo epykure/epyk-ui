@@ -77,7 +77,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     @property
     def js(self) -> JsHighcharts.Highcharts:
         if self._js is None:
-            self._js = JsHighcharts.Highcharts(selector="window['%s']" % self.js_code, component=self, page=self.page)
+            self._js = JsHighcharts.Highcharts(selector=self.js_code, component=self, page=self.page)
         return self._js
 
     @Html.jformatter("highcharts")
@@ -86,8 +86,10 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
               stop_state: bool = True, dataflows: List[dict] = None):
         self.js_code = component_id
         if data is not None:
-            builder_fnc = JsUtils.jsWrap("%s(%s, %s.options)" % (
-                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page), self.js_code), profile).toStr()
+            builder_fnc = JsUtils.jsWrap("%s(%s, Object.assign(%s.options, %s))" % (
+                self.builder_name, JsUtils.dataFlows(data, dataflows, self.page),
+                self.js_code,
+                JsUtils.jsConvertData(options, None)), profile).toStr()
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(component_id)

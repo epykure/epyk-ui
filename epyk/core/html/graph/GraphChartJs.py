@@ -430,7 +430,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         if options is None:
             if dataflows is not None:
                 return "%s;%s" % (
-                    JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap("window['%s']" % self.html_code), dataflows, self.page)),
+                    JsUtils.jsWrap(JsUtils.dataFlows(JsUtils.jsWrap(self.js_code), dataflows, self.page)),
                     self.js.update())
 
         if dataflows is not None:

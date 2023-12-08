@@ -16,7 +16,7 @@ function stateTemplate(status, htmlObj, data, options, cssStyle){
   if (status){
         var divLoading = document.createElement("div");
         divLoading.setAttribute("name", "loading");
-        divLoading.style.width = '100%'; divLoading.style.height = '100%';
+        divLoading.style.width = '100%'; divLoading.style.height = '100%';  divLoading.style.zIndex = 100;
         divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0;
         divLoading.style.textAlign = 'center'; divLoading.style.display = 'table';
         if(typeof cssStyle !== 'undefined'){for(var k in cssStyle){divLoading.style[k] = cssStyle[k]}}

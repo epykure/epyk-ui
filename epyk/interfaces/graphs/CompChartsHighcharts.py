@@ -82,6 +82,7 @@ class Highcharts:
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
+        chart.builder_name = "HchartsBar"
         if data:
             chart.options.xAxis.categories = data["labels"]
             for dataset in data['datasets']:
@@ -102,6 +103,7 @@ class Highcharts:
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
+        chart.builder_name = "HchartsBar"
         if data:
             chart.options.xAxis.categories = data["labels"]
             for dataset in data['datasets']:

@@ -63,7 +63,7 @@ class Frappe(MixHtmlState.HtmlOverlayStates, Html.Html):
         :return: A Javascript Dom object functions.
         """
         if self._js is None:
-            self._js = JsFrappe.FrappeCharts(selector="window['%s']" % self.html_code, component=self)
+            self._js = JsFrappe.FrappeCharts(selector=self.html_code, component=self)
         return self._js
 
     @property
