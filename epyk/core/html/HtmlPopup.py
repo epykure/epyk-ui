@@ -110,6 +110,7 @@ class Popup(Html.Html):
       self.style.css.padding_top = self.options.top
     if self.options.closure:
       self.close.style.css.font_factor(3)
+      self.close.options.managed = False
       self.close.style.css.background_color = self.page.theme.greys[0]
       self.close.style.css.border_radius = 20
       self.close.style.css.top = 5
