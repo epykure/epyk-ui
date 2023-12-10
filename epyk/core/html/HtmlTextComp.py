@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 # TODO Fix problem context menu in Status
-
+from pathlib import Path
 from typing import Union, Optional, List
 from epyk.core.py import primitives
 
@@ -106,7 +106,7 @@ class UpDown(Html.Html):
         """Add items to a container"""
         if hasattr(component, 'options'):
             component.options.managed = False
-        self.components[component.htmlCode] = component
+        self.components[component.html_code] = component
         return self
 
     def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
@@ -126,7 +126,7 @@ class UpDown(Html.Html):
         self.page.properties.js.add_builders(self.refresh())
         rows = [str(component) for component in self.components.values()]
         return '<%s %s>%s<div id="%s_content"></div>%s</%s>' % (
-            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows), self.htmlCode,
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows), self.html_code,
             self.helper, self.tag)
 
 
@@ -164,8 +164,8 @@ class BlockText(Html.Html):
         items = [
             '<div %s>' % self.get_attrs(css_class_names=self.style.get_classes()),
             '<div id="%s_title" style="font-size:%spx;text-align:left"><a></a></div>' % (
-                self.htmlCode, self.page.body.style.globals.font.normal(3)),
-            '<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.htmlCode,
+                self.html_code, self.page.body.style.globals.font.normal(3)),
+            '<div id="%s_p" style="width:100%%;text-justify:inter-word;text-align:justify;"></div>' % self.html_code,
             '</div>']
         self.page.properties.js.add_builders(self.refresh())
         return ''.join(items)
@@ -238,7 +238,7 @@ class Number(Html.Html):
             self.span = self.link
         self.link.style.css.font_factor(10)
         self.add_label(label, css={'text-align': 'center', 'float': 'none', "width": "auto", "margin": "auto"},
-                       position=options.get('label', 'before'), html_code=self.htmlCode)
+                       position=options.get('label', 'before'), html_code=self.html_code)
         self.css({"display": "inline-block", 'padding': '5%', 'clear': 'both', 'margin': '2px'})
         self.style.css.text_align = "center"
         self.__comps = []
@@ -258,18 +258,18 @@ class Number(Html.Html):
     def build(self, data=None, options: Optional[dict] = None,
               profile: Optional[Union[bool, dict]] = None, component_id: Optional[str] = None,
               dataflows: List[dict] = None, **kwargs):
-        return self.span.build(data, options, profile, self.span.htmlCode, dataflows=dataflows)
+        return self.span.build(data, options, profile, self.span.html_code, dataflows=dataflows)
 
     def __add__(self, component: Html.Html):
         """ Add items to a container """
         if hasattr(component, 'options'):
             component.options.managed = False
-        self.components[component.htmlCode] = component
-        self.__comps.append(component.htmlCode)
+        self.components[component.html_code] = component
+        self.__comps.append(component.html_code)
         return self
 
     def __str__(self):
-        rows = [str(self.components[htmlCode]) for htmlCode in self.__comps]
+        rows = [str(self.components[html_code]) for html_code in self.__comps]
         return "<%s %s>%s</%s>%s" % (
           self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(rows), self.tag, self.helper)
 
@@ -307,7 +307,7 @@ class Delta(Html.Html):
         """ Add items to a container """
         if hasattr(component, 'options'):
             component.options.managed = False
-        self.components[component.htmlCode] = component
+        self.components[component.html_code] = component
         return self
 
     @property
@@ -350,7 +350,7 @@ class Delta(Html.Html):
       %(helper)s
       </div>''' % {"strAttr": self.get_attrs(css_class_names=self.style.get_classes()),
                    "size": self.page.body.style.globals.font.normal(6),
-                   'htmlCode': self.htmlCode, "color": self.val['color'], "components": "".join(rows),
+                   'htmlCode': self.html_code, "color": self.val['color'], "components": "".join(rows),
                    "greyColor": self.page.theme.greys[6], "helper": self.helper}
 
 
@@ -392,15 +392,16 @@ class TrafficLight(Html.Html):
     name = 'Light'
     tag = "div"
 
-    def __init__(self, page: primitives.PageModel, color, label, height, tooltip, helper, options, profile):
+    def __init__(self, page: primitives.PageModel, color, label, height, tooltip, helper, options, profile,
+                 html_code: str=None):
         # Small change to allow the direct use of boolean and none to define the color
         # Those standards will simplify the creation of themes going forward
         super(TrafficLight, self).__init__(page, color, css_attrs={"width": height, "height": height},
-                                           options=options, profile=profile)
+                                           options=options, profile=profile, html_code=html_code)
         self.add_helper(helper, css={"margin-top": "-17px"})
         self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
                                    "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'},
-                       html_code=self.htmlCode)
+                       html_code=self.html_code)
         self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
                   'vertical-align': 'middle'})
         self.set_attrs(name="title", value=tooltip)
@@ -480,11 +481,11 @@ else {htmlObj.firstChild.style.backgroundColor = data}'''
     def __str__(self):
         if self.action is not None:
             return '<div id="%s"><div %s></div>%s</div>%s' % (
-                self.htmlCode, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
+                self.html_code, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
                 self.action.html(), self.helper)
 
         return '<%s id="%s"><div %s></div></%s>%s' % (
-            self.tag, self.htmlCode, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
+            self.tag, self.html_code, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
             self.tag, self.helper)
 
 
@@ -493,20 +494,31 @@ class ContentsTable(Html.Html):
     tag = "div"
     _option_cls = OptText.OptContents
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "common-vars.css",
+        Path(__file__).parent.parent / "css" / "native" / "contents-table.css"
+    ]
+    style_refs = {
+        "contents-table-item": "contents-table-item",
+        "contents-table-title": "contents-table-title",
+        "contents-table": "contents-table",
+        "contents-table-levels": "contents-table-level-%s",
+    }
+
     def __init__(self, page: primitives.PageModel, title, width, height, html_code, options, profile):
         self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
         super(ContentsTable, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                             css_attrs={"width": width, "height": height})
-        self.style.css.position = "fixed"
         self.title = self.page.ui.div()
         self.title += self.page.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
         self.title += self.page.ui.text("[hide]").css({
             "width": '30px', 'display': 'inline-block', 'margin-left': '5px',
             'font-size': self.page.body.style.globals.font.normal(-5)})
+        self.title[0].attr["class"].add(self.style_refs["contents-table-title"])
         self.title[0].style.css.font_size = self.page.body.style.globals.font.normal(6)
-        self.title[0].style.css.font_weight = "bold"
         self.title.options.managed = False
         self.title.style.css.white_space = "nowrap"
+        self.attr["class"].add(self.style_refs["contents-table"])
 
     @property
     def options(self) -> OptText.OptContents:
@@ -573,8 +585,12 @@ else {components.forEach(function(comp){comp.style.display = "block"}); %(icon)s
                 break
 
         self.val.append(href)
-        href.style.css.display = 'block'
-        href.style.css.width = '100%'
+        href.attr["class"].add(self.style_refs["contents-table-item"])
+        href.attr["class"].add(self.style_refs["contents-table-levels"] % level)
+        href.click(['''
+let contentMenuItems = document.querySelectorAll(".contents-table-item");
+if(contentMenuItems){contentMenuItems.forEach(function(menuItem){menuItem.classList.remove("contents-item-active");})};
+event.target.classList.add("contents-item-active")'''])
         return href
 
     def move(self):
@@ -606,14 +622,14 @@ else {components.forEach(function(comp){comp.style.display = "block"}); %(icon)s
         :param html_code_content: Optional. The Html code of the component Content table
         """
         # Special attribute set in the base component interface
-        div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
+        div = self.page.ui.div(html_code="%s_anchor" % component.html_code)
         if self.page.body.css('padding-top') is None:
             div.style.css.margin_top = - 10
         else:
             div.style.css.margin_top = - int(self.page.body.css('padding-top')[:-2]) - 10
         div.style.css.position = "absolute"
         div.style.css.z_index = -1
-        link = self.page.components[html_code_content].anchor(component.val, level or 4, "#%s_anchor" % self.htmlCode)
+        link = self.page.components[html_code_content].anchor(component.val, level or 4, "#%s_anchor" % self.html_code)
         self.page.components[html_code_content][-1].click([
             component.dom.transition(
                 ["color", "font-size"], [self.page.theme.colors[-1], '101%'], duration=[0.5, 0.5], reverse=True)])
@@ -631,7 +647,7 @@ else {components.forEach(function(comp){comp.style.display = "block"}); %(icon)s
         :param html_code_content: Optional. The Html code of the component Content table
         """
         component.options.managed = False
-        div = self.page.ui.div(html_code="%s_anchor" % component.htmlCode)
+        div = self.page.ui.div(html_code="%s_anchor" % component.html_code)
         if self.page.body.css('padding-top') is None:
             div.style.css.margin_top = - 10
         else:
@@ -654,7 +670,7 @@ else {components.forEach(function(comp){comp.style.display = "block"}); %(icon)s
         self.title[-1].click([self.menu.dom.toggle(), self.title[-1].dom.toggleText('[show]', '[hide]')])
         return '''<%(tag)s %(attr)s>%(title)s%(links)s</%(tag)s> ''' % {
             'attr': self.get_attrs(css_class_names=self.style.get_classes()), "tag": self.tag,
-            'title': self.title.html(), 'htmlCode': self.htmlCode, 'links': self.menu.html()}
+            'title': self.title.html(), 'htmlCode': self.html_code, 'links': self.menu.html()}
 
 
 class SearchResult(Html.Html):
@@ -827,9 +843,9 @@ class Composite(Html.Html):
             schema_child['args']['url'] = schema_child['args']['url'] % ref_map
         # delegate the htmlCode to the main component
         if comp is None:
-            del self.page.components[self.htmlCode]
+            del self.page.components[self.html_code]
 
-            new_comp = self._get_comp_map[schema_child['type']](html_code=self.htmlCode, **schema_child.get('args', {}))
+            new_comp = self._get_comp_map[schema_child['type']](html_code=self.html_code, **schema_child.get('args', {}))
             self._vals = new_comp
         else:
             new_comp = self._get_comp_map[schema_child['type']](**schema_child.get('args', {}))
@@ -858,7 +874,7 @@ class Composite(Html.Html):
                 schema_child['attrs']['data-target'] = schema_child['attrs']['data-target'] % ref_map
             new_comp.set_attrs(schema_child['attrs'])
         if 'ref' in schema_child:
-            ref_map[schema_child['ref']] = new_comp.htmlCode
+            ref_map[schema_child['ref']] = new_comp.html_code
         for child in schema_child.get('children', []):
             self._set_comp(new_comp, child, builders, ref_map)
         if comp is not None:

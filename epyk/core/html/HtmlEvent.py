@@ -48,7 +48,6 @@ class ProgressBar(Html.Html):
     @property
     def options(self) -> OptSliders.OptionsProgBar:
         """The progress bar is designed to display the current percent complete for a process.
-
         The bar is coded to be flexibly sized through CSS and will scale to fit inside its parent container by default.
 
         `Package Doc <https://api.jqueryui.com/progressbar>`_
@@ -84,7 +83,6 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
     @property
     def js(self) -> JsQueryUi.ProgressBar:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
 
         `Package Doc <https://api.jqueryui.com/progressbar>`_
@@ -98,7 +96,6 @@ if(options.show_percentage){%(jqId)s.children('span').html(data + '%%')};
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object
@@ -140,9 +137,7 @@ class Menu(Html.Html):
     @property
     def options(self) -> OptSliders.OptionsMenu:
         """Property to the comments component options.
-
         Optional can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
 
         `Package Doc <https://api.jqueryui.com/menu>`_
@@ -152,7 +147,6 @@ class Menu(Html.Html):
     @property
     def js(self) -> JsQueryUi.Menu:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
 
         `Package Doc <https://api.jqueryui.com/menu>`_
@@ -166,7 +160,6 @@ class Menu(Html.Html):
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object
@@ -203,9 +196,7 @@ class Dialog(Html.Html):
     @property
     def options(self) -> OptSliders.OptionDialog:
         """Property to the comments component options.
-
         Optional can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
 
         `Package Doc <https://jqueryui.com/dialog/>`_
@@ -218,7 +209,6 @@ class Dialog(Html.Html):
     @property
     def js(self) -> JsQueryUi.Dialog:
         """Open content in an interactive overlay.
-
         `Package Doc <https://jqueryui.com/dialog/>`_
 
         :return: A Javascript Dom object
@@ -230,7 +220,6 @@ class Dialog(Html.Html):
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlProgressBar:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object
@@ -338,9 +327,7 @@ class Slider(Html.Html):
     @property
     def options(self) -> OptSliders.OptionsSlider:
         """Property to the comments component options.
-
         Optional can either impact the Python side or the Javascript builder.
-
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -355,7 +342,6 @@ class Slider(Html.Html):
     @property
     def js(self) -> JsQueryUi.Slider:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
 
         `Related Pages <https://api.jqueryui.com/slider>`_

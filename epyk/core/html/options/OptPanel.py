@@ -650,9 +650,7 @@ class OptionPopup(Options):
 
   @property
   def background(self):
-    """  
-    Boolean to mention if the popup should have a grey background.
-    """
+    """Boolean to mention if the popup should have a grey background."""
     return self.get(True)
 
   @background.setter
@@ -661,8 +659,7 @@ class OptionPopup(Options):
 
   @property
   def draggable(self):
-    """  
-    Specify if the popup window is draggable.
+    """Specify if the popup window is draggable.
     If True this will set the background flag to False.
     """
     return self.get(False)
@@ -675,8 +672,7 @@ class OptionPopup(Options):
 
   @property
   def closure(self):
-    """  
-    """
+    """ """
     return self.get(False)
 
   @closure.setter
@@ -691,8 +687,7 @@ class OptionPopup(Options):
 
   @property
   def top(self):
-    """  
-    """
+    """ """
     return self.get(100)
 
   @top.setter
@@ -701,8 +696,7 @@ class OptionPopup(Options):
 
   @property
   def escape(self):
-    """  
-    """
+    """ """
     return self.get(True)
 
   @escape.setter
@@ -713,9 +707,7 @@ class OptionPopup(Options):
 
   @property
   def margin(self):
-    """  
-    Set the margin. By default the value will be in percentage but the unit can be supplied
-    """
+    """ Set the margin. By default the value will be in percentage but the unit can be supplied"""
     return self.get(10)
 
   @margin.setter
@@ -727,8 +719,7 @@ class OptionPopup(Options):
 
   @property
   def z_index(self):
-    """  
-    """
+    """ """
     return self.get(800)
 
   @z_index.setter

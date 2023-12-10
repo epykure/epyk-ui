@@ -26,6 +26,7 @@ def get_pkg_data() -> dict:
   """
   pkg_data = {
     'epyk': [
+      os.path.join('core', 'css', 'native', '*.css'),
       os.path.join('static', 'images', '*'),
       os.path.join('static', 'images', 'logo', '*')
   ]}

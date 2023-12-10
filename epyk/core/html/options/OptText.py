@@ -3,15 +3,15 @@
 
 from typing import Union
 from epyk.core.html.options import Options
+from epyk.core.html.options import OptionsWithTemplates
 from epyk.core.js.packages import packageImport
 
 
-class OptionsText(Options):
+class OptionsText(OptionsWithTemplates):
 
   @property
   def editable(self):
-    """
-    Set the content of the component editable.
+    """Set the content of the component editable.
 
     Related Pages:
 

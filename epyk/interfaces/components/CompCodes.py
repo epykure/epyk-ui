@@ -15,9 +15,8 @@ class Code:
     def css(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
             height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
             options: types.OPTION_TYPE = None, helper: str = None,
-            profile: types.PROFILE_TYPE = None):
-        """
-        CSS Text editor.
+            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """CSS Text editor.
 
         :tags:
         :categories:
@@ -26,9 +25,7 @@ class Code:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
+        `codemirror <https://codemirror.net/index.html>`_
 
         Usage::
 
@@ -36,8 +33,6 @@ class Code:
           .cssdivnoborder {margin: 0 ;clear: both ;padding: 0 ;border: 0 ;}
           .cssdivnoborder:focus {outline: 1px solid #B4BABF ;}
           ''')
-
-        Templates:
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -62,9 +57,8 @@ class Code:
     def xml(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
             height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
             options: types.OPTION_TYPE = None, helper: str = None,
-            profile: types.PROFILE_TYPE = None):
-        """
-        XML Text editor.
+            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """XML Text editor.
 
         :tags:
         :categories:
@@ -73,13 +67,7 @@ class Code:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -104,9 +92,8 @@ class Code:
     def sql(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
             height: types.SIZE_TYPE = (200, 'px'), html_code: Optional[str] = None,
             options: types.OPTION_TYPE = None, helper: str = None,
-            profile: types.PROFILE_TYPE = None):
-        """
-        SQL Text editor.
+            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """SQL Text editor.
 
         :tags:
         :categories:
@@ -115,13 +102,7 @@ class Code:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -138,17 +119,16 @@ class Code:
             "lineNumbers": True, 'mode': 'sql', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
         if options is not None:
             dfl_options.update(options)
-        component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options,
-                                                   helper, profile)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
         html.Html.set_component_skin(component)
         return component
 
     def r(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
           height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
           options: types.OPTION_TYPE = None, helper: str = None,
-          profile: types.PROFILE_TYPE = None):
-        """
-        R Text editor.
+          profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """R Text editor.
 
         :tags:
         :categories:
@@ -157,13 +137,7 @@ class Code:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -180,17 +154,16 @@ class Code:
             "lineNumbers": True, 'mode': 'r', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
         if options is not None:
             dfl_options.update(options)
-        component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options,
-                                                   helper, profile)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
         html.Html.set_component_skin(component)
         return component
 
     def python(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
                height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
                options: types.OPTION_TYPE = None, helper: str = None,
-               profile: types.PROFILE_TYPE = None):
-        """
-        Python Text editor.
+               profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """Python Text editor.
 
         :tags:
         :categories:
@@ -199,13 +172,7 @@ class Code:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -229,9 +196,8 @@ class Code:
     def javascript(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
                    height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
                    options: types.OPTION_TYPE = None, helper: str = None,
-                   profile: types.PROFILE_TYPE = None):
-        """
-        Javascript Text editor.
+                   profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """Javascript Text editor.
 
         :tags:
         :categories:
@@ -240,13 +206,7 @@ class Code:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -262,29 +222,22 @@ class Code:
         dfl_options = {"lineNumbers": True, 'mode': 'javascript', 'autoRefresh': True, 'styleActiveLine': True}
         if options is not None:
             dfl_options.update(options)
-        component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options,
-                                                   helper, profile)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
         html.Html.set_component_skin(component)
         return component
 
     def markdown(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
                  height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
                  options: types.OPTION_TYPE = None, helper: str = None,
-                 profile: types.PROFILE_TYPE = None):
-        """
-        Markdown Text editor.
+                 profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """Markdown Text editor.
 
         Underlying HTML Objects:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -300,29 +253,22 @@ class Code:
         dfl_options = {"lineNumbers": True, 'mode': 'markdown', 'autoRefresh': True, 'styleActiveLine': True}
         if options is not None:
             dfl_options.update(options)
-        component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options,
-                                                   helper, profile)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
         html.Html.set_component_skin(component)
         return component
 
     def rst(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
             height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
             options: types.OPTION_TYPE = None, helper: str = None,
-            profile: types.PROFILE_TYPE = None):
-        """
-        RestructuredText editor.
+            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """RestructuredText editor.
 
         Underlying HTML Objects:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param text: Optional. The text
         :param color: Optional. The color code
@@ -338,29 +284,22 @@ class Code:
         dfl_options = {"lineNumbers": True, 'mode': 'rst', 'autoRefresh': True, 'styleActiveLine': True}
         if options is not None:
             dfl_options.update(options)
-        component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options,
-                                                   helper, profile)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
         html.Html.set_component_skin(component)
         return component
 
     def code(self, language: str, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
              height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
              options: types.OPTION_TYPE = None, helper: str = None,
-             profile: types.PROFILE_TYPE = None):
-        """
-        Generic code editor.
+             profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """Generic code editor.
 
         Underlying HTML Objects:
 
           - :class:`epyk.core.html.HtmlTextEditor.Code`
 
-        Related Pages:
-
-          https://codemirror.net/index.html
-
-        Usage::
-
-        Templates:
+        `codemirror <https://codemirror.net/index.html>`_
 
         :param language: The language
         :param text: Optional. The text
@@ -377,7 +316,7 @@ class Code:
         dfl_options = {"lineNumbers": True, 'mode': language, 'autoRefresh': True, 'styleActiveLine': True}
         if options is not None:
             dfl_options.update(options)
-        component = html.HtmlTextEditor.CodeEditor(self.page, text, color, width, height, html_code, dfl_options,
-                                                   helper, profile)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
         html.Html.set_component_skin(component)
         return component

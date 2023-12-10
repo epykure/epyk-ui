@@ -1,0 +1,26 @@
+
+.contents-table {
+    position: fixed
+}
+
+.contents-table-item {
+    display: block;
+    width: 100%
+}
+
+.contents-item-active {
+    background-color: var(--selected);
+}
+
+.contents-table-title {
+    font-weight: bold
+}
+
+.contents-table-level-0 {
+}
+
+.contents-table-level-1 {
+}
+
+.contents-table-level-2 {
+}

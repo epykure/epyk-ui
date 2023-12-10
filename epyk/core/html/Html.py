@@ -21,6 +21,7 @@ from epyk.core.js import packages
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import packageImport
 
+from epyk.core.css import css_files_loader
 from epyk.core.css.styles import GrpCls
 from epyk.core.css import Defaults as Defaults_css
 
@@ -385,6 +386,7 @@ the same signature and return).
     builder_name, _js__builder__, async_builder = None, None, False
     _option_cls = Options
     tag = None
+    style_urls: List[str] = None
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.JS_FUNCS_TYPES = None,
@@ -587,6 +589,9 @@ the same signature and return).
 
     @property
     def js_code(self):
+        """
+
+        """
         if self.__htmlCode is not None:
             if hasattr(self.__htmlCode, "toStr"):
                 return JsUtils.jsWrap("window[%s + 'Id']" % self.__htmlCode)
@@ -642,9 +647,7 @@ the same signature and return).
         Usage::
 
           div = page.ui.div(htmlCode="testDiv")
-          div.click([
-            div.js.alert("Hello")
-          ])
+          div.click([div.js.alert("Hello")])
 
         :return: A Javascript object
         """
@@ -1815,8 +1818,13 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
     def html(self):
         """Render the HTML component to the JavaScript.
 
-        This will be the main function called by the page to render all the component.s
+        This will be the main function called by the page to render all the components.
         """
+        if self.style_urls is not None:
+            css_content = css_files_loader(self.style_urls, style_vars=self.page.theme.all())
+            if css_content:
+                self.page.properties.css.add_text(css_content, map_id=self.__class__.__name__)
+
         str_result = []
         if self._on_ready_js:
             self.onReady(list(self._on_ready_js.values()))

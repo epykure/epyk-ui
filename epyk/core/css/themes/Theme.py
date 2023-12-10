@@ -331,6 +331,9 @@ class Theme:
 
     def all(self) -> dict:
         colors_code = {}
+        # Add main colors theme
+        for i, c in enumerate(self._colors):
+            colors_code["theme-%s" % i] = c
         for v in self.__colors["all"].values():
             colors_code.update(v)
         return colors_code

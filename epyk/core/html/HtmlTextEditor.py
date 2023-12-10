@@ -361,7 +361,7 @@ class Tags(Html.Html):
                    'icon': self.icon, 'htmlCode': self.htmlCode, 'greyColor': self.page.theme.greys[2]}
 
 
-class MarkdownReader(Html.Html):
+class MarkdownReader(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'markdown'
     tag = "div"
     requirements = ('highlight.js', 'showdown')

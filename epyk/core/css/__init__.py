@@ -28,6 +28,7 @@ def css_files_loader(
     css_formatted = []
     if file_path is not None:
         for css_file in file_path:
+            css_file = str(css_file)
             if Path(css_file).exists():
                 if css_file.endswith(".css"):
                     css_formatted.append("/* CSS From file %s */" % css_file)
@@ -46,7 +47,7 @@ def css_files_loader(
                             else:
                                 css_formatted.append("%s { %s }" % (m[0], m[1]))
                 else:
-                    raise ValueError("CSS file format not supported only (.css and .scss)" % css_file)
+                    raise ValueError("CSS file format not supported %s - only (.css and .scss)" % css_file)
 
             else:
                 for k, v in style_vars.items():
