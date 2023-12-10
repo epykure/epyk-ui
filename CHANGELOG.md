@@ -1,11 +1,79 @@
 ## [Unreleased]
 
+## [1.11.4] - 2023-12-11
+
+### Added
+- CSS external module (to replace the Python CSS framework)
+- New specialized builders for Highcharts.
+- Added More Highcharts extensions.
+
+### Changed
+- Changes in the doc string to reduce package footprint.
+- Align indent in modules.
+
+### Fixed
+- Bug fix in chart reference for Frappe, Apex and ChartJs libraries
+
+
+## [1.11.0] - 2023-12-06
+
+Introduction of native CSS modules.
+
+### Added
+- js_code to replace all the different objects used to define Js reference within components.
+- Ability to have JavaScript object for js_code.
+- container_id used to replace the component reference.
+- Add builder concept for Grids.
+
+### Changed
+- Replace of htmlCode to html_code in the HTML components (legacy)
+- Upgrade SortableJs module
+- Changes in the doc string to reduce package footprint.
+- Align indent in modules.
+
+
+## [1.10.42] - 2023-11-26
+
+### Added
+- New Charting libraries Chartist and Highcharts.
+
+
+### Changed
+- Changes in the doc string to reduce package footprint.
+- Align indent in modules.
+
+## [1.10.40] - 2023-11-17
+
+### Changed
+- Changes in the doc string to reduce package footprint.
+- Align indent in modules.
+
+
+## [1.10.38] - 2023-10-30
+
+### Changed
+- Changes in the doc string to reduce package footprint.
+- Align indent in modules.
+
+
+## [1.10.0] - 2023-05-02
+
+Introduction of native JavaScript modules (with the standalone module).
+
+### Changed
+- Changes in the doc string to reduce package footprint.
+- Align indent in modules.
+
+### Added
+- Standalone components introduction
+
+
 ## [1.9.32] - 2023-03-19
 
 ### Added
 - More doc and type annotation
 - More examples in functions
-- Bootsrap icon library
+- Bootstrap icon library
 
 ### Fixed
 - Use of different icon framework.
