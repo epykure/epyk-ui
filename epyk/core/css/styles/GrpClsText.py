@@ -22,19 +22,6 @@ class ContentTable(GrpCls.ClassHtml):
       self._css_struct = Commons(self.component)
     return self._css_struct
 
-  @property
-  def css_class(self) -> Classes.CatalogTable.CatalogTable:
-    """
-    The internal class used to put a custom Style to this object.
-    Only 1 CSS class can be added to an HTML object.
-
-    :rtype: Classes.CatalogTable.CatalogTable
-    """
-    if self._css_class is None:
-      self._css_class = Classes.CatalogTable.CatalogTable(
-        self.component.page, self.classList['main'], html_id=self.component.htmlCode).table_content()
-    return self._css_class
-
 
 class ClsFormula(GrpCls.ClassHtml):
 

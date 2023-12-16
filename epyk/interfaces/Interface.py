@@ -634,7 +634,6 @@ class Components:
             html_contents = html.HtmlTextComp.ContentsTable(
                 self.page, title, width, height, html_code, options, profile)
             html_contents.menu = self.page.ui.div(html_code="%s_page" % html_code)
-            html_contents.style.css.max_height = "60%"
             if Defaults_css.BODY_CONTAINER is not None and "page_nav_bar" in self.page.components:
                 html_contents.style.css.top = Defaults_css.BODY_CONTAINER.get('padding-top', 0) + top
             else:
@@ -1240,8 +1239,8 @@ class Components:
             comp = page.ui.component("test-color")
             comp.prepare(text="Test")
 
-
         :param alias: The component selector
+        :param verbose: Display extra log messages
         """
         return self.page._props["schema"][alias](self.page, verbose=verbose, **kwargs)
 

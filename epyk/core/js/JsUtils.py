@@ -377,9 +377,16 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
                     pmt_expr.append("%s:%s" % (k, v.toStr()))
                 else:
                     pmt_expr.append("%s:%s" % (k, v))
-            data_expr = "%s(%s, {%s})" % (dataflow["name"], data_expr, ", ".join(pmt_expr))
+            if "class" in dataflow:
+                data_expr = "new %s({%s}).%s(%s)" % (
+                    dataflow["class"], ", ".join(pmt_expr), dataflow.get("name", "transform"), data_expr)
+            else:
+                data_expr = "%s(%s, {%s})" % (dataflow["name"], data_expr, ", ".join(pmt_expr))
         else:
-            data_expr = "%s(%s)" % (dataflow["name"], data_expr)
+            if "class" in dataflow:
+                data_expr = "%s().%s(%s)" % (dataflow["class"], dataflow["name"], data_expr)
+            else:
+                data_expr = "%s(%s)" % (dataflow["name"], data_expr)
     return data_expr
 
 

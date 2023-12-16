@@ -1,5 +1,19 @@
 ## [Unreleased]
 
+## [1.11.5] - 2023-12-16
+
+### Added
+- Resources class to access methods from external packages.
+- Better management for colors in the CSS
+- Add class / pipe concept for Dataflows configuration
+
+### Changed
+- Remove all CSS Python classes for table contents.
+- Changes in the doc string to reduce package footprint.
+- Align indent in modules.
+- Improve features in Standalone components.
+
+
 ## [1.11.4] - 2023-12-11
 
 ### Added

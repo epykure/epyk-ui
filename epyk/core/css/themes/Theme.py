@@ -4,6 +4,7 @@
 import re
 from typing import List
 from epyk.core.css.themes import palettes
+from epyk.core.css.Colors import THEME_REFERENCE
 
 
 class ColorRange:
@@ -332,8 +333,11 @@ class Theme:
     def all(self) -> dict:
         colors_code = {}
         # Add main colors theme
-        for i, c in enumerate(self._colors):
-            colors_code["theme-%s" % i] = c
+        for k, v in THEME_REFERENCE.items():
+            colors = getattr(self, k, None)
+            if colors:
+                for i, c in enumerate(colors):
+                    colors_code[v % i] = c
         for v in self.__colors["all"].values():
             colors_code.update(v)
         return colors_code

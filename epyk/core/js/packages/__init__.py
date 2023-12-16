@@ -157,7 +157,7 @@ class JsPackage(primitives.JsDataModel):
     def element(self):
         """ Return always the real DOM element. """
         if self.component is not None:
-            return "document.getElementById('%s')" % self.component.html_code
+            return "document.getElementById(%s)" % JsUtils.jsConvertData(self.component.html_code, None)
 
     @property
     def varId(self):

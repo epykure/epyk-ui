@@ -527,13 +527,6 @@ class ContentsTable(Html.Html):
         """
         return super().options
 
-    @property
-    def style(self) -> GrpClsText.ContentTable:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsText.ContentTable(self)
-        return self._styleObj
-
     _js__builder__ = '''var menu = htmlObj.querySelector("div[name=menu]"); menu.innerHTML = "";
 if ((data == null) || (data.length == 0)){htmlObj.style.display = 'none'}
 else{ 

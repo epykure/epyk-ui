@@ -11,6 +11,14 @@ import random
 import math
 import re
 
+
+THEME_REFERENCE = {
+    "_colors": "theme-%s",
+    "_greys": "greys-%s",
+    "_info": "info-%s",
+}
+
+
 defined = {
     'MAROON': {'hex': '#800000', 'rgb': '(128,0,0)'},
     'DARK RED': {'hex': '#8B0000', 'rgb': '(139,0,0)'},

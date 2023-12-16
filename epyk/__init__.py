@@ -13,6 +13,7 @@ from epyk.core.data import DataPy as transforms
 from epyk.core.html import Defaults as settings
 from epyk.core.html.symboles import Symboles as symboles
 from epyk.core.html.Standalone import Component as standalone
+from epyk.core.html.Standalone import Resources as resources
 
 from epyk.core.css import themes
 from epyk.core.css import Defaults as settings_css

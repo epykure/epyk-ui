@@ -123,8 +123,7 @@ class JsBase:
 
     @property
     def accounting(self):
-        """
-        Shortcut to accounting properties.
+        """Shortcut to accounting properties.
 
         `Related Pages <http://openexchangerates.github.io/accounting.js>`_
 
@@ -146,8 +145,7 @@ class JsBase:
 
     @property
     def documentElement(self):
-        """
-        Document.documentElement returns the Element that is the root element of the document (for example,
+        """Document.documentElement returns the Element that is the root element of the document (for example,
         the <html> element for HTML documents).
 
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Document/documentElement>`_
@@ -156,8 +154,7 @@ class JsBase:
 
     @property
     def screen(self):
-        """
-        The screen object contains information about the visitor's screen.
+        """The screen object contains information about the visitor's screen.
 
         `Related Pages <https://www.w3schools.com/jsref/obj_screen.asp>`_
         """
@@ -165,8 +162,7 @@ class JsBase:
 
     @property
     def navigator(self) -> JsNavigator.JsNavigator:
-        """
-        The information from the navigator object can often be misleading, and should not be used to detect
+        """The information from the navigator object can often be misleading, and should not be used to detect
         browser versions because:
 
           - Different browsers can use the same name.
@@ -178,8 +174,7 @@ class JsBase:
 
     @property
     def location(self) -> JsLocation.JsLocation:
-        """
-        Property to the Javascript Location functions.
+        """Property to the Javascript Location functions.
 
         Usage::
 
@@ -195,8 +190,7 @@ class JsBase:
 
     @property
     def mediaRecorder(self) -> JsMediaRecorder.MediaRecorder:
-        """
-        The MediaRecorder interface of the MediaStream Recording API provides functionality to easily record media.
+        """The MediaRecorder interface of the MediaStream Recording API provides functionality to easily record media.
         It is created using the MediaRecorder() constructor.
 
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder>`_
@@ -206,8 +200,7 @@ class JsBase:
         return self.__media_recorder
 
     def speechRecognition(self, js_code: str) -> JsSpeechRecognition.SpeechRecognition:
-        """
-        The SpeechRecognition interface of the Web Speech API is the controller interface for the recognition service;
+        """The SpeechRecognition interface of the Web Speech API is the controller interface for the recognition service;
         this also handles the SpeechRecognitionEvent sent from the recognition service.
 
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/SpeechRecognition>`_
@@ -240,13 +233,12 @@ class JsBase:
 
     @property
     def objects(self) -> JsObjects.JsObjects:
-        """ Interface to the main Javascript Classes and Primitives. """
+        """Interface to the main Javascript Classes and Primitives. """
         return JsObjects.JsObjects(self.page)
 
     @property
     def jquery(self):
-        """
-        jQuery is a fast, small, and feature-rich JavaScript library.
+        """jQuery is a fast, small, and feature-rich JavaScript library.
 
         It makes things like HTML document traversal and manipulation, event handling, animation, and Ajax much simpler
         with an easy-to-use API that works across a multitude of browsers.
@@ -273,8 +265,7 @@ class JsBase:
 
     @property
     def rxjs(self):
-        """
-        Reactive Extensions Library for JavaScript.
+        """Reactive Extensions Library for JavaScript.
 
         `Related Pages <https://rxjs.dev>`_
         """
@@ -284,8 +275,7 @@ class JsBase:
 
     @property
     def moment(self):
-        """
-        Parse, validate, manipulate, and display dates and times in JavaScript.
+        """Parse, validate, manipulate, and display dates and times in JavaScript.
 
         Usage::
 
@@ -302,8 +292,7 @@ class JsBase:
         return JsMoment.Moment(page=self.page)
 
     def eval(self, data: Union[primitives.JsDataModel, str], js_conv_func: Optional[Union[str, list]] = None):
-        """
-        The eval() function evaluates JavaScript code represented as a string.
+        """The eval() function evaluates JavaScript code represented as a string.
 
         Warning: Executing JavaScript from a string is an enormous security risk.
         It is far too easy for a bad actor to run arbitrary code when you use eval(). See Never use eval()!, below.
@@ -316,8 +305,7 @@ class JsBase:
         return JsObject.JsObject("eval(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
     def socketio(self, html_code: Optional[str] = None):
-        """
-        This object must be created on the Python side.
+        """This object must be created on the Python side.
 
         The various function will be the one generating the Javascript string.
         This is just a Python wrapper on top of the library.
@@ -331,8 +319,7 @@ class JsBase:
         return JsSocketIO.SocketIO(html_code, self.page)
 
     def websocket(self, html_code: Optional[str] = None, secured: bool = False):
-        """
-        WebSocket client applications use the WebSocket API to communicate with WebSocket servers
+        """WebSocket client applications use the WebSocket API to communicate with WebSocket servers
         using the WebSocket protocol.
 
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API/Writing_WebSocket_client_applications>`_
@@ -344,8 +331,7 @@ class JsBase:
         return JsWebSocket.WebSocket(html_code, self.page, secured)
 
     def worker(self, html_code: Optional[str] = None, server: bool = False):
-        """
-        A web worker is a JavaScript running in the background, without affecting the performance of the page.
+        """A web worker is a JavaScript running in the background, without affecting the performance of the page.
 
         `Related Pages <https://www.w3schools.com/html/html5_webworkers.asp>`_
 
@@ -355,8 +341,7 @@ class JsBase:
         return JsWebSocket.Worker(html_code, self.page, server)
 
     def serverSentEvent(self, html_code: Optional[str] = None) -> JsWebSocket.ServerSentEvent:
-        """
-        SSE is a native HTML5 feature that allows the server to keep the HTTP connection open and push data
+        """SSE is a native HTML5 feature that allows the server to keep the HTTP connection open and push data
         changes to the client.
         Server-sent Streaming is really ideal for server-push notifications, device monitoring and all other tasks
         that do not require real-time push back from the client.
@@ -371,8 +356,7 @@ class JsBase:
 
     @property
     def d3(self):
-        """
-        D3.js is a JavaScript library for manipulating documents based on data.
+        """D3.js is a JavaScript library for manipulating documents based on data.
         D3 helps you bring data to life using HTML, SVG, and CSS.
 
         D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a
@@ -384,8 +368,7 @@ class JsBase:
         return JsD3.JsD3(page=self.page, component=self.component)
 
     def not_(self, data, js_conv_func: Optional[Union[str, list]] = None) -> JsFncs.JsFunction:
-        """
-        Add the Symbol (!) for the boolean negation.
+        """Add the Symbol (!) for the boolean negation.
         This feature is also available directly to any JsBoolean objects.
 
         Usage::
@@ -403,14 +386,12 @@ class JsBase:
 
     def if_(self, condition: Union[str, list, bool], js_funcs: Union[list, str],
             profile: Optional[Union[dict, bool]] = False):
-        """
-        Conditional statements are used to perform different actions based on different conditions.
+        """Conditional statements are used to perform different actions based on different conditions.
 
         Usage::
 
           page.js.if_(icon.icon.dom.content == "fas fa-lock-open cssicon", [
-            page.js.console.log(icon.icon.dom.content),
-          ])
+            page.js.console.log(icon.icon.dom.content)])
 
         `Related Pages <https://www.w3schools.com/js/js_if_else.asp>`_
 
@@ -425,8 +406,7 @@ class JsBase:
 
     def while_(self, condition: Union[str, list], js_funcs: Union[list, str], options: Optional[dict] = None,
                profile: Optional[Union[dict, bool]] = False) -> JsWhile.JsWhile:
-        """
-        The while loop loops through a block of code as long as a specified condition is true.
+        """The while loop loops through a block of code as long as a specified condition is true.
 
         `Related Pages <https://www.w3schools.com/js/js_loop_while.asp>`_
 
@@ -442,8 +422,7 @@ class JsBase:
 
     def for_(self, js_funcs: Union[list, str] = None, step: int = 1, start: int = 0, end: int = 10,
              options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = False) -> JsFor.JsFor:
-        """
-        Shortcut to a for loop.
+        """Shortcut to a for loop.
 
         Usage::
 
@@ -469,15 +448,14 @@ class JsBase:
         return for_statment.fncs(js_funcs, profile=profile)
 
     def return_(self, data: str) -> JsFncs.JsFunction:
-        """
-        Javascript return keyword.
+        """Javascript return keyword.
 
         :param data: The Javascript expression
         """
         return JsFncs.JsFunction("return %s" % data)
 
     def and_(self, *args) -> JsUtils.jsWrap:
-        """ Create a Javascript and statement. """
+        """Create a Javascript and statement. """
         vals = []
         for a in args:
             if hasattr(a, "html_code"):
@@ -487,7 +465,7 @@ class JsBase:
         return JsUtils.jsWrap(" && " .join(vals))
 
     def or_(self, *args) -> JsUtils.jsWrap:
-        """ Create a Javascript Or statement. """
+        """Create a Javascript Or statement. """
         vals = []
         for a in args:
             if hasattr(a, "html_code"):
@@ -498,8 +476,7 @@ class JsBase:
 
     def switch(self, variable: Union[str, primitives.JsDataModel, primitives.HtmlModel],
                js_conv_func: Optional[Union[str, list]] = None) -> JsSwitch.JsSwitch:
-        """
-        switch statement is used to perform different actions based on different conditions.
+        """switch statement is used to perform different actions based on different conditions.
 
         `Related Pages <https://www.w3schools.com/js/js_switch.asp>`_
 
@@ -513,8 +490,7 @@ class JsBase:
         return self.__switch
 
     def clipboard(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
-        """
-        Copy the full URL to rhe clipboard.
+        """Copy the full URL to rhe clipboard.
 
         `Related Pages <https://isabelcastillo.com/hidden-input-javascript>`_
 
@@ -528,8 +504,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 ''' % JsUtils.jsConvertData(data, js_conv_func))
 
     def _addImport(self, import_alias: str):
-        """
-        Internal function to include an external JavaScript module
+        """Internal function to include an external JavaScript module
         This can only use pre-defined modules. This will fail during the resolution if it does not exist
 
         :param import_alias: Alias reference of a JavaScript module
@@ -539,8 +514,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @staticmethod
     def typeof(data: str, var_type: Optional[str] = None):
-        """
-        The typeof function.
+        """The typeof function.
 
         `Related Pages <https://www.w3schools.com/js/js_datatypes.asp>`_
 
@@ -554,8 +528,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def custom(self, data: Union[str, primitives.JsDataModel], key: Optional[str] = None,
                is_py_data: bool = False, js_func: Optional[Union[list, str]] = None):
-        """
-        Allow the definition of bespoke javascript strings.
+        """Allow the definition of bespoke javascript strings.
 
         :param data: A String corresponding to a JavaScript object
         :param key: Optional. A key reference in the JavaScript object
@@ -566,8 +539,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         self.page._props.setdefault('js', {}).setdefault('bespoke', []).append(data)
 
     def customText(self, text: str):
-        """
-        Javascript fragment added at the beginning of the page.
+        """Javascript fragment added at the beginning of the page.
         This will be called before any function in the framework.
 
         :param text: The Javascript fragment
@@ -580,8 +552,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     def customFile(self, filename: str, path: Optional[str] = None, module_type: str = "text/javascript",
                    absolute_path: bool = False, requirements: Optional[list] = None,
                    randomize: bool = False, authorize: bool = False):
-        """
-        This will load your local javascript file when the report will be built.
+        """This will load your local javascript file when the report will be built.
         Then you will be able to use the new features in the different Javascript wrappers.
 
         Usage::
@@ -626,8 +597,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def extendProto(self, py_class: Any, func_name: str, js_funcs: Union[str, list], pmts: Optional[dict] = None,
                     profile: Optional[Union[dict, bool]] = False):
-        """
-        Javascript Framework extension.
+        """Javascript Framework extension.
 
         Hook in the base class to allow the definition of specific function to add extra primitive features.
         Usual this function should be used in a wrapper function with the same name in order to have a coherent
@@ -650,8 +620,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def request_http(self, method_type: str, url: str, js_code: str = "response", is_json: bool = True,
                      components: Optional[List[primitives.HtmlModel]] = None) -> JsObjects.XMLHttpRequest:
-        """
-        All modern browsers have a built-in XMLHttpRequest object to request data from a server.
+        """All modern browsers have a built-in XMLHttpRequest object to request data from a server.
 
         `Related Pages <https://www.w3schools.com/xml/xml_http.asp>`_
 
@@ -670,8 +639,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url)
 
     def flows(self, data, dataflows, js_code: str = None) -> JsObjects.JsObject.JsObject:
-        """
-        Allow isolated data process.
+        """Allow isolated data process.
         Those data processes are running in JavaScript.
 
         :param data: Input data
@@ -688,15 +656,13 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             headers: Optional[dict] = None,
             asynchronous: bool = False, stringify: bool = True,
             dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
-        """
-        Create a GET HTTP request.
+        """Create a GET HTTP request.
 
         Usage::
 
           inputs = page.ui.input("")
           btn = page.ui.button("Click").click([
-            page.js.get("/test", {"fegeg": "efefe", "ok": inputs.dom.content}, components=[("input", inputs)])
-          ])
+            page.js.get("/test", {"fegeg": "efefe", "ok": inputs.dom.content}, components=[("input", inputs)])])
 
         :param url: The url path of the HTTP request
         :param data: Optional. A String corresponding to a JavaScript object
@@ -740,8 +706,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
              profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
              asynchronous: bool = False, stringify: bool = True,
              dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
-        """
-        Create a POST HTTP request.
+        """Create a POST HTTP request.
 
         :param method: The REST method used
         :param url: The url path of the HTTP request
@@ -791,8 +756,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
              profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
              asynchronous: bool = False, stringify: bool = True,
              dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
-        """
-        Create a POST HTTP request.
+        """Create a POST HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
@@ -817,8 +781,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
             asynchronous: bool = False, stringify: bool = True,
             dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
-        """
-        Create a PUT HTTP request.
+        """Create a PUT HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
@@ -843,8 +806,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
               profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
               asynchronous: bool = False, stringify: bool = True,
               dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
-        """
-        Create a PATH HTTP request.
+        """Create a PATH HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
@@ -869,8 +831,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
                profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
                asynchronous: bool = False, stringify: bool = True,
                dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
-        """
-        Create a DELETE HTTP request.
+        """Create a DELETE HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
 
@@ -890,15 +851,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
                          dataflows=dataflows)
 
     def queueMicrotask(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        The queueMicrotask() method, which is exposed on the Window or Worker interface, queues a microtask to be
+        """The queueMicrotask() method, which is exposed on the Window or Worker interface, queues a microtask to be
         executed at a safe time prior to control returning to the browser's event loop.
 
         Usage::
 
-          page.body.onReady([
-              page.js.queueMicrotask([page.js.alert("ok")])
-            ])
+          page.body.onReady([page.js.queueMicrotask([page.js.alert("ok")])])
 
         `Related Pages <https://developer.mozilla.org/fr/docs/Web/API/queueMicrotask>`_
 
@@ -911,8 +869,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     def request_rpc(self, js_code: str, method_type: Union[str, primitives.JsDataModel],
                     fnc: Callable, url: str,
                     extra_params: Optional[Union[dict, primitives.JsDataModel]] = None) -> JsObjects.XMLHttpRequest:
-        """
-        Internal RPC to trigger services.
+        """Internal RPC to trigger services.
 
         :param js_code: The variable name created in the Javascript
         :param method_type: The method type
@@ -937,17 +894,14 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def fetch(self, url: str, options: Optional[dict] = None, profile: Optional[Union[dict, bool]] = False,
               async_await: bool = False) -> JsObjects.JsPromise:
-        """
-        The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline,
+        """The Fetch API provides a JavaScript interface for accessing and manipulating parts of the HTTP pipeline,
         such as requests and responses.
 
         Usage::
 
           page.ui.button("Click").click([
             page.js.fetch("test", {"method": "POST"}).then([
-              page.js.console.log(pk.events.response)
-            ])
-          ])
+              page.js.console.log(pk.events.response)])])
 
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch>`_
 
@@ -966,8 +920,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def fncs(self) -> JsFncs.JsRegisteredFunctions:
-        """
-        Property to the predefined Javascript functions.
+        """Property to the predefined Javascript functions.
 
         :return: The predefined functions.
         """
@@ -975,8 +928,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def samples(self) -> JsFncsSamples.Samples:
-        """
-        JavaScript feature to provide sample of data for a test/demo.
+        """JavaScript feature to provide sample of data for a test/demo.
 
         Usage::
 
@@ -987,8 +939,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def breadcrumb(self) -> JsBreadCrumb:
-        """
-        Create an internal Breadcrumb to keep track of the user journey within your page.
+        """Create an internal Breadcrumb to keep track of the user journey within your page.
 
         `Related Pages <https://www.w3schools.com/howto/howto_css_breadcrumbs.asp>`_
 
@@ -999,8 +950,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return self._breadcrumb
 
     def navigateTo(self, url: Union[str, primitives.JsDataModel], options: Optional[dict] = None) -> JsObject.JsObject:
-        """
-        Navigator to another URL like NodeJs.
+        """Navigator to another URL like NodeJs.
 
         Usage::
 
@@ -1019,8 +969,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def registerFunction(self, func_name: str, js_funcs: Union[str, list], args: Optional[dict] = None,
                          profile: Optional[Union[dict, bool]] = False):
-        """
-        Javascript Framework extension.
+        """Javascript Framework extension.
 
         Register a predefined Javascript function.
         This is only dedicated to specific Javascript transformation functions.
@@ -1036,8 +985,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def keydown(self) -> KeyCodes.KeyCode:
-        """
-        The onkeydown event occurs when the user is pressing a key (on the keyboard).
+        """The onkeydown event occurs when the user is pressing a key (on the keyboard).
 
         Usage::
 
@@ -1051,8 +999,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def keypress(self) -> KeyCodes.KeyCode:
-        """
-        The onkeypress event occurs when the user presses a key (on the keyboard).
+        """The onkeypress event occurs when the user presses a key (on the keyboard).
 
         Usage::
 
@@ -1066,8 +1013,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def keyup(self) -> KeyCodes.KeyCode:
-        """
-        The onkeypress event occurs when the user presses a key (on the keyboard).
+        """The onkeypress event occurs when the user presses a key (on the keyboard).
 
         Usage::
 
@@ -1080,8 +1026,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return keyup
 
     def onReady(self, js_funcs: Union[str, list], profile: Optional[Union[dict, bool]] = False):
-        """
-        The ready event occurs when the body DOM (document object model) has been loaded.
+        """The ready event occurs when the body DOM (document object model) has been loaded.
 
         `Related Pages <https://www.w3schools.com/jquery/event_ready.asp>`_
 
@@ -1108,8 +1053,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @staticmethod
     def getElementById(id_name: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
-        """
-        The getElementById() method returns the element that has the ID attribute with the specified value.
+        """The getElementById() method returns the element that has the ID attribute with the specified value.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_getelementbyid.asp>`_
 
@@ -1125,8 +1069,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     @staticmethod
     def getElementsByName(name: Union[str, primitives.JsDataModel],
                           js_conv_func: Optional[Union[str, list]] = None) -> JsNodeDom.JsDomsList:
-        """
-        The getElementsByName() method returns a collection of all elements in the document with the specified name
+        """The getElementsByName() method returns a collection of all elements in the document with the specified name
         (the value of the name attribute), as a NodeList object.
 
         The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers.
@@ -1146,9 +1089,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     @staticmethod
     def getElementsByTagName(tag_name: Union[str, primitives.JsDataModel], i: int = 0,
                              js_conv_func: Optional[Union[str, list]] = None) -> JsNodeDom.JsDoms:
-        """
-        The getElementsByTagName() method returns a collection of an elements's child elements with the specified tag name,
-        as a NodeList object.
+        """The getElementsByTagName() method returns a collection of an elements's child elements with the specified
+        tag name, as a NodeList object.
 
         The NodeList object represents a collection of nodes. The nodes can be accessed by index numbers.
         The index starts at 0.
@@ -1164,8 +1106,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @staticmethod
     def getElementsByClassName(cls_name: str) -> JsNodeDom.JsDoms:
-        """
-        The getElementsByClassName() method returns a collection of all elements in the document with the specified
+        """The getElementsByClassName() method returns a collection of all elements in the document with the specified
         class name, as a NodeList object.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_getelementsbyclassname.asp>`_
@@ -1178,8 +1119,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsNodeDom.JsDoms("document.getElementsByClassName(%s)" % cls_name)
 
     def createElement(self, tag_name: str, js_code: str = None, set_var: bool = True, dom_id: str = None):
-        """
-        The createElement() method creates an Element Node with the specified name.
+        """The createElement() method creates an Element Node with the specified name.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_createelement.asp>`_
 
@@ -1196,8 +1136,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     @staticmethod
     def createTextNode(text: Union[str, primitives.JsDataModel] = None,
                        js_conv_func: Optional[Union[str, list]] = None) -> JsObject.JsObject:
-        """
-        The createTextNode() method creates a Text Node with the specified text.
+        """The createTextNode() method creates a Text Node with the specified text.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_createtextnode.asp>`_
 
@@ -1211,8 +1150,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def createElementStyle(self, content, map_id: str = None, js_conv_func: Optional[Union[str, list]] = None,
                            override: bool = False):
-        """
-        Add a CSS element from the JavaScript.
+        """Add a CSS element from the JavaScript.
 
         `Related Pages <https://gist.github.com/sagarpanda/ed583b408a38c56f33ba>`_
 
@@ -1234,8 +1172,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def encodeURIComponent(self, uri: Union[str, primitives.JsDataModel],
                            js_conv_func: Union[str, list] = None) -> JsObject.JsObject:
-        """
-        The encodeURIComponent() function encodes a URI component.
+        """The encodeURIComponent() function encodes a URI component.
 
         `Related Pages <https://www.w3schools.com/jsref/jsref_encodeuricomponent.asp>`_
 
@@ -1248,8 +1185,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def decodeURIComponent(self, url_enc: Union[str, primitives.JsDataModel],
                            js_conv_func: Union[str, list] = None) -> JsObject.JsObject:
-        """
-        The decodeURIComponent() function decodes a URI component.
+        """The decodeURIComponent() function decodes a URI component.
 
         `Related Pages <https://www.w3schools.com/jsref/jsref_decodeuricomponent.asp>`_
 
@@ -1262,8 +1198,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def body(self) -> JsNodeDom.JsDoms:
-        """
-        Get the DOM object.
+        """Get the DOM object.
 
         This will return the object. It will not create any variable.
         """
@@ -1277,8 +1212,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return self.__data
 
     def string(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True) -> JsString.JsString:
-        """
-        Shortcut to the Javascript String primitives.
+        """Shortcut to the Javascript String primitives.
 
         :param data: The String data.
         :param js_code: Optional. The specific name to be used for this JavaScript String.
@@ -1288,8 +1222,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsString.JsString(data, js_code, set_var, is_py_data, page=self.page)
 
     def number(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True) -> JsNumber.JsNumber:
-        """
-        Shortcut to the Javascript Number primitives.
+        """Shortcut to the Javascript Number primitives.
 
         :param data: The String data.
         :param js_code: Optional. The specific name to be used for this JavaScript String.
@@ -1299,8 +1232,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsNumber.JsNumber(data, js_code, set_var, is_py_data, page=self.page)
 
     def object(self, data, js_code: str = None, set_var: bool = False, is_py_data: bool = True) -> JsObject.JsObject:
-        """
-        Shortcut to the Javascript Object primitives.
+        """Shortcut to the Javascript Object primitives.
 
         :param data: The String data.
         :param js_code: Optional. The specific name to be used for this JavaScript String.
@@ -1330,8 +1262,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             self,
             selector: Union[str, primitives.JsDataModel],
             js_conv_func: Union[str, list] = None) -> JsNodeDom.JsDomsList:
-        """
-        The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
+        """The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
         as a static NodeList object.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_queryselectorall.asp>`_
@@ -1343,8 +1274,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             "document.querySelectorAll(%s)" % JsUtils.jsConvertData(selector, js_conv_func), is_py_data=False)
 
     def querySelector(self, selector: Union[str, primitives.JsDataModel], js_conv_func: Union[str, list] = None):
-        """
-        The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
+        """The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_queryselector.asp>`_
 
@@ -1354,8 +1284,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsNodeDom.JsDoms.get("document.querySelector(%s)" % JsUtils.jsConvertData(selector, js_conv_func))
 
     def activeElement(self):
-        """
-        The activeElement property returns the currently focused element in the document.
+        """The activeElement property returns the currently focused element in the document.
 
         `Related Pages <https://www.w3schools.com/jsref/prop_document_activeelement.asp>`_
 
@@ -1366,8 +1295,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
     @staticmethod
     def title(text: Optional[Union[str, primitives.JsDataModel]] = None,
               js_conv_func: Optional[Union[str, list]] = None):
-        """
-        The title property sets or returns the title of the current document (the text inside the HTML title element).
+        """The title property sets or returns the title of the current document (the text inside the HTML title element).
 
         `Related Pages <https://www.w3schools.com/jsref/prop_doc_title.asp>`_
 
@@ -1380,8 +1308,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsObjects.JsVoid("document.title = %s" % JsUtils.jsConvertData(text, js_conv_func))
 
     def execCommand(self, command: str, show_ui: bool, value: str) -> JsObjects.JsVoid:
-        """
-        The execCommand() method executes the specified command for the selected part of an editable section.
+        """The execCommand() method executes the specified command for the selected part of an editable section.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_execcommand.asp>`_
 
@@ -1394,9 +1321,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsObjects.JsVoid("document.execCommand('%s')" % command)
 
     def createEvent(self, event_type: str):
-        """
-        The createEvent() method creates an event object.
-
+        """The createEvent() method creates an event object.
         The event can be of any legal event type, and must be initialized before use.
 
         `Related Pages <https://www.w3schools.com/jsref/event_createevent.asp>`_
@@ -1412,8 +1337,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             raise ValueError("Not recognized type %s" % event_type)
 
     def createAttribute(self, attribute_name):
-        """
-        The createAttribute() method creates an attribute with the specified name, and returns the attribute as an
+        """The createAttribute() method creates an attribute with the specified name, and returns the attribute as an
         Attr object.
 
         `Related Pages <https://www.w3schools.com/jsref/met_document_createattribute.asp>`_
@@ -1425,9 +1349,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsNodeAttributes.JsAttributes(attribute_name)
 
     def writeln(self, value: str):
-        """
-        The writeln() method is identical to the document.write() method, with the addition of writing a newline character
-        after each statement.
+        """The writeln() method is identical to the document.write() method, with the addition of writing a newline
+        character after each statement.
 
         `Related Pages <https://www.w3schools.com/jsref/met_doc_writeln.asp>`_
 
@@ -1440,8 +1363,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @staticmethod
     def parseFloat(value: str) -> JsNumber.JsNumber:
-        """
-        The parseFloat() function parses a string and returns a floating point number.
+        """The parseFloat() function parses a string and returns a floating point number.
 
         `Related Pages <https://www.w3schools.com/jsref/jsref_parseint.asp>`_
 
@@ -1453,8 +1375,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @staticmethod
     def parseInt(value: str):
-        """
-        The parseInt() function parses a string and returns an integer.
+        """The parseInt() function parses a string and returns an integer.
 
         `Related Pages <https://www.w3schools.com/jsref/jsref_parseint.asp>`_
 
@@ -1466,9 +1387,8 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @staticmethod
     def parseDate(value: str) -> JsNumber.JsNumber:
-        """
-        The parse() method parses a date string and returns the number of milliseconds between the date string and midnight
-        of January 1, 1970.
+        """The parse() method parses a date string and returns the number of milliseconds between the date string and
+        midnight of January 1, 1970.
 
         `Related Pages <https://www.w3schools.com/jsref/jsref_parse.asp>`_
 
@@ -1479,8 +1399,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         return JsNumber.JsNumber("Date.parse(%s)" % value, is_py_data=False)
 
     def getVar(self, js_code: Union[str, primitives.JsDataModel], var_type: str = "var") -> JsObjects.JsObject.JsObject:
-        """
-        Get the Javascript Variable name.
+        """Get the Javascript Variable name.
 
         :param js_code: The Variable name
         :param var_type: Optional. The scope of the variable
@@ -1495,8 +1414,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     def info(self, data: Union[str, primitives.JsDataModel], css_style: Optional[dict] = None,
              icon: str = "fas fa-spinner fa-spin", seconds: int = 10000):
-        """
-        Display a message.
+        """Display a message.
 
         `Related Pages <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
 
@@ -1526,8 +1444,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             self.window.setTimeout(self.objects.dom("popup_info").remove(), milliseconds=seconds)]
 
     def print(self, content: Union[str, primitives.JsDataModel], timer: int = 1000, css_attrs: Optional[dict] = None):
-        """
-        Print a temporary message.
+        """Print a temporary message.
 
         :param content: The content of the popup.
         :param timer: Optional. The time the popup will be displayed.
@@ -1550,8 +1467,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
       })(event, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, timer, JsUtils.jsConvertData(content, None))
 
     def mail(self, mails, subject=None, body=None, cc=None, bcc=None):
-        """
-        Create an email.
+        """Create an email.
 
         `Related Pages <https://www.w3docs.com/snippets/html/how-to-create-mailto-links.html>`_
 
@@ -1593,13 +1509,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
     @property
     def msg(self) -> JsMsgAlerts.Msg:
-        """ Shortcut to predefined temporary messages displayed to the UI. """
+        """Shortcut to predefined temporary messages displayed to the UI. """
         return JsMsgAlerts.Msg(self.page)
 
     def import_js(self, script: str, js_funcs: Union[str, list], profile: Optional[Union[bool, dict]] = None,
                   self_contained: bool = False):
-        """
-        Add a Javascript module and then run function once it is loaded.
+        """Add a Javascript module and then run function once it is loaded.
 
         Usage::
 
@@ -1643,8 +1558,7 @@ else {%(fncs)s}  ''' % {"script": abs(hash(script)), "content": url_module, "fnc
   else {%(fncs)s}  ''' % {"script": js_script, "fncs": js_funcs})
 
     def import_css(self, css_file: str, self_contained: bool = False, js_code: str = "css_dyn"):
-        """
-        Add a CSS file on the fly from a JavaScript event.
+        """Add a CSS file on the fly from a JavaScript event.
 
         `Related Pages <https://stackoverflow.com/questions/19844545/replacing-css-file-on-the-fly-and-apply-the-new-style-to-the-page>`_
 
@@ -1675,8 +1589,7 @@ if (!existingStyle && (styleElementId !== 'css_')) {
 
     def delay(self, js_funcs: Union[list, str], seconds: int = 0, window_id: str = "window",
               profile: Optional[Union[dict, bool]] = False):
-        """
-        Add a wrapper on top of the setTimeout.
+        """Add a wrapper on top of the setTimeout.
 
         Usage::
 
@@ -1691,8 +1604,7 @@ if (!existingStyle && (styleElementId !== 'css_')) {
 
 
 class JsConsole:
-    """
-    This is a wrapper to the Console.
+    """This is a wrapper to the Console.
 
     `Related Pages <https://medium.freecodecamp.org/how-to-get-the-most-out-of-the-javascript-console-b57ca9db3e6d>`_
     """
@@ -1702,8 +1614,7 @@ class JsConsole:
 
     @property
     def debugger(self):
-        """
-        Trigger a Javascript debugger from this point.
+        """Trigger a Javascript debugger from this point.
         The Javascript will be stopped. It will be possible to check the process step by step in the browser using F12.
 
         Usage::
@@ -1718,8 +1629,7 @@ class JsConsole:
 
     @property
     def clear(self):
-        """
-        The console.clear() method clears the console.
+        """The console.clear() method clears the console.
 
         Usage::
 
@@ -1733,8 +1643,7 @@ class JsConsole:
 
     def log(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None,
             skip_data_convert: bool = False):
-        """
-        The console.log() method writes a message to the console.
+        """The console.log() method writes a message to the console.
 
         Usage::
 
@@ -1760,8 +1669,7 @@ class JsConsole:
         return JsFncs.JsFunction(_CONSOLE_LOG_EXPR.format(JsUtils.jsConvertData(data, js_conv_func)))
 
     def info(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
-        """
-        The console.info() method writes a message to the console.
+        """The console.info() method writes a message to the console.
 
         `Related Pages <https://www.w3schools.com/jsref/met_console_info.asp>`_
 
@@ -1773,8 +1681,7 @@ class JsConsole:
         return JsFncs.JsFunction("console.info(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
     def warn(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
-        """
-        The console.warn() method writes a warning to the console.
+        """The console.warn() method writes a warning to the console.
 
         `Related Pages <https://www.w3schools.com/jsref/met_console_warn.asp>`_
 
@@ -1786,8 +1693,7 @@ class JsConsole:
         return JsFncs.JsFunction("console.warn(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
     def error(self, data: Union[str, primitives.JsDataModel], js_conv_func: Optional[Union[str, list]] = None):
-        """
-        The console.error() method writes an error message to the console.
+        """The console.error() method writes an error message to the console.
 
         `Related Pages <https://www.w3schools.com/jsref/met_console_error.asp>`_
 
@@ -1799,8 +1705,7 @@ class JsConsole:
         return JsFncs.JsFunction("console.error(%s)" % JsUtils.jsConvertData(data, js_conv_func))
 
     def table(self, data: Union[str, primitives.JsDataModel], js_header: Optional[list] = None) -> JsFncs.JsFunction:
-        """
-        The console.table() method writes a table in the console view.
+        """The console.table() method writes a table in the console view.
 
         `Related Pages <https://www.w3schools.com/jsref/met_console_table.asp>`_
 
@@ -1815,8 +1720,7 @@ class JsConsole:
         return JsFncs.JsFunction("console.table(%s)" % data)
 
     def time(self, html_code: Union[str, primitives.JsDataModel]) -> JsNumber.JsNumber:
-        """
-        The console.time() method starts a timer in the console view.
+        """The console.time() method starts a timer in the console view.
 
         `Related Pages <https://www.w3schools.com/jsref/met_console_time.asp>`_
 
@@ -1827,8 +1731,7 @@ class JsConsole:
         return JsNumber.JsNumber("console.time('%s')" % html_code, is_py_data=False)
 
     def timeEnd(self, html_code: Union[str, primitives.JsDataModel]):
-        """
-        The console.timeEnd() method ends a timer, and writes the result in the console view.
+        """The console.timeEnd() method ends a timer, and writes the result in the console view.
 
         `Related Pages <https://www.w3schools.com/jsref/met_console_timeend.asp>`_
 
@@ -1840,8 +1743,7 @@ class JsConsole:
 
     def _assert(self, data: Union[str, primitives.JsDataModel], info: str,
                 js_conv_func: Optional[Union[str, list]] = None) -> JsFncs.JsFunction:
-        """
-        The console.assert() method writes a message to the console, but only if an expression evaluates to false.
+        """The console.assert() method writes a message to the console, but only if an expression evaluates to false.
 
         `Related Pages <https://www.w3schools.com/jsref/met_console_assert.asp>`_
 
@@ -1853,8 +1755,7 @@ class JsConsole:
 
     def tryCatch(self, js_funcs: Union[str, list], js_funcs_errs: Union[str, list] = "console.warn(err.message)",
                  profile: Optional[Union[dict, bool]] = False):
-        """
-        Javascript Try Catch Exceptions.
+        """Javascript Try Catch Exceptions.
 
         `Related Pages <https://www.w3schools.com/jsref/jsref_obj_error.asp>`_
 
@@ -1870,8 +1771,7 @@ class JsConsole:
             "try{%s} catch(err){%s}" % (JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_funcs_errs))
 
     def perf(self, js_code: str, label: Optional[str] = None):
-        """
-        Shortcut function to display performances from a variable.
+        """Shortcut function to display performances from a variable.
         The variable must be global. Namely the name should start with window.
 
         :param js_code: The variable var name use to compute the performance
@@ -1883,8 +1783,7 @@ class JsConsole:
         return JsFncs.JsFunction("console.log((performance.now() - %s) + 'ms')" % js_code)
 
     def service(self, msg: str, headers: Optional[dict] = None):
-        """
-        Send logs to the backend.
+        """Send logs to the backend.
 
         :param msg: The log message to be sent to the backend
         :param headers: the service headers
@@ -1898,8 +1797,7 @@ class JsConsole:
 
 
 class JsJson:
-    """
-    Wrapper around the Javascript Json module.
+    """Wrapper around the Javascript Json module.
 
     This wrapper will only wrapper the different functions available in the underlying library.
     The documentation can be found in each function or are available on the Javascript Official documentation.
@@ -1909,8 +1807,7 @@ class JsJson:
 
     def parse(self, data: Union[str, primitives.JsDataModel],
               js_result_func: Optional[str] = None, js_conv_func: Optional[Union[str, list]] = None):
-        """
-        Parses a JSON string and returns a JavaScript object.
+        """Parses a JSON string and returns a JavaScript object.
 
         `Related Pages <https://www.w3schools.com/js/js_json_parse.asp>`_
         `Related Pages <https://www.w3schools.com/jsref/jsref_parse_json.asp>`_
@@ -1930,8 +1827,7 @@ class JsJson:
 
     def stringify(self, data: Union[str, primitives.JsDataModel],
                   replacer=None, space: int = 0, js_conv_func: Optional[Union[str, list]] = None):
-        """
-        The JSON.stringify() method converts JavaScript objects into strings.
+        """The JSON.stringify() method converts JavaScript objects into strings.
 
         `Related Pages <https://www.w3schools.com/js/js_json_stringify.asp>`_
 

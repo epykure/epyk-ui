@@ -291,6 +291,10 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.attr["placeholder"] = text
         return self
 
+    def _set_js_code(self, html_code: str, js_code: str):
+        self.dom.varName = js_code
+        self.js.varName = js_code
+
     def build(self, data: str = None, options: Optional[dict] = None, profile: Optional[Union[bool, dict]] = None,
               component_id: Optional[str] = None, dataflows: List[dict] = None, **kwargs):
         """This is a specific version of the common build as the function is not applied to the dom ID but
@@ -302,7 +306,7 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param component_id: Optional.
         :param dataflows: Chain of data transformations
         """
-        return super().build(data, options, profile, component_id=self.js_code, dataflows=dataflows)
+        return super().build(data, options, profile, component_id=component_id or self.js_code, dataflows=dataflows)
 
     def __str__(self):
         set_val = ""
@@ -313,9 +317,9 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
 %(editor)s = CodeMirror.fromTextArea(document.getElementById('%(htmlId)s'),%(options)s); 
 %(editor)s.setSize("%(width)s", "%(height)s"); %(setVal)s; %(editor)s.refresh()''' % {
             "editor": self.js_code, "width": self.css("width"), "height": self.css("height"),
-            "options": self.options.config_js(), "htmlId": self.htmlCode, "setVal": set_val})
+            "options": self.options.config_js(), "htmlId": self.html_code, "setVal": set_val})
         return '<%s><textarea %s></textarea><div id="%s_loading"></div>%s</%s>' % (
-            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.htmlCode, self.helper, self.tag)
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.html_code, self.helper, self.tag)
 
 
 class Tags(Html.Html):

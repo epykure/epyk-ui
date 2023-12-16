@@ -1,4 +1,5 @@
 import json
+import sys
 import logging
 from pathlib import Path
 from typing import Optional, List, Tuple, Any, Dict, Union
@@ -230,6 +231,7 @@ class DomComponent(JsHtml.JsHtml):
 
 
 class JsComponents(JsPackage):
+    trimFunc = None #
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
@@ -295,7 +297,7 @@ class JsComponents(JsPackage):
 
         :param fnc: Static method to define / pain the component (Default trim%(className)s)
         """
-        fnc = fnc or "trim%s" % self.component.__class__.__name__
+        fnc = fnc or self.trimFunc or "trim%s" % self.component.__class__.__name__
         fnc = get_static_method(fnc, self.component.library, self.component.set_exports)
         return JsUtils.jsWrap("%s(%s)" % (fnc, self.element))
 
@@ -370,6 +372,8 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     js_funcs_map: dict = {}   # Internal mapping for Js functions
     _def_js_cls = JsComponents
 
+    trim: bool = False   # trim dom before creating the object
+
     # Package details to define the use
     set_exports: bool = False
     library: Optional[str] = None
@@ -383,6 +387,21 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                  css_attrs: Optional[dict] = None, verbose: bool = None, **kwargs):
         if self.selector is None:
             raise ValueError("selector must be defined for a standalone component")
+
+        if not self.requirements and self.component_url is not None:
+            component_path = Path(self.component_url)
+            if component_path.exists():
+                # Check for the package.json file to get dependencies
+                comp_pkg_json = Path(component_path.parent, "package.json")
+                if comp_pkg_json.exists():
+                    with open(comp_pkg_json) as fp:
+                        pkg_data = json.load(fp)
+                        self.requirements = set()
+                        for dep, dep_version in pkg_data.get("dependencies", {}).items():
+                            if dep_version.startswith("^"):
+                                self.requirements.add((dep, dep_version[1:]))
+                            else:
+                                self.requirements.add(dep)
 
         super(Component, self).__init__(page, vals, html_code, options, profile, css_attrs, verbose=verbose)
         self.style.clear_style(persist_attrs=css_attrs)  # Clear all default CSS styles.
@@ -526,8 +545,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             on_ready=on_ready)
 
     def html_extension(self, html: str):
-        """
-        Update the HTML content of a component
+        """Update the HTML content of a component
 
         :param html: The HTML string expression
         """
@@ -574,27 +592,40 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
         return "import { %s%s } from '%s'" % (cls.__name__, suffix, path)
 
-    def __str__(self):
-        if self.component_url is not None:
-            if Path(self.component_url).exists():
-                component_path = Path(self.component_url)
+    @classmethod
+    def add_imports(cls, page):
+        if cls.component_url is not None:
+            if Path(cls.component_url).exists():
+                component_path = Path(cls.component_url)
                 if component_path.is_absolute():
-                    self.page.js.customFile(
+                    page.js.customFile(
                         component_path.name, path=component_path.parent.resolve(), absolute_path=True, authorize=True)
                 else:
-                    self.page.js.customFile(self.component_url, absolute_path=True, authorize=True)
-                self.page.properties.js.add_builders([
-                    "%s = new %s(%s, %s=%s, %s=%s)" % (
-                        self.js_code, self.proxy_class, self.dom.varId,
-                        self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
-                        self.arg_init_options, self.options.config_attrs())])
+                    page.js.customFile(cls.component_url, absolute_path=True, authorize=True)
             else:
-                raise ValueError("Component file - %s - was not loaded correctly" % self.proxy_class)
+                raise ValueError("Component file - %s - was not loaded correctly" % cls.proxy_class)
 
-        if self.style_urls is not None:
-            css_content = css_files_loader(self.style_urls, self.selector, style_vars=self.page.theme.all())
+        if cls.style_urls is not None:
+            css_content = css_files_loader(cls.style_urls, cls.selector, style_vars=page.theme.all())
             if css_content:
-                self.page.properties.css.add_text(css_content, map_id=self.selector)
+                page.properties.css.add_text(css_content, map_id=cls.selector)
+
+    def __str__(self):
+        self.add_imports(self.page)
+        if self.component_url is not None:
+            if Path(self.component_url).exists():
+                if self.trim:
+                    self.page.properties.js.add_builders([
+                        "%s = new %s(%s, %s=%s, %s=%s)" % (
+                            self.js_code, self.proxy_class, self.js.trim(),
+                            self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
+                            self.arg_init_options, self.options.config_attrs())])
+                else:
+                    self.page.properties.js.add_builders([
+                        "%s = new %s(%s, %s=%s, %s=%s)" % (
+                            self.js_code, self.proxy_class, self.dom.varId,
+                            self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
+                            self.arg_init_options, self.options.config_attrs())])
 
         values = dict(self.__metadata)
         # Set all the templates attributes
@@ -619,10 +650,22 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         else:
             raise ValueError("Missing template definition")
 
-        return "<div name='%s' style='%s'>%s</div>" % (
-            self.selector,
-            ";".join(["%s:%s" % (k, v) for k, v in self.options.container.items()]),
-            html_def["template"])
+        return "<div name='%s' style='%s' class='%s'>%s</div>" % (
+            self.selector, ";".join(["%s:%s" % (k, v) for k, v in self.options.container.items()]),
+            values["cssClass"], html_def["template"])
+
+    def onReadyFunc(self, func_name, requirements: list = None, **kwargs):
+        """Link JavaScript function specific to the object.
+
+        :param func_name: The function name
+        :param requirements: optional. External requirements
+        """
+        for package in requirements or []:
+            if isinstance(package, tuple):
+                self.require.add(package[0], package[1])
+            else:
+                self.require.add(package)
+        self.onReady(self.js.custom(func_name=func_name, **kwargs))
 
     @staticmethod
     def from_json(path: Path, is_parent: bool = False, raise_exception: bool = False) -> Dict[Any, dict]:
@@ -646,3 +689,56 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             if result:
                 components[result["class"]] = result["content"]
         return components
+
+
+class Resources:
+    components: List[Component] = None
+
+    def __init__(self, page: primitives.PageModel):
+        if self.components is None:
+            raise Exception("")
+
+        self.page = page
+
+    def to_js(self, value, js_funcs=None, depth: bool = False, force: bool = False):
+        """Convert Python objects to JavaScript objects.
+
+        :param value: The Python Javascript data
+        :param js_funcs: Optional. The conversion function (not used)
+        :param depth: Optional. Set to true of it is a nested object
+        :param force: Optional. Whatever the object received force the string conversion
+        """
+        return JsUtils.jsConvertData(value, js_funcs=js_funcs, depth=depth, force=force)
+
+    def get_component(self, selector) -> Optional[Component]:
+        """Return the corresponding component class.
+        This method will also add the different JavaScript and CSS requirements.
+
+        :param selector: Component's selector
+        """
+        for component in self.components:
+            if component.selector == selector:
+                component.add_imports(self.page)
+                return component
+
+    def get_method_from(self, selector, func_name: str = None):
+        """Get the appropriate definition for a JavaScript method in the module.
+
+        :param selector: Component's selector
+        :param func_name: Optional. The function name (default calling function)
+        """
+        component = self.get_component(selector)
+        if component is not None:
+            func_name = func_name or sys._getframe().f_back.f_code.co_name
+            return get_static_method(func_name, component.library, component.set_exports)
+
+    def get_method_string(self, selector, func_name: str = None, **kwargs) -> str:
+        """Get the entire string definition to be added to an HTML page.
+
+        :param selector: Component's selector
+        :param func_name: Optional. The function name (default calling function)
+        :param kwargs: Must be all arguments in the JavaScript method (in order with defaults)
+        """
+        func_name = func_name or sys._getframe().f_back.f_code.co_name
+        c = self.get_method_from(selector, func_name)
+        return "%s(%s)" % (c, ", ".join(["%s=%s" % (k, self.to_js(v)) for k, v in kwargs.items()]))

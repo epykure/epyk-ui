@@ -15,7 +15,7 @@ class CM(JsPackage):
   def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = False,
                page: primitives.PageModel = None):
     super(CM, self).__init__(
-      component=component, js_code=js_code, selector=component.js_code, data=None, set_var=set_var, page=page)
+      component=component, selector=component.js_code, data=None, set_var=set_var, page=page)
 
   def setSize(self, width: Union[tuple, int, primitives.JsDataModel] = None,
               height: Union[tuple, int, primitives.JsDataModel] = None):
@@ -36,12 +36,9 @@ class CM(JsPackage):
     return self.fnc_closure("setSize(%s, %s)" % (width, height))
 
   def scrollTo(self, x: int = None, y: int = None):
-    """
-    Scroll the editor to a given (pixel) position. Both arguments may be left as null or undefined to have no effect.
+    """Scroll the editor to a given (pixel) position. Both arguments may be left as null or undefined to have no effect.
 
-    Related Pages:
-
-      https://codemirror.net/doc/manual.html#option_viewportMargin
+    `CodeMirror <https://codemirror.net/doc/manual.html#option_viewportMargin>`_
  
     :param x: The x position of the scrollbar.
     :param y: The y position of the scrollbar.
