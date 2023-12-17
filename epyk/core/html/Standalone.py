@@ -603,7 +603,8 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
                 else:
                     page.js.customFile(cls.component_url, absolute_path=True, authorize=True)
             else:
-                raise ValueError("Component file - %s - was not loaded correctly" % cls.proxy_class)
+                raise ValueError("Component file - %s - was not loaded correctly, js: %s" % (
+                  cls.__name__, cls.component_url))
 
         if cls.style_urls is not None:
             css_content = css_files_loader(cls.style_urls, cls.selector, style_vars=page.theme.all())

@@ -313,7 +313,7 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
         if self._vals:
             set_val = '%(editor)s.setValue(%(content)s)' % {
                 "editor": self.js_code, "content": JsUtils.jsConvertData(self._vals, None)}
-        self.page.body.onReady('''
+        self.page.properties.js.add_builders('''
 %(editor)s = CodeMirror.fromTextArea(document.getElementById('%(htmlId)s'),%(options)s); 
 %(editor)s.setSize("%(width)s", "%(height)s"); %(setVal)s; %(editor)s.refresh()''' % {
             "editor": self.js_code, "width": self.css("width"), "height": self.css("height"),

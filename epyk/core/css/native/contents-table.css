@@ -4,6 +4,7 @@
     padding: 5px 10px 5px 10px;
     border: 1px solid var(--grey);
     max-height: 60%;
+    background: var(--white) ;
 }
 
 .contents-table-item {

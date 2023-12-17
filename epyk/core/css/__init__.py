@@ -52,7 +52,7 @@ def css_files_loader(
             else:
                 for k, v in style_vars.items():
                     css_file = css_file.replace("$%s" % k, v).replace(":host", "")
-                for m in regex.findall(css_data):
+                for m in regex.findall(css_file):
                     if selector is not None:
                         css_formatted.append("div[name=%s] > %s { %s }" % (selector, m[0], m[1]))
                     else:

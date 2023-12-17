@@ -1,4 +1,5 @@
 :root {
   --selected: $theme-3;
   --grey: $greys-4;
+  --white: $greys-0;
 }
