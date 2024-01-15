@@ -220,9 +220,9 @@ class Required:
 
         TODO: Use the version number
 
-        :param package: The package alias.
-        :param version: Optional. The package version number.
-        :param verbose: Optional. Display version details (default True).
+        :param package: The package alias
+        :param version: Optional. The package version number
+        :param verbose: Optional. Display version details (default True)
         """
         html_types = set()
         if package in Imports.JS_IMPORTS:
@@ -459,9 +459,9 @@ the same signature and return).
                      element_id: Optional[str] = None) -> dict:
         """Return the profile options.
 
-        :param profile: Optional. A flag to set the component performance storage.
-        :param event: Optional. The event name.
-        :param element_id: Optional. A DOM component reference in the page.
+        :param profile: Optional. A flag to set the component performance storage
+        :param event: Optional. The event name
+        :param element_id: Optional. A DOM component reference in the page
         """
         if profile is None and self.profile:
             if event is None:
@@ -537,9 +537,7 @@ the same signature and return).
 
           page = pk.Page()
           page.properties.js.add_text('''
-          function NewButton(htmlObj, data, options){
-            htmlObj.style.color = "red"; htmlObj.innerHTML = data}
-          ''')
+          function NewButton(htmlObj, data, options){htmlObj.style.color = "red"; htmlObj.innerHTML = data}''')
           page.properties.js.set_constructor("NewButton")
           btn = page.ui.button("click")
           btn.set_builder("NewButton")
@@ -559,7 +557,6 @@ the same signature and return).
         This property will allow to custom any component in the page.
 
         Usage::
-
           div = page.ui.div()
           div.style.css.background = 'black'
         """
@@ -578,7 +575,6 @@ the same signature and return).
         There is no setter for this property in order to ensure a consistency in Python and JavaScript.
 
         Usage::
-
           div = page.ui.div(html_code="testDiv")
           print(div.html_code)
         """
@@ -614,7 +610,7 @@ the same signature and return).
 
     @property
     def ref(self) -> str:
-        """ The component ref used in REST calls when html_code is not unique in current context"""
+        """The component ref used in REST calls when html_code is not unique in current context"""
         return self.__aliasCode or self.html_code
 
     @property
@@ -628,7 +624,6 @@ the same signature and return).
         There is no setter for this property in order to ensure a consistency in Python and JavaScript.
 
         Usage::
-
           div = page.ui.div(htmlCode="testDiv")
           print(div.htmlCode)
         """
@@ -661,7 +656,6 @@ the same signature and return).
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           div = page.ui.div(htmlCode="testDiv")
           print(div.dom.content)
 
@@ -676,7 +670,6 @@ the same signature and return).
         """Property to set all the possible object for a button.
     
         Usage::
-
           div = page.ui.div(htmlCode="testDiv")
           div.options.inline = True
         """
@@ -686,7 +679,6 @@ the same signature and return).
         """Wrapper to the Javascript method insertChild to add an HTML component.
 
         Usage::
-
           for i in range(10):
             comp = page.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
             select.prepend_child(comp)
@@ -711,7 +703,6 @@ the same signature and return).
         """Wrapper to the Javascript method appendChild to append an HTML component.
 
         Usage::
-
           for i in range(10):
             component = page.ui.texts.label("Add Label %s" % i).css({"width": "100%", "display": 'block'})
             select.append_child(component)
@@ -736,7 +727,6 @@ the same signature and return).
         Usually this can be used to add js functions on a chart or a table.
 
         Usage::
-
           network = page.ui.charts.vis.network()
           network.onReady([network.js.setData({"nodes": [{"id": 0, "label": "test"}], "edges": []})])
 
@@ -751,7 +741,6 @@ the same signature and return).
 
     def add_banner(self, component: primitives.HtmlModel, css: Optional[dict] = None):
         """Add a banner to a component.
-
         This will change the position of the container.
 
         :param component: The banner component
@@ -780,7 +769,6 @@ the same signature and return).
         """Add an icon to the HTML object.
 
         Usage::
-
           checks.title.add_icon("wrench") # For cross family icon definition
           checks.title.add_icon("fas fa-align-center") # for font awesome icon
 
@@ -877,7 +865,6 @@ the same signature and return).
         """Add an elementary label component.
 
         Usage::
-
           div = page.ui.div()
           div.add_link("test.py", name="Click to go to the test report")
 
@@ -992,7 +979,6 @@ the same signature and return).
 
     def add_helper(self, text: str, css: dict = None):
         """Add an elementary helper icon.
-
         The helper is not managed by the main page and should be written in the component.
 
         :param text: The helper content
@@ -1087,7 +1073,7 @@ the same signature and return).
         if reset:
             self.style.css.attrs = {}
             self.attr['css'] = self.style.css.attrs
-        # Do not add None value to the CSS otherwise it will break the page on the front end side
+        # Do not add None as value to the CSS otherwise it will break the page on the front end side
         if value is None and isinstance(key, dict):
             css_vals = key if isinstance(key, dict) else {}
         elif value is None and hasattr(key, "attrs"):
@@ -1154,7 +1140,6 @@ the same signature and return).
         This tooltip version is coming from Bootstrap.
 
         Usage::
-
           htmlObj.tooltip("My tooltip", location="bottom")
 
         `Learn more <https://getbootstrap.com/docs/4.1/components/tooltips/>`_
@@ -1452,7 +1437,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         """Add a drag and drop property to the element.
 
         Usage::
-
           d = page.ui.div()
           d.drop([page.js.objects.data.toRecord([1, 2, 3, 4], "result")])
 
@@ -1485,7 +1469,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         """Add a mouse hover event on the component.
 
         Usage::
-
           div = page.ui.div()
           div.hover([page.js.alert("This is a test")])
 
@@ -1502,7 +1485,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         The result of the event can be on the component itself (the observer) or another component (to load / add items).
 
         Usage::
-
           text = page.ui.text("This is a text")
           text.viewport([
             page.js.delay([text.build("Change the value")], 5),
@@ -1524,7 +1506,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         """The onclick event occurs when the user clicks on an element.
 
         Usage::
-
           div = page.ui.div()
           div.click([page.js.alert("This is a test")])
 
@@ -1544,7 +1525,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         """The onfocusout event occurs when the user select an element.
 
         Usage::
-
           div = page.ui.div()
           div.focusout([page.js.alert("This is a test")])
 
@@ -1599,7 +1579,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         clean the cache.
 
         Usage::
-
           span.mouse([
               span.dom.css("color", "red"),
               span.dom.css("cursor", "pointer").r],
@@ -1665,7 +1644,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         `Learn more <https://www.w3schools.com/jsref/obj_touchevent.asp>`_
 
         Usage::
-
           component.touch.
         """
         return EventTouch(self)
@@ -1688,7 +1666,6 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         """Return the JavaScript fragment to refresh the component content.
 
         Usage::
-
           dt = page.ui.rich.update()
           page.ui.button("Update").click([dt.refresh()])
 
@@ -1696,6 +1673,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The object reference ID
+        :param stop_state: Optional.
         :param dataflows: Chain of data transformations
         """
         self.js_code = component_id

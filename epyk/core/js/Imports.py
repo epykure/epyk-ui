@@ -1,8 +1,5 @@
-"""
-Core module in charge of linking the Python report request to the corresponding external packages required.
-
+"""Core module in charge of linking the Python report request to the corresponding external packages required.
 This package will resolve the external Javascript and CSS dependencies.
-
 It can also help or retrieve external Python packages from the official Python Page Index online repository
 """
 
@@ -34,11 +31,8 @@ STATIC_PATH = "/static"
 
 
 def requires(name: str, reason: str = 'Missing Package', install=None, package=None, raise_except=False,
-             source_script=None,
-             pip_attrs=None):
-    """
-    Import the necessary external packages and provide explicit message to find a way to solve this error message.
-
+             source_script=None, pip_attrs=None):
+    """Import the necessary external packages and provide explicit message to find a way to solve this error message.
     This method should also explain why this module is required to make sure this is really expected to get an error.
 
     :param str name:
@@ -85,7 +79,6 @@ def requires(name: str, reason: str = 'Missing Package', install=None, package=N
             logging.warning("Error with %s in script %s, autoload set to %s" % (name, source_script, AUTOLOAD))
             import subprocess
             subprocess.call([sys.executable, '-m', "pip", 'install'] + pip_attrs + [install])
-
             return requires(name, reason, install, package=package, raise_except=raise_except)
 
         if raise_except:
@@ -99,18 +92,14 @@ def requires(name: str, reason: str = 'Missing Package', install=None, package=N
 
 
 def load_package(package_name: str, pip_attrs: Optional[list] = None, action: str = 'install'):
-    """
-    Force the package to be installed manually to the current python distribution.
-
+    """Force the package to be installed manually to the current python distribution.
     This will run a pip command to the running python set up.
 
     Usage::
 
       load_package("pandas")
 
-    Related Pages:
-
-        https://pypi.org/
+    `PYPI <https://pypi.org/>`_
 
     :param package_name: The external package reference (e.g. pandas)
     :param pip_attrs: Optional. The pip attributes  https://packaging.python.org/tutorials/installing-packages/
@@ -127,11 +116,9 @@ def load_package(package_name: str, pip_attrs: Optional[list] = None, action: st
 
 
 def installed_packages():
-    """
-    Returns the list of packages installed on the running Python distribution.
-
+    """Returns the list of packages installed on the running Python distribution.
     This will require an internet connection as it will run the pip command behind the scene.
-    It will return in the console a table with the status of the obsolescence of all the python packages.
+    It will return to the console a table with the status of the obsolescence of all the python packages.
 
     Usage::
 
@@ -142,10 +129,10 @@ def installed_packages():
 
 
 def string_to_base64(content: str, is_binary: bool = False) -> str:
-    """ Format a String content to a base64 object.
+    """Format a String content to a base64 object.
 
     :param content: String content
-    :param is_binary: Flag to specify if content need to be encoded
+    :param is_binary: Optional. Flag to specify if content need to be encoded
     """
     if not is_binary:
         content = content.encode()
@@ -2275,9 +2262,7 @@ GOOGLE_EXTENSIONS = {
 
 
 def script_version(alias: str, script_details: dict, with_prefix: bool = False):
-    """
-    Return the script version number with or without prefix.
-
+    """Return the script version number with or without prefix.
     This will ensure a standard way to get the version number for a given CSS or JavaScript script in the framework.
 
     :param alias: The package reference alias in the framework and in NPM
@@ -2306,11 +2291,8 @@ def script_version(alias: str, script_details: dict, with_prefix: bool = False):
 
 
 def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = False) -> str:
-    """
-    Get the script path to retrieve the content locally.
-
+    """Get the script path to retrieve the content locally.
     This is mainly used by PyNpm package in order to retrieve the content of the script to produce local copies of them.
-
     Having script copied locally will speed up the loading of the page and also will ensure a run offline.
 
     :param alias: The package reference alias in the framework and in NPM
@@ -2325,7 +2307,7 @@ def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = Fals
     if USE_NPM_UNPK and JS_IMPORTS.get(alias, {}).get("unpkg", True):
         if "node_path" not in details:
             details["node_path"] = ""
-        return "https://www.unpkg.com/"+ alias +"@latest/%(node_path)s%(script)s" % details
+        return "https://www.unpkg.com/" + alias + "@latest/%(node_path)s%(script)s" % details
 
     return "%(cdnjs)s/%(path)s%(script)s" % details
 
@@ -2349,11 +2331,7 @@ def script_npm_path(alias: str, script_details: dict, static_path: str, with_pre
 
 
 def extend(reference: str, module_path, version: str, cdnjs_url: str = CDNJS_REPO, required: Optional[list] = None):
-    """
-    Function to extend the internal CSS and JS registered modules.
-
-
-    Related Pages::
+    """Function to extend the internal CSS and JS registered modules.
 
     :param reference: The internal reference in the framework
     :param module_path: The different modules and location
@@ -2375,9 +2353,7 @@ def extend(reference: str, module_path, version: str, cdnjs_url: str = CDNJS_REP
 
 
 def extend_imports(extension: dict):
-    """
-    Hook to extend the imports in the centralised Import module.
-
+    """Hook to extend the imports in the centralised Import module.
     Packages definition is quite similar to the one in Imports.py except that CSS and JS are grouped together for
     simplicity.
 
@@ -2440,18 +2416,15 @@ class ImportModule:
 
     @property
     def alias(self) -> str:
-        """ Get the NPM alias name. """
+        """Get the NPM alias name."""
         return self._name
 
     @property
     def defer(self) -> bool:
-        """
-        If the defer attribute is set, it specifies that the script is downloaded in parallel to parsing the page,
+        """If the defer attribute is set, it specifies that the script is downloaded in parallel to parsing the page,
         and executed after the page has finished parsing.
 
-        Related Pages:
-
-          https://www.w3schools.com/tags/att_script_defer.asp
+        `Defer <https://www.w3schools.com/tags/att_script_defer.asp>`_
         """
         return self._defer
 
@@ -2461,13 +2434,10 @@ class ImportModule:
 
     @property
     def asynchrone(self) -> bool:
-        """
-        Specifies that the script is downloaded in parallel to parsing the page, and executed as soon as it is available
-        (before parsing completes) (only for external scripts).
+        """Specifies that the script is downloaded in parallel to parsing the page, and executed as soon as it is
+        available (before parsing completes) (only for external scripts).
 
-        Related Pages:
-
-          https://www.w3schools.com/tags/att_script_defer.asp
+        `Defer <https://www.w3schools.com/tags/att_script_defer.asp>`_
         """
         return self._async
 
@@ -2477,12 +2447,9 @@ class ImportModule:
 
     @property
     def nomodule(self) -> bool:
-        """
-        Specifies that the script should not be executed in browsers supporting ES2015 modules.
+        """Specifies that the script should not be executed in browsers supporting ES2015 modules.
 
-        Related Pages:
-
-          https://www.w3schools.com/tags/tag_script.asp
+        `Tag Script <https://www.w3schools.com/tags/tag_script.asp>`_
         """
         return self.attrs.get("nomodule")
 
@@ -2492,8 +2459,7 @@ class ImportModule:
 
     @property
     def eferrerpolicy(self) -> str:
-        """
-        Specifies which referrer information to send when fetching a script.
+        """Specifies which referrer information to send when fetching a script.
 
         Related Pages:
 
@@ -2507,7 +2473,7 @@ class ImportModule:
 
     @property
     def version(self):
-        """ Return the package version number defined in the framework. """
+        """Return the package version number defined in the framework. """
         return self._js["versions"]
 
     @version.setter
@@ -2533,7 +2499,7 @@ class ImportModule:
 
     @property
     def path(self) -> str:
-        """ Get the package path used to retrieve the various modules. """
+        """Get the package path used to retrieve the various modules. """
         mod = JS_IMPORTS[self._name]['modules'][0]
         mod["version"] = self.version[0]
         mod["path"] = mod["path"] % mod
@@ -2553,8 +2519,7 @@ class ImportModule:
 
     @property
     def scripts(self):
-        """
-        Get the list of external files used for this package.
+        """Get the list of external files used for this package.
 
         Usage::
 
@@ -2573,23 +2538,20 @@ class ImportModule:
         return list(self._css["main"].keys())
 
     def add(self):
-        """ Force a package to be added to the external requirements. """
+        """Force a package to be added to the external requirements."""
         if self._name in JS_IMPORTS:
             self.page.jsImports.add(self._name)
         if self._name in CSS_IMPORTS:
             self.page.cssImport.add(self._name)
 
     def from_cdnjs(self):
-        """
-        Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
-        Indeed this method will not impact any modules with this flag set to True.
+        """Just change the overridden flag of this package to ensure it will not be changed by the set_local method.
+        Indeed, this method will not impact any modules with this flag set to True.
         """
         self.overriden = True
 
     def set_local(self, static_url: str = "/static"):
-        """
-        Route the package to the local path.
-
+        """Route the package to the local path.
         Check first of the modules exist and raise an error otherwise.
 
         :param static_url: Optional. The static root on the server. (default value /static/)
@@ -2608,7 +2570,6 @@ class ImportModule:
             new_js["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
         if new_js:
             self._js["main"] = new_js
-
         if self._css:
             new_css = collections.OrderedDict()
             for v in CSS_IMPORTS[self._name]["modules"]:
@@ -2624,9 +2585,7 @@ class ImportModule:
         self.overriden = True
 
     def set_enterprise(self, version: str = None, license_key: str = None):
-        """
-        Change the package to the enterprise version.
-
+        """Change the package to the enterprise version.
         This feature will only work for few modules like AGGrid.
 
         Usage::
@@ -2672,8 +2631,7 @@ class ImportModule:
                 self.page.properties.js.add_text("if(window['agGrid']){agGrid.LicenseManager.setLicenseKey('%s')}" % license_key)
 
     def set_access_token(self, value: str = None, name: str = ""):
-        """
-        Set an access token to use this package
+        """Set an access token to use this package
 
         Related Pages:
 
@@ -2708,22 +2666,22 @@ class ImportPackagesPivotExts:
 
     @property
     def c3(self):
-        """ Shortcut to C3 package. """
+        """Shortcut to C3 package. """
         return self.get("pivot-c3")
 
     @property
     def plotly(self):
-        """ Shortcut to Plotly package. """
+        """Shortcut to Plotly package."""
         return self.get("pivot-plotly")
 
     @property
     def d3(self):
-        """ Shortcut to D3 package. """
+        """Shortcut to D3 package."""
         return self.get("pivot-d3")
 
     @property
     def subtotal(self):
-        """ Shortcut to Sub total table package. """
+        """Shortcut to Sub total table package."""
         return self.get("subtotal")
 
 
@@ -2741,42 +2699,42 @@ class ImportPackagesCodeMirrorExts:
 
     @property
     def search(self) -> ImportModule:
-        """ Shortcut to CodeMirror Search addon. """
+        """Shortcut to CodeMirror Search addon."""
         return self.get("codemirror-search")
 
     @property
     def placeholder(self) -> ImportModule:
-        """ Shortcut to CodeMirror PlaceHolder addon. """
+        """Shortcut to CodeMirror PlaceHolder addon."""
         return self.get("codemirror-placeholder")
 
     @property
     def trailingspace(self) -> ImportModule:
-        """ Shortcut to CodeMirror Trainling Space addon. """
+        """Shortcut to CodeMirror Trainling Space addon."""
         return self.get("codemirror-trailingspace")
 
     @property
     def fullscreen(self) -> ImportModule:
-        """ Shortcut to CodeMirror Full Screen addon. """
+        """Shortcut to CodeMirror Full Screen addon."""
         return self.get("codemirror-fullscreen")
 
     @property
     def highlighter(self) -> ImportModule:
-        """ Shortcut to CodeMirror Highligher addon. """
+        """Shortcut to CodeMirror Highligher addon."""
         return self.get("codemirror-highlighter")
 
     @property
     def hint(self) -> ImportModule:
-        """ Shortcut to Code Mirror Hint addon. """
+        """Shortcut to Code Mirror Hint addon."""
         return self.get("codemirror-hint")
 
     @property
     def panel(self) -> ImportModule:
-        """ Shortcut to CodeMirror Panel addon. """
+        """Shortcut to CodeMirror Panel addon."""
         return self.get("codemirror-panel")
 
     @property
     def fold(self) -> ImportModule:
-        """ Shortcut to CodeMirror Fold addon. """
+        """Shortcut to CodeMirror Fold addon."""
         return self.get("codemirror-fold")
 
 
@@ -3556,10 +3514,10 @@ class ImportPackages:
     def timepicker(self) -> ImportModule:
         """ jQuery TimePicker is a plugin to enhance standard form input fields, helping users to select (or type) times.
 
-    Related Pages:
+        Related Pages:
 
-      https://timepicker.co
-    """
+          https://timepicker.co
+        """
         return self.get("timepicker")
 
     @property
@@ -3812,20 +3770,20 @@ class ImportManager:
             self.online = False
         self._static_path = path
 
-    def add(self, alias: str):
-        """
-        Add package to the page external required modules.
+    def add(self, alias: str, incl_css: bool = True, incl_js: bool = True):
+        """Add package to the page external required modules.
 
         :param alias: The external module alias
+        :param incl_css: Optional. Include CSS files
+        :param incl_js: Optional. Include Js files
         """
-        if alias in JS_IMPORTS:
+        if alias in JS_IMPORTS and incl_js:
             self.page.jsImports.add(alias)
-        if alias in CSS_IMPORTS:
+        if alias in CSS_IMPORTS and incl_css:
             self.page.cssImport.add(alias)
 
     def extend(self, aliases: List[str]):
-        """
-        Add multiple aliases to the external requirements.
+        """Add multiple aliases to the external requirements.
 
         :param aliases: The list of package aliases to be added
         """
@@ -3834,8 +3792,7 @@ class ImportManager:
 
     @property
     def requirements(self) -> set:
-        """
-        Retrieve all the mandatory requirements required to display the final HTML page.
+        """Retrieve all the mandatory requirements required to display the final HTML page.
 
         Usage::
 
@@ -3848,9 +3805,7 @@ class ImportManager:
 
     def getModules(self, modules: dict, alias: Union[str, dict], folder: Optional[str] = None,
                    module_details: Optional[dict] = None):
-        """
-        Return the list of modules for a given entry.
-
+        """Return the list of modules for a given entry.
         This will be used recursively to resolve all the dependencies.
 
         Usage::
@@ -3861,7 +3816,7 @@ class ImportManager:
         :param modules: The ordered definition of modules
         :param alias: The module reference in the above JS and CSS dictionaries
         :param folder: Optional. The folder name
-        :param module_details: The module definition. Default check in the Javascript modules
+        :param module_details: Optional. The module definition. Default check in the Javascript modules
 
         :return: The list of modules
         """
@@ -4237,8 +4192,7 @@ class ImportManager:
 
     def getFullPackage(self, alias: str, version: Optional[str] = None, static_path: Optional[str] = None,
                        reload: bool = False):
-        """
-        Download a full package (CSS and JS) locally for a server or full offline mode.
+        """Download a full package (CSS and JS) locally for a server or full offline mode.
 
         Usage::
 
@@ -4302,9 +4256,7 @@ class ImportManager:
 
     def setVersion(self, alias: str, version: str, js: Optional[dict] = None, css: Optional[dict] = None,
                    verbose: bool = None) -> bool:
-        """
-        Allow the use of different version of a package.
-
+        """Allow the use of different version of a package.
         This will change the Import important to the Python env.
 
         Usage::
@@ -4315,7 +4267,7 @@ class ImportManager:
         :param version: The new version to be used globally
         :param js: Optional. The JavaScript packages to be added
         :param css: Optional. The CSS packages to be added
-        :param verbose: Optional. Display version details (default True).
+        :param verbose: Optional. Display version details (default True)
         """
         global CSS_IMPORTS, JS_IMPORTS
 
@@ -4363,9 +4315,7 @@ class ImportManager:
         return True
 
     def addPackage(self, alias: str, config: dict):
-        """
-        Add a new package or update an existing one with new parameters.
-
+        """Add a new package or update an existing one with new parameters.
         Only few parameters are available here in order to limit the changes.
 
         Usage::
@@ -4504,8 +4454,7 @@ class ImportManager:
         return results
 
     def show(self, all: bool = False):
-        """
-        Show all the underlying packages used in a report or available in the framework.
+        """Show all the underlying packages used in a report or available in the framework.
 
         :param all: Optional. A flag to specify if only the one requested in the report should be displayed
         """
@@ -4533,9 +4482,7 @@ class ImportManager:
 
     def google_products(self, products: List[str], api_key: Optional[str] = None,
                         site_key: str = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"):
-        """
-        Enable the google predefined products.
-
+        """Enable the google predefined products.
         Those are by default disabled as they are sharing data with Google.
 
         TODO: Add the use of the API Key.
@@ -4564,9 +4511,7 @@ class ImportManager:
         self.page._with_google_imports = True
 
     def locals(self, aliases: List[str], end_points: Optional[str] = None):
-        """
-        Short circuit the import mechanism and retrieve the selected ones from a local static path.
-
+        """Short circuit the import mechanism and retrieve the selected ones from a local static path.
         This could help on the debugging and the improvement of the packages before submitting them for review.
 
         :param aliases: The list of aliases
@@ -4587,29 +4532,22 @@ class ImportManager:
 
     @property
     def pkgs(self) -> ImportPackages:
-        """
-        Shortcut properties to the various package definitions.
-
+        """Shortcut properties to the various package definitions.
         This can be used in the script in order to change the path of the version of any external modules used.
         """
         if self.__pkgs is None:
             self.__pkgs = ImportPackages(self.jsImports, self.cssImports, page=self.page)
         return self.__pkgs
 
-    def website(self, alias: str):
-        """
-        Get the official website for a JavaScript library.
+    def website(self, alias: str) -> str:
+        """Get the official website for a JavaScript library.
 
         :param alias: The JavaScript module alias (usually the one used by npm)
         """
-        if alias not in JS_IMPORTS:
-            return ""
-
-        return JS_IMPORTS[alias].get('website', "")
+        return JS_IMPORTS.get(alias, {}).get('website', "")
 
     def append_to(self, alias: str, js_modules: List[dict] = None, css_modules: List[dict] = None, version: str = None):
-        """
-        Update an existing configuration by adding addon scripts or styles.
+        """Update an existing configuration by adding addon scripts or styles.
 
         :param alias: NPM package alias
         :param js_modules: JavaScript modules extension

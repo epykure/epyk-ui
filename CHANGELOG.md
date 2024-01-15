@@ -1,11 +1,15 @@
 ## [Unreleased]
 
-## [1.11.5] - 2023-12-16
+## [1.11.6] - 2023-12-17
 
 ### Added
 - Resources class to access methods from external packages.
 - Better management for colors in the CSS
 - Add class / pipe concept for Dataflows configuration
+
+### Fixed
+- Bug fix with CSS native definition
+- Problem with js_code migration for some HTML components
 
 ### Changed
 - Remove all CSS Python classes for table contents.

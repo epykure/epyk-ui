@@ -231,7 +231,7 @@ class DomComponent(JsHtml.JsHtml):
 
 
 class JsComponents(JsPackage):
-    trimFunc = None #
+    trimFunc = None
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
@@ -613,20 +613,19 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     def __str__(self):
         self.add_imports(self.page)
-        if self.component_url is not None:
-            if Path(self.component_url).exists():
-                if self.trim:
-                    self.page.properties.js.add_builders([
-                        "%s = new %s(%s, %s=%s, %s=%s)" % (
-                            self.js_code, self.proxy_class, self.js.trim(),
-                            self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
-                            self.arg_init_options, self.options.config_attrs())])
-                else:
-                    self.page.properties.js.add_builders([
-                        "%s = new %s(%s, %s=%s, %s=%s)" % (
-                            self.js_code, self.proxy_class, self.dom.varId,
-                            self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
-                            self.arg_init_options, self.options.config_attrs())])
+        if self.component_url is not None and Path(self.component_url).exists():
+          if self.trim:
+              self.page.properties.js.add_builders([
+                  "%s = new %s(%s, %s=%s, %s=%s)" % (
+                      self.js_code, self.proxy_class, self.js.trim(),
+                      self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
+                      self.arg_init_options, self.options.config_attrs())])
+          else:
+              self.page.properties.js.add_builders([
+                  "%s = new %s(%s, %s=%s, %s=%s)" % (
+                      self.js_code, self.proxy_class, self.dom.varId,
+                      self.arg_init_value, JsUtils.jsConvertData(self._vals, None),
+                      self.arg_init_options, self.options.config_attrs())])
 
         values = dict(self.__metadata)
         # Set all the templates attributes
@@ -697,7 +696,7 @@ class Resources:
 
     def __init__(self, page: primitives.PageModel):
         if self.components is None:
-            raise Exception("")
+            raise Exception("Resources must be linked to components")
 
         self.page = page
 
@@ -722,24 +721,39 @@ class Resources:
                 component.add_imports(self.page)
                 return component
 
-    def get_method_from(self, selector, func_name: str = None):
+    def get_method_from(self, selector, func_name: str = None, requirements: list = None):
         """Get the appropriate definition for a JavaScript method in the module.
 
         :param selector: Component's selector
+        :param requirements: optional. External requirements
         :param func_name: Optional. The function name (default calling function)
         """
         component = self.get_component(selector)
+        if requirements:
+            for r in requirements:
+                if isinstance(r, tuple):
+                    if r[1]:
+                        self.page.imports.setVersion(r[0], r[1])
+                    self.page.imports.add(r[0])
+                elif isinstance(r, dict):
+                    alias = list(r.keys())[0]
+                    if "version" in r[alias]:
+                        self.page.imports.setVersion(alias, r[alias]["version"])
+                    self.page.imports.add(alias, incl_css=r[alias].get("css", False), incl_js=r[alias].get("js", False))
+                else:
+                    self.page.imports.add(r)
         if component is not None:
             func_name = func_name or sys._getframe().f_back.f_code.co_name
             return get_static_method(func_name, component.library, component.set_exports)
 
-    def get_method_string(self, selector, func_name: str = None, **kwargs) -> str:
+    def get_method_string(self, selector, func_name: str = None, requirements: list = None, **kwargs) -> str:
         """Get the entire string definition to be added to an HTML page.
 
         :param selector: Component's selector
         :param func_name: Optional. The function name (default calling function)
+        :param requirements: optional. External requirements
         :param kwargs: Must be all arguments in the JavaScript method (in order with defaults)
         """
         func_name = func_name or sys._getframe().f_back.f_code.co_name
-        c = self.get_method_from(selector, func_name)
+        c = self.get_method_from(selector, func_name, requirements)
         return "%s(%s)" % (c, ", ".join(["%s=%s" % (k, self.to_js(v)) for k, v in kwargs.items()]))
