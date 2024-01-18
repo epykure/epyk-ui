@@ -215,7 +215,8 @@ class Required:
         self.js, self.css = {}, {}
         self._page = page
 
-    def add(self, package: str, version: Optional[str] = None, verbose: bool = None):
+    def add(self, package: str, version: Optional[str] = None, verbose: bool = None, incl_css: bool = True,
+            incl_js: bool = True):
         """Add the package to the main page context.
 
         TODO: Use the version number
@@ -223,13 +224,15 @@ class Required:
         :param package: The package alias
         :param version: Optional. The package version number
         :param verbose: Optional. Display version details (default True)
+        :param incl_css: Optional. Include CSS files
+        :param incl_js: Optional. Include Js files
         """
         html_types = set()
-        if package in Imports.JS_IMPORTS:
+        if package in Imports.JS_IMPORTS and incl_js:
             self.js[package] = version or '*'
             self._page.jsImports.add(package)
             html_types.add('js')
-        if package in Imports.CSS_IMPORTS:
+        if package in Imports.CSS_IMPORTS and incl_css:
             self.css[package] = version or '*'
             self._page.cssImport.add(package)
             html_types.add('css')
@@ -399,6 +402,10 @@ the same signature and return).
         for package in self.requirements or []:
             if isinstance(package, tuple):
                 self.require.add(package[0], package[1], verbose=verbose)
+            if isinstance(package, dict):
+                alias = list(package.keys())[0]
+                self.require.add(alias, version=package[alias].get("version"), verbose=verbose,
+                                 incl_css=package[alias].get("css", False), incl_js=package[alias].get("js", False))
             else:
                 self.require.add(package, verbose=verbose)
 

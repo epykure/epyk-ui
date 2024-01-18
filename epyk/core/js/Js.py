@@ -1564,6 +1564,7 @@ else {%(fncs)s}  ''' % {"script": abs(hash(script)), "content": url_module, "fnc
 
         :param css_file: A script name with a CSS extension
         :param self_contained: Optional. A flag to specify where the import will be done
+        :param js_code: Optional. The CSS Style element tag
         """
         if css_file.endswith(".css"):
             if os.path.exists(css_file) and self_contained:
@@ -1583,8 +1584,7 @@ let existingStyle = document.getElementById(styleElementId);
 if (!existingStyle && (styleElementId !== 'css_')) {
   var fileref = document.createElement("link"); fileref.id = styleElementId;
   fileref.setAttribute("rel", "stylesheet"); fileref.setAttribute("type", "text/css");
-  fileref.setAttribute("href", "%(file)s"); 
-  document.getElementsByTagName("head")[0].appendChild(fileref)
+  fileref.setAttribute("href", "%(file)s"); document.getElementsByTagName("head")[0].appendChild(fileref)
 }''' % {"file": url_module, "js_code": JsUtils.jsConvertData(js_code, None)})
 
     def delay(self, js_funcs: Union[list, str], seconds: int = 0, window_id: str = "window",
@@ -1601,6 +1601,36 @@ if (!existingStyle && (styleElementId !== 'css_')) {
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console
         """
         return self.window.setTimeout(js_funcs, seconds * 1000, window_id, profile)
+
+    def callback_data(self, data, keys, js_funcs, comparator: Union[dict, str] = None, html_codes: List[str] = None,
+                      profile: Optional[Union[bool, dict]] = None) -> list:
+        """JavaScript's expression to define a data callback function.
+
+        :param data: The data object
+        :param keys: The keys / depth structure within the object
+        :param js_funcs: The callback methods if
+        :param comparator: Optional. The comparator rule. By default it will just check if key exist
+        :param html_codes: Optional. The components required to run the expression
+        :param profile: Optional.
+        """
+        if html_codes:
+            for html_code in html_codes:
+                if html_code not in self.page.components:
+                    return []
+
+        if comparator is not None:
+            if isinstance(comparator, dict):
+                value = JsUtils.jsConvertData(comparator.get("value", ""), None)
+                operator = comparator.get("operator", "==")
+            else:
+                value = JsUtils.jsConvertData(comparator, None)
+                operator = "=="
+            return [JsUtils.jsWrap("if((%s) && (%s %s %s)){%s}" % (
+                data.has_keys(keys), data.get_value(keys), operator, value,
+                JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))]
+
+        return [JsUtils.jsWrap("if(%s){%s}" % (
+            data.has_keys(keys), JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))]
 
 
 class JsConsole:

@@ -273,7 +273,7 @@ class JsObject(primitives.JsDataModel):
 
         return "%s > %s" % (self.varId, json.dumps(a))
 
-    def __ge__(self, a: Union[primitives.JsDataModel, str]):
+    def __ge__(self, a: Union[primitives.JsDataModel, str]) -> str:
         """
 
         :param a:
@@ -286,18 +286,33 @@ class JsObject(primitives.JsDataModel):
 
         return "%s >= %s" % (self.varId, json.dumps(a))
 
-    def has_key(self, item: Union[primitives.JsDataModel, str]):
-        """
-        Check the key / attribute in the JavaScript object.
+    def has_key(self, item: Union[primitives.JsDataModel, str]) -> str:
+        """Check the key / attribute in the JavaScript object.
 
         :param item: The key to lookup
         """
         return "typeof %s[%s] !== 'undefined'" % (self.varId, JsUtils.jsConvertData(item, None))
 
-    def isUndefined(self):
+    def has_keys(self, items: List[Union[primitives.JsDataModel, str]]) -> str:
+        """Check the keys / attributes' path in the JavaScript object.
+
+        :param items: The keys / depth to lookup
+        """
+        expr = ["[%s]" % JsUtils.jsConvertData(item, None) for item in items]
+        return "typeof %s?.%s !== 'undefined'" % (self.varId, "?.".join(expr))
+
+    def get_value(self, items: List[Union[primitives.JsDataModel, str]]) -> str:
+        """Get the value corresponding to the keys / attributes' path in the JavaScript object.
+
+        :param items: The keys / depth to lookup
+        """
+        expr = ["[%s]" % JsUtils.jsConvertData(item, None) for item in items]
+        return "%s?.%s" % (self.varId, "?.".join(expr))
+
+    def isUndefined(self) -> str:
         return "typeof %s !== 'undefined'" % self.varId
 
-    def isNumber(self):
+    def isNumber(self) -> str:
         return "isNaN(parseFloat(%s))" % self.varId
 
     def isFrozen(self):

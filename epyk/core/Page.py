@@ -3,7 +3,7 @@ import json
 import collections
 import time
 import inspect
-from typing import Union, Optional
+from typing import Union, Optional, List
 
 try:
     basestring
@@ -865,3 +865,23 @@ class Report:
 
         self.properties.js.add_event("DOMContentLoaded", DOMContentLoaded())
         return self
+
+    def build(self, data, html_code: str, options = None, profile = None, component_id: Optional[str] = None,
+              stop_state: bool = True, dataflows: List[dict] = None, **kwargs) -> str:
+        """Return the JavaScript expression to build any component registered to the page.
+        This will rely on the registration to the main components property.
+
+        :param data: Component data
+        :param html_code: Component ID
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        :param component_id: Optional. The object reference ID
+        :param stop_state: Optional.
+        :param dataflows: Chain of data transformations
+        """
+        if html_code in self.components:
+            return self.components[html_code].build(data, options=options, profile=profile, component_id=component_id,
+                                                    stop_state=stop_state, dataflows=dataflows)
+
+        return ""
+

@@ -1,5 +1,21 @@
 ## [Unreleased]
 
+## [1.11.7] - 2024-01-18
+
+### Added
+- New dictionary structure for requirements
+- More success helper for REST calls.
+- Component generic builder method
+- New JavaScript Object / Objects features
+
+### Changed
+- Requirement management (CSS / JS filter available)
+- Better requirements management for standalone components
+- Align indent in modules.
+- CSS reg exp parsing.
+- Changes in the doc string to reduce package footprint.
+
+
 ## [1.11.6] - 2023-12-17
 
 ### Added
