@@ -39,7 +39,7 @@ class JsProperties:
 
     @property
     def frgs(self):
-        """Return the extra JavaScript function manually added. """
+        """Return the extra JavaScript function manually added"""
         return self._context["text"]
 
     @property
@@ -130,8 +130,8 @@ class JsProperties:
         """
         return name in self._context['constructors']
 
-    def get_constructor(self, name: str):
-        """Get the constructor definition. """
+    def get_constructor(self, name: str) -> Optional[str]:
+        """Get the constructor definition"""
         return self._context['constructors'].get(name)
 
     def set_constructor(self, name: str, content: str = None, func_ref: bool = False):
@@ -155,7 +155,7 @@ class JsProperties:
         else:
             self._context['constructors'][name] = content
 
-    def add_function(self, name: str, js_funcs: Union[list, str], pmts: list) -> dict:
+    def add_function(self, name: str, js_funcs: Union[list, str], pmts: list, dsc: str = "") -> dict:
         """Add a JavaScript function to the page.
         This method will build the JavaScript method and it will be in charge during the conversion to JavaScript to
         write function [name] ( [pmts] ){ [js_funcs] }
@@ -171,23 +171,24 @@ class JsProperties:
         :param name: The function name
         :param js_funcs: The function definition (JavaScript expression)
         :param pmts: The function's parameters
+        :param dsc: Optional. Function's description
         """
-        self._context['functions'][name] = {'content': js_funcs, 'pmt': pmts}
+        self._context['functions'][name] = {'content': js_funcs, 'pmt': pmts, "dsc": dsc}
         return self._context['functions'][name]
 
     def get_function(self, name: str) -> str:
-        """Get an existing function definition. """
+        """Get an existing function definition"""
         if name in self._context['functions']:
             func = self._context['functions'][name]
             return "function %s(%s){%s}" % (name, ", ".join(func['pmt']), func['content'])
 
     def set_init_options(self, html_code: str, options: str):
-        """Set init options to the main scope of the report """
+        """Set init options to the main scope of the report"""
         if isinstance(html_code, str):
             self._context['init'][html_code] = options
 
     def get_init_options(self, html_code: str = None) -> dict:
-        """Get init option of a component """
+        """Get init option of a component"""
         if html_code is None:
             return self._context['init']
 
@@ -202,7 +203,7 @@ class CssProperties:
 
     @property
     def text(self) -> str:
-        """Return the extra CSS styles manually added. """
+        """Return the extra CSS styles manually added"""
         return "\n".join(self._context['css']["text"])
 
     def add_text(self, text: str, map_id: str = None, replace: bool = False):
@@ -286,12 +287,12 @@ class Properties:
 
     @property
     def context(self):
-        """Return the common Page context. """
+        """Return the common Page context"""
         return self._context['context']
 
     @property
     def icon(self):
-        """Return the page icons definition. """
+        """Return the page icons definition"""
         return self._context['icon']
 
     @property
@@ -419,14 +420,14 @@ class Report:
 
     @property
     def properties(self) -> Properties:
-        """Property to the different Page properties JavaScript and CSS. """
+        """Property to the different Page properties JavaScript and CSS"""
         if self.__properties is None:
             self.__properties = Properties(self._props)
         return self.__properties
 
     @property
     def root__script(self) -> str:
-        """Return the name of the script creating the Page object. """
+        """Return the name of the script creating the Page object"""
         return self._props["context"]["script"]
 
     @property
@@ -528,10 +529,8 @@ class Report:
           page = Report()
           page.ui.text(page.symbols.shapes.BLACK_SQUARE)
 
-        Related Pages:
-
-          https://www.w3schools.com/html/html_symbols.asp
-          https://www.w3schools.com/charsets/ref_utf_math.asp
+        `HTML Symbols <https://www.w3schools.com/html/html_symbols.asp>`_
+        `UFT Math <https://www.w3schools.com/charsets/ref_utf_math.asp>`_
         """
         return symboles.Symboles()
 
@@ -545,9 +544,7 @@ class Report:
           page = Report()
           page.ui.text(page.entities.non_breaking_space)
 
-        Related Pages:
-
-          https://www.w3schools.com/html/html_entities.asp
+        `HTML Entities <https://www.w3schools.com/html/html_entities.asp>`_
         """
         return entities.Entities()
 
@@ -794,9 +791,7 @@ class Report:
           page = Report()
           page.dumps(result)
 
-        Related Pages:
-
-          https://docs.python.org/2/library/json.html
+        `Json <https://docs.python.org/2/library/json.html>`_
 
         :param result: The python dictionary or data structure
 
@@ -829,11 +824,7 @@ class Report:
 
           page = pk.Page()
           page.icons.family = "bootstrap-icons"
-          icons = page.ui.menus.icons([
-              "bi-1-circle-fill",
-              "bi-search-heart-fill",
-              "bi-x-circle-fill",
-          ])
+          icons = page.ui.menus.icons(["bi-1-circle-fill", "bi-search-heart-fill", "bi-x-circle-fill"])
         """
         if self.__icons is None:
             self.__icons = Icons.IconModel(self)
@@ -870,6 +861,7 @@ class Report:
         """Override the chart settings on the JavaScript side.
         This will allow ot set specific styles for some series or also add commons properties.
 
+        :param html_code: Component ID
         :param options: JavaScript of Python attributes
         :param dataflows: Chain of config transformations:
         """
