@@ -1,5 +1,5 @@
 import sys
-from typing import Any, List, Tuple
+from typing import Any, List, Tuple, Union, Optional
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -165,8 +165,7 @@ class JsPackage(primitives.JsDataModel):
         return self._selector if self.varName is None else self.varName
 
     def version(self, tag: str, js: dict = None, css: dict = None):
-        """
-        Change the package version number.
+        """Change the package version number.
 
         Usage::
 
@@ -180,8 +179,7 @@ class JsPackage(primitives.JsDataModel):
         return self
 
     def fnc(self, data: Any, unique: bool = False):
-        """
-        Base function to allow the object chain.
+        """Base function to allow the object chain.
 
         This will add the elements to the current section in the object structure.
         All the items at the same level wil be chained.
@@ -201,8 +199,7 @@ class JsPackage(primitives.JsDataModel):
         return self
 
     def fnc_enum(self, name: str, data_class):
-        """
-        Base function to allow the creation of function with parameters which are list of dataclasses.
+        """Base function to allow the creation of function with parameters which are list of dataclasses.
         Basically this will be then transpiled to a list of dictionary.
 
         :param name: The function Name
@@ -219,8 +216,7 @@ class JsPackage(primitives.JsDataModel):
         return self._js_enums[index][name][-1]
 
     def fnc_closure(self, data: str, check_undefined: bool = False, unique: bool = False):
-        """
-        Add the function string to the existing object definition but create a new entry point for the next ones.
+        """Add the function string to the existing object definition but create a new entry point for the next ones.
         This structure will allow the chain on the Javascript side but also on the Python side.
 
         Thanks to this Python can always keep the same structure and produce the correct Javascript definition.
@@ -246,8 +242,7 @@ class JsPackage(primitives.JsDataModel):
         return self
 
     def fnc_closure_in_promise(self, data: str, check_undefined: bool = False):
-        """
-        Base function to allow the creation of a promise.
+        """Base function to allow the creation of a promise.
 
         A Js promise is an event attached toa function which will be only executed after the function.
         In case of success the then will be triggered otherwise the exception will be caught.
@@ -265,12 +260,11 @@ class JsPackage(primitives.JsDataModel):
 
     @property
     def var(self) -> JsString.JsString:
-        """ Property to return the variable name as a valid pyJs object. """
+        """Property to return the variable name as a valid pyJs object."""
         return JsString.JsString(self.varId, is_py_data=False)
 
     def set_var(self, flag: bool):
-        """
-        Change the flag to define if the variable should be defined on the Javascript side.
+        """Change the flag to define if the variable should be defined on the Javascript side.
         Default this is set to True.
 
         :param flag: A python boolean
@@ -281,8 +275,7 @@ class JsPackage(primitives.JsDataModel):
         return self
 
     def getStr(self, empty_stack: bool = True) -> str:
-        """
-        Get the current string representation for the object and remove the stack.
+        """Get the current string representation for the object and remove the stack.
 
         :param empty_stack: Emtpy the various JavaScript fragments stored for this object
         """
@@ -298,8 +291,7 @@ class JsPackage(primitives.JsDataModel):
         return content
 
     def _mapVarId(self, func: types.JS_FUNCS_TYPES, js_code: str):
-        """
-        Special function used for some external packages used to fix the problem of function override.
+        """Special function used for some external packages used to fix the problem of function override.
         Indeed in Datatable row.add is used as a class method compare to the other functions used at object level.
 
         :param func: The function string
@@ -310,8 +302,7 @@ class JsPackage(primitives.JsDataModel):
         return js_code
 
     def custom(self, func_nam: str, *argv):
-        """
-        Generic function to call any missing function form a package.
+        """Generic function to call any missing function form a package.
         This will automatically convert the object to JavaScript and also put the right object reference.
 
         :param func_nam: The function name
@@ -322,8 +313,24 @@ class JsPackage(primitives.JsDataModel):
             js_args.append(str(JsUtils.jsConvertData(arg, None)))
         return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (self.varId, func_nam, ", ".join(js_args)))
 
+    def callback_data(self, data, keys, js_funcs, comparator: Union[dict, str] = None, html_codes: List[str] = None,
+                      profile: Optional[Union[bool, dict]] = None) -> types.JS_EXPR_TYPES:
+        """JavaScript's expression to define a data callback function.
+
+        :param data: The data object
+        :param keys: The keys / depth structure within the object
+        :param js_funcs: The callback methods if
+        :param comparator: Optional. The comparator rule. By default, it will just check if key exist
+        :param html_codes: Optional. The components required to run the expression
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        """
+        if self.page is None:
+            return ""
+
+        return self.page.js.callback_data(data, keys, js_funcs, comparator, html_codes, profile)
+
     def toStr(self) -> str:
-        """ Javascript representation """
+        """Javascript representation """
         if self._selector is None:
             raise ValueError("Selector not defined, use this() or new() first")
 

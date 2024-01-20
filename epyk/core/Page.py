@@ -866,10 +866,23 @@ class Report:
         self.properties.js.add_event("DOMContentLoaded", DOMContentLoaded())
         return self
 
+    def define(self, html_code: str, options=None, dataflows: List[dict] = None) -> str:
+        """Override the chart settings on the JavaScript side.
+        This will allow ot set specific styles for some series or also add commons properties.
+
+        :param options: JavaScript of Python attributes
+        :param dataflows: Chain of config transformations:
+        """
+        if html_code in self.components:
+            if hasattr(self.components[html_code], "define"):
+                return self.components[html_code].define(html_code, options, dataflows)
+
+        return ""
+
     def build(self, data, html_code: str, options = None, profile = None, component_id: Optional[str] = None,
               stop_state: bool = True, dataflows: List[dict] = None, **kwargs) -> str:
         """Return the JavaScript expression to build any component registered to the page.
-        This will rely on the registration to the main components property.
+        This will rely on the registration to the main component's property.
 
         :param data: Component data
         :param html_code: Component ID
@@ -880,8 +893,10 @@ class Report:
         :param dataflows: Chain of data transformations
         """
         if html_code in self.components:
+            if data is None:
+                return self.components[html_code].refresh()
+
             return self.components[html_code].build(data, options=options, profile=profile, component_id=component_id,
                                                     stop_state=stop_state, dataflows=dataflows)
 
         return ""
-
