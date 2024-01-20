@@ -1901,10 +1901,11 @@ class GridStack(Html.Html):
             grid_stack_item.attr["gs-w"] = w
         if h is not None:
             grid_stack_item.attr["gs-h"] = h
-        for k, v in attrs.items():
-            if not k.startswith("gs-"):
-                k = "gs-%s" % k
-            grid_stack_item.attr[k] = v
+        if attrs:
+            for k, v in attrs.items():
+                if not k.startswith("gs-"):
+                    k = "gs-%s" % k
+                grid_stack_item.attr[k] = v
         self.val.append(grid_stack_item)
         return grid_stack_item
 

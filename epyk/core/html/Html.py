@@ -247,7 +247,7 @@ class Required:
             if "services" in self._page.ext_packages[package]:
                 self._page.cssImport.add(package)
         if not html_types and verbose and package != "other-icons":
-            logging.warning("%s - Not defined in neither JS nor CSS configurations" % package)
+            logging.warning("%s - Not defined in neither JS nor CSS configurations" % str(package))
         if version:
             if self._page.imports.setVersion(package, version, verbose=verbose):
                 self._page.imports.reload()

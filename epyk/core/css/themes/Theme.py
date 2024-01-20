@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import os
 import re
 from typing import List
 from epyk.core.css.themes import palettes
@@ -253,28 +254,29 @@ class Theme:
         :param file_path: The full file path
         """
         regex = re.compile("\$(.*): (.*);")
-        with open(file_path) as fp:
-            content = fp.read()
-            for m in regex.findall(content):
-                tag, color = m
-                if tag.startswith("color") or tag.startswith("chart-"):
-                    _, category, level = tag.split("-")
-                    self.__colors["all"].setdefault(category, {})[tag] = color.strip()
-                if tag.startswith("charts"):
-                    if color.strip().startswith("("):
-                        self.chart_categories = [s.strip() for s in color.strip()[1:-1].split(",")]
-                    else:
-                        self.chart_categories = ["default"]
-        if self.chart_categories:
-            chart_colors = []
-            tmp_chart_map = {self.chart_categories[0]: self.category(self.chart_categories[0])[::-1]}
-            for i in range(0, len(tmp_chart_map[self.chart_categories[0]])):
-                for cat in self.chart_categories:
-                    if cat not in tmp_chart_map:
-                        tmp_chart_map[cat] = self.category(cat)[::-1]
-                    chart_colors.append(tmp_chart_map[cat][i])
-            self.charts = chart_colors
-        self.update()
+        if os.path.isfile(file_path):
+            with open(file_path) as fp:
+                content = fp.read()
+                for m in regex.findall(content):
+                    tag, color = m
+                    if tag.startswith("color") or tag.startswith("chart-"):
+                        _, category, level = tag.split("-")
+                        self.__colors["all"].setdefault(category, {})[tag] = color.strip()
+                    if tag.startswith("charts"):
+                        if color.strip().startswith("("):
+                            self.chart_categories = [s.strip() for s in color.strip()[1:-1].split(",")]
+                        else:
+                            self.chart_categories = ["default"]
+            if self.chart_categories:
+                chart_colors = []
+                tmp_chart_map = {self.chart_categories[0]: self.category(self.chart_categories[0])[::-1]}
+                for i in range(0, len(tmp_chart_map[self.chart_categories[0]])):
+                    for cat in self.chart_categories:
+                        if cat not in tmp_chart_map:
+                            tmp_chart_map[cat] = self.category(cat)[::-1]
+                        chart_colors.append(tmp_chart_map[cat][i])
+                self.charts = chart_colors
+            self.update()
 
     def monochrome(self, name: str, reverse: bool = None):
         """
@@ -312,8 +314,7 @@ class Theme:
                 self.info = self.category("info")
 
     def category(self, name: str, reverse: bool = None) -> List[str]:
-        """
-        Get the colors for a given category.
+        """Get the colors for a given category.
 
         Usages::
 
@@ -324,9 +325,12 @@ class Theme:
             print(page.theme.category("default"))
 
         :param name: The color category
-        :param reverse: Set the color order (default from light to dark)
+        :param reverse: Optional. Set the color order (default from light to dark)
         """
         reverse = reverse or self.dark
+        if name not in self.__colors["all"]:
+            return []
+
         colors = {int(k.split("-")[-1]): v for k, v in self.__colors["all"][name].items()}
         return [colors[k] for k in sorted(colors, reverse=reverse)]
 

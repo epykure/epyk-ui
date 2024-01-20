@@ -123,7 +123,7 @@ class Texts:
 
   def text(self, text: str = "", color: str = None, align: str = 'left', width: types.SIZE_TYPE = ('auto', ""),
            height: types.SIZE_TYPE =(None, "px"), html_code: str = None, tooltip: str = None, options: dict = None,
-           helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlText.Text:
+           helper: str = None, profile: types.PROFILE_TYPE = None, verbose: bool = False) -> html.HtmlText.Text:
     """
     Add the HTML text component to the page.
 

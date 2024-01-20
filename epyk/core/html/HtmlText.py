@@ -232,9 +232,9 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, text: str, color: str, align: str, width, height, html_code: str,
-                 tooltip: str, options, helper: str, profile):
+                 tooltip: str, options, helper: str, profile, verbose: bool = False):
         super(Text, self).__init__(page, text, css_attrs={"color": color, "width": width, "height": height},
-                                   html_code=html_code, profile=profile, options=options)
+                                   html_code=html_code, profile=profile, options=options, verbose=verbose)
         self.add_helper(helper)
         self.css({'text-align': align})
         if tooltip is not None:

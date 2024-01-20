@@ -267,7 +267,7 @@ def to_library(
 
             with open(component_config_path) as fp:
                 content = json.load(fp)
-                for r in content['requirements']:
+                for r in content.get('requirements', []):
                     requirements.add(r)
     pkg_versions = {r: get_version(r, node_modules_path) for r in requirements}
 
