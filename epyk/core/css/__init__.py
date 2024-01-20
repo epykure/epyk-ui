@@ -15,8 +15,7 @@ def css_files_loader(
         style_vars: Optional[Dict[str, str]] = None,
         minify: bool = True
 ) -> str:
-    """
-    Get the CSS content from CSS component files.
+    """Get the CSS content from CSS component files.
 
     :param file_path: The list of CSS styles
     :param selector: Optional. The container selector definition
@@ -64,8 +63,7 @@ def css_files_loader(
 
 
 def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None):
-    """
-    Create a SCSS template file for the definition of colors theme.
+    """Create a SCSS template file for the definition of colors theme.
     It will generate a schema based on the default theme definition.
 
     Usages::
@@ -112,9 +110,8 @@ def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = 
                         fp.write("$chart-%s-%s: %s;\n" % (group, i * 100, color))
 
 
-def scss_icons(out_file_path: str = "ICONS.SCSS"):
-    """
-    Create a SCSS template file for the definition of Icons.
+def scss_icons(file_path: str = "ICONS.SCSS", family: str = None):
+    """Create a SCSS template file for the definition of Icons.
     It will generate a schema based on the default definition using font-awesome icons.
 
     Usages::
@@ -122,20 +119,31 @@ def scss_icons(out_file_path: str = "ICONS.SCSS"):
         import epyk as ek
         ek.helpers.scss_icons()
 
-    :param out_file_path: Optional. The full scss file path
+    :param file_path: Optional. In / Out full scss file path
+    :param family: Optional. Icon's family
     """
-    with open(out_file_path, "w") as fp:
-        fp.write("/* Auto generated SCSS files for icons definition */ \n\n")
-        for k, v in Icons._ICON_MAPPINGS["font-awesome"].items():
-            fp.write("$%s: %s;\n" % (k, v))
+    if Path(file_path).exists():
+        family = family or "SCSS"
+        with open(file_path) as fp:
+            Defaults_css.ICON_MAPPINGS[family] = {}
+            for line in fp:
+                l = line.strip()
+                match = re.search("^\$(.*):(.*);", l)
+                if match:
+                    Defaults_css.ICON_MAPPINGS[family][match.group(1).strip()] = match.group(2).strip()
+    else:
+        family = family or Defaults_css.ICON_FAMILY
+        with open(file_path, "w") as fp:
+            fp.write("/* Auto generated SCSS files for icons definition */ \n\n")
+            for k, v in Defaults_css.ICON_MAPPINGS[family].items():
+                fp.write("$%s: %s;\n" % (k, v))
 
 
 def inline_to_dict(value: str, no_hyphen: bool = True) -> Dict[str, str]:
-    """
-    Convert an inline CSS String to a dictionary.
+    """Convert an inline CSS String to a dictionary.
 
     :param value: Inline CSS content
-    :param no_hyphen: Flag to remove the - from the CSS keys
+    :param no_hyphen: Optional. Flag to remove the - from the CSS keys
     """
     results = {}
     for props in value.split(";"):

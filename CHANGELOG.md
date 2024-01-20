@@ -1,5 +1,24 @@
 ## [Unreleased]
 
+## [1.11.8] - 2024-01-21
+
+### Added
+- More doc and type annotation
+- Generic page function to build, refresh or define any components
+- verbose to text component
+- New JavaScript expression type.
+- Align indent in modules.
+
+### Fixed
+- Fix bugs for NPM
+- Fix bugs in the rest interface.
+- remove duplicate internal icons mapping
+
+### Changed
+- Changes in the doc string to reduce package footprint.
+- Better SCSS export for icons
+
+
 ## [1.11.7] - 2024-01-18
 
 ### Added
@@ -75,6 +94,7 @@ Introduction of native CSS modules.
 ### Changed
 - Changes in the doc string to reduce package footprint.
 - Align indent in modules.
+
 
 ## [1.10.40] - 2023-11-17
 
