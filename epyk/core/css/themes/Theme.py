@@ -40,6 +40,7 @@ class ColorRange:
 
 class Theme:
     dark = False
+    name: str = None
     _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
               '#212121', '#000000']
     _info = ["#e3f2fd", "#2196f3", "#0d47a1"]
@@ -91,8 +92,7 @@ class Theme:
         return self.__colors["greys"][0]
 
     def dark_or_white(self, light=True) -> str:
-        """
-        Get the appropriate light or dark color according to the theme.
+        """Get the appropriate light or dark color according to the theme.
         Setting the Light flag to true will point to white in light mode otherwise it will point to black.
         """
         if light:
@@ -102,8 +102,7 @@ class Theme:
 
     @property
     def black(self):
-        """
-        Get the black color from the theme.
+        """Get the black color from the theme.
 
         Usage::
 
@@ -113,8 +112,7 @@ class Theme:
 
     @property
     def charts(self):
-        """
-        Get the chart colors from the theme.
+        """Get the chart colors from the theme.
 
         Usage::
 
@@ -128,8 +126,7 @@ class Theme:
 
     @property
     def colors(self):
-        """
-        Get the theme colors scale.
+        """Get the theme colors scale.
 
         Usage::
 
@@ -146,8 +143,7 @@ class Theme:
 
     @property
     def greys(self):
-        """
-        Get the theme grey colors scale.
+        """Get the theme grey colors scale.
 
         Usage::
 
@@ -164,8 +160,7 @@ class Theme:
 
     @property
     def warning(self) -> ColorRange:
-        """
-        Get the warning colors. It is a tuple (light, dark).
+        """Get the warning colors. It is a tuple (light, dark).
 
         Usage::
 
@@ -179,8 +174,7 @@ class Theme:
 
     @property
     def danger(self) -> ColorRange:
-        """
-        Get the danger colors. It is a tuple (light, dark).
+        """Get the danger colors. It is a tuple (light, dark).
 
         Usage::
 
@@ -194,8 +188,7 @@ class Theme:
 
     @property
     def info(self) -> ColorRange:
-        """
-        Get the info colors. It is a tuple (light, dark).
+        """Get the info colors. It is a tuple (light, dark).
 
         Usage::
 
@@ -209,8 +202,7 @@ class Theme:
 
     @property
     def success(self) -> ColorRange:
-        """
-        Get the success colors. It is a tuple (light, dark).
+        """Get the success colors. It is a tuple (light, dark).
 
         Usage::
 
@@ -223,12 +215,9 @@ class Theme:
         self.__colors["success"] = ColorRange(colors)
 
     def color_palette(self, palette: str = None, n_colors: int = None, desat: float = None):
-        """
-        Change the chart color codes using standard palettes used in JavaScript and Python libraries.
+        """Change the chart color codes using standard palettes used in JavaScript and Python libraries.
 
-        Related Pages:
-
-          https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html
+        `Color Chart <https://nagix.github.io/chartjs-plugin-colorschemes/colorchart.html>`_
 
         :param palette: Optional. Name of palette or None to set for charts colors
         :param n_colors: Optional. Number of colors in the palette
@@ -242,8 +231,7 @@ class Theme:
             self.__colors["charts"] = getattr(palettes.tableau, palette.split(".")[1])
 
     def from_sass(self, file_path: str = "COLORS.SCSS"):
-        """
-        Load the SASS file to set the colors codes.
+        """Load the SASS file to set the colors codes.
 
         Usage::
 
@@ -253,6 +241,7 @@ class Theme:
 
         :param file_path: The full file path
         """
+        #self.name =
         regex = re.compile("\$(.*): (.*);")
         if os.path.isfile(file_path):
             with open(file_path) as fp:
@@ -279,8 +268,7 @@ class Theme:
             self.update()
 
     def monochrome(self, name: str, reverse: bool = None):
-        """
-        Change the chart definition to use a unique category.
+        """Change the chart definition to use a unique category.
         This must be defined from a CSS file (no default category available).
 
         :param name: The category name
@@ -294,7 +282,7 @@ class Theme:
 
     @property
     def groups(self):
-        """ Get all the technical colors categories """
+        """Get all the technical colors categories"""
         return ["theme", "grey", "warning", "danger", "success"]
 
     def update(self):
@@ -353,6 +341,7 @@ class ThemeCustom(Theme):
 
 
 class ThemeDefault(Theme):
+    name = "default"
     _charts = [
         '#009999', '#336699', '#ffdcb9',
         '#cc99ff', '#b3d9ff', '#ffff99',
@@ -366,6 +355,6 @@ class ThemeDefault(Theme):
         '#fff3e0', '#ffe0b2', '#ffcc80',  # orange
         '#efebe9', '#d7ccc8', '#bcaaa4',  # brown
     ]
-    _colors = ['#f4f9fc', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64',
-               '#37474f', '#263238']
+    _colors = [
+        '#f4f9fc', '#cfd8dc', '#b0bec5', '#90a4ae', '#78909c', '#607d8b', '#546e7a', '#455a64', '#37474f', '#263238']
     _warning, _danger, _success = ['#FFF3CD', '#e2ac00'], ["#F8D7DA", "#C00000"], ['#e8f2ef', '#5DDEAD']

@@ -62,7 +62,7 @@ def css_files_loader(
     return "\n".join(css_formatted)
 
 
-def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None):
+def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None, override: bool = False):
     """Create a SCSS template file for the definition of colors theme.
     It will generate a schema based on the default theme definition.
 
@@ -73,6 +73,7 @@ def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = 
 
     :param out_file_path: Optional. The full scss file path
     :param theme: Optional. The theme to export
+    :param override: Optional. Force the out_file to be updated
     """
     with open(out_file_path, "w") as fp:
         fp.write("/* Auto generated SCSS files for colors definition */ \n")
@@ -110,7 +111,7 @@ def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = 
                         fp.write("$chart-%s-%s: %s;\n" % (group, i * 100, color))
 
 
-def scss_icons(file_path: str = "ICONS.SCSS", family: str = None):
+def scss_icons(file_path: str = "ICONS.SCSS", family: str = None, override: bool = False):
     """Create a SCSS template file for the definition of Icons.
     It will generate a schema based on the default definition using font-awesome icons.
 
@@ -121,8 +122,9 @@ def scss_icons(file_path: str = "ICONS.SCSS", family: str = None):
 
     :param file_path: Optional. In / Out full scss file path
     :param family: Optional. Icon's family
+    :param override: Optional. Force the file_path to be updated
     """
-    if Path(file_path).exists():
+    if Path(file_path).exists() and not override:
         family = family or "SCSS"
         with open(file_path) as fp:
             Defaults_css.ICON_MAPPINGS[family] = {}

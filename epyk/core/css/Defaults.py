@@ -151,6 +151,7 @@ def em_to_px(value: float, with_unit: bool = True) -> str:
 
 
 #
+THEME = "default"
 DEFAULT_STYLE = "no_border"
 ICON_FAMILY = 'font-awesome'
 ICON_MAPPINGS = {

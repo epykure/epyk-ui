@@ -38,8 +38,7 @@ LOG_SERVICE = None
 
 
 def css_inline(attrs: dict = None) -> CssInline:
-    """
-    Create a CSS Inline style.
+    """Create a CSS Inline style.
 
     Usage::
 
@@ -60,8 +59,7 @@ def css_inline(attrs: dict = None) -> CssInline:
 
 
 def rename_css_cls(mappings: dict):
-    """
-    Change the name of the CSS classes in the framework.
+    """Change the name of the CSS classes in the framework.
     This function need to be used before the creation of any component in the page.
 
     This will not change the content. it will only rename them.
@@ -75,8 +73,7 @@ def rename_css_cls(mappings: dict):
 
 
 def packages_black_list(pkgs_alias: List[str], raise_exception: bool = True):
-    """
-    All packages in this list will be considered as forbidden.
+    """All packages in this list will be considered as forbidden.
     The other packages will be authorised.
 
     :param pkgs_alias: A list of packages reference
@@ -92,8 +89,7 @@ def packages_black_list(pkgs_alias: List[str], raise_exception: bool = True):
 
 
 def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
-    """
-    All packages not in those lists will be considered as forbidden.
+    """All packages not in those lists will be considered as forbidden.
 
     :param pkgs_alias: A list of packages reference
     :param raise_exception: Optional. The kind of error triggered
@@ -119,8 +115,7 @@ def packages_white_list(pkgs_alias: List[str], raise_exception: bool = True):
 
 
 class Interface:
-    """
-    Quick interface for building dashboards.
+    """Quick interface for building dashboards.
 
     Usages::
 
@@ -194,8 +189,8 @@ class Interface:
                     ]))
             else:
                 btn.click(
-                    getattr(self.page.js, event.get("method", "get").lower())(event["url"],
-                                                                              components=inputs_comps).onSuccess([
+                    getattr(self.page.js, event.get("method", "get").lower())(
+                        event["url"], components=inputs_comps).onSuccess([
                         self.page.js.if_(events.data.has_key(comp.html_code), [
                             comp.build(events.data[comp.html_code])]) for comp in out_components
                     ]))
@@ -292,7 +287,7 @@ MAP_FIELDS = {
 }
 
 
-def from_json_to_html(content: str, page: Rpt = None):
+def from_json_to_html(content: dict, page: Rpt = None):
     if page is None:
         page = Page()
     components = content["components"] if "components" in content else content
