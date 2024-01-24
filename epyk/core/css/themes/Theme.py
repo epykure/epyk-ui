@@ -3,47 +3,52 @@
 
 import os
 import re
-from typing import List
+from typing import List, Optional, Dict
 from epyk.core.css.themes import palettes
 from epyk.core.css.Colors import THEME_REFERENCE
 
 
 class ColorRange:
 
-    def __init__(self, colors: list, index: int = None):
+    def __init__(self, colors: List[str], index: int = None):
         self.__colors = colors
         self.index = index or round(len(colors) / 2)
 
     def __iter__(self):
-        """ Make the object iterable """
+        """Make the object iterable"""
         yield from self.__colors
 
-    def __getitem__(self, item: int):
-        """ Make the object subscriptable """
+    def __getitem__(self, item: int) -> str:
+        """Make the object subscriptable"""
         return self.__colors[item]
 
     def reverse(self):
+        """Reverse the color range (when DARK_MODE is switched on / off)"""
         self.__colors = self.__colors[::-1]
 
     @property
-    def light(self):
+    def light(self) -> str:
+        """Lightest color from the internal colors range"""
         return self.__colors[0]
 
     @property
-    def dark(self):
+    def dark(self) -> str:
+        """Darkest color from the internal colors range"""
         return self.__colors[-1]
 
     @property
-    def base(self):
+    def base(self) -> str:
         return self.__colors[self.index]
 
 
 class Theme:
     dark = False
-    name: str = None
+    name: Optional[str] = None
     _greys = ['#FFFFFF', '#f5f5f5', '#eeeeee', '#e0e0e0', '#bdbdbd', '#9e9e9e', '#757575', '#616161', '#424242',
               '#212121', '#000000']
     _info = ["#e3f2fd", "#2196f3", "#0d47a1"]
+    # Add extra groups to a theme
+    other_groups: Optional[Dict[str, List[str]]] = None
 
     def __init__(self, ovr_attrs: dict = None, index: int = 5, step: int = 1):
         self.__colors = {
@@ -62,17 +67,16 @@ class Theme:
         if ovr_attrs is not None:
             self.__colors.update(ovr_attrs)
 
-    def notch(self, value: int = None, step: int = None):
-        """
-        Get the base color from the theme.
+    def notch(self, value: int = None, step: int = None) -> str:
+        """Get the base color from the theme.
         The base color can change and it is defined by the variable self.index.
 
         Usage::
 
           base_color = page.theme.notch()
 
-        :param value: Optional. The number of notch from the centered index.
-        :param step: Optional The value of a move (default 1).
+        :param value: Optional. The number of notch from the centered index
+        :param step: Optional The value of a move (default 1)
         """
         step = step or self.step
         if value is not None:
@@ -80,20 +84,31 @@ class Theme:
 
         return self.colors[self.index]
 
+    def __getitem__(self, item: str):
+      """
+
+      This will raise an exception if the group does not exist for the theme.
+      """
+      if item in self.__colors:
+        return self.__colors[item]
+
+      return self.other_groups[item]
+
     @property
-    def white(self):
-        """
-        Get the white color from the theme.
+    def white(self) -> str:
+        """Get the white color from the theme.
 
         Usage::
 
           color = page.theme.white
         """
-        return self.__colors["greys"][0]
+        return self["greys"][0]
 
-    def dark_or_white(self, light=True) -> str:
+    def dark_or_white(self, light: bool = True) -> str:
         """Get the appropriate light or dark color according to the theme.
         Setting the Light flag to true will point to white in light mode otherwise it will point to black.
+
+        :param light:
         """
         if light:
             return self.black if self.dark else self.white
@@ -101,31 +116,31 @@ class Theme:
         return self.white if self.dark else self.black
 
     @property
-    def black(self):
+    def black(self) -> str:
         """Get the black color from the theme.
 
         Usage::
 
           color = page.theme.black
         """
-        return self.__colors["greys"][-1]
+        return self["greys"][-1]
 
     @property
-    def charts(self):
+    def charts(self) -> List[str]:
         """Get the chart colors from the theme.
 
         Usage::
 
           colors = page.theme.charts
         """
-        return self.__colors["charts"]
+        return self["charts"]
 
     @charts.setter
     def charts(self, colors: list):
         self.__colors["charts"] = colors
 
     @property
-    def colors(self):
+    def colors(self) -> List[str]:
         """Get the theme colors scale.
 
         Usage::
@@ -133,16 +148,16 @@ class Theme:
           colors = page.theme.colors
         """
         if self.dark:
-            return self.__colors["colors"][::-1]
+            return self["colors"][::-1]
 
-        return self.__colors["colors"]
+        return self["colors"]
 
     @colors.setter
     def colors(self, colors: list):
         self.__colors["colors"] = colors
 
     @property
-    def greys(self):
+    def greys(self) -> List[str]:
         """Get the theme grey colors scale.
 
         Usage::
@@ -150,9 +165,9 @@ class Theme:
           colors = page.theme.greys
         """
         if self.dark:
-            return self.__colors["greys"][::-1]
+            return self["greys"][::-1]
 
-        return self.__colors["greys"]
+        return self["greys"]
 
     @greys.setter
     def greys(self, colors: list):
@@ -166,7 +181,7 @@ class Theme:
 
           light, dark = page.theme.warning
         """
-        return self.__colors["warning"]
+        return self["warning"]
 
     @warning.setter
     def warning(self, colors: list):
@@ -180,7 +195,7 @@ class Theme:
 
           light, dark = page.theme.danger
         """
-        return self.__colors["danger"]
+        return self["danger"]
 
     @danger.setter
     def danger(self, colors: list):
@@ -194,7 +209,7 @@ class Theme:
 
           light, dark = page.theme.danger
         """
-        return self.__colors["info"]
+        return self["info"]
 
     @info.setter
     def info(self, colors: list):
@@ -208,7 +223,7 @@ class Theme:
 
           light, dark = page.theme.success
         """
-        return self.__colors["success"]
+        return self["success"]
 
     @success.setter
     def success(self, colors: list):
@@ -241,15 +256,16 @@ class Theme:
 
         :param file_path: The full file path
         """
-        #self.name =
         regex = re.compile("\$(.*): (.*);")
         if os.path.isfile(file_path):
+            head, tail = os.path.split(file_path)
+            self.name = tail[:-5]
             with open(file_path) as fp:
                 content = fp.read()
                 for m in regex.findall(content):
                     tag, color = m
                     if tag.startswith("color") or tag.startswith("chart-"):
-                        _, category, level = tag.split("-")
+                        _, category, _ = tag.split("-")
                         self.__colors["all"].setdefault(category, {})[tag] = color.strip()
                     if tag.startswith("charts"):
                         if color.strip().startswith("("):
@@ -281,25 +297,33 @@ class Theme:
         self.charts = colors
 
     @property
-    def groups(self):
-        """Get all the technical colors categories"""
+    def groups(self) -> List[str]:
+        """Get all the technical / extra colors categories defined for a selected theme"""
+        if self.other_groups is not None:
+          return ["theme", "grey", "warning", "danger", "success"] + list(self.other_groups.keys())
+
         return ["theme", "grey", "warning", "danger", "success"]
 
     def update(self):
         """ Sync the colors with the ones stored from the static file. """
-        for category, colors in self.__colors["all"].items():
+        for category in self.__colors["all"].keys():
             if category == "theme":
                 self.colors = self.category("theme")
             elif category == "greys":
                 self.greys = self.category("grey")
             elif category == "warning":
-                self.warning =self.category("warning")
+                self.warning = self.category("warning")
             elif category == "danger":
                 self.danger = self.category("danger")
             elif category == "success":
                 self.success = self.category("success")
             elif category == "info":
                 self.info = self.category("info")
+            else:
+                # Add the extra category to the internal mapping anyway
+                if self.other_groups is None:
+                  self.other_groups = {}
+                self.other_groups[category] = self.category(category)
 
     def category(self, name: str, reverse: bool = None) -> List[str]:
         """Get the colors for a given category.

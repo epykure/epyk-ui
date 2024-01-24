@@ -150,8 +150,13 @@ def em_to_px(value: float, with_unit: bool = True) -> str:
     return px_value
 
 
-#
+# Global configuration for the entire framework
+# Changing those variables will impact all reports generated
+# Theme global settings
 THEME = "default"
+DARK_MODE = False
+
+# Icon global settings
 DEFAULT_STYLE = "no_border"
 ICON_FAMILY = 'font-awesome'
 ICON_MAPPINGS = {
