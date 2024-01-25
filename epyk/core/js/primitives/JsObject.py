@@ -298,6 +298,9 @@ class JsObject(primitives.JsDataModel):
 
         :param items: The keys / depth to lookup
         """
+        if not items:
+            return self.varId
+
         expr = ["[%s]" % JsUtils.jsConvertData(item, None) for item in items]
         return "typeof %s?.%s !== 'undefined'" % (self.varId, "?.".join(expr))
 
@@ -306,6 +309,9 @@ class JsObject(primitives.JsDataModel):
 
         :param items: The keys / depth to lookup
         """
+        if not items:
+            return self.varId
+
         expr = ["[%s]" % JsUtils.jsConvertData(item, None) for item in items]
         return "%s?.%s" % (self.varId, "?.".join(expr))
 
