@@ -17,8 +17,10 @@ from epyk.core.html.Standalone import Resources as resources
 
 from epyk.core.css import themes
 from epyk.core.css import Defaults as settings_css
-from epyk.core.css import Colors as colors, scss_colors, scss_icons, css_files_loader
-from epyk.core.css.themes import palettes
+from epyk.core.css.Icons import get_icon, defined_icons, set_family
+from epyk.core.css import Colors as colors, scss_colors, scss_icons, css_files_loader, export_scss_files
+from epyk.core.css.themes import palettes, add_themes, set_theme, Theme, get_themes, get_theme
+from epyk.core.css.themes.Theme import Theme
 from epyk.core.css.styles.attributes import CssInline
 
 # Add JavaScript shortcuts

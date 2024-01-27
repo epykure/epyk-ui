@@ -36,8 +36,7 @@ class Font:
         self._size = value
 
     def normal(self, step: int = 0, unit: str = None) -> str:
-        """
-        Font text format.
+        """Font text format.
 
         :param step: Optional. The value to be added to the default font size
         :param unit: Optional. The unit code. default px
@@ -45,8 +44,7 @@ class Font:
         return "%s%s" % (self._size + step, unit or self.unit)
 
     def header(self, step: int = 0, unit: str = None) -> str:
-        """
-        Font header format.
+        """Font header format.
 
         :param step: Optional. The value to be added to the default font size
         :param unit: Optional. The unit code. default px
@@ -58,8 +56,7 @@ class Icon:
     small, normal, big, unit = 10, 15, 25, 'px'
 
     def small_size(self, step: int = 0, unit: str = None) -> str:
-        """
-        Icon small format.
+        """Icon small format.
 
         :param step: Optional. The value to be added to the default font size
         :param unit: Optional. The unit code. default px
@@ -67,8 +64,7 @@ class Icon:
         return "%s%s" % (self.small + step, unit or self.unit)
 
     def normal_size(self, step: int = 0, unit: str = None) -> str:
-        """
-        Icon normal format.
+        """Icon normal format.
 
         :param step: Optional. The value to be added to the default font size
         :param unit: Optional. The unit code. default px
@@ -76,8 +72,7 @@ class Icon:
         return "%s%s" % (self.normal + step, unit or self.unit)
 
     def big_size(self, step: int = 0, unit: str = None) -> str:
-        """
-        Icon big format.
+        """Icon big format.
 
         :param step: Optional. The value to be added to the default font size
         :param unit: Optional. The unit code. default px
@@ -94,16 +89,13 @@ def header(step: int = 0) -> str:
 
 
 def inline(css_attrs: dict, important: bool = False) -> str:
-    """
-    Convert a CSS attributes dictionary to a online CSS Style to be added to the dom object.
+    """Convert a CSS attributes dictionary to a online CSS Style to be added to the dom object.
 
     Usage::
 
       inline({"color": "red"})
 
-    Related Pages::
-
-      https://www.w3schools.com/css/css_howto.asp
+    `w3schools <https://www.w3schools.com/css/css_howto.asp>`_
 
     :param css_attrs: The CSS Attributes
     :param important: Optional. Set the attributes to important. Default False
@@ -115,12 +107,9 @@ def inline(css_attrs: dict, important: bool = False) -> str:
 
 
 def px_to_em(value: float, with_unit: bool = True) -> str:
-    """
-    Convert the pixel value to em.
+    """Convert the pixel value to em.
 
-    Related Pages::
-
-        https://www.w3schools.com/cssref/css_pxtoemconversion.asp
+    `w3schools <https://www.w3schools.com/cssref/css_pxtoemconversion.asp>`_
 
     :param value: A pixel value
     :param with_unit: Optional. To define the return format
@@ -133,12 +122,9 @@ def px_to_em(value: float, with_unit: bool = True) -> str:
 
 
 def em_to_px(value: float, with_unit: bool = True) -> str:
-    """
-    Convert an em value in pixel.
+    """Convert an em value in pixel.
 
-    Related Pages::
-
-        https://www.w3schools.com/cssref/css_pxtoemconversion.asp
+    `w3schools <https://www.w3schools.com/cssref/css_pxtoemconversion.asp>`_
 
     :param value: The em value
     :param with_unit: Optional. To define the return format
@@ -227,14 +213,19 @@ ICON_MAPPINGS = {
         'star': "fa fa-star",
         'arrow_right': "fas fa-arrow-alt-circle-right",
         'arrow_left': "fas fa-arrow-alt-circle-left",
+        'face_grin_hearts': "far fa-grin-hearts",
+        'face_smile': "far fa-smile",
+        'face_meh': "far fa-meh",
+        'face_frown_open': "far fa-frown-open",
+        'face_frown': "far fa-frown",
     }
 }
+
 WEB_LIBS = "std"
 
 
 def get_icon(alias: Optional[str], family: str = None) -> dict:
-    """
-    Return the icon from an alias.
+    """Return the icon from an alias from any family.
     This will allow the integration of multiple icon libraries.
 
     :param alias: The icon reference in the components
@@ -278,7 +269,7 @@ class GlobalStyle:
 
     @property
     def font(self) -> Font:
-        """	Set the page font. """
+        """Set the page font"""
         if self._font is None:
             self._font = Font(self.page)
         return self._font

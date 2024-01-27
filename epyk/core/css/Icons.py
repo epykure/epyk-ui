@@ -1,6 +1,30 @@
 import re
-from typing import Optional, Any
+from typing import Optional, Any, Dict, List
 from . import Defaults as Defaults_css
+
+
+def defined_icons()-> Dict[str, str]:
+    """Return a copy of the internal icon mapping """
+    return dict(Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY])
+
+
+def get_icon(alias: str) -> Optional[str]:
+    """Get the icon class.
+
+    :param alias: The icon alias from the internal mapping
+    """
+    return Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY][alias]
+
+
+def set_family(alias: str):
+    """Set the default family for the entire framework.
+
+    :param alias: Icon Family alias
+    """
+    if alias not in Defaults_css.ICON_MAPPINGS:
+        raise ValueError("Family %s is not defined in the internal mapping" % alias)
+
+    Defaults_css.ICON_FAMILY = alias
 
 
 class IconModel:

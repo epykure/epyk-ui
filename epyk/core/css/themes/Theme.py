@@ -51,16 +51,13 @@ class Theme:
     other_groups: Optional[Dict[str, List[str]]] = None
 
     def __init__(self, ovr_attrs: dict = None, index: int = 5, step: int = 1):
-        self.__colors = {
-            "charts": list(self._charts),
-            "colors": list(self._colors),
-            "greys": list(self._greys),
-            "warning": ColorRange(self._warning),
-            "danger": ColorRange(self._danger),
-            "success": ColorRange(self._success),
-            "info": ColorRange(self._info),
-            "all": {}
-        }
+        sys_categories = ["charts", "colors", "greys"]
+        sys_color_ranges = ["warning", "danger", "success", "info"]
+        self.__colors = {"all": {}}
+        for c in sys_categories:
+            self.__colors[c] = getattr(self, "_%s" % c, [])
+        for c in sys_color_ranges:
+            self.__colors[c] = ColorRange(getattr(self, "_%s" % c, []))
         self.chart_categories = []
         self.index = index
         self.step = step

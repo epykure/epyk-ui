@@ -62,7 +62,20 @@ def css_files_loader(
     return "\n".join(css_formatted)
 
 
-def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None, override: bool = False):
+def export_scss_files(out_path: str = None):
+    """This will export all SCSS files namely the colors and the Icons theme
+
+    :param out_path: The export path. If None it will take the current directory
+    """
+    out_path = out_path or Path.cwd()
+    out_theme_path = Path(out_path, "%s.SCSS" % Defaults_css.THEME.upper())
+    scss_colors(file_path=str(out_theme_path), theme=themes.get_theme(), override=True)
+
+    out_icons_path = Path(out_path, "%s.SCSS" % Defaults_css.ICON_FAMILY.upper())
+    scss_icons(file_path=str(out_icons_path), family=Defaults_css.ICON_FAMILY, override=True)
+
+
+def scss_colors(file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None, override: bool = False):
     """Create a SCSS template file for the definition of colors theme.
     It will generate a schema based on the default theme definition.
 
@@ -71,44 +84,52 @@ def scss_colors(out_file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = 
         import epyk as ek
         ek.helpers.scss_colors()
 
-    :param out_file_path: Optional. The full scss file path
+    :param file_path: Optional. The full scss file path
     :param theme: Optional. The theme to export
     :param override: Optional. Force the out_file to be updated
     """
-    with open(out_file_path, "w") as fp:
-        fp.write("/* Auto generated SCSS files for colors definition */ \n")
-        if theme is None:
-            theme = themes.Theme.ThemeDefault()
-        mapped_groups = {"theme": "colors", "grey": "greys"}
-        for group in theme.groups:
-            fp.write("\n/* Colors codes for %s */ \n" % group)
-            for i, color in enumerate(getattr(theme, mapped_groups.get(group, group))[::-1]):
-                if i == 0:
-                    fp.write("$color-%s-50: %s;\n" % (group, color))
-                else:
-                    fp.write("$color-%s-%s: %s;\n" % (group, i * 100, color))
+    out_path = Path(file_path)
+    if not out_path.exists() or override:
+        with open(out_path, "w") as fp:
+            fp.write("/* Auto generated SCSS files for colors definition */ \n")
+            if theme is None:
+                theme = themes.Theme.ThemeDefault()
+            mapped_groups = {"theme": "colors", "grey": "greys"}
+            for group in theme.groups:
+                fp.write("\n/* Colors codes for %s */ \n" % group)
+                cat = mapped_groups.get(group, group)
+                for i, color in enumerate(theme[cat][::-1]):
+                    if i == 0:
+                        fp.write("$color-%s-50: %s;\n" % (group, color))
+                    else:
+                        fp.write("$color-%s-%s: %s;\n" % (group, i * 100, color))
 
-        fp.write("\n\n/* Colors codes for charts */ \n")
-        if not theme.chart_categories:
-            fp.write("/*$charts: (green, blue, purple, yellow, orange, red, brown) ; */ \n")
-            fp.write("$charts: default ; \n\n")
-            for i, color in enumerate(theme.charts):
-                if i == 0:
-                    fp.write("$chart-default-50: %s;\n" % color)
-                else:
-                    fp.write("$chart-default-%s: %s;\n" % (i * 100, color))
-        else:
-            if len(theme.chart_categories) > 1:
-                fp.write("/*$charts: (%s) ; */ \n" % ", ".join(theme.chart_categories))
-            else:
+            fp.write("\n\n/* Colors codes for charts */ \n")
+            if not theme.chart_categories:
                 fp.write("/*$charts: (green, blue, purple, yellow, orange, red, brown) ; */ \n")
-                fp.write("$charts: %s ; \n\n" % theme.chart_categories[0])
-            for group in theme.chart_categories:
+                fp.write("$charts: default ; \n\n")
                 for i, color in enumerate(theme.charts):
                     if i == 0:
-                        fp.write("$chart-%s-50: %s;\n" % (group, color))
+                        fp.write("$chart-default-50: %s;\n" % color)
                     else:
-                        fp.write("$chart-%s-%s: %s;\n" % (group, i * 100, color))
+                        fp.write("$chart-default-%s: %s;\n" % (i * 100, color))
+            else:
+                if len(theme.chart_categories) > 1:
+                    fp.write("/*$charts: (%s) ; */ \n" % ", ".join(theme.chart_categories))
+                else:
+                    fp.write("/*$charts: (green, blue, purple, yellow, orange, red, brown) ; */ \n")
+                    fp.write("$charts: %s ; \n\n" % theme.chart_categories[0])
+                for group in theme.chart_categories:
+                    for i, color in enumerate(theme.charts):
+                        if i == 0:
+                            fp.write("$chart-%s-50: %s;\n" % (group, color))
+                        else:
+                            fp.write("$chart-%s-%s: %s;\n" % (group, i * 100, color))
+    else:
+        dyn_theme = themes.Theme.Theme()
+        dyn_theme.from_sass(file_path)
+        themes.add_themes([dyn_theme])
+        themes.set_theme(dyn_theme.name)
 
 
 def scss_icons(file_path: str = "ICONS.SCSS", family: str = None, override: bool = False):
@@ -124,8 +145,9 @@ def scss_icons(file_path: str = "ICONS.SCSS", family: str = None, override: bool
     :param family: Optional. Icon's family
     :param override: Optional. Force the file_path to be updated
     """
-    if Path(file_path).exists() and not override:
-        family = family or "SCSS"
+    fpath = Path(file_path)
+    if fpath.exists() and not override:
+        family = family or fpath.stem.lower()
         with open(file_path) as fp:
             Defaults_css.ICON_MAPPINGS[family] = {}
             for line in fp:
@@ -133,6 +155,7 @@ def scss_icons(file_path: str = "ICONS.SCSS", family: str = None, override: bool
                 match = re.search("^\$(.*):(.*);", l)
                 if match:
                     Defaults_css.ICON_MAPPINGS[family][match.group(1).strip()] = match.group(2).strip()
+                    Defaults_css.ICON_FAMILY = family
     else:
         family = family or Defaults_css.ICON_FAMILY
         with open(file_path, "w") as fp:
