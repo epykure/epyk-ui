@@ -857,17 +857,18 @@ class Report:
         self.properties.js.add_event("DOMContentLoaded", DOMContentLoaded())
         return self
 
-    def define(self, html_code: str, options=None, dataflows: List[dict] = None) -> str:
+    def define(self, html_code: str, options=None, dataflows: List[dict] = None, component_id: str = None) -> str:
         """Override the chart settings on the JavaScript side.
         This will allow ot set specific styles for some series or also add commons properties.
 
         :param html_code: Component ID
         :param options: JavaScript of Python attributes
         :param dataflows: Chain of config transformations:
+        :param component_id: Optional. The object reference ID
         """
         if html_code in self.components:
             if hasattr(self.components[html_code], "define"):
-                return self.components[html_code].define(html_code, options, dataflows)
+                return self.components[html_code].define(options, dataflows)
 
         return ""
 
