@@ -73,30 +73,67 @@ class Newline(Html.Html):
 class Stars(Html.Html):
   name = 'Stars'
   tag = "div"
+  _option_cls = OptText.OptionsSurveys
 
   def __init__(self, page: primitives.PageModel, val, label, color, align, best, html_code, helper, options, profile):
-    icon_details = page.icons.get("star")
-    if icon_details['icon_family'] != 'bootstrap-icons':
-      self.requirements = (icon_details['icon_family'],)
+    if options is None:
+      options = {}
+    options.update({"best": best, "position": val, "label": label})
+    icons = options.get("icon", "star")
+    icon_details, colors = [], []
+    if isinstance(icons, list):
+      options["scale"] = True
+      for icon in icons:
+        icon_details.append(page.icons.get(icon))
+    else:
+      options["scale"] = False
+      icon = page.icons.get(icons)
+      for i in range(best):
+        icon_details.append(icon)
+    if options.get("colors"):
+      colors = options["colors"]
+    elif color is None:
+      for i in range(best):
+        colors.append(page.theme.success.base)
+    elif isinstance(color, list):
+      colors = color
+    else:
+      for i in range(best):
+        colors.append(color)
+
+    if icon_details and icon_details[0]['icon_family'] != 'bootstrap-icons':
+      self.requirements = (icon_details[0]['icon_family'],)
     super(Stars, self).__init__(page, val, html_code=html_code, profile=profile, options=options)
     # Add the HTML components
     self._spans = []
-    self._jsStyles = {'color': self.page.theme.success.base if color is None else color}
+    self.options.colors = colors
     for i in range(best):
       self.add_span("", position="after", css=False)
-      self._sub_htmls[-1].attr['class'].add(icon_details["icon"])
-      self._sub_htmls[-1].css({"margin": 0, "padding": 0})
+      self._sub_htmls[-1].attr['class'].add(icon_details[i]["icon"])
+      self._sub_htmls[-1].css(self.options.style)
       self._sub_htmls[-1].set_attrs(name="data-level", value=i)
-      if i < val:
-        self._sub_htmls[-1].css({"color": self._jsStyles['color']})
+      if len(self.options.tooltips) > i:
+        self._sub_htmls[-1].set_attrs(name="title", value=self.options.tooltips[i])
+      if val and self.options.tail and i < val:
+        self._sub_htmls[-1].css({"color": self.options.colors[i]})
+      elif val and not self.options.tail and i == val-1:
+        self._sub_htmls[-1].css({"color": self.options.colors[i]})
       self._spans.append(self._sub_htmls[-1])
     self.set_attrs(name='data-level', value=val)
-    self.add_label(label, {"margin": "0 0 0 5px", 'height': 'none', "text-align": "left", "display": "inline-block",
-                           'float': 'None'}, html_code=self.htmlCode, position="after")
+    self.add_label(label, self.options.style_label, html_code=self.html_code, position="after")
     self.add_helper(helper)
     if self.helper:
       self.helper.css({"margin": '1px 4px'})
     self.css({'text-align': align, "display": 'block'})
+
+  @property
+  def options(self) -> OptText.OptionsSurveys:
+    """Property to the component options.
+    Options can either impact the Python side or the Javascript builder.
+
+    Python can pass some options to the JavaScript layer.
+    """
+    return super().options
 
   @property
   def dom(self) -> JsHtmlStars.Stars:
@@ -105,8 +142,7 @@ class Stars(Html.Html):
       self._dom = JsHtmlStars.Stars(self, page=self.page)
     return self._dom
 
-  def click(self, js_funcs: types.JS_FUNCS_TYPES = None,
-            profile: types.PROFILE_TYPE = None,
+  def click(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
             source_event: Optional[str] = None, on_ready: bool = False):
     """Add the event click and double click to the starts item.
     The Javascript function will be triggered after the change of content of the component.
@@ -130,7 +166,7 @@ class Stars(Html.Html):
       if not isinstance(js_funcs, list):
         js_funcs = [js_funcs]
     js_funcs = ["var data = parseInt(event.target.dataset.level)+1",
-                self.build(data=JsObjects.JsObjects.get("data"), options=self._jsStyles)] + js_funcs
+                self.build(data=JsObjects.JsObjects.get("data"))] + js_funcs
     str_fncs = JsUtils.jsConvertFncs(js_funcs)
     for span in self._spans:
       span.click(str_fncs, profile, source_event=source_event, on_ready=on_ready)

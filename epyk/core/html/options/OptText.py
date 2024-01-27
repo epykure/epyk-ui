@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import Union, List
 from epyk.core.html.options import Options
 from epyk.core.html.options import OptionsWithTemplates
 from epyk.core.js.packages import packageImport
@@ -925,3 +925,98 @@ class OptionsUpdate(Options):
   def template(self, value: str):
     self.component._label = ""
     self._config("function(date){return %s}" % value, js_type=True)
+
+
+class OptionsSurveys(OptionsWithTemplates):
+  component_properties = ("style_label", "names", "tail")
+
+  @property
+  def best(self) -> int:
+    return self._config_get(None)
+
+  @best.setter
+  def best(self, value: int):
+    self._config(value)
+
+  @property
+  def icon(self) -> Union[List[str], str]:
+    return self._config_get("star")
+
+  @icon.setter
+  def icon(self, icon: Union[List[str], str]):
+    self._config(icon)
+
+  @property
+  def scale(self) -> bool:
+    return self._config_get(False)
+
+  @scale.setter
+  def scale(self, scale: bool):
+    self._config(scale)
+
+  @property
+  def colors(self) -> str:
+    return self._config_get(None)
+
+  @colors.setter
+  def colors(self, values: List[str]):
+    self._config(values)
+
+  @property
+  def tail(self) -> bool:
+    return self._config_get(True)
+
+  @tail.setter
+  def tail(self, value: bool):
+    self._config(value)
+
+  @property
+  def style(self) -> dict:
+    return self._config_get({"margin": 0, "padding": 0})
+
+  @style.setter
+  def style(self, values: dict):
+    self._config(values)
+
+  @property
+  def names(self) -> dict:
+    return self._config_get([])
+
+  @names.setter
+  def names(self, values: List[str]):
+    self._config(values)
+
+  @property
+  def tooltips(self) -> dict:
+    return self._config_get([])
+
+  @tooltips.setter
+  def tooltips(self, values: List[str]):
+    self._config(values)
+
+  @property
+  def style_label(self) -> dict:
+    return self._config_get({
+      "margin": "0 0 0 5px", 'height': 'none', "text-align": "left", "display": "inline-block", 'float': 'None',
+      "font-size": self.page.body.style.globals.font.normal(), "color": self.page.theme.black
+    })
+
+  @style_label.setter
+  def style_label(self, values: dict):
+    self._config(values)
+
+  @property
+  def position(self) -> int:
+    return self._config_get(None)
+
+  @position.setter
+  def position(self, value: int):
+    self._config(value)
+
+  @property
+  def label(self) -> int:
+    return self._config_get("")
+
+  @label.setter
+  def label(self, value: str):
+    self._config(value)

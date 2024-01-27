@@ -94,8 +94,7 @@ class Rich:
         :param helper: Optional. The value to be displayed to the helper icon
         :param profile: Optional. A flag to set the component performance storage
         """
-        html_star = html.HtmlOthers.Stars(self.page, val, label, color, align, best, html_code, helper, options,
-                                          profile)
+        html_star = html.HtmlOthers.Stars(self.page, val, label, color, align, best, html_code, helper, options, profile)
         html.Html.set_component_skin(html_star)
         return html_star
 

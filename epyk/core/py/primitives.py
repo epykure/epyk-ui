@@ -108,6 +108,7 @@ class PageModel:
   py = None
   user = None
   entities = None
+  icons: dict = None
 
   @property
   @abstractmethod

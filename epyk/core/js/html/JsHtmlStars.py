@@ -11,8 +11,8 @@ class Stars(JsHtml.JsHtmlRich):
     def val(self):
         """The Javascript data object. A dictionary with all the specific metadata attached to the component. """
         return JsObjects.JsObjects.get(
-            "{%s: {value: %s.dataset.level, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-                self.htmlCode, self.varName))
+            "{%s: {value: %s.dataset.level, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), names: %s}}" % (
+                self.htmlCode, self.varName, self.component.options.names))
 
     @property
     def content(self) -> JsHtml.ContentFormatters:
@@ -20,6 +20,10 @@ class Stars(JsHtml.JsHtmlRich):
         This returned only a value corresponding to the state of the component.
         """
         return JsHtml.ContentFormatters(self.page, "%s.dataset.level" % self.varName)
+
+    def selection(self):
+        """Get the selected name"""
+        return JsObjects.JsString.JsString.get("%s[%s.dataset.level-1]" % (self.component.options.names, self.varName))
 
 
 class Slides(JsHtml.JsHtmlRich):
