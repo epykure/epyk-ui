@@ -46,9 +46,9 @@ class JsPromiseRecords(primitives.JsDataModel):
     def get(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """
 
-    :param js_funcs: The Javascript functions
-    :param profile: Optional. A flag to set the component performance storage
-    """
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
         self.promise.then("function(data){%s}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
@@ -57,10 +57,10 @@ class JsPromiseRecords(primitives.JsDataModel):
     def cast(self, columns: list, to: str = "float", profile: types.PROFILE_TYPE = None):
         """
 
-    :param columns:
-    :param to:
-    :param profile: Optional. A flag to set the component performance storage.
-    """
+        :param columns:
+        :param to:
+        :param profile: Optional. A flag to set the component performance storage.
+        """
         cast_cols = {}
         str_frg = []
         if not isinstance(to, dict):
@@ -78,9 +78,9 @@ class JsPromiseRecords(primitives.JsDataModel):
     def row(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False):
         """
 
-    :param js_funcs: The Javascript functions
-    :param profile: Optional. A flag to set the component performance storage
-    """
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
         if not isinstance(js_funcs, list):
             js_funcs = []
         self.promise.then(
@@ -93,11 +93,11 @@ class JsPromiseRecords(primitives.JsDataModel):
                   operator: str = "==", keep: bool = True):
         """
 
-    :param column:
-    :param value:
-    :param operator:
-    :param keep:
-    """
+        :param column:
+        :param value:
+        :param operator:
+        :param keep:
+        """
         column = JsUtils.jsConvertData(column, None)
         value = JsUtils.jsConvertData(value, None)
         if not keep:

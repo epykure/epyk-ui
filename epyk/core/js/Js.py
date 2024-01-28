@@ -1603,7 +1603,7 @@ if (!existingStyle && (styleElementId !== 'css_')) {
         return self.window.setTimeout(js_funcs, seconds * 1000, window_id, profile)
 
     def callback_data(self, data, keys, js_funcs, comparator: Union[dict, str] = None, html_codes: List[str] = None,
-                      profile: Optional[Union[bool, dict]] = None) -> types.JS_EXPR_TYPES:
+                      profile: Optional[Union[bool, dict]] = None, ignore_empty: bool = False) -> types.JS_EXPR_TYPES:
         """JavaScript's expression to define a data callback function.
 
         :param data: The data object
@@ -1612,6 +1612,7 @@ if (!existingStyle && (styleElementId !== 'css_')) {
         :param comparator: Optional. The comparator rule. By default, it will just check if key exist
         :param html_codes: Optional. The components required to run the expression
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        :param ignore_empty: Optional. Flag to ignore key with empty value
         """
         if html_codes and self.page is not None:
             for html_code in html_codes:
@@ -1626,11 +1627,12 @@ if (!existingStyle && (styleElementId !== 'css_')) {
                 value = JsUtils.jsConvertData(comparator, None)
                 operator = "=="
             return JsUtils.jsWrap("if((%s) && (%s %s %s)){%s}" % (
-                data.has_keys(keys), data.get_value(keys), operator, value,
+                data.has_keys(keys, ignore_empty=ignore_empty), data.get_value(keys), operator, value,
                 JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
         return JsUtils.jsWrap("if(%s){%s}" % (
-            data.has_keys(keys), JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+            data.has_keys(keys, ignore_empty=ignore_empty),
+            JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
 
 class JsConsole:
