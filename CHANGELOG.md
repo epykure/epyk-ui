@@ -1,5 +1,18 @@
 ## [Unreleased]
 
+
+## [1.11.9] - 2024-01-28
+
+### Added
+- Flag to ignore empty string in JavaScript conditions
+- New features for rich components
+- New shortcut for themes, colors and icons at package level
+
+### Changed
+- Changes in the doc string to reduce package footprint.
+- Better SCSS export for icons / themes
+
+
 ## [1.11.8] - 2024-01-21
 
 ### Added
