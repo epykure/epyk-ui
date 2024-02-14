@@ -1,7 +1,7 @@
 
 
-function geoChoroplethCountry(htmlObj, data, options, mapFile, callbacks){
-    fetch(mapFile).then(
+function geoChoroplethCountry(htmlObj, data, options, callbacks){
+    fetch(options.options._mapFile).then(
       function(r){r.json().then(function(geoData){
           var chartContext = options;
           chartContext.data = {labels: [], datasets: [{label: 'Countries', data: [] }]};

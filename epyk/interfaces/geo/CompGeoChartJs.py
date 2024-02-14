@@ -49,6 +49,7 @@ class BubbleMaps:
     height = Arguments.size(height, unit="px")
     geo_chart = geo.GeoChartJs.Choropleth(self.page, width, height, html_code, options or {}, profile)
     geo_chart._attrs['type'] = "bubbleMap"
+
     geo_chart.options.scale.projection = "mercator"
     geo_chart.options.geo.radiusScale.display = True
     geo_chart.options.geo.radiusScale.size = [1, 20]
@@ -245,7 +246,7 @@ class Choropleth:
          options: dict = None, width: Union[int, tuple] = (100, "%"),
          height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
-    chart.geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/fra.json"
+    chart.options.mapFile = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/fra.json"
     if self.page.imports.pkgs.chart_js_extensions.geo.version[0].startswith("4."):
       chart.options.scales.projection.projectionScale = 24
       chart.options.scales.projection.projectionOffset = [-80, 1050]
@@ -275,7 +276,7 @@ class Choropleth:
     :return:
     """
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
-    chart.geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/gbr.json"
+    chart.options.mapFile = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/gbr.json"
     if self.page.imports.pkgs.chart_js_extensions.geo.version[0].startswith("4."):
       chart.options.scales.projection.projectionScale = 20
       chart.options.scales.projection.projectionOffset = [0, 1100]
@@ -285,7 +286,7 @@ class Choropleth:
             options: dict = None, width: Union[int, tuple] = (100, "%"),
             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
-    chart.geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/ita.json"
+    chart.options.mapFile = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/ita.json"
     if self.page.imports.pkgs.chart_js_extensions.geo.version[0].startswith("3."):
       chart.options.scales.projection.center = [78.9629, 23.5937]
       chart.options.scales.projection.padding = 10
@@ -298,5 +299,5 @@ class Choropleth:
             options: dict = None, width: Union[int, tuple] = (100, "%"),
             height: Union[int, tuple] = (Defaults_html.CHARTS_HEIGHT_PX, "px"), html_code: str = None):
     chart = self.country(record, y_columns, x_axis, profile, options, width, height, html_code)
-    chart.geo_map = "https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json"
+    chart.options.mapFile = "https://rawgit.com/Anujarya300/bubble_maps/master/data/geography-data/india.topo.json"
     return chart

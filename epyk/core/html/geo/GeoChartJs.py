@@ -46,12 +46,9 @@ class Choropleth(GraphChartJs.Chart):
         callbacks = "(function(){})"
         if stop_state:
             callbacks = "(function(){%s})" % self.hide_state(self.html_code)
-        return "%(builder)s(%(htmlObj)s, %(data)s, %(options)s, %(map)s, %(callbacks)s)" % {
-            "data": data or [], "options": self.getCtx(),
-            "builder": self.builder_name,
-            "callbacks": callbacks,
-            "htmlObj": component_id or self.dom.varId,
-            'map': JsUtils.dataFlows(data, dataflows, self.page)
+        return "%(builder)s(%(htmlObj)s, %(data)s, %(options)s, %(callbacks)s)" % {
+            "data": JsUtils.dataFlows(data, dataflows, self.page), "options": self.getCtx(),
+            "builder": self.builder_name, "callbacks": callbacks, "htmlObj": component_id or self.dom.varId
         }
 
     def __str__(self):

@@ -3277,6 +3277,15 @@ class OptionPlugins(Options):
 
 
 class OptionsGeo(ChartJsOptions):
+    component_properties = ('mapFile',)
+
+    @property
+    def mapFile(self):
+        return self._config_get(self.component.geo_map, name="_mapFile")
+
+    @mapFile.setter
+    def mapFile(self, val: str):
+        self._config(val, name="_mapFile")
 
     @property
     def showOutline(self):
@@ -3311,8 +3320,7 @@ class OptionsGeo(ChartJsOptions):
 
     @property
     def plugins(self) -> OptionPlugins:
-        """
-    """
+        """ """
         return self._config_sub_data("plugins", OptionPlugins)
 
 

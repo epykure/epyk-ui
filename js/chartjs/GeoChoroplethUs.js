@@ -1,7 +1,7 @@
 
 
-function geoChoroplethUs(htmlObj, data, options, mapFile, callbacks){
-    fetch(mapFile).then(
+function geoChoroplethUs(htmlObj, data, options, callbacks){
+    fetch(options.options._mapFile).then(
           function(r){r.json().then(function(geoData){
               const nation = ChartGeo.topojson.feature(geoData, geoData.objects.nation).features[0];
               const states = ChartGeo.topojson.feature(geoData, geoData.objects.states).features;

@@ -384,6 +384,9 @@ class JsBase:
         """
         return JsFncs.JsFunction("!%s" % JsUtils.jsConvertData(data, js_conv_func))
 
+    def online(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = False):
+        return self.if_(self.navigator.onLine, js_funcs, profile)
+
     def if_(self, condition: Union[str, list, bool], js_funcs: Union[list, str],
             profile: Optional[Union[dict, bool]] = False):
         """Conditional statements are used to perform different actions based on different conditions.
