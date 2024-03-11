@@ -893,3 +893,24 @@ class Report:
                                                     stop_state=stop_state, dataflows=dataflows)
 
         return ""
+
+    def licenses(self, commercial: bool = False) -> dict:
+        """Get licenses for underlying packages.
+        This is only informative and this might be changed by the third party library.
+        Do not hesitate to let us know any update.
+
+        :param commercial: Check if commercial licenses are available
+        """
+        packages = {}
+        for pkg in self.jsImports:
+            packages[pkg] = Imports.JS_IMPORTS[pkg].get('license')
+            plans = Imports.JS_IMPORTS[pkg].get('pricing')
+            if plans and commercial:
+                packages.setdefault("commercial", {})[pkg] = plans
+        for pkg in self.cssImport:
+            if pkg not in Imports.JS_IMPORTS:
+                if pkg in Imports.CSS_IMPORTS:
+                    packages[pkg] = Imports.CSS_IMPORTS[pkg].get('license')
+                    if plans and commercial:
+                        packages.setdefault("commercial", {})[pkg] = plans
+        return packages

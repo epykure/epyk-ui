@@ -161,6 +161,7 @@ TABULATOR_EXTENSIONS = '0.0.29'
 JS_IMPORTS = {
     #
     'intersection-observer': {
+        "license": "W3C Software and Document License",
         "repository": "https://github.com/w3c/IntersectionObserver/tree/main/polyfill",
         "version": "0.12.0",
         "polyfill": True,
@@ -173,6 +174,7 @@ JS_IMPORTS = {
     'accounting': {
         "repository": "https://github.com/openexchangerates/accounting.js",
         "version": "0.4.1",
+        "license": "MIT License",
         'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting'},
         'v_prefix': 'v',
         'modules': [
@@ -184,6 +186,8 @@ JS_IMPORTS = {
     'highcharts': {
         'version': '11.2.0',
         "unpkg": False,
+        "license": "License",
+        "pricing": "https://shop.highcharts.com/",
         'modules': [
             {'script': 'highcharts.min.js', 'path': 'highcharts/%(version)s/', 'cdnjs': CDNJS_REPO},
             {'script': 'highcharts-more.min.js', 'path': 'highcharts/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -198,6 +202,7 @@ JS_IMPORTS = {
     'chartist': {
         'version': '0.11.4',
         "unpkg": False,
+        "license": "MIT License",
         'modules': [
             {'script': 'chartist.min.js', 'path': 'chartist/%(version)s/', 'cdnjs': CDNJS_REPO},
         ],
@@ -208,6 +213,7 @@ JS_IMPORTS = {
     # QR Code
     'qrcodejs': {
         'version': '1.0.0',
+        "license": "MIT License",
         'modules': [
             {'script': 'qrcode.min.js', 'path': 'qrcodejs/%(version)s/', 'cdnjs': CDNJS_REPO},
         ],
@@ -219,6 +225,7 @@ JS_IMPORTS = {
     'underscore': {
         'version': '1.13.6',
         'repository': 'https://github.com/jashkenas/underscore',
+        "license": "MIT License",
         'modules': [
             {'script': 'underscore-min.js', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
             {'script': 'underscore-min.js.map', 'path': 'underscore.js/%(version)s/', 'cdnjs': CDNJS_REPO},
@@ -227,16 +234,20 @@ JS_IMPORTS = {
 
     # Plolyfill
     'promise-polyfill': {
+        "license": "MIT License",
         'modules': [
             # Better to use the bundle version to avoid the import issue with popper.js
             {'script': 'polyfill.min.js', 'node_path': 'dist/', 'path': 'promise-polyfill@8/dist/',
              'cdnjs': 'https://cdn.jsdelivr.net/npm'},
         ],
         'version': '8.2.0',
+        'repository': 'https://github.com/taylorhakes/promise-polyfill',
         'website': 'https://github.com/taylorhakes/promise-polyfill'},
 
     # Plolyfill for urlSearchParam for very old version of IE
     'url-search-params': {
+        "license": "MIT License",
+        "repository": "https://github.com/WebReflection/url-search-params?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library",
         'version': '1.1.0',
         'modules': [
             # Better to use the bundle version to avoid the import issue with popper.js
@@ -246,6 +257,8 @@ JS_IMPORTS = {
 
     # Common module for browser versions compatibilities
     'babel-polyfill': {
+        'repository': 'https://github.com/babel/babel-polyfills',
+        "license": "MIT License",
         'version': '7.4.4',
         'website': 'https://babeljs.io/',
         'register': {'alias': 'babel', 'module': 'polyfill', 'name': 'babel'},
@@ -259,6 +272,7 @@ JS_IMPORTS = {
         'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
         'v_prefix': 'v',
         'version': '4.6.0',
+        'license': 'MIT license',
         'repository': 'https://github.com/twbs/bootstrap',
         'modules': [
             # Better to use the bundle version to avoid the import issue with popper.js
@@ -275,6 +289,7 @@ JS_IMPORTS = {
         "version": "2.29.4",
         'repository': 'https://github.com/moment/moment',
         'register': {'alias': 'moment', 'module': 'moment.min', 'npm': 'moment'},
+        'license': 'MIT license',
         'modules': [
             {'script': 'moment.min.js', 'node_path': 'min/', 'path': 'moment.js/%(version)s/', 'cdnjs': CDNJS_REPO},
         ],
@@ -290,6 +305,8 @@ JS_IMPORTS = {
         'repository': 'https://github.com/ag-grid/ag-grid',
         'version': '25.1.0',
         'enterprise': '30.2.0',
+        'license': 'MIT license',
+        "pricing": "https://www.ag-grid.com/license-pricing/",
         "register": {"alias": "agGrid", "module": "ag-grid-community.min", "npm": 'ag-grid-community'},
         'modules': [
             {'script': 'ag-grid-community.min.js', 'node_path': 'dist/', 'path': 'ag-grid/%(version)s/',
@@ -299,6 +316,8 @@ JS_IMPORTS = {
     # module for tabulator
     'tabulator-tables': {
         'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
+        'repository': 'https://github.com/olifolkerd/tabulator',
+        'license': 'MIT license',
         'version': '4.9.3',  # '5.3.1', # '4.9.3',
         'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator-tables'},
         'modules': [
@@ -404,6 +423,9 @@ JS_IMPORTS = {
     'font-awesome': {
         'version': '6.4.0',
         'unpkg': False,
+        "license": "Free License",
+        "pricing": "https://fontawesome.com/plans",
+        "repository": "https://github.com/FortAwesome/Font-Awesome",
         'register': {'alias': 'fontawesome', 'module': 'fontawesome', 'npm': '@fortawesome/fontawesome-free',
                      'npm_path': 'js'},
         'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
@@ -415,7 +437,11 @@ JS_IMPORTS = {
     # Javascript packages to handle DataTables
     'datatables': {
         'unpkg': False,
+        'license': 'MIT license',
+        "pricing": "https://datatables.net/purchase/index",
         'req': [{'alias': 'jquery'}],
+        "website": "https://datatables.net/",
+        "repository": "https://github.com/DataTables/DataTables",
         'version': '1.10.21',
         'register': {'alias': 'datatables', 'module': 'jquery.dataTables.min'},
         'modules': [
@@ -426,6 +452,7 @@ JS_IMPORTS = {
     # Datatable Buttons
     'datatables-buttons': {
         'unpkg': False,
+        'license': 'MIT license',
         'version': '1.6.1',
         'website': 'https://datatables.net/extensions/buttons/',
         'req': [{'alias': 'datatables'}],
@@ -436,6 +463,7 @@ JS_IMPORTS = {
     # Datatable Select
     'datatables-select': {
         'unpkg': False,
+        'license': 'MIT license',
         'version': '1.3.1',
         'website': 'https://datatables.net/extensions/select/',
         'req': [{'alias': 'datatables'}],
@@ -572,18 +600,34 @@ JS_IMPORTS = {
              'path': 'colreorder/%(version)s/js/',
              'cdnjs': 'https://cdn.datatables.net'}]},
 
+    # Echarts A powerful, interactive charting and data visualization library for browser
+    'echarts': {
+        'unpkg': False,
+        "license": "Apache-2.0 license",
+        "repository": "https://github.com/apache/echarts",
+        'version': '5.5.0',
+        'website': 'https://echarts.apache.org/en/index.html',
+        'modules': [
+            {'script': 'echarts.min.js', 'node_path': 'dist/', 'path': 'echarts/%(version)s/', 'cdnjs': CDNJS_REPO}
+        ]
+    },
+
     # gridstack Build interactive dashboards in minute
     'gridstack': {
         'unpkg': False,
         'version': '9.5.1',
+        "license": "MIT license",
+        "repository": "https://github.com/gridstack/gridstack.js",
         'website': 'https://gridstackjs.com/',
         'modules': [
             {'script': 'gridstack-all.min.js', 'path': 'gridstack.js/%(version)s/', 'cdnjs': CDNJS_REPO}],
     },
 
-    #
+    # jszip, Create, read and edit .zip files with Javascript http://stuartk.com/jszip
     'jszip': {
-        'website': 'https://datatables.net/extensions/buttons/',
+        'website': 'https://stuk.github.io/jszip/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
+        'repository': 'https://github.com/Stuk/jszip',
+        "license": "MIT license",
         'version': '3.10.1',
         'modules': [
             {'reqAlias': 'jszip', 'script': 'jszip.min.js', 'node_path': 'dist/', 'path': 'jszip/%(version)s/',
@@ -593,6 +637,8 @@ JS_IMPORTS = {
     # Reactive Extensions Library for JavaScript
     'rxjs': {
         'website': 'https://rxjs.dev/',
+        "license": "Apache-2.0 license",
+        "repository": "https://github.com/ReactiveX/rxjs",
         'version': '7.8.1',
         'modules': [
             {'reqAlias': 'jszip', 'script': 'rxjs.umd.min.js', 'node_path': 'dist/', 'path': 'rxjs/%(version)s/',
@@ -613,6 +659,7 @@ JS_IMPORTS = {
     # Datatable pivot
     'pivottable': {
         'req': [{'alias': 'jqueryui'}],
+        "license": "MIT license",
         "repository": 'https://github.com/nicolaskruchten/pivottable',
         'version': '2.23.0',
         'website': 'https://github.com/nicolaskruchten/pivottable',
@@ -706,6 +753,7 @@ JS_IMPORTS = {
     # Jquery package width CDN links
     'jquery': {
         'website': 'http://jquery.com/',
+        "license": "MIT license",
         'repository': "https://github.com/jquery/jquery",
         'register': {'alias': '$', 'module': 'jquery.min', 'npm': 'jquery', 'npm_path': 'dist'},
         'version': '3.7.1',
@@ -720,6 +768,7 @@ JS_IMPORTS = {
     # Jquery vector Maps
     'jqvmap': {
         'req': [{'alias': 'jquery'}],
+        "license": "MIT license",
         'website': 'https://www.10bestdesign.com/jqvmap/',
         'repository': "https://github.com/10bestdesign/jqvmap/",
         'register': {'alias': 'jqvmap', 'module': 'jquery.vmap.min', 'npm': 'jqvmap', "init_fnc": 'jQuery = $'},
@@ -732,6 +781,7 @@ JS_IMPORTS = {
     # QUnit package width CDN links
     'qunit': {
         'website': 'https://qunitjs.com',
+        "license": "MIT license",
         'version': '2.13.0',
         'modules': [
             {'script': 'qunit.js', 'node_path': 'qunit', 'path': 'qunit/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -859,6 +909,8 @@ JS_IMPORTS = {
     # Clipboard features width CDN links
     'clipboard': {
         'website': 'https://clipboardjs.com/',
+        "license": "MIT license",
+        "repository": "https://github.com/zenorocha/clipboard.js",
         'version': '2.0.11',
         'modules': [
             {'reqAlias': 'clipboard', 'script': 'clipboard.min.js', 'node_path': 'dist/',
@@ -868,6 +920,8 @@ JS_IMPORTS = {
     # Javascript dependencies for D3 and NVD2 components width CDN links
     'd3': {
         'website': 'https://d3js.org/',
+        "license": "ISC license",
+        "repository": "https://github.com/d3/d3",
         'v_prefix': 'v',
         'register': {'alias': 'd3', 'module': 'd3.min'},
         'version': '6.3.1',
@@ -878,6 +932,7 @@ JS_IMPORTS = {
 
     # D3 Tips Package
     'd3-tip': {
+        "license": "ISC license",
         'req': [{'alias': 'd3'}],
         'v_prefix': 'v',
         'version': '0.9.1',
@@ -888,6 +943,7 @@ JS_IMPORTS = {
 
     # D3 axis
     'd3-axis': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-axis',
         'v_prefix': 'v',
         'version': '3.0.0',
@@ -897,6 +953,7 @@ JS_IMPORTS = {
 
     # D3 ease
     'd3-ease': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-ease',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -906,6 +963,7 @@ JS_IMPORTS = {
 
     # D3 DSV
     'd3-dsv': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-dsv',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -915,6 +973,7 @@ JS_IMPORTS = {
 
     # D3 dispatch
     'd3-dispatch': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-dispatch',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -924,6 +983,7 @@ JS_IMPORTS = {
 
     # D3 transition
     'd3-transition': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-interpolate',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -942,6 +1002,7 @@ JS_IMPORTS = {
 
     # D3 Selection
     'd3-selection': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-selection',
         'v_prefix': 'v',
         'version': '3.0.0',
@@ -951,6 +1012,7 @@ JS_IMPORTS = {
 
     # D3 Interpolate
     'd3-interpolate': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-interpolate',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -963,6 +1025,7 @@ JS_IMPORTS = {
 
     # D3 Time format
     'd3-time-format': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-time-format',
         'v_prefix': 'v',
         'version': '4.0.0',
@@ -974,6 +1037,7 @@ JS_IMPORTS = {
 
     # D3 Time
     'd3-time': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-time',
         'v_prefix': 'v',
         'version': '3.0.0',
@@ -986,6 +1050,7 @@ JS_IMPORTS = {
 
     # D3 Format
     'd3-array': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-array',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -995,6 +1060,7 @@ JS_IMPORTS = {
 
     # D3 Format
     'd3-format': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-format',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -1004,6 +1070,7 @@ JS_IMPORTS = {
 
     # D3 Timer
     'd3-timer': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-timer',
         'version': '3.0.1',
         'v_prefix': 'v',
@@ -1013,6 +1080,7 @@ JS_IMPORTS = {
 
     # D3 collection
     'd3-collection': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-collection',
         'version': '1.0.7',
         'v_prefix': 'v',
@@ -1022,6 +1090,7 @@ JS_IMPORTS = {
 
     # D3 Scale
     'd3-scale': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-scale',
         'v_prefix': 'v',
         'version': '4.0.0',
@@ -1037,6 +1106,7 @@ JS_IMPORTS = {
 
     # D3 color module
     'd3-color': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-color',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -1046,6 +1116,7 @@ JS_IMPORTS = {
 
     # D3 Brush module
     'd3-brush': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-brush',
         'v_prefix': 'v',
         'version': '3.0.0',
@@ -1058,6 +1129,7 @@ JS_IMPORTS = {
 
     # D3 Brush module
     'd3-drag': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-drag',
         'v_prefix': 'v',
         'version': '3.0.0',
@@ -1071,6 +1143,7 @@ JS_IMPORTS = {
 
     # D3 Shape module
     'd3-shape': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-shape',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -1083,6 +1156,7 @@ JS_IMPORTS = {
 
     # D3 Zoom module
     'd3-zoom': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-zoom',
         'v_prefix': 'v',
         'version': '3.0.0',
@@ -1097,6 +1171,7 @@ JS_IMPORTS = {
 
     # D3 Path module
     'd3-path': {
+        "license": "ISC license",
         'website': 'https://github.com/d3/d3-path',
         'v_prefix': 'v',
         'version': '3.0.1',
@@ -1106,6 +1181,7 @@ JS_IMPORTS = {
 
     # Javascript dependencies for Plotly width CDN links
     'plotly.js': {
+        "license": "ISC license",
         'website': 'https://plot.ly/javascript/',
         'repository': 'https://github.com/plotly/plotly.js',
         'register': {'alias': 'Plotly', 'module': 'plotly.min', 'npm': 'plotly.js'},
@@ -1125,6 +1201,7 @@ JS_IMPORTS = {
     # NVD3 Components width CDN links
     'nvd3': {
         'website': 'http://nvd3.org/',
+        "license": "Apache License",
         'repository': 'https://github.com/novus/nvd3',
         'req': [{'alias': 'd3', 'version': '3.5.17'}],
         'register': {'alias': 'nvd3', 'module': 'nv.d3.min', 'npm': 'nvd3'},
@@ -1139,6 +1216,7 @@ JS_IMPORTS = {
     # C3 modules width CDN links
     'c3': {
         'website': 'https://c3js.org/',
+        "license": "MIT license",
         'repository': 'https://github.com/c3js/c3',
         'req': [{'alias': 'd3', 'version': '5.0.0'}],
         'register': {'alias': 'c3', 'module': 'c3.min', 'npm': 'c3'},
@@ -1148,6 +1226,7 @@ JS_IMPORTS = {
 
     'crossfilter': {
         'website': 'http://square.github.io/crossfilter/',
+        "license": "Apache License",
         'repository': 'https://github.com/crossfilter/crossfilter',
         'version': '1.3.12',
         'register': {'alias': 'xfilter', 'module': 'crossfilter.min', 'npm': 'crossfilter'},
@@ -1157,7 +1236,9 @@ JS_IMPORTS = {
     },
 
     'svgjs': {
+        "license": "MIT License",
         'version': '2.6.2',
+        "repository": "https://github.com/svgdotjs/svg.js",
         'register': {'alias': 'svg', 'module': 'svg.min', 'npm': 'svgjs',  # "init_fnc": "window.SVG = svg"
                      },
         'modules': [
@@ -1166,6 +1247,7 @@ JS_IMPORTS = {
     },
 
     'apexcharts': {
+        "license": "MIT license",
         'req_js': [  # depn only for requirejs
             {'alias': 'svgjs'},
         ],
@@ -1181,6 +1263,7 @@ JS_IMPORTS = {
     # DC modules width CDN links
     'dc': {
         'website': 'https://dc-js.github.io/dc.js/examples/',
+        "license": "Apache-2.0 license",
         'repository': 'https://github.com/dc-js/dc.js',
         'register': {'alias': 'dc', 'module': 'dc.min', 'npm': 'dc'},
         'req': [
@@ -1199,6 +1282,7 @@ JS_IMPORTS = {
     # Vega Charts
     'vega': {
         'website': 'https://vega.github.io/vega-lite/',
+        "license": "BSD-3-Clause license",
         'repository': 'https://observablehq.com/@uwdata/introduction-to-vega-lite',
         'register': {'alias': 'vega', 'module': 'vega.min'},
         'version': '5.25.0',
@@ -1209,6 +1293,7 @@ JS_IMPORTS = {
 
     # JS VEGA Utils
     "vega-tooltip": {
+        "license": "BSD-3-Clause license",
         'req_js': [
             {"alias": "vega-util"}
         ],
@@ -1221,6 +1306,7 @@ JS_IMPORTS = {
     },
     # JS VEGA Utils
     "vega-util": {
+        "license": "BSD-3-Clause license",
         'website': 'https://github.com/vega/vega-util/',
         'register': {'variable': 'vegaUtil', 'module': 'vega-util.min'},
         'version': '1.16.1',
@@ -1231,6 +1317,7 @@ JS_IMPORTS = {
 
     # JS VEGA Lite
     'vega-lite': {
+        "license": "BSD-3-Clause license",
         'req': [
             {"alias": "vega"}
         ],
@@ -1249,6 +1336,7 @@ JS_IMPORTS = {
 
     # JS VEGA Embed
     'vega-embed': {
+        "license": "BSD-3-Clause license",
         'req': [
             {"alias": "vega-lite"}
         ],
@@ -1263,6 +1351,8 @@ JS_IMPORTS = {
 
     # billboard modules width CDN links
     'billboard.js': {
+        "license": "MIT license",
+        "repository": "https://github.com/naver/billboard.js",
         'website': 'https://naver.github.io/billboard.js/release/latest/doc/',
         'req': [
             {'alias': 'd3-axis'},
@@ -1293,7 +1383,9 @@ JS_IMPORTS = {
 
     # Rough Viz charts
     'rough-viz': {
-        'website': 'https://github.com/jwilber/roughViz',
+        "license": "MIT license",
+        'repository': 'https://github.com/jwilber/roughViz',
+        'website': 'https://www.jwilber.me/roughviz/',
         'req': [{'alias': 'd3'}],
         'version': '1.0.6',
         'register': {'alias': 'roughViz', 'module': 'roughviz.min'},
@@ -1304,6 +1396,8 @@ JS_IMPORTS = {
 
     # Frappe-Charts module
     'frappe-charts': {
+        "license": "MIT license",
+        'repository': 'https://github.com/frappe/charts',
         'website': 'https://frappe.io/charts/docs',
         'version': '1.6.2',
         'register': {'alias': 'Frappe', 'module': 'frappe-charts.min.iife'},
@@ -1328,6 +1422,7 @@ JS_IMPORTS = {
 
     # ChartJs modules width CDN links
     'chart.js': {
+        "license": "MIT license",
         'website': 'https://www.chartjs.org/',
         'version': '3.9.1',  # 2.9.4
         'v_prefix': 'v',
@@ -1342,6 +1437,7 @@ JS_IMPORTS = {
 
     # ChartJs stacked100 plugin modules width CDN links
     'chartjs-plugin-stacked100': {
+        "license": "MIT license",
         "unpkg": False,
         'website': 'https://github.com/y-takey/chartjs-plugin-stacked100',
         'version': '1.3.0',
@@ -1352,6 +1448,7 @@ JS_IMPORTS = {
 
     # ChartJs Matrix plugin modules width CDN links
     'chartjs-chart-matrix': {
+        "license": "MIT license",
         'website': 'https://github.com/kurkle/chartjs-chart-matrix',
         'version': '2.0.1',
         'req': [{'alias': 'chart.js'}],
@@ -1361,6 +1458,7 @@ JS_IMPORTS = {
 
     # ChartJs Sankey plugin modules width CDN links
     'chartjs-chart-sankey': {
+        "license": "MIT license",
         'website': 'https://github.com/kurkle/chartjs-chart-sankey',
         'version': '0.12.0',
         'req': [{'alias': 'chart.js'}],
@@ -1370,6 +1468,7 @@ JS_IMPORTS = {
 
     # ChartJs WordCloud plugin modules width CDN links
     'chartjs-chart-wordcloud': {
+        "license": "MIT license",
         'website': 'https://github.com/sgratzl/chartjs-chart-wordcloud',
         'version': '4.1.1',
         'req': [{'alias': 'chart.js'}],
@@ -1379,6 +1478,7 @@ JS_IMPORTS = {
 
     # ChartJs Venn plugin modules width CDN links
     'chartjs-chart-venn': {
+        "license": "MIT license",
         'website': 'https://github.com/kurkle/chartjs-chart-sankey',
         'version': '4.1.1',
         'req': [{'alias': 'chart.js'}],
@@ -1388,6 +1488,7 @@ JS_IMPORTS = {
 
     # ChartJs Crosshair plugin modules width CDN links
     'chartjs-plugin-dragdata': {
+        "license": "MIT license",
         'website': 'https://www.chartjs.org/',
         'version': 'latest',
         'req': [{'alias': 'chart.js'}],
@@ -1397,6 +1498,7 @@ JS_IMPORTS = {
 
     # ChartJs Treemap
     'chartjs-chart-treemap': {
+        "license": "MIT license",
         'website': 'https://github.com/kurkle/chartjs-chart-treemap',
         'version': '2.3.0',  # 2.0.2
         'req': [{'alias': 'chart.js'}],
@@ -1406,6 +1508,7 @@ JS_IMPORTS = {
 
     # ChartJs Crosshair plugin modules width CDN links
     'chartjs-plugin-annotation': {
+        "license": "MIT license",
         'website': 'https://www.chartjs.org/',
         'version': '2.1.2',
         'req': [{'alias': 'chart.js'}],
@@ -1415,6 +1518,7 @@ JS_IMPORTS = {
 
     # ChartJs deferred plugin modules width CDN links
     'chartjs-plugin-deferred': {
+        "license": "MIT license",
         'version': '2.0.0',
         'website': 'https://chartjs-plugin-deferred.netlify.app/guide/',
         'req': [{'alias': 'chart.js'}],
@@ -1424,6 +1528,7 @@ JS_IMPORTS = {
 
     # ChartJs hierarchical plugin modules width CDN links
     'chartjs-plugin-hierarchical': {
+        "license": "MIT license",
         'version': '4.1.1',
         'website': 'https://github.com/sgratzl/chartjs-plugin-hierarchical',
         'req': [{'alias': 'chart.js'}],
@@ -1433,6 +1538,7 @@ JS_IMPORTS = {
 
     # ChartJs datalabels plugin modules width CDN links
     'chartjs-plugin-datalabels': {
+        "license": "MIT license",
         'version': '2.2.0',
         'website': 'https://chartjs-plugin-datalabels.netlify.app/',
         'req': [{'alias': 'chart.js'}],
@@ -1442,6 +1548,7 @@ JS_IMPORTS = {
 
     # ChartJs Labels plugin modules width CDN links
     'chartjs-plugin-labels': {
+        "license": "MIT license",
         'version': '1.1.0',
         'website': 'https://github.com/emn178/chartjs-plugin-labels',
         'req': [{'alias': 'chart.js'}],
@@ -1453,6 +1560,7 @@ JS_IMPORTS = {
 
     # ChartJs Crosshair plugin modules width CDN links
     'chartjs-plugin-crosshair': {
+        "license": "MIT license",
         'version': '1.2.0',
         'website': 'https://www.chartjs.org/',
         'req': [{'alias': 'chart.js'}],
@@ -1462,6 +1570,7 @@ JS_IMPORTS = {
 
     # ChartJs Zoom plugin modules width CDN links
     'chartjs-plugin-zoom': {
+        "license": "MIT license",
         'website': 'https://www.chartjs.org/',
         'version': '2.0.0',
         'req': [{'alias': 'chart.js'}, {"alias": 'hammer'}],
@@ -1471,6 +1580,7 @@ JS_IMPORTS = {
 
     # ChartJs addon to add some Geo charts
     'chartjs-chart-geo': {
+        "license": "MIT license",
         'version': '4.1.2',  # '3.1.0'
         'website': 'https://github.com/sgratzl/chartjs-chart-geo',
         'req': [{'alias': 'chart.js'}],
@@ -1481,8 +1591,10 @@ JS_IMPORTS = {
 
     # For ChartJs Zoom to get the gesture details.
     'hammer': {
+        "license": "MIT license",
         "unpkg": False,
         'version': '2.0.8',
+        "repository": "https://github.com/hammerjs/hammer.js",
         'website': 'http://hammerjs.github.io/',
         'modules': [
             {'script': 'hammer.min.js', 'path': 'hammer.js/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -1494,6 +1606,7 @@ JS_IMPORTS = {
 
     # Popper tooltips used by bootstrap in the dropdown components
     '@popperjs/core': {
+        "license": "MIT license",
         'req': [{'alias': 'jquery'}],
         'v_prefix': 'v',
         'version': '2.11.8',
@@ -1512,6 +1625,7 @@ JS_IMPORTS = {
 
     # Javascript module for the simple select component. issue with Bootstrap 4 width CDN links
     'bootstrap-select': {
+        "license": "MIT license",
         'website': 'http://silviomoreto.github.io/bootstrap-select/',
         'version': '1.13.18',
         'repository': 'https://github.com/snapappointments/bootstrap-select',
@@ -1532,6 +1646,7 @@ JS_IMPORTS = {
     },
 
     'ajax-bootstrap-select': {
+        "license": "MIT license",
         'version': '1.4.5',
         'website': 'https://github.com/truckingsim/Ajax-Bootstrap-Select',
         'register': {'alias': 'selectAjax', 'module': 'ajax-bootstrap-select.min', 'npm_path': 'dist/js'},
@@ -1549,14 +1664,17 @@ JS_IMPORTS = {
 
     # Vis Javascript Packages
     'vis': {
+        "license": "Apache-2.0, MIT licenses found",
         'register': {'alias': 'vis', 'module': 'vis.min', 'npm': 'vis', 'npm_path': 'dist'},
         'website': 'http://visjs.org/',
         'version': '4.21.0',
+        "repository": "https://github.com/visjs/vis-graph3d",
         'modules': [
             {'script': 'vis.min.js', 'node_path': 'dist/', 'path': 'vis/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
     # Vis Timeline style with CDN Links
     'vis-timeline': {
+        "license": "Apache-2.0, MIT licenses found",
         'register': {'alias': 'vis-timeline', 'npm': 'vis-timeline', 'npm_path': 'dist'},
         'website': 'http://visjs.org/',
         'version': '7.3.7',
@@ -1567,7 +1685,10 @@ JS_IMPORTS = {
     # Mapbox GL
     'mapbox-gl': {
         'register': {'alias': 'mapbox-gl', 'npm_path': 'dist'},
-        'website': 'https://github.com/mapbox/mapbox-gl-js?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
+        "license": "Copyright © 2021 - 2023 Mapbox, Inc. All rights reserved",
+        "repository": "https://github.com/mapbox/mapbox-gl-js",
+        "pricing": "https://www.mapbox.com/pricing",
+        'website': 'https://www.mapbox.com/',
         'version': '2.14.1',
         'modules': [
             {'script': 'mapbox-gl.js', 'node_path': 'dist/', 'path': 'mapbox-gl/%(version)s/', 'cdnjs': CDNJS_REPO}]
@@ -1578,6 +1699,7 @@ JS_IMPORTS = {
     # https://github.com/mathjax/mathjax
     'mathjax': {
         'website': 'https://www.mathjax.org/',
+        "license": "Apache-2.0 license",
         'version': '3.2.2',
         'repository': 'https://github.com/mathjax/MathJax',
         'package': {'zip': 'https://github.com/mathjax/MathJax/archive/%(version)s.zip', 'root': 'MathJax-%(version)s',
@@ -1589,6 +1711,7 @@ JS_IMPORTS = {
     # Socket IO
     'socket.io': {
         'version': '3.0.4',
+        "license": "MIT license",
         'website': 'https://github.com/socketio/socket.io',
         'repository': 'https://github.com/socketio/socket.io',
         'req': [{'alias': 'jquery'}],
@@ -1605,6 +1728,8 @@ JS_IMPORTS = {
     # Code mirror
     'codemirror': {
         'version': '6.65.7',
+        "license": "MIT License",
+        "repository": "https://github.com/codemirror/dev/",
         'website': 'https://codemirror.net/',
         'modules': [
             {'script': 'codemirror.js', 'node_path': 'lib/', 'path': 'codemirror/%(version)s/', 'cdnjs': CDNJS_REPO}
@@ -1628,6 +1753,7 @@ JS_IMPORTS = {
     },
 
     'codemirror-search': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1647,6 +1773,7 @@ JS_IMPORTS = {
         ]},
 
     'codemirror-placeholder': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1658,6 +1785,7 @@ JS_IMPORTS = {
         ]},
 
     'codemirror-trailingspace': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1669,6 +1797,7 @@ JS_IMPORTS = {
         ]},
 
     'codemirror-fullscreen': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1680,6 +1809,7 @@ JS_IMPORTS = {
         ]},
 
     'codemirror-highlighter': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1699,6 +1829,7 @@ JS_IMPORTS = {
         ]},
 
     'codemirror-hint': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1710,6 +1841,7 @@ JS_IMPORTS = {
         ]},
 
     'codemirror-panel': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1721,6 +1853,7 @@ JS_IMPORTS = {
         ]},
 
     'codemirror-fold': {
+        "license": "MIT License",
         'req': [
             {'alias': 'codemirror'}
         ],
@@ -1745,6 +1878,7 @@ JS_IMPORTS = {
 
     # highlight
     'highlight.js': {
+        "license": "BSD-3-Clause license",
         'version': '11.8.0',
         'website': 'https://highlightjs.org/',
         'repository': 'https://github.com/highlightjs/highlight.js',
@@ -1757,6 +1891,7 @@ JS_IMPORTS = {
     # Leaflet
     'leaflet': {
         'version': '1.9.4',
+        "license": "BSD-2-Clause license",
         'website': 'https://leafletjs.com/',
         'repository': 'https://github.com/Leaflet/Leaflet',
         'register': {'alias': 'L', 'module': 'leaflet', 'npm': 'leaflet'},
@@ -1771,6 +1906,7 @@ JS_IMPORTS = {
     # showdown
     'showdown': {
         'version': '2.1.0',
+        "license": "MIT license",
         'website': 'https://github.com/showdownjs/showdown',
         'repository': 'https://github.com/showdownjs/showdown',
         'register': {'alias': 'showdown', 'module': 'showdown.min', 'npm': 'showdown', 'npm_path': 'dist'},
@@ -1782,6 +1918,7 @@ JS_IMPORTS = {
     # Sortable framework
     'sortablejs': {
         'register': {'alias': 'Sortable', 'npm': 'sortablejs'},
+        "license": "MIT license",
         'repository': 'https://github.com/SortableJS/Sortable',
         'version': '1.15.1',
         'modules': [
@@ -1806,6 +1943,7 @@ JS_IMPORTS = {
 
     # Tiny slider for carousels
     'tiny-slider': {
+        "license": "MIT license",
         'version': '2.9.3',
         'register': {'alias': 'tns', 'npm': 'tiny-slider'},
         'modules': [
@@ -1830,6 +1968,7 @@ CSS_IMPORTS = {
     },
 
     '@chartshq/muze': {
+        "repository": "https://github.com/chartshq/muze",
         'modules': [
             {'script': 'muze.css', 'path': '@chartshq/muze@%(version)s/dist/',
              'cdnjs': "https://cdn.jsdelivr.net/npm"}]},
@@ -1837,6 +1976,7 @@ CSS_IMPORTS = {
     # Chart.css
     'charts.css': {
         'website': 'https://github.com/ChartsCSS/charts.css#readme',
+        "license": "MIT license",
         'version': "1.0.0",
         'modules': [
             {'script': 'charts.min.css', 'path': 'charts.css/dist/', 'cdnjs': "https://cdn.jsdelivr.net/npm/"}
@@ -1851,6 +1991,8 @@ CSS_IMPORTS = {
 
     # fluent ui icons
     'office-ui-fabric-core': {
+        "license": "MIT License",
+        "repository": "https://github.com/OfficeDev/office-ui-fabric-core",
         'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm_path': 'dist/css'},
         'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/',
                      'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
@@ -1858,6 +2000,7 @@ CSS_IMPORTS = {
 
     # fluent ui icons
     'office-ui-fabric-react': {
+        "license": "MIT License",
         'register': {'alias': 'fluentui', 'module': 'fluentui', 'npm_path': 'dist/css'},
         'modules': [{'script': 'fabric.min.css', 'version': '11.0.0', 'path': 'office-ui-fabric-core/%(version)s/css/',
                      'cdnjs': "https://static2.sharepointonline.com/files/fabric"}],
@@ -2074,9 +2217,10 @@ CSS_IMPORTS = {
 
     # bootstrap icons
     'bootstrap-icons': {
+        "license": "MIT license",
+        "repository": "https://github.com/twbs/icons",
         'website': 'https://icons.getbootstrap.com/',
         'version': '1.10.3',
-        'repository': 'https://github.com/twbs/icons?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library',
         'modules': [
             {'script': 'bootstrap-icons.min.css', 'path': 'bootstrap-icons/%(version)s/font/', 'cdnjs': CDNJS_REPO}]},
 
