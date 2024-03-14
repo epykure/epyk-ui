@@ -462,20 +462,30 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
     def update_components(self) -> JsFncs.JsFunction:
         """ Update all components using the default / init configurations. """
         # This will require to add all builders to the resources in the page
+        select_components = []
         for component in self.page.components.values():
             if component.defined_code and component._js__builder__:
                 # TODO find a way to add loader without having to call build method
-                component.build(None)
+                if hasattr(component.js, "select"):
+                    select_components.append((component.html_code, "function(v){%s}" % component.js.select(JsUtils.jsWrap("v"))))
+                else:
+                    component.build(None)
         return JsFncs.JsFunction('''
 (function(){let params = new URLSearchParams(location.search); 
+    let sComponents = %(sComponents)s;
     for (const [key, value] of params) {
-      let componentBuilder = document.getElementById(key);
-      if (componentBuilder){
-        let componentOptions = %(gOptions)s[key] || {}; 
-        window[componentBuilder.getAttribute('data-builder')](componentBuilder, value, componentOptions);
+      if (key in sComponents){
+        sComponents[key](value)
+      } else {
+          let componentBuilder = document.getElementById(key);
+          if (componentBuilder){
+            let componentOptions = %(gOptions)s[key] || {}; 
+            window[componentBuilder.getAttribute('data-builder')](componentBuilder, value, componentOptions);
+          }
       }
     }
- })()''' % {'gOptions': JsGlobals.EXPORT_INIT_OPTIONS})
+ })()''' % {'gOptions': JsGlobals.EXPORT_INIT_OPTIONS,
+            "sComponents": "{%s}" % ", ".join(["%s: %s" % (k, v)for k, v in select_components])})
 
     def animate_anchor(self, class_name: str, time: int = 3000) -> JsFncs.JsFunction:
         """ Animate the selected component when the page.
