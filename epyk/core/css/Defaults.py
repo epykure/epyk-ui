@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional
+from typing import Optional, Union
 from epyk.core.py import primitives
 from epyk.core.html import Defaults as defaultHtml
 
@@ -51,9 +51,16 @@ class Font:
         """
         return "%s%s" % (self.header_size + step, unit or self.unit)
 
+    def vars(self) -> dict:
+        return {"font-family": self.family, "font-size": self.normal(), "header-size": self.header()}
+
 
 class Icon:
     small, normal, big, unit = 10, 15, 25, 'px'
+
+    @property
+    def family(self):
+        return ICON_FAMILY
 
     def small_size(self, step: int = 0, unit: str = None) -> str:
         """Icon small format.
@@ -78,6 +85,10 @@ class Icon:
         :param unit: Optional. The unit code. default px
         """
         return "%s%s" % (self.big + step, unit or self.unit)
+
+    def vars(self) -> dict:
+        return {"icon-family": self.family, "icon-small": self.small_size(), "icon-size": self.normal_size(),
+                "icon-large": self.big_size()}
 
 
 def header(step: int = 0) -> str:
@@ -106,7 +117,7 @@ def inline(css_attrs: dict, important: bool = False) -> str:
     return ";".join(["%s: %s" % (k, v) for k, v in css_attrs.items()])
 
 
-def px_to_em(value: float, with_unit: bool = True) -> str:
+def px_to_em(value: float, with_unit: bool = True) -> Union[str, float]:
     """Convert the pixel value to em.
 
     `w3schools <https://www.w3schools.com/cssref/css_pxtoemconversion.asp>`_
@@ -121,7 +132,7 @@ def px_to_em(value: float, with_unit: bool = True) -> str:
     return em_value
 
 
-def em_to_px(value: float, with_unit: bool = True) -> str:
+def em_to_px(value: float, with_unit: bool = True) -> Union[str, float]:
     """Convert an em value in pixel.
 
     `w3schools <https://www.w3schools.com/cssref/css_pxtoemconversion.asp>`_
@@ -260,7 +271,7 @@ class GlobalStyle:
         self._line_height = max(defaultHtml.LINE_HEIGHT, self.font.size)
 
     @property
-    def line_height(self):
+    def line_height(self) -> int:
         return self._line_height
 
     @line_height.setter
@@ -296,3 +307,9 @@ class GlobalStyle:
 
             self._table = GlobalTable()
         return self._table
+
+    def vars(self) -> dict:
+        results = {"line-height": "%spx" % self._line_height}
+        results.update(self.font.vars())
+        results.update(self.icon.vars())
+        return results

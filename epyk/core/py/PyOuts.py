@@ -1,3 +1,4 @@
+import inspect
 import os
 import sys
 import time
@@ -475,7 +476,7 @@ if (typeof icon === "undefined"){
           page.imports.static_url = "C:\epyks\statics"
           page.outs.html_file(name="test.html", options={"split": True, "minify": True, "static_path": page.imports.static_url})
 
-        :param path: Optional. The path in which the output files will be created
+        :param path: Optional. The path in which the output files will be created. This can be set by env HTML_OUT_PATH
         :param name: Optional. The filename without the extension
         :param print_paths: Optional. Print the page for the created file
         :param options: Optional.
@@ -488,19 +489,23 @@ if (typeof icon === "undefined"){
 
         options = options or {}
         if path is None:
-            path = os.path.join(os.getcwd(), "outs")
+            if "HTML_OUT_PATH" in os.environ:
+                path = os.environ["HTML_OUT_PATH"]
+            else:
+                path = os.path.join(os.getcwd(), "outs")
         if not os.path.exists(path):
             os.makedirs(path)
         if name is None:
             if configs.keys:
                 name = self.page.json_config_file
             else:
+                module_name = os.path.split(inspect.stack()[1].filename)[-1][:-3]
                 if run_id is True:
-                    name = "%s_%s" % (os.path.basename(sys.argv[0])[:-3], int(time.time()))
+                    name = "%s_%s" % (module_name, int(time.time()))
                 elif run_id is False:
-                    name = os.path.basename(sys.argv[0])[:-3]
+                    name = module_name
                 else:
-                    name = "%s_%s" % (os.path.basename(sys.argv[0])[:-3], run_id)
+                    name = "%s_%s" % (module_name, run_id)
 
         name = name if not name.endswith(".html") else name[:-5]
         html_file_path = os.path.join(path, "%s.html" % name)

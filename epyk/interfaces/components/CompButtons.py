@@ -738,7 +738,7 @@ class Buttons:
 
   def radio(self, record: List[dict] = None, html_code: Optional[str] = None, group_name: Optional[str] = None,
             width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (None, "px"), align: str = 'left',
-            options: Optional[dict] = None, profile: Union[dict, bool] = None) -> html.HtmlRadio.Radio:
+            checked: str = None, options: Optional[dict] = None, profile: Union[dict, bool] = None) -> html.HtmlRadio.Radio:
     """
     Creates a radio HTML component.
 
@@ -760,9 +760,7 @@ class Buttons:
 
       https://www.w3schools.com/bootstrap/bootstrap_forms_inputs.asp
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
+    `Templates <https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py>`_
 
     :param record: Optional. The Python list of dictionaries
     :param group_name: Optional. Group name for multi radio buttons
@@ -770,11 +768,16 @@ class Buttons:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. A string with the horizontal position of the component
+    :param checked:
     :param profile: Optional. A flag to set the component performance storage
     :param options: Optional. Specific Python options available for this component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
+    if checked:
+      for rec in record:
+        if rec['value'] == checked:
+          rec["checked"] = True
     component = html.HtmlRadio.Radio(
       self.page, record or [], html_code, group_name, width, height, options or {}, profile)
     component.style.css.line_height = self.page.body.style.globals.line_height

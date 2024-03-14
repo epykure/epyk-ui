@@ -1,0 +1,80 @@
+
+.dropdown > select {
+    padding-top: 0 ;
+    background: inherit ;
+    display: inline-block !IMPORTANT ;
+    margin: 0 !IMPORTANT ;
+}
+
+.dropdown > select:focus {
+    outline: 0 ;
+    border: none ;
+    box-shadow: none ;
+    font-family: var(--font-family) ;
+    line-height: var(--line-height) ;
+    font-size: var(--font-size) ;
+}
+
+.dropdown > button.btn {
+   padding: 2px 5px ;
+   font-family: var(--font-family) ;
+   font-size: var(--font-size) ;
+   border-radius: 2px ;
+   border-color: none ;
+   box-shadow: none ;
+   background-color: inherit ;
+   border: none ;
+}
+
+.dropdown > button.btn:focus {
+    border-color: none ;
+    box-shadow: none ;
+    outline: 0 !IMPORTANT ;
+}
+
+.dropdown > button.btn:hover {
+    box-shadow: none ;
+    color: var(--white) !IMPORTANT ;
+    background-color: var(--theme-dark) !IMPORTANT;
+}
+
+.bootstrap-select {
+    outline: 0 !important ;
+}
+
+.dropdown-toggle {
+    outline: 0 !important ;
+}
+
+.bs-searchbox > input.form-control {
+    outline: 0 ;
+    margin-bottom: 5px ;
+}
+
+.dropdown-item {
+    padding: 1px 15px 1px 5px ;
+}
+
+.dropdown-item:hover {
+    color: var(--white) ;
+    background-color: var(--theme-dark) ;
+}
+
+.dropdown-item: focus {
+    outline: 0 !important ;
+}
+
+.dropdown-menu.show {
+    font-size: inherit ;
+    z-index: 260 ;
+    background-color: var(--white) ;
+}
+
+.dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+    color: var(--white) ;
+    background-color: var(--selected) ;
+}
+
+.dropdown-menu > div.popover-header {
+    font-size: inherit ;
+}

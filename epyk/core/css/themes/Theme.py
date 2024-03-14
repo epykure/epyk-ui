@@ -351,6 +351,13 @@ class Theme:
             if colors:
                 for i, c in enumerate(colors):
                     colors_code[v % i] = c
+                colors_code[v % "dark"] = c
+                if v % self.index in colors_code:
+                    colors_code[v[:-3]] = colors_code[v % self.index]
+                    colors_code[v % "light"] = colors_code[v % (self.index - self.step)]
+                else:
+                    colors_code[v[:-3]] = colors_code[v % int(len(colors) / 2)]
+                    colors_code[v % "light"] = colors_code[v % (int(len(colors) / 2) - self.step)]
         for v in self.__colors["all"].values():
             colors_code.update(v)
         return colors_code

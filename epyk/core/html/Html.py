@@ -1806,7 +1806,9 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
         This will be the main function called by the page to render all the components.
         """
         if self.style_urls is not None:
-            css_content = css_files_loader(self.style_urls, style_vars=self.page.theme.all())
+            style_vars = self.page.theme.all()
+            style_vars.update(self.page.body.style.globals.vars())
+            css_content = css_files_loader(self.style_urls, style_vars=style_vars)
             if css_content:
                 self.page.properties.css.add_text(css_content, map_id=self.__class__.__name__)
 

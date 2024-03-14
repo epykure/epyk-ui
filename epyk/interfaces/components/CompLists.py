@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union
+from typing import Union, List
 
 from epyk.core import html
 from epyk.core.py import primitives, types
@@ -15,7 +15,7 @@ class Lists:
   def __init__(self, ui):
     self.page = ui.page
 
-  def select(self, records=None, html_code: str = None, selected: str = None, width: types.SIZE_TYPE = (100, "%"),
+  def select(self, records=None, html_code: str = None, selected: Union[str, List[str]] = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "%"), profile: types.PROFILE_TYPE = None, multiple: bool = False,
              options: dict = None) -> html.HtmlSelect.Select:
     """  
@@ -65,7 +65,6 @@ class Lists:
         for rec in records:
           if rec["value"] in selected:
             rec["selected"] = True
-
       icon_details = self.page.icons.get("check")
       options["iconBase"] = "iconBase"
       options["tickIcon"] = icon_details["icon"]
