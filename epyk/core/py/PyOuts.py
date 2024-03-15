@@ -462,7 +462,7 @@ if (typeof icon === "undefined"){
         return path
 
     def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None,
-                  print_paths: bool = False, run_id: Union[bool, str] = True):
+                  print_paths: Union[bool, dict] = False, run_id: Union[bool, str] = True):
         """
         Function used to generate a static HTML page for the report.
 
@@ -564,7 +564,13 @@ if (typeof icon === "undefined"){
             results['header'] = self.page.headers
             f.write(HtmlTmplBase.STATIC_PAGE % results)
         if print_paths:
-            print("html", "file:///%s" % html_file_path.replace("\\", "/"))
+            if isinstance(print_paths, dict):
+                link_args = ""
+                if "args" in print_paths:
+                    link_args = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in print_paths["args"].items()])
+                print("html", "file:///%s%s" % (html_file_path.replace("\\", "/"), link_args))
+            else:
+                print("html", "file:///%s" % html_file_path.replace("\\", "/"))
 
         if configs.keys:
             with open(os.path.join(path, "%s.json" % name), "w") as fp:
