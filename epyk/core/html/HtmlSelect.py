@@ -79,6 +79,7 @@ class Select(Html.Html):
         "dropdown-toggle": "dropdown-toggle",
         "bs-searchbox > input.form-control": "bs-searchbox > input.form-control",
         "dropdown-item": "dropdown-item",
+        "dropdown-item .selected": "dropdown-item .selected",
         "dropdown-item: focus": "dropdown-item: focus",
         "dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus": "dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus",
         "dropdown-menu > div.popover-header": "dropdown-menu > div.popover-header"

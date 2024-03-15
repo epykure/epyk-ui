@@ -518,7 +518,8 @@ class OptionsSelectJs(OptionsSelect):
     @showTick.setter
     def showTick(self, flag: bool):
         if flag:
-            self.page.imports.append_to(self.page.body.style.globals.icon.family)
+            # Add the Icon family to display the icons
+            self.page.imports.add(self.page.body.style.globals.icon.family)
         self._config(flag)
 
     @property

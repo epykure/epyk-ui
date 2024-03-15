@@ -3,6 +3,8 @@
   --grey: $greys-4;
   --white: $greys-0;
   --theme-dark: $theme-dark;
+  --theme-light: $theme-light;
+  --theme: $theme;
   --font-family: $font-family;
   --line-height: $line-height;
   --font-size: $font-size;

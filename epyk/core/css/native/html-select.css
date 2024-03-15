@@ -64,6 +64,11 @@
     outline: 0 !important ;
 }
 
+.dropdown-item.selected {
+    color: var(--white) ;
+    background-color: var(--theme) ;
+}
+
 .dropdown-menu.show {
     font-size: inherit ;
     z-index: 260 ;
