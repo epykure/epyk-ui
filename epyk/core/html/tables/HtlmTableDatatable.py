@@ -1,15 +1,15 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, List
+from typing import List
 
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptTableDatatable
+from epyk.core.html.tables.evts import EvtTableDatatable
 from epyk.core.js.packages import JsDatatable
 from epyk.core.js import JsUtils
-from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlTables
 
 # The list of CSS classes
@@ -35,6 +35,11 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
                                     css_attrs={"width": width, "height": height})
         if records is not None:
             self.options.data = records
+
+    @property
+    def events(self) -> EvtTableDatatable.EvtDatatable:
+        """Common events for tables"""
+        return EvtTableDatatable.EvtDatatable(page=self.page, component=self)
 
     @property
     def dom(self) -> JsHtmlTables.JsHtmlDatatable:

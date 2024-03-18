@@ -8,6 +8,7 @@ from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
 from typing import Generator, Dict
 from epyk.core.html.options import OptTableAgGrid
+from epyk.core.html.tables.evts import EvtTableAgGrid
 
 from epyk.core.js import JsUtils
 from epyk.core.js.packages import JsAgGrid
@@ -156,6 +157,11 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         if self._js is None:
             self._js = JsAgGrid.AgGrid(page=self.page, selector=self.js_code, set_var=False, component=self)
         return self._js
+
+    @property
+    def events(self) -> EvtTableAgGrid.EvtAggrid:
+        """Common events for tables"""
+        return EvtTableAgGrid.EvtAggrid(page=self.page, component=self)
 
     @property
     def dom(self) -> JsHtmlTables.JsHtmlAggrid:

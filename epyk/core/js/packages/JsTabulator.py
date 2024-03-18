@@ -1495,6 +1495,29 @@ dataContemt.slice(1).forEach(function(v){var row = {}; dataContemt[0].forEach(fu
         """
         return JsObjects.JsArray.JsArray("%s.getSelectedData()" % self.varId, page=self.page, component=self.component)
 
+    def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+           data_ref: str = "data", with_event: bool = True) -> JsUtils.jsWrap:
+        """
+
+        :param event:
+        :param js_funcs:
+        :param profile:
+        :param data_ref:
+        :param with_event:
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+        event = JsUtils.jsConvertData(event, None)
+        if not str_func.startswith("function("):
+            if "return " not in str_func:
+                str_func = "return %s" % str_func
+            if with_event:
+                str_func = "function(evt, %s){%s}" % (data_ref, str_func)
+            else:
+                str_func = "function(%s){%s}" % (data_ref, str_func)
+        return JsUtils.jsWrap("%s.on(%s, %s)" % (self.varId, event, str_func))
+
     @property
     def _(self):
         """

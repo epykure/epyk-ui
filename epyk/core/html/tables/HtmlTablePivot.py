@@ -6,6 +6,7 @@ from typing import Union
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.html.tables.evts import EvtTablePivot
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptTable
 from epyk.core.js.packages import JsQuery
@@ -350,6 +351,11 @@ class PivotTable(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.style.css.background_color = "white"
 
     @property
+    def events(self) -> EvtTablePivot.EvtPivot:
+        """Common events for tables"""
+        return EvtTablePivot.EvtPivot(page=self.page, component=self)
+
+    @property
     def style(self) -> GrpClsTable.Pivot:
         """Property to the CSS Style of the component"""
         if self._styleObj is None:
@@ -394,6 +400,11 @@ class PivotUITable(PivotTable):
         # to add all the columns in the table if nothing defined
         self.options.cols = cols or []
         self.options.rows = rows or []
+
+    @property
+    def events(self) -> EvtTablePivot.EvtPivot:
+        """Common events for tables"""
+        return EvtTablePivot.EvtPivot(page=self.page, component=self)
 
     @property
     def options(self) -> OptTable.OptionsPivotUI:

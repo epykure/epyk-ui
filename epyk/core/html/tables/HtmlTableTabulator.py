@@ -6,6 +6,7 @@ from typing import Generator, List
 from epyk.core.py import primitives, types
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.html.tables.evts import EvtTableTabulator
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlTables
@@ -32,6 +33,11 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.__bespoke_formatters = set()
         if options is not None and options.get("striped"):
             self.style.strip()
+
+    @property
+    def events(self) -> EvtTableTabulator.EvtTabulator:
+        """Common events for tables"""
+        return EvtTableTabulator.EvtTabulator(page=self.page, component=self)
 
     @property
     @Html.deprecated("Should use .js._. instead to get table core components")
@@ -238,6 +244,11 @@ class TableTree(Table):
         if records is not None:
             self.options.data = records
         self.style.css.background = None
+
+    @property
+    def events(self) -> EvtTableTabulator.EvtTabulator:
+        """Common events for tables"""
+        return EvtTableTabulator.EvtTabulator(page=self.page, component=self)
 
     @property
     def options(self) -> OptTableTabulator.TableTreeConfig:

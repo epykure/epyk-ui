@@ -318,7 +318,7 @@ JS_IMPORTS = {
         'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
         'repository': 'https://github.com/olifolkerd/tabulator',
         'license': 'MIT license',
-        'version': '4.9.3',  # '5.3.1', # '4.9.3',
+        'version': '6.0.0', # '4.9.3',  # '5.3.1', # '4.9.3',
         'register': {'alias': 'Tabulator', 'module': 'tabulator.min', 'npm': 'tabulator-tables'},
         'modules': [
             # core only needed for Jupyter for some reasons

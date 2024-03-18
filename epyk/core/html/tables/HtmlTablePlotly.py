@@ -4,6 +4,7 @@
 from epyk.core.html.graph import GraphPlotly
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptPlotly
+from epyk.core.html.tables.evts import EvtTablePlotly
 
 from epyk.core.js.packages import JsPlotly
 
@@ -178,6 +179,11 @@ class Table(MixHtmlState.HtmlOverlayStates, GraphPlotly.Chart):
     requirements = ('plotly.js',)
 
     __reqJs = ['plotly.js']
+
+    @property
+    def events(self) -> EvtTablePlotly.EvtPlotly:
+        """Common events for tables"""
+        return EvtTablePlotly.EvtPlotly(page=self.page, component=self)
 
     @property
     def chart(self) -> JsPlotly.Pie:

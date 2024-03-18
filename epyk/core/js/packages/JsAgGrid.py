@@ -953,10 +953,8 @@ class AgGrid(JsPackage):
     :return: 
     """
     return JsObjects.JsVoid('''
-const calcTotalCols = %s;
-const totalRow = function(api) {
-      let result = [{}];
-      calcTotalCols.forEach(function (params){result[0][params] = 0});
+const calcTotalCols = %s; const totalRow = function(api) {
+      let result = [{}]; calcTotalCols.forEach(function (params){result[0][params] = 0});
       calcTotalCols.forEach(function (params){%s.forEach(function (line) {result[0][params] += line[params];})});
       api.setPinnedBottomRowData(result);
   }; totalRow(%s.api)''' % (JsUtils.jsConvertData(cols, None), JsUtils.jsConvertData(rowData, None), self.varId))
@@ -969,6 +967,16 @@ const totalRow = function(api) {
     :param data:
     """
     return JsObjects.JsVoid("%s.api.setServerSideDatasource(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
+
+  @property
+  def fields(self) -> JsObjects.JsArray.JsArray:
+    """Get the table's header fields"""
+    return JsObjects.JsArray.JsArray.get("(function(colsDef){let res = []; colsDef.forEach(function(r){res.push(r.field)}); return res})(%s)" % self.getColumnDefs())
+
+  @property
+  def titles(self) -> JsObjects.JsArray.JsArray:
+    """Get the table's header titles"""
+    return JsObjects.JsArray.JsArray.get("(function(colsDef){let res = []; colsDef.forEach(function(r){res.push(r.title)}); return res})(%s)" % self.getColumnDefs())
 
   def fetch(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
             is_json: bool = True,

@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import List, Union, Optional
-from epyk.core.py import primitives, types
+from typing import List, Union
+from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.html.tables.evts import EvtTableBasic
 from epyk.core.js.html import JsHtml
 from epyk.core.html.options import OptTable
 
@@ -120,6 +121,11 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.style.add_classes.table.table()
         self.css({"text-align": 'center', 'border-collapse': 'collapse'})
         self.set_items()
+
+    @property
+    def events(self) -> EvtTableBasic.EvtBespoke:
+        """Common events for tables"""
+        return EvtTableBasic.EvtBespoke(page=self.page, component=self)
 
     @property
     def options(self) -> OptTable.OptionsBasic:
@@ -269,6 +275,11 @@ class Excel(Html.Html):
         self._jsStyles = {'header': rows + cols, 'cellwidth': cell_width}
         self.css({'display': 'inline-block', 'overflow': 'auto', 'padding': 0, 'vertical-align': 'top'})
         self.add_title(title, options={'content_table': False})
+
+    @property
+    def events(self) -> EvtTableBasic.EvtExcel:
+        """Common events for tables"""
+        return EvtTableBasic.EvtExcel(page=self.page, component=self)
 
     _js__builder__ = '''var tr = $('<tr></tr>');
 jsStyles.header.forEach(function(rec){tr.append("<th>"+ rec +"</th>")});

@@ -114,8 +114,7 @@ class ColumnFilter(Enums):
         return self._set_value(value='false', js_type=True)
 
     def agTextColumnFilter(self, **kwargs):
-        """
-        A Text Filter for string comparisons.
+        """A Text Filter for string comparisons.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
         """
@@ -124,8 +123,7 @@ class ColumnFilter(Enums):
         return self._set_value()
 
     def agDateColumnFilter(self, **kwargs):
-        """
-        A Date Filter for date comparisons.
+        """A Date Filter for date comparisons.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-filter-date/>`_
         """
@@ -134,16 +132,14 @@ class ColumnFilter(Enums):
         return self._set_value()
 
     def agNumberColumnFilter(self):
-        """
-        A Number Filter for number comparisons.
+        """A Number Filter for number comparisons.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
         """
         return self._set_value()
 
     def agSetColumnFilter(self, filter_name):
-        """
-        A Set Filter, influenced by how filters work in Microsoft Excel. This is an ag-Grid-Enterprise feature.
+        """A Set Filter, influenced by how filters work in Microsoft Excel. This is an ag-Grid-Enterprise feature.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-filter-component/>`_
         """
@@ -173,8 +169,7 @@ class Column(Options):
 
     @property
     def cellClassRules(self):
-        """
-        Rules that return true will have the class applied the second time.
+        """Rules that return true will have the class applied the second time.
         Rules that return false will have the class removed second time.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-styles/>`_
@@ -194,8 +189,7 @@ class Column(Options):
 
     @property
     def cellRenderer(self):
-        """
-        Change the cell rendering.
+        """Change the cell rendering.
 
         Usage::
 
@@ -213,8 +207,7 @@ class Column(Options):
 
     @property
     def cellRendererParams(self):
-        """
-        On top of the parameters provided by the grid, you can also provide your own parameters.
+        """On top of the parameters provided by the grid, you can also provide your own parameters.
         This is useful if you want to 'configure' your Cell Renderer. For example, you might have a Cell
         Renderer for formatting currency but you need to provide what currency for your cell renderer to use.
 
@@ -231,8 +224,7 @@ class Column(Options):
 
     @property
     def cellStyle(self):
-        """
-        Rules that return true will have the class applied the second time.
+        """Rules that return true will have the class applied the second time.
         Rules that return false will have the class removed second time.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-styles/>`_
@@ -258,8 +250,7 @@ class Column(Options):
         self._config(val)
 
     def add_children(self, attrs: dict):
-        """
-        Integrated way to add children to the header definition.
+        """Integrated way to add children to the header definition.
 
         :param attrs: The different columns properties to set.
         """
@@ -280,8 +271,7 @@ class Column(Options):
 
     @property
     def columnGroupShow(self):
-        """
-        values closed, open.
+        """values closed, open.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-grouping-headers/>`_
         """
@@ -293,8 +283,7 @@ class Column(Options):
 
     @property
     def editor(self) -> CellEditor:
-        """
-        Cell editing format
+        """Cell editing format
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
@@ -311,8 +300,7 @@ class Column(Options):
 
     @property
     def enableRowGroup(self):
-        """
-        Allow every column to be grouped.
+        """Allow every column to be grouped.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
         """
@@ -333,9 +321,8 @@ class Column(Options):
 
     @property
     def filters(self) -> ColumnFilter:
-        """
-        Set filtering on a column using the column definition property filter. The property can have one of the following
-        values:
+        """Set filtering on a column using the column definition property filter. The property can have one of the
+        following values:
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
         """
@@ -343,8 +330,7 @@ class Column(Options):
 
     @property
     def filterValueGetter(self):
-        """
-        Function or expression. Gets the value for filtering purposes.
+        """Function or expression. Gets the value for filtering purposes.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-getters/>`_
         """
@@ -365,8 +351,7 @@ class Column(Options):
 
     @property
     def groupRowsSticky(self):
-        """
-        To enable sticky groups, set the groupRowsSticky property to true.
+        """To enable sticky groups, set the groupRowsSticky property to true.
         This behaviour applies to all row group levels.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/>`_
@@ -379,8 +364,7 @@ class Column(Options):
 
     @property
     def groupDisplayType(self):
-        """
-        To display each row group using group rows set groupDisplayType = 'groupRows' as shown below:
+        """To display each row group using group rows set groupDisplayType = 'groupRows' as shown below:
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-sticky-groups/>`_
         """
@@ -392,8 +376,7 @@ class Column(Options):
 
     @property
     def hide(self) -> bool:
-        """
-        True if the column is hidden, otherwise false.
+        """True if the column is hidden, otherwise false.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
         """
@@ -405,8 +388,7 @@ class Column(Options):
 
     @property
     def headerClass(self):
-        """
-        Similarly to styling cells, the grid will use the result of headerClass
+        """Similarly to styling cells, the grid will use the result of headerClass
         from the column definition to style the grid headers.
 
         `Related Pages <https://ag-grid.com/javascript-data-grid/excel-export-styles/#styling-headers>`_
@@ -419,8 +401,7 @@ class Column(Options):
 
     @property
     def headerName(self):
-        """
-        The name to render in the column header.
+        """The name to render in the column header.
         If not specified and field is specified, the field name will be used as the header name.
 
         `Related Pages <https://ag-grid.com/javascript-data-grid/column-properties/#reference-header>`_
@@ -433,8 +414,7 @@ class Column(Options):
 
     @property
     def headerCheckboxSelection(self) -> bool:
-        """
-        If true or the callback returns true, a 'select all' checkbox will be put into the header.
+        """If true or the callback returns true, a 'select all' checkbox will be put into the header.
         See Header Checkbox Selection.
 
         `Related Pages <https://ag-grid.com/javascript-data-grid/column-properties/#reference-header>`_
@@ -458,8 +438,7 @@ class Column(Options):
 
     @property
     def headerTooltip(self):
-        """
-        When we want to display a header tooltip, we set the headerTooltip config as a string,
+        """When we want to display a header tooltip, we set the headerTooltip config as a string,
         and that string will be displayed as the tooltip.
 
         `Related Pages <https://ag-grid.com/javascript-data-grid/component-tooltip/#header-tooltip-with-custom-tooltip>`_
@@ -472,8 +451,7 @@ class Column(Options):
 
     @property
     def headerValueGetter(self):
-        """
-        Function or expression. Gets the value for display in the header.
+        """Function or expression. Gets the value for display in the header.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-getters/>`_
         """
@@ -485,8 +463,7 @@ class Column(Options):
 
     @property
     def lockPinned(self):
-        """
-        If you do not want the user to be able to pin using the UI, set the property lockPinned=true.
+        """If you do not want the user to be able to pin using the UI, set the property lockPinned=true.
         This will block the UI in the following way:
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-pinning/>`_
@@ -499,8 +476,7 @@ class Column(Options):
 
     @property
     def marryChildren(self):
-        """
-        Sometimes you want columns of the group to always stick together.
+        """Sometimes you want columns of the group to always stick together.
         To achieve this, set the column group property marryChildren=true. The example below demonstrates the following:
         """
         return self._config_get()
@@ -596,8 +572,7 @@ class Column(Options):
 
     @property
     def flex(self):
-        """
-        It's often required that one or more columns fill the entire available space in the grid. For this scenario,
+        """It's often required that one or more columns fill the entire available space in the grid. For this scenario,
         it is possible to use the flex config.
         Some columns could be set with a regular width config, while other columns would have a flex config.
 
@@ -620,8 +595,7 @@ class Column(Options):
 
     @property
     def suppressMovable(self):
-        """
-        The column property suppressMovable changes whether the column can be dragged.
+        """The column property suppressMovable changes whether the column can be dragged.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-moving/>`_
         """
@@ -642,8 +616,7 @@ class Column(Options):
 
     @property
     def lockPosition(self):
-        """
-        The column property lockPosition locks columns to the first position in the grid.
+        """The column property lockPosition locks columns to the first position in the grid.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-moving/>`_
         """
@@ -674,8 +647,7 @@ class Column(Options):
 
     @property
     def resizable(self):
-        """
-        Turn column resizing on for the grid by setting resizable=true for each column.
+        """Turn column resizing on for the grid by setting resizable=true for each column.
         To set resizing for each column, set resizable=true on the default column definition.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-resizing/>`_
@@ -706,8 +678,7 @@ class Column(Options):
 
     @property
     def rowGroupIndex(self):
-        """
-        The index of the row group. If the column is not grouped, this field is null.
+        """The index of the row group. If the column is not grouped, this field is null.
         If multiple columns are used to group, this index provides the order of the grouping.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
@@ -720,8 +691,7 @@ class Column(Options):
 
     @property
     def rowSpan(self):
-        """
-        By default, each cell will take up the height of one row. You can change this behaviour to allow cells to
+        """By default, each cell will take up the height of one row. You can change this behaviour to allow cells to
         span multiple rows. This feature is similar to 'cell merging' in Excel or 'row spanning' in HTML tables.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-spanning/>`_
@@ -733,8 +703,7 @@ class Column(Options):
         self._config(val)
 
     def rowSpanFunc(self, data: etypes.JS_DATA_TYPES):
-        """
-        Set a rowSpan function. This can be a callback function or even a string pointing to a
+        """Set a rowSpan function. This can be a callback function or even a string pointing to a
         JavaScript function.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-spanning/>`_
@@ -745,8 +714,7 @@ class Column(Options):
 
     @property
     def suppressSizeToFit(self):
-        """
-        If you don't want a particular column to be included in the auto resize, then set the column definition
+        """If you don't want a particular column to be included in the auto resize, then set the column definition
         suppressSizeToFit=true. This is helpful if, for example, you want the first column to remain fixed width,
         but all other columns to fill the width of the table.
 
@@ -776,8 +744,7 @@ class Column(Options):
 
     @property
     def enableCellChangeFlash(self):
-        """
-        The grid can flash cells to highlight data changes. This is a great visual indicator to users of the grid who
+        """The grid can flash cells to highlight data changes. This is a great visual indicator to users of the grid who
         want data changes to be noticed.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-refresh/>`_
@@ -802,8 +769,7 @@ class Column(Options):
 
     @property
     def sortingOrder(self):
-        """
-        It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
+        """It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
         colDef.
         If defined both in colDef and gridOptions, the colDef will get preference, allowing you to defined a common
         default, and then tailoring per column.
@@ -827,8 +793,7 @@ class Column(Options):
 
     @property
     def comparator(self):
-        """
-        Custom sorting is provided at a column level by configuring a comparator on the column definition.
+        """Custom sorting is provided at a column level by configuring a comparator on the column definition.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-sorting/>`_
         """
@@ -840,8 +805,7 @@ class Column(Options):
 
     @property
     def sort(self):
-        """
-        Custom sorting is provided at a column level.
+        """Custom sorting is provided at a column level.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-sorting/>`_
         """
@@ -853,8 +817,7 @@ class Column(Options):
 
     @property
     def unSortIcon(self):
-        """
-        Custom sorting is provided at a column level.
+        """Custom sorting is provided at a column level.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-sorting/>`_
         """
@@ -897,8 +860,7 @@ class Column(Options):
 
     @property
     def valueFormatter(self):
-        """
-        Value formatters allow you to format values for display. This is useful when data is one type (e.g. numeric)
+        """Value formatters allow you to format values for display. This is useful when data is one type (e.g. numeric)
         but needs to be converted for human reading (e.g. putting in currency symbols and number formatting).
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/value-formatters/>`_
@@ -929,8 +891,7 @@ class Column(Options):
 
     @property
     def wrapHeaderText(self):
-        """
-        If enabled then column header names that are too long for the column width will wrap onto the next line.
+        """If enabled then column header names that are too long for the column width will wrap onto the next line.
         Default false
 
         `Related Pages <https://ag-grid.com/javascript-data-grid/column-properties/#reference-header>`_
@@ -981,8 +942,7 @@ class DefaultColDef(Options):
 
     @property
     def cellRenderer(self):
-        """
-        Change the cell rendering.
+        """Change the cell rendering.
 
         Usage::
 
@@ -1014,8 +974,7 @@ class DefaultColDef(Options):
 
     @property
     def filters(self):
-        """
-        Set filtering on a column using the column definition property filter. The property can have one of the
+        """Set filtering on a column using the column definition property filter. The property can have one of the
         following values:
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-filtering/>`_
@@ -1036,8 +995,7 @@ class DefaultColDef(Options):
 
     @property
     def flex(self):
-        """
-        It's often required that one or more columns fill the entire available space in the grid. For this scenario,
+        """It's often required that one or more columns fill the entire available space in the grid. For this scenario,
         it is possible to use the flex config.
         Some columns could be set with a regular width config, while other columns would have a flex config.
 
@@ -1051,8 +1009,7 @@ class DefaultColDef(Options):
 
     @property
     def floatingFilter(self):
-        """
-        Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
+        """Floating Filter Components allow you to add your own floating filter types to AG Grid. You can create a Custom
         Floating Filter Component to work alongside one of the grid's Provided Filters, or alongside a Custom Filter.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/>`_
@@ -1065,8 +1022,7 @@ class DefaultColDef(Options):
 
     @property
     def groupDefaultExpanded(self):
-        """
-        To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
+        """To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
         """
@@ -1109,8 +1065,7 @@ class DefaultColDef(Options):
 
     @property
     def resizable(self):
-        """
-        Turn column resizing on for the grid by setting resizable=true for each column.
+        """Turn column resizing on for the grid by setting resizable=true for each column.
         To set resizing for each column, set resizable=true on the default column definition.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-resizing/>`_
@@ -1132,8 +1087,7 @@ class DefaultColDef(Options):
 
     @property
     def suppressMovable(self):
-        """
-        The column property suppressMovable changes whether the column can be dragged.
+        """The column property suppressMovable changes whether the column can be dragged.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-moving/>`_
         """
@@ -1159,8 +1113,7 @@ class DefaultColDef(Options):
 
     @property
     def width(self):
-        """
-        set every column width.
+        """set every column width.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
         """
@@ -1675,10 +1628,54 @@ class TableConfig(OptionsWithTemplates):
             event_type = "on%s" % event_type.capitalize()
         self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref, name=event_type)
 
+    def onColumnHeaderClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        """A click is performed on a column header.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/#reference-columns-columnHeaderClicked>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onColumnHeaderMouseOver(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        """A mouse cursor is initially moved over a column header.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/#reference-columns-columnHeaderClicked>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onColumnHeaderMouseLeave(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        """A mouse cursor is moved out of a column header.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/#reference-columns-columnHeaderClicked>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onCellEditingStarted(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                             func_ref: bool = False):
+        """Editing a cell has stopped.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
     def onCellEditingStopped(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                              func_ref: bool = False):
-        """
-        Editing a cell has stopped.
+        """Editing a cell has stopped.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing/>`_
 
@@ -1690,8 +1687,7 @@ class TableConfig(OptionsWithTemplates):
 
     def onCellValueChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                            func_ref: bool = False):
-        """
-        Value has changed after editing (this event will not fire if editing was cancelled, eg ESC was pressed) or
+        """Value has changed after editing (this event will not fire if editing was cancelled, eg ESC was pressed) or
         if cell value has changed as a result of paste operation.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing/>`_
@@ -1702,9 +1698,143 @@ class TableConfig(OptionsWithTemplates):
         """
         self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
+    def onCellClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                     func_ref: bool = False):
+        """Cell is clicked.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onCellDoubleClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                     func_ref: bool = False):
+        """Cell is double clicked.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onCellFocused(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                     func_ref: bool = False):
+        """Cell is focused.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onCellMouseOver(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                        func_ref: bool = False):
+        """Mouse entered cell.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onCellMouseOut(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                        func_ref: bool = False):
+        """Mouse left cell.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onCellMouseDown(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                        func_ref: bool = False):
+        """Mouse down on cell.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
     def onRowClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                      func_ref: bool = False):
+        """Row is clicked.
+
+        `Related Pages <https://ag-grid.com/angular-data-grid/grid-interface/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
         """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onRowDoubleClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        """Row is double clicked.
+
+        `Related Pages <https://ag-grid.com/angular-data-grid/grid-interface/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onRowEditingStarted(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                            func_ref: bool = False):
+        """Editing a row has started (when row editing is enabled). When row editing, this event will be fired once and
+        cellEditingStarted will be fired for each individual cell. Only fires when doing Full Row Editing.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/#reference-columns-columnHeaderClicked>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onRowEditingStopped(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                            func_ref: bool = False):
+        """Editing a row has stopped (when row editing is enabled). When row editing, this event will be fired once
+        and cellEditingStopped will be fired for each individual cell. Only fires when doing Full Row Editing.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/#reference-columns-columnHeaderClicked>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onRowValueChanged(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                          func_ref: bool = False):
+        """A cell's value within a row has changed. This event corresponds to Full Row Editing only.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-events/#reference-columns-columnHeaderClicked>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onRowSelected(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                     func_ref: bool = False):
+        """Row is selected or deselected. The event contains the node in question, so call the node's isSelected()
+        method to see if it was just selected or deselected.
 
         `Related Pages <https://ag-grid.com/angular-data-grid/grid-interface/>`_
 
@@ -1716,7 +1846,8 @@ class TableConfig(OptionsWithTemplates):
 
     def onSelectionChanged(
             self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
-        """
+        """Row selection is changed. Use the grid API getSelectedNodes() or getSelectedRows() to get the new list of
+        selected nodes / row data.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-selection/>`_
 
@@ -1754,8 +1885,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def overlayLoadingTemplate(self):
-        """
-        Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
+        """Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/overlays/>`_
         """
@@ -1767,8 +1897,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def overlayNoRowsTemplate(self):
-        """
-        Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
+        """Provide a plain HTML string to the grid properties overlayLoadingTemplate and overlayNoRowsTemplate.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/overlays/>`_
         """
@@ -1780,8 +1909,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def paginateChildRows(self):
-        """
-        Set to true to have pages split children of groups when using Row Grouping or detail rows with Master Detail.
+        """Set to true to have pages split children of groups when using Row Grouping or detail rows with Master Detail.
         See Pagination & Child Rows.
 
         Default: false
@@ -1796,8 +1924,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def pagination(self):
-        """
-        To enable pagination in, set the grid property pagination=true.
+        """To enable pagination in, set the grid property pagination=true.
         The following simple example shows this, the only difference to this and previous examples is the pagination=true
         property.
 
@@ -1811,8 +1938,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def paginationPageSize(self):
-        """
-        How many rows to load per page. If paginationAutoPageSize is specified, this property is ignored.
+        """How many rows to load per page. If paginationAutoPageSize is specified, this property is ignored.
         See Customising Pagination.
         Default: 100
 
@@ -1827,10 +1953,9 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def paginationAutoPageSize(self):
-        """
-        If you set paginationAutoPageSize=true the grid will automatically show as many rows in each page as it can fit.
-        This is demonstrated below. Note if you resize the display area of the grid, the page size automatically changes.
-        To view this, open the example up in a new tab and resize your browser.
+        """If you set paginationAutoPageSize=true the grid will automatically show as many rows in each page as it can
+        fit. This is demonstrated below. Note if you resize the display area of the grid, the page size automatically
+        changes. To view this, open the example up in a new tab and resize your browser.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
         """
@@ -1841,8 +1966,7 @@ class TableConfig(OptionsWithTemplates):
         self._config(num)
 
     def paginationNumberFormatter(self):
-        """
-        Allows user to format the numbers in the pagination panel, i.e. 'row count' and 'page number' labels.
+        """Allows user to format the numbers in the pagination panel, i.e. 'row count' and 'page number' labels.
         This is for pagination panel only, to format numbers inside the grid's cells (i.e. your data),
         then use valueFormatter in the column definitions.
 
@@ -1885,8 +2009,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def groupDefaultExpanded(self):
-        """
-        To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
+        """To open all groups down to a given group level use the groupDefaultExpanded grid option as shown below:
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
         """
@@ -1900,8 +2023,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def groupSelectsChildren(self):
-        """
-        Filler groups do not keep their selection state should the filler group be moved.
+        """Filler groups do not keep their selection state should the filler group be moved.
 
         For example if you have groups A->B->C, where C is the only row provided
         (so the grid creates groups A and B for you), and then you change the patch to D->B->C,
@@ -1928,8 +2050,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowClass(self):
-        """
-        The style properties to apply to all rows. Set to an object of key (style names) and values (style values).
+        """The style properties to apply to all rows. Set to an object of key (style names) and values (style values).
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
@@ -1941,8 +2062,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowClassRules(self):
-        """
-        The following snippet shows rowClassRules applying classes to rows using expressions on an age column value:
+        """The following snippet shows rowClassRules applying classes to rows using expressions on an age column value:
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
@@ -1954,8 +2074,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowHeight(self):
-        """
-        By default, the grid will display rows with a height of 25px. You can change this for each row individually
+        """By default, the grid will display rows with a height of 25px. You can change this for each row individually
         to give each row a different height.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-height/>`_
@@ -1987,8 +2106,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowStyle(self):
-        """
-        Property to set style for all rows. Set to an object of key (style names) and values (style values).
+        """Property to set style for all rows. Set to an object of key (style names) and values (style values).
 
         `Related Pages <http://54.222.217.254/javascript-grid-row-styles/#row-style>`_
         """
@@ -2000,8 +2118,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def singleClickEdit(self):
-        """
-        To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
+        """To change the default so that a single-click starts editing, set the property gridOptions.singleClickEdit = true.
         This is useful when you want a cell to enter edit mode as soon as you click on it, similar to the experience you
         get when inside Excel.
 
@@ -2026,8 +2143,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressClickEdit(self):
-        """
-        The grid configures a cellRenderer with a button to start editing.
+        """The grid configures a cellRenderer with a button to start editing.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-cell-editing/>`_
         """
@@ -2050,8 +2166,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressPaginationPanel(self):
-        """
-        If you set suppressPaginationPanel=true, the grid will not show the standard navigation controls for pagination.
+        """If you set suppressPaginationPanel=true, the grid will not show the standard navigation controls for pagination.
         This is useful is you want to provide your own navigation controls.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
@@ -2064,8 +2179,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressPaste(self):
-        """
-        Pasting is on by default as long as cells are editable (non-editable cells cannot be modified,
+        """Pasting is on by default as long as cells are editable (non-editable cells cannot be modified,
         even with a paste operation). Set to true turn paste operations off.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/clipboard/>`_
@@ -2078,8 +2192,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressCopySingleCellRanges(self):
-        """
-        Set to true to copy rows instead of ranges when a range with only a single cell is selected.
+        """Set to true to copy rows instead of ranges when a range with only a single cell is selected.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/clipboard/>`_
         """
@@ -2091,8 +2204,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressRowHoverHighlight(self):
-        """
-        Highlighting Rows is on by default. To turn it off, set the grid property.
+        """Highlighting Rows is on by default. To turn it off, set the grid property.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
@@ -2104,8 +2216,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def columnHoverHighlight(self):
-        """
-        Highlighting Columns is off by default. To turn it on, set the grid property.
+        """Highlighting Columns is off by default. To turn it on, set the grid property.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-styles/>`_
         """
@@ -2117,9 +2228,8 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressScrollOnNewData(self):
-        """
-        The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top when
-        the page changes.
+        """The example also sets property suppressScrollOnNewData=true, which tells the grid to NOT scroll to the top
+        when the page changes.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-pagination/>`_
         """
@@ -2131,8 +2241,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressColumnVirtualisation(self):
-        """
-        Ensures all columns are rendered, i.e. appears in the DOM.
+        """Ensures all columns are rendered, i.e. appears in the DOM.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-accessibility/>`_
         """
@@ -2144,8 +2253,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressDragLeaveHidesColumns(self):
-        """
-        Column animations happen when you move a column. The default is for animations to be turned on.
+        """Column animations happen when you move a column. The default is for animations to be turned on.
 
         It is recommended that you leave the column move animations on unless your target platform (browser and hardware)
         is to slow to manage the animations.
@@ -2172,8 +2280,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowMultiSelectWithClick(self):
-        """
-        Set to true to allow multiple rows to be selected with clicks.
+        """Set to true to allow multiple rows to be selected with clicks.
 
         For example, if you click to select one row and then click to select another row, the first row will stay
         selected as well.
@@ -2190,8 +2297,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowDeselection(self):
-        """
-        Set to true to allow rows to be deselected if you hold down Ctrl and click the row.
+        """Set to true to allow rows to be deselected if you hold down Ctrl and click the row.
         By default, the grid disallows deselection of rows (i.e. once a row is selected, it remains selected until another
         row is selected in its place).
 
@@ -2205,8 +2311,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowSelection(self):
-        """
-        Type of row selection, set to either 'single' or 'multiple' to enable selection.
+        """Type of row selection, set to either 'single' or 'multiple' to enable selection.
         'single' will use single row selection, such that when you select a row, any previously selected row gets
         unselected.
         'multiple' allows multiple rows to be selected.
@@ -2221,8 +2326,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def rowBuffer(self):
-        """
-        Sets the number of rows rendered outside of the scrollable viewable area.
+        """Sets the number of rows rendered outside of the scrollable viewable area.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-accessibility/>`_
         """
@@ -2256,8 +2360,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressRowClickSelection(self):
-        """
-        If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't
+        """If true, rows won't be selected when clicked. Use, for example, when you want checkbox selection, and don't
         want to also select the row when the row is clicked.
 
         `Related Pages <https://www.ag-grid.com/javascript-grid-selection/>`_
@@ -2281,8 +2384,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def suppressRowTransform(self):
-        """
-        The property suppressRowTransform=true is used to stop the grid positioning rows using CSS transform and
+        """The property suppressRowTransform=true is used to stop the grid positioning rows using CSS transform and
         instead the grid will use CSS top.
 
         `Related Pages <https://www.ag-grid.com/angular-data-grid/row-spanning/>`_
@@ -2295,8 +2397,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def sortingOrder(self):
-        """
-        It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
+        """It is possible to override this behaviour by providing your own sortingOrder on either the gridOptions or the
         colDef.
         If defined both in colDef and gridOptions, the colDef will get preference, allowing you to define a common
         default, and then tailoring per column.
@@ -2342,8 +2443,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def valueCache(self):
-        """
-        Set to true to turn on the value cache.
+        """Set to true to turn on the value cache.
 
         Default: false
 
@@ -2357,8 +2457,7 @@ class TableConfig(OptionsWithTemplates):
 
     @property
     def valueCacheNeverExpires(self):
-        """
-        Set to true to configure the value cache to not expire after data updates.
+        """Set to true to configure the value cache to not expire after data updates.
 
         Default: false
 
