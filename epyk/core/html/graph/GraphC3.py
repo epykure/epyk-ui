@@ -7,6 +7,7 @@ from epyk.core.py import types as etypes
 from epyk.core.py import primitives
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.html.graph.evts import EvtBillboard
 from epyk.core.css import Colors
 
 from epyk.core.js.packages import JsC3
@@ -33,6 +34,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         if width[1] == "%":
             self.style.css.width_calc(10, None)
         self.__defined_options = None
+
+    @property
+    def events(self) -> EvtBillboard.EvtBillboard:
+        """Common Chart events"""
+        return EvtBillboard.EvtBillboard(page=self.page, component=self)
 
     @property
     def options(self) -> OptChartC3.C3:

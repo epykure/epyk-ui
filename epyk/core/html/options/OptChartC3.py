@@ -1680,27 +1680,51 @@ class OptionsData(Options):
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         """
-        self._config("function(){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+        self._config("function(d, element){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
     def onmouseover(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False):
-        """Set a callback for mouseover event on each data point.
+        """Set a callback for mouse/touch over event on each data point.
 
         `Package Doc <https://c3js.org/reference.html#data-onmouseover>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         """
-        self._config("function(){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+        self._config("function(d, element){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+                     name="onover", js_type=True)
 
     def onmouseout(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False):
-        """ Set a callback for mouseout event on each data point.
+        """ Set a callback for mouse/touch out event on each data point.
 
         `Package Doc <https://c3js.org/reference.html#data-onmouseout>`_
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         """
-        self._config("function(){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+        self._config("function(d, element){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+                     name="onout", js_type=True)
+
+    def onselected(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False):
+        """Set a callback for on data selection.
+
+        `Package Doc <https://c3js.org/reference.html#data-onmouseout>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        self.selection.enabled = True
+        self._config("function(d, element){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
+
+    def onunselected(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = False):
+        """Set a callback for on data selection.
+
+        `Package Doc <https://c3js.org/reference.html#data-onmouseout>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        self.selection.enabled = True
+        self._config("function(d, element){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile), js_type=True)
 
     @property
     def url(self):

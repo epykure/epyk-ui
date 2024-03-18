@@ -11,6 +11,7 @@ from epyk.core.js.packages import JsNvd3
 from epyk.core.js.packages import JsD3
 from epyk.core.html.options import OptChart
 from epyk.core.html.options import OptChartNvd3
+from epyk.core.html.graph.evts import EvtNVD3
 
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
@@ -27,6 +28,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.style.css.margin_left = 10
         self.style.css.margin_right = 10
         self.__defined_options = None
+
+    @property
+    def events(self) -> EvtNVD3.EvtNVD3:
+        """Common Chart events"""
+        return EvtNVD3.EvtNVD3(page=self.page, component=self)
 
     @property
     def shared(self) -> OptChartNvd3.OptionsChartSharedNVD3:

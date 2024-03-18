@@ -6,6 +6,7 @@ from typing import List
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.html.options import OptPlotly
+from epyk.core.html.graph.evts import EvtPlotly
 
 from epyk.core.py import types
 
@@ -30,6 +31,11 @@ class Chart(Html.Html):
     self.layout.autosize, self._labels = True, None
     if not height[0] is None:
       self.layout.height = height[0]
+
+  @property
+  def events(self) -> EvtPlotly.EvtPlotly:
+      """Common Chart events"""
+      return EvtPlotly.EvtPlotly(page=self.page, component=self)
 
   @property
   def shared(self) -> OptPlotly.OptionsChartSharedPlotly:

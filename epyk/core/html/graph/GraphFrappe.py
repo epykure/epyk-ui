@@ -7,6 +7,7 @@ from epyk.core.py import types
 from epyk.core.html import Html
 from epyk.core.html.options import OptChartFrappe
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.html.graph.evts import EvtFrappe
 from epyk.core.css import Colors
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlCharts
@@ -27,6 +28,11 @@ class Frappe(MixHtmlState.HtmlOverlayStates, Html.Html):
             css_attrs={"width": width, "height": height})
         self.options.type = self._chart__type
         self.__defined_options = None
+
+    @property
+    def events(self) -> EvtFrappe.EvtFrappe:
+        """Common Chart events"""
+        return EvtFrappe.EvtFrappe(page=self.page, component=self)
 
     @property
     def dom(self) -> JsHtmlCharts.ChartJs:

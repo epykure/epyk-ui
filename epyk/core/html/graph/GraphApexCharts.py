@@ -9,6 +9,7 @@ from epyk.core.css import Colors
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptChartApex
+from epyk.core.html.graph.evts import EvtApexCharts
 from epyk.core.js.html import JsHtmlCharts
 from epyk.core.js.packages import JsApexChart
 from epyk.core.js import JsUtils
@@ -123,6 +124,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.yaxis.labels.formatters.toNumber()
         self.style.css.margin_top = 10
         self.__defined_options = None
+
+    @property
+    def events(self) -> EvtApexCharts.EvtApexCharts:
+        """Common Chart events"""
+        return EvtApexCharts.EvtApexCharts(page=self.page, component=self)
 
     def activePoints(self, i: int = None, component_id: str = None) -> ApexActivePoints:
         """The current active points selected by an event on a chart.
@@ -330,7 +336,6 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
-        print(self.build())
         return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
 
 

@@ -559,7 +559,7 @@ class OptionAnimations(Options):
 class OptionEvents(Options):
 
   def click(self, js_funcs, profile=None):
-    """   Fires when user clicks on any area of the chart.
+    """Fires when user clicks on any area of the chart.
 
     Related Pages:
 

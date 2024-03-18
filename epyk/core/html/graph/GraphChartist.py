@@ -6,6 +6,7 @@ from epyk.core.css import Colors
 from epyk.core.html.options import OptChartist
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
+from epyk.core.html.graph.evts import EvtChartist
 from epyk.core.js.html import JsHtmlCharts
 from epyk.core.js import JsUtils
 
@@ -24,6 +25,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
                                     css_attrs={"width": width, "height": height})
         self.style.css.margin_top = 10
         self.__defined_options = None
+
+    @property
+    def events(self) -> EvtChartist.EvtChartist:
+        """Common Chart events"""
+        return EvtChartist.EvtChartist(page=self.page, component=self)
 
     def colors(self, hex_values: list):
         """Set chart colors.

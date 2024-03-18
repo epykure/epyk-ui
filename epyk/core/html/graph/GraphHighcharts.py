@@ -10,6 +10,7 @@ from epyk.core.py import types
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html import Html
 from epyk.core.html.options import OptChartHighcharts
+from epyk.core.html.graph.evts import EvtHighcharts
 
 
 class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
@@ -25,6 +26,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         super(Chart, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
         self.style.css.margin_top = 10
+
+    @property
+    def events(self) -> EvtHighcharts.EvtHighcharts:
+        """Common Chart events"""
+        return EvtHighcharts.EvtHighcharts(page=self.page, component=self)
 
     @property
     def options(self) -> OptChartHighcharts.OptionsHighcharts:
@@ -67,7 +73,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
                 line_colors.append(h[0])
         self.options._config(line_colors, name="colors")
         for i, rec in enumerate(self.options.js_tree.get("series", [])):
-            rec.color = line_colors[i]
+            rec.color = line_colors[i % max(len(line_colors), 1)]
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
               source_event: str = None, on_ready: bool = False):

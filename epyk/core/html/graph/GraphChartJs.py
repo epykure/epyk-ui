@@ -7,6 +7,7 @@ from epyk.core.css import Colors
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptChartJs
+from epyk.core.html.graph.evts import EvtChartJs
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlCharts
@@ -258,6 +259,11 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.plugins.dragdata.dragX = True
         return self.options
 
+    @property
+    def events(self) -> EvtChartJs.EvtChartJs:
+        """Common Chart events"""
+        return EvtChartJs.EvtChartJs(page=self.page, component=self)
+
     def labels(self, labels: list):
         """Set the labels of the different series in the chart.
 
@@ -327,8 +333,10 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
                 rec.backgroundColor = self.options.background_colors
                 rec.borderColor = self.options.colors
             else:
-                rec.backgroundColor = self.options.background_colors[i]
-                rec.borderColor = self.options.colors[i]
+                if self.options.background_colors:
+                    rec.backgroundColor = self.options.background_colors[i % max(len(self.options.background_colors), 1)]
+                if self.options.colors:
+                    rec.borderColor = self.options.colors[i % max(len(self.options.colors), 1)]
             rec.borderWidth = 1
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
