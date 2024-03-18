@@ -4,6 +4,7 @@ import collections
 import time
 import inspect
 from typing import Union, Optional, List
+from pathlib import Path
 
 try:
     basestring
@@ -52,6 +53,25 @@ class JsProperties:
         """Get the list of needed javasScript functions """
         return self._context['functions'].keys()
 
+    def add_from_file(self, file_path: str, category: str = None, override: bool = False, verbose: bool = False) -> str:
+        """Store a JavaScript expression from a file.
+        This method will be used for the defined javaScript data transformations (aggregators or filters).
+
+        :param file_path: File path with the JavaScript definition
+        :param category: Optional. Set the category for the JavaScript expression
+        :param override: Optional. Override an existing JavaScript definition
+        :param verbose: Optional. Flag to display extra log messages
+        """
+        fpath = Path(file_path)
+        if not fpath.exists():
+            raise ValueError("Javascript file does not exist: %s" % file_path)
+
+        name = fpath.name
+        with open(file_path) as fp:
+            content = fp.read()
+        if category == "constructor":
+            return self.add_constructor(name[0].lower() + name[1:], content, override=override, verbose=verbose)
+
     def add_text(self, text: str, map_id: str = None):
         """Add JavaScript fragments from String.
 
@@ -62,7 +82,7 @@ class JsProperties:
           page.outs.html_file(name="test", print_paths=True)
 
         :param text: JavaScript fragments to be directly included to the page
-        :param map_id: Internal ID to avoid loading the same content multiple time
+        :param map_id: Optional. Internal ID to avoid loading the same content multiple time
         """
         if map_id is None or map_id not in self.__map_css:
             self._context["text"].append(text)
@@ -83,7 +103,7 @@ class JsProperties:
         #TODO implement func_dsc
 
         :param builder_def: The builder definition.
-        :param func_dsc:
+        :param func_dsc: Optional.
         """
         if isinstance(builder_def, list):
             for builder in builder_def:
@@ -112,8 +132,8 @@ class JsProperties:
 
         :param name: The constructor name
         :param content: The entire definition
-        :param override: Override the method if already defined if set to true
-        :param verbose: Display extra messages if set to true
+        :param override: Optional. Override the method if already defined if set to true
+        :param verbose: Optional. Display extra messages if set to true
         """
         if not override and name in self._context['constructors']:
             if verbose:
@@ -145,8 +165,8 @@ class JsProperties:
           btn.click([btn.build("Clicked")])
 
         :param name: The constructor alias (must match the function's name)
-        :param content: The constructor expression in JavaScript
-        :param func_ref:
+        :param content: Optional. The constructor expression in JavaScript
+        :param func_ref: Optional. Flag to decorate the JavaScript expression as a function
         """
         if content is None:
             self._context['constructors'][name] = None

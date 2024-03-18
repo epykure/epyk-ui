@@ -187,7 +187,12 @@ class DataEvents:
         This is the default variable name in all the JavaScript embedded methods.
         """
         from epyk.core.js.primitives import JsObjects
-        return JsObjects.JsObjects.get("data")
+        from epyk.core.data import DataCore
+
+        result = JsObjects.JsObjects.get("data")
+        result.aggs = DataCore.DataAggregators(js_code="data")
+        result.fltrs = DataCore.DataFilters(js_code="data")
+        return result
 
     @property
     def target(self):

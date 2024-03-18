@@ -1,0 +1,10 @@
+
+
+function aggCount(records, {columns, attrs = null}){
+    let result = {}; columns.forEach(function(c){result[c] = 0});
+    records.forEach(function(v){
+        columns.forEach(function(c){
+            if(typeof v[c] !== 'undefined'){result[c] += 1}})});
+    if(attrs){for(let attr in attrs){result[attr] = attrs[attr]}};
+    return [result]
+}

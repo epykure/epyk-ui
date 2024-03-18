@@ -9,8 +9,6 @@ class ItemsLinkRec:
                    other_fields: Dict[str, Any] = None) -> list:
     """
 
-    Usage::
-
     :param records:
     :param column:
     :param text: A Python function to transform the text displayed
@@ -64,8 +62,6 @@ class ItemsBoxRec:
   @staticmethod
   def from_records(records: List[dict], column: Any, title: str = None, color: str = None, icons=None) -> list:
     """
-
-    Usage::
 
     :param records:
     :param column:

@@ -34,6 +34,11 @@ from epyk.core.js.Imports import PACKAGE_STATUS, JS_IMPORTS, CSS_IMPORTS
 
 from epyk.web import jupyter, npm, react, angular, svelte, vue
 
+# Attach the generic data transforms
+from epyk.core.data import DataCore
+aggs = DataCore.DataAggregators()
+fltrs = DataCore.DataFilters()
+
 Page = Rpt.Report
 
 LOG_SERVICE = None

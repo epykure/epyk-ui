@@ -329,6 +329,8 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
     """All the chaining of data flow transformation to feed the various widgets.
     flow must point to function with the following signature (data, {obj1, obj2, .... objN=0})
 
+    TODO: Add Aggs and Filters
+
     usage::
 
         i_var = page.ui.inputs.input("test", html_code="invar")
