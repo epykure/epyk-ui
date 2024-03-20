@@ -1163,7 +1163,7 @@ class Radio(Html.Html):
     self.add_input("", position="before", css={
       "width": 'none', "vertical-align": 'middle', "margin-bottom": 0,
       "height": "{}px".format(Defaults.LINE_HEIGHT)})
-    self.add_label(label, html_code=self.htmlCode, position="after",
+    self.add_label(label, html_code=self.html_code, position="after",
                    css={"display": 'inline-block', "width": "None", 'float': "none"})
     self.input.set_attrs(name="data-content", value=label)
     if flag:
@@ -1172,12 +1172,12 @@ class Radio(Html.Html):
     if group_name is not None:
       self.input.set_attrs(name="name", value=group_name)
     else:
-      self.input.set_attrs(name="name", value=self.htmlCode)
+      self.input.set_attrs(name="name", value=self.html_code)
     self.input.set_attrs(attrs={"type": "radio"})
     self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
     self.input.css({"cursor": 'pointer', 'display': 'inline-block', 'vertical-align': 'middle', 'min-width': 'none'})
     self.css({'vertical-align': 'middle', 'text-align': "left"})
-    self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
+    self.add_icon(icon, html_code=self.html_code, position="after", family=options.get("icon_family"),
                   css={"margin-left": '5px', 'color': self.page.theme.success[1]})
     self.style.css.line_height = Defaults.LINE_HEIGHT
 

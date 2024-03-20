@@ -99,7 +99,7 @@ class Rich:
         return html_star
 
     def light(self, color: str = None, height: types.SIZE_TYPE = (None, 'px'), label: str = None, align: str = "left",
-              tooltip: str = None, helper: str = None, options: types.OPTION_TYPE = None,
+              tooltip: str = None, helper: str = None, html_code: str = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None):
         """Add a traffic light component to give a visual status of a given process.
 
@@ -121,6 +121,7 @@ class Rich:
         :param align: Optional. A string with the horizontal position of the component
         :param tooltip: Optional. A string with the value of the tooltip
         :param helper: Optional. The filtering properties for this component
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         """
@@ -130,7 +131,7 @@ class Rich:
         if isinstance(color, bool):
             color = self.page.theme.success.base if color else self.page.theme.danger.base
         html_traffic = html.HtmlTextComp.TrafficLight(self.page, color, label, height, tooltip, helper, options,
-                                                      profile)
+                                                      profile, html_code=html_code)
         if align == "center":
             html_traffic.style.css.margin = "auto"
             html_traffic.style.css.display = "block"
