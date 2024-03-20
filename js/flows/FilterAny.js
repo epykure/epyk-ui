@@ -2,7 +2,7 @@
 
 function filterAny(records, {value, keys=null, caseSensitive=false}){
     if (value == ''){return r};
-    if (!caseSensitive){value = value.toUpperCase()}
+    if (!caseSensitive){value = value.toUpperCase()};
     let n = [];
     records.forEach(function(e){
       if (keys){

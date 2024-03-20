@@ -208,7 +208,8 @@ class DataAggregators:
         elif cast_vals is False:
             cast_vals = "false"
         return self.func(
-            func_args={"columns": columns, "convertFunc": JsUtils.jsWrap(cast_vals), "srcKeys": keys, "dstKey": dst_key},
+            func_args={"columns": columns, "convertFunc": JsUtils.jsWrap(cast_vals),
+                       "srcKeys": keys, "dstKey": dst_key},
             js_src_path=js_src_path, records=records, verbose=verbose)
 
     def sumCols(self, columns: list, dst_key: dict = None, cast_vals: Union[bool, str] = False, attrs: dict = None,
@@ -433,7 +434,7 @@ class DataFilters:
         """
         name = self.func(js_src_path, verbose)
         key = JsUtils.jsConvertData(key, None)
-        value = JsUtils.jsConvertData(values, None)
+        values = JsUtils.jsConvertData(values, None)
         case_sensitive = JsUtils.jsConvertData(case_sensitive, None)
         empty_all = JsUtils.jsConvertData(empty_all, None)
         self.__filters.add("%s(%%s, {key: %s, values: %s, caseSensitive: %s, emptyAll: %s})" % (
@@ -588,7 +589,7 @@ class DataFilters:
             name, columns, json.dumps(add_missing_cols), dflt))
         return self
 
-    def rename(self, names: Dict[str, str], keep_origin: bool = False, js_src_path: str = None, verbose: bool = None):
+    def rename(self, names: List[tuple], keep_origin: bool = False, js_src_path: str = None, verbose: bool = None):
         """Rename certain columns in the recordset.
         This function will not reduce the records but only change / replace some keys
 
@@ -606,8 +607,12 @@ class DataFilters:
         :param verbose: Optional. Flag to display extra log messages
         """
         name = self.func(js_src_path, verbose)
-        names = JsUtils.jsConvertData(names, None)
-        self.__filters.add("%s(%%s, {names: %s, keepOrigin: %s})" % (name, names, json.dumps(keep_origin)))
+        lnames = []
+        for k, v in names:
+            if JsUtils.isJsData(k):
+                k = "[%s]" % JsUtils.jsConvertData(k, None)
+            lnames.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+        self.__filters.add("%s(%%s, {names: {%s}, keepOrigin: %s})" % (name, ",".join(lnames), json.dumps(keep_origin)))
         return self
 
     @property
