@@ -197,6 +197,22 @@ class OptionAxisLabel(Options):
 class OptionYAxis(Options):
 
     @property
+    def animationDuration(self) -> int:
+        return self._config_get()
+
+    @animationDuration.setter
+    def animationDuration(self, val: int):
+        self._config(val)
+
+    @property
+    def animationDurationUpdate(self) -> int:
+        return self._config_get()
+
+    @animationDurationUpdate.setter
+    def animationDurationUpdate(self, val: int):
+        self._config(val)
+
+    @property
     def axisLabel(self) -> OptionAxisLabel:
         return self._config_sub_data("axisLabel", OptionAxisLabel)
 
@@ -217,6 +233,14 @@ class OptionYAxis(Options):
         self._config(val)
 
     @property
+    def inverse(self) -> bool:
+        return self._config_get()
+
+    @inverse.setter
+    def inverse(self, flag: bool):
+        self._config(flag)
+
+    @property
     def max(self) -> int:
         return self._config_get()
 
@@ -230,6 +254,14 @@ class OptionYAxis(Options):
 
     @min.setter
     def min(self, num: int):
+        self._config(num)
+
+    @property
+    def minInterval(self) -> int:
+        return self._config_get()
+
+    @minInterval.setter
+    def minInterval(self, num: int):
         self._config(num)
 
     @property
@@ -836,12 +868,52 @@ class OptionToolbox(Options):
 class EChartOptions(OptionsWithTemplates):
 
     @property
+    def animationDuration(self) -> int:
+        return self._config_get()
+
+    @animationDuration.setter
+    def animationDuration(self, num: int):
+        self._config(num)
+
+    @property
+    def animationDurationUpdate(self) -> int:
+        return self._config_get()
+
+    @animationDurationUpdate.setter
+    def animationDurationUpdate(self, num: int):
+        self._config(num)
+
+    @property
+    def animationEasing(self) -> str:
+        return self._config_get()
+
+    @animationEasing.setter
+    def animationEasing(self, val: str):
+        self._config(val)
+
+    @property
+    def animationEasingUpdate(self) -> str:
+        return self._config_get()
+
+    @animationEasingUpdate.setter
+    def animationEasingUpdate(self, val: str):
+        self._config(val)
+
+    @property
     def dataZoom(self) -> List[dict]:
         return self._config_get()
 
     @dataZoom.setter
     def dataZoom(self, val: List[dict]):
         self._config(val)
+
+    @property
+    def graphic(self) -> bool:
+        return self._config_get()
+
+    @graphic.setter
+    def graphic(self, values: Union[dict, list]):
+        self._config(values)
 
     @property
     def grid(self) -> bool:
@@ -854,7 +926,6 @@ class EChartOptions(OptionsWithTemplates):
 
     @property
     def title(self) -> bool:
-        """Shortcut to set list of titles"""
         return self._config_get()
 
     @title.setter
