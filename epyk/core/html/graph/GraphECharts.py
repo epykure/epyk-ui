@@ -9,6 +9,7 @@ from epyk.core.html.options import OptChartECharts
 from epyk.core.html.graph.evts import EvtECharts
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.js import JsUtils
+from epyk.core.js.packages import JsECharts
 
 
 class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
@@ -22,6 +23,27 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         super(ECharts, self).__init__(
             page, [], html_code=html_code, profile=profile, options=options,
             css_attrs={"width": width, "height": height})
+
+    @property
+    def options(self) -> OptChartECharts.EChartOptions:
+        """Chart specific options"""
+        return super().options
+
+    @property
+    def js(self) -> JsECharts.ECharts:
+        """Return all the Javascript functions defined in the framework.
+        THis is an entry point to the full Javascript ecosystem.
+
+        Usage::
+
+          line = page.ui.charts.chartJs.bar()
+          page.ui.button("Load").click([line.js.add(6, {"test 2": 34})])
+
+        :return: A Javascript object.
+        """
+        if self._js is None:
+            self._js = JsECharts.ECharts(selector="window['%s']" % self.js_code, component=self, page=self.page)
+        return self._js
 
     def _set_js_code(self, html_code: str, js_code: str):
         """Set a different code for the component.
@@ -107,7 +129,7 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(self.html_code)
-            return '%(chartId)s.setOption(%(builder)s);%(state)s' % {
+            return '%(chartId)s.clear();%(chartId)s.setOption(%(builder)s, true);%(state)s' % {
                 'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
 
         return '''%(chartId)s = window.echarts.init(document.getElementById(%(hmlCode)s)); %(chartId)s.setOption(%(builder)s);
@@ -119,6 +141,45 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Common Chart events"""
         return EvtECharts.EvtECharts(page=self.page, component=self)
 
+    def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = False,
+              source_event: str = None, on_ready: bool = False):
+        """Add a click event on the chart.
+
+        `Echarts <https://echarts.apache.org/en/api.html#events.Mouse%20events.click>`_
+
+        :param js_funcs: Set of Javascript function to trigger on this event
+        :param profile: Optional. A flag to set the component performance storage
+        :param source_event: Optional. The JavaScript DOM source for the event (can be a sug item)
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+        """
+        return self.events.click(js_funcs, profile)
+
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
         return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
+
+
+class EChartsRadar(ECharts):
+    _option_cls = OptChartECharts.EChartRadarOptions
+
+    @property
+    def options(self) -> OptChartECharts.EChartRadarOptions:
+        """Chart specific options"""
+        return super().options
+
+class EChartsTreeMap(ECharts):
+    _option_cls = OptChartECharts.EChartTreeMapOptions
+
+    @property
+    def options(self) -> OptChartECharts.EChartTreeMapOptions:
+        """Chart specific options"""
+        return super().options
+
+
+class EChartsSankey(ECharts):
+    _option_cls = OptChartECharts.EChartSankeyOptions
+
+    @property
+    def options(self) -> OptChartECharts.EChartSankeyOptions:
+        """Chart specific options"""
+        return super().options

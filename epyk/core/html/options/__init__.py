@@ -36,15 +36,24 @@ class Options(DataClass):
         if attrs is not None:
             for k, v in attrs.items():
                 if hasattr(self, k):
-                    try:
-                        setattr(self, k, v)
-                    except AttributeError:
-                        if isinstance(v, dict):
-                            p = getattr(self, k)
-                            for w, x in v.items():
-                                setattr(p, w, x)
+                    self._try_setattr(self, k, v)
                 else:
                     self.js_tree[k] = v
+
+    def _try_setattr(self, opt, field, value):
+        """Try to set a specific value for a given field to the option definition.
+
+        :param opt: Option object
+        :param field: option field to be set
+        :param value: value to set for the specified field
+        """
+        try:
+            setattr(opt, field, value)
+        except AttributeError:
+            if isinstance(value, dict):
+                new_opt = getattr(opt, field)
+                for k, v in value.items():
+                    self._try_setattr(new_opt, k, v)
 
     def set_defaults(self, attrs_path: List[tuple]):
         """
@@ -68,16 +77,14 @@ class Options(DataClass):
                 setattr(opt, attr_path[-1], getattr(opt, attr_path[-1]))
 
     def set_attrs(self, vals: dict):
-        """
-        Set the object internal attributes.
+        """Set the object internal attributes.
 
         :param vals: All the attributes to be added to the component
         """
         self.js_tree.update(vals)
 
     def from_json(self, vals: dict, schema: dict = None):
-        """
-        Load the option schema for a component from a json string.
+        """Load the option schema for a component from a json string.
 
         TODO: add more feature to handle functions and enumeration
 
@@ -97,8 +104,7 @@ class Options(DataClass):
                 self._config(v, k, hasattr(v, "toStr"))
 
     def rset(self, vals: dict, js_check: bool = True):
-        """
-        recursive options setter
+        """Recursive options setter
 
         :param vals: The input schema
         :param js_check: Flag to automatically check the JavaScript expression starting with function
@@ -124,8 +130,7 @@ class Options(DataClass):
         deep_set(self, vals)
 
     def remove(self, name: str = None) -> bool:
-        """
-        remove a field from the option configuration if it exists.
+        """Remove a field from the option configuration if it exists.
 
         :param name: Optional. The attribute name
         """
@@ -137,8 +142,7 @@ class Options(DataClass):
         return False
 
     def _config_get(self, dflt: Any = None, name: str = None):
-        """
-        Get the option attribute to be added on the Javascript side during the component build.
+        """Get the option attribute to be added on the Javascript side during the component build.
 
         Unlike the usual get from dict this method will take the default value as first parameter as
         the name is by default the property name using it.

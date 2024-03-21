@@ -26,6 +26,7 @@ from epyk.interfaces.graphs import CompChartsCanvas
 from epyk.interfaces.graphs import CompChartsGoogle
 from epyk.interfaces.graphs import CompChartsSparkline
 from epyk.interfaces.graphs import CompChartsHighcharts
+from epyk.interfaces.graphs import CompChartsECharts
 
 
 class Graphs:
@@ -152,6 +153,18 @@ class Graphs:
     return CompChartsHighcharts.Highcharts(self)
 
   @property
+  def echarts(self) -> CompChartsECharts.ECharts:
+    """Apache Echarts An Open Source JavaScript Visualization Library.
+
+    Usage::
+
+      chart = page.ui.charts.echarts.line()
+
+    `Apache ECharts <https://echarts.apache.org/en/index.html>`_
+    """
+    return CompChartsECharts.ECharts(self)
+
+  @property
   def chartist(self) -> CompChartist.Chartist:
     """You may think that this is just yet an other charting library.
     But Chartist.js is the product of a community that was disappointed about the abilities provided by other
@@ -169,8 +182,7 @@ class Graphs:
 
   @property
   def sparklines(self) -> CompChartsSparkline.Sparkline:
-    """
-    Display a sparkline component.
+    """Display a sparkline component.
 
     :Category: Web Application, Analytics
 
@@ -185,8 +197,7 @@ class Graphs:
 
   @property
   def plotly(self) -> CompChartsPlotly.Plotly:
-    """
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    """Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     :Category: Analytics, Dataviz
@@ -199,8 +210,7 @@ class Graphs:
 
   @property
   def chartJs(self) -> CompChartsChartJs.ChartJs:
-    """
-    Simple yet flexible JavaScript charting for designers & developers.
+    """Simple yet flexible JavaScript charting for designers & developers.
 
     :Category: Web Application
 
@@ -212,8 +222,7 @@ class Graphs:
 
   @property
   def apex(self) -> CompChartsApex.ApexChart:
-    """
-    Interface for the ApexChart library.
+    """Interface for the ApexChart library.
 
     :Category: Web application
 
@@ -223,8 +232,7 @@ class Graphs:
 
   @property
   def c3(self) -> CompChartsC3.C3:
-    """
-    Interface to the JavaScript C3 module.
+    """Interface to the JavaScript C3 module.
 
     :Category: Analytics, Dataviz
 
@@ -239,8 +247,7 @@ class Graphs:
 
   @property
   def bb(self) -> CompChartsBillboard.Billboard:
-    """
-    Interface to the Javascript Billboard module.
+    """Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from C3.js.
@@ -262,8 +269,7 @@ class Graphs:
 
   @property
   def billboard(self) -> CompChartsBillboard.Billboard:
-    """
-    Interface to the Javascript Billboard module.
+    """Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from C3.js.
@@ -281,8 +287,7 @@ class Graphs:
 
   @property
   def vis(self) -> CompChartsVis.Vis:
-    """
-    A dynamic, browser based visualization library.
+    """A dynamic, browser based visualization library.
 
     :Category: Analytics, Dataviz
 
@@ -292,8 +297,7 @@ class Graphs:
 
   @property
   def nvd3(self) -> CompChartsNvd3.Nvd3:
-    """
-    Interface to the Javascript NVD3 library.
+    """Interface to the Javascript NVD3 library.
 
     :Category: Analytics, Web application
 
@@ -315,8 +319,7 @@ class Graphs:
 
   @property
   def d3(self) -> CompChartsD3.D3:
-    """
-    D3.js is a JavaScript library for manipulating documents based on data.
+    """D3.js is a JavaScript library for manipulating documents based on data.
 
     :Category: Analytics, Dataviz
 
@@ -326,8 +329,7 @@ class Graphs:
 
   @property
   def google(self) -> CompChartsGoogle.ChartGoogle:
-    """
-    Google chart tools are powerful, simple to use, and free.
+    """Google chart tools are powerful, simple to use, and free.
     Try out our rich gallery of interactive charts and data tools.
 
     :Category: Analytics, Dataviz
@@ -341,8 +343,7 @@ class Graphs:
 
   @property
   def svg(self) -> CompChartsSvg.SVG:
-    """
-    SVG defines vector-based graphics in XML format.
+    """SVG defines vector-based graphics in XML format.
 
     `Related Pages <https://www.w3schools.com/graphics/svg_intro.asp>`_
     """
@@ -350,8 +351,7 @@ class Graphs:
 
   @property
   def canvas(self) -> CompChartsCanvas.Canvas:
-    """
-    The HTML <canvas> element is used to draw graphics on a web page.
+    """The HTML <canvas> element is used to draw graphics on a web page.
 
     The graphic to the left is created with <canvas>.
     It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
@@ -362,8 +362,7 @@ class Graphs:
 
   @property
   def roughviz(self) -> CompChartsRoughViz.CompRoughViz:
-    """
-    Reusable JavaScript library for creating sketchy/hand-drawn styled charts in the browser.
+    """Reusable JavaScript library for creating sketchy/hand-drawn styled charts in the browser.
 
     :Category: Web application
 
@@ -373,8 +372,7 @@ class Graphs:
 
   @property
   def frappe(self) -> CompChartsFrappe.CompChartFrappe:
-    """
-    GitHub-inspired simple and modern SVG charts for the web with zero dependencies.
+    """GitHub-inspired simple and modern SVG charts for the web with zero dependencies.
 
     :Category: Web application
 
@@ -384,8 +382,7 @@ class Graphs:
 
   @property
   def chartCss(self) -> CompChartsChartCss.CompChartCss:
-    """
-    Charts.css is a modern CSS framework. It uses CSS utility classes to style HTML elements as charts.
+    """Charts.css is a modern CSS framework. It uses CSS utility classes to style HTML elements as charts.
 
     :Category: Web application
 
@@ -395,8 +392,7 @@ class Graphs:
 
   @property
   def vega(self) -> CompChartsVega.VegaEmbedded:
-    """
-    Vega – A Visualization Grammar.
+    """Vega – A Visualization Grammar.
 
     :Category: Analytics, Vega
 
@@ -408,8 +404,7 @@ class Graphs:
 
   def menu(self, chart: html.Html.Html, height: types.SIZE_TYPE = (18, 'px'), options: dict = None,
            post: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Col:
-    """
-    Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
+    """Add a standard menu on the table to trigger standard operation (add, empty, copy, download).
 
     :param chart: The chart component
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -450,8 +445,7 @@ class Chart2d:
 
   @property
   def plotly(self) -> CompChartsPlotly.Plotly2D:
-    """
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    """Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     :Category: Analytics, Plotly
@@ -464,8 +458,7 @@ class Chart2d:
 
   @property
   def nvd3(self) -> CompChartsNvd3.Nvd3:
-    """
-    This project is an attempt to build re-usable charts and chart components for d3.js
+    """This project is an attempt to build re-usable charts and chart components for d3.js
     without taking away the power that d3.js gives you.
 
     :Category: Analytics, Web application
@@ -478,8 +471,7 @@ class Chart2d:
 
   @property
   def dc(self) -> CompChartsDc.DC:
-    """
-    dc.js is a javascript charting library with native crossfilter support, allowing highly
+    """dc.js is a javascript charting library with native crossfilter support, allowing highly
     efficient exploration on large multi-dimensional datasets (inspired by crossfilter's demo).
 
     :Category: Analytics, Dataviz
@@ -490,8 +482,7 @@ class Chart2d:
 
   @property
   def d3(self) -> CompChartsD3.D3:
-    """
-    D3.js is a JavaScript library for manipulating documents based on data.
+    """D3.js is a JavaScript library for manipulating documents based on data.
 
     :Category: Analytics, Dataviz
 
@@ -501,8 +492,7 @@ class Chart2d:
 
   @property
   def svg(self) -> CompChartsSvg.SVG:
-    """
-    SVG stands for Scalable Vector Graphics.
+    """SVG stands for Scalable Vector Graphics.
 
     SVG defines vector-based graphics in XML format.
 
@@ -512,8 +502,7 @@ class Chart2d:
 
   @property
   def canvas(self) -> CompChartsCanvas.Canvas:
-    """
-    The HTML <canvas> element is used to draw graphics on a web page.
+    """The HTML <canvas> element is used to draw graphics on a web page.
 
     The graphic to the left is created with <canvas>.
     It shows four elements: a red rectangle, a gradient rectangle, a multicolor rectangle, and a multicolor text.
@@ -524,8 +513,7 @@ class Chart2d:
 
   @property
   def chartJs(self) -> CompChartsChartJs.ChartJs:
-    """
-    Interface for the ChartJs library.
+    """Interface for the ChartJs library.
 
     :Category: Web application
 
@@ -537,8 +525,7 @@ class Chart2d:
 
   @property
   def apex(self) -> CompChartsApex.ApexChart:
-    """
-    Interface for the ApexChart library.
+    """Interface for the ApexChart library.
 
     :Category: Web application
 
@@ -550,8 +537,7 @@ class Chart2d:
 
   @property
   def c3(self) -> CompChartsC3.C3:
-    """
-    Interface to the JavaScript C3 module.
+    """Interface to the JavaScript C3 module.
 
     :Category: Analytics, Dataviz
 
@@ -563,8 +549,7 @@ class Chart2d:
 
   @property
   def billboard(self) -> CompChartsBillboard.Billboard:
-    """
-    Interface to the Javascript Billboard module.
+    """Interface to the Javascript Billboard module.
 
     This will propose various charts for data analysis and visualisation based on D£.
     This project has been forked from Billboard.js.
@@ -579,8 +564,7 @@ class Chart2d:
 
   @property
   def vis(self) -> CompChartsVis.Vis2D:
-    """
-    Interface for the Vis library.
+    """Interface for the Vis library.
 
     :Category: Analytics, Vis
 
@@ -598,8 +582,7 @@ class Chart3d:
 
   @property
   def plotly(self) -> CompChartsPlotly.Plotly3D:
-    """
-    Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
+    """Built on top of d3.js and stack.gl, Plotly.js is a high-level, declarative charting library.
     plotly.js ships with over 40 chart types, including 3D charts, statistical graphs, and SVG maps.
 
     :Category: Analytics, Plotly
@@ -612,8 +595,7 @@ class Chart3d:
 
   @property
   def vis(self) -> CompChartsVis.Vis3D:
-    """
-    Interface for the Vis library.
+    """Interface for the Vis library.
 
     :Category: Analytics, Dataviz
 
