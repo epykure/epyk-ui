@@ -19,7 +19,7 @@ class WinterSnow(GraphCanvas.Canvas):
   window.flakes = []; window.flakeCount = 400; var mX = -100; var mY = -100;
   htmlObj.width = window.innerWidth; htmlObj.height = window.innerHeight;
   htmlObj.addEventListener("mousemove", function(e) {mX = e.clientX, mY = e.clientY});
-  window.addEventListener("resize", function(){htmlObj.width = window.innerWidth; htmlObj.height = window.innerHeight})
+  window.addEventListener("resize", function(){htmlObj.width = window.innerWidth; htmlObj.height = window.innerHeight});
   for (var i = 0; i < window.flakeCount; i++) {
     var x = Math.floor(Math.random() * htmlObj.width); var y = Math.floor(Math.random() * htmlObj.height);
     var size = (Math.random() * 3) + 2; var speed = (Math.random() * 1) + 0.5;
