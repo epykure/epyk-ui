@@ -504,7 +504,6 @@ class Options(DataClass):
 
         :param attrs: Optional. The extra or overridden options
         """
-
         def _process_sub_items(v: dict) -> str:
             """ Allow recursive check for sub components """
             items = []
@@ -519,6 +518,9 @@ class Options(DataClass):
 
         js_attrs, attrs = [], attrs or {}
         if self.__config_sub_levels:
+            if JsUtils.isJsData(attrs):
+                return JsUtils.jsWrap("Object.assign(%s, %s)" % (self.config_js(), attrs.toStr()))
+
             tmp_tree = dict(self.js_tree)
             for k, v in attrs.items():
                 if k not in tmp_tree:

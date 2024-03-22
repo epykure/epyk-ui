@@ -128,7 +128,7 @@ def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list]
     :param depth: Optional. Set to true of it is a nested object
     :param force: Optional. Whatever the object received force the string conversion
     """
-    if (not hasattr(js_data, 'varData') and not hasattr(js_data, 'fncName')) or force:
+    if ((not getattr(js_data, 'varData', None) or getattr(js_data, 'varData', None) == "None") and not getattr(js_data, 'fncName', None)) or force:
         if hasattr(js_data, 'toStr'):
             return js_data.toStr()
 

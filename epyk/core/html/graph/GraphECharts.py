@@ -107,18 +107,26 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param options: JavaScript of Python attributes
         :param dataflows: Chain of config transformations
         """
-        defined_options = "window.%s_options" % self.html_code
-        js_expr = "%s = Object.assign(%s ?? %s, %s)" % (
-            defined_options, defined_options, self.options.config_js(), JsUtils.dataFlows(options, dataflows, self.page))
-        self.__defined_options = defined_options
-        return js_expr
+        if options is None:
+            if dataflows is not None:
+                return self.js.setOption(JsUtils.jsWrap(JsUtils.dataFlows(self.js.getOption(), dataflows, self.page)))
+
+        if dataflows is not None:
+            options = JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
+        return self.js.setOption(options)
 
     @Html.jformatter("echarts")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
-        """
+        """Update the chart with context and / or data changes.
 
+        :param data: Optional. The full datasets object expected by ChartJs
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        :param component_id: Optional. Not used
+        :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
         """
         self.js_code = component_id
         builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (

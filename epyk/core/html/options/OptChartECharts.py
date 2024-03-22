@@ -175,6 +175,14 @@ class OptionAxisLine(Options):
 class OptionAxisTick(Options):
 
     @property
+    def alignWithLabel(self) -> bool:
+        return self._config_get()
+
+    @alignWithLabel.setter
+    def alignWithLabel(self, val: bool):
+        self._config(val)
+
+    @property
     def show(self) -> bool:
         return self._config_get()
 
@@ -184,6 +192,17 @@ class OptionAxisTick(Options):
 
 
 class OptionAxisLabel(Options):
+
+    @property
+    def show(self) -> bool:
+        return self._config_get()
+
+    @show.setter
+    def show(self, val: bool):
+        self._config(val)
+
+
+class OptionSplitArea(Options):
 
     @property
     def show(self) -> bool:
@@ -265,12 +284,24 @@ class OptionYAxis(Options):
         self._config(num)
 
     @property
+    def name(self) -> str:
+        return self._config_get()
+
+    @name.setter
+    def name(self, val: str):
+        self._config(val)
+
+    @property
     def position(self) -> str:
         return self._config_get()
 
     @position.setter
     def position(self, val: str):
         self._config(val)
+
+    @property
+    def splitArea(self) -> OptionSplitArea:
+        return self._config_sub_data("splitArea", OptionSplitArea)
 
     @property
     def splitLine(self) -> OptionSplitLine:
@@ -320,6 +351,14 @@ class OptionXAxis(Options):
         self._config(num)
 
     @property
+    def name(self) -> str:
+        return self._config_get()
+
+    @name.setter
+    def name(self, val: str):
+        self._config(val)
+
+    @property
     def nameLocation(self):
         return self._config_get()
 
@@ -334,6 +373,10 @@ class OptionXAxis(Options):
     @position.setter
     def position(self, val: str):
         self._config(val)
+
+    @property
+    def splitArea(self) -> OptionSplitArea:
+        return self._config_sub_data("splitArea", OptionSplitArea)
 
     @property
     def splitLine(self) -> OptionSplitLine:
@@ -568,6 +611,49 @@ class OptionEmphasis(Options):
         return self._config_sub_data("label", OptionLabel)
 
 
+class OptionEncode(Options):
+
+    @property
+    def itemName(self):
+        return self._config_get()
+
+    @itemName.setter
+    def itemName(self, val: str):
+        self._config(val)
+
+    @property
+    def label(self):
+        return self._config_get()
+
+    @label.setter
+    def label(self, val: List[str]):
+        self._config(val)
+
+    @property
+    def tooltip(self):
+        return self._config_get()
+
+    @tooltip.setter
+    def tooltip(self, val: List[str]):
+        self._config(val)
+
+    @property
+    def x(self):
+        return self._config_get()
+
+    @x.setter
+    def x(self, val: str):
+        self._config(val)
+
+    @property
+    def y(self):
+        return self._config_get()
+
+    @y.setter
+    def y(self, val: str):
+        self._config(val)
+
+
 class OptionSeries(Options):
 
     @property
@@ -626,6 +712,11 @@ class OptionSeries(Options):
         return self._config_sub_data("emphasis", OptionEmphasis)
 
     @property
+    def encode(self) -> OptionEncode:
+        """ """
+        return self._config_sub_data("encode", OptionEncode)
+
+    @property
     def endAngle(self) -> float:
         return self._config_get()
 
@@ -664,6 +755,14 @@ class OptionSeries(Options):
     @name.setter
     def name(self, val):
         self._config(val)
+
+    @property
+    def markLine(self):
+        return self._config_get()
+
+    @markLine.setter
+    def markLine(self, values):
+        self._config(values)
 
     @property
     def radius(self) -> list:
@@ -831,7 +930,7 @@ class OptionFeature(Options):
         self._config(val)
 
     @property
-    def saveAsImage(self):
+    def saveAsImage(self) -> str:
         return self._config_get()
 
     @saveAsImage.setter
@@ -857,11 +956,27 @@ class OptionToolbox(Options):
         return self._config_sub_data("feature", OptionFeature)
 
     @property
+    def order(self) -> str:
+        return self._config_get()
+
+    @order.setter
+    def order(self, val: str):
+        self._config(val)
+
+    @property
     def show(self) -> bool:
         return self._config_get()
 
     @show.setter
     def show(self, val: bool):
+        self._config(val)
+
+    @property
+    def trigger(self) -> str:
+        return self._config_get()
+
+    @trigger.setter
+    def trigger(self, val: str):
         self._config(val)
 
 
@@ -897,6 +1012,14 @@ class EChartOptions(OptionsWithTemplates):
 
     @animationEasingUpdate.setter
     def animationEasingUpdate(self, val: str):
+        self._config(val)
+
+    @property
+    def dataset(self) -> List[dict]:
+        return self._config_get()
+
+    @dataset.setter
+    def dataset(self, val: List[dict]):
         self._config(val)
 
     @property

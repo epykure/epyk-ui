@@ -107,7 +107,7 @@ class ECharts(JsPackage):
 
         :param options: Echarts options
         """
-        options = JsUtils.jsConvertData(options, None, depth=True)
+        options = JsUtils.jsConvertData(options, None)
         return JsObjects.JsObject.JsObject.get("%s.setOption(%s)" % (self.varName, options))
 
     def clear(self):
