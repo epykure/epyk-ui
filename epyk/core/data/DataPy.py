@@ -470,6 +470,9 @@ class ChartJs:
         :param options: Optional. Specific Python options available for this component
         """
         agg_data = {}
+        if not data or not y_columns or not x_axis:
+            return agg_data
+
         for rec in data:
             for y in y_columns:
                 if y in rec:
