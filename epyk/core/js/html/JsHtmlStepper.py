@@ -42,7 +42,7 @@ class JsShapes:
   shape.setAttribute('fill', 'url(#'+ gradient.id +')');
   shape.setAttribute('name', 'signal');
   svg.setAttribute('width', width +'px');
-  svg.setAttribute('height', height +'px')
+  svg.setAttribute('height', height +'px');
   svg.setAttribute('version', '1.1');
   svg.setAttribute('xmlns', svgns);
   
