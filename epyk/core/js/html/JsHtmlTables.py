@@ -96,7 +96,7 @@ class JsHtmlTabulator(JsHtml.JsHtml):
         self.component.options.managed = False
         self.component.js_code = html_code
         lib = "bb" if self.component.name == "Billboard" else 'c3'
-        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''
@@ -138,7 +138,7 @@ class JsHtmlAggrid(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''
@@ -169,7 +169,7 @@ class JsHtmlDatatable(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''

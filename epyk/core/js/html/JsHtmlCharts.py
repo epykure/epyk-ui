@@ -326,7 +326,7 @@ class ChartJs(JsCanvas.Canvas):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None)
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
@@ -357,7 +357,7 @@ class ChartFrappe(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None)
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
@@ -386,7 +386,7 @@ class ChartApex(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None)
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
@@ -423,7 +423,7 @@ class Chartist(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None)
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, chartType, ctx, attrs){
@@ -453,7 +453,7 @@ class RoughViz(JsHtml.JsHtml):
         """
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None)
+        js_code = JsUtils.jsConvertData(self.component.js_code, None, force=True)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, chartType, ctx, attrs){

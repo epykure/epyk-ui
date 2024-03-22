@@ -145,6 +145,9 @@ def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list]
                         result = [jsConvertData(v, js_funcs, depth=depth) for v in js_data]
                         return "[%s]" % ", ".join(result)
 
+                if force:
+                    return json.dumps(js_data)
+
                 return JsObject.JsObject(json.dumps(js_data))
 
             except TypeError as err:
