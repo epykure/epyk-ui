@@ -487,6 +487,9 @@ if (typeof icon === "undefined"){
         # For templates configuration
         from epyk import configs
 
+        if "HTML_PRINT_PATH" in os.environ:
+            # Env variables can override defined arguments.
+            print_paths = os.environ.get("HTML_PRINT_PATH", 'N') == 'Y'
         options = options or {}
         if path is None:
             if "HTML_OUT_PATH" in os.environ:
