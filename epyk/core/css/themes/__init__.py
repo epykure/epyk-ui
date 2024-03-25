@@ -268,4 +268,7 @@ def get_theme() -> Optional[Theme.Theme]:
     """
     for r in REGISTERED_THEMES:
         if Defaults.THEME == r["class"].name:
-            return r["class"]()
+            if callable(r["class"]):
+                return r["class"]()
+
+            return r["class"]
