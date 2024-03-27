@@ -8,10 +8,6 @@ function ekPieECharts(data, options){
         options._ek.chart.x_axis = options.x_axis;
         delete options.x_axis;
     };
-    if (typeof options.series !== 'undefined') {
-        options._ek.series = options.series;
-        delete options.series;
-    };
     if (typeof options.names !== 'undefined') {
         options._ek.names = options.names;
         delete options.names;

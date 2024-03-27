@@ -213,8 +213,7 @@ class OptionSplitArea(Options):
         self._config(val)
 
 
-class OptionYAxis(Options):
-
+class OptionAxis(Options):
     @property
     def animationDuration(self) -> int:
         return self._config_get()
@@ -242,6 +241,14 @@ class OptionYAxis(Options):
     @property
     def axisTick(self) -> OptionAxisTick:
         return self._config_sub_data("axisTick", OptionAxisTick)
+
+    @property
+    def boundaryGap(self):
+        return self._config_get()
+
+    @boundaryGap.setter
+    def boundaryGap(self, flag: bool):
+        self._config(flag)
 
     @property
     def data(self):
@@ -292,79 +299,39 @@ class OptionYAxis(Options):
         self._config(val)
 
     @property
-    def position(self) -> str:
+    def nameGap(self) -> int:
+        """The gap between axisName and axisLine."""
         return self._config_get()
 
-    @position.setter
-    def position(self, val: str):
+    @nameGap.setter
+    def nameGap(self, val: int):
         self._config(val)
 
     @property
-    def splitArea(self) -> OptionSplitArea:
-        return self._config_sub_data("splitArea", OptionSplitArea)
-
-    @property
-    def splitLine(self) -> OptionSplitLine:
-        return self._config_sub_data("splitLine", OptionSplitLine)
-
-    @property
-    def type(self):
-        return self._config_get()
-
-    @type.setter
-    def type(self, val):
-        self._config(val)
-
-
-class OptionXAxis(Options):
-
-    @property
-    def boundaryGap(self):
-        return self._config_get()
-
-    @boundaryGap.setter
-    def boundaryGap(self, flag: bool):
-        self._config(flag)
-
-    @property
-    def data(self):
-        return self._config_get()
-
-    @data.setter
-    def data(self, val):
-        self._config(val)
-
-    @property
-    def max(self) -> int:
-        return self._config_get()
-
-    @max.setter
-    def max(self, num: int):
-        self._config(num)
-
-    @property
-    def min(self) -> int:
-        return self._config_get()
-
-    @min.setter
-    def min(self, num: int):
-        self._config(num)
-
-    @property
-    def name(self) -> str:
-        return self._config_get()
-
-    @name.setter
-    def name(self, val: str):
-        self._config(val)
-
-    @property
-    def nameLocation(self):
+    def nameLocation(self) -> str:
         return self._config_get()
 
     @nameLocation.setter
-    def nameLocation(self, val):
+    def nameLocation(self, val: str):
         self._config(val)
+
+    @property
+    def nameRotate(self) -> int:
+        """By degree. By default auto rotate by nameLocation."""
+        return self._config_get()
+
+    @nameRotate.setter
+    def nameRotate(self, val: int):
+        self._config(val)
+
+    @property
+    def nameTruncate(self) -> dict:
+        """By degree. By default auto rotate by nameLocation."""
+        return self._config_get()
+
+    @nameTruncate.setter
+    def nameTruncate(self, valS: dict):
+        self._config(valS)
 
     @property
     def position(self) -> str:
@@ -373,6 +340,14 @@ class OptionXAxis(Options):
     @position.setter
     def position(self, val: str):
         self._config(val)
+
+    @property
+    def show(self) -> bool:
+        return self._config_get()
+
+    @show.setter
+    def show(self, flag: bool):
+        self._config(flag)
 
     @property
     def splitArea(self) -> OptionSplitArea:
@@ -397,6 +372,23 @@ class OptionXAxis(Options):
     @type.setter
     def type(self, val):
         self._config(val)
+
+    @property
+    def z(self) -> int:
+        """z level: 0,"""
+        return self._config_get(0)
+
+    @z.setter
+    def z(self, val: int):
+        self._config(val)
+
+
+class OptionYAxis(OptionAxis):
+    ...
+
+
+class OptionXAxis(OptionAxis):
+    ...
 
 
 class OptionAxisPointer(Options):

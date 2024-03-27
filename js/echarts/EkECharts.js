@@ -1,6 +1,7 @@
 
 function ekECharts(data, options){
-
+    console.log(data);
+    console.log(options);
     if (typeof options.y_columns !== 'undefined') {
         options._ek.chart.y_columns = options.y_columns;
         delete options.y_columns;
@@ -8,10 +9,6 @@ function ekECharts(data, options){
     if (typeof options.x_axis !== 'undefined') {
         options._ek.chart.x_axis = options.x_axis;
         delete options.x_axis;
-    };
-    if (typeof options.series !== 'undefined') {
-        options._ek.series = options.series;
-        delete options.series;
     };
     if (typeof options.names !== 'undefined') {
         options._ek.names = options.names;

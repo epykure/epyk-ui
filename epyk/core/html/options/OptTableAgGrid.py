@@ -804,6 +804,17 @@ class Column(Options):
         self._config(val)
 
     @property
+    def showDisabledCheckboxes(self):
+        """
+        `Related Pages <https://ag-grid.com/javascript-data-grid/row-selection//>`_
+        """
+        return self._config_get()
+
+    @showDisabledCheckboxes.setter
+    def showDisabledCheckboxes(self, val):
+        self._config(val)
+
+    @property
     def sort(self):
         """Custom sorting is provided at a column level.
 
@@ -1589,6 +1600,16 @@ class TableConfig(OptionsWithTemplates):
             if "return " not in str_func:
                 str_func = "return %s" % str_func
             str_func = "function(dataItem){%s}" % str_func
+        self._config(str_func, js_type=True)
+
+    def isRowSelectable(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+        if not str_func.startswith("function(row)") and not func_ref:
+            if "return " not in str_func:
+                str_func = "return %s" % str_func
+            str_func = "function(row){%s}" % str_func
         self._config(str_func, js_type=True)
 
     @property
