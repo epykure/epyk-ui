@@ -1,7 +1,5 @@
 
 function ekECharts(data, options){
-    console.log(data);
-    console.log(options);
     if (typeof options.y_columns !== 'undefined') {
         options._ek.chart.y_columns = options.y_columns;
         delete options.y_columns;
