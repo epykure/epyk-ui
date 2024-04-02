@@ -508,15 +508,25 @@ class OptionsLink(OptionsText):
 
 
 class OptionsConsole(OptionsText):
+  component_properties = ("scroll_to_bottom",)
 
   @property
-  def timestamp(self):
-    """
-    """
+  def timestamp(self) -> bool:
+    """Add the timestamp to any lines added"""
     return self.get(False)
 
   @timestamp.setter
   def timestamp(self, flag: bool):
+    self.set(flag)
+
+
+  @property
+  def scroll_to_bottom(self) -> bool:
+    """Force the console content to allow display the last lines when updated"""
+    return self.get(True)
+
+  @scroll_to_bottom.setter
+  def scroll_to_bottom(self, flag: bool):
     self.set(flag)
 
 

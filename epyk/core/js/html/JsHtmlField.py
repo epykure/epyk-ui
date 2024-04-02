@@ -26,7 +26,7 @@ class Radio(JsHtml.JsHtmlRich):
         """Get the user defined value for the group. """
         return JsHtml.ContentFormatters(
             self.page,
-            "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self.component.input.dom.getAttribute(
+            "document.body.querySelector('input[name='+%s+']:checked')?.getAttribute('data-content')" % self.component.input.dom.getAttribute(
                 'name'))
 
     @property
@@ -42,7 +42,7 @@ class Radio(JsHtml.JsHtmlRich):
         """Get the user defined value for the component. """
         return JsHtml.ContentFormatters(
             self.page,
-            "document.body.querySelector('input[name='+%s+']:checked').getAttribute('data-content')" % self.component.input.dom.getAttribute(
+            "document.body.querySelector('input[name='+%s+']:checked')?.getAttribute('data-content')" % self.component.input.dom.getAttribute(
                 'name'))
 
     @property
@@ -125,9 +125,8 @@ class InputText(JsHtml.JsHtmlRich):
 
         values = JsUtils.jsConvertData(values, None)
         options = options or {}
-        return JsUtils.jsWrap('''
-%s.autocomplete(Object.assign({source: %s}, %s))
-''' % (JsQuery.decorate_var(self.varId, convert_var=False), values, options))
+        return JsUtils.jsWrap('''%s.autocomplete(Object.assign({source: %s}, %s))''' % (
+            JsQuery.decorate_var(self.varId, convert_var=False), values, options))
 
 
 class JsHtmlFields(JsHtml.JsHtmlRich):

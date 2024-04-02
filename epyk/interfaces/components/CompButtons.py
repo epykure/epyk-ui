@@ -55,7 +55,7 @@ class Buttons:
 
   def button(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "%"),
              height: types.SIZE_TYPE = (None, "px"), align: str = "left", html_code: str = None,
-             tooltip: str = None, profile: types.PROFILE_TYPE = None,
+             tooltip: str = None, profile: types.PROFILE_TYPE = None, badge: str = None,
              options: types.OPTION_TYPE = None) -> html.HtmlButton.Button:
     """
     Standard button
@@ -100,6 +100,8 @@ class Buttons:
       self.page, text, icon, width, height, html_code=html_code, tooltip=tooltip, profile=profile, options=options)
     if options is not None and options.get("colored", False):
       self.__set_color(component, options["colored"])
+    if badge:
+      component.add_badge(badge)
     component.style.css.line_height = self.page.body.style.globals.line_height
     component.style.css.margin = "0"
     component.style.css.padding = 0

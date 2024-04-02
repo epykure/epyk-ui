@@ -1,6 +1,6 @@
 import logging
 
-from typing import Union
+from typing import Union, List
 from epyk.core.js import JsUtils
 from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.html.options import Enums
@@ -975,6 +975,33 @@ class DefaultColDef(Options):
         return self._config_sub_data("cellRendererParams", CellRendererParams)
 
     @property
+    def enablePivot(self) -> bool:
+        """"""
+        return self._config_get()
+
+    @enablePivot.setter
+    def enablePivot(self, val: bool):
+        self._config(val)
+
+    @property
+    def enableRowGroup(self) -> bool:
+        """"""
+        return self._config_get()
+
+    @enableRowGroup.setter
+    def enableRowGroup(self, val: bool):
+        self._config(val)
+
+    @property
+    def enableValue(self) -> bool:
+        """"""
+        return self._config_get()
+
+    @enableValue.setter
+    def enableValue(self, val: bool):
+        self._config(val)
+
+    @property
     def filter(self):
         """  set a filter for every columns. """
         return self._config_get()
@@ -1387,6 +1414,15 @@ class TableConfig(OptionsWithTemplates):
         self._config(val)
 
     @property
+    def deltaRowDataMode(self):
+        """ """
+        return self._config_get()
+
+    @deltaRowDataMode.setter
+    def deltaRowDataMode(self, flag: bool):
+        self._config(flag)
+
+    @property
     def editType(self):
         """ """
         return self._config_get()
@@ -1791,6 +1827,18 @@ class TableConfig(OptionsWithTemplates):
         """
         self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
+    def onFilterChanged(
+            self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        """Filter has been modified and applied.
+
+        `Related Pages <https://ag-grid.com/javascript-data-grid/grid-events//>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
     def onRowClicked(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
                      func_ref: bool = False):
         """Row is clicked.
@@ -1878,6 +1926,19 @@ class TableConfig(OptionsWithTemplates):
         """
         if self.rowSelection is None:
             self.rowSelection = 'single'
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def onRowDataUpdated(
+            self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        """Row selection is changed. Use the grid API getSelectedNodes() or getSelectedRows() to get the new list of
+        selected nodes / row data.
+
+        `Related Pages <https://ag-grid.com/javascript-data-grid/grid-lifecycle/#row-data-updated/>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
         self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
 
     def onColumnResized(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
@@ -1971,6 +2032,18 @@ class TableConfig(OptionsWithTemplates):
     def paginationPageSize(self, num: int):
         self.pagination = num > 0
         self._config(num)
+
+    @property
+    def paginationPageSizeSelector(self):
+        """
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-pagination/#customising-pagination>`_
+        """
+        return self._config_get([200, 500, 1000])
+
+    @paginationPageSizeSelector.setter
+    def paginationPageSizeSelector(self, values: List[int]):
+        self._config(values)
 
     @property
     def paginationAutoPageSize(self):
@@ -2297,6 +2370,15 @@ class TableConfig(OptionsWithTemplates):
 
     @suppressExcelExport.setter
     def suppressExcelExport(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def suppressPropertyNamesCheck(self):
+        """ """
+        return self._config_get()
+
+    @suppressPropertyNamesCheck.setter
+    def suppressPropertyNamesCheck(self, flag: bool):
         self._config(flag)
 
     @property

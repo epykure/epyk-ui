@@ -459,17 +459,30 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
 })(%s, %s)
 ''' % (JsUtils.jsConvertData(params, None), JsUtils.jsConvertData(removed_params, None)), is_py_data=False)
 
+    def url_from_object(self, obj, columns: List[str] = None, url: str = None):
+        return JsString.JsString.get('''
+(function(obj, columns, url){
+  let urlParams = [];
+  if (columns){columns.forEach(function(col){urlParams.push(col +"="+ obj[col]?.join(","))})} 
+  else {for (const [col, colValues] of Object.entries(obj)) {urlParams.push(col +"="+ colValues.join(","))}}
+  if (!url){let urlOrigin = new URL(window.location.href); url = urlOrigin.origin + urlOrigin.pathname;}
+  return url + "?"+ urlParams.join("&")
+})(%s, %s, %s)
+''' % (JsUtils.jsConvertData(obj, None), JsUtils.jsConvertData(columns, None),
+       JsUtils.jsConvertData(url, None)))
+
     def update_components(self) -> JsFncs.JsFunction:
         """ Update all components using the default / init configurations. """
         # This will require to add all builders to the resources in the page
-        select_components = []
+        select_components = {}
         for component in self.page.components.values():
-            if component.defined_code and component._js__builder__:
-                # TODO find a way to add loader without having to call build method
-                if hasattr(component.js, "select"):
-                    select_components.append((component.html_code, "function(v){%s}" % component.js.select(JsUtils.jsWrap("v"))))
-                else:
-                    component.build(None)
+            if component.defined_code and hasattr(component.js, "set_value"):
+                code = component.html_code
+                if component.name == "Radio":
+                    code = component.input.attr["name"]
+                select_components[code] = "function(v){%s}" % component.js.set_value(JsUtils.jsWrap("v"))
+            elif component.defined_code and component._js__builder__:
+                component.build(None)
         return JsFncs.JsFunction('''
 (function(){let params = new URLSearchParams(location.search); 
     let sComponents = %(sComponents)s;
@@ -485,7 +498,7 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
       }
     }
  })()''' % {'gOptions': JsGlobals.EXPORT_INIT_OPTIONS,
-            "sComponents": "{%s}" % ", ".join(["%s: %s" % (k, v)for k, v in select_components])})
+            "sComponents": "{%s}" % ", ".join(["%s: %s" % (k, v)for k, v in select_components.items()])})
 
     def animate_anchor(self, class_name: str, time: int = 3000) -> JsFncs.JsFunction:
         """ Animate the selected component when the page.

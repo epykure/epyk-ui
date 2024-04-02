@@ -303,8 +303,8 @@ JS_IMPORTS = {
     'ag-grid-community': {
         'website': 'https://www.ag-grid.com/javascript-grid/',
         'repository': 'https://github.com/ag-grid/ag-grid',
-        'version': '25.1.0',
-        'enterprise': '30.2.0',
+        'version': '31.2.0',
+        'enterprise': '31.2.0',
         'license': 'MIT license',
         "pricing": "https://www.ag-grid.com/license-pricing/",
         "register": {"alias": "agGrid", "module": "ag-grid-community.min", "npm": 'ag-grid-community'},

@@ -5,118 +5,114 @@ from typing import Any
 
 
 def size(value: Any, unit: str = "%", toStr: bool = False):
-  """ Wrapper to allow size arguments to be more flexible.
-  By using this in the interface it is possible to then use float values instead of the usual tuples.
+    """ Wrapper to allow size arguments to be more flexible.
+    By using this in the interface it is possible to then use float values instead of the usual tuples.
 
-  Related Pages:
+    `w3schools <https://www.w3schools.com/cssref/css_units.asp>`_
 
-    https://www.w3schools.com/cssref/css_units.asp
+    :param value: The value for this argument
+    :param unit: Optional. The unit for the argument. Default %
+    :param toStr: Optional. Transform the tuple to string
+    """
+    if value is False:
+        return None, ""
 
-  :param value: The value for this argument
-  :param unit: Optional. The unit for the argument. Default %
-  :param toStr: Optional. Transform the tuple to string
-  """
-  if value is False:
-    return None, ""
+    if isinstance(value, tuple):
+        if toStr:
+            return "{}{}".format(value[0], value[1])
 
-  if isinstance(value, tuple):
-    if toStr:
-      return "{}{}".format(value[0], value[1])
+        return value
 
-    return value
+    elif value == "auto":
+        return value, ''
 
-  elif value == "auto":
-    return value, ''
-
-  else:
-    if isinstance(value, str):
-      if value.endswith("%"):
-        unit = value[-1:]
-        value = int(value[:-1])
-      else:
-        unit = value[-2:]
-        if unit not in ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "vw", "vh"]:
-          raise ValueError("Unit not recognised {}".format(unit))
-
-        value = int(value[:-2])
     else:
-      if value is not None and value > 100 and unit == "%":
-        unit = "px"
-  if toStr:
-    return "{}{}".format(value, unit)
-  return value, unit
+        if isinstance(value, str):
+            if value.endswith("%"):
+                unit = value[-1:]
+                value = int(value[:-1])
+            else:
+                unit = value[-2:]
+                if unit not in ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "vw", "vh"]:
+                    raise ValueError("Unit not recognised {}".format(unit))
+
+                value = int(value[:-2])
+        else:
+            if value is not None and value > 100 and unit == "%":
+                unit = "px"
+    if toStr:
+        if not value:
+            return "auto"
+
+        return "{}{}".format(value, unit)
+    return value, unit
 
 
 class Align:
-  """ A string with the horizontal position of the component.
-  """
+    """ A string with the horizontal position of the component."""
 
-  @property
-  def center(self):
-    return "center"
+    @property
+    def center(self):
+        return "center"
 
-  @property
-  def left(self):
-    return "left"
+    @property
+    def left(self):
+        return "left"
 
-  @property
-  def right(self):
-    return "right"
+    @property
+    def right(self):
+        return "right"
 
 
 class Position:
-  """ A string with the vertical position of the component.
-  """
+    """ A string with the vertical position of the component."""
 
-  @property
-  def top(self):
-    return "top"
+    @property
+    def top(self):
+        return "top"
 
-  @property
-  def bottom(self):
-    return "bottom"
+    @property
+    def bottom(self):
+        return "bottom"
 
-  @property
-  def middle(self):
-    return "middle"
+    @property
+    def middle(self):
+        return "middle"
 
 
 class Size:
-  """ A tuple with the integer for the component size and its unit.
-  """
+    """ A tuple with the integer for the component size and its unit."""
 
-  @property
-  def auto(self):
-    return "auto", ''
+    @property
+    def auto(self):
+        return "auto", ''
 
-  @staticmethod
-  def px(value):
-    return value, 'px'
+    @staticmethod
+    def px(value):
+        return value, 'px'
 
-  @staticmethod
-  def percent(value):
-    return value, '%'
+    @staticmethod
+    def percent(value):
+        return value, '%'
 
 
 class Color:
-  """ The font color in the component. Default inherit.
-  """
+    """ The font color in the component. Default inherit."""
 
-  @property
-  def white(self):
-    return ""
+    @property
+    def white(self):
+        return ""
 
 
 class Profile:
-  """ A flag to set the component performance storage.
-  """
+    """ A flag to set the component performance storage."""
 
-  @property
-  def true(self):
-    return True
+    @property
+    def true(self):
+        return True
 
-  def name(self, name: str):
-    return {"name": name}
+    def name(self, name: str):
+        return {"name": name}
 
 
 ICON = "The component icon content from font-awesome references"

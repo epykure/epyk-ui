@@ -74,6 +74,7 @@ class OptionsButton(Options):
 
 
 class OptionsBadge(Options):
+    component_properties = ("show_empty", "zeros_as_empty")
 
     @property
     def badge_css(self):
@@ -100,6 +101,24 @@ class OptionsBadge(Options):
         else:
             self.set({"position": 'relative', "top": "-4px", "right": "11px"}, name='badge_css')
         self.set(position)
+
+    @property
+    def show_empty(self):
+        """If True display the empty badge"""
+        return self._config_get(True)
+
+    @show_empty.setter
+    def show_empty(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def zeros_as_empty(self):
+        """if True consider zero values as empty (so follow the same display rules)"""
+        return self._config_get(False)
+
+    @zeros_as_empty.setter
+    def zeros_as_empty(self, flag: bool):
+        self._config(flag)
 
 
 class OptMedia(Options):

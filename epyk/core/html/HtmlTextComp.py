@@ -509,9 +509,9 @@ class ContentsTable(Html.Html):
         self.indices, self.first_level, self.entries_count, self.ext_links = [], None, 0, {}
         super(ContentsTable, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                             css_attrs={"width": width, "height": height})
-        self.title = self.page.ui.div()
-        self.title += self.page.ui.text(title).css({"width": 'auto', 'display': 'inline-block'})
-        self.title += self.page.ui.text("[hide]").css({
+        self.title = self.page.ui.div(html_code="%s_title" % self.html_code)
+        self.title += self.page.ui.text(title, html_code="%s_title_text" % self.html_code).css({"width": 'auto', 'display': 'inline-block'})
+        self.title += self.page.ui.text("[hide]", html_code="%s_title_toggle" % self.html_code).css({
             "width": '30px', 'display': 'inline-block', 'margin-left': '5px',
             'font-size': self.page.body.style.globals.font.normal(-5)})
         self.title[0].attr["class"].add(self.style_refs["contents-table-title"])
@@ -519,6 +519,7 @@ class ContentsTable(Html.Html):
         self.title.options.managed = False
         self.title.style.css.white_space = "nowrap"
         self.attr["class"].add(self.style_refs["contents-table"])
+        self.anchors_count = 0
 
     @property
     def options(self) -> OptText.OptContents:
@@ -538,7 +539,7 @@ else{
     menu.appendChild(link)
 })} '''
 
-    def anchor(self, text: str, level: int = 0, anchor: str = '#', options: Optional[dict] = None):
+    def anchor(self, text: str, level: int = 0, anchor: str = '#', options: Optional[dict] = None, html_code: str = None):
         """Add link to the content table.
 
         `Related Pages <https://www.w3schools.com/tags/tag_a.asp>`_
@@ -547,13 +548,16 @@ else{
         :param level: Optional. The depth of the link in the document tree
         :param anchor: Optional. The internal reference to another component in the page
         :param options: Optional. The component options for the link
+        :param html_code: Optional. Anchor's HTML codee
         """
+        self.anchors_count += 1
+        anchor_code = html_code or "%s_anchor_%s" % (self.html_code, self.anchors_count)
         if anchor is not None:
-            href = self.page.ui.link(text, url=anchor, options=options)
+            href = self.page.ui.link(text, url=anchor, html_code=anchor_code, options=options)
             href.style.css.font_size = self.page.body.style.globals.font.normal(2)
             href.style.add_classes.link.no_decoration()
         else:
-            min_links = self.page.ui.text("-")
+            min_links = self.page.ui.text("-", html_code=anchor_code)
             min_links.style.css.margin_left = 10
             min_links.click([
                 '''var components = %(dom)s.querySelectorAll("[data-group='%(group)s']");

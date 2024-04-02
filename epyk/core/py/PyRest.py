@@ -238,8 +238,17 @@ class PyRest:
 
         if url.endswith(".tsv"):
             delimiter = "\t"
-        raw_data = list(csv.reader(
-            PyRest.webscrapping(url).decode(encoding).splitlines(), delimiter=delimiter, quotechar=quotechar))
+        response = PyRest.webscrapping(url)
+        if hasattr(response, "status"):
+            if response.status == 200:
+                raw_data = list(csv.reader(
+                    PyRest.webscrapping(url).decode(encoding).splitlines(), delimiter=delimiter, quotechar=quotechar))
+            else:
+                print("Error with REST url: %s" % url)
+                raw_data = []
+        else:
+            raw_data = list(csv.reader(
+                PyRest.webscrapping(url).decode(encoding).splitlines(), delimiter=delimiter, quotechar=quotechar))
         records = []
         if raw_data:
             header = raw_data[0]

@@ -171,6 +171,14 @@ class JsObject(primitives.JsDataModel):
         data = JsUtils.jsConvertData(n, None)
         return JsObject("%s + %s" % (self.varId, data), is_py_data=False)
 
+    def extend(self, value: Union[primitives.JsDataModel, float, str]):
+        """Add an extra Js expression to the existing definition. Expression will be separated with a ;
+
+        :param value: A Js expression
+        """
+        data = JsUtils.jsConvertData(value, None)
+        return JsObject("%s; %s" % (self.varId, data), is_py_data=False)
+
     def __add__(self, value: primitives.JsDataModel):
         return JsObject("%s += %s" % (self.varId, value), is_py_data=False)
 

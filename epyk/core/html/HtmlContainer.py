@@ -1076,7 +1076,7 @@ class Grid(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.template.options.managed = False
         self.options.template.dom._container = self.dom.varId
         if self.options.pivot is None or self.options.template is None:
-            raise Exception("Template and Pivot must be defined to use the grid builder")
+            raise Exception("Template and Pivot options must be defined to use the grid builder")
 
         comp_builder = "%(create)s; %(builder)s" % {
             "create": self.options.template.dom.createWidget(

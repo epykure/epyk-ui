@@ -15,8 +15,7 @@ class Tags:
 
   def a(self, text: str, url: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <a> tag defines a hyperlink, which is used to link from one page to another.
+    """The <a> tag defines a hyperlink, which is used to link from one page to another.
 
     The most important attribute of the <a> element is the href attribute, which indicates the link's destination.
 
@@ -24,24 +23,17 @@ class Tags:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGenericLink`
 
-    Related Pages:
+    `w3schools <https://www.w3schools.com/tags/tag_a.asp>`_
+    `Templates <https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py>`_
 
-      https://www.w3schools.com/tags/tag_a.asp
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/paragraph.py
-
-    Usage::
- 
-    :param text: String with the content to be added to the component.
-    :param url: String. Specifies the URL of the page the link goes to.
-    :param width: Tuple with the width value and its unit.
-    :param height: Tuple with the height value and its unit.
-    :param html_code: String. The code reference of the component.
-    :param tooltip: String. The tooltip to be display on the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean flag to set the profiling mode for the component.
+    :param text: String with the content to be added to the component
+    :param url: Specifies the URL of the page the link goes to
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param html_code: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean flag to set the profiling mode for the component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -54,8 +46,7 @@ class Tags:
 
   def aside(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <aside> tag defines some content aside from the content it is placed in.
+    """The <aside> tag defines some content aside from the content it is placed in.
 
     The aside content should be related to the surrounding content.
 
@@ -63,38 +54,33 @@ class Tags:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGenericLink`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_aside.asp
+    `w3schools <https://www.w3schools.com/tags/tag_aside.asp>`_
  
-    :param text: String with the content to be added to the component.
-    :param width: Tuple with the width value and its unit.
-    :param height: Tuple with the height value and its unit.
-    :param html_code: String. The code reference of the component.
-    :param tooltip: String. The tooltip to be display on the component.
-    :param options: Dictionary. Optional. Specific Python options available for this component.
-    :param profile: Boolean flag to set the profiling mode for the component.
+    :param text: String with the content to be added to the component
+    :param width: Tuple with the width value and its unit
+    :param height: Tuple with the height value and its unit
+    :param html_code: String. The code reference of the component
+    :param tooltip: String. The tooltip to be display on the component
+    :param options: Dictionary. Optional. Specific Python options available for this component
+    :param profile: Boolean flag to set the profiling mode for the component
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_a = html.HtmlTags.HtmlGenericLink(self.page, sys._getframe().f_code.co_name, text, width,
-                                           height, html_code, tooltip, options, profile)
+    html_a = html.HtmlTags.HtmlGenericLink(
+      self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     html_a.style.clear()
     html.Html.set_component_skin(html_a)
     return html_a
 
   def b(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <b> tag specifies bold text without any extra importance.
+    """The <b> tag specifies bold text without any extra importance.
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_b.asp
+    `w3schools <https://www.w3schools.com/tags/tag_b.asp>`_
  
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
@@ -114,8 +100,7 @@ class Tags:
 
   def h1(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <h1> to <h6> tags are used to define HTML headings.
+    """The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
 
@@ -123,9 +108,7 @@ class Tags:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGeneric`s
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_hn.asp
+    `w3schools <https://www.w3schools.com/tags/tag_hn.asp>`_
  
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
@@ -145,8 +128,7 @@ class Tags:
 
   def h2(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <h1> to <h6> tags are used to define HTML headings.
+    """The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
 
@@ -154,9 +136,7 @@ class Tags:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_hn.asp
+    `w3schools <https://www.w3schools.com/tags/tag_hn.asp>`_
  
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
@@ -176,8 +156,7 @@ class Tags:
 
   def h3(self, text: str = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <h1> to <h6> tags are used to define HTML headings.
+    """The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
 
@@ -207,8 +186,7 @@ class Tags:
 
   def hn(self, level: int, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <h1> to <h6> tags are used to define HTML headings.
+    """The <h1> to <h6> tags are used to define HTML headings.
 
     <h1> defines the most important heading. <h6> defines the least important heading.
 
@@ -239,8 +217,7 @@ class Tags:
 
   def delete(self, text: str, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-
+    """
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
@@ -262,8 +239,7 @@ class Tags:
 
   def figcaption(self, text: str = "", width=(None, "%"), height=(None, "px"), html_code=None, tooltip='',
                  options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <figcaption> tag defines a caption for a <figure> element.
+    """The <figcaption> tag defines a caption for a <figure> element.
 
     The <figcaption> element can be placed as the first or last child of the <figure> element.
 
@@ -293,9 +269,7 @@ class Tags:
 
   def u(self, text, width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    Underline a misspelled word with the <u> tag:
-    <p>This is a <u>paragraph</u>.</p>
+    """Underline a misspelled word with the <u> tag: <p>This is a <u>paragraph</u>.</p>
 
     Underlying HTML Objects:
 
@@ -323,9 +297,7 @@ class Tags:
 
   def p(self, text = "", width: Union[tuple, int] = (None, "%"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    A paragraph is marked up as follows with the <p> tag:
-    <p>This is some text in a paragraph.</p>
+    """A paragraph is marked up as follows with the <p> tag: <p>This is some text in a paragraph.</p>
 
     Underlying HTML Objects:
 
@@ -353,9 +325,7 @@ class Tags:
 
   def bdi(self, text, width: Union[tuple, int] = (100, "%"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    BDI stands for Bi-Directional Isolation.
-    The <bdi> tag is new in HTML5.
+    """BDI stands for Bi-Directional Isolation. The <bdi> tag is new in HTML5.
 
     Usage::
 
@@ -388,9 +358,7 @@ class Tags:
 
   def bdo(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    bdo stands for Bi-Directional Override.
-    The <bdo> tag is used to override the current text direction.
+    """bdo stands for Bi-Directional Override. The <bdo> tag is used to override the current text direction.
 
     Usage::
 
@@ -421,8 +389,7 @@ class Tags:
 
   def ol(self, text="", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <ol> tag defines an ordered list. An ordered list can be numerical or alphabetical.
+    """The <ol> tag defines an ordered list. An ordered list can be numerical or alphabetical.
 
     Use the <li> tag to define list items.
 
@@ -451,8 +418,7 @@ class Tags:
 
   def em(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
          html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <em> tag is a phrase tag. It renders as emphasized text.
+    """The <em> tag is a phrase tag. It renders as emphasized text.
 
     Underlying HTML Objects:
 
@@ -479,8 +445,7 @@ class Tags:
 
   def strong(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <strong> tag is a phrase tag. It defines important text.
+    """The <strong> tag is a phrase tag. It defines important text.
 
     Underlying HTML Objects:
 
@@ -507,8 +472,7 @@ class Tags:
 
   def samp(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <samp> tag is a phrase tag. It defines sample output from a computer program.
+    """The <samp> tag is a phrase tag. It defines sample output from a computer program.
 
     Underlying HTML Objects:
 
@@ -535,8 +499,7 @@ class Tags:
 
   def kbd(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <kbd> tag is a phrase tag. It defines keyboard input.
+    """The <kbd> tag is a phrase tag. It defines keyboard input.
 
     Underlying HTML Objects:
 
@@ -563,8 +526,7 @@ class Tags:
 
   def var(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <var> tag also supports the Global Attributes in HTML.
+    """The <var> tag also supports the Global Attributes in HTML.
 
     Underlying HTML Objects:
 
@@ -591,8 +553,7 @@ class Tags:
 
   def sup(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <sup> tag defines superscript text. Superscript text appears half a character above the normal line,
+    """The <sup> tag defines superscript text. Superscript text appears half a character above the normal line,
     and is sometimes rendered in a smaller font. Superscript text can be used for footnotes, like WWW
 
     Underlying HTML Objects:
@@ -620,8 +581,7 @@ class Tags:
 
   def wbr(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <wbr> (Word Break Opportunity) tag specifies where in a text it would be ok to add a line-break.
+    """The <wbr> (Word Break Opportunity) tag specifies where in a text it would be ok to add a line-break.
 
     Underlying HTML Objects:
 
@@ -648,8 +608,7 @@ class Tags:
 
   def time(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <time> tag defines a human-readable date/time.
+    """The <time> tag defines a human-readable date/time.
 
     Underlying HTML Objects:
 
@@ -676,8 +635,7 @@ class Tags:
 
   def sub(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <sub> tag defines subscript text. Subscript text appears half a character below the normal line,
+    """The <sub> tag defines subscript text. Subscript text appears half a character below the normal line,
     and is sometimes rendered in a smaller font.
     Subscript text can be used for chemical formulas, like H2O.
 
@@ -706,8 +664,7 @@ class Tags:
 
   def small(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <small> tag defines smaller text (and other side comments).
+    """The <small> tag defines smaller text (and other side comments).
 
     Underlying HTML Objects:
 
@@ -734,8 +691,7 @@ class Tags:
 
   def s(self, text, width=(100, "px"), height: Union[tuple, int] = (None, "px"), html_code: str = None,
         tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <s> tag specifies text that is no longer correct, accurate or relevant.
+    """The <s> tag specifies text that is no longer correct, accurate or relevant.
 
     Underlying HTML Objects:
 
@@ -760,10 +716,9 @@ class Tags:
     html.Html.set_component_skin(html_s)
     return html_s
 
-  def i(self, text, width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = (None, "px"),
-        html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <i> tag defines a part of text in an alternate voice or mood. The content of the <i>
+  def i(self, text: str = "", width: Union[tuple, int] = (None, "px"), height: Union[tuple, int] = (None, "px"),
+        css_class: str = "", html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
+    """The <i> tag defines a part of text in an alternate voice or mood. The content of the <i>
     tag is usually displayed in italic.
 
     Underlying HTML Objects:
@@ -780,6 +735,7 @@ class Tags:
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
     :param height: Tuple with the height value and its unit
+    :param css_class:
     :param html_code: String. The code reference of the component
     :param tooltip: String. The tooltip to be display on the component
     :param options: Dictionary. Optional. Specific Python options available for this component.
@@ -789,13 +745,17 @@ class Tags:
     height = Arguments.size(height, unit="px")
     html_i = html.HtmlTags.HtmlGeneric(
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
+    self.page.imports.add(self.page.icons.family)
     html.Html.set_component_skin(html_i)
+    if css_class:
+      for c in css_class.split(" "):
+        html_i.attr["class"].add(c)
+    html_i.style.css.remove('font-family')
     return html_i
 
   def q(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
         html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <q> tag defines a short quotation.
+    """The <q> tag defines a short quotation.
 
     Browsers normally insert quotation marks around the quotation.
 
@@ -824,8 +784,7 @@ class Tags:
 
   def mark(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <mark> tag defines marked text.
+    """The <mark> tag defines marked text.
 
     Use the <mark> tag if you want to highlight parts of your text.
 
@@ -854,8 +813,7 @@ class Tags:
 
   def nav(self, text: str = None, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The HTML <nav> element represents a section of a page whose purpose is to provide navigation links, either within
+    """The HTML <nav> element represents a section of a page whose purpose is to provide navigation links, either within
     the current document or to other documents.
     Common examples of navigation sections are menus, tables of contents, and indexes.
 
@@ -885,8 +843,7 @@ class Tags:
 
   def ins(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <ins> tag defines a text that has been inserted into a document.
+    """The <ins> tag defines a text that has been inserted into a document.
 
     Underlying HTML Objects:
 
@@ -913,8 +870,7 @@ class Tags:
 
   def dfn(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
           html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <dfn> tag represents the defining instance of a term in HTML.
+    """The <dfn> tag represents the defining instance of a term in HTML.
 
     Underlying HTML Objects:
 
@@ -941,8 +897,7 @@ class Tags:
 
   def cite(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <cite> tag defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture, etc.).
+    """The <cite> tag defines the title of a work (e.g. a book, a song, a movie, a TV show, a painting, a sculpture...)
 
     Underlying HTML Objects:
 
@@ -969,8 +924,7 @@ class Tags:
 
   def abbr(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <abbr> tag defines an abbreviation or an acronym, like "HTML", "Mr.", "Dec.", "ASAP", "ATM".
+    """The <abbr> tag defines an abbreviation or an acronym, like "HTML", "Mr.", "Dec.", "ASAP", "ATM".
 
     Underlying HTML Objects:
 
@@ -997,8 +951,7 @@ class Tags:
 
   def meter(self, text: str, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <meter> tag defines a scalar measurement within a known range, or a fractional value.
+    """The <meter> tag defines a scalar measurement within a known range, or a fractional value.
     This is also known as a gauge.
 
     Underlying HTML Objects:
@@ -1025,8 +978,7 @@ class Tags:
     return html_abbr
 
   def comment(self, text: str):
-    """  
-    Add an HTML comment to the code
+    """Add an HTML comment to the code
 
     Underlying HTML Objects:
 
@@ -1040,8 +992,7 @@ class Tags:
 
   def span(self, text: str = "", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
            html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <span> tag is an inline container used to mark up a part of a text, or a part of a document.
+    """The <span> tag is an inline container used to mark up a part of a text, or a part of a document.
 
     The <span> tag is easily styled by CSS or manipulated with JavaScript using the class or id attribute.
 
@@ -1079,16 +1030,13 @@ class Tags:
 
   def label(self, text: str = "", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
             html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    The <label> tag defines a label for several elements.
+    """The <label> tag defines a label for several elements.
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlTags.HtmlGeneric`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_label.asp
+    `w3schools <https://www.w3schools.com/tags/tag_label.asp>`_
  
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit
@@ -1107,8 +1055,7 @@ class Tags:
 
   def no_tag(self, text: str = "", width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),
              html_code: str = None, tooltip: str = '', options: dict = None, profile: Union[dict, bool] = None):
-    """  
-    Dummy HTML without any tag to add this to the list of a container objects.
+    """Dummy HTML without any tag to add this to the list of a container objects.
  
     :param text: String with the content to be added to the component
     :param width: Tuple with the width value and its unit

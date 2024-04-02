@@ -169,7 +169,7 @@ class HtmlGenericLink(HtmlGeneric):
         :param profile: Optional. A flag to set the component performance storage.
         """
         self.on('mouseenter', [
-            self.page.js.request_http("test", 'GET', url).send().onSuccess([
+            self.page.js.request_http(js_code="test", method_type='GET', url=url).send().onSuccess([
                 self.page.js.createElement("div", "popup").innerHTML(
                     self.page.js.object("data")).attr('id', 'popup').css(
                     {'color': 'red', 'display': 'block', 'background': 'white', 'width': '250px',

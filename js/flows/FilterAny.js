@@ -7,12 +7,12 @@ function filterAny(records, {value, keys=null, caseSensitive=false}){
     records.forEach(function(e){
       if (keys){
         for(const k in keys){
-          if (!caseSensitive){if(String(e[k]).toUpperCase().includes(v)){n.push(e); break;}}
-          else {if(e[k].includes(v)){n.push(e); break;}}}}
+          if (!caseSensitive){if(String(e[k]).toUpperCase().includes(value)){n.push(e); break;}}
+          else {if(e[k].includes(value)){n.push(e); break;}}}}
       else {
         for(const k in e){
-          if (!caseSensitive){if(String(e[k]).toUpperCase().includes(v)){n.push(e); break;}}
-          else {if(e[k].includes(v)){n.push(e); break;}}
+          if (!caseSensitive){if(String(e[k]).toUpperCase().includes(value)){n.push(e); break;}}
+          else {if(e[k].includes(value)){n.push(e); break;}}
         }
       }
     });

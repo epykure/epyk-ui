@@ -639,6 +639,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param components: Optional. A list of HTML objects values to be passed in the request
         """
         method_type = JsUtils.jsConvertData(method_type, None)
+        url = JsUtils.jsConvertData(url, None)
         return JsObjects.XMLHttpRequest(self.page, js_code, method_type, url)
 
     def flows(self, data, dataflows, js_code: str = None) -> JsObjects.JsObject.JsObject:

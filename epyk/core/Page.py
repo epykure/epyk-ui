@@ -861,7 +861,7 @@ class Report:
           div = page.ui.div("Simple Div")
           page.onDOMContentLoaded([div.dom.css({"border": "1px solid red"})])
 
-        `Mozlla <https://developer.mozilla.org/fr/docs/Web/API/Window/DOMContentLoaded_event>`_
+        `Mozilla <https://developer.mozilla.org/fr/docs/Web/API/Window/DOMContentLoaded_event>`_
 
         :param js_funcs: The Javascript functions to be added to this section
         :param profile: Optional. A flag to set the component performance storage

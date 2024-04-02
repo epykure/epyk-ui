@@ -727,9 +727,10 @@ class Badge(Html.Html):
     tag = "span"
 
     def __init__(self, page: primitives.PageModel, text, width, height, label, icon, background_color,
-                 color, url, tooltip, options, profile):
+                 color, url, tooltip, html_code, options, profile):
         super(Badge, self).__init__(
-            page, None, css_attrs={"width": width, "height": height}, profile=profile, options=options)
+            page, None, html_code=html_code, css_attrs={"width": width, "height": height}, profile=profile,
+            options=options)
         self.add_label(label, html_code=self.htmlCode,
                        css={"vertical-align": "middle", "width": 'none', "height": 'none'})
         if self.options.badge_position == 'left':

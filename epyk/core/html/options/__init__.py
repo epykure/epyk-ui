@@ -568,7 +568,10 @@ class Options(DataClass):
                     js_attrs.append(
                         "%s: [%s]" % (k, ", ".join([s.config_js(attrs=attrs.get(k, {})).toStr() for s in v])))
                 else:
-                    js_attrs.append("%s: %s" % (k, json.dumps(v)))
+                    try:
+                        js_attrs.append("%s: %s" % (k, json.dumps(v)))
+                    except:
+                        js_attrs.append("%s: %s" % (k, JsUtils.jsConvertData(v, None, depth=True)))
 
         if JsUtils.isJsData(attrs):
             return JsUtils.jsWrap(

@@ -29,7 +29,7 @@ class D3:
     """
     table = self.page.ui.div(width=width, height=height, html_code=html_code, options=options, profile=profile)
     d3_table = table.js.d3.select("#%s" % table.htmlCode, js_code='d3Table').rappend('table')
-    if header is None and records is not None:
+    if header is None and records:
       header = list(records[0].keys())
     table.onReady(
       [d3_table.toStr(),

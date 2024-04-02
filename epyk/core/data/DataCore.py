@@ -63,6 +63,19 @@ class DataAggregators:
         return JsObjects.JsArray.JsArray("[_.min(%s, function(rec){ return rec['%s']; })]" % (
             self.varName, column), page=self.page)
 
+    def valsFor(self, columns: list, attrs: dict = None, js_src_path: str = None, records: List[dict] = None,
+            verbose: bool = None) -> JsObjects.JsObject.JsObject:
+        """Returns an object with as keys the columns and as values the list of distinct values in the records.
+
+        :param columns: The list of columns to keep
+        :param attrs: Optional. The static values to be added to the final records
+        :param js_src_path: Optional. JavaScript file path
+        :param records: Optional. Shortcut for the data reference used by this transformation
+        :param verbose: Optional. Flag to display extra log messages
+        """
+        return self.func(
+            func_args={"columns": columns, "attrs": attrs}, js_src_path=js_src_path, records=records, verbose=verbose)
+
     def sortBy(self, column: str) -> JsObjects.JsArray.JsArray:
         """Returns a (stably) sorted copy of list, ranked in ascending order by the results of running each value
         through iterator. iterator may also be the string name of the property to sort by (eg. length).

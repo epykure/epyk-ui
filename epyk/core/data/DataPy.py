@@ -747,7 +747,8 @@ class Google:
 class Checkbox:
 
     @staticmethod
-    def from_records(data: List[dict], column: str, all_checked: bool = False, apply_sort: bool = False) -> List[dict]:
+    def from_records(data: List[dict], column: str, all_checked: bool = False, apply_sort: bool = False,
+                     with_count: bool = False) -> List[dict]:
         """
 
         :param data: A list of dictionaries
@@ -755,8 +756,16 @@ class Checkbox:
         :param all_checked: Optional.
         :param apply_sort: Optional.
         """
-        result = [{"value": rec[column], "checked": all_checked} for rec in data]
-        return result
+        result = {}
+        for rec in data:
+            if rec[column] not in result:
+                result[rec[column]] = {"value": rec[column], "checked": all_checked}
+            if with_count:
+                result[rec[column]]["count"] = result[rec[column]].get("count", 0) + 1
+        if apply_sort:
+            return [result[k] for k in sorted(result)]
+
+        return list(result.values())
 
     @staticmethod
     def from_df(df, column: str, all_checked: bool = False, apply_sort: bool = False) -> List[dict]:
@@ -804,7 +813,12 @@ class SelectionBox:
         result = {}
         for rec in records:
             result[rec[column]] = {'name': rec[column], 'value': str(rec[column]).strip()}
-        return [result[k] for k in sorted(result.keys())]
+            if with_count:
+                result[rec[column]]["count"] = result[rec[column]].get("count", 0) + 1
+        if apply_sort:
+            return [result[k] for k in sorted(result.keys())]
+
+        return list(result.values())
 
     @staticmethod
     def from_df(df, column: str, all_checked: bool = False, apply_sort: bool = False,

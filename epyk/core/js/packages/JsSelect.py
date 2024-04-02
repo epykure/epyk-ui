@@ -67,7 +67,7 @@ class JSelect(JsPackage):
         data = JsUtils.jsConvertData(data, None)
         return JsObjects.JsObjects.get("%s.val(%s).selectpicker('refresh')" % (self.component.dom.jquery.varId, data))
 
-    def select(self, values: etypes.JS_DATA_TYPES = None):
+    def set_value(self, values: etypes.JS_DATA_TYPES = None):
         """Set the components values without calling the build method.
 
         :param values: The value of the item to be removed from the list

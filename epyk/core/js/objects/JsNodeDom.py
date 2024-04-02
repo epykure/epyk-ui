@@ -28,7 +28,7 @@ class JsDomEvents(primitives.JsDataModel):
         if js_code is not None:
             self.varName = js_code
         else:
-            self.varName = "document.getElementById('%s')" % self.component.htmlCode
+            self.varName = "document.getElementById('%s')" % self.component.html_code
 
     def stopPropagation(self):
         """
@@ -300,8 +300,7 @@ class JsDomEvents(primitives.JsDataModel):
 
     def trigger(self, event: types.JS_DATA_TYPES, with_focus: bool = True,
                 options: dict = None, event_name: str = "clickEvent"):
-        """
-    Trigger a javascript event
+        """Trigger a javascript event
 
     Related Pages:
 
@@ -329,7 +328,7 @@ class JsDomEvents(primitives.JsDataModel):
             if options is not None and 'timer' in options:
                 return JsFncs.JsFunction(
                     "window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; %(elem)s.focus(); %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)" % {
-                        "htmlCode": self.component.htmlCode, "event_name": event_name, "event": event,
+                        "htmlCode": self.component.html_code, "event_name": event_name, "event": event,
                         "elem": self.varName,
                         'timer': options['timer'] * 1000})
 
@@ -342,7 +341,7 @@ class JsDomEvents(primitives.JsDataModel):
             return JsFncs.JsFunction('''
         window['%(htmlCode)s_timer'] = setInterval(function(){var %(event_name)s = %(event)s; 
           %(elem)s.dispatchEvent(%(event_name)s)}, %(timer)s)''' % {
-                "htmlCode": self.component.htmlCode, "event_name": event_name, "event": event, "elem": self.varName,
+                "htmlCode": self.component.html_code, "event_name": event_name, "event": event, "elem": self.varName,
                 'timer': options['timer'] * 1000})
 
         else:
@@ -350,12 +349,20 @@ class JsDomEvents(primitives.JsDataModel):
                 "(function(){var %(event_name)s = %(event)s; %(elem)s.dispatchEvent(%(event_name)s)})()" % {
                     "event": event, "event_name": event_name, "elem": self.varName})
 
+    def fire(self, event: types.JS_DATA_TYPES):
+        """Trigger a javascript event without creating any event to dispatch.
+        This will directly call the requested method to the object.
+
+        :param event: The event name
+        """
+        return JsFncs.JsFunction("%(elem)s.%(event)s()" % {"event": event, "elem": self.varName})
+
     def toStr(self):
-        if self.component.htmlCode is None:
+        if self.component.html_code is None:
             raise ValueError("Selector not defined, use this() or new() first")
 
         if len(self._js) == 0:
-            return self.component.htmlCode
+            return self.component.html_code
 
         str_data = "%(varName)s.%(items)s" % {
             'varName': self.varName, 'items': ".".join(self._js)}
