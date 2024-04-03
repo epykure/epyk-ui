@@ -665,7 +665,7 @@ class Images:
     return component
 
   def badge(self, text: str = "", label: str = None, icon: str = None, width: types.SIZE_TYPE = (25, "px"),
-            height: types.SIZE_TYPE = (25, "px"), background_color: str = None,
+            height: types.SIZE_TYPE = (25, "px"), background_color: str = None, html_code: str = None,
             color: str = None, url: str = None, tooltip: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Badge:
     """  
@@ -719,8 +719,8 @@ class Images:
     options = options or {}
     options["icon_family"] = icon_details["icon_family"]
     component = html.HtmlImage.Badge(
-      self.page, text, width, height, label, icon_details["icon"], background_color, color, url, tooltip, options,
-      profile)
+      self.page, text, width, height, label, icon_details["icon"], background_color, color, url, tooltip, html_code,
+      options, profile)
     html.Html.set_component_skin(component)
     return component
 

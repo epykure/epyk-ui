@@ -25,7 +25,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     _option_cls = OptTableAgGrid.TableConfig
 
     def __init__(self, page: primitives.PageModel, records, width, height, html_code, options, profile):
-        data, columns, self.__config = [], [], None
+        data, columns, self.__config, self.q_filter = [], [], None, None
         super(Table, self).__init__(page, None, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
         if records is not None:
@@ -223,6 +223,26 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.dom.varName = "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
         self.js.varName = js_code
 
+    def quick_filter(self, label: str = "Quick Filter:", placeholder: str = "Filter..."):
+        """Quick Filter is a piece of text given to the grid (typically the user will type it in somewhere in your
+        application) that is used to filter rows by comparing against the data in all columns. This can be used in
+        addition to column-specific filtering.
+
+        `Aggrid <https://ag-grid.com/javascript-data-grid/filter-quick/>`_
+
+        :param label: Input's label
+        :param placeholder: Input's placeholder when empty
+        """
+        q_span = self.page.ui.tags.span(label, html_code="%s_qfilter_label" % self.html_code)
+        q_input = self.page.ui.input(placeholder=placeholder, html_code="%s_qfilter_input" % self.html_code)
+        q_input.style.css.text_align = "left"
+        q_input.style.css.padding_left = 3
+        self.q_filter = self.page.ui.div([q_span, q_input])
+        self.q_filter.options.managed = False
+        self.q_filter.input = q_input
+        self.q_filter.label = q_input
+        return self.q_filter
+
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
@@ -279,4 +299,9 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
+        if self.q_filter:
+            self.q_filter.input.oninput([self.js.setGridOption("quickFilterText", self.q_filter.input.dom.content)])
+            return "%s<%s %s></%s>" % (
+                self.q_filter, self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
+
         return "<%s %s></%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)

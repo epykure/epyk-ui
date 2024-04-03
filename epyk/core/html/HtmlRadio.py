@@ -8,6 +8,7 @@ from epyk.core.py import types
 from epyk.core.html import Html
 
 from epyk.core.js.html import JsHtmlSelect
+from epyk.core.js.html import JsHtmlField
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsComponents
 
@@ -25,10 +26,35 @@ class Radio(Html.Html):
         super(Radio, self).__init__(page, [], html_code=html_code,
                                     css_attrs={"width": width, "height": height}, profile=profile, options=options,
                                     verbose=verbose)
-        self.group_name = group_name or self.htmlCode
+        self.group_name = group_name or self.html_code
+        self.input = None # point to the last created object
         for i, v in enumerate(vals):
             sub_html_code = "%s_%s" % (html_code, i) if html_code else html_code
             self.add(v['value'], v.get('checked', False), html_code=sub_html_code)
+            if "count" in v:
+                self.input.add_badge(v["count"])
+
+    @property
+    def dom(self) -> JsHtmlField.Radio:
+        """
+        Return all the Javascript functions defined for an HTML Component.
+
+        Those functions will use plain javascript by default.
+        """
+        if self._dom is None:
+            self._dom = JsHtmlField.Radio(self, page=self.page)
+        return self._dom
+
+    @property
+    def js(self) -> JsComponents.Radio:
+        """
+        The Javascript functions defined for this component.
+
+        Those can be specific ones for the module or generic ones from the language.
+        """
+        if self._js is None:
+            self._js = JsComponents.Radio(self, page=self.page)
+        return self._js
 
     def add(self, val: Union[Html.Html, str], checked: bool = False, html_code: str = None):
         """Add a value to the radio component.
@@ -40,15 +66,16 @@ class Radio(Html.Html):
         if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
             val = self.page.ui.inputs.radio(checked, val, html_code=html_code, group_name="radio_%s" % self.group_name,
                                             width=("auto", ""))
-        val.set_attrs(name="name", value="radio_%s" % self.htmlCode)
+        val.set_attrs(name="name", value="radio_%s" % self.html_code)
         val.options.managed = False
         super(Radio, self).__add__(val)
+        self.input = val
         return self
 
     def set_disable(self, text: str):
         """
-    :param text: The item value to disable
-    """
+        :param text: The item value to disable
+        """
         for v in self.val:
             if v.val["text"] == text:
                 self.page.properties.js.add_builders(v.dom.attr("disabled", 'true').r)
@@ -86,7 +113,7 @@ class Tick(Html.Html):
     def __init__(self, page: primitives.PageModel, position: str, icon: str, text: str, tooltip: str,
                  width: tuple, height: tuple, html_code: str, options: Optional[dict],
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
-        self._options = options
+        self._options, self.badge = options, ""
         super(Tick, self).__init__(page, '', html_code=html_code, profile=profile,
                                    css_attrs={"width": width, 'height': height,
                                               'float': 'left' if position is None else position}, verbose=verbose)
@@ -115,8 +142,30 @@ class Tick(Html.Html):
             self._dom.options = self._options
         return self._dom
 
+    def add_badge(self, value, background_color: str = None, parent_html_code: str = None, **kwargs):
+        """Add badge to a defined component.
+
+        :param value: Badge value
+        :param background_color: Badge's background color
+        :param parent_html_code: Badge's parent code
+        """
+        if self.span:
+            return self.span.add_badge(value, background_color)
+
+        self.badge = self.page.ui.icons.badge(
+            value, width="5px", background_color=background_color, html_code="%s_badge" % self.html_code)
+        self.badge.options.managed = False
+        self.badge.style.css.position = "relative"
+        self.badge.style.css.top = -9
+        self.badge.style.css.line_height = 6
+        self.badge.link.style.css.font_factor(-3)
+        self.badge.style.css.left = -7
+        self.span.style.css.margin = "0 5px 0 0"
+        return self.badge
+
     def __str__(self):
-        return "<%(t)s %(a)s></%(t)s>" % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
+        return "<%(t)s %(a)s>%(b)s</%(t)s>" % {
+            "a": self.get_attrs(css_class_names=self.style.get_classes()), "b": self.badge, "t": self.tag}
 
 
 class Switch(Html.Html):
@@ -186,8 +235,8 @@ class Switch(Html.Html):
     @property
     def dom(self) -> JsHtmlSelect.JsHtmlSwitch:
         """Return all the Javascript functions defined for an HTML Component.
-    Those functions will use plain javascript available for a DOM element by default.
-    """
+        Those functions will use plain javascript available for a DOM element by default.
+        """
         if self._dom is None:
             self._dom = JsHtmlSelect.JsHtmlSwitch(self, page=self.page)
         return self._dom
@@ -195,55 +244,66 @@ class Switch(Html.Html):
     @property
     def js(self) -> JsComponents.Switch:
         """The Javascript functions defined for this component.
-    Those can be specific ones for the module or generic ones from the language.
+        Those can be specific ones for the module or generic ones from the language.
 
-    :return: A Javascript Dom object.
-    """
+        :return: A Javascript Dom object.
+        """
         if self._js is None:
             self._js = JsComponents.Switch(self, page=self.page)
         return self._js
 
     def event_fnc(self, event: str):
         """Function to get the generated JavaScript method in order to then reuse it in other components.
-    This will return the event function in a string already transpiled.
+        This will return the event function in a string already transpiled.
 
-    :param event: The event function.
-    """
+        :param event: The event function.
+        """
         return list(self._browser_data['mouse'][event][self.switch.toStr()]["content"])
 
-    def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
-              source_event: str = None, on_ready: bool = False):
+    def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: bool = False, **kwargs):
         """Add click event to the switch component.
 
-    Usage::
+        Usage::
 
-      mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
-      mode_switch.input.click([page.js.console.log(mode_switch.input.dom.val)])
+          mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
+          mode_switch.input.click([page.js.console.log(mode_switch.input.dom.val)])
 
-    :param js_funcs: A Javascript Python function
-    :param profile: Optional. Set to true to get the profile for the function on the Javascript console
-    :param source_event: Optional. The source target for the event
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
-    """
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+        """
         if on_ready:
             self.page.body.onReady([self.dom.events.trigger("click")])
-        return self.on("click", js_funcs, profile, self.switch.toStr())
+        event = "click"
+        profile = self.with_profile(profile, event=event)
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        source_event = self.switch.toStr()
+        if event not in self._browser_data['mouse']:
+            self._browser_data['mouse'][event] = {}
+        self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).extend(
+            JsUtils.jsConvertFncs(js_funcs))
+        self._browser_data['mouse'][event][source_event]['profile'] = profile
+        self._browser_data['mouse'][event][source_event]['fncType'] = "addEventListener"
+        if on_ready:
+            self.page.body.onReady([self.dom.events.trigger(event)])
+        return self
 
     def toggle(self, on_funcs: types.JS_FUNCS_TYPES = None, off_funcs: types.JS_FUNCS_TYPES = None,
                profile: types.PROFILE_TYPE = None, on_ready: bool = False):
         """Set the click property for the Switch.
-    The toggle event allow specifying different Javascript functions for each states of the component.
+        The toggle event allow specifying different Javascript functions for each states of the component.
 
-    Usage::
+        Usage::
 
-      sw = page.ui.buttons.switch({'on': "true", 'off': 'false'})
-      sw.toggle([page.js.console.log(sw.content)])
+          sw = page.ui.buttons.switch({'on': "true", 'off': 'false'})
+          sw.toggle([page.js.console.log(sw.content)])
 
-    :param on_funcs: Optional. The Javascript functions
-    :param off_funcs: Optional. The Javascript functions
-    :param profile: Optional. A flag to set the component performance storage
-    :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
-    """
+        :param on_funcs: Optional. The Javascript functions
+        :param off_funcs: Optional. The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+        """
         self._clicks['profile'] = profile
         if on_funcs is not None:
             if not isinstance(on_funcs, list):

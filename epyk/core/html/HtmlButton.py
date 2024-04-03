@@ -213,8 +213,9 @@ class Button(Html.Html):
     def __str__(self):
         str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
         self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
-        return '<{tag} {attrs}>{content}</{tag}>'.format(
-            tag=self.tag, attrs=self.get_attrs(css_class_names=self.style.get_classes()), content=str_div)
+        return '<{tag} {attrs}>{content}{badge}</{tag}>'.format(
+            tag=self.tag, attrs=self.get_attrs(css_class_names=self.style.get_classes()), badge=self.badge,
+            content=str_div)
 
     def loading(self, status: bool = True, label: str = None,
                 data: types.JS_DATA_TYPES = None, disable: bool = True):

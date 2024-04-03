@@ -353,6 +353,13 @@ class AgGrid(JsPackage):
   #  -----------------------------------------
   #  Common table javascript interface
   #  -----------------------------------------
+
+  def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False, dataflows: List[dict] = None):
+    row = JsUtils.dataFlows(data, dataflows, self.page)
+    return JsObjects.JsVoid(
+      "%(tableId)s.gridOptions.rowData.push(%(row)s); %(tableId)s.gridApi.setRowData(this.gridOptions.rowData)" % {
+        "tableId": self.varId, "row": row})
+
   def empty(self):
     """ Empty the table """
     return self.setRowData([])
@@ -371,11 +378,6 @@ class AgGrid(JsPackage):
     options["fileName"] = filename
     return self.exportDataAsCsv(options)
 
-  def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False, dataflows: List[dict] = None):
-    row = JsUtils.dataFlows(data, dataflows, self.page)
-    return JsObjects.JsVoid(
-      "%(tableId)s.gridOptions.rowData.push(%(row)s); %(tableId)s.gridApi.setRowData(this.gridOptions.rowData)" % {
-        "tableId": self.varId, "row": row})
 
   def show_column(self, column: str):
     return self.columnApi.setColumnVisible(column, False)
@@ -389,93 +391,6 @@ class AgGrid(JsPackage):
   #  -----------------------------------------
   #  Specific table javascript interface
   #  -----------------------------------------
-  def setDomLayout(self, data: types.JS_DATA_TYPES):
-    """Gets columns to adjust in size to fit the grid horizontally
-
-    `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
-
-    :param data: The layout properties
-    """
-    data = JsUtils.jsConvertData(data, None)
-    return JsObjects.JsVoid("%s.api.setDomLayout(%s)" % (self.varId, data))
-
-  def setAutoHeight(self):
-    """Gets columns to adjust automatically height.
-
-    `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
-    """
-    return JsObjects.JsVoid("%s.api.setDomLayout('autoHeight')" % self.varId)
-
-  def sizeColumnsToFit(self):
-    """Gets columns to adjust in size to fit the grid horizontally
-
-    `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
-    """
-    return JsObjects.JsVoid("%s.api.sizeColumnsToFit()" % self.varId)
-
-  def stopEditing(self):
-    """The callback stopEditing (from the params above) gets called by the editor.
-    This is how your cell editor informs the grid to stop editing.
-
-    `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing-start-stop/>`_
-    """
-    return JsObjects.JsVoid("%s.api.stopEditing()" % self.varId)
-
-  @property
-  def columnApi(self):
-    """
-    `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
-    """
-    return ColumnApi(self.page, "%s.columnApi" % self.varId)
-
-  def collapseAll(self):
-    """
-    `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
-    """
-    return ColumnApi(self.page, "%s.api.collapseAll" % self.varId)
-
-  def expandAll(self):
-    """   
-
-    `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
-    """
-    return ColumnApi(self.page, "%s.api.expandAll" % self.varId)
-
-  def setColumnDefs(self, col_defs: Any):
-    """Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
-
-    `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
-
-    :param col_defs: The new table definition. If None update the existing ones.
-    """
-    if col_defs is None:
-      return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (
-        self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
-
-    return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
-
-  def getColumnDefs(self):
-    """Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
-
-    `Related Pages <https://www.ag-grid.com/documentation/javascript/column-updating-definitions/>`_
-    """
-    return JsObjects.JsObject.JsObject("%s.api.getColumnDefs()" % self.varId)
-
-  def setRowData(self, rows: types.JS_DATA_TYPES, dataflows: List[dict] = None):
-    """Set rows.
-
-    `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
-
-    :param rows:
-    :param dataflows: Chain of data transformations
-    """
-    if self.component.options.rowTotal:
-      return JsObjects.JsVoid("%s.api.setRowData(%s); %s" % (
-        self.varId, JsUtils.dataFlows(rows, dataflows, self.page),
-        self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
-
-    return JsObjects.JsVoid("%s.api.setRowData(%s)" % (
-      self.varId, JsUtils.dataFlows(rows, dataflows, self.page)))
 
   def applyTransaction(self, transaction):
     """Update row data. Pass a transaction object with lists for add, remove and update.
@@ -497,6 +412,26 @@ class AgGrid(JsPackage):
     return JsObjects.JsVoid("%s.api.applyTransaction(%s, %s)" % (
       self.varId, JsUtils.jsConvertData(transaction, None), callback))
 
+  def collapseAll(self):
+    """
+    `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
+    """
+    return ColumnApi(self.page, "%s.api.collapseAll" % self.varId)
+
+  @property
+  def columnApi(self):
+    """
+    `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
+    """
+    return ColumnApi(self.page, "%s.columnApi" % self.varId)
+
+  def expandAll(self):
+    """
+
+    `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
+    """
+    return ColumnApi(self.page, "%s.api.expandAll" % self.varId)
+
   def exportDataAsCsv(self, csv_export_params: dict = None):
     """The grid data can be exported to CSV with an API call, or using the right-click context menu
     (Enterprise only) on the Grid.
@@ -511,12 +446,32 @@ class AgGrid(JsPackage):
 
     return JsObjects.JsVoid("%s.api.exportDataAsCsv()" % self.varId)
 
+  def getColumnDefs(self):
+    """Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
+
+    `Related Pages <https://www.ag-grid.com/documentation/javascript/column-updating-definitions/>`_
+    """
+    return JsObjects.JsObject.JsObject("%s.api.getColumnDefs()" % self.varId)
+
+  def getDisplayedRowAtIndex(self, index):
+    """Returns the displayed rowNode at the given index.
+
+    `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
+
+    :param index:
+    """
+    index = JsUtils.jsConvertData(index, None)
+    return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, index))
+
   def getDisplayedRowCount(self):
     """Returns the total number of displayed rows.
 
     `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
     """
     return JsObjects.JsVoid("%s.api.getDisplayedRowCount()" % self.varId)
+
+  def getFilteredRowData(self):
+    return JsObjects.JsArray.JsArray.get("(function(){let rowData = [];%s.api.forEachNodeAfterFilter(node => {rowData.push(node.data);}); return rowData})()" % self.varId)
 
   def getFirstDisplayedRow(self):
     """Get the index of the first displayed row due to scrolling (includes invisible rendered rows in the buffer).
@@ -532,49 +487,12 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsVoid("%s.api.getLastDisplayedRow()" % self.varId)
 
-  def hideColumns(self, columns):
+  def getQuickFilter(self):
+    """Get the current Quick Filter text from the grid, or undefined if none is set.
+
+    `Related Pages <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
     """
-
-    :param columns:
-    """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, false)" % {
-      'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
-
-  def purgeServerSideCache(self, route):
-    """
-
-    `Related Pages <http://54.222.217.254/javascript-grid-server-side-model-tree-data/>`_
-
-    :param route:
-    """
-    return JsObjects.JsVoid("%s.api.purgeServerSideCache(%s)" % (self.varId, JsUtils.jsConvertData(route, None)))
-
-  def showColumns(self, columns):
-    """
-
-    :param columns:
-    """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, true)" % {
-      'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
-
-  def hideColumn(self, column):
-    """
-
-    `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
-
-    :param column:
-    """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, false)" % {
-      'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
-
-  def showColumn(self, column):
-    """
-    `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
-
-    :param column:
-    """
-    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, true)" % {
-      'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
+    return JsObjects.JsVoid("%s.api.getQuickFilter()" % self.varId)
 
   def getRowNode(self, row_id):
     """Returns the row node with the given ID.
@@ -588,15 +506,122 @@ class AgGrid(JsPackage):
     row_id = JsUtils.jsConvertData(row_id, None)
     return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, row_id))
 
-  def getDisplayedRowAtIndex(self, index):
-    """Returns the displayed rowNode at the given index.
+  def hideColumn(self, column):
+    """
+
+    `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
+
+    :param column:
+    """
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, false)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
+
+  def hideColumns(self, columns):
+    """
+
+    :param columns:
+    """
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, false)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
+
+  def isQuickFilterPresent(self):
+    """Returns true if the Quick Filter is set, otherwise false.
+
+    `Aggrid <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
+    """
+    return JsObjects.JsVoid("%s.api.isQuickFilterPresent()" % self.varId)
+
+  def purgeServerSideCache(self, route):
+    """
+
+    `Related Pages <http://54.222.217.254/javascript-grid-server-side-model-tree-data/>`_
+
+    :param route:
+    """
+    return JsObjects.JsVoid("%s.api.purgeServerSideCache(%s)" % (self.varId, JsUtils.jsConvertData(route, None)))
+
+  def setAutoHeight(self):
+    """Gets columns to adjust automatically height.
+
+    `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
+    """
+    return JsObjects.JsVoid("%s.api.setDomLayout('autoHeight')" % self.varId)
+
+  def setColumnDefs(self, col_defs: Any):
+    """Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
 
     `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
 
-    :param index:
+    :param col_defs: The new table definition. If None update the existing ones.
     """
-    index = JsUtils.jsConvertData(index, None)
-    return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, index))
+    if col_defs is None:
+      return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (
+        self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
+
+    return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
+
+  def setDomLayout(self, data: types.JS_DATA_TYPES):
+    """Gets columns to adjust in size to fit the grid horizontally
+
+    `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
+
+    :param data: The layout properties
+    """
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsVoid("%s.api.setDomLayout(%s)" % (self.varId, data))
+
+  def setGridOption(self, name: types.JS_DATA_TYPES, value: types.JS_DATA_TYPES):
+    name = JsUtils.jsConvertData(name, None)
+    value = JsUtils.jsConvertData(value, None)
+    return JsUtils.jsWrap("%s.api.setGridOption(%s, %s)" % (self.varId, name, value))
+
+  def setRowData(self, rows: types.JS_DATA_TYPES, dataflows: List[dict] = None):
+    """Set rows.
+
+    `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
+
+    :param rows:
+    :param dataflows: Chain of data transformations
+    """
+    if self.component.options.rowTotal:
+      return JsObjects.JsVoid("%s.api.setRowData(%s); %s" % (
+        self.varId, JsUtils.dataFlows(rows, dataflows, self.page),
+        self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
+
+    return JsObjects.JsVoid("%s.api.setRowData(%s)" % (
+      self.varId, JsUtils.dataFlows(rows, dataflows, self.page)))
+
+  def showColumn(self, column):
+    """
+    `Related Pages <https://www.ag-grid.com/javascript-grid-column-definitions/>`_
+
+    :param column:
+    """
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnVisible(%(cols)s, true)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(column, None)})
+
+  def showColumns(self, columns):
+    """
+
+    :param columns:
+    """
+    return JsObjects.JsVoid("%(varId)s.columnApi.setColumnsVisible(%(cols)s, true)" % {
+      'varId': self.varId, 'cols': JsUtils.jsConvertData(columns, None)})
+
+  def sizeColumnsToFit(self):
+    """Gets columns to adjust in size to fit the grid horizontally
+
+    `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
+    """
+    return JsObjects.JsVoid("%s.api.sizeColumnsToFit()" % self.varId)
+
+  def stopEditing(self):
+    """The callback stopEditing (from the params above) gets called by the editor.
+    This is how your cell editor informs the grid to stop editing.
+
+    `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing-start-stop/>`_
+    """
+    return JsObjects.JsVoid("%s.api.stopEditing()" % self.varId)
 
   def selectAll(self):
     """Select all rows (even rows that are not visible due to grouping being enabled and their groups not expanded).

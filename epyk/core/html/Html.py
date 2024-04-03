@@ -457,7 +457,7 @@ the same signature and return).
                 vals = self.page.inputs[html_code]
 
         self.page.components[self.htmlCode] = self
-        self._vals = vals
+        self._vals, self.badge = vals, ""
         if self.builder_name is None:
             self.builder_name = self.__class__.__name__
         self._internal_components = [self.htmlCode]
@@ -996,6 +996,25 @@ the same signature and return).
             self.helper.options.managed = False
             if css is not None:
                 self.helper.css(css)
+        return self
+
+    def add_badge(self, value, background_color: str = None, parent_html_code: str = None, **kwargs):
+        """Add badge to a defined component.
+
+        :param value: Badge value
+        :param background_color: Badge's background color
+        :param parent_html_code: Badge's parent code
+        """
+        html_code = "%s_badge" % (parent_html_code if parent_html_code else self.html_code)
+        self.badge = self.page.ui.icons.badge(
+            value, width="5px", background_color=background_color, html_code=html_code)
+        self.badge.options.show_empty = False
+        self.badge.options.managed = False
+        self.badge.style.css.position = "relative"
+        self.badge.style.css.top = -9
+        self.badge.style.css.line_height = 6
+        self.badge.link.style.css.font_factor(-3)
+        self.badge.style.css.left = -7
         return self
 
     @property

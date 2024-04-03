@@ -1330,6 +1330,18 @@ class TableConfig(OptionsWithTemplates):
         self._config(num)
 
     @property
+    def cacheQuickFilter(self):
+        """Set to true to turn on the Quick Filter cache, used to improve performance when using the Quick Filter.
+
+        `Aggrid <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
+        """
+        return self._config_get()
+
+    @cacheQuickFilter.setter
+    def cacheQuickFilter(self, num: int):
+        self._config(num)
+
+    @property
     def colResizeDefault(self):
         """
         If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent
@@ -1609,6 +1621,18 @@ class TableConfig(OptionsWithTemplates):
 
     @groupIncludeTotalFooter.setter
     def groupIncludeTotalFooter(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def includeHiddenColumnsInQuickFilter(self) -> bool:
+        """Hidden columns are excluded from the Quick Filter by default. To include hidden columns, set to true.
+
+        `Ag-grid <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
+        """
+        return self._config_get()
+
+    @includeHiddenColumnsInQuickFilter.setter
+    def includeHiddenColumnsInQuickFilter(self, flag: bool):
         self._config(flag)
 
     def isGroupOpenByDefault(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
@@ -2130,6 +2154,42 @@ class TableConfig(OptionsWithTemplates):
     @groupSelectsChildren.setter
     def groupSelectsChildren(self, flag: bool):
         self._config(flag)
+
+    def quickFilterMatcher(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                             func_ref: bool = False):
+        """Changes the matching logic for whether a row passes the Quick Filter.
+
+        `ag-grid <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    def quickFilterParser(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None,
+                             func_ref: bool = False):
+        """Changes how the Quick Filter splits the Quick Filter text into search terms.
+
+        `ag-grid <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        :param func_ref: Optional. Specify if js_funcs point to an external function
+        """
+        self._config_func(js_funcs=js_funcs, profile=profile, func_ref=func_ref)
+
+    @property
+    def quickFilterText(self) -> str:
+        """Rows are filtered using this text as a Quick Filter.
+
+        `Related Pages <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
+        """
+        return self._config_get()
+
+    @quickFilterText.setter
+    def quickFilterText(self, val: str):
+        self._config(val)
 
     @property
     def rowModelType(self):

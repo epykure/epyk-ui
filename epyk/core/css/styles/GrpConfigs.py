@@ -33,7 +33,7 @@ class ClsConfigs:
     return self
 
   def box(self, hexa_color: str = None, opacity: float = 0.6, size: int = 5, margin_v: tuple = (10, 'px'),
-          margin_h: tuple = (10, 'px'), background: str = "white"):
+          margin_h: tuple = (10, 'px'), background: str = None):
     """
     Add a box shadow layout to the component.
 
@@ -55,7 +55,7 @@ class ClsConfigs:
     self.component.style.css.margin_v = "%s%s" % (margin_v[0], margin_v[1])
     self.component.style.css.margin_h = "%s%s" % (margin_h[0], margin_h[1])
     if background is not None:
-      self.component.style.css.background = background
+      self.component.style.css.background = background or self.page.theme.white
     rgb = Colors.getHexToRgb(self.component.page.theme.greys[5] if hexa_color is None else hexa_color)
     self.component.style.css.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
       "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}

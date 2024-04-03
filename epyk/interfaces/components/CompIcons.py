@@ -1317,7 +1317,7 @@ class Icons:
         return icon
 
     def tick(self, flag=True, text=None, icons=(JsFontAwesome.ICON_CHECK, JsFontAwesome.ICON_TIMES), position=None,
-             tooltip="", width=(None, 'px'), html_code=None, options=None, profile=None) -> html.HtmlRadio.Tick:
+             tooltip="", width=(None, 'px'), html_code=None, options=None, badge=None, profile=None) -> html.HtmlRadio.Tick:
         """
         Display a tick box component
 
@@ -1345,6 +1345,8 @@ class Icons:
         # report, position, icon, text, tooltip, width, height, html_code, profile
         icon = html.HtmlRadio.Tick(self.page, position, icons[0] if flag else icons[1], text, tooltip, width,
                                    width, html_code, dftl_options, profile)
+        if badge:
+            icon.add_badge(badge)
         icon.click([
             icon.icon.dom.switchClass(icons[0] if flag else icons[1], icons[1] if flag else icons[0]),
             icon.icon.dom.transition('background', self.page.theme.success.light, duration=.2, reverse=True)
@@ -1470,8 +1472,8 @@ class Icons:
         html.Html.set_component_skin(avatar)
         return avatar
 
-    def badge(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (25, "px"),
-              height: types.SIZE_TYPE = (25, "px"), background_color: str = None, color: str = None, url: str = None,
+    def badge(self, text: str = "", icon: str = None, width: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+              height: types.SIZE_TYPE = (None, "px"), background_color: str = None, color: str = None, url: str = None,
               tooltip: str = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Badge:
         """
@@ -1509,14 +1511,14 @@ class Icons:
         width = Arguments.size(width, unit="px")
         height = Arguments.size(height, unit="px")
         if background_color is None:
-            background_color = self.page.theme.greys[0]
+            background_color = self.page.theme.notch()
         if color is None:
             color = self.page.theme.white
         container = html.HtmlImage.Badge(
-            self.page, text, width, height, None, icon, background_color, color, url, tooltip, options or {}, profile)
+            self.page, text, width, height, None, icon, background_color, color, url, tooltip, html_code, options or {}, profile)
         html.Html.set_component_skin(container)
-        container.link.style.css.padding = 5
-        container.link.style.css.font_factor(-7)
+        container.link.style.css.padding = 3
+        container.link.style.css.font_factor(-5)
         return container
 
     def date(self, value: str = None, label: str = None, icon: str = "calendar", color: str = None,

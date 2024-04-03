@@ -37,6 +37,7 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
         self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block',
                   'line-height': '%spx' % Default_html.LINE_HEIGHT,
                   'vertical-align': 'middle', 'text-align': 'left'})
+        self.badge = ""
         if tooltip:
             self.set_attrs(name='title', value=tooltip)
 
@@ -117,8 +118,9 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
                 else:
                     res.append(str(v))
         self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
-        return '<%s %s>%s</%s>%s' % (
-            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(res), self.tag, self.helper)
+        return '<%s %s>%s%s</%s>%s' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(res), self.badge, self.tag,
+            self.helper)
 
 
 class Span(MixHtmlState.HtmlStates, Html.Html):
@@ -195,8 +197,8 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
     def __str__(self):
         self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
         val = self.page.py.markdown.all(self.val) if self.options.showdown is not False else self.val
-        return '<%s %s>%s</%s>%s' % (
-          self.tag, self.get_attrs(css_class_names=self.style.get_classes()), val, self.tag, self.helper)
+        return '<%s %s>%s</%s>%s%s' % (
+          self.tag, self.get_attrs(css_class_names=self.style.get_classes()), val, self.tag, self.badge, self.helper)
 
 
 class Position(Span):

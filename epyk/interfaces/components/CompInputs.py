@@ -561,9 +561,9 @@ class Inputs:
             component.tooltip(tooltip)
         return component
 
-    def radio(self, flag: bool, label: str = None, group_name: str = None, icon: str = None,
+    def radio(self, flag: bool = False, label: str = None, group_name: str = None, icon: str = None,
               width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-              helper: str = None, options: types.OPTION_TYPE = None, tooltip: str = None,
+              helper: str = None, options: types.OPTION_TYPE = None, tooltip: str = None, badge: str = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlInput.Radio:
         """
 
@@ -600,6 +600,8 @@ class Inputs:
         html.Html.set_component_skin(component)
         if tooltip:
             component.tooltip(tooltip)
+        if badge:
+            component.add_badge(badge)
         return component
 
     def editor(self, text: str = "", language: str = 'python', width: types.SIZE_TYPE = (100, "%"),
