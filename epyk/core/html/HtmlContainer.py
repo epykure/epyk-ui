@@ -397,6 +397,24 @@ class Div(Html.Html):
         js_funcs.append(self.js.location.open_new_tab(url, target))
         return self.click(js_funcs, profile, source_event)
 
+    def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+              source_event: Optional[str] = None, on_ready: bool = False):
+        """The onclick event occurs when the user clicks on an element.
+
+        Usage::
+          div = page.ui.div()
+          div.click([page.js.alert("This is a test")])
+
+        `Learn more <https://www.w3schools.com/jsref/event_onclick.asp>`_
+
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        :param source_event: Optional. The source target for the event
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+        """
+        self.css({"cursor": "pointer"})
+        return super(Div, self).click(js_funcs=js_funcs, profile=profile, source_event=source_event, on_ready=on_ready)
+
     @property
     def dom(self) -> JsHtml.JsHtmlRich:
         """Return all the Javascript functions defined for an HTML Component.
@@ -519,9 +537,9 @@ class Div(Html.Html):
             else:
                 rows.append(str(component))
 
-        return "<%(tag)s %(attrs)s>%(content)s</%(tag)s>%(helper)s" % {
+        return "<%(tag)s %(attrs)s>%(content)s</%(tag)s>%(badge)s%(helper)s" % {
             'tag': self.tag or 'div', 'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
-            "content": "".join(rows), "helper": self.helper}
+            "content": "".join(rows), "helper": self.helper, "badge": self.badge}
 
 
 class Td(Html.Html):

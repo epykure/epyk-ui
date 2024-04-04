@@ -615,7 +615,7 @@ class Images:
   def icon(self, icon: str = None, family: str = None, width: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, height: types.SIZE_TYPE = (None, "px"), color: str = None,
            tooltip: str = None, align: str = "left", options: types.OPTION_TYPE = None,
-           profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Icon:
+           profile: types.PROFILE_TYPE = None, badge: str = None) -> html.HtmlImage.Icon:
     """  
     Add an icon to the page.
 
@@ -661,6 +661,8 @@ class Images:
     if align == "center":
       component.style.css.margin = "auto"
       component.style.css.display = "block"
+    if badge:
+      component.add_badge(badge)
     html.Html.set_component_skin(component)
     return component
 

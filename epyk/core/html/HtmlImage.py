@@ -651,8 +651,8 @@ class Icon(Html.Html):
         return self.on("click", str_fnc, profile, on_ready=on_ready)
 
     def __str__(self):
-        return '<%s %s>%s</%s>' % (
-            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, self.tag)
+        return '<%s %s>%s</%s>%s' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, self.tag, self.badge)
 
 
 class IconToggle(Icon):

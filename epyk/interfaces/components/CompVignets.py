@@ -411,7 +411,7 @@ class Vignets:
     html.Html.set_component_skin(div)
     return div
 
-  def vignet(self, title: str, content: str, icon: str = None, render: str = "col", align: str = "center",
+  def vignet(self, title: str, content: Union[str, list] = "", icon: str = None, render: str = "col", align: str = "center",
              width: Union[tuple, int] = (200, 'px'), options: dict = None, profile: Union[dict, bool] = None):
     """
 
@@ -435,10 +435,17 @@ class Vignets:
       container.style.css.margin = "auto"
       if not hasattr(title, 'options'):
         title = self.page.ui.titles.title(title, profile=profile)
+        title.style.css.remove("margin-top")
         title.style.css.display = "block"
         title.style.css.text_align = align
       if not hasattr(content, 'options'):
-        content = self.page.ui.text(content, options=options, profile=profile)
+        if isinstance(content, list):
+          for c in content:
+            if hasattr(c, 'options'):
+              c.style.css.display = "block"
+          content = self.page.ui.col(content, options=options, profile=profile)
+        else:
+          content = self.page.ui.text(content, options=options, profile=profile)
         content.style.css.display = "block"
         content.style.css.text_align = align
       if icon is not None:
@@ -472,6 +479,8 @@ class Vignets:
       container.add(self.page.ui.col([title, content]))
       container[-1].style.css.border_left = "1px solid %s" % self.page.theme.greys[3]
     html.Html.set_component_skin(container)
+    container.title = title
+    container.body = content
     return container
 
   def price(self, value, title: str, items: List[html.Html.Html] = None, components: List[html.Html.Html] = None, url: str = None,

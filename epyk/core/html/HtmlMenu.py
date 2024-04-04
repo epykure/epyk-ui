@@ -86,7 +86,7 @@ class HtmlNavBar(Html.Html):
         self.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[0]
         return self
 
-    def add_right(self, component: Html.Html, css: Optional[dict] = None, prepend: bool = False,
+    def add_right(self, component: Union[Html.Html, List[Html.Html]], css: Optional[dict] = None, prepend: bool = False,
                   with_css_cls: bool = True) -> Html.Html:
         """
         Add component to the right.
@@ -96,6 +96,17 @@ class HtmlNavBar(Html.Html):
         :param prepend: Optional
         :param with_css_cls: Add the default hover CSS class to the component
         """
+        if isinstance(component, list):
+            component = self.page.ui.div(component)
+            component.style.clear(no_default=True)
+            component.style.css.margin_left = 5
+            component.style.css.user_select = "none"
+            component.style.css.margin_right = 5
+            component.style.css.cursor = "pointer"
+            component.options.managed = False
+            if css is not None:
+                component.css(css)
+
         if not hasattr(component, 'options'):
             component = self.page.ui.text(component, width=("auto", ''))
             component.style.css.margin_left = 5
