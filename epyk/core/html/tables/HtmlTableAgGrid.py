@@ -237,6 +237,8 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         q_input = self.page.ui.input(placeholder=placeholder, html_code="%s_qfilter_input" % self.html_code)
         q_input.style.css.text_align = "left"
         q_input.style.css.padding_left = 3
+        q_input.style.css.margin_top = 3
+        q_input.style.css.margin_bottom = 3
         self.q_filter = self.page.ui.div([q_span, q_input])
         self.q_filter.options.managed = False
         self.q_filter.input = q_input
@@ -266,10 +268,14 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(self.html_code)
-            return "%s%s" % (self.js.setRowData(data, dataflows=dataflows).toStr(), state_expr)
+            return "%s;if(!%s){%s};%s" % (
+                self.js.setRowData(data, dataflows=dataflows).toStr(), self.js.getDisplayedRowCount().toStr(),
+                self.js.showNoRowsOverlay().toStr(), state_expr)
 
-        return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s)' % {
-            'tableId': self.js_code, 'config': self.options.config_js(options), 'htmlCode': self.dom.varName}
+        return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s); if(!%(rows)s){%(noRows)s}' % {
+            'tableId': self.js_code, 'config': self.options.config_js(options), 'htmlCode': self.dom.varName,
+            "rows": self.js.getDisplayedRowCount().toStr(), "noRows": self.js.showNoRowsOverlay().toStr()
+        }
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
               on_ready: bool = False, data_ref: str = "data"):

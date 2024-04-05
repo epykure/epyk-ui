@@ -92,3 +92,7 @@ NETFLIX_TITLE = "https://raw.githubusercontent.com/rsharankumar/Learn_Data_Scien
 #
 CO2_DATA = "https://raw.githubusercontent.com/owid/co2-data/master/owid-co2-data.csv"
 ENERGY_DATA = "https://raw.githubusercontent.com/owid/energy-data/master/owid-energy-data.csv"
+
+
+# Aggrid
+AGGRID_OLYMPIC_WINNERS = "https://www.ag-grid.com/example-assets/olympic-winners.json"

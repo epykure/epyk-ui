@@ -1253,7 +1253,7 @@ class Tabs(Html.Html):
         for tab_obj in self.__panel_objs.values():
             yield tab_obj["tab"]
 
-    def add_panel(self, name: str, div: Html.Html, icon: str = None, selected: bool = False,
+    def add_panel(self, name: str, div: Html.Html = None, icon: str = None, selected: bool = False,
                   css_tab: dict = None, css_tab_clicked: dict = None, width: tuple = None,
                   tooltip: str = None):
         """Add a panel / tab to a tabs container.
@@ -1275,6 +1275,9 @@ class Tabs(Html.Html):
             else:
                 div = self.page.ui.div(div)
                 show_div = [div.dom.show()]
+            div.style.clear(no_default=True)
+            div.style.css.padding_left = 3
+            div.style.css.padding_right = 3
         else:
             show_div = [div.dom.show()]
         div.css({"display": 'none', "width": "100%"})
