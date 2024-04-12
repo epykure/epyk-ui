@@ -105,6 +105,8 @@ class Youtube(Html.Html):
     name = 'Youtube Video'
     tag = "div"
 
+    EMBED_URL = "https://www.youtube.com/embed"
+
     def __init__(self, page: primitives.PageModel, link: str, width: tuple, height: tuple, html_code: str,
                  profile: Union[bool, dict], options: Optional[dict]):
         super(Youtube, self).__init__(
@@ -118,7 +120,7 @@ class Youtube(Html.Html):
             "tag": self.tag, 'attrs': self.get_attrs(css_class_names=self.style.get_classes()), "iframe": self.video.html()}
 
     @staticmethod
-    def get_embed_link(youtube_link: str):
+    def get_embed_link(youtube_link: str) -> str:
         """Simple function to convert a youtube link to the embedded version.
 
         Usage::
@@ -127,7 +129,7 @@ class Youtube(Html.Html):
 
         :param youtube_link: The Youtube link of the online video.
         """
-        return 'https://www.youtube.com/embed/%s' % youtube_link.split('=')[-1]
+        return '%s/%s' % (Youtube.EMBED_URL, youtube_link.split('=')[-1])
 
 
 class Camera(Html.Html):

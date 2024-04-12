@@ -646,7 +646,7 @@ class OptionGrid(OptionsWithTemplates):
 
 class OptionPopup(Options):
 
-  component_properties = ("z_index", "draggable", "background", "escape")
+  component_properties = ("z_index", "draggable", "background", "escape", "popup_name")
 
   @property
   def background(self):
@@ -716,6 +716,15 @@ class OptionPopup(Options):
       self.set("%s%%" % num)
     else:
       self.set(num)
+
+  @property
+  def popup_name(self) -> str:
+    """ """
+    return self.get("report_popup")
+
+  @popup_name.setter
+  def popup_name(self, value: str):
+    self.set(value)
 
   @property
   def z_index(self):

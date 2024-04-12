@@ -32,20 +32,19 @@ class DatePicker(Html.Html):
         if width[0] is not None and width[1] == 'px':
             width = (width[0] - 30, width[1])
         self.input = self.page.ui.inputs.d_date(self.val, width=width, height=height, options=options,
-                                                html_code="%s_input" % html_code if html_code is not None else html_code).css(
-            {"padding": 0})
+                                                html_code=self.sub_html_code("input")).css({"padding": 0})
         if html_code is not None:
-            self.input.attr["name"] = "%s_input" % html_code
+            self.input.attr["name"] = self.input.html_code
         self.prepend_child(self.input)
         if not self.input.options.inline and icon:
-            self.add_icon(icon, html_code=self.htmlCode,
+            self.add_icon(icon, html_code=self.html_code,
                           css={"margin-top": '-4px', "margin-left": '5px', 'color': color or "inherit"},
                           position="after", family=options.get("icon_family"))
         else:
             self.icon = None
         if self.icon is not None:
             self.icon.click([self.input.dom.events.trigger("click").toStr()])
-        self.add_label(label, html_code=self.htmlCode,
+        self.add_label(label, html_code=self.html_code,
                        css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
                        options=options)
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
@@ -158,12 +157,12 @@ class TimePicker(Html.Html):
                  options: Optional[dict], helper: Optional[str], verbose: bool = False):
         super(TimePicker, self).__init__(page, None, html_code=html_code, profile=profile, verbose=verbose)
         self.input = self.page.ui.inputs.d_time(
-            value, options=options, html_code="%s_input" % html_code if html_code is not None else html_code)
+            value, options=options, html_code=self.sub_html_code("input"))
         self.input.set_attrs(name="class", value='time').css({"padding": 0})
         if html_code is not None:
-            self.input.attr["name"] = "%s_input" % html_code
+            self.input.attr["name"] = self.input.html_code
         self.prepend_child(self.input)
-        self.add_icon(icon, html_code=self.htmlCode, css={"margin-left": '5px', 'color': self.page.theme.success.base},
+        self.add_icon(icon, html_code=self.html_code, css={"margin-left": '5px', 'color': self.page.theme.success.base},
                       position="after", family=options.get("icon_family"))
         if self.icon is not None:
             self.icon.click(self.input.dom.events.trigger("click").toStr())
@@ -224,11 +223,11 @@ class CountDownDate(Html.Html):
         # timestamp in milliseconds
         self.timeInMilliSeconds = timestamp
         # Add the underlying components
-        self.add_label(label, html_code=self.htmlCode, css={
+        self.add_label(label, html_code=self.html_code, css={
             "padding": '2px 0', 'height': 'auto', "width": "none", "line-height": "none"})
-        self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
         self.add_helper(helper)
-        self._jquery_ref = '#%s span' % self.htmlCode
+        self._jquery_ref = '#%s span' % self.html_code
 
     def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """Events triggered at the end of the timer.
@@ -245,7 +244,7 @@ class CountDownDate(Html.Html):
         self.page.properties.js.add_builders(self.refresh())
         self.page.properties.js.add_builders(
             '''var %(htmlCode)s_interval = setInterval(function(){%(refresh)s}, %(timeInMilliSeconds)s)''' % {
-                'htmlCode': self.htmlCode, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds})
+                'htmlCode': self.html_code, 'refresh': self.refresh(), 'timeInMilliSeconds': self.timeInMilliSeconds})
         return '<%s %s><span name="dt_time"></span>%s</%s>' % (
             self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.helper, self.tag)
 
@@ -522,8 +521,8 @@ class Elapsed(Html.Html):
         super(Elapsed, self).__init__(page, {'day': day, 'month': month, 'year': year}, html_code=html_code,
                                       profile=profile, css_attrs={"width": width, "height": height}, verbose=verbose)
         # Add the underlying components
-        self.add_label(label, html_code=self.htmlCode, css={"padding": '2px 0', 'height': 'auto'})
-        self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
+        self.add_label(label, html_code=self.html_code, css={"padding": '2px 0', 'height': 'auto'})
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
         self.add_helper(helper)
 
     def __str__(self):

@@ -36,7 +36,7 @@ class Button(Html.Html):
         super(Button, self).__init__(
             page, text, html_code=html_code, options=options, profile=profile,
             css_attrs={"width": width, "height": height}, verbose=verbose)
-        self.add_icon(icon, html_code=self.htmlCode)
+        self.add_icon(icon, html_code=self.html_code)
         if icon is not None and not text:
             self.icon.style.css.margin_right = None
         if icon is not None:
@@ -381,8 +381,8 @@ isChecked = true} else {$(this).find('span').html('<div style="width:16px;displa
         if self.options.all_selected:
             self.page.body.onReady([self.dom.check(True)])
         self.page.properties.js.add_builders(self.refresh())
-        return '<%(tag)s %(strAttr)s><div name="checks"></div></%(tag)s>' % {'tag': self.tag,
-            'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
+        return '<%(tag)s %(strAttr)s><div name="checks"></div></%(tag)s>' % {
+            'tag': self.tag,'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
 class CheckButton(Html.Html):
@@ -397,13 +397,14 @@ class CheckButton(Html.Html):
         super(CheckButton, self).__init__(
             page, 'Y' if flag else 'N', html_code=html_code, options=options,
             css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
-        self.input = page.ui.images.icon(self.options.icon_check if flag else self.options.icon_not_check).css(
-            {"width": page.body.style.globals.font.normal()})
+        self.input = page.ui.images.icon(
+            self.options.icon_check if flag else self.options.icon_not_check,
+            html_code=self.sub_html_code("_input")).css({"width": page.body.style.globals.font.normal()})
         self.input.style.css.color = self.page.theme.success.base if flag else self.page.theme.danger.base
         self.input.style.css.middle()
         self.input.options.managed = False
-        self.add_label(label, {"width": "none", "float": "none"}, html_code=self.htmlCode, position="after")
-        self.add_icon(icon, {"float": 'none'}, html_code=self.htmlCode, position="after",
+        self.add_label(label, {"width": "none", "float": "none"}, html_code=self.html_code, position="after")
+        self.add_icon(icon, {"float": 'none'}, html_code=self.html_code, position="after",
                       family=options.get("icon_family"))
         if tooltip is not None:
             self.tooltip(tooltip)
@@ -475,8 +476,9 @@ class CheckButton(Html.Html):
         return super(CheckButton, self).click(js_fncs, profile, on_ready=on_ready)
 
     def __str__(self):
-        return '''<%(tag)s %(attrs)s>%(content)s</%(tag)s>''' % {"tag": self.tag,
-            "attrs": self.get_attrs(css_class_names=self.style.get_classes()), "content": self.input.html()}
+        return '''<%(tag)s %(attrs)s>%(content)s</%(tag)s>''' % {
+            "tag": self.tag, "attrs": self.get_attrs(css_class_names=self.style.get_classes()),
+            "content": self.input.html()}
 
 
 class IconEdit(Html.Html):
@@ -499,11 +501,11 @@ class IconEdit(Html.Html):
         if width[0] is not None and width[1] == 'px':
             self.add_icon(icon, {"margin-right": "None", "margin": "2px",
                                  'font-size': "%s%s" % (width[0] - notches, width[1])},
-                          html_code=self.htmlCode, family=options.get("icon_family"))
+                          html_code=self.html_code, family=options.get("icon_family"))
         else:
             self.add_icon(icon, {"margin-right": "None", "margin": "2px",
                                  'font-size': self.page.body.style.globals.font.normal(-notches)},
-                          html_code=self.htmlCode, family=options.get("icon_family"))
+                          html_code=self.html_code, family=options.get("icon_family"))
         self.hover_color = True
 
     def spin(self):
@@ -660,7 +662,10 @@ class Buttons(Html.Html):
                                       css_attrs={"width": width, "height": height, 'color': color},
                                       profile=profile, verbose=verbose)
         for b in data:
-            bt = page.ui.button(b, options={"group": "group_%s" % self.htmlCode}).css({"margin-right": '5px'})
+            bt = page.ui.button(
+                b, options={"group": "group_%s" % self.html_code},
+                html_code=self.sub_html_code("button", auto_inc=True)
+            ).css({"margin-right": '5px'})
             bt.css(options.get("button_css", {}))
             self.__add__(bt)
         self.add_helper(helper)
@@ -786,14 +791,15 @@ class ButtonMore(Html.Html):
                  profile: Optional[Union[bool, dict]], options: Optional[dict], verbose: bool = False):
         super(ButtonMore, self).__init__(
             page, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
-        self.text = self.page.ui.text(text, width=("auto", ''), profile=profile, verbose=verbose)
+        self.text = self.page.ui.text(
+            text, width=("auto", ''), profile=profile, verbose=verbose, html_code=self.sub_html_code("label"))
         self.text.style.css.font_factor(-4)
         self.text.style.css.italic()
         self.text.style.css.display = "inline-block"
         self.text.style.css.text_align = "center"
         self.button = self.page.ui.button(
-            text=self.text, icon="fas fa-chevron-down", width=width, height=height, align="center", html_code=html_code,
-            tooltip=tooltip, profile=profile, options=options)
+            text=self.text, icon="fas fa-chevron-down", width=width, height=height, align="center",
+            html_code=self.sub_html_code("button"), tooltip=tooltip, profile=profile, options=options)
         self.button.style.css.border_radius = 5
         self.button.style.css.text_align = 'left'
         self.button.style.css.display = 'inline-block'
@@ -802,7 +808,8 @@ class ButtonMore(Html.Html):
         self.button.icon.style.add_classes.div.color_background_hover(self.page.theme.notch(-3))
         self.button.options.managed = False
         self.button.style.css.padding = "0 5px"
-        self.menu = self.page.ui.lists.links(record, width=("auto", ""), profile=profile)
+        self.menu = self.page.ui.lists.links(
+            record, width=("auto", ""), profile=profile, html_code=self.sub_html_code("menu"))
         self.menu.options.managed = False
         self.menu.style.css.background = "white"
         self.menu.style.css.z_index = 10
@@ -861,18 +868,18 @@ class ButtonFilter(Html.Html):
         super(ButtonFilter, self).__init__(
             page, "", html_code=html_code, profile=profile, options=options,
             css_attrs={"width": width, "height": height}, verbose=verbose)
-        self.text = self.page.ui.text(text, tooltip=tooltip)
+        self.text = self.page.ui.text(text, tooltip=tooltip, html_code=self.sub_html_code("label"))
         self.text.draggable()
         self.text.style.css.margin_right = 5
         self.text.options.managed = False
 
-        self.icon_filer = self.page.ui.icon(self.options.icon_filer)
+        self.icon_filer = self.page.ui.icon(self.options.icon_filer, html_code=self.sub_html_code("filter"))
         self.icon_filer.style.css.font_factor(-4)
         self.icon_filer.style.css.margin_right = 15
         self.icon_filer.style.css.invisible()
         self.icon_filer.options.managed = False
 
-        self.icon = self.page.ui.icon(self.options.icon)
+        self.icon = self.page.ui.icon(self.options.icon, html_code=self.sub_html_code("icon"))
         self.icon.options.managed = False
         self.icon.style.css.position = "absolute"
         self.icon.style.css.right = 0
@@ -883,27 +890,27 @@ class ButtonFilter(Html.Html):
                              options["categories"]]
         self.select = self.page.ui.select(
             filter_categories, width=(180, 'px'), options={"empty_selected": False},
-            html_code="%s_select" % self.htmlCode)
-        self.input = self.page.ui.input(placeholder="Filter", html_code="%s_input" % self.htmlCode)
+            html_code=self.sub_html_code("select"))
+        self.input = self.page.ui.input(placeholder="Filter", html_code=self.sub_html_code("input"))
         self.input.style.css.text_align = "left"
         self.input.attr["type"] = "number" if self.options.is_number else "text"
         self.input.style.css.padding_left = 5
         self.radios = self.page.ui.radio(
-            [{"value": "and"}, {"value": "or"}], align="center", html_code="%s_radio" % self.htmlCode)
+            [{"value": "and"}, {"value": "or"}], align="center", html_code=self.sub_html_code("radio"))
         self.radios.attr["data-anchor"] = "test_filter"
         self.radios.style.css.hide()
 
         self.select2 = self.page.ui.select(
             filter_categories, width=(180, 'px'), options={"empty_selected": False},
-            html_code="%s_select2" % self.htmlCode)
+            html_code=self.sub_html_code("select2"))
         self.select2.style.css.hide()
 
-        self.input2 = self.page.ui.input(placeholder="Filter", html_code="%s_input2" % self.htmlCode)
+        self.input2 = self.page.ui.input(placeholder="Filter", html_code=self.sub_html_code("input2"))
         self.input2.style.css.hide()
         self.input2.attr["type"] = "number" if self.options.is_number else "text"
 
-        self.menu = self.page.ui.div([self.select, self.input, self.radios, self.select2, self.input2],
-                                     width=(200, 'px'))
+        self.menu = self.page.ui.div([
+            self.select, self.input, self.radios, self.select2, self.input2], width=(200, 'px'))
         self.menu.style.css.background = "white"
         self.menu.style.css.padding = 10
         self.menu.style.css.z_index = 10

@@ -132,7 +132,7 @@ if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k
 ''' % Defaults.SERVER_PATH
 
     def loading(self, status: bool = True, label: str = "https://loading.io/mod/spinner/spinner/sample.gif",
-                *args, **kwargs):
+                *args, **kwargs) -> str:
         """Loading feature for image.
 
         Usage::
@@ -177,11 +177,11 @@ class AnimatedImage(Html.Html):
         self.img = page.ui.img(
             image, path=path, width="auto", html_code=html_code, height=(100, "%"), options=options)
         self.img.options.managed = False
-        self.title = page.ui.tags.h2(title).css({"display": 'block'})
-        self.text = page.ui.tags.p(text).css({"display": 'block'})
-        self.a = page.ui.tags.a("Enter", url).css({"width": "100px", "background": "white"})
+        self.title = page.ui.tags.h2(title, html_code=self.sub_html_code("title")).css({"display": 'block'})
+        self.text = page.ui.tags.p(text, html_code=self.sub_html_code("text")).css({"display": 'block'})
+        self.a = page.ui.tags.a("Enter", url, html_code=self.sub_html_code("link")).css({"width": "100px", "background": "white"})
         self.a.style.add_classes.image.info_link()
-        self.div = page.ui.div([self.title, self.text, self.a], width=(100, "%"))
+        self.div = page.ui.div([self.title, self.text, self.a], html_code=self.sub_html_code("menu"), width=(100, "%"))
         self.div.style.add_classes.image.mask()
         self.div.style.css.position = "absolute"
         self.div.style.css.padding = 10
@@ -257,16 +257,17 @@ class ImgCarousel(Html.Html):
                 if rec.get('selected') is not None:
                     selected = i
                 img = page.ui.img(rec["image"], path=rec["path"], width=width,
+                                  html_code=self.sub_html_code("title", auto_inc=True),
                                   height=(height[0] - 60 if height[0] is not None else None, height[1]))
-                img_title = page.ui.tags.h3(rec['title'])
-                div = page.ui.layouts.div([img_title, img], html_code="%s_img_%s" % (self.htmlCode, i)).css(
+                img_title = page.ui.tags.h3(rec['title'], html_code=self.sub_html_code("label", auto_inc=True))
+                div = page.ui.layouts.div([img_title, img], html_code=self.sub_html_code("panel", auto_inc=True)).css(
                     {"display": 'none', "text-align": "center"})
                 div.title = img_title
                 div.img = img
             else:
-                div = page.ui.layouts.div(rec, html_code="%s_img_%s" % (self.htmlCode, i)).css(
+                div = page.ui.layouts.div(rec, html_code=self.sub_html_code("panel", auto_inc=True)).css(
                     {"display": 'none', "text-align": "center"})
-            div.set_attrs(name="name", value="%s_img" % self.htmlCode)
+            div.set_attrs(name="name", value=self.i_name)
             div.options.managed = False
             self.items.append(div)
         self.__point_display = options.get('points', True)
@@ -274,11 +275,15 @@ class ImgCarousel(Html.Html):
         self.container = self.page.ui.layouts.div().css({"display": 'block', "width": "100%", "text-align": "center"})
         self.container.options.managed = False
         if 'arrows' in options:
-            self.next = self.page.ui.icon(options.get("arrows-right", "fas fa-chevron-right")).css(
+            self.next = self.page.ui.icon(
+                options.get("arrows-right", "fas fa-chevron-right"),
+                html_code=self.sub_html_code("next")).css(
                 {"position": 'absolute', "font-size": '35px', "padding": '8px', "right": '10px', 'top': '50%'})
             self.next.options.managed = False
 
-            self.previous = self.page.ui.icon(options.get("arrows-left", "fas fa-chevron-left")).css(
+            self.previous = self.page.ui.icon(
+                options.get("arrows-left", "fas fa-chevron-left"),
+                html_code=self.sub_html_code("prev")).css(
                 {"position": 'absolute', "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
             self.previous.options.managed = False
 
@@ -299,6 +304,11 @@ class ImgCarousel(Html.Html):
     def __getitem__(self, i) -> Html.Html:
         return self.items[i]
 
+    @property
+    def i_name(self) -> str:
+        """Images common names"""
+        return "%s_img" % self.html_code
+
     def add_plot(self, plot, title: str = "", width: types.SIZE_TYPE = "auto"):
         """
 
@@ -311,11 +321,11 @@ class ImgCarousel(Html.Html):
         img = self.page.ui.img(width=width)
         img.from_plot(plot)
         title = self.page.ui.tags.h3(title)
-        div = self.page.ui.layouts.div([title, img], html_code="%s_img_%s" % (self.htmlCode, len(self.items))).css(
+        div = self.page.ui.layouts.div([title, img], html_code=self.sub_html_code("panel", auto_inc=True)).css(
             {"display": 'none', "text-align": "center"})
         div.title = title
         div.img = img
-        div.set_attrs(name="name", value="%s_img" % self.htmlCode)
+        div.set_attrs(name="name", value=self.i_name)
         div.options.managed = False
         self.items.append(div)
         return self
@@ -329,7 +339,7 @@ class ImgCarousel(Html.Html):
         """
         self.items[selected].css({"display": 'block'})
         self.points = self.page.ui.navigation.points(
-            len(self.items), html_code="%s_points" % self.htmlCode, options={"managed": False})
+            len(self.items), html_code=self.sub_html_code("points"), options={"managed": False})
         return self
 
     def from_base64_list(self, values: List[str], width: Union[str, tuple] = "auto"):
@@ -343,10 +353,10 @@ class ImgCarousel(Html.Html):
         for val in values:
             img = self.page.ui.img(width=width)
             img.from_base64(val)
-            div = self.page.ui.layouts.div([img], html_code="%s_img_%s" % (self.htmlCode, len(self.items))).css(
+            div = self.page.ui.layouts.div([img], html_code=self.sub_html_code("panel", auto_inc=True)).css(
                 {"display": 'none', "text-align": "center"})
             div.img = img
-            div.set_attrs(name="name", value="%s_img" % self.htmlCode)
+            div.set_attrs(name="name", value=self.i_name)
             div.options.managed = False
             self.items.append(div)
         return self
@@ -372,8 +382,8 @@ class ImgCarousel(Html.Html):
         if not self.__point_display:
             self.points.style.css.display = 'none'
         self.points.click([
-                              self.page.js.getElementsByName("%s_img" % self.htmlCode).css({"display": 'none'}),
-                              self.page.js.getElementById("%s_img_' + data.position +'" % self.htmlCode).css(
+                              self.page.js.getElementsByName(self.i_name).css({"display": 'none'}),
+                              self.page.js.getElementById("%s_panel_' + data.position +'" % self.html_code).css(
                                   {"display": 'block'})
                           ] + self.__click_items)
         if hasattr(self.next, 'html'):
@@ -383,14 +393,10 @@ class ImgCarousel(Html.Html):
                 self.js.if_(self.page.js.object('picture_index') <= self.dom.attr('data-last_picture'), [
                     self.dom.attr("data-current_picture", self.page.js.object('picture_index')),
                     "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent)})()" %
-                    self.page.js.getElementsByName("%s_points" % self.htmlCode)[
-                        self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
-                                                                                                           self.dom.attr(
-                                                                                                               "data-current_picture",
-                                                                                                               -1),
-                                                                                                           self.next.dom.events.trigger(
-                                                                                                               "click")
-                                                                                                       ] if self.infinity else None)
+                    self.page.js.getElementsByName(self.sub_html_code("points"))[
+                        self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_(
+                    [self.dom.attr("data-current_picture", -1), self.next.dom.events.trigger("click")
+                     ] if self.infinity else None)
             ])
         if hasattr(self.previous, 'html'):
             self.previous.click([
@@ -399,14 +405,10 @@ class ImgCarousel(Html.Html):
                 self.js.if_(self.page.js.object('picture_index') >= 0, [
                     self.dom.attr("data-current_picture", self.page.js.object('picture_index')),
                     "(function(){var clickEvent = new Event('click'); %s.dispatchEvent(clickEvent) })()" %
-                    self.page.js.getElementsByName("%s_points" % self.htmlCode)[
-                        self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_([
-                                                                                                           self.dom.attr(
-                                                                                                               "data-current_picture",
-                                                                                                               len(self.items)),
-                                                                                                           self.previous.dom.events.trigger(
-                                                                                                               "click")
-                                                                                                       ] if self.infinity else None)
+                    self.page.js.getElementsByName(self.sub_html_code("points"))[
+                        self.dom.getAttribute('data-current_picture').toString().parseFloat()]]).else_(
+                    [self.dom.attr("data-current_picture", len(self.items)),
+                     self.previous.dom.events.trigger("click")] if self.infinity else None)
             ])
         return '''<div %(strAttr)s>%(img_cont)s%(points)s%(next)s%(previous)s</div>
       ''' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'img_cont': self.container.html(),
@@ -699,8 +701,8 @@ class Emoji(Html.Html):
     tag = "p"
 
     def __init__(self, page: primitives.PageModel, symbol: str, top: tuple, options: Optional[dict],
-                 profile: Optional[Union[dict, bool]]):
-        super(Emoji, self).__init__(page, symbol, options=options, profile=profile)
+                 profile: Optional[Union[dict, bool]], html_code: str = None):
+        super(Emoji, self).__init__(page, symbol, html_code=html_code, options=options, profile=profile)
         self.style.css.margin_top = '%s%s' % (top[0], top[1])
 
     @property
@@ -731,23 +733,23 @@ class Badge(Html.Html):
         super(Badge, self).__init__(
             page, None, html_code=html_code, css_attrs={"width": width, "height": height}, profile=profile,
             options=options)
-        self.add_label(label, html_code=self.htmlCode,
+        self.add_label(label, html_code=self.html_code,
                        css={"vertical-align": "middle", "width": 'none', "height": 'none'})
         if self.options.badge_position == 'left':
-            self.add_icon(icon, html_code=self.htmlCode, css={"float": 'None', 'margin-left': "5px"}, position="after",
+            self.add_icon(icon, html_code=self.html_code, css={"float": 'None', 'margin-left': "5px"}, position="after",
                           family=options.get("icon_family"))
         else:
-            self.add_icon(icon, html_code=self.htmlCode, css={"float": 'left', 'margin-left': "5px"},
+            self.add_icon(icon, html_code=self.html_code, css={"float": 'left', 'margin-left': "5px"},
                           family=options.get("icon_family"))
         if hasattr(self.icon, 'css') and width[0] is not None:
             self.icon.css({"font-size": "%s%s" % (width[0], width[1])})
         self.link = None
         if url is not None:
-            self.link = self.page.ui.links.external(text, url).css(
+            self.link = self.page.ui.links.external(text, url, html_code=self.sub_html_code("link")).css(
                 {"color": "inherit", 'display': 'inline-block', "padding": "2px", "width": "auto"})
             self.link.options.managed = False
         else:
-            self.link = self.page.ui.text(text).css(
+            self.link = self.page.ui.text(text, html_code=self.sub_html_code("link")).css(
                 {'display': 'inline-block', "padding": "2px", "width": "auto"})
         self.link.css(self.options.badge_css)
         self.link.attr["name"] = "badge-value"
@@ -774,7 +776,7 @@ class Badge(Html.Html):
         """
         if self._dom is None:
             self._dom = JsHtml.JsHtml(component=self, page=self.page)
-            self._dom.varName = "document.getElementById('%s').querySelector('div[name=badge-value]')" % self.htmlCode
+            self._dom.varName = "document.getElementById('%s').querySelector('div[name=badge-value]')" % self.html_code
         return self._dom
 
     @property
@@ -836,7 +838,7 @@ class SlideShow(Html.Html):
 
         :return: self to allow the chaining.
         """
-        img = self.page.ui.img(width=width)
+        img = self.page.ui.img(width=width, html_code=self.sub_html_code("img", auto_inc=True))
         img.style.css.display = "inline-block"
         img.from_plot(plot)
         self.add(img)
@@ -1115,10 +1117,10 @@ class SlideShow(Html.Html):
         :param component: A component to be added to the slider container
         """
         if not hasattr(component, 'options'):
-            component = self.page.ui.div(component)
+            component = self.page.ui.div(component, html_code=self.sub_html_code("panel", auto_inc=True))
         component.options.managed = False
         self.val.append(component)
-        self.components[component.htmlCode] = component
+        self.components[component.html_code] = component
         return self
 
     def __len__(self):

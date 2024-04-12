@@ -265,11 +265,11 @@ class Slider(Html.Html):
     @property
     def output(self) -> Html.Html:
         if self.__output is None:
-            self.__output = self.page.ui.tags.span(html_code="out_%s" % self.html_code)
+            self.__output = self.page.ui.tags.span(html_code=self.sub_html_code("out"))
             self.__output.attr["class"].clear()
             self.__output.css({"position": "relative", "top": "15px", "font-size": "14px", "width": "80px",
                                "display": "inline-block", "text-align": "center", "left": "-35px"})
-            self.__output.attr["name"] = "out_%s" % self.html_code
+            self.__output.attr["name"] = self.__output.html_code
             self.__output.onReady(["%(jqId)s.find('.ui-slider-handle').append(%(outComp)s)" % {
                 "jqId": self.js.varId,
                 "outComp": self.__output.js.jquery.varId}])
@@ -322,7 +322,7 @@ class Slider(Html.Html):
             self.page.properties.js.add_constructor(self.__output.builder_name,
                                                     "function %s(htmlObj, data, options){%s}" % (
                                                         self.__output.builder_name, self.__output._js__builder__))
-        component.attr["name"] = "out_%s" % self.html_code
+        component.attr["name"] = self.sub_html_code("out")
 
     @property
     def options(self) -> OptSliders.OptionsSlider:
@@ -419,7 +419,7 @@ class Slider(Html.Html):
     _js__builder__ = '''options.value = data; %(jqId)s.slider(options).css(options.css);
 if (typeof options.handler_css !== 'undefined'){%(jqId)s.find('.ui-slider-handle').css(options.handler_css)}
 if((typeof options.out_builder_fnc !== "undefined") && (typeof window[options.out_builder_fnc] !== "undefined")){
-  window[options.out_builder_fnc](document.getElementsByName('out_'+ htmlObj.id)[0], data, options.out_builder_opts); 
+  window[options.out_builder_fnc](document.getElementsByName(htmlObj.id + '_out')[0], data, options.out_builder_opts); 
 }''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
     def __str__(self):

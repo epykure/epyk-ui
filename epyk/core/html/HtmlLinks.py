@@ -63,8 +63,8 @@ class ExternalLink(Html.Html):
 
         :param component: A link to this HTML component
         """
-        self.val["url"] = "#%s" % component.htmlCode
-        self.options.url = "#%s" % component.htmlCode
+        self.val["url"] = "#%s" % component.html_code
+        self.options.url = "#%s" % component.html_code
         return self
 
     def no_decoration(self, color: Optional[str] = None):
@@ -99,10 +99,10 @@ class ExternalLink(Html.Html):
 
     def __str__(self):
         return '<%s %s>%s</%s>%s' % (
-        self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val['text'], self.tag, self.helper)
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val['text'], self.tag, self.helper)
 
     def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
-                data: types.JS_DATA_TYPES = None):
+                data: types.JS_DATA_TYPES = None) -> str:
         """Display a loading message in the component.
 
         Usage::

@@ -26,18 +26,26 @@ class Radio(Html.Html):
         super(Radio, self).__init__(page, [], html_code=html_code,
                                     css_attrs={"width": width, "height": height}, profile=profile, options=options,
                                     verbose=verbose)
-        self.group_name = group_name or self.html_code
+        self._group_name = group_name or ("radio_%s" % self.html_code)
         self.input = None # point to the last created object
-        for i, v in enumerate(vals):
-            sub_html_code = "%s_%s" % (html_code, i) if html_code else html_code
-            self.add(v['value'], v.get('checked', False), html_code=sub_html_code)
+        for v in vals:
+            self.add(v['value'], v.get('checked', False), html_code=self.sub_html_code("input", auto_inc=True))
             if "count" in v:
                 self.input.add_badge(v["count"])
 
     @property
+    def i_name(self) -> str:
+        """Inputs common names"""
+        return "radio_%s" % self.html_code
+
+    @property
+    def group_name(self) -> str:
+        """Inputs group name"""
+        return self._group_name
+
+    @property
     def dom(self) -> JsHtmlField.Radio:
-        """
-        Return all the Javascript functions defined for an HTML Component.
+        """Return all the Javascript functions defined for an HTML Component.
 
         Those functions will use plain javascript by default.
         """
@@ -47,8 +55,7 @@ class Radio(Html.Html):
 
     @property
     def js(self) -> JsComponents.Radio:
-        """
-        The Javascript functions defined for this component.
+        """The Javascript functions defined for this component.
 
         Those can be specific ones for the module or generic ones from the language.
         """
@@ -64,9 +71,9 @@ class Radio(Html.Html):
         :param html_code: Optional. Set the radio HTML code
         """
         if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
-            val = self.page.ui.inputs.radio(checked, val, html_code=html_code, group_name="radio_%s" % self.group_name,
+            val = self.page.ui.inputs.radio(checked, val, html_code=html_code, group_name=self.group_name,
                                             width=("auto", ""))
-        val.set_attrs(name="name", value="radio_%s" % self.html_code)
+        val.set_attrs(name="name", value=self.i_name)
         val.options.managed = False
         super(Radio, self).__add__(val)
         self.input = val
@@ -92,13 +99,13 @@ class Radio(Html.Html):
 
     @property
     def dom(self) -> JsHtmlSelect.Radio:
-        """HTML Dom object. """
+        """HTML Dom object."""
         if self._dom is None:
             self._dom = JsHtmlSelect.Radio(self, page=self.page)
         return self._dom
 
     def __str__(self):
-        row = self.page.ui.layouts.div(self.val)
+        row = self.page.ui.layouts.div(self.val, html_code=self.sub_html_code("panel"))
         row.options.managed = False
         row.style.css.text_align = "inherit"
         return "<%s %s>%s</%s>%s" % (
@@ -153,7 +160,7 @@ class Tick(Html.Html):
             return self.span.add_badge(value, background_color)
 
         self.badge = self.page.ui.icons.badge(
-            value, width="5px", background_color=background_color, html_code="%s_badge" % self.html_code)
+            value, width="5px", background_color=background_color, html_code=self.sub_html_code("badge"))
         self.badge.options.managed = False
         self.badge.style.css.position = "relative"
         self.badge.style.css.top = -9
@@ -184,14 +191,14 @@ class Switch(Html.Html):
 
         is_on = options.get("is_on", False)
         self.checkbox = page.ui.inputs.checkbox(
-          is_on, width=(None, "%"), html_code="%s_check" % html_code if html_code else html_code)
+          is_on, width=(None, "%"), html_code=self.sub_html_code("check"))
         self.checkbox.style.add_classes.radio.switch_checkbox()
         self.checkbox.options.managed = False
         if is_on:
             self.checkbox.attr["checked"] = is_on
 
         self.switch_label = page.ui.texts.label(
-          page.entities.non_breaking_space, html_code="%s_label" % html_code if html_code else html_code)
+          page.entities.non_breaking_space, html_code=self.sub_html_code("label"))
         self.switch_label.style.clear_all(no_default=True)
         self.switch_label.style.css.display = "inline-block"
         # self.switch_label.style.css.top = 4
@@ -201,7 +208,7 @@ class Switch(Html.Html):
         self.switch_label.style.css.line_height = int(self.page.body.style.globals.line_height / 2)
 
         self.switch_text = page.ui.tags.p(
-          self.val['on'] if is_on else self.val['off'], html_code="%s_text" % html_code if html_code else html_code)
+          self.val['on'] if is_on else self.val['off'], html_code=self.sub_html_code("text"))
         self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold", "margin-top": 0})
         self.switch_text.tooltip(self.val.get('text', ''))
         self.switch_text.style.css.font_size = int(self.page.body.style.globals.line_height / 2) + 2

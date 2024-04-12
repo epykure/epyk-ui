@@ -142,13 +142,13 @@ class Tree(Html.Html):
   divLoading.style.color = '%(color)s'; divLoading.style.border = '1px solid %(color)s';
   divLoading.innerHTML = "<div style='font-size:%(size)spx'><i class='fas fa-spinner fa-spin' style='margin-right:10px'></i>%(label)s</div>";
   document.getElementById('%(htmlId)s').appendChild(divLoading)
-} ''' % {"htmlId": self.htmlCode, 'color': color or self.page.theme.success.base,
+} ''' % {"htmlId": self.html_code, 'color': color or self.page.theme.success.base,
          'background': self.page.theme.greys[0], 'label': loading, "z_index": z_index,
          "size": self.page.body.style.globals.font.size + 5}
 
         return '''if (typeof window['popup_loading_%(htmlId)s'] !== 'undefined'){
   document.getElementById('%(htmlId)s').removeChild(window['popup_loading_%(htmlId)s']); 
-  window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.htmlCode}
+  window['popup_loading_%(htmlId)s'] = undefined}''' % {"htmlId": self.html_code}
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())

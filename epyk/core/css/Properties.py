@@ -973,6 +973,16 @@ class CssMixin:
     val = val if val is not None else 'None'
     self.css({"cursor": val})
 
+  def dark(self, flag: bool = True):
+    """Set the dark mode based on the theme definition for the component.
+
+    :param flag: Flag to enable / disable the dark mode
+    """
+    if flag:
+      self.css({"background": self.page.theme.black, "color": self.page.theme.white})
+    else:
+      self.css({"background": self.page.theme.white, "color": self.page.theme.black})
+
   @property
   def direction(self): return self.css("direction")
 

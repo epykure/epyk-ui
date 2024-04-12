@@ -543,7 +543,7 @@ class Vignets:
     return container
 
   def slides(self, start: int = 0, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (100, "%"),
-             options: dict = None, profile: Union[dict, bool] = None):
+             options: dict = None, html_code: str = None, profile: Union[dict, bool] = None):
     """
 
     :tags:
@@ -555,6 +555,7 @@ class Vignets:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param options: Dictionary. Optional. Specific Python options available for this component.
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
 
     TODO: Fix layout issue with F11 (full screen)
@@ -562,6 +563,6 @@ class Vignets:
     dflt_options = {'markdown': True}
     if options is not None:
       dflt_options.update(options)
-    html_slides = html.HtmlOthers.Slides(self.page, start, width, height, dflt_options, profile)
+    html_slides = html.HtmlOthers.Slides(self.page, start, width, height, dflt_options, html_code, profile)
     html.Html.set_component_skin(html_slides)
     return html_slides

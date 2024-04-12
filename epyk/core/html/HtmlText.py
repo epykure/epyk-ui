@@ -64,7 +64,7 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
 
         `Doc getElementsByTagName<https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName>`_
         """
-        return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
+        return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.html_code)
 
     @property
     def options(self) -> OptText.OptionsText:
@@ -144,11 +144,11 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
 
     @property
     def id_container(self):
-        return self.htmlCode
+        return self.html_code
 
     @property
     def id_jquery(self):
-        return JsNodeDom.JsDoms.get("$('#%s')" % self.htmlCode)
+        return JsNodeDom.JsDoms.get("$('#%s')" % self.html_code)
 
     @property
     def id_html(self):
@@ -157,7 +157,7 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
 
         `Doc getElementsByTagName <https://developer.mozilla.org/fr/docs/Web/API/Element/getElementsByTagName>`_
         """
-        return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.htmlCode)
+        return JsNodeDom.JsDoms.get("document.getElementById('%s')" % self.html_code)
 
     @property
     def dom(self) -> JsHtml.JsHtmlRich:
@@ -332,24 +332,24 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
         value = self.val
         self.val = ""
         self.page.body.onReady([
-            self.page.js.objects.string(value, js_code="%s_writer" % self.htmlCode, set_var=True),
-            self.page.js.objects.number(0, js_code="%s_pos" % self.htmlCode, set_var=True),
+            self.page.js.objects.string(value, js_code="%s_writer" % self.html_code, set_var=True),
+            self.page.js.objects.number(0, js_code="%s_pos" % self.html_code, set_var=True),
             self.build(""),
             self.page.js.window.setInterval([
                 self.page.js.if_(
                     self.page.js.objects.number.get(
-                        "window.%s_pos" % self.htmlCode) < self.page.js.objects.string.get(
-                        "window.%s_writer" % self.htmlCode).length, [
+                        "window.%s_pos" % self.html_code) < self.page.js.objects.string.get(
+                        "window.%s_writer" % self.html_code).length, [
                         self.page.js.objects.number(
                             self.page.js.objects.number.get(
-                                "window.%s_pos" % self.htmlCode) + 1, js_code="window.%s_pos" % self.htmlCode,
+                                "window.%s_pos" % self.html_code) + 1, js_code="window.%s_pos" % self.html_code,
                             set_var=True),
                         self.dom.append(
                             self.page.js.objects.string.get(
-                                "window.%s_writer" % self.htmlCode).charAt(
-                                self.page.js.objects.number.get("window.%s_pos" % self.htmlCode)), new_line=False)
-                    ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
-            ], "%s_interval" % self.htmlCode, timer)
+                                "window.%s_writer" % self.html_code).charAt(
+                                self.page.js.objects.number.get("window.%s_pos" % self.html_code)), new_line=False)
+                    ]).else_(self.page.js.window.clearInterval("%s_interval" % self.html_code))
+            ], "%s_interval" % self.html_code, timer)
         ])
         return self
 
@@ -511,7 +511,7 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
         super(Title, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
         self._name, self.level, self.picture = name, level, picture
-        self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
         if contents is not None:
             self._name = contents.add(text, level or 1, name)
         if level is not None and level < 6:
@@ -561,9 +561,8 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
 
     def click(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
               source_event: Optional[str] = None, on_ready: bool = False):
-        """Add a click event for a component.
-        The event will be automatically added to the onload section to be activated once the component
-        has been build.
+        """Add a click event for a component. The event will be automatically added to the onload section to be
+        activated once the component has been build.
 
         Usage::
 
@@ -608,8 +607,8 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
         super(Numeric, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "color": color})
         # Add the components label and icon
-        self.add_label(label, css={"float": "none", "width": 'auto', 'margin-right': '10px'}, html_code=self.htmlCode)
-        self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family"))
+        self.add_label(label, css={"float": "none", "width": 'auto', 'margin-right': '10px'}, html_code=self.html_code)
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
         self.add_helper(helper, css={"line-height": '20px'})
         self.add_title(title, level=4, options={'content_table': False},
                        css={"margin-bottom": 0, "margin-right": 0, "padding": 0})

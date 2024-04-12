@@ -23,7 +23,7 @@ class Component:
         return self
 
     @property
-    def tag(self):
+    def tag(self) -> str:
         """ Create a tag for the HTML component. This will be used by some JavaScript framework like Angular. """
         return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
 

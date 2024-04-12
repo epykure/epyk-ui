@@ -181,11 +181,11 @@ class Help(Html.Html):
   tag = "i"
 
   def __init__(self, page: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
-               options: Optional[dict]):
+               html_code: Optional[str], options: Optional[dict]):
     icon_details = page.icons.get("info")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    super(Help, self).__init__(page, val, css_attrs={"width": width}, profile=profile)
+    super(Help, self).__init__(page, val, html_code=html_code, css_attrs={"width": width}, profile=profile)
     self.attr['class'].add(icon_details["icon"])
     self.attr['title'] = val
     self._jsStyles = options
@@ -206,11 +206,11 @@ class Loading(Html.Html):
   tag = "div"
 
   def __init__(self, page: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
-               profile: Optional[Union[bool, dict]]):
+               html_code: Optional[str], profile: Optional[Union[bool, dict]]):
     icon_details = self.page.icons.get("spin")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
-    super(Loading, self).__init__(page, text, profile=profile)
+    super(Loading, self).__init__(page, text, html_code=html_code, profile=profile)
     self.color = self.page.theme.greys[-1] if color is None else color
     self.size = size[0]
     self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
@@ -339,8 +339,8 @@ class Legend(Html.Html):
   _option_cls = OptJsonFormatter.OptionsLegend
 
   def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
-               profile: Optional[Union[dict, bool]]):
-    super(Legend, self).__init__(page, record, options=options,
+               html_code: str, profile: Optional[Union[dict, bool]]):
+    super(Legend, self).__init__(page, record, options=options, html_code=html_code,
                                  css_attrs={"width": width, "height": height}, profile=profile)
 
   @property
@@ -355,9 +355,11 @@ class Legend(Html.Html):
   def __str__(self):
     divs = []
     css_inline = Defaults.inline(self.options.style)
-    for val in self.val:
+    for i, val in enumerate(self.val):
       val["css_inline"] = css_inline
-      divs.append("<div><div style='background:%(color)s;%(css_inline)s'></div>%(name)s</div>" % val)
+      if "id" not in val:
+        val["id"] = self.sub_html_code("value_%s" % i)
+      divs.append("<div><div id='%(id)s' style='background:%(color)s;%(css_inline)s'></div>%(name)s</div>" % val)
     return '<%s %s>%s</%s>' % (
       self.tag, self.get_attrs(css_class_names=self.style.get_classes()), "".join(divs), self.tag)
 
@@ -367,15 +369,15 @@ class Slides(Html.Html):
   _option_cls = OptText.OptionsText
 
   def __init__(self, page: primitives.PageModel, start, width: tuple, height: tuple, options: Optional[dict],
-               profile: Optional[Union[dict, bool]]):
-    icon_details_right = self.page.icons.get("arrow_right")
+               html_code: str, profile: Optional[Union[dict, bool]]):
+    icon_details_right = page.icons.get("arrow_right")
     if icon_details_right['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details_right['icon_family'],)
-    icon_details_left = self.page.icons.get("arrow_left")
-    super(Slides, self).__init__(page, [], options=options,
+    icon_details_left = page.icons.get("arrow_left")
+    super(Slides, self).__init__(page, [], options=options, html_code=html_code,
                                  css_attrs={"width": width, 'height': height}, profile=profile)
     self.attr['data-current_slide'] = start
-    self.title = self.page.ui.title("")
+    self.title = self.page.ui.title("", html_code=self.sub_html_code("title"))
     self.title.style.css.border_bottom = "1px solid %s" % page.theme.colors[7]
     self.title.style.css.color = page.theme.colors[7]
     self.title.style.css.margin = 0
@@ -386,53 +388,53 @@ class Slides(Html.Html):
       self._content_table = options['contents']
       self._content_table.style.css.z_index = 100
     if 'timer' in options:
-      self.page.ui.calendars.timer(options['timer']).css(
+      self.timer = self.page.ui.calendars.timer(options['timer'], html_code=self.sub_html_code("timer")).css(
         {"position": 'fixed', "font-size": '15px', 'top': '8px', "padding": '8px', "right": '15px', 'width': 'none',
          'color': page.theme.greys[5]})
-    self.next = self.page.ui.icon(icon_details_right["icon"]).css(
+    self.next = self.page.ui.icon(icon_details_right["icon"], html_code=self.sub_html_code("next")).css(
       {"position": 'fixed', "font-size": '35px', 'bottom': '0',  "padding": '8px', "right": '10px', 'width': 'none'})
-    self.previous = self.page.ui.icon(icon_details_left["icon"]).css(
+    self.previous = self.page.ui.icon(icon_details_left["icon"], html_code=self.sub_html_code("prev")).css(
       {"position": 'fixed', "font-size": '35px', 'bottom': '0',  "padding": '8px', "left": '10px', 'width': 'none'})
 
-    self.page_number = self.page.ui.text("").css(
+    self.page_number = self.page.ui.text("", html_code=self.sub_html_code("value")).css(
       {"position": 'fixed', 'z-index': 101, "font-size": '25px', 'bottom': '0',  "padding": '8px', "left": '50%',
        'width': 'none'})
 
     self.next.click([
-      self.page.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
+      self.page.js.getElementsByName(self.html_code).all([data.loops.dom_list.hide()]),
         data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(1), 'slide_index'),
 
       self.js.if_(page.js.object('slide_index') <= self.dom.attr('data-last_slide'), [
         self.title.build(self.page.js.getElementsByName(
-          self.htmlCode)[page.js.object('slide_index')].attr('data-slide_title')),
+          self.html_code)[page.js.object('slide_index')].attr('data-slide_title')),
         self.dom.attr("data-current_slide", page.js.object('slide_index')),
-        self.page.js.getElementsByName(self.htmlCode)[page.js.object('slide_index')].show(display_value='flex'),
+        self.page.js.getElementsByName(self.html_code)[page.js.object('slide_index')].show(display_value='flex'),
         self.page.js.getElementById(
-          "%s_count" % self.htmlCode).innerHTML(page.js.object('slide_index').toString().parseFloat().add(1)),
+          "%s_count" % self.html_code).innerHTML(page.js.object('slide_index').toString().parseFloat().add(1)),
       ]).else_([
         self.title.build(self.page.js.getElementsByName(
-          self.htmlCode)[page.js.object('slide_index').add(-1)].attr('data-slide_title')),
+          self.html_code)[page.js.object('slide_index').add(-1)].attr('data-slide_title')),
         self.page.js.getElementsByName(
-          self.htmlCode)[page.js.object('slide_index').add(-1)].show(display_value='flex')]),
+          self.html_code)[page.js.object('slide_index').add(-1)].show(display_value='flex')]),
 
       self.js.if_(page.js.object('slide_index') > 0, [self.previous.dom.show()]),
       self.js.if_(page.js.object('slide_index') == self.dom.attr('data-last_slide'), [self.next.dom.hide()])
     ])
 
     self.previous.click([
-      self.page.js.getElementsByName(self.htmlCode).all([data.loops.dom_list.hide()]),
+      self.page.js.getElementsByName(self.html_code).all([data.loops.dom_list.hide()]),
       data.primitives.float(self.dom.attr("data-current_slide").toString().parseFloat().add(-1), 'slide_index'),
 
       self.js.if_(page.js.object('slide_index') >= 0, [
         self.title.build(self.page.js.getElementsByName(
-          self.htmlCode)[page.js.object('slide_index')].attr('data-slide_title')),
+          self.html_code)[page.js.object('slide_index')].attr('data-slide_title')),
         self.dom.attr("data-current_slide", page.js.object('slide_index')),
-        self.page.js.getElementsByName(self.htmlCode)[page.js.object('slide_index')].show(display_value='flex'),
+        self.page.js.getElementsByName(self.html_code)[page.js.object('slide_index')].show(display_value='flex'),
         self.page.js.getElementById(
-          "%s_count" % self.htmlCode).innerHTML(page.js.object('slide_index').toString().parseFloat().add(1)),
+          "%s_count" % self.html_code).innerHTML(page.js.object('slide_index').toString().parseFloat().add(1)),
       ]).else_([
-        self.title.build(self.page.js.getElementsByName(self.htmlCode)[0].attr('data-slide_title')),
-        self.page.js.getElementsByName(self.htmlCode)[0].show(display_value='flex')]),
+        self.title.build(self.page.js.getElementsByName(self.html_code)[0].attr('data-slide_title')),
+        self.page.js.getElementsByName(self.html_code)[0].show(display_value='flex')]),
 
       self.js.if_(page.js.object('slide_index') == 0, [self.previous.dom.hide()]),
       self.js.if_(page.js.object('slide_index') < self.dom.attr('data-last_slide'), [self.next.dom.show()])
@@ -441,7 +443,6 @@ class Slides(Html.Html):
     # Add the keyboard shortcut
     page.body.keydown.right([self.next.dom.events.trigger("click")])
     page.body.keydown.left([self.previous.dom.events.trigger("click")])
-
     self.style.css.padding = "0 20px 20px 20px"
 
   @property
@@ -513,7 +514,7 @@ class Slides(Html.Html):
     comps = []
     self.attr['data-last_slide'] = len(self.val)-1
     for i, s in enumerate(self.val):
-      s.attr['name'] = self.htmlCode
+      s.attr['name'] = self.html_code
       if i != self.attr['data-current_slide']:
         s.style.css.display = False
       else:
@@ -549,7 +550,7 @@ class HtmlQRCode(Html.Html):
   @property
   def jsonId(self):
     """Return the Javascript variable of the json object. """
-    return "%s_obj" % self.htmlCode
+    return "%s_obj" % self.html_code
 
   @property
   def js(self) -> JsQrCode.QrCode:

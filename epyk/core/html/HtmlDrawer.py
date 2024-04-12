@@ -26,19 +26,19 @@ class Drawer(Html.Html):
         self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
         self.style.css.position = 'relative'
 
-        self.panels = page.ui.div()
+        self.panels = page.ui.div(html_code=self.sub_html_code("panels"))
         self.panels.options.managed = False
         self.panels.style.css.padding_right = 10
         self.panels.attr['name'] = 'drawer_panels'
 
-        self.handle = page.ui.div()
+        self.handle = page.ui.div(html_code=self.sub_html_code("handle"))
         self.handle.style.clear_all()
         self.handle.style.css.cursor = 'pointer'
 
         self.handle.options.managed = False
         self.handle.attr['name'] = 'drawer_handle'
 
-        self.drawers = page.ui.div()
+        self.drawers = page.ui.div(html_code=self.sub_html_code("drawers"))
         self.drawers.style.clear_all()
         self.drawers.style.css.overflow_y = 'auto'
         self.drawers.options.managed = False
@@ -64,11 +64,11 @@ class Drawer(Html.Html):
         :param display: Optional. The CSS Display property
         """
         if not hasattr(link, 'options'):
-            link = self.page.ui.div(link)
+            link = self.page.ui.div(link, html_code=self.sub_html_code("link", auto_inc=True))
             link.style.css.padding = "0 5px"
             link.options.managed = False
         if not hasattr(container, 'options'):
-            container = self.page.ui.div(container)
+            container = self.page.ui.div(container, html_code=self.sub_html_code("panel", auto_inc=True))
         container.style.css.display = display
         container.options.managed = False
         self.panels += container
@@ -86,7 +86,7 @@ class Drawer(Html.Html):
 
         :param component: An HTML component.
         """
-        self.handle = self.page.ui.div()
+        self.handle = self.page.ui.div(html_code=self.sub_html_code("handle"))
         self.handle.style.clear_all()
         if self.options.side == 'left':
             component.click([self.drawers.dom.toggle_transition("margin-right", "0px", "-%s" % self.options.width)])
@@ -134,7 +134,7 @@ class DrawerMulti(Html.Html):
         self.panels.style.css.width = "auto"
         self.panels.style.css.padding_right = 10
 
-        self.handle = page.ui.div()
+        self.handle = page.ui.div(html_code=self.sub_html_code("handle"))
         self.handle.style.clear_all()
         self.handle.style.css.z_index = 10
         self.handle.style.css.position = 'relative'
@@ -142,7 +142,7 @@ class DrawerMulti(Html.Html):
         self.handle.options.managed = False
         self.handle.attr['name'] = 'drawer_handle'
 
-        self.drawers = page.ui.div()
+        self.drawers = page.ui.div(html_code=self.sub_html_code("drawers"))
         self.drawers.style.clear_all()
         self.drawers.style.css.overflow_y = 'auto'
         self.drawers.options.managed = False
@@ -167,14 +167,14 @@ class DrawerMulti(Html.Html):
         :param container: The component to be displayed
         """
         if not hasattr(link, 'options'):
-            link = self.page.ui.div(link)
+            link = self.page.ui.div(link, html_code=self.sub_html_code("link", auto_inc=True))
         link.style.css.padding = "5px 0"
         link.style.css.color = self.page.theme.colors[0]
         link.style.css.margin = "0 2px"
         link.style.css.cursor = "pointer"
         link.options.managed = False
         if not hasattr(container, 'options'):
-            container = self.page.ui.div(container)
+            container = self.page.ui.div(container, html_code=self.sub_html_code("panel", auto_inc=True))
             container.style.css.padding = 5
         container.options.managed = False
         link.style.css.writing_mode = "vertical-rl"
@@ -225,6 +225,6 @@ class DrawerMulti(Html.Html):
           %(drawer)s
         </div>
         %(handle)s
-      </div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.htmlCode,
+      </div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.html_code,
                    'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
                    'side': self.options.side}

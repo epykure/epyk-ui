@@ -20,8 +20,9 @@ class HtmlGeneric(Html.Html):
                  width: tuple, height: tuple, html_code: Optional[str], tooltip: str, options: Optional[dict],
                  profile: Optional[Union[bool, dict]]):
         self.tag = tag
-        super(HtmlGeneric, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
-                                          options=options, profile=profile)
+        super(HtmlGeneric, self).__init__(
+            page, [], html_code=html_code, css_attrs={"width": width, "height": height}, options=options,
+            profile=profile)
         if self.options.html_encode:
             text = self.page.py.encode_html(text)
         if self.options.multiline:
@@ -123,7 +124,7 @@ class HtmlGeneric(Html.Html):
                                      self.tag, self.helper)
 
     def loading(self, status: bool = True, label: str = Default_html.TEMPLATE_LOADING_ONE_LINE,
-                data: types.JS_DATA_TYPES = None):
+                data: types.JS_DATA_TYPES = None) -> str:
         """Display a loading message in the component.
 
         Usage::
@@ -141,17 +142,17 @@ class HtmlGeneric(Html.Html):
         return ""
 
     def error(self, status: bool = True, label: str = Default_html.TEMPLATE_ERROR_LINE,
-              data: types.JS_DATA_TYPES = None):
+              data: types.JS_DATA_TYPES = None) -> str:
         """Display an error message in the component.
 
-    Usage::
+        Usage::
 
-      btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
+          btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
-    :param status: The message status (true is active)
-    :param label: The message template
-    :param data: The message parameter to feed the template
-    """
+        :param status: The message status (true is active)
+        :param label: The message template
+        :param data: The message parameter to feed the template
+        """
         self.options.templateError = label
         if status:
             return self.build(data, options={"templateMode": 'error'})
@@ -163,22 +164,27 @@ class HtmlGenericLink(HtmlGeneric):
     name = 'tagLink'
     builder_name = "HtmlGeneric"
 
+    @property
+    def ipopup(self):
+        """Popup's id"""
+        return self.sub_html_code("popup")
+
     def preview(self, url: str, profile: Optional[Union[bool, dict]] = None):
         """
         :param url: The url path.
         :param profile: Optional. A flag to set the component performance storage.
         """
+        popup_id = self.ipopup
         self.on('mouseenter', [
-            self.page.js.request_http(js_code="test", method_type='GET', url=url).send().onSuccess([
-                self.page.js.createElement("div", "popup").innerHTML(
-                    self.page.js.object("data")).attr('id', 'popup').css(
+            self.page.js.request_http(js_code="%s_rest" % self.html_code, method_type='GET', url=url).send().onSuccess([
+                self.page.js.createElement("div", popup_id).innerHTML(
+                    self.page.js.object("data")).attr('id', popup_id).css(
                     {'color': 'red', 'display': 'block', 'background': 'white', 'width': '250px',
                      'padding': '10px'}).position(),
-                self.page.body.dom.appendChild(self.page.js.object("popup"))]
-            )
+                self.page.body.dom.appendChild(self.page.js.object(popup_id))])
         ], profile=profile)
 
-        self.on('mouseleave', [self.page.js.getElementById("popup").remove()], profile=profile)
+        self.on('mouseleave', [self.page.js.getElementById(popup_id).remove()], profile=profile)
 
 
 class HtmlComment(Html.Html):

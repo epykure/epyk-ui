@@ -580,7 +580,7 @@ class Images:
     return component
 
   def emoji(self, symbol: str = None, top: types.SIZE_TYPE = (20, 'px'), options: types.OPTION_TYPE = None,
-            profile: types.PROFILE_TYPE = None) -> html.HtmlImage.Emoji:
+            profile: types.PROFILE_TYPE = None, html_code: str = None) -> html.HtmlImage.Emoji:
     """  
 
     :tags:
@@ -606,9 +606,10 @@ class Images:
     :param top: Optional. The number of pixel from the top of the page
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
     top = Arguments.size(top, "px")
-    component = html.HtmlImage.Emoji(self.page, symbol, top, options, profile)
+    component = html.HtmlImage.Emoji(self.page, symbol, top, options, profile, html_code)
     html.Html.set_component_skin(component)
     return component
 

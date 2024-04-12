@@ -590,11 +590,29 @@ the same signature and return).
 
         return "%s_%s" % (self.__class__.__name__.lower(), id(self))
 
+    def sub_html_code(self, suffix: str, html_code: str = None, auto_inc: bool = False) -> Optional[str]:
+        """Generate a sub HTML code for internal components to the widget.
+
+        :param suffix: Code suffix for the component
+        :param html_code: Parent HTML code to be used for prefix
+        :param auto_inc: Add auto inc number to the HTML Code
+        """
+        if html_code:
+            value = "%s_%s" % (html_code, suffix)
+        else:
+            value = "%s_%s" % (self.html_code, suffix)
+        if auto_inc:
+            i = 0
+            result = "%s_%s" % (value, i)
+            while result in self.components:
+                i += 1
+                result = "%s_%s" % (value, i)
+            value = result
+        return value
+
     @property
     def js_code(self):
-        """
-
-        """
+        """JavaScript object reference for the component"""
         if self.__htmlCode is not None:
             if hasattr(self.__htmlCode, "toStr"):
                 return JsUtils.jsWrap("window[%s + 'Id']" % self.__htmlCode)
@@ -698,7 +716,7 @@ the same signature and return).
         :return: The HTML component.
         """
         self._sub_htmls.append(component)
-        self.components[component.htmlCode] = component
+        self.components[component.html_code] = component
         # add a flag to propagate on the Javascript the fact that some child nodes will be added
         # in this case innerHYML cannot be used anymore
         self._jsStyles["_children"] = self._jsStyles.get("_children", 0) + 1
@@ -795,7 +813,7 @@ the same signature and return).
         if family is None:
             family = self.page.icons.family
         if text is not None:
-            html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
+            html_code_icon = self.sub_html_code("icon", html_code=html_code)
             self.icon = self.page.ui.images.icon(
                 text, html_code=html_code_icon, family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
             self.icon.defined_code = self.defined_code
@@ -822,7 +840,7 @@ the same signature and return).
         """
         self.label = ""
         if text is not None:
-            html_code_label = "%s_label" % html_code if html_code is not None else html_code
+            html_code_label = self.sub_html_code("label", html_code=html_code)
             self.label = self.page.ui.texts.label(text, options=options, html_code=html_code_label)
             self.label.defined_code = self.defined_code
             if for_ is not None:
@@ -853,7 +871,7 @@ the same signature and return).
         key_attr = 'span_%s' % i if i is not None else 'span'
         setattr(self, key_attr, '')
         if text is not None:
-            html_code_span = "%s_span" % html_code if html_code is not None else html_code
+            html_code_span = self.sub_html_code("span", html_code=html_code)
             setattr(self, key_attr, self.page.ui.texts.span(text, html_code=html_code_span))
             span = getattr(self, key_attr)
             if position == "before":
@@ -914,7 +932,8 @@ the same signature and return).
         """
         self.title = ""
         if text is not None:
-            self.title = self.page.ui.texts.title(text, level=level, options=options)
+            html_code_title = self.sub_html_code("title", auto_inc=True)
+            self.title = self.page.ui.texts.title(text, level=level, html_code=html_code_title, options=options)
             if options is not None and options.get('managed', True):
                 if position == "before":
                     self.prepend_child(self.title)
@@ -947,11 +966,11 @@ the same signature and return).
                 del input_options['autocomplete']
 
                 self.input = self.page.ui.inputs.autocomplete(
-                    text, width=(100, '%'), html_code="%s_input" % self.htmlCode, options=input_options)
+                    text, width=(100, '%'), html_code=self.sub_html_code("input"), options=input_options)
                 self.input.options.appendTo = "#%s" % self.htmlCode
                 self.input.options.position()
             else:
-                self.input = self.page.ui.inputs.input(text, html_code="%s_input" % self.htmlCode, options=options)
+                self.input = self.page.ui.inputs.input(text, html_code=self.sub_html_code("input"), options=options)
             if position == "before":
                 self.prepend_child(self.input)
             else:
@@ -973,7 +992,7 @@ the same signature and return).
         """
         self.checkbox = ""
         if flag is not None:
-            self.checkbox = self.page.ui.inputs.checkbox(flag)
+            self.checkbox = self.page.ui.inputs.checkbox(flag, html_code=self.sub_html_code("checkbox"))
             if position == "before":
                 self.prepend_child(self.checkbox)
             else:
@@ -992,7 +1011,7 @@ the same signature and return).
         :param css: Optional. The CSS style to be added to the component
         """
         if text is not None:
-            self.helper = self.page.ui.rich.info(text)
+            self.helper = self.page.ui.rich.info(text, html_code=self.sub_html_code("help"))
             self.helper.options.managed = False
             if css is not None:
                 self.helper.css(css)
@@ -1005,7 +1024,7 @@ the same signature and return).
         :param background_color: Badge's background color
         :param parent_html_code: Badge's parent code
         """
-        html_code = "%s_badge" % (parent_html_code if parent_html_code else self.html_code)
+        html_code = self.sub_html_code("badge", html_code=parent_html_code)
         self.badge = self.page.ui.icons.badge(
             value, width="5px", background_color=background_color, html_code=html_code)
         self.badge.options.show_empty = False

@@ -571,7 +571,8 @@ class Options(DataClass):
                     try:
                         js_attrs.append("%s: %s" % (k, json.dumps(v)))
                     except:
-                        js_attrs.append("%s: %s" % (k, JsUtils.jsConvertData(v, None, depth=True)))
+                        if type(v).__name__ != "ContentsTable":
+                            js_attrs.append("%s: %s" % (k, JsUtils.jsConvertData(v, None, depth=True)))
 
         if JsUtils.isJsData(attrs):
             return JsUtils.jsWrap(

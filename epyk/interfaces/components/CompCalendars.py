@@ -187,7 +187,7 @@ class Calendar:
     return component
 
   def legend(self, record: list, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = (None, "px"),
-             align: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
+             align: str = None, options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None):
     """ Add a legend to a Calendar component.
 
     :tags:
@@ -229,7 +229,7 @@ class Calendar:
     height = Arguments.size(height, unit="px")
     if options is not None:
       dfl_options.update(options)
-    component = html.HtmlOthers.Legend(self.page, data, width, height, dfl_options, profile)
+    component = html.HtmlOthers.Legend(self.page, data, width, height, dfl_options, html_code, profile)
     html.Html.set_component_skin(component)
     return component
 

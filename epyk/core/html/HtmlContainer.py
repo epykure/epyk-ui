@@ -52,7 +52,7 @@ class Panel(Html.Html):
         self.add_helper(helper)
         super(Panel, self).__init__(page, component, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"color": color, "width": width, "height": height})
-        container.set_attrs(name="name", value="panel_%s" % self.htmlCode)
+        container.set_attrs(name="name", value="panel_%s" % self.html_code)
 
     @property
     def style(self) -> GrpClsContainer.ClassDiv:
@@ -225,7 +225,7 @@ class PanelSlide(Panel):
         super(PanelSlide, self).__init__(
             page, components, None, color, width, height, html_code, helper, options, profile)
         self.add_helper(helper)
-        self.icon = self.page.ui.icon("").css(
+        self.icon = self.page.ui.icon("", html_code=self.sub_html_code("icon")).css(
             {"display": 'inline-block', 'margin': '0 5px 5px 0', 'line-height': "%spx" % Defaults.LINE_HEIGHT,
              'font-size': "%spx" % Defaults.BIG_ICONS})
         if hasattr(title, 'options'):
@@ -234,9 +234,9 @@ class PanelSlide(Panel):
             self.text.style.css.display = "inline-block"
         else:
             self.text = self.page.ui.title(
-                title, html_code="%s_title" % self.htmlCode).css({"display": 'inline-block', 'margin': 0})
+                title, html_code=self.sub_html_code("title")).css({"display": 'inline-block', 'margin': 0})
             self.text.style.css.font_size = self.page.body.style.globals.font.normal(-2)
-        self.title = self.page.ui.div([self.icon, self.text])
+        self.title = self.page.ui.div([self.icon, self.text], html_code=self.sub_html_code("panel"))
         self.title.options.managed = False
         self.title.style.css.white_space = "nowrap"
         self.title.style.css.padding = "0 5px 0 0"
@@ -358,8 +358,8 @@ class Div(Html.Html):
                 self.val.append(obj)
         self.tag = tag
         # Add the component predefined elements
-        self.add_icon(icon, html_code=self.htmlCode, family=options.get("icon_family", None))
-        self.add_label(label, html_code=self.htmlCode)
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family", None))
+        self.add_label(label, html_code=self.html_code)
         self.add_helper(helper)
         if helper is not None:
             self.helper.style.css.position = "absolute"
@@ -429,7 +429,8 @@ class Div(Html.Html):
     def __add__(self, component: Html.Html):
         """ Add items to a container """
         if isinstance(component, list):
-            component = self.page.ui.row(component, position=self.options.get(None, "position"))
+            component = self.page.ui.row(component, position=self.options.get(None, "position"),
+                                         html_code=self.sub_html_code("row", auto_inc=True))
         # Has to be defined here otherwise it is set to late
         component.options.managed = False
         if self.options.inline:
@@ -451,7 +452,7 @@ class Div(Html.Html):
         :param component: The component to be added to the underlying list
         """
         if isinstance(component, list):
-            component = self.page.ui.row(component)
+            component = self.page.ui.row(component, html_code=self.sub_html_code("row", auto_inc=True))
         # Has to be defined here otherwise it is set to late
         component.options.managed = False
         if self.options.inline:
@@ -548,9 +549,9 @@ class Td(Html.Html):
     def __init__(self, page: primitives.PageModel, components: Optional[List[Union[Html.Html, str]]],
                  header: bool, position: Optional[str], width: types.SIZE_TYPE,
                  height: types.SIZE_TYPE, align: Optional[str], options: types.OPTION_TYPE,
-                 profile: types.PROFILE_TYPE):
+                 profile: types.PROFILE_TYPE, html_code: Optional[str] = None):
         self.position, self.rows_css, self.row_css_dflt, self.header = position, {}, {}, header
-        super(Td, self).__init__(page, [], profile=profile,
+        super(Td, self).__init__(page, [], profile=profile, html_code=html_code,
                                  css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
         self.__options = options
         self.attr["align"] = options.cell_align or align
@@ -592,10 +593,11 @@ class Tr(Html.Html):
 
     def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]],
                  header, position, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
-                 align: Optional[str], options: types.OPTION_TYPE, profile):
+                 align: Optional[str], options: types.OPTION_TYPE, profile, html_code: Optional[str] = None):
         self.position, self.header = position, header
         super(Tr, self).__init__(
-            page, [], profile=profile, css_attrs={"width": width, "height": height, 'text-align': align})
+            page, [], html_code=html_code, profile=profile,
+            css_attrs={"width": width, "height": height, 'text-align': align})
         self.__options = options
         if components is not None:
             for component in components:
@@ -660,8 +662,9 @@ class TSection(Html.Html):
     _option_cls = OptPanel.OptionPanelTable
 
     def __init__(self, page: primitives.PageModel, type: str, rows: Optional[list] = None,
-                 options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-        super(TSection, self).__init__(page, [], options=options, profile=profile)
+                 options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
+                 html_code: Optional[str] = None):
+        super(TSection, self).__init__(page, [], html_code=html_code, options=options, profile=profile)
         self.__section = type
         if rows is not None:
             for row in rows:
@@ -681,7 +684,7 @@ class TSection(Html.Html):
         if not isinstance(row_data, Tr):
             row_data = Tr(
                 self.page, row_data, self.__section == 'thead', None, (100, "%"), (100, "%"),
-                'center', self.options, False)
+                'center', self.options, False, html_code=self.sub_html_code("thead", auto_inc=True))
         super(TSection, self).__add__(row_data)
         return self
 
@@ -708,9 +711,9 @@ class Table(Html.Html):
             'border-collapse': 'collapse',
             'box-sizing': 'border-box'}, profile=profile, options=options, html_code=html_code)
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
-        self.header = TSection(self.page, 'thead', options=options)
-        self.body = TSection(self.page, 'tbody', options=options)
-        self.footer = TSection(self.page, 'tfoot', options=options)
+        self.header = TSection(self.page, 'thead', options=options, html_code=self.sub_html_code('thead'))
+        self.body = TSection(self.page, 'tbody', options=options, html_code=self.sub_html_code('tbody'))
+        self.footer = TSection(self.page, 'tfoot', options=options, html_code=self.sub_html_code('tfoot'))
         self.header.options.managed = False
         self.body.options.managed = False
         self.footer.options.managed = False
@@ -764,9 +767,13 @@ class Table(Html.Html):
         :param align: Optional. The text-align property within this component
         :param dim: Optional. The number of columns in the table
         """
-        cell = Td(self.page, [text], False, None, (None, "%"), (None, "%"), align, self.options, False)
+        cell = Td(
+            self.page, [text], False, None, (None, "%"), (None, "%"), align,
+            self.options, False, html_code=self.sub_html_code("td", auto_inc=True))
         cell.colspan(dim or len(self.body.val[0].val))
-        self += Tr(self.page, [cell], False, None, (100, "%"), (100, "%"), align, self.options, False)
+        self += Tr(
+            self.page, [cell], False, None, (100, "%"), (100, "%"), align,
+            self.options, False, html_code=self.sub_html_code("tr", auto_inc=True))
         return cell
 
     def add_caption(self, text: str, color: Optional[str] = None, align: Optional[str] = None,
@@ -1191,8 +1198,8 @@ class Tabs(Html.Html):
         super(Tabs, self).__init__(page, "", html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height, 'color': color})
         self.__panels, self.__panel_objs, self.__selected = [], {}, None
-        self.tabs_name, self.panels_name = "button_%s" % self.htmlCode, "panel_%s" % self.htmlCode
-        self.tabs_container = self.page.ui.div([])
+        self.tabs_name, self.panels_name = self.sub_html_code("button"), self.sub_html_code("panel")
+        self.tabs_container = self.page.ui.div([], html_code=self.sub_html_code("parent"))
         self.tabs_container.options.managed = False
         self.add_helper(helper)
 
@@ -1270,10 +1277,10 @@ class Tabs(Html.Html):
         width = Arguments.size(width or self.options.width, unit="px")
         if not hasattr(div, 'options'):
             if div is None:
-                div = self.page.ui.div()
+                div = self.page.ui.div(html_code=self.sub_html_code("panel", auto_inc=True))
                 show_div = []
             else:
-                div = self.page.ui.div(div)
+                div = self.page.ui.div(div, html_code=self.sub_html_code("panel", auto_inc=True))
                 show_div = [div.dom.show()]
             div.style.clear(no_default=True)
             div.style.css.padding_left = 3
@@ -1286,16 +1293,17 @@ class Tabs(Html.Html):
 
         self.__panels.append(name)
         if icon is not None:
+            html_code_tab = self.sub_html_code("tab", auto_inc=True)
             tab = self.page.ui.div([
-                self.page.ui.icon(icon).css(
+                self.page.ui.icon(icon, html_code="%s_icon" % html_code_tab).css(
                     {"display": 'block', 'color': 'inherit', "width": '100%',
                      "font-size": self.page.body.style.globals.font.normal(4)}),
-                name], width=width)
+                name], width=width, html_code=html_code_tab)
         else:
             if hasattr(name, "html"):
-                tab = self.page.ui.div(name, width=width)
+                tab = self.page.ui.div(name, width=width, html_code=self.sub_html_code("tab", auto_inc=True))
             else:
-                html_code_tab = "%s_%s" % (self.htmlCode, JsUtils.getJsValid(name, False))
+                html_code_tab = "%s_%s" % (self.html_code, JsUtils.getJsValid(name, False))
                 tab = self.page.ui.div(name, width=width, html_code=html_code_tab)
         tab_style = self.options.tab_style(name, css_tab)
         tab_style_clicked = self.options.tab_clicked_style(name, css_tab_clicked)
@@ -1464,7 +1472,7 @@ class IconsMenu(Html.Html):
             logging.warning("Family %s not defined in %s" % (family, defined_families))
 
         if text is not None:
-            html_code_icon = "%s_icon" % html_code if html_code is not None else html_code
+            html_code_icon = self.sub_html_code("icon")
             self._icons.append(self.page.ui.images.icon(text, html_code=html_code_icon, family=family).css(
                 {"margin-right": '5px', 'cursor': "pointer"}))
             self.icon = self._icons[-1]
@@ -1538,7 +1546,7 @@ class Form(Html.Html):
         :param text: Optional. The text on the submit button
         """
         self.attr.update({"action": action or self.action, "method": method or self.method})
-        self.__submit = self.page.ui.button(text).set_attrs({"type": 'submit'})
+        self.__submit = self.page.ui.button(text, html_code=self.sub_html_code("button")).set_attrs({"type": 'submit'})
         self.__submit.style.css.margin_top = 10
         self.__submit.options.managed = False
         if self._has_container:
@@ -1569,9 +1577,10 @@ class Modal(Html.Html):
         self.add_helper(helper)
         self.doSubmit = submit
         if self.doSubmit:
-            self.submit = page.ui.buttons.important("Submit").set_attrs({"type": 'submit'})
+            self.submit = page.ui.buttons.important("Submit", html_code=self.sub_html_code("button")).set_attrs({
+                "type": 'submit'})
             self.submit.options.managed = False
-        self.closeBtn = page.ui.texts.span('&times', width='auto')
+        self.closeBtn = page.ui.texts.span('&times', width='auto', html_code=self.sub_html_code("close"))
         self.closeBtn.css(None, reset=True)
         self.closeBtn.style.add_classes.div.span_close()
         self.closeBtn.click(page.js.getElementById(self.htmlCode).css({'display': "none"}))
@@ -1584,11 +1593,13 @@ class Modal(Html.Html):
         if footer:
             for obj in footer:
                 self.__footer + obj
-        self.__footer = page.ui.row([])
+        self.__footer = page.ui.row([], html_code=self.sub_html_code("footer"))
         self.__footer.options.managed = False
-        self.__body = page.ui.col([]).css({'position': 'relative', 'overflow-y': 'scroll'})
+        self.__body = page.ui.col([], html_code=self.sub_html_code("body")).css({
+            'position': 'relative', 'overflow-y': 'scroll'})
         self.__body.options.managed = False
-        self.col = page.ui.col([self.__header, self.__body, self.__footer]).css({'width': 'auto'}, reset=True)
+        self.col = page.ui.col([self.__header, self.__body, self.__footer], html_code=self.sub_html_code("col")).css({
+            'width': 'auto'}, reset=True)
         self.col.style.add_classes.div.modal_content()
         self.col.options.managed = False
         self.val.append(self.col)
@@ -1665,8 +1676,8 @@ class Indices(Html.Html):
                                       css_attrs={"width": width, "height": height})
         self.items = []
         for i in range(count):
-            div = self.page.ui.div(i, width=(15, "px"))
-            div.attr["name"] = self.htmlCode
+            div = self.page.ui.div(i, width=(15, "px"), html_code=self.sub_html_code("item_%s" % i))
+            div.attr["name"] = self.html_code
             div.attr["data-position"] = i + 1
             div.css({"display": 'inline-block', "padding": "2px", "text-align": "center"})
             div.css(self.options.div_css)
@@ -1674,13 +1685,19 @@ class Indices(Html.Html):
             div.options.managed = False
             self.items.append(div)
 
-        self.first = self.page.ui.icon("fas fa-angle-double-left", width=(20, 'px')).css({"display": 'inline-block'})
+        self.first = self.page.ui.icon(
+            "fas fa-angle-double-left", width=(20, 'px'),
+            html_code=self.sub_html_code("icon_first")).css({"display": 'inline-block'})
         self.first.options.managed = False
-        self.prev = self.page.ui.icon("fas fa-chevron-left", width=(20, 'px')).css({"display": 'inline-block'})
+        self.prev = self.page.ui.icon(
+            "fas fa-chevron-left", width=(20, 'px'),
+            html_code=self.sub_html_code("icon_prev")).css({"display": 'inline-block'})
         self.prev.options.managed = False
-        self.next = self.page.ui.icon("fas fa-chevron-right", width=(20, 'px')).css({"display": 'inline-block'})
+        self.next = self.page.ui.icon("fas fa-chevron-right", width=(20, 'px'),
+                                      html_code=self.sub_html_code("icon_next")).css({"display": 'inline-block'})
         self.next.options.managed = False
-        self.last = self.page.ui.icon("fas fa-angle-double-right", width=(20, 'px')).css({"display": 'inline-block'})
+        self.last = self.page.ui.icon("fas fa-angle-double-right", width=(20, 'px'),
+                                      html_code=self.sub_html_code("icon_last")).css({"display": 'inline-block'})
         self.last.options.managed = False
 
     @property
@@ -1726,7 +1743,7 @@ class Points(Html.Html):
         self.items = []
         self.css({"text-align": "center"})
         for i in range(count):
-            div = self.page.ui.div(self.page.entities.non_breaking_space)
+            div = self.page.ui.div(self.page.entities.non_breaking_space, html_code=self.sub_html_code("item_%s" % i))
             div.attr["name"] = html_code
             div.attr["data-position"] = i
             div.css({"border": "1px solid %s" % self.page.theme.greys[5], "border-radius": "10px", "width": "15px",
@@ -1913,9 +1930,9 @@ class GridStack(Html.Html):
         :param h: The number of columns for the height (0 to 12)
         :param attrs: Any other item attributes
         """
-        grid_stack_item_content = self.page.ui.div([component])
+        grid_stack_item_content = self.page.ui.div([component], html_code=self.sub_html_code("content"))
         grid_stack_item_content.style.add("grid-stack-item-content")
-        grid_stack_item = self.page.ui.div([grid_stack_item_content])
+        grid_stack_item = self.page.ui.div([grid_stack_item_content], html_code=self.sub_html_code("item"))
         grid_stack_item.style.add("grid-stack-item")
         grid_stack_item.options.managed = False
         if w is not None:

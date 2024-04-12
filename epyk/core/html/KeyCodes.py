@@ -23,7 +23,7 @@ class KeyCode:
         """
         if not profile and self._page.profile:
             if self._component is not None:
-                profile = {"name": "%s[key=%s]" % (self._component.htmlCode, rule)}
+                profile = {"name": "%s[key=%s]" % (self._component.html_code, rule)}
             else:
                 profile = {"name": "Page[key=%s]" % rule}
         source_event = source_event or self.source_event
@@ -46,7 +46,7 @@ class KeyCode:
         """
         if not profile and self._page.profile:
             if self._component is not None:
-                profile = {"name": "%s[key=%s]" % (self._component.htmlCode, key_code)}
+                profile = {"name": "%s[key=%s]" % (self._component.html_code, key_code)}
             else:
                 profile = {"name": "Page[key=%s]" % key_code}
         source_event = source_event or self.source_event

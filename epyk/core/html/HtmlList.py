@@ -73,7 +73,7 @@ class Li(Html.Html):
             dfl_css = {"float": 'none', 'width': 'none'}
             if css is not None:
                 dfl_css.update(css)
-            html_code_label = "%s_label" % html_code if html_code is not None else html_code
+            html_code_label = self.sub_html_code("label")
             self.label = self.page.ui.texts.label(text, options=options, html_code=html_code_label)
             if for_ is not None:
                 # Attach the label to another HTML component based on the ID
@@ -485,8 +485,8 @@ class Items(Html.Html):
         """
         if not isinstance(js_funcs, list):
             js_funcs = []
-        self.options.click = "function(event, value){%s} " % JsUtils.jsConvertFncs(js_funcs, toStr=True,
-                                                                                   profile=profile)
+        self.options.click = "function(event, value){%s} " % JsUtils.jsConvertFncs(
+            js_funcs, toStr=True, profile=profile)
         return self
 
     def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: types.OPTION_TYPE = None,

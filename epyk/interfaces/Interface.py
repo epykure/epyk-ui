@@ -683,7 +683,7 @@ class Components:
             profile)
 
     def loading(self, text: str = "Loading", color: Union[str, bool] = None, options: types.OPTION_TYPE = None,
-                profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Loading:
+                html_code: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Loading:
         """Entry point to the loading component.
 
         This component will create a
@@ -693,10 +693,12 @@ class Components:
         :param text: Optional. The text in the component (during the loading)
         :param color: Optional. The font color in the component. Default inherit
         :param options: Optional. Specific Python options available for this component
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
         :param profile: Optional. A flag to set the component performance storage
         """
         html_loading = html.HtmlOthers.Loading(
-            self.page, text, color, (self.page.body.style.globals.font.size, 'px'), options or {}, profile)
+            self.page, text, color, (self.page.body.style.globals.font.size, 'px'), options or {}, html_code,
+            profile)
         html.Html.set_component_skin(html_loading)
         return html_loading
 

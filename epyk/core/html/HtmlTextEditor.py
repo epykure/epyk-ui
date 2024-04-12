@@ -52,8 +52,8 @@ class Console(Html.Html):
         return super().options
 
     _js__builder__ = '''if(options.showdown){var converter = new showdown.Converter(options.showdown);
-  converter.setOption("display", "inline-block");
-  data = converter.makeHtml(data).replace("<p>", "<p style='display:inline-block;margin:0'>")}
+converter.setOption("display", "inline-block");
+data = converter.makeHtml(data).replace("<p>", "<p style='display:inline-block;margin:0'>")}
 htmlObj.innerHTML = data +'<br/>' '''
 
     def __str__(self):
@@ -71,7 +71,8 @@ class Editor(Html.Html):
         super(Editor, self).__init__(page, vals, html_code=html_code, profile=profile,
                                      css_attrs={"width": width, "height": height, 'box-sizing': 'border-box',
                                                 'margin': '5px 0'}, verbose=verbose)
-        self.textarea = self.page.ui.texts.code(vals, height=height, language=language, options=options)
+        self.textarea = self.page.ui.texts.code(
+            vals, html_code=self.sub_html_code("input"), height=height, language=language, options=options)
         self.textarea.options.managed = False
         self.actions = []
 
@@ -85,26 +86,36 @@ class Editor(Html.Html):
             self._dom = JsHtmlEditor.Editor(self, page=self.page)
         return self._dom
 
-    def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None):
+    def action(self, icon: str, js_funcs: Union[list, str], tooltip: Optional[str] = None, css_attrs: dict = None):
         """Add a bespoke action to the action panel.
 
         :param icon: The font awesome icon
         :param js_funcs: The Javascript functions
         :param tooltip: Optional. Text to be displayed when mouse is hover
+        :param css_attrs: Optional . Default {"margin-right": '5px'}
         """
-        icon_button = self.page.ui.icon(icon, tooltip=tooltip).css({"margin-right": '5px'}).click(js_funcs)
+        if not css_attrs:
+            css_attrs = {"margin-right": '5px'}
+        icon_button = self.page.ui.icon(
+            icon, html_code=self.sub_html_code("action", auto_inc=True), tooltip=tooltip).css(
+            css_attrs).click(js_funcs)
         self.actions.append((icon, icon_button))
         icon_button.options.managed = False
         return self
 
-    def toggle(self, js_funcs: Union[list, str], icons: tuple = ("show", "hide"), tooltip: Optional[str] = None):
+    def toggle(self, js_funcs: Union[list, str], icons: tuple = ("show", "hide"), tooltip: Optional[str] = None,
+               css_attrs: dict = None):
         """Add an event action to the console object.
 
         :param icons: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
         :param tooltip: Optional. Text to be displayed when mouse is hover
+        :param css_attrs: Optional . Default {"margin-right": '5px'}
         """
-        icon_button = self.page.ui.icon(icons[0], tooltip=tooltip).css({"margin-right": '5px'})
+        if not css_attrs:
+            css_attrs = {"margin-right": '5px'}
+        icon_button = self.page.ui.icon(
+            icons[0], html_code=self.sub_html_code("toggle", auto_inc=True), tooltip=tooltip).css(css_attrs)
         js_funcs.append(self.textarea.dom.toggle())
         js_funcs.append(icon_button.dom.switchClass(icons[0], icons[1]).r)
         icon_button.click(js_funcs)
@@ -112,46 +123,50 @@ class Editor(Html.Html):
         self.actions.append((icons[0], icon_button))
         return self
 
-    def copy(self, js_funcs: Union[list, str], icon: str = "capture", tooltip: Optional[str] = None):
+    def copy(self, js_funcs: Union[list, str], icon: str = "capture", tooltip: Optional[str] = None, css_attrs: dict = None):
         """Copy the content of the editor component to the clipboard.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
         :param tooltip: Optional. Text to be displayed when mouse is hover
+        :param css_attrs: Optional . Default {"margin-right": '5px'}
         """
         js_funcs.append(self.textarea.dom.select())
         js_funcs.append('document.execCommand("copy")')
-        return self.action(icon, js_funcs, tooltip)
+        return self.action(icon, js_funcs, tooltip, css_attrs)
 
-    def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
+    def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None, css_attrs: dict = None):
         """Emtpy run button.
         This function will just add the icon on the actions panel.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
         :param tooltip: Optional. Text to be displayed when mouse is hover
+        :param css_attrs: Optional . Default {"margin-right": '5px'}
         """
-        return self.action(icon, js_funcs, tooltip)
+        return self.action(icon, js_funcs, tooltip, css_attrs)
 
-    def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
+    def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None, css_attrs: dict = None):
         """Emtpy save button.
         This function will just add the icon on the actions panel.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
         :param tooltip: Optional. Text to be displayed when mouse is hover
+        :param css_attrs: Optional . Default {"margin-right": '5px'}
         """
-        return self.action(icon, js_funcs, tooltip)
+        return self.action(icon, js_funcs, tooltip, css_attrs)
 
-    def clear(self, js_funcs: Union[list, str], icon: str = "remove", tooltip: Optional[str] = None):
+    def clear(self, js_funcs: Union[list, str], icon: str = "remove", tooltip: Optional[str] = None, css_attrs: dict = None):
         """Add an event action to the console object.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
         :param tooltip: Optional. Text to be displayed when mouse is hover
+        :param css_attrs: Optional . Default {"margin-right": '5px'}
         """
         js_funcs.append(self.textarea.dom.clear())
-        return self.action(icon, js_funcs, tooltip)
+        return self.action(icon, js_funcs, tooltip, css_attrs)
 
     def __str__(self):
         actions = "".join([b.html() for _, b in self.actions])

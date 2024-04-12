@@ -712,7 +712,7 @@ else {return [true, '', '']}''' % {
 
     def format_dates(self, class_name: str, dts: List[str] = None, css: Optional[dict] = None, tooltip: str = "",
                      profile: types.PROFILE_TYPE = None, dataflows: List[dict] = None):
-        """Change the CSS style for some selected dates in the DateIicker.
+        """Change the CSS style for some selected dates in the DatePicker.
 
         This function can be also used on the Javascript side from the js property.
 
@@ -817,7 +817,7 @@ class Field(Html.Html):
             page, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
         self._vals = ""
         # Add the component predefined elements
-        self.add_label(label, html_code=self.htmlCode,
+        self.add_label(label, html_code=self.html_code,
                        css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
                        position=options.get("position", 'before'), options=options)
         if self.label and options.get("format") == "column":
@@ -831,9 +831,9 @@ class Field(Html.Html):
         self.input = html_input
         if html_code is not None:
             if "name" not in self.input.attr:
-                self.input.attr["name"] = self.input.htmlCode
+                self.input.attr["name"] = self.input.html_code
         self.append_child(self.input)
-        self.add_icon(icon, html_code=self.htmlCode, position="after", family=options.get("icon_family"),
+        self.add_icon(icon, html_code=self.html_code, position="after", family=options.get("icon_family"),
                       css={"margin-left": '5px', 'color': self.page.theme.colors[-1]})
         self.css({"margin-top": '5px'})
 
@@ -858,8 +858,7 @@ class FieldInput(Field):
     def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height, html_code,
                  helper, options, profile):
         html_input = page.ui.inputs.input(page.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
-                                          html_code="%s_input" % html_code if html_code is not None else html_code,
-                                          options=options)
+                                          html_code=self.sub_html_code("input"), options=options)
         super(FieldInput, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options,
                                          profile)
 
@@ -982,8 +981,7 @@ class FieldRange(Field):
     def __init__(self, page: primitives.PageModel, value, min_val, max_val, step, label, placeholder, icon, width,
                  height, html_code, helper, options, profile):
         html_input = page.ui.inputs.d_range(page.inputs.get(html_code, value), min_val=min_val, max_val=max_val,
-                                            step=step,
-                                            width=(None, "%"), placeholder=placeholder, options=options)
+                                            step=step, width=(None, "%"), placeholder=placeholder, options=options)
         super(FieldRange, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options,
                                          profile)
         if icon is not None and html_input.options.output:
@@ -1430,7 +1428,7 @@ var %(cachedVar)s;
                source_event: str = None, on_ready: bool = False):
         """The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
 
-        `mozilla <hhttps://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event/>`_
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event/>`_
 
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage
@@ -1506,8 +1504,7 @@ class Search(Html.Html):
                                'position': 'absolute', 'vertical-align': 'top'})
         if options.get("groups") is not None:
             self.select = self.page.ui.select([{"value": g, "name": g} for g in options.get("groups")],
-                                              width=(200, 'px'),
-                                              html_code="%s_select" % html_code if html_code is not None else None)
+                                              width=(200, 'px'), html_code=self.sub_html_code("select"))
             self.select.style.clear_all(no_default=True)
             self.page.properties.css.add_text('''
 .bootstrap-select .btn:focus{

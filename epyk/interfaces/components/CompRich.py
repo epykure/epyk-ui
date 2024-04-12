@@ -138,7 +138,7 @@ class Rich:
         html.Html.set_component_skin(html_traffic)
         return html_traffic
 
-    def info(self, text: str = None, options: types.OPTION_TYPE = None,
+    def info(self, text: str = None, options: types.OPTION_TYPE = None, html_code: str = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Help:
         """Display an info icon with a tooltip.
 
@@ -159,8 +159,10 @@ class Rich:
         :param text: Optional. The content of the tooltip
         :param profile: Optional. A boolean to store the performances for each components
         :param options: Optional. Specific Python options available for this component
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
         """
-        html_help = html.HtmlOthers.Help(self.page, text, width=(10, "px"), profile=profile, options=options or {})
+        html_help = html.HtmlOthers.Help(self.page, text, width=(10, "px"), profile=profile, options=options or {},
+                                         html_code=html_code)
         html.Html.set_component_skin(html_help)
         return html_help
 

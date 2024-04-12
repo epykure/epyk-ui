@@ -50,7 +50,7 @@ class HtmlNavBar(Html.Html):
     def __add__(self, component: Html.Html):
         """ Add items to the footer """
         if not hasattr(component, 'options'):
-            component = self.page.ui.div(component)
+            component = self.page.ui.div(component, html_code=self.sub_html_code("menu", auto_inc=True))
             component.style.add_classes.div.color_hover()
             component.style.css.user_select = "none"
             component.style.css.margin_left = 5
@@ -97,7 +97,7 @@ class HtmlNavBar(Html.Html):
         :param with_css_cls: Add the default hover CSS class to the component
         """
         if isinstance(component, list):
-            component = self.page.ui.div(component)
+            component = self.page.ui.div(component, html_code=self.sub_html_code("menu", auto_inc=True))
             component.style.clear(no_default=True)
             component.style.css.margin_left = 5
             component.style.css.user_select = "none"
@@ -108,7 +108,7 @@ class HtmlNavBar(Html.Html):
                 component.css(css)
 
         if not hasattr(component, 'options'):
-            component = self.page.ui.text(component, width=("auto", ''))
+            component = self.page.ui.text(component, width=("auto", ''), html_code=self.sub_html_code("menu", auto_inc=True))
             component.style.css.margin_left = 5
             component.style.css.user_select = "none"
             component.style.css.margin_right = 5
@@ -120,7 +120,8 @@ class HtmlNavBar(Html.Html):
             component.style.add_classes.div.color_hover()
         component.style.css.color = self.page.theme.greys[self.page.theme.index]
         if not hasattr(self, '_right'):
-            self._right = self.page.ui.div(width=("auto", ''), height=(100, "%"))
+            self._right = self.page.ui.div(
+                width=("auto", ''), height=(100, "%"), html_code=self.sub_html_code("right", auto_inc=True))
             self._right.style.css.display = 'inline-block'
             self._right.style.css.float = 'right'
             self._right.style.css.text_transform = 'uppercase'
@@ -149,7 +150,7 @@ class HtmlNavBar(Html.Html):
         :param text: The link to be added to the navbar
         """
         if not hasattr(text, 'options'):
-            text = self.page.ui.text(text)
+            text = self.page.ui.text(text, html_code=self.sub_html_code("menu", auto_inc=True))
             text.style.css.height = "100%"
             text.style.css.vertical_align = 'middle'
         self.__add__(text)
@@ -188,13 +189,13 @@ class HtmlFooter(Html.Html):
         self.style.css.color = page.theme.greys[6]
 
     @property
-    def sections(self):
+    def sections(self) -> list:
         if not self.__col_lst:
             self.__col_lst = []
         return self.__col_lst
 
     @sections.setter
-    def sections(self, col_lst):
+    def sections(self, col_lst: list):
         """
 
         :param col_lst:
@@ -211,7 +212,7 @@ class HtmlFooter(Html.Html):
     def __add__(self, component: Union[Html.Html, str]):
         """ Add items to the footer """
         if not hasattr(component, 'options'):
-            component = self.page.ui.div(component)
+            component = self.page.ui.div(component, html_code=self.sub_html_code("panel", auto_inc=True))
         # Has to be defined here otherwise it is set to late
         component.options.managed = False
         self.val.append(component)

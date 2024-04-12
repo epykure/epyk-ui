@@ -15,9 +15,11 @@ class Popup(Html.Html):
     tag = "div"
 
     def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: tuple, height: tuple,
-                 options: Optional[dict], profile: Optional[Union[bool, dict]], verbose: bool = False):
+                 options: Optional[dict], profile: Optional[Union[bool, dict]], verbose: bool = False,
+                 html_code: Optional[str] = None):
         super(Popup, self).__init__(
-            page, [], css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
+            page, [], html_code=html_code, css_attrs={"width": width, "height": height}, profile=profile,
+            verbose=verbose)
         self.__options = OptPanel.OptionPopup(self, options)
         if self.options.background:
             bg_color = Colors.rgba(*Colors.getHexToRgb(page.theme.greys[-1]), 0.4)
@@ -27,8 +29,8 @@ class Popup(Html.Html):
         else:
             self.css(
                 {'position': 'absolute', 'margin': 0, 'padding': 0, 'display': 'none', 'z-index': self.options.z_index})
-        self.set_attrs(name="name", value="report_popup")
-        self.window = self.page.ui.div(width="auto")
+        self.set_attrs(name="name", value=self.options.popup_name)
+        self.window = self.page.ui.div(width="auto", html_code=self.sub_html_code("window"))
         self.window.options.managed = False
         self.window.set_attrs(name="tabindex", value=0)
         self.window.style.css.padding = 10
@@ -39,7 +41,8 @@ class Popup(Html.Html):
         self.window.style.css.transform = "translate(-50%, -50%)"
         self.window.style.css.position = "fixed"
         self.window.style.css.background = page.theme.greys[0]
-        self.container = page.ui.div(components, width=(100, '%'), height=(100, '%'))
+        self.container = page.ui.div(
+            components, width=(100, '%'), height=(100, '%'), html_code=self.sub_html_code("parent"))
         self.container.options.managed = False
         self.container.style.css.position = 'relative'
         self.container.style.css.overflow = "auto"
@@ -53,8 +56,8 @@ class Popup(Html.Html):
     def js(self) -> JsHtmlPopup.JsHtmlPopup:
         """Specific JavaScript features for the popup component.
 
-    :return: A Javascript object
-    """
+        :return: A Javascript object
+        """
         if self._js is None:
             self._js = JsHtmlPopup.JsHtmlPopup(page=self.page, component=self)
         return self._js
@@ -99,7 +102,9 @@ class Popup(Html.Html):
         :param options: Specific Python options available for this component
         """
         if not hasattr(text, 'options'):
-            title = self.page.ui.title(text, align=align, level=level, options=options)
+            title = self.page.ui.title(
+                text, align=align, level=level, options=options,
+                html_code=self.sub_html_code("title", auto_inc=True))
             title.style.css.margin_top = -3
         else:
             title = text
