@@ -16,13 +16,11 @@ class Event(primitives.JsDataModel):
         """
 
         :param js_code:
-        :return:
         """
         return JsObject.JsObject.get(js_code)
 
     def createEvent(self, js_code: str, event_type: Union[str, primitives.JsDataModel] = 'Event'):
-        """
-        Create a bespoke JavaScript event.
+        """Create a bespoke JavaScript event.
 
         Usages::
 
@@ -36,9 +34,7 @@ class Event(primitives.JsDataModel):
             div2.dom.dispatchEvent(pk.js_std.getEvent('test_event'))
           ])
 
-        Related Pages:
-
-          https://developer.mozilla.org/fr/docs/Web/API/Document/createEvent
+        `mozilla <https://developer.mozilla.org/fr/docs/Web/API/Document/createEvent>`_
 
         :param js_code:
         :param event_type:
@@ -49,12 +45,10 @@ class Event(primitives.JsDataModel):
     def initEvent(self, name: Union[str, primitives.JsDataModel], js_code: str = None,
                   bubbles: Union[bool, primitives.JsDataModel] = True,
                   cancelable: Union[bool, primitives.JsDataModel] = True):
-        """
-        The Event.initEvent() method is used to initialize the value of an event created using Document.createEvent().
+        """The Event.initEvent() method is used to initialize the value of an event created using
+        Document.createEvent().
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/Event/initEvent
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Event/initEvent>`_
 
         :param name: Optional.
         :param js_code: Optional.
@@ -68,37 +62,28 @@ class Event(primitives.JsDataModel):
         return JsObject.JsObject.get("%s.initEvent(%s, %s, %s)" % (js_code, name, bubbles, cancelable))
 
     def cancelBubble(self):
-        """
-        The cancelBubble() method prevents the event-flow from bubbling up to parent elements.
+        """The cancelBubble() method prevents the event-flow from bubbling up to parent elements.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_cancelbubble.asp
+        `w3schools <https://www.w3schools.com/jsref/event_cancelbubble.asp>`_
         """
         return JsString.JsString("event.cancelBubble = true")
 
     def target(self):
-        """
-        Returns the element that triggered the event
+        """Returns the element that triggered the event
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_target.asp
+        `w3schools <https://www.w3schools.com/jsref/event_target.asp>`_
         """
         return JsString.JsString("event.target")
 
     @property
     def dataTransfer(self):
-        """
-        The DataTransfer object is used to hold the data that is being dragged during a drag and drop operation.
+        """The DataTransfer object is used to hold the data that is being dragged during a drag and drop operation.
         It may hold one or more data items, each of one or more data types. For more information about drag and drop,
         see HTML Drag and Drop API.
 
         This object is available from the dataTransfer property of all drag events.
 
-        Related Pages:
-
-          https://developer.mozilla.org/fr/docs/Web/API/DataTransfer
+        `mozilla <https://developer.mozilla.org/fr/docs/Web/API/DataTransfer>`_
         """
         from epyk.core.js.objects.JsData import JsDataTransfer
 
@@ -106,16 +91,13 @@ class Event(primitives.JsDataModel):
 
     @property
     def clipboardData(self):
-        """
-        The ClipboardEvent.clipboardData property holds a DataTransfer object, which can be used:
+        """The ClipboardEvent.clipboardData property holds a DataTransfer object, which can be used:
 
           - to specify what data should be put into the clipboard from the cut and copy event handlers, typically with a
             setData(format, data) call;
           - to obtain the data to be pasted from the paste event handler, typically with a getData(format) call.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent/clipboardData
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/ClipboardEvent/clipboardData>`_
         """
         from epyk.core.js.objects.JsData import JsClipboardData
 
@@ -123,33 +105,25 @@ class Event(primitives.JsDataModel):
 
     @property
     def timeStamp(self):
-        """
-        Returns the time (in milliseconds relative to the epoch) at which the event was created.
+        """Returns the time (in milliseconds relative to the epoch) at which the event was created.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_timestamp.asp
+        `w3schools <https://www.w3schools.com/jsref/event_timestamp.asp>`_
         """
         return JsString.JsString("event.timeStamp", is_py_data=False)
 
     @property
     def defaultPrevented(self):
-        """
-        The defaultPrevented event property checks whether the preventDefault() method was called for the event.
+        """The defaultPrevented event property checks whether the preventDefault() method was called for the event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_defaultprevented.asp
+        `w3schools <https://www.w3schools.com/jsref/event_defaultprevented.asp>`_
         """
         return JsString.JsString("event.defaultPrevented", is_py_data=False)
 
     def preventDefault(self):
-        """
-        Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
+        """Cancels the event if it is cancelable, meaning that the default action that belongs to the event will not
+        occur.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_preventdefault.asp
+        `w3schools <https://www.w3schools.com/jsref/event_preventdefault.asp>`_
         """
         return JsString.JsString("event.preventDefault()", is_py_data=False)
 
@@ -157,61 +131,46 @@ class Event(primitives.JsDataModel):
         return JsObject.JsObject("event.%s" % items, is_py_data=False)
 
     def srcElement(self):
-        """
-        The deprecated Event.srcElement is an alias for the Event.target property. Use Event.target instead.
+        """The deprecated Event.srcElement is an alias for the Event.target property. Use Event.target instead.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/Event/srcElement
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Event/srcElement>`_
         """
         return JsObject.JsObject("event.srcElement()", is_py_data=False)
 
-    def stopImmediatePropagation(self):
-        """
-        The stopImmediatePropagation() method of the Event interface prevents other listeners of the same event from
+    def stopImmediatePropagation(self) -> JsString.JsString:
+        """The stopImmediatePropagation() method of the Event interface prevents other listeners of the same event from
         being called.
 
-        Related Pages:
-
-         https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Event/stopImmediatePropagation>`_
         """
         return JsString.JsString("event.stopImmediatePropagation()", is_py_data=False)
 
-    def stopPropagation(self):
-        """
-        Prevents further propagation of an event during event flow.
+    def stopPropagation(self) -> JsString.JsString:
+        """Prevents further propagation of an event during event flow.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_stoppropagation.asp
+        `w3schools <https://www.w3schools.com/jsref/event_stoppropagation.asp>`_
         """
         return JsString.JsString("event.stopPropagation()", is_py_data=False)
 
-    def toStr(self):
+    def toStr(self) -> str:
         return "event"
 
 
 class UIEvent(Event):
 
     @property
-    def detail(self):
-        """
-        The detail property returns a number with details about the event.
+    def detail(self) -> JsNumber.JsNumber:
+        """The detail property returns a number with details about the event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_detail.asp
+        `w3schools <https://www.w3schools.com/jsref/event_detail.asp>`_
         """
         return JsNumber.JsNumber("event.detail", is_py_data=False)
 
     @property
     def view(self):
-        """
-        The view event property returns a reference to the Window object where the event occured.
+        """The view event property returns a reference to the Window object where the event occured.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_view.asp
+        `w3schools <https://www.w3schools.com/jsref/event_view.asp>`_
         """
         from epyk.core.js.JsWindow import JsWindow
         return JsWindow()
@@ -220,121 +179,91 @@ class UIEvent(Event):
 class KeyboardEvent(UIEvent):
 
     @property
-    def altKey(self):
-        """
-        The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a key
-        event was triggered.
+    def altKey(self) -> JsBoolean.JsBoolean:
+        """The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed when a
+        key event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_altkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_altkey.asp>`_
         """
         return JsBoolean.JsBoolean.get(js_code="event.altKey")
 
     @property
-    def charCode(self):
-        """
-        The charCode property returns the Unicode character code of the key that triggered the onkeypress event.
+    def charCode(self) -> JsString.JsString:
+        """The charCode property returns the Unicode character code of the key that triggered the onkeypress event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_charcode.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_charcode.asp>`_
         """
         return JsString.JsString.get(js_code="event.charCode")
 
     @property
     @JsUtils.incompatibleBrowser(["Internet Explorer"])
-    def code(self):
-        """
-        The code property returns the key that triggered the event.
+    def code(self) -> JsString.JsString:
+        """The code property returns the key that triggered the event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_code.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_code.asp>`_
         """
         return JsString.JsString("event.code", is_py_data=False)
 
     @property
-    def ctrlKey(self):
-        """
-        The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a
+    def ctrlKey(self) -> JsBoolean.JsBoolean:
+        """The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed when a
         key event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_ctrlkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_ctrlkey.asp>`_
         """
         return JsBoolean.JsBoolean("event.ctrlKey", is_py_data=False)
 
     @property
     @JsUtils.incompatibleBrowser(["Safari"])
-    def key(self):
-        """
-        The getModifierState() method returns true if the specified modifier key was pressed, or activated.
+    def key(self) -> JsString.JsString:
+        """The getModifierState() method returns true if the specified modifier key was pressed, or activated.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_key.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_key.asp>`_
         """
         return JsString.JsString("event.key", is_py_data=False)
 
     @property
-    def keyCode(self):
-        """
-        The keyCode property returns the Unicode character code of the key that triggered the onkeypress event,
+    def keyCode(self) -> JsString.JsString:
+        """The keyCode property returns the Unicode character code of the key that triggered the onkeypress event,
         or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_keycode.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_keycode.asp>`_
         """
         return JsString.JsString("event.keyCode", is_py_data=False)
 
     @property
     @JsUtils.incompatibleBrowser(["Safari"])
-    def location(self):
-        """
-        The location property returns a number that indicates the location of a key on the keyboard or device.
+    def location(self) -> JsNumber.JsNumber:
+        """The location property returns a number that indicates the location of a key on the keyboard or device.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_location.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_location.asp>`_
         """
         return JsNumber.JsNumber("event.location", is_py_data=False)
 
     @property
-    def metaKey(self):
-        """
-        The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
+    def metaKey(self) -> JsString.JsString:
+        """The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
         when a key event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_metakey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_metakey.asp>`_
         """
         return JsString.JsString("event.metaKey", is_py_data=False)
 
     @property
-    def shiftKey(self):
-        """
-        The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when a
-        key event was triggered.
+    def shiftKey(self) -> JsBoolean.JsBoolean:
+        """The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed when
+        a key event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_shiftkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_shiftkey.asp>`_
         """
         return JsBoolean.JsBoolean.get(js_code="event.shiftKey")
 
     @property
-    def which(self):
-        """
-        The which property returns the Unicode character code of the key that triggered the onkeypress event,
+    def which(self) -> JsNumber.JsNumber:
+        """The which property returns the Unicode character code of the key that triggered the onkeypress event,
         or the Unicode key code of the key that triggered the onkeydown or onkeyup event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_key_which.asp
+        `w3schools <https://www.w3schools.com/jsref/event_key_which.asp>`_
         """
         return JsNumber.JsNumber("event.which", is_py_data=False)
 
@@ -342,43 +271,35 @@ class KeyboardEvent(UIEvent):
 class MouseEvent(UIEvent):
 
     @property
-    def altKey(self):
-        """
-        The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
+    def altKey(self) -> JsBoolean.JsBoolean:
+        """The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
         when a key event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_altkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_altkey.asp>`_
         """
         return JsBoolean.JsBoolean.get(js_code="event.altKey")
 
     @property
-    def button(self):
-        """
-        The button property returns a number that indicates which mouse button was pressed when a mouse event was triggered.
+    def button(self) -> JsNumber.JsNumber:
+        """The button property returns a number that indicates which mouse button was pressed when a mouse event was
+        triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_button.asp
+        `w3schools <https://www.w3schools.com/jsref/event_button.asp>`_
         """
         return JsNumber.JsNumber("event.button", is_py_data=False)
 
     @property
     @JsUtils.incompatibleBrowser(["Safari"])
-    def buttons(self):
-        """
-        The buttons property returns a number that indicates which mouse button or mouse buttons were pressed
+    def buttons(self) -> JsNumber.JsNumber:
+        """The buttons property returns a number that indicates which mouse button or mouse buttons were pressed
         when a mouse event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_buttons.asp
+        `w3schools <https://www.w3schools.com/jsref/event_buttons.asp>`_
         """
         return JsNumber.JsNumber("event.buttons", is_py_data=False)
 
     @property
-    def isTrusted(self):
+    def isTrusted(self) -> JsBoolean.JsBoolean:
         """
 
         :return:
@@ -387,226 +308,172 @@ class MouseEvent(UIEvent):
 
     @property
     def clientX(self):
-        """
-        Returns the horizontal coordinate of the mouse pointer, relative to the current window,
-        when the mouse event was triggered
+        """Returns the horizontal coordinate of the mouse pointer, relative to the current window, when the mouse event
+        was triggered
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_clientx.asp
+        `w3schools <https://www.w3schools.com/jsref/event_clientx.asp>`_
         """
         return JsNumber.JsNumber.get(js_code="event.clientX")
 
     @property
-    def clientY(self):
-        """
-        The clientY property returns the vertical coordinate (according to the client area) of the mouse pointer
+    def clientY(self) -> JsNumber.JsNumber:
+        """The clientY property returns the vertical coordinate (according to the client area) of the mouse pointer
         when a mouse event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_clienty.asp
+        `w3schools <https://www.w3schools.com/jsref/event_clienty.asp>`_
         """
         return JsNumber.JsNumber.get(js_code="event.clientY")
 
     @property
-    def pageX(self):
-        """
-
-        :return:
-        """
+    def pageX(self) -> JsNumber.JsNumber:
+        """ """
         return JsNumber.JsNumber.get(js_code="event.pageX")
 
     @property
-    def pageY(self):
-        """
-
-        :return:
-        """
+    def pageY(self) -> JsNumber.JsNumber:
+        """ """
         return JsNumber.JsNumber.get(js_code="event.pageY")
 
     @property
-    def offsetX(self):
-        """
-        Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
-        """
+    def offsetX(self) -> JsNumber.JsNumber:
+        """Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target
+        element"""
         return JsNumber.JsNumber.get(js_code="event.offsetX")
 
     @property
-    def offsetY(self):
-        """
-        Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target element.
-        """
+    def offsetY(self) -> JsNumber.JsNumber:
+        """Returns the horizontal coordinate of the mouse pointer relative to the position of the edge of the target
+        element"""
         return JsNumber.JsNumber.get(js_code="event.offsetY")
 
-    def getField(self, field_name: str):
+    def getField(self, field_name: str) -> JsObject.JsObject:
         return JsObject.JsObject.get("event.%s" % field_name)
 
     @property
-    def metaKey(self):
-        """
-        The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
+    def metaKey(self) -> JsString.JsString:
+        """The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
         when a key event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_metakey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_metakey.asp>`_
         """
         return JsString.JsString("event.metaKey", is_py_data=False)
 
     @property
-    def shiftKey(self):
-        """
-        The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed
+    def shiftKey(self) -> JsBoolean.JsBoolean:
+        """The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed
         when a mouse event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_shiftkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_shiftkey.asp>`_
         """
         return JsBoolean.JsBoolean.get(js_code="event.shiftKey")
 
     @property
-    def ctrlKey(self):
-        """
-        The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed
+    def ctrlKey(self) -> JsBoolean.JsBoolean:
+        """The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed
         when a mouse event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_ctrlkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_ctrlkey.asp>`_
         """
         return JsBoolean.JsBoolean("event.ctrlKey", is_py_data=False)
 
     @property
-    def which(self):
-        """
-        The which property returns a number that indicates which mouse button was pressed when a mouse event was triggered.
+    def which(self) -> JsNumber.JsNumber:
+        """The which property returns a number that indicates which mouse button was pressed when a mouse event was
+        triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_which.asp
+        `w3schools <https://www.w3schools.com/jsref/event_which.asp>`_
         """
         return JsNumber.JsNumber("event.which", is_py_data=False)
 
     @property
-    def movementX(self):
-        """
-        Returns the horizontal coordinate of the mouse pointer relative to the position of the last mousemove event.
+    def movementX(self) -> JsNumber.JsNumber:
+        """Returns the horizontal coordinate of the mouse pointer relative to the position of the last mousemove event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/obj_mouseevent.asp
+        `w3schools <https://www.w3schools.com/jsref/obj_mouseevent.asp>`_
         """
         return JsNumber.JsNumber.get(js_code="event.movementX")
 
     @property
-    def movementY(self):
-        """
-        Returns the vertical coordinate of the mouse pointer relative to the position of the last mousemove event.
+    def movementY(self) -> JsNumber.JsNumber:
+        """Returns the vertical coordinate of the mouse pointer relative to the position of the last mousemove event.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/obj_mouseevent.asp
+        `w3schools <https://www.w3schools.com/jsref/obj_mouseevent.asp>`_
         """
         return JsNumber.JsNumber.get(js_code="event.movementY")
 
     @property
-    def screenX(self):
-        """
-        Returns the horizontal coordinate of the mouse pointer, relative to the screen, when an event was triggered.
+    def screenX(self) -> JsNumber.JsNumber:
+        """Returns the horizontal coordinate of the mouse pointer, relative to the screen, when an event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/obj_mouseevent.asp
+        `w3schools <https://www.w3schools.com/jsref/obj_mouseevent.asp>`_
         """
         return JsNumber.JsNumber.get(js_code="event.screenX")
 
     @property
-    def screenY(self):
-        """
-        Returns the vertical coordinate of the mouse pointer, relative to the screen, when an event was triggered.
+    def screenY(self) -> JsNumber.JsNumber:
+        """Returns the vertical coordinate of the mouse pointer, relative to the screen, when an event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/obj_mouseevent.asp
+        `w3schools <https://www.w3schools.com/jsref/obj_mouseevent.asp>`_
         """
         return JsNumber.JsNumber.get(js_code="event.screenY")
 
-    def toStr(self):
+    def toStr(self) -> JsObject.JsObject:
         return JsObject.JsObject.get("event")
 
 
 class TouchEvent(UIEvent):
 
     @property
-    def altKey(self):
-        """
-        The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
+    def altKey(self) -> JsBoolean.JsBoolean:
+        """The altKey property returns a Boolean value that indicates whether or not the "ALT" key was pressed
         when a touch event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_touch_altkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_touch_altkey.asp>`_
         """
         return JsBoolean.JsBoolean.get(js_code="event.altKey")
 
     @property
-    def ctrlKey(self):
-        """
-        The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed
+    def ctrlKey(self) -> JsBoolean.JsBoolean:
+        """The ctrlKey property returns a Boolean value that indicates whether or not the "CTRL" key was pressed
         when a touch event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_touch_ctrlkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_touch_ctrlkey.asp>`_
         """
         return JsBoolean.JsBoolean("event.ctrlKey", is_py_data=False)
 
     @property
-    def metaKey(self):
-        """
-        The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
+    def metaKey(self) -> JsString.JsString:
+        """The metaKey property returns a Boolean value that indicates whether or not the "META" key was pressed
         when a touch event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_touch_metakey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_touch_metakey.asp>`_
         """
         return JsString.JsString("event.metaKey", is_py_data=False)
 
     @property
-    def shiftKey(self):
-        """
-        The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed
+    def shiftKey(self) -> JsBoolean.JsBoolean:
+        """The shiftKey property returns a Boolean value that indicates whether or not the "SHIFT" key was pressed
         when a touch event was triggered.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_touch_shiftkey.asp
+        `w3schools <https://www.w3schools.com/jsref/event_touch_shiftkey.asp>`_
         """
         return JsBoolean.JsBoolean.get(js_code="event.shiftKey")
 
     @property
-    def targetTouches(self):
-        """
-        The targetTouches property returns an array of Touch objects, one for each finger that is touching the
+    def targetTouches(self) -> JsArray.JsArray:
+        """The targetTouches property returns an array of Touch objects, one for each finger that is touching the
         current target element.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_touch_targettouches.asp
+        `w3schools <https://www.w3schools.com/jsref/event_touch_targettouches.asp>`_
         """
         return JsArray.JsArray("event.shiftKey", is_py_data=False)
 
     @property
-    def touches(self):
-        """
-        The touches property returns an array of Touch objects, one for each finger that is currently touching the surface.
+    def touches(self) -> JsArray.JsArray:
+        """The touches property returns an array of Touch objects, one for each finger that is currently touching the
+        surface.
 
-        Related Pages:
-
-          https://www.w3schools.com/jsref/event_touch_touches.asp
+        `w3schools <https://www.w3schools.com/jsref/event_touch_touches.asp>`_
         """
         return JsArray.JsArray("event.shiftKey", is_py_data=False)
 

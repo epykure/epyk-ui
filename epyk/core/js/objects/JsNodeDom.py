@@ -1859,6 +1859,10 @@ class JsDoms(JsObject.JsObject):
         """
         return JsString.JsString("%s.offsetTop" % self.varId, is_py_data=False)
 
+    @property
+    def nextElementSibling(self):
+      return JsDoms("%s.nextElementSibling" % self.varId)
+
     def contentEditable(self, flag: types.JS_DATA_TYPES):
         """
         Set content editable
@@ -1917,6 +1921,11 @@ class JsDoms(JsObject.JsObject):
         """
         return JsDoms("%s.cloneNode(%s)" % (self.varId, JsUtils.jsConvertData(deep, None)))
 
+    def replaceWith(self, dom = None):
+        if not dom:
+            dom = self.cloneNode()
+        return JsDoms("%s.replaceWith(%s)" % (self.varId, JsUtils.jsConvertData(dom, None)))
+
     def remove(self):
         """
         Remove the current dom object from the page
@@ -1957,6 +1966,24 @@ class JsDoms(JsObject.JsObject):
         :return: A Node object, representing the removed node, or null if the node does not exist.
         """
         return JsDoms("%s.removeChild(%s)" % (self.varId, dom))
+
+    def removeEventListener(self, event_type: str, event_handler: types.JS_FUNCS_TYPES = None, flag: bool = False):
+      """
+
+      :param event_type:
+      :param event_handler:
+      :param flag:
+      :return:
+      """
+      if event_handler:
+        self._js.append("%s.removeEventListener(%s, %s, %s)" % (
+          self.varId, JsUtils.jsConvertData(event_type, None),
+          JsUtils.jsConvertData(event_handler, None), JsUtils.jsConvertData(flag, None)
+        ))
+      else:
+        self._js.append("%(id)s.removeEventListener(%(type)s, %(id)s.%(type)s, %(f)s)" % {
+          "id": self.varId, "type": JsUtils.jsConvertData(event_type, None), "f": JsUtils.jsConvertData(flag, None)})
+      return self
 
     def appendChild(self, dom: types.JS_DATA_TYPES):
         """
@@ -2086,6 +2113,13 @@ class JsDoms(JsObject.JsObject):
         """
         return JsObject.JsObject("%s.%s" % (self.varId, frg))
 
+    def getElementsByName(self, name: str = None) -> 'JsDomsList':
+      name = name or self.component.attr["name"]
+      return JsDomsList("document.getElementsByName(%s)" % JsUtils.jsConvertData(name, None))
+
+    def focus(self):
+      return JsString.JsString.get("%s?.focus()" % self.varId)
+
 
 class JsDomsList(JsArray.JsArray):
 
@@ -2174,6 +2208,32 @@ class JsDomsList(JsArray.JsArray):
             self._js.append("for(let e of %s){ e.setAttribute('%s', %s) }" % (
                 self.varId, value, JsUtils.jsConvertData(data, None)))
         return self
+
+    def setAttribute(self, attribute_name: types.JS_DATA_TYPES, attribute_value: Any):
+        """
+        The setAttribute() method adds the specified attribute to an element, and gives it the specified value.
+
+        Usage::
+
+          select.label.dom.setAttribute("title", "Tooltip")
+
+        Related Pages:
+
+          https://www.w3schools.com/jsref/met_element_setattribute.asp
+
+        :param attribute_name: The name of the attribute you want to add
+        :param attribute_value: The value of the attribute you want to add
+        """
+        attribute_name = JsUtils.jsConvertData(attribute_name, None)
+        return JsUtils.jsWrap("%s.forEach(function(t){t.setAttribute(%s, %s)})" % (
+            self.varId, attribute_name, JsUtils.jsConvertData(attribute_value, None)))
+
+    def css(self, attr: types.JS_DATA_TYPES, data: types.JS_DATA_TYPES = None, duration: int = None):
+
+      if data:
+        #attr = JsUtils.jsConvertData(attr, None)
+        data = JsUtils.jsConvertData(data, None)
+        return JsUtils.jsWrap("%s.forEach(function(t){t.style.%s = %s})" % (self.varId, attr, data))
 
     def __getitem__(self, index: int):
         """
