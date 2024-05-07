@@ -599,8 +599,12 @@ the same signature and return).
         """
         if html_code:
             value = "%s_%s" % (html_code, suffix)
-        else:
+        elif hasattr(self, "html_code"):
+            # Input components might not have this already set
             value = "%s_%s" % (self.html_code, suffix)
+        else:
+            return None
+
         if auto_inc:
             i = 0
             result = "%s_%s" % (value, i)

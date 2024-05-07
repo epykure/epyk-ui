@@ -28,6 +28,10 @@ def clean_opt(inputs: dict, options: dict) -> dict:
     :param options: New chart options
     """
     if inputs:
+        if "params" in inputs:
+            options["_ek"]["params"] = inputs["params"]
+            del inputs["params"]
+
         if "series" in inputs:
             options["_ek"]["series"] = inputs["series"]
             del inputs["series"]
@@ -276,8 +280,9 @@ class ECharts:
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
-        chart.options.xAxis.type = "value"
         chart.options.yAxis.type = "value"
+        chart.options.xAxis.type = "value"
+        chart.builder_name = "EkScatterECharts"
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
             for i, dataset in enumerate(data['datasets']):

@@ -857,8 +857,9 @@ class FieldInput(Field):
 
     def __init__(self, page: primitives.PageModel, value, label, placeholder, icon, width, height, html_code,
                  helper, options, profile):
-        html_input = page.ui.inputs.input(page.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
-                                          html_code=self.sub_html_code("input"), options=options)
+        html_input = page.ui.inputs.input(
+            page.inputs.get(html_code, value), width=(None, "%"), placeholder=placeholder,
+            html_code=self.sub_html_code("input", html_code=html_code), options=options)
         super(FieldInput, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options,
                                          profile)
 

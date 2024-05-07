@@ -342,6 +342,14 @@ class OptionAxis(Options):
         self._config(val)
 
     @property
+    def scale(self) -> bool:
+        return self._config_get()
+
+    @scale.setter
+    def scale(self, flag: bool):
+        self._config(flag)
+
+    @property
     def show(self) -> bool:
         return self._config_get()
 
