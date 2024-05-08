@@ -130,3 +130,9 @@ class ECharts(JsPackage):
         `ECharts <https://echarts.apache.org/en/api.html#echartsInstance.dispose>`_
         """
         return JsUtils.jsWrap("echarts.dispose()" % self.varName)
+
+    def showLoading(self):
+        return JsUtils.jsWrap("%s.showLoading()" % self.varName)
+
+    def hideLoading(self):
+        return JsUtils.jsWrap("%s.hideLoading()" % self.varName)
