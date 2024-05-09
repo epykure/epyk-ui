@@ -26,7 +26,7 @@ class Options(DataClass):
                  page: primitives.PageModel = None):
         super(Options, self).__init__(component, attrs, options, page=page)
         self.js_type, self.__config_sub_levels, self.__config_sub__enum_levels = {}, set(), set()
-        self.value_enums = {}
+        self.value_enums, self.attrs_not_defined = {}, {}
         # By default, it is the component dictionary
         self.js_tree = self.component._jsStyles if js_tree is None else js_tree
         self.js = None
@@ -35,12 +35,13 @@ class Options(DataClass):
             setattr(self, c, getattr(self, c))
         if attrs is not None:
             for k, v in attrs.items():
+                attr_path = []
                 if hasattr(self, k):
-                    self._try_setattr(self, k, v)
+                    self._try_setattr(self, k, v, attr_path=attr_path)
                 else:
                     self.js_tree[k] = v
 
-    def _try_setattr(self, opt, field, value):
+    def _try_setattr(self, opt, field, value, attr_path: list):
         """Try to set a specific value for a given field to the option definition.
 
         :param opt: Option object
@@ -48,12 +49,25 @@ class Options(DataClass):
         :param value: value to set for the specified field
         """
         try:
+            if not hasattr(opt, field):
+                self.attrs_not_defined[opt] = (field, value)
+            attr_path.append(field)
             setattr(opt, field, value)
         except AttributeError:
             if isinstance(value, dict):
                 new_opt = getattr(opt, field)
                 for k, v in value.items():
-                    self._try_setattr(new_opt, k, v)
+                    self._try_setattr(new_opt, k, v, list(attr_path))
+            else:
+                print(field)
+
+    def set_undefined(self):
+        """ Force the option to set all attributes for the JavaScript configuration """
+        for k, v in self.attrs_not_defined.items():
+            try:
+                k.js_tree[v[0]] = v[1]
+            except:
+                print("Error with %s" % v[0])
 
     def set_defaults(self, attrs_path: List[tuple]):
         """

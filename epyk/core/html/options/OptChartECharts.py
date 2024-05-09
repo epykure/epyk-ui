@@ -194,12 +194,45 @@ class OptionAxisTick(Options):
 class OptionAxisLabel(Options):
 
     @property
+    def interval(self) -> int:
+        return self._config_get()
+
+    @interval.setter
+    def interval(self, val: int):
+        self._config(val)
+
+    @property
+    def overflow(self) -> str:
+        return self._config_get()
+
+    @overflow.setter
+    def overflow(self, val: str):
+        self._config(val)
+
+    @property
+    def rotate(self) -> int:
+        return self._config_get()
+
+    @rotate.setter
+    def rotate(self, val: int):
+        self._config(val)
+
+    @property
     def show(self) -> bool:
         return self._config_get()
 
     @show.setter
     def show(self, val: bool):
         self._config(val)
+
+    @property
+    def width(self) -> int:
+        return self._config_get()
+
+    @width.setter
+    def width(self, val: int):
+        self._config(val)
+
 
 
 class OptionSplitArea(Options):

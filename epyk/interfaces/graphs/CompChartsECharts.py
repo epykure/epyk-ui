@@ -101,7 +101,7 @@ class ECharts:
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
-        chart.options.yAxis.type = 'value'
+        chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", 'value')
         chart.options.tooltip.trigger = 'axis'
         if data:
             chart.options.xAxis.data = data["labels"]
@@ -123,11 +123,11 @@ class ECharts:
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
-        chart.options.yAxis.type = 'value'
+        chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", 'value')
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
             chart.options.xAxis.data = data["labels"]
-            chart.options.xAxis.type = "category"
+            chart.options.xAxis.type = dfl_options.get("xAxis", {}).get("type", 'category')
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
@@ -228,9 +228,9 @@ class ECharts:
         dfl_options = clean_opt(options, {"_ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
-        chart.options.yAxis.type = "category"
-        chart.options.xAxis.type = "value"
-        chart.options.xAxis.position = "top"
+        chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", "category")
+        chart.options.xAxis.type = dfl_options.get("xAxis", {}).get("type", "value")
+        chart.options.xAxis.position = dfl_options.get("xAxis", {}).get("position", "top")
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
@@ -280,8 +280,8 @@ class ECharts:
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
-        chart.options.yAxis.type = "value"
-        chart.options.xAxis.type = "value"
+        chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", "value")
+        chart.options.xAxis.type = dfl_options.get("xAxis", {}).get("type", "value")
         chart.builder_name = "EkScatterECharts"
         chart.options.toolbox.feature.saveAsImage = {}
         if data:

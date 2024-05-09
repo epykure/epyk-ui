@@ -68,7 +68,7 @@ class AgGrid:
         table = html_tables.HtmlTableAgGrid.Table(self.page, records, width, height, html_code, table_options_dfls,
                                                   profile)
         for c in cols + rows:
-            table.add_column(c)
+            table.add_column(c, title=c.capitalize())
         if height[0] == "auto":
             table.options.onGridReady(["param.api.setDomLayout('autoHeight')"])
         return table
