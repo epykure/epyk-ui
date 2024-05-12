@@ -458,6 +458,73 @@ class OptionTooltip(Options):
         self._config(val)
 
 
+class OptionStyleNormal(Options):
+
+    @property
+    def areaColor(self):
+        return self._config_get()
+
+    @areaColor.setter
+    def areaColor(self, val: str):
+        self._config(val)
+
+    @property
+    def borderColor(self) -> str:
+        return self._config_get()
+
+    @borderColor.setter
+    def borderColor(self, val: str):
+        self._config(val)
+
+    @property
+    def borderWidth(self) -> int:
+        return self._config_get()
+
+    @borderWidth.setter
+    def borderWidth(self, val: int):
+        self._config(val)
+
+    @property
+    def color(self) -> str:
+        return self._config_get()
+
+    @color.setter
+    def color(self, val: str):
+        self._config(val)
+
+    @property
+    def fontSize(self) -> str:
+        return self._config_get()
+
+    @fontSize.setter
+    def fontSize(self, val: str):
+        self._config(val)
+
+    @property
+    def shadowOffsetX(self) -> int:
+        return self._config_get()
+
+    @shadowOffsetX.setter
+    def shadowOffsetX(self, val: int):
+        self._config(val)
+
+    @property
+    def shadowOffsetY(self) -> int:
+        return self._config_get()
+
+    @shadowOffsetY.setter
+    def shadowOffsetY(self, val: int):
+        self._config(val)
+
+    @property
+    def show(self) -> bool:
+        return self._config_get()
+
+    @show.setter
+    def show(self, val: bool):
+        self._config(val)
+
+
 class OptionItemStyle(Options):
 
     @property
@@ -483,6 +550,14 @@ class OptionItemStyle(Options):
     @borderWidth.setter
     def borderWidth(self, val: int):
         self._config(val)
+
+    @property
+    def emphasis(self) -> OptionStyleNormal:
+        return self._config_sub_data("emphasis", OptionEmphasis)
+
+    @property
+    def normal(self) -> OptionStyleNormal:
+        return self._config_sub_data("normal", OptionStyleNormal)
 
     @property
     def shadowBlur(self) -> int:
@@ -625,7 +700,7 @@ class OptionLLabelLine(Options):
         self._config(flag)
 
 
-class OptionEmphasis(Options):
+class OptionEmphasis(OptionStyleNormal):
 
     @property
     def focus(self):
@@ -1012,6 +1087,14 @@ class OptionToolbox(Options):
     def trigger(self, val: str):
         self._config(val)
 
+    @property
+    def triggerOn(self) -> str:
+        return self._config_get()
+
+    @triggerOn.setter
+    def triggerOn(self, val: str):
+        self._config(val)
+
 
 class EChartOptions(OptionsWithTemplates):
 
@@ -1147,7 +1230,7 @@ class OptionRadar(Options):
 class EChartRadarOptions(EChartOptions):
 
     @property
-    def radar(self) -> OptionGrid:
+    def radar(self) -> OptionRadar:
         """ """
         return self._config_sub_data("radar", OptionRadar)
 
@@ -1158,3 +1241,171 @@ class EChartTreeMapOptions(EChartOptions):
 
 class EChartSankeyOptions(EChartOptions):
     ...
+
+
+class OptionGeoLabel(Options):
+
+    @property
+    def emphasis(self) -> OptionEmphasis:
+        return self._config_sub_data("emphasis", OptionEmphasis)
+
+    @property
+    def normal(self) -> OptionStyleNormal:
+        return self._config_sub_data("normal", OptionStyleNormal)
+
+class OptionGeoScaleLimit(Options):
+
+    @property
+    def max(self) -> int:
+        return self._config_get()
+
+    @max.setter
+    def max(self, val: int):
+        self._config(val)
+
+    @property
+    def min(self) -> int:
+        return self._config_get()
+
+    @min.setter
+    def min(self, val: int):
+        self._config(val)
+
+
+class OptionGeo(Options):
+
+    @property
+    def label(self) -> OptionGeoLabel:
+        """ """
+        return self._config_sub_data("label", OptionGeoLabel)
+
+    @property
+    def map(self) -> str:
+        return self._config_get()
+
+    @map.setter
+    def map(self, val: str):
+        self._config(val)
+
+    @property
+    def roam(self) -> bool:
+        return self._config_get()
+
+    @roam.setter
+    def roam(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def scaleLimit(self) -> OptionGeoScaleLimit:
+        """ """
+        return self._config_sub_data("scaleLimit", OptionGeoScaleLimit)
+
+    @property
+    def silent(self) -> bool:
+        return self._config_get()
+
+    @silent.setter
+    def silent(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def zoom(self) -> bool:
+        return self._config_get()
+
+    @zoom.setter
+    def zoom(self, flag: bool):
+        self._config(flag)
+
+
+class OptionPostEffect(Options):
+
+    @property
+    def enable(self) -> bool:
+        return self._config_get()
+
+    @enable.setter
+    def enable(self, val: bool):
+        self._config(val)
+
+
+class OptionGeoSeries(OptionSeries):
+
+    @property
+    def blendMode(self) -> str:
+        return self._config_get()
+
+    @blendMode.setter
+    def blendMode(self, val: str):
+        self._config(val)
+
+    @property
+    def coordinateSystem(self) -> str:
+        return self._config_get()
+
+    @coordinateSystem.setter
+    def coordinateSystem(self, val: str):
+        self._config(val)
+
+    @property
+    def dimensions(self) -> list:
+        return self._config_get()
+
+    @dimensions.setter
+    def dimensions(self, val: list):
+        self._config(val)
+
+    @property
+    def geoIndex(self) -> int:
+        return self._config_get()
+
+    @geoIndex.setter
+    def geoIndex(self, val: int):
+        self._config(val)
+
+    @property
+    def large(self) -> bool:
+        return self._config_get()
+
+    @large.setter
+    def large(self, val: bool):
+        self._config(val)
+
+    @property
+    def postEffect(self) -> OptionPostEffect:
+        """ """
+        return self._config_sub_data("postEffect", OptionPostEffect)
+
+    @property
+    def progressive(self) -> int:
+        return self._config_get()
+
+    @progressive.setter
+    def progressive(self, val: int):
+        self._config(val)
+
+    @property
+    def zoomScale(self) -> float:
+        return self._config_get()
+
+    @zoomScale.setter
+    def zoomScale(self, val: float):
+        self._config(val)
+
+
+class EChartGeoOptions(EChartOptions):
+
+    @property
+    def geo(self) -> OptionGeo:
+        """ """
+        return self._config_sub_data("geo", OptionGeo)
+
+    @property
+    def series(self) -> OptionGeoSeries:
+        """ """
+        s = self._config_sub_data_enum("series", OptionGeoSeries)
+        i = len(self.js_tree["series"]) - 1 % len(self.js_tree["_ek"]['colors'])
+        if self.js_tree["_ek"]['chart']["type"] in ("pie", "radar"):
+            s.color = self.js_tree["_ek"]['colors']
+        else:
+            s.color = self.js_tree["_ek"]['colors'][i]
+        return s

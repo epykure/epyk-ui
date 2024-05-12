@@ -6,6 +6,7 @@ from epyk.interfaces.geo import CompGeoGoogle
 from epyk.interfaces.geo import CompGeoLeaflet
 from epyk.interfaces.geo import CompGeoD3
 from epyk.interfaces.geo import CompGeoMapboxGl
+from epyk.interfaces.geo import CompGeoECharts
 
 
 class Geo:
@@ -15,14 +16,9 @@ class Geo:
 
     @property
     def plotly_map(self) -> CompGeoPlotly.Plotly:
-        """
-        Interface for the Plotly library.
+        """Interface for the Plotly library.
 
-        Usage::
-
-        Related Pages:
-
-          https://plotly.com/javascript/choropleth-maps/
+        `Plotly <https://plotly.com/javascript/choropleth-maps/>`_
         """
         return CompGeoPlotly.Plotly(self)
 
@@ -33,39 +29,33 @@ class Geo:
 
     @property
     def chartJs(self) -> CompGeoChartJs.ChartJs:
-        """
-        Property to the ChartJs Geo API.
+        """Property to the ChartJs Geo API.
 
-        Usage::
-
-        Related Pages:
-
-          https://github.com/sgratzl/chartjs-chart-geo
+        `Chartjs <https://github.com/sgratzl/chartjs-chart-geo>`_
         """
         return CompGeoChartJs.ChartJs(self)
+
+    @property
+    def echarts(self) -> CompGeoECharts.ECharts:
+        """Property to the EChartJs Geo API.
+
+        `echarts <https://echarts.apache.org/en/index.html>`_
+        """
+        return CompGeoECharts.ECharts(self)
 
     @property
     def plotly(self) -> CompGeoPlotly.Plotly:
         """
 
-        Usage::
-
-        Related Pages:
-
-          https://plotly.com/javascript/choropleth-maps/
+        `plotly <https://plotly.com/javascript/choropleth-maps/>`_
         """
         return CompGeoPlotly.Plotly(self)
 
     @property
     def google(self) -> CompGeoGoogle.GeoGoogle:
-        """
-        Property to the Google charts API.
+        """Property to the Google charts API.
 
-        Usage::
-
-        Related Pages:
-
-          https://developers.google.com/chart
+        `google <https://developers.google.com/chart>`_
         """
         if not getattr(self.page, '_with_google_imports', False):
             raise ValueError("Google produce must be added using for example page.imports.google_products(['charts'])")
@@ -74,46 +64,31 @@ class Geo:
 
     @property
     def jqv(self) -> CompGeoJqV.JqueryVertorMap:
-        """
-        Property to the Jquery vector Map API.
+        """Property to the Jquery vector Map API.
 
-        Usage::
-
-        Related Pages:
-
-          https://www.10bestdesign.com/jqvmap/
+        `jqvmap <https://www.10bestdesign.com/jqvmap/>`_
         """
         return CompGeoJqV.JqueryVertorMap(self)
 
     @property
     def leaflet(self) -> CompGeoLeaflet.GeoLeaflet:
-        """
-        Property to the Jquery vector Map API.
+        """Property to the Jquery vector Map API.
 
-        Usage::
-
-        Related Pages:
-
-          https://www.10bestdesign.com/jqvmap/
+        `leaflet <https://leafletjs.com/>`_
         """
         return CompGeoLeaflet.GeoLeaflet(self)
 
     @property
     def d3(self) -> CompGeoD3.D3:
-        """
-        Interactive maps for data visualizations. Bundled into a single Javascript file.
+        """Interactive maps for data visualizations. Bundled into a single Javascript file.
 
-        Related Pages:
-
-          https://github.com/markmarkoh/datamaps
-
+        `datamaps <https://github.com/markmarkoh/datamaps>`_
         """
         return CompGeoD3.D3(self)
 
     @property
     def mapbox(self) -> CompGeoMapboxGl.MapboxMaps:
-        """
-        A JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles.
+        """A JavaScript library that uses WebGL to render interactive maps from vector tiles and Mapbox styles.
 
         Usage::
 
@@ -143,8 +118,6 @@ class Geo:
           ])
           l.options.style = 'mapbox://styles/mapbox/streets-v11'
 
-        Related Pages:
-
-          https://docs.mapbox.com/
+        `mapbox <https://docs.mapbox.com/>`_
         """
         return CompGeoMapboxGl.MapboxMaps(self)

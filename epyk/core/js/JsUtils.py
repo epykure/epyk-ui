@@ -545,3 +545,14 @@ class JsFile:
             f.write('<html><head></head><body></body>%s<script src="js/%s.js"></script></html>' % (
                 js_external, self.script_name))
         return r"%s\Launche_%s.html" % (self.path, self.script_name)
+
+
+def urlInputs(key: str, dflt: str = "") -> JsObject.JsObject:
+    """Helper to get variable from the url input.
+
+    :param key: The key to extract from the url.
+    :param dflt: The default value to set if not defined
+    """
+    return JsObject.JsObject.get('''(function(key, dflt){
+const urlParams = new URLSearchParams(window.location.search); return urlParams.get(key)  || dflt })(%s, %s)''' % (
+    jsConvertData(key, None), jsConvertData(dflt, None)))

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Any
+import collections.abc
 
 
 def size(value: Any, unit: str = "%", toStr: bool = False):
@@ -133,3 +134,74 @@ DSC_HELPER = "A tooltip helper"
 DSC_TOOLTIP = "A string with the value of the tooltip"
 DSC_JSFNCS = "The Javascript functions"
 DSC_HTMLCODE = "An identifier for this component (on both Python and Javascript side)"
+
+
+def rupdate(d: dict, u: dict) -> dict:
+    """Recursive nested dict update
+
+    :param d: source dictionary
+    :param u: dictionary to be merged
+    """
+    for k, v in u.items():
+        if isinstance(v, collections.abc.Mapping):
+            d[k] = rupdate(d.get(k, {}), v)
+        else:
+            d[k] = v
+    return d
+
+
+def clean_opt(inputs: dict, options: dict) -> dict:
+    """Clean the ECharts options.
+
+    :param inputs: Input parameters
+    :param options: New chart options
+    """
+    if inputs:
+        if "params" in inputs:
+            options["_ek"]["params"] = inputs["params"]
+            del inputs["params"]
+
+        if "series" in inputs:
+            options["_ek"]["series"] = inputs["series"]
+            del inputs["series"]
+
+        if "names" in inputs:
+            options["_ek"]["names"] = inputs["names"]
+            del inputs["names"]
+
+        options.update(inputs)
+    return options
+
+
+def update_series(series, options: dict):
+    """Update series object with input chart options.
+    This will be used when common series properties are defined or some specific named properties are defined
+    for a series.
+
+    :param series:
+    :param options:
+    """
+    if options and "series" in options["_ek"]:
+        series.set_attrs(options["_ek"]["series"])
+    if "names" in options["_ek"] and series.name in options["_ek"]["names"]:
+        series.set_attrs(options["_ek"]["names"][series.name])
+
+
+def set_default(options: dict, dflt_attrs: dict):
+    """Set options arguments if not already defined.
+    This will do the update recursively.
+
+    :param options: Component's options
+    :param dflt_attrs: Component' default options
+    """
+    for k, v in dflt_attrs.items():
+        if isinstance(v, dict):
+            if k in options:
+                set_default(options[k], v)
+            else:
+                options[k] = v
+        else:
+            if not k in options:
+                options[k] = v
+
+
