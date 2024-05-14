@@ -57,7 +57,8 @@ class Choropleth:
             if not file_path.exists():
                 raise
 
-            self.page.js.customFile(file_path.name, path=str(file_path.parent), absolute_path=True, authorize=True)
+            self.page.js.customFile(file_path.name, path=str(file_path.parent),
+                                    requirements=[{'alias': 'echarts'}], absolute_path=True, authorize=True)
 
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
@@ -127,7 +128,8 @@ class BubbleMaps:
             if not file_path.exists():
                 raise
 
-            self.page.js.customFile(file_path.name, path=str(file_path.parent), absolute_path=True, authorize=True)
+            self.page.js.customFile(file_path.name, path=str(file_path.parent), requirements=[{'alias': 'echarts'}],
+                                    absolute_path=True, authorize=True)
 
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
