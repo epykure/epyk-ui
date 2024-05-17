@@ -704,6 +704,11 @@ the same signature and return).
         """
         return self.__options
 
+    @property
+    def classList(self):
+        """Shortcut to the class properties for the dom object"""
+        return self.attr["class"]
+
     def prepend_child(self, component: primitives.HtmlModel, profile: types.PROFILE_TYPE = None):
         """Wrapper to the Javascript method insertChild to add an HTML component.
 
