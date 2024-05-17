@@ -239,6 +239,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         q_input.style.css.padding_left = 3
         q_input.style.css.margin_top = 3
         q_input.style.css.margin_bottom = 3
+        q_input.attr["name"] = self.html_code
         self.q_filter = self.page.ui.div([q_span, q_input])
         self.q_filter.options.managed = False
         self.q_filter.input = q_input
