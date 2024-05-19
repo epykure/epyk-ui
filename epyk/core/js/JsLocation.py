@@ -252,7 +252,8 @@ class JsLocation:
     def open_new_tab(cls, url: Union[str, primitives.JsDataModel], name: Union[str, primitives.JsDataModel] = "_blank",
                      specs: Union[str, primitives.JsDataModel] = None,
                      replace: Union[str, primitives.JsDataModel] = None,
-                     window_id: str = "window", data: dict = None, secured: bool = False) -> JsFncs.JsFunction:
+                     window_id: str = "window", data: dict = None, secured: bool = False, keep_state: bool = True
+                     ) -> JsFncs.JsFunction:
         """
         Opens a new browser window in a new tab (duplicated but part of the Window module).
 
@@ -271,11 +272,13 @@ class JsLocation:
         :param window_id: Optional. The JavaScript window object
         :param data: Optional. The url parameters
         :param secured: Optional. The secure flag
+        :param keep_state: Optional. Keep url parameters
         """
         if not hasattr(url, 'toStr') and url.startswith("www."):
             url = r"http:\\%s" % url if not secured else r"https:\\%s" % url
         url = JsUtils.jsConvertData(url, None)
         name = JsUtils.jsConvertData(name, None)
+        keepState = JsUtils.jsConvertData(keep_state, None)
         if data is not None:
             attrs = []
             for k, v in data.items():
@@ -283,11 +286,30 @@ class JsLocation:
                 attrs.append('"%s=" + %s' % (k, js_val))
             url = str(url) + '+ "?" + %s' % ' +"&"+ '.join(attrs)
         if specs is None:
-            return JsFncs.JsFunction("%s.open(%s, %s)" % (window_id, url, name))
+            return JsFncs.JsFunction('''%s.open((function(url, keepState){
+    if (!keepState) { return url} ;
+    const urlTargets = new URL(url) ; 
+    const urlTargetParams = new URLSearchParams(urlTargets.search) ;
+    const urlParams = new URLSearchParams(window.location.search) ;
+    for(const entry of urlParams.entries()) { 
+        if (!urlTargetParams.has(entry[0])){urlTargetParams.append(entry[0], entry[1])}};
+    if (urlTargetParams.toString()){ return urlTargets.href + "?" + urlTargetParams.toString() }
+    else {return urlTargets.href}
+})(%s, %s), %s)
+''' % (window_id, url, keepState, name))
 
         specs = JsUtils.jsConvertData(specs, None)
         replace = JsUtils.jsConvertData(replace, None)
-        return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (window_id, url, name, specs, replace))
+        return JsFncs.JsFunction('''%s.open((function(url, keepState){
+    if (!keepState) { return url} ;
+    const urlTargets = new URL(url) ; 
+    const urlTargetParams = new URLSearchParams(urlTargets.search) ;
+    const urlParams = new URLSearchParams(window.location.search) ;
+    for(const entry of urlParams.entries()) { 
+        if (!urlTargetParams.has(entry[0])){urlTargetParams.append(entry[0], entry[1])}};
+    if (urlTargetParams.toString()){ return urlTargets.href + "?" + urlTargetParams.toString() }
+    else {return urlTargets.href}
+})(%s, %s), %s, %s, %s)''' % (window_id, url, keepState, name, specs, replace))
 
     @classmethod
     def download(cls, url: Union[str, primitives.JsDataModel],
@@ -493,7 +515,9 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
           let componentBuilder = document.getElementById(key);
           if (componentBuilder){
             let componentOptions = %(gOptions)s[key] || {}; 
-            window[componentBuilder.getAttribute('data-builder')](componentBuilder, value, componentOptions);
+            let compDataBuilder = componentBuilder?.dataset?.builder ;
+            if (!compDataBuilder){compDataBuilder = componentBuilder.getAttribute('data-builder')};
+            window[compDataBuilder](componentBuilder, value, componentOptions);
           }
       }
     }
