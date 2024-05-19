@@ -148,7 +148,7 @@ class Panels:
 
   def tabs(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
-           profile: types.PROFILE_TYPE = False):
+           profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
     """
     Python wrapper for a multi Tabs component.
 
