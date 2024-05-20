@@ -567,10 +567,11 @@ class EasePick(Html.Html):
             self.icon = None
         if self.icon is not None:
             self.icon.click([self.input.dom.events.trigger("click").toStr()])
-        self.add_label("", html_code=self.html_code,
-                       css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
-                       options=options.get("label", {}))
-        self.page.properties.js.add_builders(self.label.build(label))
+        if label is not None:
+            self.add_label("", html_code=self.html_code,
+                           css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
+                           options=options.get("label", {}))
+            self.page.properties.js.add_builders(self.label.build(label))
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
         self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
         self.options.element = self.input.dom.varName
