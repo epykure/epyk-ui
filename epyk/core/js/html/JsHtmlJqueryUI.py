@@ -349,3 +349,26 @@ class JsHtmlSparkline(JsHtml.JsHtml):
             "tag": self.component.tag, "ctx": self.component.options.config_js(options).toStr(),
             "container": JsUtils.jsConvertData(container, None),
         })
+
+
+class JsHtmlEasePick(JsHtml.JsHtml):
+
+    @property
+    def val(self):
+        """Return the component's details"""
+        return JsObjects.JsObjects.get(
+            "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+                self.html_code, self.component.input.dom.val.toStr()))
+
+    @property
+    def content(self):
+        """return the component's content"""
+        if "RangePlugin" in self.component.options.input.plugins:
+            return JsHtml.ContentFormatters(
+                self.page, self.component.input.dom.content.string.split(self.component.options.input.RangePlugin.delimiter))
+
+        return JsHtml.ContentFormatters(self.page, self.component.input.dom.content.toStr())
+
+    def empty(self):
+        """Empty the string value """
+        return JsUtils.jsWrap("%s.value = '' " % self.component.input.dom.varName)

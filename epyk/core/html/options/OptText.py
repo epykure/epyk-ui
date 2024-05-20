@@ -234,6 +234,14 @@ class OptionsText(OptionsWithTemplates):
   def templateError(self, value: str):
     self._config("function(data){return %s}" % value, js_type=True)
 
+  @property
+  def value(self):
+    return self._config_get()
+
+  @value.setter
+  def value(self, value: str):
+    self._config(value)
+
 
 class OptionsTitle(OptionsText):
 

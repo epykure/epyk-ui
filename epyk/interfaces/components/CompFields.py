@@ -141,7 +141,7 @@ class Fields:
 
     width = Arguments.size(width, unit="px")
     height = Arguments.size(height, unit="px")
-    dft_options = {'dateFormat': 'yy-mm-dd'}
+    dft_options = {"input": {'dateFormat': 'yy-mm-dd'}}
     if value is not None and (
         value.startswith("T-") or value.startswith("W-") or value.startswith("M-") or value.startswith("Y-")):
         value = self.page.py.dates.date_from_alias(value)
@@ -1351,6 +1351,36 @@ class Fields:
     else:
       raise ValueError("Kind {} not defined".format(kind))
 
+    html.Html.set_component_skin(component)
+    return component
+
+  def dates(self, value: Optional[str] = None, label: str = None, icon: str = "calendar-week", color: str = None,
+           width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
+           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
+           helper: str = None) -> html.HtmlDates.EasePick:
+    """
+
+    :param value: Optional. The value to be displayed to the time component. Default now
+    :param label: Optional. The text of label to be added to the component
+    :param icon: Optional. The component icon content from font-awesome references
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param profile: Optional. A flag to set the component performance storage
+    :param options: Optional. Specific Python options available for this component
+    :param helper: Optional. A tooltip helper
+    """
+    width = Arguments.size(width, unit="px")
+    height = Arguments.size(height, unit="px")
+    dft_options = Arguments.clean_opt(options, {"input": {'format': 'YYYY-MM-DD', "grid": 2, "calendars": 2}})
+    if value is not None and (
+        value.startswith("T-") or value.startswith("W-") or value.startswith("M-") or value.startswith("Y-")):
+        value = self.page.py.dates.date_from_alias(value)
+    component = html.HtmlDates.EasePick(
+        self.page, value, label, icon, width, height, color, html_code, profile, dft_options, helper)
+    if width[0] == 100 and width[1] == "%" and icon:
+        component.style.css.width = FIELD_FULL_WIDTH_VALUE
     html.Html.set_component_skin(component)
     return component
 

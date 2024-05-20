@@ -517,7 +517,9 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
             let componentOptions = %(gOptions)s[key] || {}; 
             let compDataBuilder = componentBuilder?.dataset?.builder ;
             if (!compDataBuilder){compDataBuilder = componentBuilder.getAttribute('data-builder')};
-            window[compDataBuilder](componentBuilder, value, componentOptions);
+            if (window[compDataBuilder]){
+                window[compDataBuilder](componentBuilder, value, componentOptions);
+            }
           }
       }
     }

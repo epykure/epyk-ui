@@ -14,7 +14,9 @@ from epyk.core.html.options import OptText
 
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlJqueryUI, JsHtml
+from epyk.core.js.packages import JsEasePick
 
+from epyk.core.html import Defaults as HTML_Defaults
 from epyk.core.css import Defaults
 
 
@@ -22,16 +24,19 @@ class DatePicker(Html.Html):
     requirements = ('jqueryui',)
     name = 'Date Picker'
     _option_cls = OptCalendars.OptionDatePicker
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str], width: tuple,
                  height: tuple, color: Optional[str], html_code: Optional[str],
                  profile: Optional[Union[dict, bool]], options: Optional[dict], helper: Optional[str],
                  verbose: bool = False):
-        super(DatePicker, self).__init__(page, value, html_code=html_code, profile=profile, verbose=verbose)
+        super(DatePicker, self).__init__(
+            page, value, html_code=html_code, profile=profile, verbose=verbose, options=options)
         # Add all the internal components input, label, icon and helper
+        options = options or {}
         if width[0] is not None and width[1] == 'px':
             width = (width[0] - 30, width[1])
-        self.input = self.page.ui.inputs.d_date(self.val, width=width, height=height, options=options,
+        self.input = self.page.ui.inputs.d_date(self.val, width=width, height=height, options=options.get("input", {}),
                                                 html_code=self.sub_html_code("input")).css({"padding": 0})
         if html_code is not None:
             self.input.attr["name"] = self.input.html_code
@@ -46,7 +51,7 @@ class DatePicker(Html.Html):
             self.icon.click([self.input.dom.events.trigger("click").toStr()])
         self.add_label(label, html_code=self.html_code,
                        css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
-                       options=options)
+                       options=options.get("input", {}))
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
         self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
 
@@ -143,8 +148,9 @@ class DatePicker(Html.Html):
         return self
 
     def __str__(self):
-        return '<div %(attr)s>%(helper)s</div>' % {
-            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper}
+        self.page.properties.js.add_builders(self.refresh())
+        return '<%(tag)s %(attr)s>%(helper)s</%(tag)s>' % {
+            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper, "tag": self.tag}
 
 
 class TimePicker(Html.Html):
@@ -529,3 +535,77 @@ class Elapsed(Html.Html):
         self.page.properties.js.add_builders(self.refresh())
         return '<%s %s><span name="clock"></span>%s</%s>' % (
             self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.helper, self.tag)
+
+
+class EasePick(Html.Html):
+    requirements = ('@easepick/bundle',)
+    name = 'Dates Range'
+    _option_cls = OptCalendars.OptionDatesRange
+    tag = "div"
+
+    def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str], width: tuple,
+                 height: tuple, color: Optional[str], html_code: Optional[str],
+                 profile: Optional[Union[dict, bool]], options: Optional[dict], helper: Optional[str],
+                 verbose: bool = False):
+        super(EasePick, self).__init__(page, value, html_code=html_code, profile=profile, verbose=verbose,
+                                       css_attrs={"width": width, "height": height}, options=options)
+        # Add all the internal components input, label, icon and helper
+        options = options or {}
+        if width[0] is not None and width[1] == 'px':
+            width = (width[0] - 30, width[1])
+        self.input = self.page.ui.input(
+            self.val, width=width, height=height, options=options.get("input", {}),
+            html_code=self.sub_html_code("input")).css({"padding": 0})
+        if html_code is not None:
+            self.input.attr["name"] = self.input.html_code
+        self.prepend_child(self.input)
+        if icon:
+            self.add_icon(icon, html_code=self.html_code,
+                          css={"margin-top": '-4px', "margin-left": '5px', 'color': color or "inherit"},
+                          position="after", family=options.get("icon_family"))
+        else:
+            self.icon = None
+        if self.icon is not None:
+            self.icon.click([self.input.dom.events.trigger("click").toStr()])
+        self.add_label("", html_code=self.html_code,
+                       css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
+                       options=options.get("label", {}))
+        self.page.properties.js.add_builders(self.label.build(label))
+        self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
+        self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
+        self.options.element = self.input.dom.varName
+    @property
+    def options(self) -> OptCalendars.OptionDatesRange:
+        """Property to set all the DatePicker properties. """
+        return super().options
+
+    @property
+    def js(self) -> JsEasePick.EasePick:
+        """Return all the Javascript functions defined for an HTML Component.
+        Those functions will use plain javascript by default.
+
+        `Package Doc <https://easepick.com/packages/>`_
+
+        :return: A Javascript Dom object
+        """
+        if self._js is None:
+            self._js = JsEasePick.EasePick(self, page=self.page)
+        return self._js
+
+    @property
+    def dom(self) -> JsHtmlJqueryUI.JsHtmlEasePick:
+        """The Javascript Dom proxy to the input object.
+
+        Usage::
+
+          today = page.ui.fields.today()
+          today.select([page.js.console.log(today.dom.content)])
+        """
+        if self._dom is None:
+            self._dom = JsHtmlJqueryUI.JsHtmlEasePick(self, page=self.page)
+        return self._dom
+
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return '<%(tag)s %(attr)s>%(helper)s</%(tag)s>' % {
+            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper, "tag": self.tag}

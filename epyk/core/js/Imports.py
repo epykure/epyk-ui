@@ -802,7 +802,7 @@ JS_IMPORTS = {
         'req': [{'alias': 'jquery'}, {'alias': '@popperjs/core'}],
         'website': 'http://jquery.com/',
         'repository': 'https://github.com/jquery/jqueryui.com',
-        'version': '1.13.2',
+        'version': '1.13.3',
         'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
         'modules': [
             {'script': 'jquery-ui.min.js', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
@@ -1951,7 +1951,16 @@ JS_IMPORTS = {
              'cdnjs': CDNJS_REPO},
         ],
         'website': 'https://github.com/ganlanyuan/tiny-slider',
-    }
+    },
+
+    '@easepick/bundle': {
+            "unpkg": False,
+            'modules': [
+                {'script': 'index.umd.min.js', 'version': "1.2.1",
+                 'path': 'npm/@easepick/bundle@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+            ],
+            'website': 'https://easepick.com/'
+        },
 }
 
 CSS_IMPORTS = {

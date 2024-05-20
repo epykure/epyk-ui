@@ -176,6 +176,7 @@ ICON_MAPPINGS = {
         "lock_open": "fas fa-lock-open",
         "compress": "fas fa-compress",
         "calendar": "far fa-calendar-alt",
+        "calendar-week": "fas fa-calendar-week",
         "spin": "fas fa-spinner",
         "next": "fas fa-caret-right",
         "previous": "fas fa-caret-left",

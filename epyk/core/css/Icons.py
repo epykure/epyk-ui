@@ -1,5 +1,5 @@
 import re
-from typing import Optional, Any, Dict, List
+from typing import Optional, Any, Dict
 from . import Defaults as Defaults_css
 
 
