@@ -1,8 +1,64 @@
-from typing import Union
+from typing import Union, List
 from epyk.core.py import primitives
-from epyk.core.html.options import OptionsWithTemplates
+from epyk.core.html.options import OptionsWithTemplates, Options
 from epyk.core.js import JsUtils
 import abc
+
+
+
+class OptionsCoreChartSettings(Options):
+
+    @property
+    def type(self):
+        return self._config_get()
+
+    @type.setter
+    def type(self, value: str):
+        self._config(value)
+
+    @property
+    def x_axis(self):
+        return self._config_get()
+
+    @x_axis.setter
+    def x_axis(self, value: str):
+        self._config(value)
+
+    @property
+    def y_columns(self):
+        return self._config_get()
+
+
+    @y_columns.setter
+    def y_columns(self, values: List[str]):
+        self._config(values)
+
+
+class OptionsCoreChart(Options):
+
+    def alterSeries(self, value):
+        self._config(value, js_type=True)
+
+    @property
+    def background_colors(self):
+        return self._config_get()
+
+    @background_colors.setter
+    def background_colors(self, values: List[str]):
+        self._config(values)
+
+    @property
+    def chart(self) -> OptionsCoreChartSettings:
+        """ """
+        return self._config_sub_data("chart", OptionsCoreChartSettings)
+
+    @property
+    def colors(self):
+        return self._config_get()
+
+    @colors.setter
+    def colors(self, values: List[str]):
+        self._config(values)
 
 
 class OptionsChart(OptionsWithTemplates):
@@ -99,6 +155,11 @@ class OptionsChart(OptionsWithTemplates):
     @commons.setter
     def commons(self, values: dict):
         self._config(values)
+
+    @property
+    def ek(self) -> OptionsCoreChart:
+        """Core attributes for all charting libraries"""
+        return self._config_sub_data("_ek", OptionsCoreChart)
 
 
 class OptionsChartShared(abc.ABC):

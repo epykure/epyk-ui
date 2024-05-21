@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
-from typing import Dict, List
+from typing import List
 
 from epyk.core.py import types
 from epyk.core.html import graph
@@ -10,6 +10,7 @@ from epyk.interfaces import Arguments
 from epyk.core.js import Imports
 from epyk.core.css import Colors
 from epyk.core.js.packages import until_version
+from epyk.core.js import JsUtils
 
 
 class ChartJs:
@@ -65,10 +66,17 @@ class ChartJs:
     :param options: Optional. Specific Python options available for this component
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
-    if y is not None and not isinstance(y, list):
+    if y is not None and not isinstance(y, list) and not JsUtils.isJsData(y):
       y = [y]
-    return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
+    if hasattr(self, kind):
+      return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
+                                 options=options, html_code=html_code)
+
+    # Other kind of charts will be based on the line definition
+    chart = getattr(self, "line")(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)
+    chart._chart__type = kind
+    return chart
 
   def line(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
@@ -426,6 +434,8 @@ class ChartJs:
     for i, d in enumerate(data['datasets']):
       bar_chart.add_dataset(d["data"], d['label'])
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
+    if record and not data.get("python", True):
+      bar_chart.onReady([bar_chart.build(record)])
     return bar_chart
 
   def hbar(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
@@ -469,8 +479,6 @@ class ChartJs:
     bar_chart.colors(self.page.theme.charts)
     bar_chart.labels(data['labels'])
     bar_chart.options.scales.y_axis().ticks.beginAtZero = True
-    for i, d in enumerate(data['datasets']):
-      bar_chart.add_dataset(d["data"], d['label'])
     return bar_chart
 
   def multi(self, kind: str, record: list = None, y_columns: list = None, x_axis: str = None,
@@ -692,8 +700,8 @@ class ChartJs:
     height = Arguments.size(height, unit="px")
     options = options or {}
     options.update({'y_columns': y_columns or [], "groups": groups,
-      'commons': {
-        "opacity": self.opacity, "colors": {"base": self.page.theme.notch(), "light": self.page.theme.notch(-3)}}})
+        'commons': {
+          "opacity": self.opacity, "colors": {"base": self.page.theme.notch(), "light": self.page.theme.notch(-3)}}})
     groups = groups or x_axis
     if groups is not None:
       if len(groups) == 1:

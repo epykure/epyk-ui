@@ -1,16 +1,19 @@
 
 
 function chartSunbrust(data, options){
-    var result = [{name: options.x_axis, children: []}]; var sizeTree = options.y_columns.length-1;
+    var yDefs; var xDefs;
+    if (typeof options.y_columns === 'function') {yDefs = options.y_columns(data, options)} else {yDefs = options.y_columns} ;
+    if (typeof options.x_axis === 'function') {xDefs = options.x_axis(data, options)} else {xDefs = options.x_axis} ;
+    var result = [{name: xDefs, children: []}]; var sizeTree = yDefs.length-1;
       data.forEach(function(rec){
         var path = []; var tmpResultLevel = result[0].children; var branchVal = 0;
-        options.y_columns.forEach(function(s, i){
+        yDefs.forEach(function(s, i){
           var treeLevel = -1;
           tmpResultLevel.forEach(function(l, j){if(l.name == rec[s]){treeLevel = j}});
           if(i == sizeTree){
             if(treeLevel >= 0){
-              tmpResultLevel[treeLevel].size += rec[options.x_axis]}
-            else{tmpResultLevel.push({name: rec[s], size: rec[options.x_axis]})}
+              tmpResultLevel[treeLevel].size += rec[xDefs]}
+            else{tmpResultLevel.push({name: rec[s], size: rec[xDefs]})}
           }else{
             if(treeLevel < 0 ){
               tmpResultLevel.push({name: rec[s], children: []}); treeLevel = tmpResultLevel.length - 1};

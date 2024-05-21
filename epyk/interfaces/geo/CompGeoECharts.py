@@ -62,11 +62,11 @@ class Choropleth:
 
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"x_axis": x_axis, "y_columns": y_columns}}})
         Arguments.set_default(dfl_options, {
             "geo": {"map": map_alias, "roam": True},
             "tooltip": {"triggerOn": "click"},
-            "_ek": {"series": {"type": "map", "geoIndex": 0}}
+            "ek": {"series": {"type": "map", "geoIndex": 0}}
         })
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = geo.GeoECharts.Maps(self.page, width, height, html_code, dfl_options, profile)
@@ -75,7 +75,7 @@ class Choropleth:
             for i, dataset in enumerate(data['datasets']):
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [[v["x"], v["y"]] for v in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -133,11 +133,11 @@ class BubbleMaps:
 
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"x_axis": x_axis, "y_columns": y_columns}}})
         Arguments.set_default(dfl_options, {
             "geo": {"map": map_alias, "roam": True},
             "tooltip": {"triggerOn": "click"},
-            "_ek": {"series": {"type": "scatter", "postEffect": {"enable": True},  "large": True, "silent": True,
+            "ek": {"series": {"type": "scatter", "postEffect": {"enable": True},  "large": True, "silent": True,
                                "coordinateSystem": "geo", "blendMode": 'source-over', "symbolSize": 5}}
         })
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
@@ -147,7 +147,7 @@ class BubbleMaps:
             for i, dataset in enumerate(data['datasets']):
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [[v["x"], v["y"]] for v in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart

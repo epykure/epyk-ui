@@ -87,10 +87,10 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
             else:
                 line_colors.append(h[0])
                 bg_colors.append(h[0])
-        self.options.js_tree["_ek"]["colors"] = line_colors
-        self.options.js_tree["_ek"]["background_colors"] = bg_colors
+        self.options.ek.colors = line_colors
+        self.options.ek.background_colors = bg_colors
         for i, rec in enumerate(self.options.js_tree.get("series", [])):
-            if self.options.js_tree["_ek"]["chart"]["type"] in ["pie", "polarArea"]:
+            if self.options.ek.chart.type in ["pie", "polarArea"]:
                 rec.color = self.options.colors
             else:
                 rec.color = self.options.colors[i]

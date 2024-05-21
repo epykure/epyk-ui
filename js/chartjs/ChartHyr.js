@@ -1,5 +1,7 @@
 
 
 function chartHyr(data, options){
-    return {datasets: [{data: data}]}
+    var results = {datasets: [{data: data}]} ;
+    if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(dataSet, null)}
+    return results
 }

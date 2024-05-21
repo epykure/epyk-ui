@@ -5,6 +5,7 @@ from epyk.core.py import types
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
+from epyk.core.js import JsUtils
 
 
 class ApexChart:
@@ -12,6 +13,29 @@ class ApexChart:
     def __init__(self, ui):
         self.page = ui.page
         self.chartFamily = "Apex"
+
+    def plot(self, record=None, y: list = None, x: str = None, kind: str = "line", profile: types.PROFILE_TYPE = None,
+             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
+             options: dict = None, html_code: str = None, **kwargs):
+        """
+
+        :tags:
+        :categories:
+
+        :param record: Optional. The list of dictionaries with the input data
+        :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+        :param x: Optional. The column corresponding to a key in the dictionaries in the record
+        :param kind: Optional. The chart type
+        :param profile: Optional. A flag to set the component performance storage
+        :param width: Optional. The width of the component in the page, default (100, '%')
+        :param height: Optional. The height of the component in the page, default (330, "px")
+        :param options: Optional. Specific Python options available for this component
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        """
+        if y is not None and not isinstance(y, list) and not JsUtils.isJsData(y):
+            y = [y]
+        return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
+                                   options=options, html_code=html_code)
 
     def line(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
@@ -56,29 +80,6 @@ class ApexChart:
             series.data = d["data"]
         chart.options.chart.type = "line"
         return chart
-
-    def plot(self, record=None, y: list = None, x: str = None, kind: str = "line", profile: types.PROFILE_TYPE = None,
-             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
-             options: dict = None, html_code: str = None, **kwargs):
-        """
-
-        :tags:
-        :categories:
-
-        :param record: Optional. The list of dictionaries with the input data
-        :param y: Optional. The columns corresponding to keys in the dictionaries in the record
-        :param x: Optional. The column corresponding to a key in the dictionaries in the record
-        :param kind: Optional. The chart type
-        :param profile: Optional. A flag to set the component performance storage
-        :param width: Optional. The width of the component in the page, default (100, '%')
-        :param height: Optional. The height of the component in the page, default (330, "px")
-        :param options: Optional. Specific Python options available for this component
-        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-        """
-        if y is not None and not isinstance(y, list):
-            y = [y]
-        return getattr(self, kind)(records=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
-                                   options=options, html_code=html_code)
 
     def scatter(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
                 width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
@@ -307,7 +308,7 @@ class ApexChart:
         responsive.breakpoint = 480
         return chart
 
-    def pie(self, records=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+    def pie(self, record=None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
             width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"),
             options: dict = None, html_code: str = None):
         """Display a pie chart from ApexCharts.
@@ -317,7 +318,7 @@ class ApexChart:
 
         `Pie <https://apexcharts.com/docs/chart-types/pie-donut/>`_
 
-        :param records: The Python list of dictionaries
+        :param record: The Python list of dictionaries
         :param y_columns: The columns corresponding to keys in the dictionaries in the record
         :param x_axis: The column corresponding to a key in the dictionaries in the record
         :param profile: Optional. A flag to set the component performance storage
@@ -332,7 +333,7 @@ class ApexChart:
         dfl_options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {'fill': None}})
         if options is not None:
             dfl_options.update(options)
-        data = self.page.data.chartJs.y(records or [], y_columns, x_axis)
+        data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphApexCharts.Pie(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
         chart.options.chart.type = "pie"

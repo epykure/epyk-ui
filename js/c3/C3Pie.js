@@ -8,15 +8,17 @@ function c3Pie(data, options){
           result['columns'].push([name].concat(data.datasets[i]));
         });
       } else {
-        var temp = {}; var labels = {};
+        var temp = {}; var labels = {}; var yDefs; var xDefs;
+        if (typeof options.y_columns === 'function') {yDefs = options.y_columns(data, options)} else {yDefs = options.y_columns} ;
+        if (typeof options.x_column === 'function') {xDefs = options.x_column(data, options)} else {xDefs = options.x_column} ;
         data.forEach(function(rec){
-          if(!(rec[options.x_column] in temp)){temp[rec[options.x_column]] = {}};
-          options.y_columns.forEach(function(name){
+          if(!(rec[xDefs] in temp)){temp[rec[xDefs]] = {}};
+          yDefs.forEach(function(name){
             labels[name] = true;
             if(rec[name] !== undefined){
-              if(!(name in temp[rec[options.x_column]])){
-                temp[rec[options.x_column]][name] = rec[name]}
-              else{temp[rec[options.x_column]][name] += rec[name]}}})});
+              if(!(name in temp[rec[xDefs]])){
+                temp[rec[xDefs]][name] = rec[name]}
+              else{temp[rec[xDefs]][name] += rec[name]}}})});
         columns = []; var labels = Object.keys(labels); var count = 0;
         for(var series in temp){
           var values = [series]; count += 1;

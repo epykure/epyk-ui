@@ -2,6 +2,7 @@
 
 from epyk.core.html import graph
 from epyk.core.py import types
+from epyk.core.js import JsUtils
 
 
 class ChartGoogle:
@@ -30,7 +31,7 @@ class ChartGoogle:
     :param options: Optional. Specific Python options available for this component
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
-    if y is not None and not isinstance(y, list):
+    if y is not None and not isinstance(y, list) and not JsUtils.isJsData(y):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)

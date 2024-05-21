@@ -2,14 +2,17 @@
 
 function easePick(htmlObj, data, options){
     if (!options?.input?.element){options.input.element = document.getElementById(htmlObj.id + "_input")}
-    const picker = new easepick.create(options.input);
+    let pickerId = htmlObj.id + 'Id';
+    if (!window[htmlObj.id + 'Id']){
+        window[htmlObj.id + 'Id'] = new easepick.create(options.input);
+    }
     if (data) {
         if (options.input.plugins.includes("RangePlugin")){
             let dates = data.split(options.input.RangePlugin.delimiter) ;
-            picker.setStartDate(dates[0]) ;
-            picker.setEndDate(dates[1]) ;
+            window[htmlObj.id + 'Id'].setStartDate(dates[0]) ;
+            window[htmlObj.id + 'Id'].setEndDate(dates[1]) ;
         } else {
-            picker.setDate(data) ;
+            window[htmlObj.id + 'Id'].setDate(data) ;
         }
     } ;
     if ("label" in options){

@@ -8,16 +8,18 @@ function c3Line(data, options){
           result['columns'].push([name].concat(data.datasets[i]));
         });
       } else {
-        var temp = {}; var labels = []; var uniqLabels = {};
-        options.y_columns.forEach(function(series){temp[series] = {}});
+        var temp = {}; var labels = []; var uniqLabels = {}; var yDefs; var xDefs;
+        if (typeof options.y_columns === 'function') {yDefs = options.y_columns(data, options)} else {yDefs = options.y_columns} ;
+        if (typeof options.x_column === 'function') {xDefs = options.x_column(data, options)} else {xDefs = options.x_column} ;
+        yDefs.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){
-          options.y_columns.forEach(function(name){
+          yDefs.forEach(function(name){
             if(rec[name] !== undefined){
-              if (!(rec[options.x_column] in uniqLabels)){
-                labels.push(rec[options.x_column]); uniqLabels[rec[options.x_column]] = true};
-              temp[name][rec[options.x_column]] = rec[name]}})});
+              if (!(rec[xDefs] in uniqLabels)){
+                labels.push(rec[xDefs]); uniqLabels[rec[xDefs]] = true};
+              temp[name][rec[xDefs]] = rec[name]}})});
         columns = []; columns.push(['x'].concat(labels));
-        options.y_columns.forEach(function(series){
+        yDefs.forEach(function(series){
           dataSet = [series];
           labels.forEach(function(x){
             if(temp[series][x] == undefined){dataSet.push(null)}

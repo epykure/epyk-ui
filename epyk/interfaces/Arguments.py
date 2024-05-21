@@ -158,15 +158,15 @@ def clean_opt(inputs: dict, options: dict) -> dict:
     """
     if inputs:
         if "params" in inputs:
-            options["_ek"]["params"] = inputs["params"]
+            options["ek"]["params"] = inputs["params"]
             del inputs["params"]
 
         if "series" in inputs:
-            options["_ek"]["series"] = inputs["series"]
+            options["ek"]["series"] = inputs["series"]
             del inputs["series"]
 
         if "names" in inputs:
-            options["_ek"]["names"] = inputs["names"]
+            options["ek"]["names"] = inputs["names"]
             del inputs["names"]
 
         options.update(inputs)
@@ -181,10 +181,10 @@ def update_series(series, options: dict):
     :param series:
     :param options:
     """
-    if options and "series" in options["_ek"]:
-        series.set_attrs(options["_ek"]["series"])
-    if "names" in options["_ek"] and series.name in options["_ek"]["names"]:
-        series.set_attrs(options["_ek"]["names"][series.name])
+    if options and "series" in options["ek"]:
+        series.set_attrs(options["ek"]["series"])
+    if "names" in options["ek"] and series.name in options["ek"]["names"]:
+        series.set_attrs(options["ek"]["names"][series.name])
 
 
 def set_default(options: dict, dflt_attrs: dict):

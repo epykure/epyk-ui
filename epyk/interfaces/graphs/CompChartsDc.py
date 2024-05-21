@@ -2,6 +2,7 @@ from typing import List, Any
 
 from epyk.core.html.graph import GraphDC
 from epyk.core.py import types
+from epyk.core.js import JsUtils
 
 
 class DC:
@@ -28,7 +29,7 @@ class DC:
     :param options: Optional. Specific Python options available for this component
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
-    if not isinstance(y, list):
+    if not isinstance(y, list) and not JsUtils.isJsData(y):
       y = [y]
     return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
                                options=options, html_code=html_code)

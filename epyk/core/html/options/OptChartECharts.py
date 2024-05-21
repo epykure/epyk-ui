@@ -4,6 +4,7 @@
 from typing import Union, List
 from epyk.core.html.options import Options
 from epyk.core.html.options import OptionsWithTemplates
+from epyk.core.html.options import OptChart
 
 
 class OptionTitle(Options):
@@ -1147,6 +1148,11 @@ class EChartOptions(OptionsWithTemplates):
         self._config(val)
 
     @property
+    def ek(self) -> OptChart.OptionsCoreChart:
+        """Core attributes for all charting libraries"""
+        return self._config_sub_data("_ek", OptChart.OptionsCoreChart)
+
+    @property
     def graphic(self) -> bool:
         return self._config_get()
 
@@ -1200,11 +1206,11 @@ class EChartOptions(OptionsWithTemplates):
     def series(self) -> OptionSeries:
         """ """
         s = self._config_sub_data_enum("series", OptionSeries)
-        i = len(self.js_tree["series"]) - 1 % len(self.js_tree["_ek"]['colors'])
-        if self.js_tree["_ek"]['chart']["type"] in ("pie", "radar"):
-            s.color = self.js_tree["_ek"]['colors']
+        i = len(self.js_tree["series"]) - 1 % len(self.ek.colors)
+        if self.ek.chart.type in ("pie", "radar"):
+            s.color = self.ek.colors
         else:
-            s.color = self.js_tree["_ek"]['colors'][i]
+            s.color = self.ek.colors[i]
         return s
 
     @property

@@ -21,5 +21,6 @@ function chartSankey(data, options){
                       dataSet = Object.assign(dataset, options.datasets[series])}
         })
     }
+    iif(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(dataSet, null)}
     return {datasets: datasets}
 }

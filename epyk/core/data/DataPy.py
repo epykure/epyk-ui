@@ -5,9 +5,10 @@ import re
 import os
 import logging
 
-from typing import List, Union, Optional, Any, Callable
+from typing import List, Union, Optional
 from epyk.core.py import OrderedSet
 from epyk.core.data.recs import RecItems
+from epyk.core.js import JsUtils
 
 
 class Plotly:
@@ -22,6 +23,9 @@ class Plotly:
         :param z_axis: The key in the dictionaries used as z-axis
         """
         naps = {'datasets': [], 'series': [], 'python': True}
+
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {'datasets': [], 'series': [], 'python': False}
 
         z_a, x_a, agg_y = set(), set(), {}
         for rec in data:
@@ -149,6 +153,9 @@ class Plotly:
         :param x_axis: The column corresponding to a key in the dictionaries in the record
         :param options: Various options for the data conversion
         """
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {'datasets': [], 'series': [], 'python': False}
+
         if data is None:
             return {'datasets': [], 'python': True, 'series': y_columns}
 
@@ -423,6 +430,9 @@ class ChartJs:
         :param options: Optional. Specific Python options available for this component
         """
         is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {"labels": [], 'datasets': [], 'series': [], 'python': False}
+
         if data is None or y_columns is None:
             return is_data
 
@@ -470,6 +480,9 @@ class ChartJs:
         :param options: Optional. Specific Python options available for this component
         """
         agg_data = {}
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {"labels": [], 'datasets': [], 'series': [], 'python': False}
+
         if not data or not y_columns or not x_axis:
             return agg_data
 
@@ -509,6 +522,9 @@ class ChartJs:
         :param options: Optional. Specific Python options available for this component
         """
         is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {"labels": [], 'datasets': [], 'series': [], 'python': False}
+
         if data is None or y_columns is None:
             return is_data
 
@@ -562,6 +578,10 @@ class C3:
         :param options: Optional. Specific Python options available for this component
         """
         is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': False}
+
         if data is None or y_columns is None:
             return is_data
 
@@ -610,6 +630,10 @@ class NVD3:
         :param options: Optional. Specific Python options available for this component
         """
         is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': False}
+
         if data is None or y_columns is None:
             return is_data
 
@@ -649,6 +673,10 @@ class NVD3:
         :param options: Optional. Specific Python options available for this component
         """
         is_data = {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': True}
+
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': False}
+
         if data is None or y_columns is None:
             return is_data
 
@@ -698,6 +726,10 @@ class Google:
         :param options: Optional. Specific Python options available for this component
         """
         is_data = {"labels": [], 'datasets': [], 'series': [], 'python': True}
+
+        if JsUtils.isJsData(x_axis) or JsUtils.isJsData(y_columns):
+            return {"labels": OrderedSet(), 'datasets': [], 'series': [], 'python': False}
+
         if data is None:
             return is_data
 
@@ -736,6 +768,10 @@ class Google:
         :param cols:
         """
         is_data = {"rows": rows, 'datasets': [], 'cols': cols, 'python': True}
+
+        if JsUtils.isJsData(rows) or JsUtils.isJsData(cols):
+            return {"rows": rows, 'datasets': [], 'cols': cols, 'python': False}
+
         if data is None:
             return is_data
 

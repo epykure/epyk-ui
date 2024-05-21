@@ -2,6 +2,7 @@ from epyk.core.py import types
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
+from epyk.core.js import JsUtils
 
 
 class ECharts:
@@ -15,7 +16,7 @@ class ECharts:
              height: types.SIZE_TYPE = (330, "px"), options: dict = None,
              html_code: str = None, **kwargs
              ) -> graph.GraphECharts.ECharts:
-        if y is not None and not isinstance(y, list):
+        if y is not None and not isinstance(y, list) and not JsUtils.isJsData(y):
           y = [y]
         if kind and hasattr(self, kind):
             return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width, height=height,
@@ -23,7 +24,7 @@ class ECharts:
 
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"type": kind, "x_axis": x, "y_columns": y}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": kind, "x_axis": x, "y_columns": y}}})
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
         chart.builder_name = "EkPlotECharts"
@@ -42,7 +43,7 @@ class ECharts:
              options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"type": "line", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "line", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
@@ -55,7 +56,7 @@ class ECharts:
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = dataset['data']
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -65,7 +66,7 @@ class ECharts:
              options: types.OPTION_TYPE = None, html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
@@ -77,7 +78,7 @@ class ECharts:
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = dataset['data']
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -87,7 +88,7 @@ class ECharts:
             html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.builder_name = "EkPieECharts"
@@ -97,7 +98,7 @@ class ECharts:
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [{'name': v["x"], 'value': v["y"]} for v in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -107,7 +108,7 @@ class ECharts:
               html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {
+        dfl_options = Arguments.clean_opt(options, {"ek": {
             "chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns}, "series": {"radius": ['40%', '70%']}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
@@ -118,7 +119,7 @@ class ECharts:
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [{'name': v["x"], 'value': v["y"]} for v in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -128,7 +129,7 @@ class ECharts:
               html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {
+        dfl_options = Arguments.clean_opt(options, {"ek": {
             "chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns},
             "series": {"radius": ['40%', '70%'], "center": ['50%', '70%'], "startAngle": 180, "endAngle": 360}
         }})
@@ -141,7 +142,7 @@ class ECharts:
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [{'name': v["x"], 'value': v["y"]} for v in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -171,7 +172,7 @@ class ECharts:
              html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", "category")
@@ -188,7 +189,7 @@ class ECharts:
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [{"value": d, "label": {"position": "right"}} for d in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -199,7 +200,7 @@ class ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
         dfl_options = Arguments.clean_opt(options, {
-            "_ek": {
+            "ek": {
                 "chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns},
                 "series": {"roseType": "radius", "radius": [20, 140], "center": ['50%', '50%'], "itemStyle": {"borderRadius": 5}}
             }})
@@ -212,7 +213,7 @@ class ECharts:
             for i, dataset in enumerate(data['datasets']):
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [{'name': v["x"], 'value': v["y"]} for v in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -222,7 +223,7 @@ class ECharts:
               options: dict = None, html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"type": "scatter", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "scatter", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
@@ -234,7 +235,7 @@ class ECharts:
             for i, dataset in enumerate(data['datasets']):
                 s = chart.options.series
                 s.name = dataset['label']
-                s.type = dfl_options["_ek"]["chart"]["type"]
+                s.type = dfl_options["ek"]["chart"]["type"]
                 s.data = [[v["x"], v["y"]] for v in dataset['data']]
                 Arguments.update_series(s, dfl_options)
         return chart
@@ -244,7 +245,7 @@ class ECharts:
               html_code: str = None, **kwargs) -> graph.GraphECharts.EChartsRadar:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"_ek": {"chart": {"type": "radar", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "radar", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.EChartsRadar(self.page, width, height, html_code, dfl_options, profile)
         chart.builder_name = "EkRadarECharts"
@@ -253,13 +254,13 @@ class ECharts:
         if data:
             chart.options.radar.indicator = [{"name": l} for l in data["labels"]]
             s = chart.options.series
-            s.type = dfl_options["_ek"]["chart"]["type"]
+            s.type = dfl_options["ek"]["chart"]["type"]
             s.data = []
             for dataset in data['datasets']:
                 new_series = {"value": dataset['data'], "name": dataset['label']}
-                if "series" in dfl_options["_ek"]:
-                    Arguments.rupdate(new_series, dfl_options["_ek"]["series"])
-                if "names" in dfl_options["_ek"] and new_series["name"] in dfl_options["_ek"]["names"]:
-                    Arguments.rupdate(new_series, dfl_options["_ek"]["names"][new_series["name"]])
+                if "series" in dfl_options["ek"]:
+                    Arguments.rupdate(new_series, dfl_options["ek"]["series"])
+                if "names" in dfl_options["ek"] and new_series["name"] in dfl_options["ek"]["names"]:
+                    Arguments.rupdate(new_series, dfl_options["ek"]["names"][new_series["name"]])
                 s.data.append(new_series)
         return chart

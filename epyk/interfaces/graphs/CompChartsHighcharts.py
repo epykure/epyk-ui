@@ -2,6 +2,8 @@ from epyk.core.py import types
 from epyk.core.html import graph
 from epyk.interfaces import Arguments
 from epyk.core.html import Defaults_html
+from epyk.core.js import JsUtils
+
 
 
 class Highcharts:
@@ -32,7 +34,7 @@ class Highcharts:
         :param options: Optional. Specific Python options available for this component
         :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
         """
-        if y is not None and not isinstance(y, list):
+        if y is not None and not isinstance(y, list) and not JsUtils.isJsData(y):
             y = [y]
         if hasattr(self, kind):
             return getattr(self, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width,

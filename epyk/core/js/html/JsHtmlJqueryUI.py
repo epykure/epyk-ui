@@ -356,19 +356,20 @@ class JsHtmlEasePick(JsHtml.JsHtml):
     @property
     def val(self):
         """Return the component's details"""
+        if "RangePlugin" in self.component.options.input.plugins:
+            return JsObjects.JsObjects.get(
+                "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
+                    self.component.html_code, self.component.input.dom.content.string.split(
+                        self.component.options.input.RangePlugin.delimiter)))
+
         return JsObjects.JsObjects.get(
             "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-                self.html_code, self.component.input.dom.val.toStr()))
-
+                self.component.html_code, self.component.input.dom.content.toStr()))
     @property
     def content(self):
         """return the component's content"""
-        if "RangePlugin" in self.component.options.input.plugins:
-            return JsHtml.ContentFormatters(
-                self.page, self.component.input.dom.content.string.split(self.component.options.input.RangePlugin.delimiter))
-
         return JsHtml.ContentFormatters(self.page, self.component.input.dom.content.toStr())
 
     def empty(self):
         """Empty the string value """
-        return JsUtils.jsWrap("%s.value = '' " % self.component.input.dom.varName)
+        return self.component.js.clear()

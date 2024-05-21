@@ -21,11 +21,14 @@ function chartTreeMap(data, options){
         if(typeof dataset.hoverBackgroundColor === "undefined"){
           dataset.hoverBackgroundColor = options.background_colors};
         if(typeof options.commons !== "undefined"){Object.assign(dataset, options.commons)};
+        if(typeof options.changeSeries !== 'undefined'){options.changeSeries(dataset)}
         result.datasets.push(dataset)})
     } else {
       result = {datasets: [], labels: []};
+      var uniqLabels = {}; var yDefs;
+      if (typeof options.y_columns === 'function') {yDefs = options.y_columns(data, options)} else {yDefs = options.y_columns} ;
       result.datasets.push({
-        tree: data, key: options.y_columns[0], groups: options.groups, labels: {display: true}});
+        tree: data, key: yDefs[0], groups: options.groups, labels: {display: true}});
       result.datasets.forEach(function(dataset, i){
         if (options.commons.backgroundColorMaps){
           dataset.backgroundColor = function(ctx) {

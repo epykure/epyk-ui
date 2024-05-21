@@ -459,6 +459,11 @@ class FrappeLine(OptionsWithTemplates):
     self._config(num)
 
   @property
+  def ek(self) -> OptChart.OptionsCoreChart:
+    """Core attributes for all charting libraries"""
+    return self._config_sub_data("_ek", OptChart.OptionsCoreChart)
+
+  @property
   def truncateLegends(self):
     """
     Sometimes long legends would overlap with neighboring legends, this option truncates it to a fixed length.
