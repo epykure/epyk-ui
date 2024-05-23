@@ -29,7 +29,7 @@ from epyk.core.js import expr as js_expr
 from epyk.core.js import libs as js_libs
 from epyk.core.js.JsUtils import jsWrap as js_callback, urlInputs as url_input
 
-from epyk.core.js.Imports import Package as package
+from epyk.core.js.Imports import Package as package, save_resources, string_to_base64
 from epyk.core.js.Imports import PACKAGE_STATUS, JS_IMPORTS, CSS_IMPORTS
 
 from epyk.web import jupyter, npm, react, angular, svelte, vue

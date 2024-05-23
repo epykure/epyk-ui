@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 from typing import Union, Any
 from epyk.core.js import JsUtils
+from epyk.core.py import types as etypes
 from epyk.core.html.options import Options, OptInputs, OptText
 
 
@@ -190,11 +191,19 @@ class KbdPlugin(Options):
 
 class LockPlugin(Options):
 
-    def filter(self):
+    def filter(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
         """Lock days by custom function.
 
         `Doc <https://easepick.com/packages/lock-plugin.html#option-filter>`_
         """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile).strip()
+        if not str_func.startswith("function(date, picked)") and not func_ref:
+            if "return " not in str_func:
+                str_func = "return %s" % str_func
+            str_func = "function(date, picked){%s}" % str_func
+        self._config(str_func, js_type=True)
 
     @property
     def inseparable(self):
@@ -453,11 +462,19 @@ class RangePlugin(Options):
     def tooltip(self, value: bool):
         self._config(value)
 
-    def tooltipNumber(self):
+    def tooltipNumber(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
         """Handling the tooltip number.
 
         `Doc <https://easepick.com/packages/range-plugin.html#option-tooltipNumber>`_
         """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile).strip()
+        if not str_func.startswith("function(num)") and not func_ref:
+            if "return " not in str_func:
+                str_func = "return %s" % str_func
+            str_func = "function(num){%s}" % str_func
+        self._config(str_func, js_type=True)
 
     @property
     def repick(self):
@@ -722,6 +739,16 @@ class OptionEasePick(Options):
     @readonly.setter
     def readonly(self, value: bool):
         self._config(value)
+
+    def setup(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile).strip()
+        if not str_func.startswith("function(picker)") and not func_ref:
+            if "return " not in str_func:
+                str_func = "return %s" % str_func
+            str_func = "function(picker){%s}" % str_func
+        self._config(str_func, js_type=True)
 
     @property
     def TimePlugin(self) -> TimePlugin:

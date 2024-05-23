@@ -1020,6 +1020,15 @@ class DefaultColDef(Options):
         return ColumnFilter(self, 'filter')
 
     @property
+    def filterParams(self):
+        """  set a filter for every columns. """
+        return self._config_get()
+
+    @filterParams.setter
+    def filterParams(self, values: dict):
+        self._config(values)
+
+    @property
     def field(self):
         """
 
@@ -1367,6 +1376,20 @@ class TableConfig(OptionsWithTemplates):
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-groups/#column-definitions-vs-column-group-definitions>`_
         """
         return self._config_sub_data_enum("columnDefs", Column)
+
+    @property
+    def columnMenu(self):
+        """
+        Define a column type (you can define as many as you like.
+        Expect a valid Json object.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#default-column-definitions>`_
+        """
+        return self._config_get()
+
+    @columnMenu.setter
+    def columnMenu(self, val: str):
+        self._config(val)
 
     @property
     def columnTypes(self):
@@ -2269,6 +2292,18 @@ class TableConfig(OptionsWithTemplates):
     @rowStyle.setter
     def rowStyle(self, values: Union[dict, str]):
         self._config(values)
+
+    @property
+    def sideBar(self):
+        """
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-api//>`_
+        """
+        return self._config_get()
+
+    @sideBar.setter
+    def sideBar(self, val):
+        self._config(val)
 
     @property
     def singleClickEdit(self):

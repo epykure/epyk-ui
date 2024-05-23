@@ -4214,11 +4214,13 @@ class ImportManager:
                 # if '/mode/' in url_module:
                 #  js.append('<script type="module" language="javascript" src="%s%s"></script>' % (url_module, extra_configs))
                 mod_type = self.jsImports[js_alias]['type'].get(url_module, "text/javascript")
+                mod_title = os.path.split(url_module)[-1]
                 if os.path.isabs(url_module) and not url_module.startswith("/static"):
                     file_name, file_extension = os.path.splitext(url_module)
                     if not file_extension.endswith(".js"):
                         continue
 
+                    self.jsImports[js_alias]['title'] = os.path.split(url_module)[-1]
                     with open(url_module, "rb") as fp:
                         if mod_type == "text/javascript":
                             # export cannot be used in javascript scripts not set as modules
@@ -4252,16 +4254,16 @@ class ImportManager:
                         logging.error(traceback.format_exc())
                 if self.pkgs.get(js_alias).defer:
                     js.append(
-                        '<script language="javascript" type="%s" src="%s%s" defer></script>' % (
-                        mod_type, url_module, extra_configs))
+                        '<script title="%s" language="javascript" type="%s" src="%s%s" defer></script>' % (
+                            mod_title, mod_type, url_module, extra_configs))
                 elif self.pkgs.get(js_alias).asynchrone:
                     js.append(
-                        '<script language="javascript" type="%s" src="%s%s" async></script>' % (
-                            mod_type, url_module, extra_configs))
+                        '<script title="%s" language="javascript" type="%s" src="%s%s" async></script>' % (
+                            mod_title, mod_type, url_module, extra_configs))
                 else:
                     js.append(
-                        '<script language="javascript" type="%s" src="%s%s"></script>' % (
-                        mod_type, url_module, extra_configs))
+                        '<script title="%s" language="javascript" type="%s" src="%s%s"></script>' % (
+                        mod_title, mod_type, url_module, extra_configs))
         if local_js is not None and len(local_js) > 0:
             for local_js_file in local_js:
                 js.append('<script language="javascript" type="text/javascript" src="%s"></script>' % local_js_file)
@@ -4757,3 +4759,43 @@ class Package:
         import random
 
         return "%s?version=%s" % (name, random.random())
+
+
+def save_resources(out_path: str, aliases: List[str] = None, headers = None):
+    """Copy the external resources to an specific directory.
+
+    :param out_path:
+    :param aliases:
+    """
+    if headers is None:
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+            'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+            'Accept-Encoding': 'none',
+            'Accept-Language': 'en-US,en;q=0.8',
+            'Connection': 'keep-alive'}
+    if aliases is None:
+        aliases = set(JS_IMPORTS.keys()).union(set(CSS_IMPORTS.keys()))
+    for alias in aliases:
+        for pkg_gro in [CSS_IMPORTS, JS_IMPORTS]:
+            if alias in pkg_gro:
+                pkg_def = pkg_gro[alias]
+                for f in pkg_def.get("modules", []):
+                    f_path = "%(cdnjs)s/%(path)s%(script)s" % f
+                    if "version" in f:
+                        r_path = f_path % f
+                    elif "version" not in pkg_def and "version" in JS_IMPORTS.get(alias, {}):
+                        r_path = f_path % JS_IMPORTS[alias]
+                    else:
+                        if "version" not in pkg_def:
+                            continue
+
+                        r_path = f_path % pkg_def
+                    request = Request(r_path, None, headers)
+                    try:
+                        with urlopen(request) as response:
+                            with open(r"%s\%s" % (out_path, f["script"]), "wb") as fp:
+                                fp.write(response.read())
+                    except Exception as err:
+                        logging.warning("Error with %s: %s" % (alias, r_path))
