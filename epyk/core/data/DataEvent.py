@@ -211,6 +211,12 @@ class DataEvents:
         return JsObjects.JsString.JsString.get("event.target.nodeName")
 
     @property
+    def innerText(self):
+        """Interface to get the innerText of the target dom object."""
+        from epyk.core.js.primitives import JsObjects
+        return JsObjects.JsString.JsString.get("event.target.innerText")
+
+    @property
     def value(self):
         """Interface to a standard value object available in any Event.
         This is the default variable name in all the JavaScript embedded methods.

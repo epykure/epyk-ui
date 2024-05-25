@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
-from epyk.core.py import primitives
+from epyk.core.py import primitives, types
 
 from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
@@ -319,3 +319,20 @@ class Buttons(JsPackage):
         :param dom: A dom / button component
         """
         return JsUtils.jsWrap("%s.disabled = true" % JsUtils.jsConvertData(dom, None))
+
+    def filterByVal(self, dom_val, value, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+        """Filter process by selected only the one validating the rule.
+
+        Usage::
+
+            bs = page.ui.menus.buttons(["Button", "Button 2", "Button 3"])
+            bs.click([bs.js.filterByVal(pk.events.innerText, "Button 3", [page.js.alert(bs.dom.content)])])
+
+        :param dom_val: HTML component
+        :param value: Value used to filter the process
+        :param js_funcs: Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        dom_val = JsUtils.jsConvertData(dom_val, None)
+        value = JsUtils.jsConvertData(value, None)
+        return JsUtils.jsWrap('''if(%s == %s){%s}''' % (dom_val, value, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
