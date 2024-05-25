@@ -375,7 +375,7 @@ class Links:
     self.stylesheet(href, file_type, media, rel="manifest")
 
   def stylesheet(self, href: str, file_type: str = "text/css", media: Optional[str] = None, rel: str = "stylesheet",
-                 cross_origin: bool = False):
+                 cross_origin: bool = False, title: str = ""):
     """
     Link the page to a style sheet.
 
@@ -387,11 +387,12 @@ class Links:
     :param file_type: Optional. The type of the href tag
     :param media: Optional. This resource will then only be loaded if the media condition is true
     :param rel: Optional. This attribute names a relationship of the linked document to the current document
-    :param cross_origin: Optional. Specify to the browser to enable the cross origin to get resource from
+    :param cross_origin: Optional. Specify to the browser to enable the cross-origin to get resource from
       different website.
+    :param title: File description
     """
     if isinstance(href, list):
-      self.__header._links.append({"href": href[0], "rel": rel})
+      self.__header._links.append({"href": href[0], "rel": rel, "title": title})
       for h in href[1:]:
         self.alternative(h, file_type=file_type, media=media)
     else:
@@ -399,13 +400,14 @@ class Links:
         if header["href"] == href:
           return
 
-      self.__header._links.append({"href": href, "rel": rel, "crossorigin": cross_origin})
+      self.__header._links.append({"href": href, "rel": rel, "crossorigin": cross_origin, "title": title})
     if file_type:
       self.__header._links[-1]["type"] = file_type
     if media is not None:
       self.__header._links[-1]["media"] = media
 
-  def alternative(self, href: str, file_type: str = "text/css", media: Optional[str] = None):
+  def alternative(
+          self, href: str, file_type: str = "text/css", media: Optional[str] = None, title: str = "alternate stylesheet"):
     """
     Specifying alternative style sheets in a web page provides a way for users to see multiple versions of a page,
     based on their needs or preferences.
@@ -417,12 +419,14 @@ class Links:
     :param href: The link path for the stylesheet page
     :param file_type: Optional. The type of the href tag
     :param media: Optional. This resource will then only be loaded if the media condition is true
+    :param dsc: Optional. File metadata description
+    :param title: File description
     """
-    self.__header._links.append({"href": href, "rel": "alternate stylesheet"})
+    self.__header._links.append({"href": href, "rel": "alternate stylesheet", "title": title})
     if file_type is not None:
-      self.__header._links["type"] = file_type
+      self.__header._links[-1]["type"] = file_type
     if media is not None:
-      self.__header._links["media"] = media
+      self.__header._links[-1]["media"] = media
 
 
 class Icons:

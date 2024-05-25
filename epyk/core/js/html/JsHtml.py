@@ -1412,3 +1412,34 @@ class JsHtmlLi(JsHtmlRich):
         :param profile: Optional. A flag to set the component performance storage
         """
         return self.has_state("active", js_funcs, profile=profile)
+
+
+class JsHtmlButtons(JsHtmlRich):
+
+    @property
+    def val(self):
+        """Return the val object. """
+        delimiter = JsUtils.jsConvertData(self.component.options.delimiter, None)
+        return JsObjects.JsObjects.get(
+            "{'%s': %s.split(%s)}" % (self.component.html_code, self.content.toStr(), delimiter))
+
+    @property
+    def content(self):
+        """Return the values of the items in the list. """
+        delimiter = JsUtils.jsConvertData(self.component.options.delimiter, None)
+        selected = JsUtils.jsConvertData(self.component.options.selected, None)
+        return JsObjects.JsArray.JsArray.get('''(function(){
+var values = []; %(component)s.querySelectorAll("button").forEach(function(dom){
+    if(dom.classList.contains(%(selected)s)){values.push(dom.innerText)}}); return values.join(%(delimiter)s)})()''' % {
+            "component": self.component.dom.varName, "selected": selected, "delimiter": delimiter})
+
+    def clear(self):
+        """Clear all buttons defined in the group component"""
+        return JsObjects.JsVoid('document.querySelectorAll("div#%(html_code)s button.%(selected)s").forEach(function(d){d.classList.remove("%(selected)s")})' % {
+            "html_code": self.component.html_code, "selected": self.component.options.selected})
+
+    def all(self) -> JsObjects.JsArray.JsArray:
+        """Return list with value for each button defined within the group"""
+        return JsObjects.JsArray.JsArray.get('''(function(){
+var values = []; %(component)s.querySelectorAll("button").forEach(function(dom){
+    values.push(dom.innerText)}); return values})()''' % {"component": self.component.dom.varName})

@@ -230,6 +230,7 @@ ICON_MAPPINGS = {
         'face_meh': "far fa-meh",
         'face_frown_open': "far fa-frown-open",
         'face_frown': "far fa-frown",
+        'loader': "fas fa-spinner fa-spin",
     }
 }
 

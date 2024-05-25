@@ -8,6 +8,7 @@ from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
+from epyk.core.js.objects import JsNodeDom
 
 
 class Radio(JsPackage):
@@ -261,3 +262,60 @@ class Room(JsPackage):
     def typing(self):
         """Display dots in the status to inform user is typing. """
         return self.component.dom.querySelector("div[name=dots]").show(duration=3000)
+
+
+class Buttons(JsPackage):
+
+    def __init__(self, component: primitives.HtmlModel, js_code: str = None, setVar=True,
+                 is_py_data: bool = True, page: primitives.PageModel = None):
+        self.varName, self.varData, self.__var_def = js_code, "", None
+        self.component, self.page = component, page
+        self._js, self._jquery = [], None
+
+    def set_value(self, value):
+        """Set the component value.
+
+        :param value: Initial value as a string (or url param component)
+        """
+        value = JsUtils.jsConvertData(value, None)
+        delimiter = JsUtils.jsConvertData(self.component.options.delimiter, None)
+        return JsObjects.JsObjects.get(
+            "%s.querySelectorAll('button').forEach(function(d){if(%s.split(%s).includes(d.innerText)){d.classList.add('%s')}})" % (
+                self.component.dom.varName, value, delimiter, self.component.options.selected))
+
+    def loader(self, status: bool, dom):
+        """Add loader / spin icon to the button component.
+
+        Usage::
+
+                js_funcs.insert(0, self.js.loader(True, JsUtils.jsWrap("event.target")))
+                js_funcs.append(self.js.loader(False, JsUtils.jsWrap("event.target")))
+
+        :param status: A flag to enable / disable the loading spinner
+        :param dom: A dom / button component
+        """
+        loader = self.page.icons.get("loader")
+        target = JsUtils.jsConvertData(dom, None)
+        self.component.require.add(loader['icon_family'])
+        if status:
+            return JsUtils.jsWrap('''if(%(target)s.getAttribute('loading') != 'true'){
+    let icon = document.createElement("i"); icon.className = '%(icon)s %(loading)s'; 
+    %(target)s.setAttribute('loading', 'true'); %(target)s.prepend(icon);
+}''' % {"icon": loader["icon"], "target": target, "loading": self.component.style_refs["html-button-loader"]})
+
+        return JsUtils.jsWrap('''if(%(target)s.getAttribute('loading') == 'true'){
+%(target)s.firstChild.remove() ; %(target)s.setAttribute('loading', 'false');}''' % {"target": target})
+
+    def get(self, i: int):
+        """Get a button component based on its index in the group
+
+        :param i: Component index starting from 0
+        """
+        return JsNodeDom.JsDoms.get('document.querySelectorAll("div#%s button")[%s]' % (self.component.html_code, i))
+
+    def disable(self, dom):
+        """Disable the selected component to the group.
+
+        :param dom: A dom / button component
+        """
+        return JsUtils.jsWrap("%s.disabled = true" % JsUtils.jsConvertData(dom, None))

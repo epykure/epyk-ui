@@ -2,7 +2,8 @@
 # -*- coding: utf-8 -*-
 # TODO Add JS builder to Button Filter
 
-from typing import Union, Optional
+from pathlib import Path
+from typing import Union, Optional, List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -654,26 +655,95 @@ class IconEdit(Html.Html):
 class Buttons(Html.Html):
     name = 'Buttons'
     tag = "div"
+    _option_cls = OptButton.OptionsButtons
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "common-vars.css",
+        Path(__file__).parent.parent / "css" / "native" / "html-button.css"
+    ]
+
+    style_refs = {
+        "html-button": "html-button",
+        "html-button-loader": "html-button-loader",
+    }
 
     def __init__(self, page: primitives.PageModel, data, color: Optional[str], width: tuple, height: tuple,
                  html_code: Optional[str], helper: Optional[str], options: Optional[dict],
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
-        super(Buttons, self).__init__(page, [], html_code=html_code,
+        if data:
+            rec = []
+            for d in data:
+                if not isinstance(d, dict):
+                    rec.append({options.get("value", "value"): d})
+                else:
+                    rec.append(d)
+            data = rec
+        super(Buttons, self).__init__(page, data, html_code=html_code,
                                       css_attrs={"width": width, "height": height, 'color': color},
                                       profile=profile, verbose=verbose)
-        for b in data:
-            bt = page.ui.button(
-                b, options={"group": "group_%s" % self.html_code},
-                html_code=self.sub_html_code("button", auto_inc=True)
-            ).css({"margin-right": '5px'})
-            bt.css(options.get("button_css", {}))
-            self.__add__(bt)
         self.add_helper(helper)
 
+    @property
+    def options(self) -> OptButton.OptionsButtons:
+        """Property to set all the possible object for a button.
+
+        Usage::
+
+          but = page.ui.button("Click Me")
+          but.options.multiple = False
+        """
+        return super().options
+
+    @property
+    def dom(self) -> JsHtml.JsHtmlButtons:
+        """Return all the Javascript functions defined for an HTML Component.
+
+        Those functions will use plain javascript available for a DOM element by default.
+
+        Usage::
+
+          but = page.ui.button("Click Me")
+          page.js.console.log(but.dom.content)
+        """
+        if self._dom is None:
+            self._dom = JsHtml.JsHtmlButtons(component=self, page=self.page)
+        return self._dom
+
+    @property
+    def js(self) -> JsComponents.Buttons:
+        """The Javascript functions defined for this component.
+
+        Those can be specific ones for the module or generic ones from the language.
+
+        :return: A Javascript Dom object
+        """
+        if self._js is None:
+            self._js = JsComponents.Buttons(self, page=self.page)
+        return self._js
+
+    def on(self, event: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+           source_event: Optional[str] = None, on_ready: bool = False, func_args: List[str] = None,
+           method: str = "addEventListener"):
+        profile = self.with_profile(profile, event=event)
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        source_event = source_event or self.dom.varId
+        if event not in self._browser_data['mouse']:
+            self._browser_data['mouse'][event] = {}
+        self._browser_data['mouse'][event].setdefault(source_event, {}).setdefault("content", []).append(
+            '''if (event.target.nodeName == 'BUTTON'){%s}''' % (JsUtils.jsConvertFncs(js_funcs, toStr=True)))
+        self._browser_data['mouse'][event][source_event]['profile'] = profile
+        self._browser_data['mouse'][event][source_event]['fncType'] = method
+        if func_args:
+            self._browser_data['mouse'][event][source_event]['args'] = func_args
+        if on_ready:
+            self.page.body.onReady([self.dom.events.trigger(event)])
+        return self
+
     def __str__(self):
-        str_div = "".join([v.html() if hasattr(v, 'html') else v for v in self.val])
-        return '<%s %s>%s</%s>%s' % (
-            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.tag, self.helper)
+        self.page.properties.js.add_builders(self.refresh())
+        return '<%s %s></%s>%s' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag, self.helper)
 
 
 class ButtonMenuItem:

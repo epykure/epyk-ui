@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from typing import List, Optional
+from typing import List, Optional, Dict
 from epyk.core.html.options import Options
 from epyk.core.html import Defaults as html_defaults
 
@@ -375,3 +375,70 @@ class OptionsButtonMenu(Options):
     @css_cls_child.setter
     def css_cls_child(self, values: List[str]):
         self._config(values)
+
+
+class OptionsButtons(Options):
+    component_properties = ("value", "css", "selected", "delimiter", "classes", "disabled")
+
+    @property
+    def classes(self) -> Optional[List[str]]:
+        """ Add CSS Classes for buttons """
+        return self._config_get([self.component.style_refs["html-button"]])
+
+    @classes.setter
+    def classes(self, values: List[str]):
+        self._config(values)
+
+    @property
+    def css(self) -> Optional[Dict[str, str]]:
+        """Add CSS Classes for buttons """
+        return self._config_get({})
+
+    @css.setter
+    def css(self, values: Dict[str, str]):
+        self._config(values)
+
+    @property
+    def disabled(self) -> str:
+        """Add CSS Classes for buttons """
+        return self._config_get("disabled")
+
+    @disabled.setter
+    def disabled(self, values: str):
+        self._config(values)
+
+    @property
+    def delimiter(self) -> str:
+        """Add CSS Classes for buttons """
+        return self._config_get(",")
+
+    @delimiter.setter
+    def delimiter(self, values: str):
+        self._config(values)
+
+    @property
+    def max(self) -> str:
+        """The value tag from the button definition """
+        return self._config_get()
+
+    @max.setter
+    def max(self, value: int):
+        self._config(value)
+
+    @property
+    def value(self) -> str:
+        """The value tag from the button definition """
+        return self._config_get("value")
+
+    @value.setter
+    def value(self, values: str):
+        self._config(values)
+
+    @property
+    def selected(self) -> str:
+        """Class name for the selected components """
+        return self._config_get("selected")
+
+    @selected.setter
+    def selected(self, value: str):
+        self._config(value)

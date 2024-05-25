@@ -8,16 +8,15 @@
     display: inline-block ;
     -webkit-appearance: none ;
     -moz-appearance: none ;
-    border: 1px solid #f4f9fc ;
+    border: 1px solid var(--theme) ;
     color: inherit ;
 }
 
 .html-button:hover {
     text-decoration: none ;
     cursor: pointer ;
-    background-color: #607d8b !IMPORTANT ;
+    background-color: var(--theme) !IMPORTANT ;
     color: #FFFFFF !IMPORTANT ;
-    border: 1px solid #607d8b !IMPORTANT ;
 }
 
 .html-button:focus {
@@ -34,4 +33,15 @@
 
 .html-button:empty {
     cursor: none ;
+}
+
+.html-button.selected {
+    color: var(--white) !IMPORTANT ;
+    border-color: var(--theme-dark) !IMPORTANT ;
+    background-color: var(--theme-dark) !IMPORTANT;
+}
+
+.html-button-loader {
+    margin-left: 2px ;
+    margin-right: 6px ;
 }

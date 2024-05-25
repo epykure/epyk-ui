@@ -377,7 +377,7 @@ class Menus:
     div.icons = icons
     return div
 
-  def buttons(self, data: list = None, color: str = None, width: Union[tuple, int] = (100, "%"),
+  def buttons(self, data: list = None, color: str = None, width: Union[tuple, int] = ("auto", ""),
               height: Union[tuple, int] = (None, 'px'), html_code: str = None,
               helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
     """  
@@ -404,11 +404,8 @@ class Menus:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_button_css = {"button_css": {"border-radius": 0, "border": "0px solid black"}}
-    options = options or {}
-    dfl_button_css.update(options)
     component = html.HtmlButton.Buttons(
-      self.page, data or [], color, width, height, html_code, helper, dfl_button_css, profile)
+      self.page, data or [], color, width, height, html_code, helper, options or {}, profile)
     component.css({"border": "1px solid %s" % component.page.theme.greys[4], "padding": "2px"})
     html.Html.set_component_skin(component)
     return component

@@ -14,6 +14,7 @@ from epyk.core.css.styles.attributes import Commons, Body, Empty
 from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar, CssStylesPage
 from epyk.core.py import OrderedSet
 from epyk.fwk.bs import CssClasses as BsCssClasses
+from epyk.core.js.Imports import string_to_base64
 
 
 class ClassPage:
@@ -38,20 +39,18 @@ class ClassPage:
 
     @property
     def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
-        """
-        The internal class used to put a custom Style to this object.
+        """The internal class used to put a custom Style to this object.
 
         Only 1 CSS class can be added to an HTML object.
         """
         if self._css_class is None:
             self._css_class = Classes.CatalogDiv.CatalogDiv(
-                self.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
+                self.page, self.classList['main'], html_id=self.component.html_code).no_border()
         return self._css_class
 
     @property
     def globals(self) -> Defaults_css.GlobalStyle:
-        """
-        Reference for all the global setting in the page.
+        """Reference for all the global setting in the page.
 
         This should be changed in order to be the proxy to the Default CSS settings in the framework.
         Changing this should only impact the report default settings.
@@ -64,29 +63,28 @@ class ClassPage:
 
     @property
     def scrollbar_webkit(self) -> CssStyleScrollbar.CssWebkitScrollbar:
-        """ Scrollbars predefined styles. """
+        """Scrollbars predefined styles. """
         if not self.__webkitscrollbar:
             self.__webkitscrollbar = CssStyleScrollbar.CssWebkitScrollbar(self.page)
         return self.__webkitscrollbar
 
     @property
     def scrollbar_webkit_thumb(self) -> CssStyleScrollbar.CssWebkitScrollbarThumb:
-        """ Scrollbars predefined styles. """
+        """Scrollbars predefined styles. """
         if not self.__webkitscrollbar_thumb:
             self.__webkitscrollbar_thumb = CssStyleScrollbar.CssWebkitScrollbarThumb(self.page)
         return self.__webkitscrollbar_thumb
 
     @property
     def scrollbar_webkit_track(self):
-        """ Scrollbars predefined styles. """
+        """Scrollbars predefined styles. """
         if not self.__webkitscrollbar_track:
             self.__webkitscrollbar_track = CssStyleScrollbar.CssWebkitScrollbarTrack(self.page)
         return self.__webkitscrollbar_track
 
     @property
     def selection(self) -> CssStyleScrollbar.CssWebkitSelection:
-        """
-        Selection predefined style (background color based on the selected theme).
+        """Selection predefined style (background color based on the selected theme).
 
         Related Pages:
 
@@ -98,8 +96,7 @@ class ClassPage:
 
     @property
     def moz_selection(self) -> CssStyleScrollbar.CssWebkitMozSelection:
-        """
-        Selection predefined style (background color based on the selected theme).
+        """Selection predefined style (background color based on the selected theme).
 
         Related Pages:
 
@@ -110,8 +107,7 @@ class ClassPage:
         return self.__moz_selection
 
     def contenteditable(self) -> CssStylesPage.CssPageContentEditable:
-        """
-        Set the border color of the editable content according to the selected theme.
+        """Set the border color of the editable content according to the selected theme.
 
         Related Pages:
 
@@ -136,20 +132,19 @@ class ClassPage:
 
     @property
     def defaults(self):
-        """ The Default CSS Attributes in the framework. """
+        """The Default CSS Attributes in the framework. """
         return Defaults_css
 
     @property
     def add_classes(self) -> Classes.Catalog:
-        """ Property to get access to the catalog of CSS classes to be added to the HTML class tag component. """
+        """Property to get access to the catalog of CSS classes to be added to the HTML class tag component. """
         if self.__cls_catalog is None:
             self.__cls_catalog = Classes.Catalog(self.page, self.classList)
         return self.__cls_catalog._class_type('main')
 
     @property
     def define_classes(self) -> Classes.Catalog:
-        """
-        Property to get access to the catalog of CSS classes to be loaded in the page.
+        """Property to get access to the catalog of CSS classes to be loaded in the page.
 
         Those classes will not be automatically added to any HTML tag and they need to be added manually.
         """
@@ -158,7 +153,7 @@ class ClassPage:
         return self.__cls_catalog._class_type('other')
 
     def get_classes(self):
-        """ Returns the list of Internal and bespoke classes to be added to the class HTML table on the component. """
+        """Returns the list of Internal and bespoke classes to be added to the class HTML table on the component. """
         for css_cls in self.classList.values():
             for c in css_cls:
                 if hasattr(c, 'get_ref'):
@@ -166,7 +161,7 @@ class ClassPage:
         return self.classList
 
     def get_classes_css(self):
-        """ Attach the predefined styles for the scrollbar and selection then return all the classes. """
+        """Attach the predefined styles for the scrollbar and selection then return all the classes. """
         self.classList['other'].add(self.scrollbar_webkit)
         self.classList['other'].add(self.scrollbar_webkit_thumb)
         self.classList['other'].add(self.scrollbar_webkit_track)
@@ -182,8 +177,7 @@ class ClassPage:
 
     def custom_class(self, css_attrs: dict, classname: str = None, selector: str = None, is_class: bool = True,
                      important: bool = False) -> dict:
-        """
-        This will create dynamic CSS class which will not be added to any component.
+        """This will create dynamic CSS class which will not be added to any component.
 
         The class definition can then be reused in multiple components.
         The CSS style of the body can only be done using predefined classes or inline CSS.
@@ -230,30 +224,49 @@ class ClassHtml:
 
     @property
     def varName(self) -> str:
-        """ Unique identifier for the CSS object on the Javascript side. """
-        return "%s_css" % self.component.htmlCode
+        """Unique identifier for the CSS object on the Javascript side. """
+        return "%s_css" % self.component.html_code
 
     @property
     def css(self) -> Commons:
-        """ Property to the underlying CSS definition to be added to the style HTML tag of a component. """
+        """Property to the underlying CSS definition to be added to the style HTML tag of a component. """
         if self._css_struct is None:
             self._css_struct = Commons(self.component)
         return self._css_struct
 
     @property
+    def files(self) -> Optional[dict]:
+        """Read / Only Internal files definition used to set the component styles"""
+        if self.component.style_urls:
+            return {str(fs): fs.exists() for fs in self.component.style_urls}
+
+        return {}
+
+    @property
+    def classes(self) -> Optional[dict]:
+        """Predefined CSS Classes for the component"""
+        if self.component.style_refs:
+            return self.component.style_refs
+
+        return {}
+
+    def from_str(self, content: str, replace: bool = True, dsc: str = None):
+        if replace:
+            self.component.style_urls = None
+        self.page.headers.links.stylesheet(
+            "data:text/css;base64,%s" % string_to_base64(content), title=dsc or self.component.__class__.__name__)
+
+    @property
     def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
-        """
-        The internal class used to put a custom Style to this object.
-        Only 1 CSS class can be added to an HTML object.
+        """The internal class used to put a custom Style to this object. Only 1 CSS class can be added to an HTML object
         """
         if self._css_class is None:
             self._css_class = Classes.CatalogDiv.CatalogDiv(
-                self.page, self.classList['main'], html_id=self.component.htmlCode).no_border()
+                self.page, self.classList['main'], html_id=self.component.html_code).no_border()
         return self._css_class
 
     def shadows(self, num: int):
-        """
-        Shortcut to various shadow styles.
+        """Shortcut to various shadow styles.
 
         Related Pages:
 
@@ -294,32 +307,31 @@ class ClassHtml:
 
     @property
     def configs(self) -> GrpConfigs.ClsConfigs:
-        """ All predefined CSS configurations. """
+        """All predefined CSS configurations."""
         return GrpConfigs.ClsConfigs(self.component)
 
     @property
     def defaults(self):
-        """ The Default CSS Attributes in the framework. """
+        """The Default CSS Attributes in the framework. """
         return Defaults_css
 
     @property
     def effects(self) -> Effects.Effects:
-        """ Add animation effect to the component based either on a bespoke definition or a predefined one. """
+        """Add animation effect to the component based either on a bespoke definition or a predefined one."""
         if self.__cls_effects is None:
             self.__cls_effects = Effects.Effects(self.page, self.component)
         return self.__cls_effects
 
     @property
     def add_classes(self) -> Classes.Catalog:
-        """ Property to get access to the catalog of CSS classes to be added to the HTML class tag component. """
+        """Property to get access to the catalog of CSS classes to be added to the HTML class tag component."""
         if self.__cls_catalog is None:
             self.__cls_catalog = Classes.Catalog(self.page, self.classList)
         return self.__cls_catalog._class_type('main')
 
     @property
     def define_classes(self) -> Classes.Catalog:
-        """
-        Property to get access to the catalog of CSS classes to be loaded in the page.
+        """Property to get access to the catalog of CSS classes to be loaded in the page.
         Those classes will not be automatically added to any HTML tag and they need to be added manually.
         """
         if self.__cls_catalog is None:
@@ -327,8 +339,7 @@ class ClassHtml:
         return self.__cls_catalog._class_type('other')
 
     def add_class(self, name: str):
-        """
-        Add bespoke class to a component.
+        """Add bespoke class to a component.
 
         Usage::
 
@@ -345,8 +356,7 @@ class ClassHtml:
         self.classList['main'].add(name)
 
     def extend_class(self, names: List[str]):
-        """
-        Append classes to the class attribute.
+        """Append classes to the class attribute.
 
         :param names: The CSS classes to be added to the main definition
         """
@@ -354,8 +364,7 @@ class ClassHtml:
             self.classList['main'].extend(names)
 
     def attr(self, key: str, name: str, dflt: Optional[str] = None, suffix: str = "temp"):
-        """
-        The attr() function returns the value of an attribute of the selected elements.
+        """The attr() function returns the value of an attribute of the selected elements.
 
         Related Pages:
 
@@ -375,8 +384,7 @@ class ClassHtml:
             self.__css_virtual[key_selector].update({key: "attr(%s)" % name})
 
     def attr_content(self, name: str):
-        """
-        Use of the attr function for the before content value.
+        """Use of the attr function for the before content value.
         This is the unique valid use of this CSS function in most of the browser.
 
         Related Pages:
@@ -388,8 +396,7 @@ class ClassHtml:
         self.attr("content", name, suffix='before')
 
     def hover(self, attrs: dict):
-        """
-        Add onmousever style.
+        """Add onmousever style.
 
         :param attrs: The CSS attributes for the mouse hover style
         """
@@ -408,8 +415,7 @@ class ClassHtml:
             self.css.margin_right = "%s%%" % percent
 
     def selector(self, suffix: str, attrs: dict):
-        """
-        Set the selector name.
+        """Set the selector name.
 
         :param suffix: The selector suffix value
         :param attrs: The CSS attributes
@@ -421,8 +427,7 @@ class ClassHtml:
 
     def add_custom_class(self, css_attrs: dict, classname: str = None, selector: str = None,
                          is_class: bool = True, to_component: bool = False):
-        """
-        This will create dynamic CSS class which will not be added to any component.
+        """This will create dynamic CSS class which will not be added to any component.
         The class definition can then be reused in multiple components.
 
         The CSS style of the body can only be done using predefined classes or inline CSS.
@@ -461,8 +466,7 @@ class ClassHtml:
         return cls_def
 
     def no_class(self):
-        """
-        Clear all the Style, Classes and CSS attributes for the HTML component.
+        """Clear all the Style, Classes and CSS attributes for the HTML component.
         Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
 
         :return: self to allow the chaining.
@@ -473,8 +477,7 @@ class ClassHtml:
         return self
 
     def clear_class(self, classname: str):
-        """
-        Remove a class from the main class object attribute.
+        """Remove a class from the main class object attribute.
 
         :param classname: The CSS class name to be removed for the component.
 
@@ -489,8 +492,7 @@ class ClassHtml:
         return self
 
     def clear_style(self, persist_attrs: dict = None, keep_attrs: list = None):
-        """
-        Clear all the inline CSS styles defined for the component.
+        """Clear all the inline CSS styles defined for the component.
 
         :param persist_attrs: Optional. CSS attributes to be maintained
         :param keep_attrs: Optional. CSS attributes to keep from the initial state
@@ -513,8 +515,7 @@ class ClassHtml:
         return self
 
     def clear(self, no_default: bool = False):
-        """
-        Remove the predefined class and set the default one for the div components.
+        """Remove the predefined class and set the default one for the div components.
 
         :param no_default: Optional. Remove the default class
 
@@ -533,8 +534,7 @@ class ClassHtml:
         return self
 
     def clear_all(self, no_default: bool = False):
-        """
-        Clear all the Style, Classes and CSS attributes for the HTML component.
+        """Clear all the Style, Classes and CSS attributes for the HTML component.
 
         Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
         Set the default style to no margin and no padding.
@@ -548,8 +548,7 @@ class ClassHtml:
         return self
 
     def builder(self, name: str, js_frg: str):
-        """
-        Attach a Javascript Builder to a CSS style.
+        """Attach a Javascript Builder to a CSS style.
 
         It will be triggered only once for all the HTML components using this style.
 
@@ -560,7 +559,7 @@ class ClassHtml:
         return self
 
     def get_classes(self):
-        """ Returns the list of Internal and bespoke classes to be added to the class HTML table on the component. """
+        """Returns the list of Internal and bespoke classes to be added to the class HTML table on the component. """
         if self.__css_virtual and '_attrs' not in self.__css_virtual:
             self.__css_virtual["_attrs"] = self.__css_virtual.get('_temp', {})
             self.__css_virtual["_attrs"].update(dict(self.css.attrs))
@@ -605,8 +604,7 @@ class ClassHtml:
 
     @property
     def bs(self) -> BsCssClasses.Style:
-        """
-        Add shortcut to the Bootstrap predefined styles.
+        """Add shortcut to the Bootstrap predefined styles.
 
         Related Pages:
 
@@ -621,7 +619,7 @@ class ClassHtmlEmpty(ClassHtml):
 
     @property
     def css(self) -> Empty:
-        """ Property to the underlying CSS definition to be added to the style HTML tag of a component. """
+        """Property to the underlying CSS definition to be added to the style HTML tag of a component."""
         if self._css_struct is None:
             self._css_struct = Empty(self.component, page=self.page)
         return self._css_struct
