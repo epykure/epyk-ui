@@ -1259,6 +1259,7 @@ class OptionGeoLabel(Options):
     def normal(self) -> OptionStyleNormal:
         return self._config_sub_data("normal", OptionStyleNormal)
 
+
 class OptionGeoScaleLimit(Options):
 
     @property

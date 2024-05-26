@@ -406,7 +406,7 @@ class Menus:
     height = Arguments.size(height, unit="px")
     component = html.HtmlButton.Buttons(
       self.page, data or [], color, width, height, html_code, helper, options or {}, profile)
-    component.css({"border": "1px solid %s" % component.page.theme.greys[4], "padding": "2px"})
+    component.css({"border": "1px solid %s" % component.page.theme.greys[4], "padding": "2px", "min-height": "40px"})
     html.Html.set_component_skin(component)
     return component
 

@@ -8,6 +8,7 @@ from epyk.core.py import primitives
 from epyk.core.py import types
 
 from epyk.core.html import Html
+from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptButton
 from epyk.core.html import Defaults as Default_html
 
@@ -652,7 +653,7 @@ class IconEdit(Html.Html):
             "tag": self.tag, "content": self.get_attrs(css_class_names=self.style.get_classes())}
 
 
-class Buttons(Html.Html):
+class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Buttons'
     tag = "div"
     _option_cls = OptButton.OptionsButtons

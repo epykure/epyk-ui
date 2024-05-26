@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from typing import List, Optional, Dict
-from epyk.core.html.options import Options
+from typing import List, Optional, Dict, Union
+from epyk.core.html.options import Options, OptionsWithTemplates
 from epyk.core.html import Defaults as html_defaults
 
 
@@ -377,8 +377,17 @@ class OptionsButtonMenu(Options):
         self._config(values)
 
 
-class OptionsButtons(Options):
+class OptionsButtons(OptionsWithTemplates):
     component_properties = ("value", "css", "selected", "delimiter", "classes", "disabled")
+
+    @property
+    def attributes(self) -> dict:
+        """Add Other any HTML attributes for sub buttons"""
+        return self._config_get()
+
+    @attributes.setter
+    def attributes(self, values: dict):
+        self._config(values)
 
     @property
     def classes(self) -> Optional[List[str]]:
@@ -399,17 +408,8 @@ class OptionsButtons(Options):
         self._config(values)
 
     @property
-    def disabled(self) -> str:
-        """Add CSS Classes for buttons """
-        return self._config_get("disabled")
-
-    @disabled.setter
-    def disabled(self, values: str):
-        self._config(values)
-
-    @property
     def delimiter(self) -> str:
-        """Add CSS Classes for buttons """
+        """Add content delimiter to generate a string """
         return self._config_get(",")
 
     @delimiter.setter
@@ -417,12 +417,48 @@ class OptionsButtons(Options):
         self._config(values)
 
     @property
+    def disabled(self) -> str:
+        """ASet the disable flag """
+        return self._config_get("disabled")
+
+    @disabled.setter
+    def disabled(self, values: str):
+        self._config(values)
+
+    @property
     def max(self) -> str:
-        """The value tag from the button definition """
+        """Set the maximum value to be selected"""
         return self._config_get()
 
     @max.setter
     def max(self, value: int):
+        self._config(value)
+
+    @property
+    def selected(self) -> str:
+        """Define the seleted flag from the record """
+        return self._config_get("selected")
+
+    @selected.setter
+    def selected(self, value: str):
+        self._config(value)
+
+    @property
+    def style(self) -> Union[str, dict]:
+        """Field from record for CSS Style of classes """
+        return self._config_get()
+
+    @style.setter
+    def style(self, values: Union[str, dict]):
+        self._config(values)
+
+    @property
+    def title(self) -> str:
+        """Define field for the component tooltip value"""
+        return self._config_get()
+
+    @title.setter
+    def title(self, value: str):
         self._config(value)
 
     @property
@@ -433,12 +469,3 @@ class OptionsButtons(Options):
     @value.setter
     def value(self, values: str):
         self._config(values)
-
-    @property
-    def selected(self) -> str:
-        """Class name for the selected components """
-        return self._config_get("selected")
-
-    @selected.setter
-    def selected(self, value: str):
-        self._config(value)

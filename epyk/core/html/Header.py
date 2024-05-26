@@ -703,6 +703,8 @@ class Header:
     for link in self._links:
       if "media" in link:
         result.append("<link rel='%(rel)s' type='%(type)s' href='%(href)s' media='%(media)s'>" % link)
+      elif "title" in link:
+        result.append("<link rel='%(rel)s' title='%(title)s' type='%(type)s' href='%(href)s'>" % link)
       else:
         result.append("<link rel='%(rel)s' type='%(type)s' href='%(href)s'>" % link)
     result.extend(self._scripts)

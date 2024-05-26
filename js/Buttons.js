@@ -35,6 +35,15 @@ function buttons(htmlObj, data, options){
             if(options.classes){options.classes.forEach(function (className) {btn.classList.add(className);});}
             if(rec[options.selected]){btn.classList.add(options.selected)} ;
             if(rec[options.disabled]){btn.disabled = rec[options.disabled]} ;
+            if(rec[options.title]){btn.setAttribute("title", rec[options.title])} ;
+            if(rec[options.style]){
+                if(typeof rec[options.style] === "object"){
+                    for(var k in rec[options.style]){btn.style[k] = rec[options.style][k]}
+                }
+                else {rec[options.style].split(" ").forEach(function (className) {btn.classList.add(className);})}
+            } ;
+            if(rec[options.attributes]){
+                for(var k in rec[options.attributes]){btn.setAttribute(k, rec[options.attributes][k])}} ;
             htmlObj.appendChild(btn)
         })
     }
