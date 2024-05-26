@@ -1,7 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import logging
 
-from typing import Optional, List
+from typing import Optional, List, Dict
 from epyk.core.py import primitives
 
 from epyk.core.css import Classes
@@ -244,13 +245,52 @@ class ClassHtml:
 
     @property
     def classes(self) -> Optional[dict]:
-        """Predefined CSS Classes for the component"""
+        """Predefined CSS Classes for the component.
+
+        Usage::
+
+            btns = page.ui.menus.buttons(["A", "B", "C", "D"], html_code="group")
+            btns.style.classes_map({"html-button": "html-button-new", "Other": "test"}, replace=False)
+        """
         if self.component.style_refs:
             return self.component.style_refs
 
         return {}
 
+    def classes_map(self, ovrs: Dict[str, str], replace: bool = True):
+        """Change the component pre defined classes
+
+        Usage::
+
+            btns = page.ui.menus.buttons(["A", "B", "C", "D"], html_code="group")
+            btns.options.classes = ["html-button-new"]
+
+        :param ovrs: Dictionary with the new class values
+        :param replace: Change the style_refs definition for all components
+        """
+        if not replace:
+            self.component.style_refs = dict(self.component.style_refs)
+        for k, v in ovrs.items():
+            if k not in self.component.style_refs:
+                logging.warning("Style | GrpCls | Missing definition %s for in style_refs for %s" % (k, self.component.__class__.__name__))
+            self.component.style_refs[k] = v
+
     def from_str(self, content: str, replace: bool = True, dsc: str = None):
+        """Set new CSS content for a component.
+        This will receive a string and it will create a base64 content added to the HTML page header.
+
+        Usage::
+
+            btns2 = page.ui.menus.buttons(html_code="group2")
+            btns2.style.from_str('''.html-button-new {
+                color: white; background-color: red ; border-color: red ; min-width: 80px ;}
+            .html-button-new.selected {color: green;}
+            ''')
+
+        :param content: New CSS content
+        :param replace: Replace the definition at class definition level
+        :param dsc: content description to be added to the header
+        """
         if replace:
             self.component.style_urls = None
         self.page.headers.links.stylesheet(
