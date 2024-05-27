@@ -13,6 +13,7 @@ import logging
 import base64
 import traceback
 from typing import Union, Optional, List, Dict
+from pathlib import Path
 
 try:
     from urllib.parse import urlparse, urlencode
@@ -22,6 +23,9 @@ except ImportError:
     from urlparse import urlparse
     from urllib import urlencode
     from urllib2 import urlopen, Request, HTTPError, ProxyHandler, build_opener, install_opener
+
+from epyk.conf import global_settings
+
 
 # To fully disable the automatic pip install request when a package is missing
 AUTOLOAD = False
@@ -2453,6 +2457,13 @@ def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = Fals
     :param with_prefix: Optional. Flag to specify if the full version number is required (with the prefix)
     """
     details = dict(script_details)
+    if global_settings.PACKAGES_PATH is not None:
+        local_path = Path(global_settings.PACKAGES_PATH) / details['script']
+        if local_path.exists():
+            logging.debug("IMPORTS | Package | file %s used from %s" % (
+                details['script'], global_settings.PACKAGES_PATH))
+            return str(local_path)
+
     details["version"] = script_version(alias, script_details, with_prefix)
     details["path"] = details["path"] % details
     if "cdnjs" not in details:

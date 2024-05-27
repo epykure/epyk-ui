@@ -2,7 +2,9 @@ from . import themes
 from .styles import effects
 from . import styles, Icons
 from . import Defaults as Defaults_css
+from ...conf import global_settings
 
+import logging
 from typing import List
 from pathlib import Path
 import re
@@ -27,8 +29,16 @@ def css_files_loader(
     css_formatted = []
     if file_path is not None:
         for css_file in file_path:
+            path_css_file = Path(css_file)
+            if global_settings.NATIVE_CSS_PATH is not None:
+                over_path = Path(global_settings.NATIVE_CSS_PATH) / path_css_file.name
+                if over_path.exists():
+                    logging.debug("NATIVE | CSS | file %s used from %s" % (
+                        path_css_file.name, global_settings.NATIVE_CSS_PATH))
+                    css_file = str(over_path)
+                    path_css_file = over_path
             css_file = str(css_file)
-            if Path(css_file).exists():
+            if path_css_file.exists():
                 if css_file.endswith(".css"):
                     css_formatted.append("/* CSS From file %s */" % css_file)
                     with open(css_file) as fp:

@@ -11,6 +11,7 @@ import inspect
 
 from pathlib import Path
 from typing import Union, Optional, List, Any
+from epyk.conf import global_settings
 from epyk.core.py import primitives, types
 
 from epyk.core.js import JsUtils
@@ -102,13 +103,15 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
             if name is not None:
                 component.builder_name = name
             if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
-                native_path = os.environ.get("NATIVE_JS_PATH")
+                native_path = global_settings.NATIVE_JS_PATH
                 if group is not None:
                     internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native", group)
                 else:
                     internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
                 if native_path is None:
                     native_path = internal_native_path
+                else:
+                    logging.debug("NATIVE | JS | file %s.js used from %s" % (component.builder_name, native_path))
                 native_builder = Path(native_path, "%s.js" % component.builder_name)
                 internal_native_builder = Path(internal_native_path, "%s.js" % component.builder_name)
                 if native_builder.exists():
@@ -147,7 +150,7 @@ def jformatter(group: str = None, name: str = None, refresh: bool = False, async
       if name is not None:
         component.builder_name = name
       if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
-        native_path = os.environ.get("NATIVE_JS_PATH")
+        native_path = global_settings.NATIVE_JS_PATH
         if group is not None:
           internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native", group)
         else:

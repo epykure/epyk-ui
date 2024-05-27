@@ -11,6 +11,7 @@ from epyk.core.js import Imports
 from epyk.core.css import Colors
 from epyk.core.js.packages import until_version
 from epyk.core.js import JsUtils
+from epyk.conf import global_settings
 
 
 class ChartJs:
@@ -383,44 +384,33 @@ class ChartJs:
     :param options: Optional. Specific Python options available for this component
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     """
+    npm_path = global_settings.NPM_NODE_MODULES_PATH or Imports.JSDELIVER
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     if self.page.ext_packages is None:
       self.page.ext_packages = {}
     chartjs_defined_package = {
       'funnel-chart-js': {
-        'version': '1.1.2',
+        'version': options.get("version", '1.1.3'),
         'req': [{'alias': 'chart.js'}],
         'website': 'https://www.npmjs.com/package/chartjs-plugin-funnel',
         'modules': [
-          {'script': 'chart.funnel.min.js', 'path': '',
-           'cdnjs': '%s/funnel-chart-js/dist/' % options['npm_path'].replace("\\", "/")},
+          {'script': 'chart.funnel.min.js', 'path': 'funnel-chart-js/dist/', 'cdnjs': npm_path},
         ]},
       'chartjs-chart-sankey': {
-        'version': '0.1.3',
+        'version': options.get("version", '0.12.1'),
         'website': 'https://www.npmjs.com/package/chartjs-chart-sankey',
         'req': [{'alias': 'chart.js'}],
         'modules': [
-          {'script': 'chartjs-chart-sankey.min.js', 'path': '',
-           'cdnjs': '%s/chartjs-chart-sankey/dist/' % options['npm_path'].replace("\\", "/")}
+          {'script': 'chartjs-chart-sankey.min.js', 'path': 'chartjs-chart-sankey/dist/', 'cdnjs': npm_path}
         ]}
     }
     if options.get('npm') is not None and options['npm'] not in chartjs_defined_package:
-      folder = "dist"
-      if not os.path.exists('%s/%s/%s' % (options['npm_path'].replace("\\", "/"), options['npm'], folder)):
-        folder = 'build'
-        if not os.path.exists('%s/%s/%s' % (options['npm_path'].replace("\\", "/"), options['npm'], folder)):
-          text = "Missing module %s/%s/dist or build in the package - use web npm to install package to your app"
-          raise ValueError(text % (options['npm_path'].replace("\\", "/"), options['npm']))
-
       chartjs_defined_package[options['npm']] = {
-        'req': [{'alias': 'chart.js'}], 'version': 'N/A',
+        'req': [{'alias': 'chart.js'}], 'version': options.get("version", 'N/A'),
         'modules': [
-          {'script': '%s.min.js' % options.get('script', options['npm']), 'path': '',
-           'cdnjs': '%s/%s/%s' % (options['npm_path'].replace("\\", "/"), options['npm'], folder)},
-        ]}
-
-      del options['npm_path']
+          {'script': '%s.min.js' % options.get('script', options['npm']),
+           'path': '%s@%%(version)s/%s/' % (options['npm'], options.get('folder', "dist")), 'cdnjs': npm_path}]}
       if 'script' in options:
         del options['script']
 
@@ -429,6 +419,8 @@ class ChartJs:
     options.update({'y_columns': y_columns or [], 'x_axis': x_axis, 'commons': {"opacity": self.opacity}})
     data = self.page.data.chartJs.y(record, y_columns, x_axis)
     bar_chart = graph.GraphChartJs.ChartExts(self.page, width, height, html_code, options, profile)
+    bar_chart.options.type = options["type"]
+    bar_chart._attrs["type"] = options["type"]
     bar_chart.colors(self.page.theme.charts)
     bar_chart.labels(data['labels'])
     for i, d in enumerate(data['datasets']):
