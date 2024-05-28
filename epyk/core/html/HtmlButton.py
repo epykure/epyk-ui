@@ -659,7 +659,6 @@ class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
     _option_cls = OptButton.OptionsButtons
 
     style_urls = [
-        Path(__file__).parent.parent / "css" / "native" / "common-vars.css",
         Path(__file__).parent.parent / "css" / "native" / "html-button.css"
     ]
 

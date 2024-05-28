@@ -1858,6 +1858,23 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
         if self.style_urls is not None:
             style_vars = self.page.theme.all()
             style_vars.update(self.page.body.style.globals.vars())
+            # Add CSS proxy mapping from the body
+            if self.page.body.css_map_files:
+                css_files = self.page.body.css_map_files
+                if global_settings.THEME_SASS_PATH:
+                    css_files = []
+                    for f in self.page.body.css_map_files:
+                        c_file = Path(f)
+                        n_file = Path(global_settings.THEME_SASS_PATH, c_file.name)
+                        if n_file.exists():
+                            logging.debug("NATIVE | CSS | file %s used from %s" % (
+                                c_file.name, global_settings.THEME_SASS_PATH))
+                            css_files.append(n_file)
+                        else:
+                            css_files.append(c_file)
+                css_content = css_files_loader(css_files, style_vars=style_vars)
+                self.page.headers.links.stylesheet(
+                    "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
             css_content = css_files_loader(self.style_urls, style_vars=style_vars)
             if css_content:
                 self.page.properties.css.add_text(css_content, map_id=self.__class__.__name__)
@@ -1900,6 +1917,11 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
 class Body(Html):
     name = "Body"
     tag = "body"
+
+    # Common mapping between the theme variables and the CSS variables.
+    # This mapping file is coming to all the components / style in the framework
+    # CSS Class must be attached to the header with a global scope :root.
+    css_map_files = [Path(__file__).parent.parent / "css" / "native" / "common-vars.css"]
 
     def __init__(self, report, vals, html_code: Optional[str] = None, options: types.OPTION_TYPE = None,
                  profile: types.PROFILE_TYPE = None, css_attrs: dict = None, verbose: bool = False):

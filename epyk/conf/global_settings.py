@@ -4,10 +4,15 @@ import os
 DEBUG = False
 
 # Override path for native internal Js and CSS resources
+# Native CSS is used to override the style_urls defined for certain components
 NATIVE_JS_PATH = os.environ.get("NATIVE_JS_PATH")
 NATIVE_CSS_PATH = os.environ.get("NATIVE_CSS_PATH")
 
 # Theme path will be used by colors and icons function to set default values.
+# This can be used to override paths for:
+#   - the css_map_files defined to the body
+#   - the SASS file for the color themes
+#   - the SASS file used to define the icon references
 THEME_SASS_PATH = os.environ.get("THEME_SASS_PATH")
 
 # Common path with a local copy for the external packages

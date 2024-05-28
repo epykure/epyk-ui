@@ -190,7 +190,7 @@ class RegisteredThemes:
         :return:
         """
         for t in REGISTERED_THEMES:
-            if t.name == name:
+            if t["class"].name == name:
                 return t["class"]
 
     def set(self, name: str, index: int = 5, step: int = 1, ovr_attrs: dict = None, dark: bool = False):
@@ -237,6 +237,8 @@ def set_theme(name: str, dark: bool = False, index: int = 5, step: int = 1):
 
     :param name: Theme's reference
     :param dark: Set dark mode
+    :param index:
+    :param step:
     """
     names = []
     for t in REGISTERED_THEMES:
@@ -272,3 +274,4 @@ def get_theme() -> Optional[Theme.Theme]:
                 return r["class"]()
 
             return r["class"]
+

@@ -55,7 +55,11 @@ class Theme:
         sys_color_ranges = ["warning", "danger", "success", "info"]
         self.__colors = {"all": {}}
         for c in sys_categories:
-            self.__colors[c] = getattr(self, "_%s" % c, [])
+            if not hasattr(self, "_%s" % c):
+                print("RRRR: %s" % c)
+                print(getattr(self, "_Theme__%s" % c, []))
+            else:
+                self.__colors[c] = getattr(self, "_%s" % c, [])
         for c in sys_color_ranges:
             self.__colors[c] = ColorRange(getattr(self, "_%s" % c, []))
         self.chart_categories = []
@@ -63,6 +67,11 @@ class Theme:
         self.step = step
         if ovr_attrs is not None:
             self.__colors.update(ovr_attrs)
+        if self.other_groups:
+            for k, c in self.other_groups.items():
+                self.__colors["all"][k] = {}
+                for i, v in enumerate(c, start=1):
+                    self.__colors["all"][k]["%s-%s" % (k, i)] = v
 
     def notch(self, value: int = None, step: int = None) -> str:
         """Get the base color from the theme.
@@ -346,8 +355,18 @@ class Theme:
     def all(self) -> dict:
         colors_code = {}
         # Add main colors theme
-        for k, v in THEME_REFERENCE.items():
-            colors = getattr(self, k, None)
+        for k in self.groups:
+            v = "%s-%%s" % k
+            if k == "theme":
+                colors = getattr(self, "_colors", None)
+                v = "theme-%s"
+            elif hasattr(self, "_%s" % k):
+                colors = getattr(self, "_%s" % k)
+            elif hasattr(self, "_%ss" % k):
+                colors = getattr(self, "_%ss" % k)
+                v = "%ss-%%s" % k
+            else:
+                colors = self.category(k)
             if colors:
                 for i, c in enumerate(colors):
                     colors_code[v % i] = c
@@ -358,8 +377,6 @@ class Theme:
                 else:
                     colors_code[v[:-3]] = colors_code[v % int(len(colors) / 2)]
                     colors_code[v % "light"] = colors_code[v % (int(len(colors) / 2) - self.step)]
-        for v in self.__colors["all"].values():
-            colors_code.update(v)
         return colors_code
 
 

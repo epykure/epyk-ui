@@ -65,7 +65,6 @@ class Select(Html.Html):
     _option_cls = OptSelect.OptionsSelectJs
 
     style_urls = [
-        Path(__file__).parent.parent / "css" / "native" / "common-vars.css",
         Path(__file__).parent.parent / "css" / "native" / "html-select.css"
     ]
 

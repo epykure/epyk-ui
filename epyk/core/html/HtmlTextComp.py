@@ -495,7 +495,6 @@ class ContentsTable(Html.Html):
     _option_cls = OptText.OptContents
 
     style_urls = [
-        Path(__file__).parent.parent / "css" / "native" / "common-vars.css",
         Path(__file__).parent.parent / "css" / "native" / "contents-table.css"
     ]
     style_refs = {

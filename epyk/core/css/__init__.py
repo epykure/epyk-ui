@@ -44,8 +44,11 @@ def css_files_loader(
                     with open(css_file) as fp:
                         css_data = " ".join([line.strip() for line in fp])
                         css_data = css_data.replace(":host", "")
-                        for k, v in style_vars.items():
-                            css_data = css_data.replace("$%s" % k, v)
+                        for k in sorted(style_vars, key=lambda k: len(k), reverse=True):
+                            # Important to replace by starting with the longest string to avoid issues
+                            css_data = css_data.replace("$%s" % k, style_vars[k])
+                        if "$" in css_data:
+                            logging.warning("CSS | Loader | Issue when processing file: %s" % css_file)
                         for m in regex.findall(css_data):
                             if selector is not None:
                                 container_ref = "div[name=%s]" % selector
@@ -77,7 +80,7 @@ def export_scss_files(out_path: str = None):
 
     :param out_path: The export path. If None it will take the current directory
     """
-    out_path = out_path or Path.cwd()
+    out_path = out_path or global_settings.THEME_SASS_PATH or Path.cwd()
     out_theme_path = Path(out_path, "%s.SCSS" % Defaults_css.THEME.upper())
     scss_colors(file_path=str(out_theme_path), theme=themes.get_theme(), override=True)
 
@@ -103,7 +106,7 @@ def scss_colors(file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None
         with open(out_path, "w") as fp:
             fp.write("/* Auto generated SCSS files for colors definition */ \n")
             if theme is None:
-                theme = themes.Theme.ThemeDefault()
+                theme = themes.get_theme()
             mapped_groups = {"theme": "colors", "grey": "greys"}
             for group in theme.groups:
                 fp.write("\n/* Colors codes for %s */ \n" % group)

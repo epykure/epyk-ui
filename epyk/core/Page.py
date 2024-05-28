@@ -480,7 +480,7 @@ class Report:
           page.theme = themes.ThemeBlue.Blue
         """
         if self._theme is None:
-            self._theme = themes.Theme.ThemeDefault()
+            self._theme = themes.get_theme()
         return self._theme
 
     @theme.setter
