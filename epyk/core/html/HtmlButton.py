@@ -681,6 +681,9 @@ class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
         super(Buttons, self).__init__(page, data, html_code=html_code,
                                       css_attrs={"width": width, "height": height, 'color': color},
                                       profile=profile, verbose=verbose)
+        if html_code in self.page.inputs:
+            self._vals = data
+            self.options.selection = self.page.inputs[html_code].split(self.options.delimiter)
         self.add_helper(helper)
 
     @property

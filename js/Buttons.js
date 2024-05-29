@@ -36,6 +36,8 @@ function buttons(htmlObj, data, options){
             if(rec[options.selected]){btn.classList.add(options.selected)} ;
             if(rec[options.disabled]){btn.disabled = rec[options.disabled]} ;
             if(rec[options.title]){btn.setAttribute("title", rec[options.title])} ;
+            if(options.selection && (options.selection.includes(rec[options.value]))){
+                btn.classList.add(options.selected)} ;
             if(rec[options.style]){
                 if(typeof rec[options.style] === "object"){
                     for(var k in rec[options.style]){btn.style[k] = rec[options.style][k]}

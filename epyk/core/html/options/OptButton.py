@@ -436,12 +436,21 @@ class OptionsButtons(OptionsWithTemplates):
 
     @property
     def selected(self) -> str:
-        """Define the seleted flag from the record """
+        """Define the selected flag from the record (it is also the name for the selected class for the CSS)"""
         return self._config_get("selected")
 
     @selected.setter
     def selected(self, value: str):
         self._config(value)
+
+    @property
+    def selection(self) -> List[str]:
+        """Default selection"""
+        return self._config_get()
+
+    @selection.setter
+    def selection(self, values: List[str]):
+        self._config(values)
 
     @property
     def style(self) -> Union[str, dict]:
