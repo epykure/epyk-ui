@@ -964,6 +964,31 @@ class JsWindow:
 
         return JsFncs.JsFunction("%s.getComputedStyle(%s, %s)" % (window_id, element, pseudo_element))
 
+    def getPropertyValue(self, name, element_id: str = ":root", pseudo_element=None, window_id: str = "window"):
+        """Set value for a given style attribute for DOM component on the page.
+
+        `W3School <https://www.w3schools.com/css/css3_variables_javascript.asp>`_
+
+        :param name: CSS Style attribute
+        :param element_id: Optional. Component ID on the page. Default :root
+        :param window_id: Optional. The JavaScript window object.
+        """
+        name = JsUtils.jsConvertData(name, None)
+        element_id = JsUtils.jsConvertData(element_id, None)
+        return JsUtils.jsWrap("%s.getPropertyValue(%s)" % (
+            self.getComputedStyle(JsNodeDom.JsDoms("document").querySelector(element_id), pseudo_element, window_id=window_id).toStr(), name))
+
+    def setProperties(self, values, element_id: str = ":root") -> JsObject.JsObject:
+        """Set style properties for a specific DOM component to the page.
+
+        `W3School <https://www.w3schools.com/css/css3_variables_javascript.asp>`_
+
+        :param values: Js or Python dictionary of values to set
+        :param element_id: Optional. Component ID on the page. Default :root
+        """
+        element_id = JsUtils.jsConvertData(element_id, None)
+        return JsNodeDom.JsDoms("document").querySelector(element_id).setProperties(values)
+
     def getSelection(self, window_id: str = "window"):
         """Returns a Selection object representing the range of text selected by the user.
 

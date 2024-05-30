@@ -816,6 +816,24 @@ class JsDoms(JsObject.JsObject):
         """Shortcut function to emtpy an HTML component. This will only reuse the innerHTML property"""
         return JsObject.JsObject('%s.innerHTML = ""' % self.varId)
 
+    def setProperty(self, name, value):
+        """Set a defined CSS Style property.
+
+        :param name: CSS name
+        :param value: CSS value
+        """
+        name = JsUtils.jsConvertData(name, None)
+        value = JsUtils.jsConvertData(value, None)
+        return JsObject.JsObject('%s.setProperty(%s, %s)' % (self.varId, name, value))
+
+    def setProperties(self, values):
+        """Set CSS Style properties.
+
+        :param values: Dictionary of CSS properties
+        """
+        values = JsUtils.jsConvertData(values, None)
+        return JsObject.JsObject('Object.entries(%s).forEach(([k,v]) => { %s.style.setProperty(k, v) } )' % (values, self.varId))
+
     @property
     def events(self) -> JsDomEvents:
         """Link to the events attached to a Javascript DOM object. """

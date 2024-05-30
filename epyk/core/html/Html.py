@@ -426,10 +426,11 @@ the same signature and return).
         self._jsStyles = {}  # to be deleted - because code => htmlCode, _jsStyles should be renamed
 
         self.innerPyHTML = None  # to be reviewed - not sure this is still useful
-
         self.__options = self._option_cls(component=self, attrs=options, page=self.page)
-
-        self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
+        if self.attr is None:
+            self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
+        else:
+            self.attr.update({'class': self.style.classList['main'], 'css': self.style.css.attrs})
         if css_attrs is not None:
             self.css(css_attrs)
 

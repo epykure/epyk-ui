@@ -17,11 +17,16 @@ class OptionsText(OptionsWithTemplates):
 
       https://www.w3schools.com/tags/att_global_contenteditable.asp
     """
-    return self.component.attr.get("contenteditable", False)
+    if self.component.attr is not None:
+      return self.component.attr.get("contenteditable", False)
+
+    return False
 
   @editable.setter
   def editable(self, flag: bool):
     self.component.page.body.style.contenteditable()
+    if self.component.attr is None:
+      self.component.attr = {}
     self.component.attr["contenteditable"] = flag
     if flag:
       self.spellcheck = False
