@@ -7,6 +7,7 @@ from epyk.core.py import primitives
 
 from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
+from epyk.core.css import css_files_loader
 from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
 from epyk.core.css.styles import GrpConfigs
@@ -37,6 +38,22 @@ class ClassPage:
         if self._css_struct is None:
             self._css_struct = Body(self.component, page=self.page)
         return self._css_struct
+
+    @property
+    def vars(self) -> str:
+        """Return the CSS variables mappings for the loaded theme"""
+        results = []
+        if self.component.css_map_files:
+            style_vars = self.page.theme.all()
+            style_vars.update(self.page.body.style.globals.vars())
+            for f in self.component.css_map_files:
+                with open(f) as fp:
+                    content = fp.read()
+                    for k in sorted(style_vars, key=lambda k: len(k), reverse=True):
+                        # Important to replace by starting with the longest string to avoid issues
+                        content = content.replace("$%s" % k, style_vars[k])
+                    results.append(content)
+        return "".join(results)
 
     @property
     def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
@@ -209,6 +226,21 @@ class ClassPage:
         cls_obj = v_cls(self.page)
         self.classList['other'].add(cls_obj)
         return cls_def
+
+    def add_stylesheet(self, css_files: List[str], title: str = "custom stylesheet"):
+        """Add stylesheets to the style section of the page.
+
+        :param css_files: List of CSS files to attach
+        :param title: Style ID (used as reference for the set of CSS files to avoid adding them multiple times)
+        """
+        style_vars = self.page.theme.all()
+        style_vars.update(self.page.body.style.globals.vars())
+        css_content = css_files_loader(css_files, style_vars=style_vars)
+        if css_content:
+            self.page.body.set_css_maps(style_vars)
+            self.page.properties.css.add_text(css_content, map_id=title)
+        else:
+            logging.warning("CSS | %s | Empty CSS for files: %s" % (title, css_files))
 
 
 class ClassHtml:

@@ -1860,22 +1860,7 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
             style_vars = self.page.theme.all()
             style_vars.update(self.page.body.style.globals.vars())
             # Add CSS proxy mapping from the body
-            if self.page.body.css_map_files:
-                css_files = self.page.body.css_map_files
-                if global_settings.THEME_SASS_PATH:
-                    css_files = []
-                    for f in self.page.body.css_map_files:
-                        c_file = Path(f)
-                        n_file = Path(global_settings.THEME_SASS_PATH, c_file.name)
-                        if n_file.exists():
-                            logging.debug("NATIVE | CSS | file %s used from %s" % (
-                                c_file.name, global_settings.THEME_SASS_PATH))
-                            css_files.append(n_file)
-                        else:
-                            css_files.append(c_file)
-                css_content = css_files_loader(css_files, style_vars=style_vars)
-                self.page.headers.links.stylesheet(
-                    "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
+            self.page.body.set_css_maps(style_vars)
             css_content = css_files_loader(self.style_urls, style_vars=style_vars)
             if css_content:
                 self.page.properties.css.add_text(css_content, map_id=self.__class__.__name__)
@@ -2192,6 +2177,29 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
         """
         self.footer = self.page.ui.div(components, tag="footer", **kwargs)
         return self.footer
+
+    def set_css_maps(self, style_vars: dict):
+        """Attach to the page header the CSS mapping rules.
+
+        :param style_vars: Theme variables
+        """
+        # Add CSS proxy mapping from the body
+        if self.page.body.css_map_files:
+            css_files = self.page.body.css_map_files
+            if global_settings.THEME_SASS_PATH:
+                css_files = []
+                for f in self.page.body.css_map_files:
+                    c_file = Path(f)
+                    n_file = Path(global_settings.THEME_SASS_PATH, c_file.name)
+                    if n_file.exists():
+                        logging.debug("NATIVE | CSS | file %s used from %s" % (
+                            c_file.name, global_settings.THEME_SASS_PATH))
+                        css_files.append(n_file)
+                    else:
+                        css_files.append(c_file)
+            css_content = css_files_loader(css_files, style_vars=style_vars)
+            self.page.headers.links.stylesheet(
+                "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
 
     def __str__(self):
         if getattr(self, '_template', None) is not None:
