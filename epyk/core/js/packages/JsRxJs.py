@@ -10,12 +10,9 @@ LIB_REF = "rxjs."
 
 
 def filter(predicate, thisArg = None):
-    """
-    Filter items emitted by the source Observable by only emitting those that satisfy a specified predicate.
+    """Filter items emitted by the source Observable by only emitting those that satisfy a specified predicate.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/filter
+    `rxjs <https://rxjs.dev/api/operators/filter>`_
 
     :param predicate: A function that evaluates each value emitted by the source Observable.
     :param thisArg: Optional. Undefined. An optional argument to determine the value of this in the predicate function.
@@ -28,12 +25,9 @@ def filter(predicate, thisArg = None):
 
 
 def first(predicate = None, defaultValue = None):
-    """
-    Emits only the first value (or the first value that meets some condition) emitted by the source Observable.
+    """Emits only the first value (or the first value that meets some condition) emitted by the source Observable.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/first
+    `rxjs <https://rxjs.dev/api/operators/first>`_
 
     :param predicate: Optional. Undefined. An optional function called with each item to test for condition matching.
     :param defaultValue: Optional. Undefined. The default value emitted in case no valid value was found on the source.
@@ -49,15 +43,12 @@ def first(predicate = None, defaultValue = None):
 
 
 def last(predicate = None, defaultValue = None):
-    """
-    Returns an Observable that emits only the last item emitted by the source Observable.
+    """Returns an Observable that emits only the last item emitted by the source Observable.
     It optionally takes a predicate function as a parameter, in which case, rather than emitting the last item from
     the source Observable, the resulting Observable will emit the last item from the source Observable that
     satisfies the predicate.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/first
+    `rxjs <https://rxjs.dev/api/operators/first
 
     :param predicate: Optional. Undefined. An optional function called with each item to test for condition matching.
     :param defaultValue: Optional. Undefined. The default value emitted in case no valid value was found on the source.
@@ -73,20 +64,16 @@ def last(predicate = None, defaultValue = None):
 
 
 def map(expr: types.JS_DATA_TYPES):
-    """
-    Applies a given project function to each value emitted by the source Observable,
+    """Applies a given project function to each value emitted by the source Observable,
     and emits the resulting values as an Observable.
     """
     return JsUtils.jsWrap("%smap(%s)" % (LIB_REF, expr))
 
 
 def skip(count: float):
-    """
-    Returns an Observable that skips the first count items emitted by the source Observable.
+    """Returns an Observable that skips the first count items emitted by the source Observable.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/skip
+    `rxjs <https://rxjs.dev/api/operators/skip>`_
 
     :param count: The number of times, items emitted by source Observable should be skipped.
     """
@@ -94,12 +81,9 @@ def skip(count: float):
 
 
 def skipLast(count: float):
-    """
-    Skip a specified number of values before the completion of an observable.
+    """Skip a specified number of values before the completion of an observable.
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/skipLast
+    `rxjs <https://rxjs.dev/api/index/function/skipLast>`_
 
     :param count: Number of elements to skip from the end of the source Observable.
     """
@@ -107,12 +91,9 @@ def skipLast(count: float):
 
 
 def skipUntil(notifier):
-    """
-    Returns an Observable that skips items emitted by the source Observable until a second Observable emits an item.
+    """Returns an Observable that skips items emitted by the source Observable until a second Observable emits an item.
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/skipUntil
+    `rxjs <https://rxjs.dev/api/index/function/skipUntil>`_
 
     :param notifier: An ObservableInput that has to emit an item before the source Observable elements begin to be mirrored by the resulting Observable.
     """
@@ -120,37 +101,28 @@ def skipUntil(notifier):
 
 
 def scan(expr: types.JS_DATA_TYPES):
-    """
-    Useful for encapsulating and managing state.
+    """Useful for encapsulating and managing state.
     Applies an accumulator (or "reducer function") to each value from the source after an initial state is established
     -- either via a seed value (second argument), or from the first value from the source.
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/scan
+    `rxjs <https://rxjs.dev/api/index/function/scan>`_
     """
     return JsUtils.jsWrap("%sscan(%s)" % (LIB_REF, expr))
 
 
 def startWith(values):
-    """
-    Returns an observable that, at the moment of subscription, will synchronously emit all values provided to this
+    """Returns an observable that, at the moment of subscription, will synchronously emit all values provided to this
     operator, then subscribe to the source and mirror all of its emissions to subscribers.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/startWith
+    `rxjs <https://rxjs.dev/api/operators/startWith>`_
     """
     return JsUtils.jsWrap("%sstartWith(%s)" % (LIB_REF, values))
 
 
 def take(count: int):
-    """
-    Emits only the first count values emitted by the source Observable.
+    """Emits only the first count values emitted by the source Observable.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/take
+    `rxjs <https://rxjs.dev/api/operators/take>`_
 
     :param count: The maximum number of next values to emit.
     """
@@ -158,12 +130,9 @@ def take(count: int):
 
 
 def takeLast(count: int):
-    """
-    Waits for the source to complete, then emits the last N values from the source, as specified by the count argument.
+    """Waits for the source to complete, then emits the last N values from the source, as specified by the count argument.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/takeLast
+    `rxjs <https://rxjs.dev/api/operators/takeLast>`_
 
     :param count: The maximum number of values to emit from the end of the sequence of values emitted by the source Observable.
     """
@@ -171,49 +140,37 @@ def takeLast(count: int):
 
 
 def throttleTime(duration: int):
-    """
-    Emits a value from the source Observable, then ignores subsequent source values for duration milliseconds,
+    """Emits a value from the source Observable, then ignores subsequent source values for duration milliseconds,
     then repeats this process.
 
-    Related Pages:
-
-            https://rxjs.dev/api/index/function/throttleTime
+    `rxjs <https://rxjs.dev/api/index/function/throttleTime>`_
     """
     return JsUtils.jsWrap("%sthrottleTime(%s)" % (LIB_REF, duration))
 
 
 def concatAll():
-    """
-    Converts a higher-order Observable into a first-order Observable by concatenating the inner Observables in order.
+    """Converts a higher-order Observable into a first-order Observable by concatenating the inner Observables in order.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/concatAll
+    `rxjs <https://rxjs.dev/api/operators/concatAll>`_
     """
     return JsUtils.jsWrap("%sconcatAll()" % LIB_REF)
 
 
 def mergeAll():
-    """
-    Subscribes to each inner Observable as it arrives, then emits each value as it arrives.
+    """Subscribes to each inner Observable as it arrives, then emits each value as it arrives.
 
-    Related Pages:
-
-        https://rxjs.dev/api/operators/mergeAll
+    `rxjs <https://rxjs.dev/api/operators/mergeAll>`_
     """
     return JsUtils.jsWrap("%smergeAll()" % LIB_REF)
 
 
 def distinct(keySelector = None, flushes = None):
-    """
-    Filtering Operators.
+    """Filtering Operators.
 
     Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from
     previous items.
 
-    Related Pages:
-
-            https://rxjs.dev/api/operators/distinct
+    `rxjs <https://rxjs.dev/api/operators/distinct>`_
 
     :param keySelector: Optional. undefined. Optional function to select which value you want to check as distinct
     :param flushes: Optional. undefined.Optional ObservableInput for flushing the internal HashSet of the operator
@@ -225,44 +182,35 @@ def distinct(keySelector = None, flushes = None):
 class Observer:
 
     def next(self, value: types.JS_DATA_TYPES):
-        """
-        A callback function that gets called by the producer during the subscription when the producer "has" the value.
-        It won't be called if error or complete callback functions have been called, nor after the consumer
+        """A callback function that gets called by the producer during the subscription when the producer "has" the
+        value. It won't be called if error or complete callback functions have been called, nor after the consumer
         has unsubscribed.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/interface/Observer#error
+        `rxjs <https://rxjs.dev/api/index/interface/Observer#error>`_
 
         :param value:
         """
         return JsUtils.jsWrap(value)
 
     def error(self, value: types.JS_DATA_TYPES):
-        """
-        A callback function that gets called by the producer if and when it encountered a problem of any kind.
+        """A callback function that gets called by the producer if and when it encountered a problem of any kind.
         The errored value will be provided through the err parameter.
         This callback can't be called more than one time, it can't be called if the complete callback function have
         been called previously, nor it can't be called if the consumer has unsubscribed.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/interface/Observer#error
+        `rxjs <https://rxjs.dev/api/index/interface/Observer#error>`_
 
         :param value:
         """
         return JsUtils.jsWrap(value)
 
     def complete(self, value: types.JS_DATA_TYPES):
-        """
-        A callback function that gets called by the producer if and when it has no more values to provide (by calling
+        """A callback function that gets called by the producer if and when it has no more values to provide (by calling
         next callback function). This means that no error has happened.
         This callback can't be called more than one time, it can't be called if the error callback function have
         been called previously, nor it can't be called if the consumer has unsubscribed.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/interface/Observer#complete
+        `rxjs <https://rxjs.dev/api/index/interface/Observer#complete>`_
 
         :param value:
         """
@@ -278,9 +226,7 @@ class Unsubscribable:
     def unsubscribe(self):
         """
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/interface/Unsubscribable#unsubscribe
+        `rxjs <https://rxjs.dev/api/index/interface/Unsubscribable#unsubscribe>`_
         """
         return JsUtils.jsWrap("unsubscribe()")
 
@@ -289,12 +235,9 @@ class SubscriptionLike(Unsubscribable):
 
     @property
     def closed(self):
-        """
-        A flag to indicate whether this Subscription has already been unsubscribed.
+        """A flag to indicate whether this Subscription has already been unsubscribed.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/interface/SubscriptionLike
+        `rxjs <https://rxjs.dev/api/index/interface/SubscriptionLike>`_
         """
         return JsUtils.jsWrap("closed")
 
@@ -305,41 +248,32 @@ class Subscription(SubscriptionLike):
         self._selector = selector
 
     def unsubscribe(self):
-        """
-        Disposes the resources held by the subscription. May, for instance, cancel an ongoing Observable execution or
+        """Disposes the resources held by the subscription. May, for instance, cancel an ongoing Observable execution or
         cancel any other type of work that started when the Subscription was created.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Subscription#unsubscribe
+        `rxjs <https://rxjs.dev/api/index/class/Subscription#unsubscribe>`_
         """
         return JsUtils.jsWrap("%s.unsubscribe()" % self.varId)
 
     @property
     def varId(self):
-        """ The Javascript and Python reference ID. """
+        """The Javascript and Python reference ID. """
         return self._selector
 
     def add(self, teardown):
-        """
-        Adds a finalizer to this subscription, so that finalization will be unsubscribed/called when this subscription
+        """Adds a finalizer to this subscription, so that finalization will be unsubscribed/called when this subscription
         is unsubscribed.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Subscription#unsubscribe
+        `rxjs <https://rxjs.dev/api/index/class/Subscription#unsubscribe>`_
 
         :param teardown: The finalization logic to add to this subscription
         """
         return JsUtils.jsWrap("%s.add(%s)" % (self.varId, teardown))
 
     def remove(self, teardown):
-        """
-        Removes a finalizer from this subscription that was previously added with the add method.
+        """Removes a finalizer from this subscription that was previously added with the add method.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Subscription#remove
+        `rxjs <https://rxjs.dev/api/index/class/Subscription#remove>`_
 
         :param teardown: The finalization logic to remove to this subscription
         """
@@ -357,75 +291,58 @@ class Observable(Subscriber):
 
     @classmethod
     def new(cls, expr: str, id: str, var_type: str = "const"):
-        """
-        Define an observable object.
+        """Define an observable object.
 
         Usage::
 
             page.js.rxjs.Observable.new("(subscriber) => {console.log('Hello'); subscriber.next(42);}", "foo"),
 
-        Related Pages:
-
-            https://rxjs.dev/guide/observable
+        `rxjs <https://rxjs.dev/guide/observable>`_
         """
         return JsUtils.jsWrap("%s %s = new %sObservable(%s)" % (var_type, id, LIB_REF, expr))
 
     @classmethod
     def get(cls, id: str):
-        """
-        Get an Observable object by reference.
+        """Get an Observable object by reference.
 
         Usage::
 
             page.js.rxjs.Observable.get("foo").subscribe("(x) => {console.log(x)}")
 
-        Related Pages:
-
-            https://rxjs.dev/guide/observable
+        `rxjs <ttps://rxjs.dev/guide/observable>`_
         """
         return Observable(id)
 
     @property
     def varId(self):
-        """ The Javascript and Python reference ID. """
+        """The Javascript and Python reference ID. """
         return self._selector
 
     def forEach(self, value) -> JsObjects.JsPromise:
-        """
-        Used as a NON-CANCELLABLE means of subscribing to an observable, for use with APIs that expect promises,
+        """Used as a NON-CANCELLABLE means of subscribing to an observable, for use with APIs that expect promises,
         like async/await. You cannot unsubscribe from this.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Observable#foreach
+        `rxjs <https://rxjs.dev/api/index/class/Observable#foreach>`_
         """
         return JsObjects.JsPromise(value)
 
     def pipe(self, *args):
-        """
-        Used to stitch together functional operators into a chain.
+        """Used to stitch together functional operators into a chain.
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Observable#pipe
-
+        `rxjs <https://rxjs.dev/api/index/class/Observable#pipe>`_
         """
         self.__chain.append("pipe(%s)" % ", ".join([arg.toStr() for arg in args]))
         return self
 
     def toPromise(self):
-        """
-        Subscribe to this Observable and get a Promise resolving on complete with the last emission (if any).
+        """Subscribe to this Observable and get a Promise resolving on complete with the last emission (if any).
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Observable#topromise
+        `rxjs <https://rxjs.dev/api/index/class/Observable#topromise>`_
         """
         return JsObjects.JsPromise()
 
     def subscribe(self, observerOrNext = None) -> Subscription:
-        """
-        Invokes an execution of an Observable and registers Observer handlers for notifications it will emit.
+        """Invokes an execution of an Observable and registers Observer handlers for notifications it will emit.
 
         :param observerOrNext: Optional. Default is undefined.
         """
@@ -450,9 +367,7 @@ class Subject(Observable, SubscriptionLike):
     def isStopped(self):
         """
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Subject
+        `rxjs <https://rxjs.dev/api/index/class/Subject>`_
         """
         return JsUtils.jsWrap("isStopped")
 
@@ -460,16 +375,13 @@ class Subject(Observable, SubscriptionLike):
     def hasError(self):
         """
 
-        Related Pages:
-
-            https://rxjs.dev/api/index/class/Subject
+        `rxjs <https://rxjs.dev/api/index/class/Subject>`_
         """
         return JsUtils.jsWrap("hasError")
 
 
 def fromEvent(target, eventName: str, options = None, resultSelector = None) -> Observable:
-    """
-    Creates an Observable that emits events of a specific type coming from the given event target.
+    """Creates an Observable that emits events of a specific type coming from the given event target.
 
     Usage::
 
@@ -480,9 +392,7 @@ def fromEvent(target, eventName: str, options = None, resultSelector = None) -> 
           ])
         ])
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/fromEvent
+    `rxjs <https://rxjs.dev/api/index/function/fromEvent>`_
 
     :param target: The DOM EventTarget, Node.js EventEmitter, JQuery-like event target, NodeList or HTMLCollection to attach the event handler to.
     :param eventName: The event name of interest, being emitted by the target.
@@ -497,12 +407,9 @@ def fromEvent(target, eventName: str, options = None, resultSelector = None) -> 
 
 
 def interval(number: int, scheduler = None) -> Observable:
-    """
-    Creates an Observable that emits sequential numbers every specified interval of time, on a specified SchedulerLike.
+    """Creates an Observable that emits sequential numbers every specified interval of time, on a specified SchedulerLike.
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/interval
+    `rxjs <https://rxjs.dev/api/index/function/interval>`_
 
     :param number: Optional. 0. The interval size in milliseconds (by default) or the time unit determined by the scheduler's clock.
     :param scheduler: Optional. asyncScheduler. The SchedulerLike to use for scheduling the emission of values, and providing a notion of "time".
@@ -512,12 +419,9 @@ def interval(number: int, scheduler = None) -> Observable:
 
 
 def of(*args) -> Observable:
-    """
-    Converts the arguments to an observable sequence.
+    """Converts the arguments to an observable sequence.
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/of
+    `rxjs <https://rxjs.dev/api/index/function/of>`_
 
     :param args: A comma separated list of arguments you want to be emitted
     """
@@ -525,12 +429,9 @@ def of(*args) -> Observable:
 
 
 def range(start: int, count: int, scheduler = None) -> Observable:
-    """
-    Creates an Observable that emits a sequence of numbers within a specified range.
+    """Creates an Observable that emits a sequence of numbers within a specified range.
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/range
+    `rxjs <https://rxjs.dev/api/index/function/range>`_
 
     :param start: The value of the first integer in the sequence
     :param count: Optional. Undefined. The number of sequential integers to generate
@@ -540,12 +441,9 @@ def range(start: int, count: int, scheduler = None) -> Observable:
 
 
 def ii(expression: str, trueResult: Observable, falseResult: Observable):
-    """
-    Checks a boolean at subscription time, and chooses between one of two observable sources
+    """Checks a boolean at subscription time, and chooses between one of two observable sources
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/iif
+    `rxjs <https://rxjs.dev/api/index/function/iif>`_
 
     :param expression: Condition which Observable should be chosen
     :param trueResult: An Observable that will be subscribed if condition is true
@@ -555,12 +453,9 @@ def ii(expression: str, trueResult: Observable, falseResult: Observable):
 
 
 def timer(due: int, scheduler = None):
-    """
-    Creates an observable that will wait for a specified time period, or exact date, before emitting the number 0.
+    """Creates an observable that will wait for a specified time period, or exact date, before emitting the number 0.
 
-    Related Pages:
-
-        https://rxjs.dev/api/index/function/timer
+    `rxjs <https://rxjs.dev/api/index/function/timer>`_
 
     :param due: If a number, the amount of time in milliseconds to wait before emitting. If a Date, the exact time at which to emit.
     :param scheduler: Optional. Undefined. The scheduler to use to schedule the delay. Defaults to asyncScheduler.
@@ -569,13 +464,10 @@ def timer(due: int, scheduler = None):
 
 
 def concatAll(project, resultSelector = None):
-    """
-    Transformation Operators.
+    """Transformation Operators.
 
     Projects each source value to an Observable which is merged in the output Observable,
     in a serialized fashion waiting for each one to complete before merging the next.
-
-
     """
     if resultSelector is None:
         return Observable("%sconcatAll(%s)" % (LIB_REF, project))
