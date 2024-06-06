@@ -13,7 +13,7 @@ class Cache:
     def varId(self):
         return ""
 
-    def match(self, request, options = None):
+    def match(self, request, options = None) -> JsObjects.JsObject.JsObject:
         """Returns a Promise that resolves to the response associated with the first matching request in the Cache
         object.
 
@@ -25,10 +25,10 @@ class Cache:
         """
         request = JsUtils.jsConvertData(request, None)
         if not options:
-            return JsUtils.jsWrap("await %s.match(%s)" % (self.varId, request))
+            return JsObjects.JsObject.JsObject.get("await %s.match(%s)" % (self.varId, request))
 
         options = JsUtils.jsConvertData(options, None)
-        return JsUtils.jsWrap("await %s.match(%s, %s)" % (self.varId, request, options))
+        return JsObjects.JsObject.JsObject.get("await %s.match(%s, %s)" % (self.varId, request, options))
 
     def matchAll(self, request, options = None):
         """Returns a Promise that resolves to an array of all matching responses in the Cache object.

@@ -442,7 +442,7 @@ class CheckButton(Html.Html):
             self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
         return self._styleObj
 
-    def click(self, js_fnc_true: types.JS_FUNCS_TYPES, js_fnc_false: Optional[Union[list, str]] = None,
+    def click(self, js_fnc_true: types.JS_FUNCS_TYPES = None, js_fnc_false: Optional[Union[list, str]] = None,
               with_colors: bool = True, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
         """Click even on the checkbox item.
 
@@ -462,7 +462,9 @@ class CheckButton(Html.Html):
         if self.label is not None and hasattr(self.label, 'style'):
             self.label.style.css.cursor = 'pointer'
         self.style.css.cursor = "pointer"
-        if not isinstance(js_fnc_true, list):
+        if js_fnc_true is None:
+            js_fnc_true = []
+        elif not isinstance(js_fnc_true, list):
             js_fnc_true = [js_fnc_true]
         if js_fnc_false is None:
             js_fnc_false = []

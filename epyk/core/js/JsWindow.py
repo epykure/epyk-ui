@@ -72,7 +72,7 @@ class JsLocalStorage:
         """
         return self.getItem(item)
 
-    def setItem(self, key: Union[primitives.JsDataModel, str], data: Any):
+    def setItem(self, key: Union[primitives.JsDataModel, str], data: Any, force_json: bool = True):
         """Syntax for SAVING data to localStorage.
 
         The localStorage object stores data with no expiration date.
@@ -86,14 +86,18 @@ class JsLocalStorage:
 
         :param key: A String specifying the name of the key you want to set the value of
         :param data: A String specifying the value of the key you want to set the value of
+        :param force_json: Change the value object to a JSon string
 
         :return: A String, representing the inserted value.
         """
         key = JsUtils.jsConvertData(key, None)
         data = JsUtils.jsConvertData(data, None)
+        if force_json:
+            return JsObject.JsObject("localStorage.setItem(%s, JSON.stringify(%s))" % (key, data))
+
         return JsObject.JsObject("localStorage.setItem(%s, %s)" % (key, data))
 
-    def getItem(self, key: Union[primitives.JsDataModel, str]):
+    def getItem(self, key: Union[primitives.JsDataModel, str], force_json: bool = True):
         """Syntax for READING data from localStorage:
 
         The localStorage object stores data with no expiration date.
@@ -105,11 +109,15 @@ class JsLocalStorage:
 
         `Related Pages <https://www.w3schools.com/jsref/met_storage_getitem.asp>`_
 
-        :param key: A String specifying the name of the key you want to get the value of.
+        :param key: A String specifying the name of the key you want to get the value of
+        :param force_json: Change the value json string to a javascript object
 
         :return: A String, representing the value of the specified key
         """
         key = JsUtils.jsConvertData(key, None)
+        if force_json:
+            return JsObject.JsObject("JSON.parse(localStorage.getItem(%s))" % key)
+
         return JsObject.JsObject("localStorage.getItem(%s)" % key)
 
     def removeItem(self, key: Union[primitives.JsDataModel, str]):
@@ -185,7 +193,7 @@ class JsSessionStorage:
         """
         return self.getItem(item)
 
-    def setItem(self, key: Union[primitives.JsDataModel, str], data: Any):
+    def setItem(self, key: Union[primitives.JsDataModel, str], data: Any, force_json: bool = True):
         """Syntax for SAVING data to sessionStorage.
 
         The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
@@ -198,13 +206,17 @@ class JsSessionStorage:
         `Related Pages <https://www.w3schools.com/Jsref/prop_win_sessionstorage.asp>`_
 
         :param key: The key used to store the data in the session cache.
-        :param data:
+        :param data: The cache value
+        :param force_json: Change the value object to a JSon string
         """
         key = JsUtils.jsConvertData(key, None)
         data = JsUtils.jsConvertData(data, None)
+        if force_json:
+            return JsObject.JsObject("sessionStorage.setItem(%s, JSON.stringify(%s))" % (key, data))
+
         return JsObject.JsObject("sessionStorage.setItem(%s, %s)" % (key, data))
 
-    def getItem(self, key: Union[primitives.JsDataModel, str]):
+    def getItem(self, key: Union[primitives.JsDataModel, str], force_json: bool = True):
         """Syntax for READING data from sessionStorage
 
         The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
@@ -214,9 +226,13 @@ class JsSessionStorage:
           jsObj.sessionStorage.getItem("lastname")
           jsObj.console.log(jsObj.sessionStorage.getItem("lastname"))
 
-        :param key:
+        :param key: The cache key
+        :param force_json: Change the value json string to a javascript object
         """
         key = JsUtils.jsConvertData(key, None)
+        if force_json:
+            return JsObject.JsObject("JSON.parse(sessionStorage.getItem(%s))" % key)
+
         return JsObject.JsObject("sessionStorage.getItem(%s)" % key)
 
     def removeItem(self, data, key: Union[str, primitives.JsDataModel] = None, is_py_data: bool = False,

@@ -5,6 +5,7 @@
 import json
 import os
 import base64
+import logging
 from typing import Union, Optional, Any, List, Callable, Tuple
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -22,6 +23,7 @@ from epyk.core.js import JsWebSocket
 from epyk.core.js import JsMsgAlerts
 from epyk.core.js import JsMediaRecorder
 from epyk.core.js import JsSpeechRecognition
+from epyk.core.js import JsCacheStorage
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -100,6 +102,169 @@ class JsBreadCrumb:
         return '%s(%s)' % (JsFncs.FncOnRecords(None, self.page.properties.js).url(), self._selector)
 
 
+class JsStorage:
+
+    def __init__(self, js_base):
+        self.page = js_base.page
+        self.__js = js_base
+
+    def cache(self, js_code: str, value, set_once: bool = False):
+        """
+
+        """
+        if value is None:
+            return self.__js.caches.open("page").match(js_code)
+
+        self.__js.caches.open("page").put(js_code, value)
+        return value
+
+    def local(self, js_code: str, value = None, set_once: bool = False, profile: Optional[Union[dict, bool]] = None) -> JsObjects.JsObject.JsObject:
+        """Cache data to the browser local storage (shared between tabs).
+
+        Usage::
+
+            page.js.storage.local("test", {"test": "This is a test"}, set_once=
+            {
+                "missing": [msg.build("Data set!")],
+                "exists": [msg.build("Data already cached!")]
+             })
+
+        :param js_code: Variable name and cache key
+        :param value: Optional. Cache value
+        :param set_once: Optional. Flag or object to set variable only once
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if value is None:
+            return self.__js.localStorage.getItem(js_code)
+
+        if set_once:
+            if isinstance(set_once, dict):
+                if "value" in set_once:
+                    return self.undefined(
+                        JsUtils.jsConvertData(set_once["value"], None),
+                        [self.local(js_code, value, False)] + set_once.get("missing", []),
+                        set_once.get("exists", []),
+                        profile=profile
+                    )
+
+                return self.undefined(
+                    self.local(js_code),
+                    [self.local(js_code, value, False)] + set_once.get("missing", []),
+                    set_once.get("exists", []),
+                    profile=profile
+                )
+
+            return self.undefined(
+                self.local(js_code), [self.local(js_code, value, False)], profile=profile)
+
+        return self.__js.localStorage.setItem(js_code, value)
+
+    def session(self, js_code: str, value = None, set_once: Union[bool, dict] = False, profile: Optional[Union[dict, bool]] = None) -> JsObjects.JsObject.JsObject:
+        """Cache data to the browser session storage.
+
+        Usage::
+
+            page.js.storage.local("test", inp.dom.content, set_once=
+            {
+                "value": check.dom.content,
+                "missing": [msg.build("Data updated!")],
+                "exists": [msg.build("Data already cached (Flag false)!")]
+             })
+
+        :param js_code: Variable name and cache key
+        :param value: Optional. Cache value
+        :param set_once: Optional. Flag or object to set variable only once
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if value is None:
+            return self.__js.sessionStorage.getItem(js_code)
+
+        if set_once:
+            if isinstance(set_once, dict):
+                if "value" in set_once:
+                    return self.undefined(
+                        JsUtils.jsConvertData(set_once["value"], None),
+                        [self.session(js_code, value, False)] + set_once.get("missing", []),
+                        set_once.get("exists", []),
+                        profile=profile
+                    )
+
+                return self.undefined(
+                    self.session(js_code),
+                    [self.session(js_code, value, False)] + set_once.get("missing", []),
+                    set_once.get("exists", []),
+                    profile=profile
+                )
+
+            return self.undefined(
+                self.local(js_code), [self.local(js_code, value, False)], profile=profile)
+
+        return self.__js.sessionStorage.setItem(js_code, value)
+
+    def global_(self, js_code: str, value = None, set_once: Union[bool, dict] = False,
+                profile: Optional[Union[dict, bool]] = None):
+        """Cache data using a global variable.
+
+        This variable will have a global scope and will be attached to the window properties.
+
+        Usage::
+
+            page.onDOMContentLoaded([
+                page.js.storage.global_("test", {"test": "ok"}, set_once=
+                {
+                    "missing": [msg.build("Data set!")],
+                    "exists": [msg.build("Data already cached!")]
+                 })
+            ])
+
+        :param js_code: Variable name and cache key
+        :param value: Optional. Cache value
+        :param set_once: Optional. Flag or object to set variable only once
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        js_code = JsUtils.jsConvertData(js_code, None)
+        if value is None:
+            return JsObjects.JsObject.JsObject.get("window[%s]" % js_code)
+
+        if set_once:
+            if isinstance(set_once, dict):
+                if "value" in set_once:
+                    return self.undefined(
+                        JsUtils.jsConvertData(set_once["value"], None),
+                        [self.global_(js_code, value, False)] + set_once.get("missing", []),
+                        set_once.get("exists", []),
+                        profile=profile
+                    )
+
+                return self.undefined(
+                    self.global_(js_code),
+                    [self.global_(js_code, value, False)] + set_once.get("missing", []),
+                    set_once.get("exists", []),
+                    profile=profile
+                )
+
+            return self.undefined(
+                self.global_(js_code), [self.global_(js_code, value, False)], profile=profile)
+
+        value = JsUtils.jsConvertData(value, None)
+        return JsObjects.JsObject.JsObject(value, "window[%s]" % js_code, set_var=True)
+
+    def undefined(self, var, js_funcs: Union[list, str], js_funcs_exist: Union[list, str] = None,
+                  profile: Optional[Union[dict, bool]] = False):
+        """Condition on the cached variable.
+
+        This will be used by the various cached options to do a pivot if the set_once option is activated.
+
+        :param var: The variable used as pivot for the if statement
+        :param js_funcs: Function if variable not set
+        :param js_funcs_exist: Optional. Function if variable already exist
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if not isinstance(js_funcs_exist, list):
+            js_funcs_exist = [js_funcs_exist]
+        return self.__js.if_(var, js_funcs_exist + [var], profile=profile).else_(js_funcs, profile=profile)
+
+
 class JsBase:
 
     def __init__(self, page: Optional[primitives.PageModel] = None, component: Optional[primitives.HtmlModel] = None):
@@ -120,6 +285,11 @@ class JsBase:
         self.log = self.console.log
         self._breadcrumb, self.__data, self.__location = None, None, None
         self.__media_recorder, self.__accounting = None, None
+
+    @property
+    def storage(self):
+        """Data Storage interface"""
+        return JsStorage(self)
 
     @property
     def accounting(self):
@@ -1637,6 +1807,13 @@ if (!existingStyle && (styleElementId !== 'css_')) {
         return JsUtils.jsWrap("if(%s){%s}" % (
             data.has_keys(keys, ignore_empty=ignore_empty),
             JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+
+    @property
+    def caches(self) -> JsCacheStorage.CacheStorage:
+        """The CacheStorage interface represents the storage for Cache objects."""
+        logging.debug(
+            "Caches not available for all browsers: https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage#browser_compatibility")
+        return JsCacheStorage.CacheStorage(self.page)
 
 
 class JsConsole:

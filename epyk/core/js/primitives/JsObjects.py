@@ -202,7 +202,7 @@ return data}
         result = [str(self.data)]
         if self.__thens:
             for then_step in self.__thens:
-                result.append("then(%s)" % then_step)
+                result.append("then((data) => {%s})" % then_step)
         if self.__catch:
             result.append(
                 "catch(function(error){%s})" % JsUtils.jsConvertFncs(self.__catch, toStr=True, profile=self.profile))
