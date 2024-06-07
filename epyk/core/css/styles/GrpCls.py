@@ -276,6 +276,19 @@ class ClassHtml:
         return {}
 
     @property
+    def raw(self)-> Optional[dict]:
+        """Returns the raw CSS files definition for the component in a dictionary"""
+        if self.component.style_urls:
+            result = {}
+            for fs in self.component.style_urls:
+                if fs.exists():
+                    with open(fs) as fp:
+                        result[str(fs)] = fp.read()
+            return result
+
+        return {}
+
+    @property
     def classes(self) -> Optional[dict]:
         """Predefined CSS Classes for the component.
 
