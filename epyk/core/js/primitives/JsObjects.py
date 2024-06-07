@@ -124,6 +124,19 @@ class JsPromise:
         self.data, self.profile, self.async_await = data, profile, async_await
         self.__thens, self.__catch = [], []
 
+    @staticmethod
+    def new(data: types.JS_DATA_TYPES, profile: types.PROFILE_TYPE = False, async_await: bool = False):
+        return JsPromise("new Promise(%s)" % data, profile=profile, async_await=async_await)
+
+    def set(self, js_code: str, async_await: bool = None):
+        if async_await is None:
+            async_await = self.async_await
+        if async_await:
+            self.data = "let %s = await %s" % (js_code, self.data)
+        else:
+            self.data = "let %s = %s" % (js_code, self.data)
+        return self
+
     def then(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """Add a new post-processing step to a then statement.
 
@@ -739,6 +752,20 @@ class XMLHttpRequest:
         if self.profile is not None and self.profile:
             JsUtils.PROFILE_COUNT += 1
         return ";".join(request)
+
+    def to_promise(self, js_code: str = "pRes") -> JsPromise:
+        """Return a promise object from a XMLHttpRequest request
+
+        :param js_code: Optional. The JavaScript variable name defined for this promise
+        """
+        if self.__req_success is None:
+            self.__req_success = []
+        self.__req_success.append("if(%(id)s.status == 200){resolve(%(r)s)} else {reject(%(id)s.status)}" % {
+            "id": self.varId, "r": self.response})
+        if js_code is None:
+            return JsPromise.new("function(resolve, reject){%s}" % self.toStr())
+
+        return JsPromise.new("function(resolve, reject){%s}" % self.toStr()).set(js_code)
 
 
 class JsObjects:

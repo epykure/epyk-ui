@@ -1092,6 +1092,17 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             "%s(%s, %s)" % (fetch_name, JsUtils.jsConvertData(url, None), JsUtils.jsConvertData(options, None)),
             profile, async_await)
 
+    def await_promises(self, promises: list, js_funcs: list, data_ref = "responses") -> JsUtils.jsWrap:
+        """Add sync to async promises.
+
+        :param promises: List of promises to wait for
+        :param js_funcs: Events when all promises are completed
+        :param data_ref: JavaScript variable name for the different promises responses.
+        """
+        js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True)
+        apis = "[%s]" % ",".join([JsUtils.jsConvertData(p, None) for p in promises])
+        return JsUtils.jsWrap("(async function (){let %s = await Promise.all(%s); %s})()" % (data_ref, apis, js_funcs))
+
     @property
     def fncs(self) -> JsFncs.JsRegisteredFunctions:
         """Property to the predefined Javascript functions.
