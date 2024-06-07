@@ -1413,7 +1413,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 css_class = 'class="%s"' % class_data
         elif css_class_names is not None:
             py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in css_class_names['main']]
-            css_class = 'class="%s"' % " ".join(py_cls_names) if len(py_cls_names) > 0 else ""
+            css_class = 'class="%s"' % " ".join(list(filter(lambda x: x is not None, py_cls_names))) if len(py_cls_names) > 0 else ""
         attrs["class"] = css_class[7:-1]
 
         if with_id:
