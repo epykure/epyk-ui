@@ -1092,15 +1092,21 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             "%s(%s, %s)" % (fetch_name, JsUtils.jsConvertData(url, None), JsUtils.jsConvertData(options, None)),
             profile, async_await)
 
-    def await_promises(self, promises: list, js_funcs: list, data_ref = "responses") -> JsUtils.jsWrap:
+    def await_promises(self, promises: list, js_funcs: list, before_js_funcs: list = None, data_ref = "responses") -> JsUtils.jsWrap:
         """Add sync to async promises.
 
         :param promises: List of promises to wait for
+        :param before_js_funcs: Events to be executed before the promises setup
         :param js_funcs: Events when all promises are completed
         :param data_ref: JavaScript variable name for the different promises responses.
         """
         js_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True)
         apis = "[%s]" % ",".join([JsUtils.jsConvertData(p, None) for p in promises])
+        if before_js_funcs:
+            before_js_funcs = JsUtils.jsConvertFncs(before_js_funcs, toStr=True)
+            return JsUtils.jsWrap("(async function (){%s; let %s = await Promise.all(%s); %s})()" % (
+                before_js_funcs, data_ref, apis, js_funcs))
+
         return JsUtils.jsWrap("(async function (){let %s = await Promise.all(%s); %s})()" % (data_ref, apis, js_funcs))
 
     @property
