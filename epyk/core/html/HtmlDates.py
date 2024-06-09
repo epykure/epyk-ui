@@ -44,7 +44,7 @@ class DatePicker(Html.Html):
         if not self.input.options.inline and icon:
             self.add_icon(icon, html_code=self.html_code,
                           css={"margin-top": '-4px', "margin-left": '5px', 'color': color or "inherit"},
-                          position="after", family=options.get("icon_family"))
+                          position="after", family=options.get("icon_family"), options=options.get("icon", {}))
         else:
             self.icon = None
         if self.icon is not None:
@@ -52,7 +52,7 @@ class DatePicker(Html.Html):
         self.add_label(label, html_code=self.html_code,
                        css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
                        options=options.get("input", {}))
-        self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
+        self.add_helper(helper, css={"float": "none", "margin-left": "5px"}, options=options.get("helper", {}))
         self.css({"color": color or 'inherit', "vertical-align": "middle", "display": "block", "width": 'auto'})
 
     @property
@@ -169,11 +169,12 @@ class TimePicker(Html.Html):
             self.input.attr["name"] = self.input.html_code
         self.prepend_child(self.input)
         self.add_icon(icon, html_code=self.html_code, css={"margin-left": '5px', 'color': self.page.theme.success.base},
-                      position="after", family=options.get("icon_family"))
+                      position="after", family=options.get("icon_family"), options=options.get("icon", {}))
         if self.icon is not None:
             self.icon.click(self.input.dom.events.trigger("click").toStr())
-        self.add_label(label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options)
-        self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
+        self.add_label(
+            label, css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'}, options=options.get("label", {}))
+        self.add_helper(helper, css={"float": "none", "margin-left": "5px"}, options=options.get("helper", {}))
         self.css({"color": color or 'inherit', "vertical-align": "middle"})
 
     @property
@@ -230,9 +231,9 @@ class CountDownDate(Html.Html):
         self.timeInMilliSeconds = timestamp
         # Add the underlying components
         self.add_label(label, html_code=self.html_code, css={
-            "padding": '2px 0', 'height': 'auto', "width": "none", "line-height": "none"})
-        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
-        self.add_helper(helper)
+            "padding": '2px 0', 'height': 'auto', "width": "none", "line-height": "none"}, options=options.get("label", {}))
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon", {}))
+        self.add_helper(helper, options=options.get("helper", {}))
         self._jquery_ref = '#%s span' % self.html_code
 
     def end(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
@@ -524,12 +525,13 @@ class Elapsed(Html.Html):
                  icon: Optional[str], width: tuple, height: tuple,
                  html_code: Optional[str], helper: Optional[str], options: Optional[dict],
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
+        options = options or {}
         super(Elapsed, self).__init__(page, {'day': day, 'month': month, 'year': year}, html_code=html_code,
                                       profile=profile, css_attrs={"width": width, "height": height}, verbose=verbose)
         # Add the underlying components
-        self.add_label(label, html_code=self.html_code, css={"padding": '2px 0', 'height': 'auto'})
-        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
-        self.add_helper(helper)
+        self.add_label(label, html_code=self.html_code, css={"padding": '2px 0', 'height': 'auto'}, options=options.get("label", {}))
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon", {}))
+        self.add_helper(helper, options=options.get("helper", {}))
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
@@ -562,7 +564,7 @@ class EasePick(Html.Html):
         if icon:
             self.add_icon(icon, html_code=self.html_code,
                           css={"margin-top": '-4px', "margin-left": '5px', 'color': color or "inherit"},
-                          position="after", family=options.get("icon_family"))
+                          position="after", family=options.get("icon_family"), options=options.get("icon", {}))
         else:
             self.icon = None
         if self.icon is not None:

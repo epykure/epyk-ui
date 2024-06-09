@@ -144,7 +144,7 @@ class List(Html.Html):
                  helper: str, options: dict, profile: types.PROFILE_TYPE):
         super(List, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                    html_code=html_code, profile=profile, options=options)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.color = color if color is not None else self.page.theme.greys[-1]
         self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
         self.items = None
@@ -318,9 +318,10 @@ class Groups(Html.Html):
     def __init__(self, page: primitives.PageModel, data: list, categories: Optional[list], size: tuple, color: str,
                  width: tuple, height: tuple, html_code: str, helper: str, options: Optional[dict],
                  profile: types.PROFILE_TYPE):
+        options = options or {}
         super(Groups, self).__init__(page, [], css_attrs={"width": width, "height": height}, options=options,
                                      html_code=html_code, profile=profile)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.color = color if color is not None else self.page.theme.greys[9]
         self.css({'font-size': "%s%s" % (size[0], size[1]) if size is not None else 'inherit',
                   'margin': "1px", 'padding': '0 2px'})
@@ -359,6 +360,7 @@ class Items(Html.Html):
 
     def __init__(self, page: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
                  html_code: str, profile: Optional[Union[bool, dict]], helper: str):
+        options = options or {}
         super(Items, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, 'height': height})
         self._vals = records
@@ -375,7 +377,7 @@ class Items(Html.Html):
                         v[self.options.checked_key] = True
                     else:
                         v[self.options.checked_key] = False
-        self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
+        self.add_helper(helper, css={"float": "none", "margin-left": "5px"}, options=options.get("helper"))
         self.__external_item = False
 
     @property

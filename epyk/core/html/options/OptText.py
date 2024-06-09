@@ -13,9 +13,7 @@ class OptionsText(OptionsWithTemplates):
   def editable(self):
     """Set the content of the component editable.
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_global_contenteditable.asp
+    `w3schools <https://www.w3schools.com/tags/att_global_contenteditable.asp>`_
     """
     if self.component.attr is not None:
       return self.component.attr.get("contenteditable", False)
@@ -33,12 +31,9 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def spellcheck(self):
-    """
-    The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
+    """The spellcheck attribute specifies whether the element is to have its spelling and grammar checked or not.
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_global_spellcheck.asp
+    `w3schools <https://www.w3schools.com/tags/att_global_spellcheck.asp>`_
     """
     return self.component.attr.get("spellcheck", False)
 
@@ -65,13 +60,10 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def markdown(self):
-    """
-    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    """Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
-    Related Pages:
-
-      https://github.com/showdownjs/showdown
+    `showdownjs <https://github.com/showdownjs/showdown>`_
     """
     return self._config_get(False)
 
@@ -87,13 +79,10 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def showdown(self):
-    """
-    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    """Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
-    Related Pages:
-
-      https://github.com/showdownjs/showdown
+    `showdownjs <https://github.com/showdownjs/showdown>`_
     """
     return self._config_get(False)
 
@@ -105,11 +94,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def limit_char(self):
-    """
-
-    Related Pages:
-
-    """
+    """ """
     return self._config_get(None, 'limit_char')
 
   @limit_char.setter
@@ -118,11 +103,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def red(self):
-    """
-
-    Related Pages:
-
-    """
+    """ """
     return self._config_get(self.page.theme.danger.base)
 
   @red.setter
@@ -131,11 +112,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def green(self):
-    """
-
-    Related Pages:
-
-    """
+    """ """
     return self._config_get(self.page.theme.success[1])
 
   @green.setter
@@ -144,11 +121,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def orange(self):
-    """
-
-    Related Pages:
-
-    """
+    """ """
     return self._config_get(self.page.theme.warning.base)
 
   @orange.setter
@@ -157,11 +130,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def font_size(self):
-    """
-
-    Related Pages:
-
-    """
+    """ """
     return self._config_get('none')
 
   @font_size.setter
@@ -184,9 +153,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def style_select(self):
-    """
-    Internal CSS class name to be used when the component is selected.
-    """
+    """Internal CSS class name to be used when the component is selected."""
     return self._config_get(None)
 
   @style_select.setter
@@ -195,9 +162,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def html_encode(self):
-    """
-    Encode Python content to HTML format.
-    """
+    """Encode Python content to HTML format."""
     return self._config_get(True)
 
   @html_encode.setter
@@ -206,9 +171,7 @@ class OptionsText(OptionsWithTemplates):
 
   @property
   def multiline(self):
-    """
-    Replace the Python \n to the HTML tag <br/>.
-    """
+    """Replace the Python \n to the HTML tag <br/>."""
     return self._config_get(False)
 
   @multiline.setter
@@ -252,41 +215,32 @@ class OptionsTitle(OptionsText):
 
   @property
   def content_table(self):
-    """
-
-    Related Pages:
-
-    """
+    """ """
     return self._config_get(True)
 
   @content_table.setter
   def content_table(self, flag: bool):
     self._config(flag)
 
+  @property
+  def uppercase(self):
+    """Set the CSS Style for the component to uppercase"""
+    return self._config_get(True)
+
+  @uppercase.setter
+  def uppercase(self, flag: bool):
+    if flag:
+      self.component.style.css.text_transform = "uppercase"
+    self._config(flag)
+
 
 class OptionsNumber(OptionsText):
 
   @property
-  def label(self):
-    """
-    The label attached to a number component.
- 
-    :prop text: String. The value.
-    """
-    return self._config_get("")
-
-  @label.setter
-  def label(self, text):
-    self._config(text)
-
-  @property
   def digits(self):
-    """
-    decimal point separator.
+    """decimal point separator.
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
+    `openexchangerates <http://openexchangerates.github.io/accounting.js/>`_
     """
     return self._config_get(0)
 
@@ -296,12 +250,9 @@ class OptionsNumber(OptionsText):
 
   @property
   def format(self):
-    """
-    controls output: %s = symbol, %v = value/number.
+    """controls output: %s = symbol, %v = value/number.
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
+    `openexchangerates <http://openexchangerates.github.io/accounting.js/>`_
     """
     return self._config_get("%s%v")
 
@@ -311,12 +262,9 @@ class OptionsNumber(OptionsText):
 
   @property
   def symbol(self):
-    """
-    default currency symbol is ''.
+    """default currency symbol is ''.
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/#documentation
+    `openexchangerates <http://openexchangerates.github.io/accounting.js/#documentation>`_
     """
     return self._config_get("")
 
@@ -327,12 +275,9 @@ class OptionsNumber(OptionsText):
 
   @property
   def thousand_sep(self):
-    """
-    thousands separator.
+    """thousands separator.
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
+    `openexchangerates <http://openexchangerates.github.io/accounting.js/>`_
     """
     return self._config_get(",")
 
@@ -342,12 +287,9 @@ class OptionsNumber(OptionsText):
 
   @property
   def decimal_sep(self):
-    """
-    decimal point separator.
+    """decimal point separator.
 
-    Related Pages:
-
-      http://openexchangerates.github.io/accounting.js/
+    `openexchangerates <http://openexchangerates.github.io/accounting.js/>`_
     """
     return self._config_get(".")
 
@@ -361,8 +303,7 @@ class OptionsNumberMoves(OptionsNumber):
 
   @property
   def css(self):
-    """
-    The label attached to a number component.
+    """The label attached to a number component.
  
     :prop attrs: Dictionary. The CSS attributes.
     """
@@ -377,9 +318,7 @@ class OptionsNumberMoves(OptionsNumber):
   def rotate(self):
     """
 
-    Related Pages:
-
-      https://www.w3schools.com/cssref/css3_pr_transform.asp
+    `w3schools <https://www.w3schools.com/cssref/css3_pr_transform.asp>`_
     """
     return self._config_get(40)
 
@@ -389,12 +328,9 @@ class OptionsNumberMoves(OptionsNumber):
 
   @property
   def font_size(self):
-    """
-    The font size used by the percentage and difference.
+    """The font size used by the percentage and difference.
 
-    Related Pages:
-
-      https://www.w3schools.com/cssref/css3_pr_transform.asp
+    `w3schools <https://www.w3schools.com/cssref/css3_pr_transform.asp>`_
     """
     return self._config_get(self.page.body.style.globals.font.normal(2))
 
@@ -440,9 +376,7 @@ class OptionsNumberDelta(OptionsNumber):
 
   @property
   def threshold1(self):
-    """
-    The first threshold.
-    """
+    """The first threshold."""
     return self._config_get(100)
 
   @threshold1.setter
@@ -451,9 +385,7 @@ class OptionsNumberDelta(OptionsNumber):
 
   @property
   def threshold2(self):
-    """
-    The second threshold (smaller than the first one).
-    """
+    """The second threshold (smaller than the first one)."""
     return self._config_get(50)
 
   @threshold2.setter
@@ -462,9 +394,7 @@ class OptionsNumberDelta(OptionsNumber):
 
   @property
   def previous_label(self):
-    """
-    Set the label displayed before the previous value in the component.
-    """
+    """Set the label displayed before the previous value in the component."""
     return self._config_get("Previous number: ")
 
   @previous_label.setter
@@ -476,12 +406,9 @@ class OptionsLink(OptionsText):
 
   @property
   def url(self):
-    """
-    The href attribute specifies the URL of the page the link goes to.
+    """The href attribute specifies the URL of the page the link goes to.
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_a_href.asp
+    `w3schools <https://www.w3schools.com/tags/att_a_href.asp>`_
     """
     return self.component.attr.get("href", '#')
 
@@ -491,12 +418,9 @@ class OptionsLink(OptionsText):
 
   @property
   def href(self):
-    """
-    The href attribute specifies the URL of the page the link goes to.
+    """The href attribute specifies the URL of the page the link goes to.
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_a_href.asp
+    `w3schools <https://www.w3schools.com/tags/att_a_href.asp>`_
     """
     return self.component.attr.get("href", '#')
 
@@ -506,12 +430,9 @@ class OptionsLink(OptionsText):
 
   @property
   def target(self):
-    """
-    The target attribute specifies where to open the linked document.
+    """The target attribute specifies where to open the linked document.
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_a_target.asp
+    `w3schools <https://www.w3schools.com/tags/att_a_target.asp>`_
     """
     return self.component.attr.get("target", '_self')
 
@@ -609,9 +530,7 @@ class OptContents(Options):
 
   @property
   def manual(self):
-    """
-    Define the way the content table is updated.
-    """
+    """Define the way the content table is updated."""
     return self.get("manual", False)
 
   @manual.setter
@@ -623,8 +542,7 @@ class OptBreadCrumb(Options):
   component_properties = ("delimiter", "style_selected")
 
   def set_style(self, name: str):
-    """
-    Set the breadcrumb to a predefined style.
+    """Set the breadcrumb to a predefined style.
     Do not hesitate to share on Github if you think that a new configuration should be promoted to the package.
  
     :param name: String. The predefined style.
@@ -654,8 +572,7 @@ class OptBreadCrumb(Options):
 
   @property
   def delimiter(self):
-    """
-    Set the delimiter for the breadcrumb categories.
+    """Set the delimiter for the breadcrumb categories.
  
     :prop value: String. The delimiter. Default /.
     """
@@ -667,8 +584,7 @@ class OptBreadCrumb(Options):
 
   @property
   def height(self):
-    """
-    Set the height for the breadcrumb items.
+    """Set the height for the breadcrumb items.
  
     :prop number: Integer. The height in pixel. Default 0.
     """
@@ -680,13 +596,10 @@ class OptBreadCrumb(Options):
 
   @property
   def style_selected(self):
-    """
-    Set the style for the selected item.
+    """Set the style for the selected item.
     This style will be added on top of the common CSS style.
 
-    Related Pages:
-
-      https://www.w3schools.com/cssref/
+    `w3schools <https://www.w3schools.com/cssref/>`_
  
     :prop values: Dictionary. The CSS styles.
     """
@@ -702,10 +615,7 @@ class OptionsHighlights(Options):
 
   @property
   def close(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(True)
 
   @close.setter
@@ -714,10 +624,7 @@ class OptionsHighlights(Options):
 
   @property
   def close_css(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get({"float": "right", "font-size": "20px", "cursor": "pointer"})
 
   @close_css.setter
@@ -726,10 +633,7 @@ class OptionsHighlights(Options):
 
   @property
   def reset(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(False)
 
   @reset.setter
@@ -738,8 +642,7 @@ class OptionsHighlights(Options):
 
   @property
   def markdown(self):
-    """
-    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    """Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
     Related Pages:
@@ -760,8 +663,7 @@ class OptionsHighlights(Options):
 
   @property
   def showdown(self):
-    """
-    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    """Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
 
     Related Pages:
@@ -806,10 +708,7 @@ class OptSearchResult(Options):
 
   @property
   def title(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get({
       'color': self.page.theme.colors[-1], "font-weight": 900,
       'font-size': '18px'})
@@ -820,10 +719,7 @@ class OptSearchResult(Options):
 
   @property
   def dsc(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(
       {'color': self.page.theme.greys[6], "padding-bottom": "10px"})
 
@@ -833,10 +729,7 @@ class OptSearchResult(Options):
 
   @property
   def url(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(
       {"font-style": 'italic', 'color': self.page.theme.notch(), 'font-size': '14px'})
 
@@ -846,10 +739,7 @@ class OptSearchResult(Options):
 
   @property
   def visited(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get({'color': self.page.theme.greys[5]})
 
   @visited.setter
@@ -858,10 +748,7 @@ class OptSearchResult(Options):
 
   @property
   def link(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get({'color': self.page.theme.colors[7], 'cursor': 'pointer'})
 
   @link.setter
@@ -870,10 +757,7 @@ class OptSearchResult(Options):
 
   @property
   def pageNumber(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(0)
 
   @pageNumber.setter
@@ -882,10 +766,7 @@ class OptSearchResult(Options):
 
   @property
   def currPage(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(0)
 
   @currPage.setter
@@ -894,10 +775,7 @@ class OptSearchResult(Options):
 
   @property
   def grey(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(self.page.theme.colors[9])
 
   @grey.setter
@@ -906,10 +784,7 @@ class OptSearchResult(Options):
 
   @property
   def white(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get(self.page.theme.colors[0])
 
   @white.setter
@@ -922,10 +797,7 @@ class OptionsUpdate(Options):
 
   @property
   def icon(self):
-    """
-
-    Related Pages:
-    """
+    """ """
     return self._config_get("fas fa-clock")
 
   @icon.setter

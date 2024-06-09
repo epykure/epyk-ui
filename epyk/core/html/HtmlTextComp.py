@@ -31,13 +31,14 @@ class UpDown(Html.Html):
     def __init__(self, page: primitives.PageModel, record: dict, components: List[Html.Html], color: Optional[str],
                  label: Optional[str], width: tuple, height: tuple, options: Optional[dict], helper: Optional[str],
                  profile: Optional[Union[bool, dict]]):
+        options = options or {}
         if record is None:
             record = {'value': 0, 'previous': 0}
         if label is not None:
             record["label"] = label
         super(UpDown, self).__init__(
             page, record, profile=profile, options=options, css_attrs={"width": width, "height": height})
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.style.css.position = "relative"
         if self.helper:
             self.helper.style.css.position = "absolute"
@@ -136,9 +137,10 @@ class BlockText(Html.Html):
 
     def __init__(self, page: primitives.PageModel, record: list, color: Optional[str], border: str, width: tuple,
                  height: tuple, helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
+        options = options or {}
         super(BlockText, self).__init__(page, record, profile=profile, options=options,
                                         css_attrs={'color': color, "width": width, "height": height})
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.css({'padding': '5px'})
         if border != 'auto':
             self.css('border', str(border))
@@ -178,9 +180,10 @@ class TextWithBorder(Html.Html):
 
     def __init__(self, page: primitives.PageModel, record: list, width: tuple, height: tuple, align: Optional[str],
                  helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+        options = options or {}
         super(TextWithBorder, self).__init__(
             page, record, options=options, css_attrs={"width": width, "height": height}, profile=profile)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.align = align
         if 'colorTitle' not in self.val:
             self.val['colorTitle'] = self.page.theme.colors[-1]
@@ -242,7 +245,7 @@ class Number(Html.Html):
         self.css({"display": "inline-block", 'padding': '5%', 'clear': 'both', 'margin': '2px'})
         self.style.css.text_align = "center"
         self.__comps = []
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         if helper is not None:
             self.helper.style.css.position = "absolute"
             self.helper.style.css.bottom = 10
@@ -280,9 +283,10 @@ class Delta(Html.Html):
     _option_cls = OptText.OptionsNumberDelta
 
     def __init__(self, page: primitives.PageModel, records, components, width, height, options, helper, profile):
+        options = options or {}
         super(Delta, self).__init__(page, records, options=options,
                                     css_attrs={"width": width, "height": height}, profile=profile)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         if 'color' not in self.val:
             self.val['color'] = self.page.theme.colors[-1]
         if 'thresold1' not in self.val:
@@ -359,9 +363,10 @@ class Formula(Html.Html):
     name = 'Latex Formula'
 
     def __init__(self, page: primitives.PageModel, text, width, height, color, html_code, helper, options, profile):
+        options = options or {}
         super(Formula, self).__init__(page, text, options=options, html_code=html_code,
                                       css_attrs={"color": color, "width": width, "height": height}, profile=profile)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
 
     _js__builder__ = '''htmlObj.innerHTML = data; MathJax.typeset([htmlObj])'''
 
@@ -394,14 +399,15 @@ class TrafficLight(Html.Html):
 
     def __init__(self, page: primitives.PageModel, color, label, height, tooltip, helper, options, profile,
                  html_code: str=None):
+        options = options or {}
         # Small change to allow the direct use of boolean and none to define the color
         # Those standards will simplify the creation of themes going forward
         super(TrafficLight, self).__init__(page, color, css_attrs={"width": height, "height": height},
                                            options=options, profile=profile, html_code=html_code)
-        self.add_helper(helper, css={"margin-top": "-17px"})
+        self.add_helper(helper, css={"margin-top": "-17px"}, options=options.get("helper"))
         self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
                                    "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'},
-                       html_code=self.html_code)
+                       html_code=self.html_code, options=options.get("label"))
         self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
                   'vertical-align': 'middle'})
         self.set_attrs(name="title", value=tooltip)
@@ -737,10 +743,11 @@ class Composite(Html.Html):
     _option_cls = OptText.OptionsComposite
 
     def __init__(self, page: primitives.PageModel, schema, width, height, html_code, options, profile, helper):
+        options = options or {}
         super(Composite, self).__init__(page, None, html_code=html_code, profile=profile, options=options,
                                         css_attrs={"width": width, "height": height})
         self.__builders, ref_map, self.main = set(), {}, None
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self._set_comp(None, schema, self.__builders, ref_map)
         self.attr = self.val.attr
         self._js = self.val._js

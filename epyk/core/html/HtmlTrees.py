@@ -23,6 +23,7 @@ class Tree(Html.Html):
     def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
                  helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]],
                  verbose: bool = False):
+        options = options or {}
         icon_details = page.icons.get("folder_open")
         if icon_details['icon_family'] != 'bootstrap-icons':
             self.requirements = (icon_details['icon_family'],)
@@ -30,7 +31,7 @@ class Tree(Html.Html):
                                    css_attrs={"width": width, 'height': height}, verbose=verbose)
         self.options.icon_open = icon_details["icon"]
         self.options.style = {"list-style": 'none', 'margin': '0 5px', 'padding-left': 0}
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.attr["data-depth"] = 1
         self.css(self.options.style)
 
@@ -198,7 +199,7 @@ class DropDown(Html.Html):
                         "ul": {"left": "%spx" % options.get("width")}})
         super(DropDown, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                        css_attrs={"width": width, "height": height}, verbose=verbose)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self._vals, self.text = data, text
         self.attr["class"].add("menu")
         self.css(

@@ -484,6 +484,8 @@ if (typeof icon === "undefined"){
 
         :return: The file full path.
         """
+        t1_start = time.process_time()
+
         # For templates configuration
         from epyk import configs
 
@@ -578,6 +580,8 @@ if (typeof icon === "undefined"){
         if configs.keys:
             with open(os.path.join(path, "%s.json" % name), "w") as fp:
                 fp.write(configs.to_json())
+
+        self.page.stats.transpiler.time = time.process_time() - t1_start
         return html_file_path
 
     def web(self) -> dict:

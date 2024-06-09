@@ -15,8 +15,7 @@ class Panels:
   def panel(self, components: List[html.Html.Html] = None, title: str = None, color: str = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False):
-    """
-    Add a simple div panel to the page.
+    """Add a simple div panel to the page.
 
     :tags:
     :categories:
@@ -25,33 +24,29 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.Panel`
 
-    Usage::
-
- 
-    :param components: Optional. The different HTML objects to be added to the component.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: Optional. The different HTML objects to be added to the component
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     if components is not None and not isinstance(components, list):
       components = [components]
-    html_panel = html.HtmlContainer.Panel(self.page, components or [], title, color, width, height, html_code,
-                                          helper, options, profile)
+    html_panel = html.HtmlContainer.Panel(
+      self.page, components or [], title, color, width, height, html_code, helper, options, profile)
     html.Html.set_component_skin(html_panel)
     return html_panel
 
   def pills(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
             align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False):
-    """
-    Python wrapper to the Bootstrap Pills interface.
+    """Python wrapper to the Bootstrap Pills interface.
 
     :tags:
     :categories:
@@ -66,18 +61,16 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/components/navs/
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
  
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. The text-align property within this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -99,8 +92,7 @@ class Panels:
   def boxes(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
             align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
             profile: types.PROFILE_TYPE = False):
-    """
-    Python wrapper to the Bootstrap rectangle boxes interface.
+    """Python wrapper to the Bootstrap rectangle boxes interface.
 
     :tags:
     :categories:
@@ -115,18 +107,16 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/components/navs/
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
  
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param align: Optional. The text-align property within this component.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param align: Optional. The text-align property within this component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -149,8 +139,7 @@ class Panels:
   def tabs(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
-    """
-    Python wrapper for a multi Tabs component.
+    """Python wrapper for a multi Tabs component.
 
     :tags:
     :categories:
@@ -165,17 +154,15 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/components/navs/
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
  
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -191,8 +178,7 @@ class Panels:
   def arrows_up(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
                 html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = False):
-    """
-    Python wrapper for a multi Tabs component.
+    """Python wrapper for a multi Tabs component.
 
     :tags:
     :categories:
@@ -201,19 +187,17 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.TabsArrowsUp`
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/components/navs/
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     Usage::
  
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -235,8 +219,7 @@ class Panels:
   def arrows_down(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
                   html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
                   profile: types.PROFILE_TYPE = False):
-    """
-    Python wrapper for a multi Tabs component.
+    """Python wrapper for a multi Tabs component.
 
     :tags:
     :categories:
@@ -245,19 +228,17 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.TabsArrowsDown`
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/components/navs/
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     Usage::
  
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -280,8 +261,7 @@ class Panels:
   def menu(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = False):
-    """
-    Python wrapper to the Bootstrap Pills interface.
+    """Python wrapper to the Bootstrap Pills interface.
 
     :tags:
     :categories:
@@ -290,19 +270,17 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/4.0/components/navs/
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     Usage::
  
-    :param color: Optional. The font color in the component. Default inherit.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param color: Optional. The font color in the component. Default inherit
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -323,8 +301,7 @@ class Panels:
   def sliding(self, components, title, color: str = None, align: str = "center", width: types.SIZE_TYPE = (100, "%"),
               height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
               options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.PanelSlide:
-    """
-    Add a sliding panel.
+    """Add a sliding panel.
 
     TODO: Animate the CSS to make a transition.
 
@@ -340,16 +317,16 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.PanelSlide`
  
-    :param components: Optional. The different HTML objects to be added to the component.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param align: Optional. The text-align property within this component (Default center).
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: Optional. The different HTML objects to be added to the component
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param color: Optional. The font color in the component. Default inherit
+    :param align: Optional. The text-align property within this component (Default center)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -366,13 +343,12 @@ class Panels:
     html_slide = html.HtmlContainer.PanelSlide(
       self.page, components, title, color, width, height, html_code, helper, options or {}, profile)
     if align == "center":
-      html_slide.style.css.margin = "auto"
-      html_slide.style.css.display = "block"
+      html_slide.classList.add(html_slide.style_refs["html-slidepanel-center"])
     html.Html.set_component_skin(html_slide)
     return html_slide
 
-  def split(self, left: html.Html.Html = None, right: html.Html.Html = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
-            left_width: types.SIZE_TYPE = (160, 'px'), resizable: bool = True,
+  def split(self, left: html.Html.Html = None, right: html.Html.Html = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (200, 'px'), left_width: types.SIZE_TYPE = (160, 'px'), resizable: bool = True,
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelSplit:
     """
@@ -390,31 +366,29 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.PanelSlide`
 
-    Related Pages:
+    `Example <https://codepen.io/rstrahl/pen/eJZQej>`_
 
-      https://codepen.io/rstrahl/pen/eJZQej
- 
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
     :param left_width: Optional.
     :param left: Optional.
     :param right: Optional.
     :param resizable: Optional.
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    html_split = html.HtmlContainer.PanelSplit(self.page, width, height, left_width, left, right, resizable,
-                                               helper, options, profile)
+    html_split = html.HtmlContainer.PanelSplit(
+      self.page, width, height, left_width, left, right, resizable, helper, options, profile)
     html.Html.set_component_skin(html_split)
     return html_split
 
   def filters(self, items=None, category: str = 'group', width: types.SIZE_TYPE = (100, "%"),
               height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None):
-    """   Chip component with only the filtering section.
+    """Chip component with only the filtering section.
 
     :tags:
     :categories:
@@ -427,18 +401,16 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlEvent.Filters`
 
-    Related Pages:
-
-      https://www.w3schools.com/howto/howto_css_contact_chips.asp
+    `Example <https://www.w3schools.com/howto/howto_css_contact_chips.asp>`_
  
     :param items: Optional.
     :param category: Optional.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     options = options or {}
     width = Arguments.size(width, unit="%")
@@ -469,11 +441,11 @@ class Panels:
 
       https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
  
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param options: Optional. A dictionary with the components properties.
-    :param profile: Optional. A flag to set the component performance storage.
-    :param helper: Optional. A tooltip helper.
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. A dictionary with the components properties
+    :param profile: Optional. A flag to set the component performance storage
+    :param helper: Optional. A tooltip helper
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -486,7 +458,8 @@ class Panels:
 
   def hamburger(self, components: List[html.Html.Html] = None, title: Union[str, dict] = "", color: str = None,
                 align: str = "center", width=(100, "%"), height=(None, "px"),
-                html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = False):
+                html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = False
+                ) -> html.HtmlContainer.PanelSlide:
     """
     Add hamburger panel.
 
@@ -499,16 +472,16 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.PanelSlide`
  
-    :param components: Optional. The different HTML objects to be added to the component.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param align: Optional. The text-align property within this component (Default center).
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: Optional. The different HTML objects to be added to the component
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param color: Optional. The font color in the component. Default inherit
+    :param align: Optional. The text-align property within this component (Default center)
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
@@ -522,14 +495,15 @@ class Panels:
         components.append(self.page.ui.texts.paragraph(component, options={"markdown": True}))
       else:
         components.append(component)
-    dfl_options = {"icon_expanded": "", "expanded": False, "icon_closed": "", "click_type": 'icon'}
+    dfl_options = {
+      "icon_expanded": "", "expanded": False, "icon_closed": "", "click_type": 'icon', "icon_position": "right"}
     if options is not None:
       dfl_options.update(options)
     html_slide = html.HtmlContainer.PanelSlide(
       self.page, components, title, color, width, height, html_code, helper, dfl_options, profile)
     html_slide.icon = self.page.ui.icons.hamburger()
     html_slide.icon.options.managed = False
-    html_slide.icon.style.css.float = "right"
+    html_slide.icon.style.css.float = html_slide.options.icon_position
     html_slide.icon.style.css.margin_top = 3
     html_slide.style.css.border = "1px solid %s" % self.page.theme.greys[2]
     html_slide._vals[1].style.css.padding = 5
@@ -537,16 +511,13 @@ class Panels:
     html_slide.style.css.margin_top = 5
     html_slide.style.css.margin_bottom = 5
     if align == "center":
-      html_slide.style.css.margin = "5px auto"
-      html_slide.style.css.display = "block"
+      html_slide.classList.add(html_slide.style_refs["html-slidepanel-center"])
     html.Html.set_component_skin(html_slide)
     return html_slide
 
   @property
   def slidings(self):
-    """
-    More custom sliding panels.
-    """
+    """More custom sliding panels."""
     return Slidings(self)
 
 
@@ -555,26 +526,23 @@ class Slidings:
   def __init__(self, ui):
     self.page = ui.page
 
-  def right(self, components: List[html.Html.Html], title: str = "", color=None, align="center", width=(100, "%"), height=(None, "px"), html_code=None,
-            helper=None, options=None, profile=False):
-    """
-    Sliding panels with the arrow on the right.
+  def right(self, components: List[html.Html.Html], title: str = "", color=None, align="center", width=(100, "%"),
+            height=(None, "px"), html_code=None, helper=None, options=None, profile=False):
+    """Sliding panels with the arrow on the right.
 
     :tags:
     :categories:
 
-    Usage::
- 
-    :param components: The different HTML objects to be added to the component.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param align: Optional. The text-align property within this component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param color: Optional. The font color in the component. Default inherit
+    :param align: Optional. The text-align property within this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     dfl_options = {"icon_position": "right"}
     if options is not None:
@@ -592,24 +560,21 @@ class Slidings:
   def left(self, components: List[html.Html.Html], title: str = "", color: str = None, align: str = "center",
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Sliding panels with the arrow on the left.
+    """Sliding panels with the arrow on the left.
 
     :tags:
     :categories:
 
-    Usage::
- 
-    :param components: The different HTML objects to be added to the component.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param align: The text-align property within this component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param color: Optional. The font color in the component. Default inherit
+    :param align: The text-align property within this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     sliding = self.page.ui.panels.sliding(components, color=color, title=title, align=align, width=width, height=height,
                                           html_code=html_code, helper=helper, options=options, profile=profile)
@@ -623,24 +588,21 @@ class Slidings:
   def plus(self, components, title: str = "", color: str = None, align: str = "center",
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
-    """
-    Same component than sliding with a different style.
+    """Same component than sliding with a different style.
 
     :tags:
     :categories:
-
-    Usage::
  
-    :param components: The different HTML objects to be added to the component.
-    :param title: Optional. A panel title. This will be attached to the title property.
-    :param color: Optional. The font color in the component. Default inherit.
-    :param align: Optional. The text-align property within this component.
-    :param width: Optional. A tuple with the integer for the component width and its unit.
-    :param height: Optional. A tuple with the integer for the component height and its unit.
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side).
-    :param helper: Optional. A tooltip helper.
-    :param options: Optional. Specific Python options available for this component.
-    :param profile: Optional. A flag to set the component performance storage.
+    :param components: The different HTML objects to be added to the component
+    :param title: Optional. A panel title. This will be attached to the title property
+    :param color: Optional. The font color in the component. Default inherit
+    :param align: Optional. The text-align property within this component
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     html_slide = self.page.ui.panels.sliding(
       components, title, color, align, width, height, html_code, helper, options, profile)

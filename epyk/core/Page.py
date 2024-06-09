@@ -32,6 +32,20 @@ from epyk.core.py import PyExt
 from epyk.web import apps
 
 
+class Transpiler:
+    def __init__(self, context):
+        self._context = context
+
+    @property
+    def time(self):
+        """Processing time for the transpilation"""
+        return self._context.get("time", 0)
+
+    @time.setter
+    def time(self, value: float):
+        self._context["time"] = value
+
+
 class JsProperties:
 
     def __init__(self, context):
@@ -311,6 +325,11 @@ class Properties:
         return self._context['context']
 
     @property
+    def resources(self):
+        """Return the common Page context"""
+        return self._context['context']['resources']
+
+    @property
     def icon(self):
         """Return the page icons definition"""
         return self._context['icon']
@@ -345,6 +364,17 @@ class Properties:
 
     def to_json(self):
         return self._context
+
+
+class Stats:
+
+    def __init__(self, context):
+        self._context = context
+
+    @property
+    def transpiler(self):
+        """Stats for the transpilers"""
+        return Transpiler(self._context['context']['transpiler'])
 
 
 class Report:
@@ -389,7 +419,7 @@ class Report:
         """
         self._css = {}
         self._ui, self._js, self._py, self._theme, self._auth, self.__body = None, None, None, None, None, None
-        self._tags, self._header_obj, self.__import_manage, self.__icons, self.__properties = None, None, None, None, None
+        self._tags, self._header_obj, self.__import_manage, self.__icons, self.__properties, self.__stats = None, None, None, None, None, None
         if script is None:
             frame = inspect.stack()[1]
             if inspect.getmodule(frame[0]) is not None:
@@ -415,7 +445,7 @@ class Report:
             'init': {}
         },
             # Used on the Python side to make some decisions
-            'context': {'framework': 'JS', "script": script},
+            'context': {'framework': 'JS', "script": script, "resources": {}, "transpiler": {}},
             # Add report font-face CSS definition
             'css': {
                 "font-face": {},
@@ -444,6 +474,13 @@ class Report:
         if self.__properties is None:
             self.__properties = Properties(self._props)
         return self.__properties
+
+    @property
+    def stats(self) -> Stats:
+        """Property to the different Page statistics"""
+        if self.__stats is None:
+            self.__stats = Stats(self._props)
+        return self.__stats
 
     @property
     def root__script(self) -> str:

@@ -30,6 +30,7 @@ class Button(Html.Html):
                  height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: Optional[str] = None,
                  profile: Optional[Union[dict, bool]] = None, options: Optional[dict] = None, verbose: bool = False):
         text = text or []
+        options = options or {}
         if not isinstance(text, list):
             text = [text]
         for obj in text:
@@ -38,7 +39,7 @@ class Button(Html.Html):
         super(Button, self).__init__(
             page, text, html_code=html_code, options=options, profile=profile,
             css_attrs={"width": width, "height": height}, verbose=verbose)
-        self.add_icon(icon, html_code=self.html_code)
+        self.add_icon(icon, html_code=self.html_code, options=options.get("icon"))
         if icon is not None and not text:
             self.icon.style.css.margin_right = None
         if icon is not None:
@@ -401,7 +402,8 @@ class CheckButton(Html.Html):
             css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
         self.input = page.ui.images.icon(
             self.options.icon_check if flag else self.options.icon_not_check,
-            html_code=self.sub_html_code("_input")).css({"width": page.body.style.globals.font.normal()})
+            html_code=self.sub_html_code("_input"), options=options.get("input")).css(
+            {"width": page.body.style.globals.font.normal()})
         self.input.style.css.color = self.page.theme.success.base if flag else self.page.theme.danger.base
         self.input.style.css.middle()
         self.input.options.managed = False
@@ -490,7 +492,7 @@ class IconEdit(Html.Html):
     tag = "span"
 
     def __init__(self, page: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
-                 tooltip: Optional[str], width, height, html_code, options,
+                 tooltip: Optional[str], width, height, html_code, options: dict,
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
         super(IconEdit, self).__init__(
             page, '', html_code=html_code, profile=profile, css_attrs={
@@ -498,18 +500,18 @@ class IconEdit(Html.Html):
         if tooltip is not None:
             self.tooltip(tooltip)
         # Add the internal components icons and helper
-        self.add_span(text)
+        self.add_span(text, options=options.get("span"))
         if self._vals:
             icon = self._vals
         notches = options.get("font-factor", 0)
         if width[0] is not None and width[1] == 'px':
             self.add_icon(icon, {"margin-right": "None", "margin": "2px",
                                  'font-size': "%s%s" % (width[0] - notches, width[1])},
-                          html_code=self.html_code, family=options.get("icon_family"))
+                          html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
         else:
             self.add_icon(icon, {"margin-right": "None", "margin": "2px",
                                  'font-size': self.page.body.style.globals.font.normal(-notches)},
-                          html_code=self.html_code, family=options.get("icon_family"))
+                          html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
         self.hover_color = True
 
     def spin(self):
@@ -670,7 +672,7 @@ class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
     }
 
     def __init__(self, page: primitives.PageModel, data, color: Optional[str], width: tuple, height: tuple,
-                 html_code: Optional[str], helper: Optional[str], options: Optional[dict],
+                 html_code: Optional[str], helper: Optional[str], options: dict,
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
         if data:
             rec = []
@@ -686,7 +688,7 @@ class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
         if html_code in self.page.inputs:
             self._vals = data
             self.options.selection = self.page.inputs[html_code].split(self.options.delimiter)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
 
     @property
     def options(self) -> OptButton.OptionsButtons:

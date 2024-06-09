@@ -3,8 +3,9 @@
 
 import re
 import os
-
+from pathlib import Path
 from typing import Optional, Union
+
 from epyk.core.py import primitives
 
 from epyk.core.html import Html
@@ -24,6 +25,14 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
     tag = "label"
     _option_cls = OptText.OptionsText
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-label.css"
+    ]
+
+    style_refs = {
+        "html-label": "html-label",
+    }
+
     def __init__(self, page: primitives.PageModel, text: str = None, color: str = None, align: str = None,
                  width=None, height=None, html_code: str = None, tooltip: str = None, profile=None, options=None):
         text = text or []
@@ -34,9 +43,7 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
                 obj.options.managed = False
         super(Label, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height, 'color': color, 'text-align': align})
-        self.css({'margin': '0 5px', 'float': 'left', 'display': 'inline-block',
-                  'line-height': '%spx' % Default_html.LINE_HEIGHT,
-                  'vertical-align': 'middle', 'text-align': 'left'})
+        self.classList.add(self.style_refs["html-label"])
         self.badge = ""
         if tooltip:
             self.set_attrs(name='title', value=tooltip)
@@ -128,12 +135,19 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
     tag = "span"
     _option_cls = OptText.OptionsText
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-span.css"
+    ]
+
+    style_refs = {
+        "html-span": "html-span",
+    }
+
     def __init__(self, page: primitives.PageModel, text="", color=None, align=None, width=None,
                  height=None, html_code=None, tooltip=None, options=None, profile=None):
         super(Span, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height, "color": color, 'text-align': align})
-        self.css({'line-height': '%spx' % Default_html.LINE_HEIGHT, 'margin': '0 5px', 'display': 'inline-block',
-                  'vertical-align': 'middle'})
+        self.classList.add(self.style_refs["html-span"])
         if tooltip is not None:
             self.tooltip(tooltip)
 
@@ -499,6 +513,14 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
     tag = "div"
     _option_cls = OptText.OptionsTitle
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-title.css"
+    ]
+
+    style_refs = {
+        "html-title": "html-title",
+    }
+
     def __init__(self, page: primitives.PageModel, text, level, name, contents, color, picture,
                  icon, marginTop, html_code, width, height, align, options, profile):
 
@@ -511,7 +533,7 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
         super(Title, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, "height": height})
         self._name, self.level, self.picture = name, level, picture
-        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
         if contents is not None:
             self._name = contents.add(text, level or 1, name)
         if level is not None and level < 6:
@@ -527,10 +549,9 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
             self.css({'margin': '5px auto 10px auto', 'display': 'inline-block', 'text-align': 'center'})
         elif align is not None:
             self.css({'margin': '5px auto 10px auto', 'display': 'inline-block', 'text-align': align})
-        else:
-            self.css({'display': 'inline-block'})  # , "margin-right": "10px"
         if hasattr(page, '_content_table') and not page._content_table.options.manual and self.__options.content_table:
             page._content_table.add_title(self, level=level)
+        self.classList.add(self.style_refs["html-title"])
 
     @property
     def style(self) -> GrpCls.ClassHtmlEmpty:
@@ -607,9 +628,11 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
         super(Numeric, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "color": color})
         # Add the components label and icon
-        self.add_label(label, css={"float": "none", "width": 'auto', 'margin-right': '10px'}, html_code=self.html_code)
-        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
-        self.add_helper(helper, css={"line-height": '20px'})
+        self.add_label(
+            label, css={"float": "none", "width": 'auto', 'margin-right': '10px'}, html_code=self.html_code,
+            options=options.get("label"))
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
+        self.add_helper(helper, css={"line-height": '20px'}, options=options.get("helper"))
         self.add_title(title, level=4, options={'content_table': False},
                        css={"margin-bottom": 0, "margin-right": 0, "padding": 0})
 
@@ -675,16 +698,16 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
         :param int timer: The increase in millisecond
         """
         self.page.body.onReady([
-            self.page.js.objects.number(self.val, js_code="%s_counter" % self.htmlCode, set_var=True),
+            self.page.js.objects.number(self.val, js_code="%s_counter" % self.html_code, set_var=True),
             self.page.js.window.setInterval([
                 self.page.js.if_(
-                    self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+                    self.page.js.objects.number.get("window.%s_counter" % self.html_code) < number, [
                         self.page.js.objects.number(
-                            self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
-                            js_code="window.%s_counter" % self.htmlCode, set_var=True),
-                        self.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
-                    ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
-            ], "%s_interval" % self.htmlCode, timer)
+                            self.page.js.objects.number.get("window.%s_counter" % self.html_code) + 1,
+                            js_code="window.%s_counter" % self.html_code, set_var=True),
+                        self.build(self.page.js.objects.number.get("window.%s_counter" % self.html_code))
+                    ]).else_(self.page.js.window.clearInterval("%s_interval" % self.html_code))
+            ], "%s_interval" % self.html_code, timer)
         ])
         return self
 
@@ -725,13 +748,13 @@ class Highlights(MixHtmlState.HtmlStates, Html.Html):
                  helper, options, profile):
         super(Highlights, self).__init__(page, text, css_attrs={"width": width, "height": height},
                                          html_code=html_code, profile=profile, options=options)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.style.css.color = color if color is not None else self.page.theme.greys[-1]
         # Add the components title and icon
         self.add_title(title, css={"width": "none", "font-weight": 'bold', 'margin-top': 0},
                        options={'content_table': False})
         self.add_icon(icon, {"float": "left", "color": 'inherit'}, html_code=self.htmlCode,
-                      family=options.get("icon_family"))
+                      family=options.get("icon_family"), options=options.get("icon"))
         if self.icon is not None and self.icon != "":
             self.icon.style.css.font_factor(2)
         # Change the style of the component
@@ -765,9 +788,10 @@ class Fieldset(MixHtmlState.HtmlStates, Html.Html):
 
     def __init__(self, page: primitives.PageModel, legend: str, width: str, height: str, helper: Optional[str],
                  options: Optional[dict], profile: Optional[Union[bool, dict]]):
+        options = options or {}
         super(Fieldset, self).__init__(page, legend, css_attrs={"width": width, "height": height},
                                        profile=profile, options=options)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.css({'padding': '5px', 'border': '1px groove %s' % self.page.theme.greys[3], 'display': 'block',
                   'margin': '5px 0'})
 

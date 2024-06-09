@@ -127,10 +127,10 @@ class Tick(Html.Html):
         if tooltip is not None:
             self.tooltip(tooltip)
         # Add the internal components icons and helper
-        self.add_span(text, css={"float": 'right'}, html_code=self.html_code)
+        self.add_span(text, css={"float": 'right'}, html_code=self.html_code, options=options.get("span"))
         self.add_icon(icon, {"color": self.page.theme.success.base, "margin": "2px",
                              'font-size': page.body.style.globals.font.normal()},
-                      html_code=self.html_code, family=options.get("icon_family"))
+                      html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
         self.icon.style.add_classes.div.background_hover()
         self.css({"margin": "5px 0", 'cursor': 'pointer'})
         self.style.css.float = position
@@ -191,14 +191,14 @@ class Switch(Html.Html):
 
         is_on = options.get("is_on", False)
         self.checkbox = page.ui.inputs.checkbox(
-          is_on, width=(None, "%"), html_code=self.sub_html_code("check"))
+          is_on, width=(None, "%"), html_code=self.sub_html_code("check"), options=options.get("checkbox"))
         self.checkbox.style.add_classes.radio.switch_checkbox()
         self.checkbox.options.managed = False
         if is_on:
             self.checkbox.attr["checked"] = is_on
 
         self.switch_label = page.ui.texts.label(
-          page.entities.non_breaking_space, html_code=self.sub_html_code("label"))
+          page.entities.non_breaking_space, html_code=self.sub_html_code("label"), options=options.get("label"))
         self.switch_label.style.clear_all(no_default=True)
         self.switch_label.style.css.display = "inline-block"
         # self.switch_label.style.css.top = 4

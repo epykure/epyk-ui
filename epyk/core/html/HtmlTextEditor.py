@@ -28,11 +28,12 @@ class Console(Html.Html):
                  html_code: Optional[str],
                  helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]],
                  verbose: bool = False):
+        options = options or {}
         super(Console, self).__init__(page, data, html_code=html_code, options=options,
                                       css_attrs={"width": width, "height": height}, profile=profile, verbose=verbose)
         self.css({"overflow": 'auto', 'box-sizing': 'border-box', 'color': self.page.theme.greys[-1],
                   'background': self.page.theme.colors[0]})
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
 
     @property
     def dom(self) -> JsHtmlEditor.Console:
@@ -246,10 +247,11 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
     def __init__(self, page: primitives.PageModel, vals: str, color: str, width: tuple, height: tuple,
                  html_code: Optional[str], options: Optional[dict], helper: str,
                  profile: Optional[Union[dict, bool]], verbose: bool = False):
+        options = options or {}
         super(CodeEditor, self).__init__(page, vals, html_code=html_code, options=options,
                                          css_attrs={"width": width, "height": height, "color": color},
                                          profile=profile, verbose=verbose)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.css({'display': 'block', 'margin': '5px 0'})
 
     @property

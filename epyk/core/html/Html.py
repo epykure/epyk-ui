@@ -118,11 +118,13 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
                     component.page.js.customFile("%s.js" % component.builder_name, path=native_path, authorize=True)
                     component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
                     component.page.properties.js.add_constructor(component.builder_name, None)
+                    component.page.properties.resources[native_builder.name] = native_builder
                 elif internal_native_builder.exists():
                     component.page.js.customFile(
                       "%s.js" % component.builder_name, path=internal_native_builder, authorize=True)
                     component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
                     component.page.properties.js.add_constructor(component.builder_name, None)
+                    component.page.properties.resources[internal_native_builder.name] = internal_native_builder
                 else:
                     if not component.builder_name or component._js__builder__ is None:
                         raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
@@ -393,6 +395,9 @@ the same signature and return).
     _option_cls = Options
     tag = None
     style_urls: List[str] = None
+    # Common CSS definition
+    html_class: str = "html-base"
+    html_class_full_path: Path = Path(__file__).parent / "css" / "native" / "html-base.css"
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.JS_FUNCS_TYPES = None,
@@ -433,7 +438,6 @@ the same signature and return).
             self.attr.update({'class': self.style.classList['main'], 'css': self.style.css.attrs})
         if css_attrs is not None:
             self.css(css_attrs)
-
         if html_code is not None:
             if html_code[0].isdigit() or cleanData(html_code) != html_code:
                 raise ValueError("htmlCode %s cannot start with a number or contain, suggestion %s " % (
@@ -661,6 +665,7 @@ the same signature and return).
           print(div.htmlCode)
         """
         if self.__htmlCode is not None:
+            logging.debug("[DEPRECATED] htmlCode must be replaced by html_code - %s" % self.__htmlCode)
             return self.__htmlCode
 
         return "%s_%s" % (self.__class__.__name__.lower(), id(self))
@@ -803,7 +808,7 @@ the same signature and return).
         return self
 
     def add_icon(self, text: str, css: Optional[dict] = None, position: str = "before", family: Optional[str] = None,
-                 html_code: Optional[str] = None):
+                 html_code: Optional[str] = None, options: Optional[dict] = None):
         """Add an icon to the HTML object.
 
         Usage::
@@ -815,6 +820,7 @@ the same signature and return).
         :param position: Optional. The position compared to the main component tag
         :param family: Optional. The icon framework to be used (preferred one is font-awesome)
         :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        :param options: Optional. The initial options for the icon component
 
         :return: The Html object.
         """
@@ -828,7 +834,8 @@ the same signature and return).
         if text is not None:
             html_code_icon = self.sub_html_code("icon", html_code=html_code)
             self.icon = self.page.ui.images.icon(
-                text, html_code=html_code_icon, family=family).css({"margin-right": '5px', 'font-size': 'inherit'})
+                text, html_code=html_code_icon, family=family, options=options
+            ).css({"margin-right": '5px', 'font-size': 'inherit'})
             self.icon.defined_code = self.defined_code
             if position == "before":
                 self.prepend_child(self.icon)
@@ -870,7 +877,7 @@ the same signature and return).
         return self
 
     def add_span(self, text: str, css: Optional[Union[dict, bool]] = None, position: str = "before",
-                 html_code: Optional[str] = None, i: Optional[int] = None):
+                 html_code: Optional[str] = None, i: Optional[int] = None, options: types.OPTION_TYPE = None):
         """Add an elementary span component.
 
         `Learn more <https://fontawesome.com/how-to-use/on-the-web/styling/layering>`_
@@ -880,12 +887,13 @@ the same signature and return).
         :param position: Optional. The position compared to the main component tag
         :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
         :param i: Optional. The index of the span element to be created
+        :param options: Optional. The init options for the span component
         """
         key_attr = 'span_%s' % i if i is not None else 'span'
         setattr(self, key_attr, '')
         if text is not None:
             html_code_span = self.sub_html_code("span", html_code=html_code)
-            setattr(self, key_attr, self.page.ui.texts.span(text, html_code=html_code_span))
+            setattr(self, key_attr, self.page.ui.texts.span(text, html_code=html_code_span, options=options))
             span = getattr(self, key_attr)
             if position == "before":
                 self.prepend_child(span)
@@ -1016,15 +1024,16 @@ the same signature and return).
                 self.checkbox.set_attrs(attrs=attrs)
         return self
 
-    def add_helper(self, text: str, css: dict = None):
+    def add_helper(self, text: str, css: dict = None, options: types.OPTION_TYPE = None):
         """Add an elementary helper icon.
         The helper is not managed by the main page and should be written in the component.
 
         :param text: The helper content
         :param css: Optional. The CSS style to be added to the component
+        :param options: Optional. The init options for the helper component
         """
         if text is not None:
-            self.helper = self.page.ui.rich.info(text, html_code=self.sub_html_code("help"))
+            self.helper = self.page.ui.rich.info(text, html_code=self.sub_html_code("help"), options=options)
             self.helper.options.managed = False
             if css is not None:
                 self.helper.css(css)
@@ -1856,12 +1865,27 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
 
         This will be the main function called by the page to render all the components.
         """
+        # Add Core CSS definition
+        if self.html_class is not None:
+            self.classList.insert(0, self.html_class)
+            if self.html_class_full_path.exists():
+                style_vars = self.page.theme.all()
+                style_vars.update(self.page.body.style.globals.vars())
+                # Add CSS proxy mapping from the body
+                self.page.body.set_css_maps(style_vars)
+                css_content = css_files_loader(
+                    [str(self.html_class_full_path)], style_vars=style_vars,
+                    resources=self.page.properties.resources)
+                if css_content:
+                    self.page.properties.css.add_text(css_content, map_id="html (%s)" % self.__class__.__name__)
+
         if self.style_urls is not None:
             style_vars = self.page.theme.all()
             style_vars.update(self.page.body.style.globals.vars())
             # Add CSS proxy mapping from the body
             self.page.body.set_css_maps(style_vars)
-            css_content = css_files_loader(self.style_urls, style_vars=style_vars)
+            css_content = css_files_loader(
+                self.style_urls, style_vars=style_vars, resources=self.page.properties.resources)
             if css_content:
                 self.page.properties.css.add_text(css_content, map_id=self.__class__.__name__)
 
@@ -1903,6 +1927,10 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
 class Body(Html):
     name = "Body"
     tag = "body"
+
+    # CSS definition for the body
+    html_class: str = "html-body"
+    html_class_full_path: Path = Path(__file__).parent / "css" / "native" / "html-base.css"
 
     # Common mapping between the theme variables and the CSS variables.
     # This mapping file is coming to all the components / style in the framework
@@ -2197,7 +2225,8 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
                         css_files.append(n_file)
                     else:
                         css_files.append(c_file)
-            css_content = css_files_loader(css_files, style_vars=style_vars)
+            css_content = css_files_loader(
+                css_files, style_vars=style_vars, resources=self.page.properties.resources)
             self.page.headers.links.stylesheet(
                 "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
 
@@ -2229,6 +2258,10 @@ class Component(Html):
     css_classes: Optional[List] = None
     str_repr = None
     dyn_repr = None
+
+    # CSS definition for the body
+    html_class: str = "html-component"
+    html_class_full_path: Path = Path(__file__).parent / "css" / "native" / "html-base.css"
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
@@ -2338,6 +2371,19 @@ class StructComponent(Html):
         raise ValueError("Method write_values must be defined")
 
     def __str__(self):
+        # Add CSS definition
+        if self.html_class is not None:
+            if self.html_class_full_path.exists():
+                style_vars = self.page.theme.all()
+                style_vars.update(self.page.body.style.globals.vars())
+                # Add CSS proxy mapping from the body
+                self.page.body.set_css_maps(style_vars)
+                css_content = css_files_loader(
+                    [str(self.html_class_full_path)], style_vars=style_vars,
+                    resources=self.page.properties.resources)
+                if css_content:
+                    self.page.properties.css.add_text(css_content, map_id=self.__class__.__name__)
+
         values = self.write_values()
         values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
         values["htmlCode"] = self.htmlCode

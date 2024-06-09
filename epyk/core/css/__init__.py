@@ -15,7 +15,8 @@ def css_files_loader(
         file_path: Optional[List[str]],
         selector: str = None,
         style_vars: Optional[Dict[str, str]] = None,
-        minify: bool = True
+        minify: bool = True,
+        resources: Dict[str, Path] = None
 ) -> str:
     """Get the CSS content from CSS component files.
 
@@ -40,6 +41,13 @@ def css_files_loader(
             css_file = str(css_file)
             if path_css_file.exists():
                 if css_file.endswith(".css"):
+                    if resources is not None:
+                        if not path_css_file.name in resources:
+                            resources[path_css_file.name] = path_css_file
+                        else:
+                            logging.debug("NATIVE | CSS | %s already loaded" % path_css_file)
+                            continue
+
                     css_formatted.append("/* CSS From file %s */" % css_file)
                     with open(css_file) as fp:
                         css_data = " ".join([line.strip() for line in fp])

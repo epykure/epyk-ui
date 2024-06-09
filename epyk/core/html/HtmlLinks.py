@@ -24,8 +24,8 @@ class ExternalLink(Html.Html):
         super(ExternalLink, self).__init__(page, {"text": text, "url": url}, html_code=html_code, options=options,
                                            css_attrs={'height': height}, profile=profile, verbose=verbose)
         # Add the internal components icon and helper
-        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"))
-        self.add_helper(helper)
+        self.add_icon(icon, html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
+        self.add_helper(helper, options=options.get("helper"))
         self.decoration, self.__url = decoration, {}
         if 'url' not in self.val:
             self.options.url = self.val['text']

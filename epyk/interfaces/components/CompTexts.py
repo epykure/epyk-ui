@@ -788,7 +788,7 @@ class Texts:
             color=None, picture: str = None, icon: str = None,
             top: int = 5, html_code: str = None, width: types.SIZE_TYPE = ("auto", ""),
             height: types.SIZE_TYPE = (None, "px"), align: str = None, options: types.OPTION_TYPE = None,
-            profile: types.PROFILE_TYPE = None):
+            profile: types.PROFILE_TYPE = None) -> html.HtmlText.Title:
     """
     Add a title.
 
@@ -834,7 +834,7 @@ class Texts:
       sub_title.style.css.display = "inline"
       sub_title.style.css.font_size = self.page.body.style.globals.font.normal(-3)
       text = "<b>%s</b> %s" % (list(text.keys())[0], sub_title.html())
-    dflt_options = {"reset": True, 'markdown': False}
+    dflt_options = {"reset": True, 'markdown': False, "uppercase": True}
     if options is not None:
       dflt_options.update(options)
     text = self.page.py.encode_html(text)
@@ -842,7 +842,6 @@ class Texts:
       color = self.page.theme.notch()
     html_title = html.HtmlText.Title(self.page, text, level, name, contents, color, picture, icon,
                                      top, html_code, width, height, align, dflt_options, profile)
-    html_title.style.css.text_transform = "uppercase"
     html.Html.set_component_skin(html_title)
     return html_title
 

@@ -646,6 +646,7 @@ class Images:
     :param align: Optional. The text-align property within this component
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param badge: Optional.
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
