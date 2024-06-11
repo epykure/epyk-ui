@@ -1,0 +1,30 @@
+.ui-datepicker {
+    background: var(--white) ;
+    font-size: var(--font-size) ;
+    z-index: 220 !IMPORTANT ;
+    width: auto ;
+}
+
+.ui-widget-header {
+    background: var(--theme-light);
+}
+
+.html-date {
+    font-family: inherit ;
+    cursor: pointer ;
+    margin: 0 ;
+    padding: 2px ;
+    display: inline-block ;
+    text-align: center ;
+    background: var(--white);
+    color: var(--font-color);
+    border-bottom: 1px solid var(--white);
+}
+
+.html-date:focus {
+    outline: 0 ;
+}
+
+.html-date:hover {
+    border-bottom: 1px solid var(--theme-light);
+}
