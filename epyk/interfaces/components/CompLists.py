@@ -606,7 +606,7 @@ class Lists:
 
   def dropdown(self, records=None, text: str = "", width: types.SIZE_TYPE = ('auto', ""),
                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, helper: str = None,
-               options: dict = None, profile: types.PROFILE_TYPE = None):
+               options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlTrees.DropDown:
     """ Create a dropdown item.
 
     Underlying HTML Objects:

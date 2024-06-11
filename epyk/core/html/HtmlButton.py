@@ -26,6 +26,14 @@ class Button(Html.Html):
     _option_cls = OptButton.OptionsButton
     tag = "button"
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-button.css",
+    ]
+
+    style_refs = {
+        "html-button": "html-button",
+    }
+
     def __init__(self, page: primitives.PageModel, text: str = None, icon: str = None, width: Optional[tuple] = None,
                  height: Optional[tuple] = None, html_code: Optional[str] = None, tooltip: Optional[str] = None,
                  profile: Optional[Union[dict, bool]] = None, options: Optional[dict] = None, verbose: bool = False):
@@ -45,6 +53,7 @@ class Button(Html.Html):
         if icon is not None:
             self.icon.style.css.color = "inherit"
         self.tooltip(tooltip)
+        self.classList.add(self.style_refs["html-button"])
         self.set_attrs(name="data-count", value=0)
 
     @property

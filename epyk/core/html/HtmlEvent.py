@@ -10,6 +10,7 @@ from epyk.core.py import primitives
 from epyk.core.py import types
 
 from epyk.core.html import Html
+from epyk.core.html.options import OptColors
 from epyk.core.html.options import OptSliders
 from epyk.core.html.options import OptList
 
@@ -40,7 +41,7 @@ class ProgressBar(Html.Html):
         super(ProgressBar, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
                                           css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'},
                                           verbose=verbose)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper", {}))
         self.options.background = self.page.theme.success.base
         self.style.css.background = self.page.theme.greys[0]
         self.options.border_color = self.page.theme.greys[0]
@@ -123,7 +124,7 @@ class Menu(Html.Html):
     def __init__(self, page, records, width, height, helper, options, html_code, profile, verbose: bool = False):
         super(Menu, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height}, verbose=verbose)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper", {}))
         self.style.css.display = 'block'
         self.style.css.position = 'relative'
 
@@ -186,7 +187,7 @@ class Dialog(Html.Html):
                  verbose: bool = False):
         super(Dialog, self).__init__(report, text, css_attrs={"width": width, "height": height}, html_code=html_code,
                                      profile=profile, options=options, verbose=verbose)
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper", {}))
         if hasattr(text, "options"):
             self.components[text.htmlCode] = text
             text.options.managed = False
@@ -259,7 +260,7 @@ class Slider(Html.Html):
         if self.options.show_min_max:
             self.style.css.padding = "0 10px"
         self.style.css.margin = "15px 0"
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper", {}))
         self.__output = None
 
     @property
@@ -643,9 +644,10 @@ class Filters(Html.Html):
 
     def __init__(self, page: primitives.PageModel, items, width, height, html_code, helper, options, profile,
                  verbose: bool = False):
+        options = options or {}
         super(Filters, self).__init__(page, items, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "min-height": height}, verbose=verbose)
-        self.input = self.page.ui.input()
+        self.input = self.page.ui.input(options=options.get("input"))
         self.input.style.css.text_align = 'left'
         self.input.style.css.padding = '0 5px'
         self.input.options.managed = False
@@ -653,7 +655,7 @@ class Filters(Html.Html):
         self.selections.options.managed = False
         self.selections.attr["name"] = "panel"
         self.selections.css({'min-height': '30px', 'padding': '5px 2px'})
-        self.add_helper(helper)
+        self.add_helper(helper, options=options.get("helper"))
         self.__enter_def = False
 
     @property
@@ -792,3 +794,36 @@ if(maxHeight > 0){
         return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {
             'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
             'input': self.input.html(), 'selections': self.selections.html(), 'helper': self.helper}
+
+
+class ColorsPicker(Html.Html):
+    requirements = ('@melloware/coloris',)
+    name = 'ColorsPicker'
+    tag = "input"
+
+    def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, **kwargs):
+        """A new color is selected
+
+        `Coloris <https://coloris.js.org>`_
+
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        js_funcs.insert(0, "data = event.target.value")
+        return self.on("input", js_funcs=js_funcs, profile=profile)
+
+    def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+        """The color picker is closed and the selected color has changed
+
+        `Coloris <https://coloris.js.org>`_
+
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        js_funcs.insert(0, "data = event.target.value")
+        return self.on("change", js_funcs=js_funcs, profile=profile)
+
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return '<%(tag)s type="text" %(attr)s>%(helper)s</%(tag)s>' % {
+            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper, "tag": self.tag}

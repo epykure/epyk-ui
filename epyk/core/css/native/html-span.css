@@ -1,0 +1,6 @@
+.html-span {
+    line-height: var(--line-height) ;
+    margin: 0 5px ;
+    display: inline-block ;
+    vertical-align: middle ;
+}

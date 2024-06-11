@@ -1,0 +1,10 @@
+.ui-timepicker-standard {
+    margin: 0 ;
+    color: var(--font-color) ;
+    background-color: var(--white);
+    font-size: var(--font-size) ;
+}
+
+.ui-timepicker-standard .ui-state-hover {
+    background-color: var(--theme) ;
+}

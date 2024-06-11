@@ -131,6 +131,9 @@ class ECharts(JsPackage):
         """
         return JsUtils.jsWrap("echarts.dispose()" % self.varName)
 
+    def resize(self):
+        return JsUtils.jsWrap("%s.resize()" % self.varName)
+
     def showLoading(self):
         return JsUtils.jsWrap("%s.showLoading()" % self.varName)
 

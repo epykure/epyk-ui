@@ -668,6 +668,7 @@ class OptionPopup(Options):
   def draggable(self, flag: bool):
     if flag:
       self.background = False
+      self.component.style.css.cursor = "grab"
     self.set(flag)
 
   @property
@@ -679,9 +680,10 @@ class OptionPopup(Options):
   def closure(self, icon: str):
     if icon:
       self.component.close = self.page.ui.icon(icon)
+      self.component.close.style.clear_style()
     else:
       if getattr(self.component, "close", None) is not None:
-        del self.page.components[self.component.close.htmlCode]
+        del self.page.components[self.component.close.html_code]
 
     self.set(icon)
 

@@ -464,7 +464,7 @@ class Fields:
     html.Html.set_component_skin(component)
     return component
 
-  def static(self, value: str = "", label: str = None, placeholder: str = "", icon: str = None,
+  def static(self, value: str = "&nbsp;", label: str = None, placeholder: str = "", icon: str = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
              helper: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None, input_tag: bool = False) -> html.HtmlInput.FieldInput:
@@ -510,11 +510,7 @@ class Fields:
       component.input.readonly(True)
     else:
       input_field = self.page.ui.div(value, width=None, align=None, options=options)
-      input_field.style.add_classes.input.basic()
-      input_field.style.css.display = "inline-block"
-      input_field.style.css.border = "1px solid %s" % self.page.theme.dark_or_white()
-      input_field.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
-      input_field.style.css.min_height = "%spx" % Defaults_html.LINE_HEIGHT
+      input_field.classList.add("html-input")
       component = html.HtmlInput.Field(
         self.page, input_field, label, icon, width, height, html_code, helper, options or {}, profile)
       if len(component._sub_htmls) > 1:

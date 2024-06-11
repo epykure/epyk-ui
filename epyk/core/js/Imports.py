@@ -1957,13 +1957,26 @@ JS_IMPORTS = {
         'website': 'https://github.com/ganlanyuan/tiny-slider',
     },
 
+    # Date picker - tiny size, no dependencies
     '@easepick/bundle': {
             "unpkg": False,
+            'version': "1.2.1",
             'modules': [
-                {'script': 'index.umd.min.js', 'version': "1.2.1",
-                 'path': 'npm/@easepick/bundle@%(version)s/dist/', 'cdnjs': 'https://cdn.jsdelivr.net'},
+                {'script': 'index.umd.min.js',
+                 'path': '@easepick/bundle@%(version)s/dist/', 'cdnjs': JSDELIVER},
             ],
             'website': 'https://easepick.com/'
+        },
+
+    # A lightweight and elegant JavaScript color picker. Written in vanilla ES6, no dependencies. Accessible.
+    '@melloware/coloris': {
+            "unpkg": False,
+            'version': "0.24.0",
+            'modules': [
+                {'script': 'coloris.min.js',
+                 'path': '@melloware/coloris@%(version)s/dist/umd/', 'cdnjs': JSDELIVER},
+            ],
+            'website': 'https://coloris.js.org/'
         },
 }
 
@@ -2360,6 +2373,15 @@ CSS_IMPORTS = {
         'modules': [
             {'script': 'gridstack.min.css', 'node_path': 'dist/', 'path': 'gridstack.js/%(version)s/',
              'cdnjs': CDNJS_REPO},
+        ],
+    },
+
+    # A lightweight and elegant JavaScript color picker. Written in vanilla ES6, no dependencies. Accessible.
+    '@melloware/coloris': {
+        'modules': [
+            {'script': 'coloris.min.css', 'node_path': 'dist/',
+             'path': '@melloware/coloris@%(version)s/dist/',
+             'cdnjs': JSDELIVER},
         ],
     }
 }

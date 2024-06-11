@@ -3,6 +3,7 @@
 
 import datetime
 import json
+from pathlib import Path
 from typing import Optional, List
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -39,10 +40,14 @@ class Input(Html.Html):
     name = 'Input'
     _option_cls = OptInputs.OptionsInput
 
+    # Common CSS definition
+    html_class: str = "html-input"
+    html_class_full_path: Path = Path(__file__).parent.parent / "css" / "native" / "html-input.css"
+
     def __init__(self, page: primitives.PageModel, text, placeholder, width, height, html_code, options, attrs,
                  profile):
         super(Input, self).__init__(page, text, html_code=html_code, profile=profile, options=options,
-                                    css_attrs={"width": width, "height": height, 'box-sizing': 'border-box'})
+                                    css_attrs={"width": width, "height": height})
         value = text['value'] if isinstance(text, dict) else self._vals
         self.set_attrs(attrs={"type": "text", "value": value, "spellcheck": False})
         if placeholder:
@@ -50,12 +55,9 @@ class Input(Html.Html):
         self.set_attrs(attrs=attrs)
         if html_code is not None:
             self.attr["name"] = html_code
-        self.style.css.padding = 0
         self.__focus = False
         if self.options.background:
             self.style.css.background_color = page.theme.colors[0]
-        if width[0] is None:
-            self.style.css.min_width = Defaults.INPUTS_MIN_WIDTH
 
     @property
     def options(self) -> OptInputs.OptionsInput:
@@ -84,13 +86,6 @@ class Input(Html.Html):
         if self._dom is None:
             self._dom = JsHtmlInput.Inputs(self, page=self.page)
         return self._dom
-
-    @property
-    def style(self) -> GrpClsInput.ClassInput:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsInput.ClassInput(self)
-        return self._styleObj
 
     def value(self, value):
         self.attr["value"] = value
@@ -424,14 +419,6 @@ var %(cachedVar)s;
             self.focus()
         if self.options.css:
             self.css(self.options.css)
-        if self.options.borders == "bottom":
-            self.style.no_class()
-            self.style.add_classes.input.basic_border_bottom()
-            self.options.borders = None
-        elif not self.options.borders and self.options.borders is not None:
-            self.style.no_class()
-            self.style.add_classes.input.basic_noborder()
-            self.options.borders = None
         return '<input %(strAttr)s />' % {'strAttr': self.get_attrs(css_class_names=self.style.get_classes())}
 
 
@@ -566,14 +553,22 @@ class InputTime(Input):
     requirements = ('timepicker',)
     _option_cls = OptInputs.OptionsTimePicker
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-input-date.css",
+        Path(__file__).parent.parent / "css" / "native" / "html-input-time.css",
+    ]
+
+    style_refs = {
+        "html-date": "html-date",
+    }
+
     def __init__(self, page: primitives.PageModel, text, placeholder, width, height,
                  html_code, options, attrs, profile):
         if text is None:
             text = str(datetime.datetime.now()).split(" ")[1].split(".")[0]
         super(InputTime, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
-        self.style.css.background_color = page.theme.colors[0]
-        self.style.css.line_height = Defaults.LINE_HEIGHT
-        self.style.css.text_align = "center"
+        self.classList.add(self.style_refs["html-date"])
+
 
     @property
     def options(self) -> OptInputs.OptionsTimePicker:
@@ -582,13 +577,6 @@ class InputTime(Input):
         `jqueryui <https://timepicker.co/options/>`_
         """
         return super().options
-
-    @property
-    def style(self) -> GrpClsInput.ClassInputTime:
-        """ Property to the CSS Style of the component. """
-        if self._styleObj is None:
-            self._styleObj = GrpClsInput.ClassInputTime(self)
-        return self._styleObj
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlTimePicker:
@@ -638,11 +626,20 @@ class InputDate(Input):
     name = 'Input Time'
     _option_cls = OptInputs.OptionsDatePicker
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-input-date.css"
+    ]
+
+    style_refs = {
+        "html-date": "html-date",
+    }
+
     def __init__(self, page: primitives.PageModel, records, placeholder, width, height,
                  html_code, options, attrs, profile):
         super(InputDate, self).__init__(page, records, placeholder, width, height, html_code, options, attrs, profile)
         if options is not None and options.get("date_from_js", None) is not None:
             self.options.dateJsOvr(options["date_from_js"])
+        self.classList.add(self.style_refs["html-date"])
 
     @property
     def options(self) -> OptInputs.OptionsDatePicker:
@@ -661,13 +658,6 @@ class InputDate(Input):
         if self._js is None:
             self._js = JsQueryUi.Datepicker(self, page=self.page)
         return self._js
-
-    @property
-    def style(self) -> GrpClsInput.ClassInputDate:
-        """ Property to the CSS Style of the component. """
-        if self._styleObj is None:
-            self._styleObj = GrpClsInput.ClassInputDate(self)
-        return self._styleObj
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlDatePicker:
@@ -774,12 +764,26 @@ class InputRange(Input):
     name = 'Input Range'
     _option_cls = OptInputs.OptionsInputRange
 
+    # Common CSS definition
+    html_class: str = "html-base"
+    html_class_full_path: Path = Path(__file__).parent.parent / "css" / "native" / "html-base.css"
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-input-range.css"
+    ]
+
+    style_refs = {
+        "html-range": "html-range",
+    }
+
     def __init__(self, page: primitives.PageModel, text, min_val, max_val, step, placeholder, width,
                  height, html_code, options, attrs, profile):
         super(InputRange, self).__init__(page, text, placeholder, width, height, html_code, options, attrs, profile)
         self.input = page.ui.inputs.input(
             text, width=(None, "px"), placeholder=placeholder).css({"vertical-align": 'middle'})
         self.append_child(self.input)
+        self.input.html_class = self.html_class
+        self.input.classList.add(self.style_refs["html-range"])
         self.input.set_attrs(attrs={"type": "range", "min": min_val, "max": max_val, "step": step})
         if self.options.output:
             self.style.css.position = "relative"
@@ -794,13 +798,6 @@ class InputRange(Input):
     def options(self) -> OptInputs.OptionsInputRange:
         """ Property to set input range properties. """
         return super().options
-
-    @property
-    def style(self) -> GrpClsInput.ClassInputRange:
-        """ Property to the CSS Style of the component. """
-        if self._styleObj is None:
-            self._styleObj = GrpClsInput.ClassInputRange(self)
-        return self._styleObj
 
     def __str__(self):
         if hasattr(self, 'output'):
@@ -817,9 +814,9 @@ class Field(Html.Html):
             page, "", html_code=html_code, profile=profile, css_attrs={"width": width, "height": height})
         self._vals = ""
         # Add the component predefined elements
-        self.add_label(label, html_code=self.html_code,
+        self.add_label(label, html_code=self.html_code, align=options.get("label", {}).get("align"),
                        css={'height': 'auto', 'margin-top': '1px', 'margin-bottom': '1px'},
-                       position=options.get("position", 'before'), options=options)
+                       position=options.get("position", 'before'), options=options.get("label"))
         if self.label and options.get("format") == "column":
             self.label.style.css.float = None
             self.label.style.css.display = "block"
@@ -834,8 +831,7 @@ class Field(Html.Html):
                 self.input.attr["name"] = self.input.html_code
         self.append_child(self.input)
         self.add_icon(icon, html_code=self.html_code, position="after", family=options.get("icon_family"),
-                      css={"margin-left": '5px', 'color': self.page.theme.colors[-1]})
-        self.css({"margin-top": '5px'})
+                      css={"margin-left": '5px', 'color': self.page.theme.colors[-1]}, options=options.get("icon"))
 
     @property
     def dom(self) -> JsHtmlField.JsHtmlFields:
@@ -1070,10 +1066,8 @@ class FieldSelect(Field):
         html_input.options.tickIcon = icon_details["icon"]
         if icon_details['icon_family'] != 'bootstrap-icons':
             self.requirements = (icon_details['icon_family'],)
-        super(FieldSelect, self).__init__(page, html_input, label, icon, width, height, html_code, helper, options,
-                                          profile)
-        if label is not None:
-            self.label.style.css.line_height = None
+        super(FieldSelect, self).__init__(
+            page, html_input, label, icon, width, height, html_code, helper, options, profile)
 
 
 class InputCheckbox(Html.Html):

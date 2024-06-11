@@ -362,8 +362,12 @@ class Theme:
                 v = "theme-%s"
             elif hasattr(self, "_%s" % k):
                 colors = getattr(self, "_%s" % k)
+                if self.dark:
+                    colors = colors[::-1]
             elif hasattr(self, "_%ss" % k):
                 colors = getattr(self, "_%ss" % k)
+                if self.dark:
+                    colors = colors[::-1]
                 v = "%ss-%%s" % k
             else:
                 colors = self.category(k)

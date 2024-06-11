@@ -19,13 +19,12 @@ class Attrs(Properties.CssMixin):
             self.page = component.page
 
     def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False):
-        """
-    Set multiple CSS attributes to the HTML component.
+        """Set multiple CSS attributes to the HTML component.
 
-    :param attrs: optional. The attributes to be added
-    :param value: Optional. The value for a given item
-    :param important: Optional. Flag the attribute to be important
-    """
+        :param attrs: optional. The attributes to be added
+        :param value: Optional. The value for a given item
+        :param important: Optional. Flag the attribute to be important
+        """
         if not isinstance(attrs, dict):
             if value is None:
                 return self.attrs.get(attrs)
@@ -41,15 +40,14 @@ class Attrs(Properties.CssMixin):
         return self.attrs
 
     def remove(self, attr: str = None, set_none: bool = False):
+        """Remove a CSS attribute to the HTML component.
+
+        This function will either remove it if it is part of the existing CSS attribute or set it to auto in case it is
+        coming from a CSS class.
+
+        :param attr: Optional. The attribute to be removed
+        :param set_none: Optional. Set the CSS attribute value to None on the CSS
         """
-    Remove a CSS attribute to the HTML component.
-
-    This function will either remove it if it is part of the existing CSS attribute or set it to auto in case it is
-    coming from a CSS class.
-
-    :param str attr: Optional. The attribute to be removed.
-    :param bool set_none: Optional. Set the CSS attribute value to None on the CSS.
-    """
         key = attr or sys._getframe().f_back.f_code.co_name.replace("_", "-")
         if set_none:
             self.attrs[key] = "none"
@@ -87,9 +85,6 @@ class Body(Attrs):
 
     def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
         super(Body, self).__init__(component, page=page)
-        self.font_size = component.style.globals.font.normal()
-        self.font_family = component.style.globals.font.family
-        self.margin = 0
 
 
 class CssInline(Attrs):
@@ -131,23 +126,20 @@ class CssInline(Attrs):
         self.css({"fill-opacity": num})
 
     def to_dict(self, copy: bool = False):
-        """
-      Returns the underlying CSS attributes.
-      This is the internal object and not a copy by default.
+        """Returns the underlying CSS attributes.
+        This is the internal object and not a copy by default.
 
-      :param copy: Optional. Specify if a copy must be returned.
-      """
+        :param copy: Optional. Specify if a copy must be returned.
+        """
         if copy:
             return dict(self.attrs)
 
         return self.attrs
 
     def important(self, attrs: list = None):
-        """
+        """If attrs is not defined all the attributes will be important.
 
-        If attrs is not defined all the attributes will be important.
-
-        :param attrs: The Css Python property to be changed.
+        :param attrs: The Css Python property to be changed
         """
         if attrs is None:
             for k in self.attrs.items():
@@ -157,8 +149,7 @@ class CssInline(Attrs):
                 setattr(self, k, "%s !IMPORTANT" % getattr(self, k))
 
     def to_class(self, class_name: str = None):
-        """
-        The CSS class object.
+        """The CSS class object.
 
         :param class_name: The class name
         """
@@ -174,7 +165,7 @@ class CssInline(Attrs):
         return v_cls
 
     def toStr(self) -> str:
-        """ Change the class definition to a string expression. """
+        """Change the class definition to a string expression. """
         if self.classname is None:
             raise Exception("Class Name must be defined to create virtual class")
 

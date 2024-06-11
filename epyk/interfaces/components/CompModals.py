@@ -243,11 +243,12 @@ class Modals:
         components.append(acknowledgement)
         popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
         popup.acknowledgement = acknowledgement
+        popup.button = popup.acknowledgement
         acknowledgement.click([popup.dom.hide()])
         html.Html.set_component_skin(popup)
         return popup
 
-    def popup(self, components: List[html.Html.Html] = None, title: str = None, width: types.SIZE_TYPE = (100, '%'),
+    def popup(self, components: List[html.Html.Html] = None, title: str = None, width: types.SIZE_TYPE = (80, '%'),
               height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """Display a generic popup.

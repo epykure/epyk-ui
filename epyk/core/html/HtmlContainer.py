@@ -4,6 +4,7 @@
 # TODO PanelSliding: find a way to introduce CSS transform for the panel display
 
 import logging
+from pathlib import Path
 from typing import Union, Optional, List
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -217,6 +218,17 @@ class PanelSlide(Panel):
     _option_cls = OptPanel.OptionPanelSliding
     tag = 'div'
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-panel-slide.css"
+    ]
+
+    style_refs = {
+        "html-slidepanel-title": "html-slidepanel-title",
+        "html-slidepanel-content": "html-slidepanel-content",
+        "html-slidepanel-icon": "html-slidepanel-icon",
+        "html-slidepanel-center": "html-slidepanel-center",
+    }
+
     def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]],
                  title: Union[Html.Html, str], color: Optional[str], width: types.SIZE_TYPE,
                  height: types.SIZE_TYPE, html_code: Optional[str], helper,
@@ -225,21 +237,17 @@ class PanelSlide(Panel):
         super(PanelSlide, self).__init__(
             page, components, None, color, width, height, html_code, helper, options, profile)
         self.add_helper(helper)
-        self.icon = self.page.ui.icon("", html_code=self.sub_html_code("icon")).css(
-            {"display": 'inline-block', 'margin': '0 5px 5px 0', 'line-height': "%spx" % Defaults.LINE_HEIGHT,
-             'font-size': "%spx" % Defaults.BIG_ICONS})
+        self.icon = self.page.ui.icon("", html_code=self.sub_html_code("icon"))
+        self.icon.classList.add(self.style_refs["html-slidepanel-icon"])
         if hasattr(title, 'options'):
             self.text = title
             self.text.options.managed = False
-            self.text.style.css.display = "inline-block"
         else:
-            self.text = self.page.ui.title(
-                title, html_code=self.sub_html_code("title")).css({"display": 'inline-block', 'margin': 0})
-            self.text.style.css.font_size = self.page.body.style.globals.font.normal(-2)
+            self.text = self.page.ui.title(title, html_code=self.sub_html_code("title"))
+        self.text.classList.add(self.style_refs["html-slidepanel-content"])
         self.title = self.page.ui.div([self.icon, self.text], html_code=self.sub_html_code("panel"))
+        self.title.classList.add(self.style_refs["html-slidepanel-title"])
         self.title.options.managed = False
-        self.title.style.css.white_space = "nowrap"
-        self.title.style.css.padding = "0 5px 0 0"
         self._vals, self.__clicks, self.__clicks_open = [self.title] + self._vals, [], []
 
     @property
@@ -281,13 +289,15 @@ class PanelSlide(Panel):
         self.__clicks = js_funcs
         return self
 
-    def open(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, on_ready: str = False):
+    def open(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None, on_ready: str = False):
         """Event triggered when the sliding panel is open.
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
         """
+        if not js_funcs:
+            js_funcs = []
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
         self.__clicks_open = [self.page.js.if_(self.icon.dom.content.toString().indexOf(
@@ -440,9 +450,9 @@ class Div(Html.Html):
             self._vals = [self.val]
         # Avoid having duplicated entries
         # This could happen in the __str__ method of the HTML Components (example Popup)
-        if component.htmlCode not in self.components:
+        if component.html_code not in self.components:
             self.val.append(component)
-            self.components[component.htmlCode] = component
+            self.components[component.html_code] = component
         return self
 
     def insert(self, n: int, component: Html.Html):

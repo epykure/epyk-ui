@@ -16,7 +16,7 @@
     text-decoration: none ;
     cursor: pointer ;
     background-color: var(--theme) !IMPORTANT ;
-    color: #FFFFFF !IMPORTANT ;
+    color: var(--white) !IMPORTANT ;
 }
 
 .html-button:focus {
@@ -24,9 +24,9 @@
 }
 
 .html-button:disabled {
-    background-color: #FFFFFF !IMPORTANT ;
-    border-color: #FFFFFF !IMPORTANT ;
-    color: #9e9e9e !IMPORTANT ;
+    background-color: var(--white) !IMPORTANT ;
+    border-color: var(--white) !IMPORTANT ;
+    color: var(--grey) !IMPORTANT ;
     cursor: not-allowed !IMPORTANT ;
     font-style: italic !IMPORTANT ;
 }

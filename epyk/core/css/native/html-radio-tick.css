@@ -1,0 +1,21 @@
+.html-radio-tick {
+    margin: 5px 0 ;
+    cursor: pointer ;
+    display: inline-block ;
+    text-align: center ;
+}
+
+.html-radio-tick i {
+    border-radius: 25px;
+    width: 25px ;
+    line-height: 25px ;
+    margin-right: auto ;
+    margin: auto ;
+    color: var(--selected) ;
+    border: 1px solid var(--white) ;
+}
+
+.html-radio-tick i:hover {
+    background-color: var(--theme-lighter) ;
+    border: 1px solid var(--theme-light) ;
+}

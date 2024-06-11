@@ -83,3 +83,17 @@
 .dropdown-menu > div.popover-header {
     font-size: inherit ;
 }
+
+.bs-searchbox .form-control {
+    width: 100%;
+    float: none;
+    padding: 0 2px ;
+    height: var(--line-height) ;
+    font-size: var(--font-size) ;
+    font-family: var(--font-family) ;
+}
+
+.bs-searchbox .form-control:focus {
+    border-color: var(--selected) ;
+    box-shadow: 0 0 0 .1rem var(--selected) ;
+}

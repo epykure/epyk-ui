@@ -1,0 +1,25 @@
+.html-input {
+    border: None ;
+    cursor: text ;
+    color: inherit ;
+    margin: 2px 0 ;
+    display: inline-block ;
+    font-family: var(--font-family) ;
+    line-height: var(--line-height) ;
+    font-size: var(--font-size) ;
+    box-sizing: border-box ;
+    text-align: center ;
+    border-bottom: 1px solid var(--white);
+    width: 140px ;
+    padding: 0 ;
+    background: var(--theme-light) ;
+}
+
+.html-input:hover {
+    color: var(--theme) ;
+    border-bottom: 1px solid var(--theme);
+}
+
+.html-input:focus {
+    outline: 0 ;
+}

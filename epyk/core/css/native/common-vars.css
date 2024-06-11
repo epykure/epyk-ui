@@ -2,8 +2,11 @@
   --selected: $theme-3;
   --grey: $greys-4;
   --white: $greys-0;
+  --font-color: $greys-dark;
+  --background-color: $greys-0;
   --theme-dark: $theme-dark;
   --theme-light: $theme-light;
+  --theme-lighter: $theme-0;
   --theme: $theme;
   --font-family: $font-family;
   --line-height: $line-height;

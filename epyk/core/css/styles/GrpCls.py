@@ -29,8 +29,8 @@ class ClassPage:
         self.__webkitscrollbar, self.__webkitscrollbar_track, self.__webkitscrollbar_thumb, self.__selection = 4 * [
             None]
         self.__contenteditable, self.__global_styles, self.__moz_selection = None, None, None
-        self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(),
-                                                                  'other': OrderedSet()}, None, None
+        self.classList, self.__cls_defined, self.__cls_catalog = {
+            "main": OrderedSet(), 'other': OrderedSet()}, None, None
 
     @property
     def css(self) -> Body:
@@ -54,6 +54,16 @@ class ClassPage:
                         content = content.replace("$%s" % k, style_vars[k])
                     results.append(content)
         return "".join(results)
+
+    @property
+    def raw(self) -> Optional[dict]:
+        """Returns the raw CSS files definition for the component in a dictionary"""
+        result = {}
+        if self.component.html_class_full_path:
+            if self.component.html_class_full_path.exists():
+                with open(self.component.html_class_full_path) as fp:
+                    result[str(self.component.html_class_full_path)] = fp.read()
+        return result
 
     @property
     def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
@@ -250,10 +260,9 @@ class ClassHtml:
         self.component, self.page = component, page
         if component is not None:
             self.page = component.page
-        self.classList, self.__cls_defined, self.__cls_catalog = {"main": OrderedSet(),
-                                                                  'other': OrderedSet()}, None, None
+        self.classList, self.__cls_defined, self.__cls_catalog = {
+            "main": OrderedSet(), 'other': OrderedSet()}, None, None
         self.__cls_effects, self.__css_virtual = None, {}
-        self.classList['main'].add(self.css_class)
 
     @property
     def varName(self) -> str:
@@ -270,23 +279,28 @@ class ClassHtml:
     @property
     def files(self) -> Optional[dict]:
         """Read / Only Internal files definition used to set the component styles"""
+        results = {}
+        if self.component.html_class_full_path:
+            results[str(self.component.html_class_full_path)] = self.component.html_class_full_path.exists()
         if self.component.style_urls:
-            return {str(fs): fs.exists() for fs in self.component.style_urls}
+            return results.update({str(fs): fs.exists() for fs in self.component.style_urls})
 
-        return {}
+        return results
 
     @property
     def raw(self)-> Optional[dict]:
         """Returns the raw CSS files definition for the component in a dictionary"""
+        result = {}
+        if self.component.html_class_full_path:
+            if self.component.html_class_full_path.exists():
+                with open(self.component.html_class_full_path) as fp:
+                    result[str(self.component.html_class_full_path)] = fp.read()
         if self.component.style_urls:
-            result = {}
             for fs in self.component.style_urls:
                 if fs.exists():
                     with open(fs) as fp:
                         result[str(fs)] = fp.read()
-            return result
-
-        return {}
+        return result
 
     @property
     def classes(self) -> Optional[dict]:

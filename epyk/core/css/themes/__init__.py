@@ -274,4 +274,3 @@ def get_theme() -> Optional[Theme.Theme]:
                 return r["class"]()
 
             return r["class"]
-

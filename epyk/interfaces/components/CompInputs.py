@@ -189,7 +189,7 @@ class Inputs:
             component.tooltip(tooltip)
         return component
 
-    def d_time(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (139, "px"),
+    def d_time(self, text: str = "", placeholder: str = '', width: types.SIZE_TYPE = (None, "px"),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
                attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputTime:
         """
@@ -222,7 +222,7 @@ class Inputs:
             html_input_t.tooltip(tooltip)
         return html_input_t
 
-    def d_date(self, text: str="", placeholder: str = '', width: types.SIZE_TYPE = (140, "px"),
+    def d_date(self, text: str="", placeholder: str = '', width: types.SIZE_TYPE = (None, "px"),
                height: types.SIZE_TYPE = (None, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
                attrs: dict = None, tooltip: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.InputDate:
         """

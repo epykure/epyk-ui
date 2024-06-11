@@ -1,0 +1,7 @@
+.html-label {
+    margin: 0 5px ;
+    display: inline-block ;
+    line-height: var(--line-height) ;
+    vertical-align: middle ;
+    text-align: left ;
+}

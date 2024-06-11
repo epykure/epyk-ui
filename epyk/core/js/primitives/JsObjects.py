@@ -137,15 +137,22 @@ class JsPromise:
             self.data = "let %s = %s" % (js_code, self.data)
         return self
 
-    def then(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+    def then(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, js_code: str = "data"):
         """Add a new post-processing step to a then statement.
 
         :param js_funcs: The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
+        :param js_code: Optional. The variable name created in the Javascript (default response)
         """
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
-        self.__thens.append(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+        str_funcs = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+        if "=>" in str_funcs:
+            self.__thens.append(str_funcs)
+        elif str_funcs.strip().startswith("function("):
+            self.__thens.append(str_funcs)
+        else:
+            self.__thens.append("(%s) => {%s}" % (js_code, str_funcs))
         return self
 
     def csvRows(
@@ -200,7 +207,7 @@ return data}
 
     def process(self, callback: Callable):
         """ """
-        return self.then("(data) => %s" % JsUtils.jsConvertData(callback(JsObject.JsObject.get("data")), None))
+        return self.then(JsUtils.jsConvertData(callback(JsObject.JsObject.get("data")), None))
 
     def onSuccess(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
         """Shortcut to replicated post and get requests """
@@ -215,7 +222,7 @@ return data}
         result = [str(self.data)]
         if self.__thens:
             for then_step in self.__thens:
-                result.append("then((data) => {%s})" % then_step)
+                result.append("then(%s)" % then_step)
         if self.__catch:
             result.append(
                 "catch(function(error){%s})" % JsUtils.jsConvertFncs(self.__catch, toStr=True, profile=self.profile))

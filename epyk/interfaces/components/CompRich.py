@@ -634,3 +634,8 @@ class Rich:
                 container.add(badge)
         html.Html.set_component_skin(container)
         return container
+
+    def colors_picker(self, value=None, html_code:str = None, options=None, profile=None):
+        component = html.HtmlEvent.ColorsPicker(
+            page=self.page, vals=value, html_code=html_code, options=options, profile=profile)
+        return component

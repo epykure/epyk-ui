@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+from pathlib import Path
 from typing import Union, Optional, List
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -23,13 +23,16 @@ class Radio(Html.Html):
     def __init__(self, page: primitives.PageModel, vals: List[dict], html_code: Optional[str],
                  group_name: Optional[str], width: tuple, height: tuple, options: Optional[dict],
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
+        options = options or {}
         super(Radio, self).__init__(page, [], html_code=html_code,
                                     css_attrs={"width": width, "height": height}, profile=profile, options=options,
                                     verbose=verbose)
         self._group_name = group_name or ("radio_%s" % self.html_code)
         self.input = None # point to the last created object
         for v in vals:
-            self.add(v['value'], v.get('checked', False), html_code=self.sub_html_code("input", auto_inc=True))
+            self.add(
+                v['value'], v.get('checked', False), html_code=self.sub_html_code("input", auto_inc=True),
+                options=options.get("radio"))
             if "count" in v:
                 self.input.add_badge(v["count"])
 
@@ -63,16 +66,17 @@ class Radio(Html.Html):
             self._js = JsComponents.Radio(self, page=self.page)
         return self._js
 
-    def add(self, val: Union[Html.Html, str], checked: bool = False, html_code: str = None):
+    def add(self, val: Union[Html.Html, str], checked: bool = False, html_code: str = None, options: dict = None):
         """Add a value to the radio component.
 
         :param val: The item to be added
         :param checked: Optional. Check the item
         :param html_code: Optional. Set the radio HTML code
+        :param options: Optional. Radio initial options
         """
         if not hasattr(val, 'name') or (hasattr(val, 'name') and val.name != 'Radio'):
             val = self.page.ui.inputs.radio(checked, val, html_code=html_code, group_name=self.group_name,
-                                            width=("auto", ""))
+                                            width=("auto", ""), options=options)
         val.set_attrs(name="name", value=self.i_name)
         val.options.managed = False
         super(Radio, self).__add__(val)
@@ -117,6 +121,14 @@ class Tick(Html.Html):
     name = 'Tick'
     tag = "span"
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-radio-tick.css"
+    ]
+
+    style_refs = {
+        "html-radio-tick": "html-radio-tick",
+    }
+
     def __init__(self, page: primitives.PageModel, position: str, icon: str, text: str, tooltip: str,
                  width: tuple, height: tuple, html_code: str, options: Optional[dict],
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
@@ -131,15 +143,11 @@ class Tick(Html.Html):
         self.add_icon(icon, {"color": self.page.theme.success.base, "margin": "2px",
                              'font-size': page.body.style.globals.font.normal()},
                       html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
-        self.icon.style.add_classes.div.background_hover()
-        self.css({"margin": "5px 0", 'cursor': 'pointer'})
+        #self.icon.style.add_classes.div.background_hover()
+        self.classList.add(self.style_refs["html-radio-tick"])
         self.style.css.float = position
-        self.style.css.display = "inline-block"
-        self.css({"text-align": "center"})
         if text is not None:
             self.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
-        self.icon.css({"border-radius": "%spx" % 25, "width": "%spx" % 25, "margin-right": "auto", "margin": "auto",
-                       "color": 'blue', "line-height": '%s%s' % (25, width[1])})
 
     @property
     def dom(self) -> JsHtmlSelect.Tick:

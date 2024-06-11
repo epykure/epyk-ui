@@ -397,7 +397,7 @@ the same signature and return).
     style_urls: List[str] = None
     # Common CSS definition
     html_class: str = "html-base"
-    html_class_full_path: Path = Path(__file__).parent / "css" / "native" / "html-base.css"
+    html_class_full_path: Path = Path(__file__).parent.parent / "css" / "native" / "html-base.css"
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.JS_FUNCS_TYPES = None,
@@ -436,6 +436,8 @@ the same signature and return).
             self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
         else:
             self.attr.update({'class': self.style.classList['main'], 'css': self.style.css.attrs})
+        # Add the python class name to the HTML component
+        self.attr["data-python-class"] = self.__class__.__name__
         if css_attrs is not None:
             self.css(css_attrs)
         if html_code is not None:
@@ -464,7 +466,7 @@ the same signature and return).
             if html_code in self.page.inputs:
                 vals = self.page.inputs[html_code]
 
-        self.page.components[self.htmlCode] = self
+        self.page.components[self.html_code] = self
         self._vals, self.badge = vals, ""
         if self.builder_name is None:
             self.builder_name = self.__class__.__name__
@@ -846,7 +848,7 @@ the same signature and return).
         return self
 
     def add_label(self, text: str, css: Optional[dict] = None, position: str = "before", for_: str = None,
-                  html_code: Optional[str] = None, options: types.OPTION_TYPE = None):
+                  html_code: Optional[str] = None, align: str = None, options: types.OPTION_TYPE = None):
         """Add an elementary label component.
 
         `Learn more <https://www.w3schools.com/tags/tag_label.asp>`_
@@ -861,7 +863,7 @@ the same signature and return).
         self.label = ""
         if text is not None:
             html_code_label = self.sub_html_code("label", html_code=html_code)
-            self.label = self.page.ui.texts.label(text, options=options, html_code=html_code_label)
+            self.label = self.page.ui.texts.label(text, align=align, options=options, html_code=html_code_label)
             self.label.defined_code = self.defined_code
             if for_ is not None:
                 # Attach the label to another HTML component based on the ID
@@ -1930,7 +1932,7 @@ class Body(Html):
 
     # CSS definition for the body
     html_class: str = "html-body"
-    html_class_full_path: Path = Path(__file__).parent / "css" / "native" / "html-base.css"
+    html_class_full_path: Path = Path(__file__).parent.parent / "css" / "native" / "html-base.css"
 
     # Common mapping between the theme variables and the CSS variables.
     # This mapping file is coming to all the components / style in the framework
@@ -2231,6 +2233,20 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
                 "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
 
     def __str__(self):
+        # Add Core CSS definition
+        if self.html_class is not None:
+            self.attr["class"].insert(0, self.html_class)
+            if self.html_class_full_path.exists():
+                style_vars = self.page.theme.all()
+                style_vars.update(self.page.body.style.globals.vars())
+                # Add CSS proxy mapping from the body
+                self.page.body.set_css_maps(style_vars)
+                css_content = css_files_loader(
+                    [str(self.html_class_full_path)], style_vars=style_vars,
+                    resources=self.page.properties.resources)
+                if css_content:
+                    self.page.properties.css.add_text(css_content, map_id="html (%s)" % self.__class__.__name__)
+
         if getattr(self, '_template', None) is not None:
             self._template._vals = str(self._html_content)
             return '<body %s>%s%s%s</body>' % (
@@ -2261,7 +2277,7 @@ class Component(Html):
 
     # CSS definition for the body
     html_class: str = "html-component"
-    html_class_full_path: Path = Path(__file__).parent / "css" / "native" / "html-base.css"
+    html_class_full_path: Path = Path(__file__).parent.parent / "css" / "native" / "html-base.css"
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,
                  options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
@@ -2315,7 +2331,7 @@ class Component(Html):
     def __str__(self):
         values = self.write_values()
         values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
-        values["htmlCode"] = self.htmlCode
+        values["htmlCode"] = self.html_code
         if self.dyn_repr is not None:
             str_frgs = [self.dyn_repr.format(**self.write_item(item)) for item in self.items]
             values["sub_items"] = "".join(str_frgs)

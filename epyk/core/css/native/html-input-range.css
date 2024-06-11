@@ -1,0 +1,32 @@
+.html-range {
+    border: None ;
+    cursor: pointer ;
+    color: inherit ;
+    margin: 2px 0 ;
+    display: inline-block ;
+    line-height: var(--line-height) ;
+    font-size: var(--font-size) ;
+    box-sizing: border-box ;
+    text-align: center ;
+    width: 140px ;
+    padding: 0 ;
+    background: var(--theme-light) ;
+    -webkit-appearance: None ;
+    appearance: None ;
+    outline: None ;
+    opacity: 0.7 ;
+    -webkit-transition: .2s ;
+    transition: opacity .2s ;
+}
+
+.html-range: hover {
+    opacity: 1 ;
+}
+
+.html-range::-webkit-slider-thumb {
+  -webkit-appearance: None;
+  width: 18px;
+  height: 18px;
+  border-radius: 10px;
+  background-color: var(--theme) ;
+}

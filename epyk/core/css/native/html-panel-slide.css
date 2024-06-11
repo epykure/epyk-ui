@@ -1,0 +1,22 @@
+.html-slidepanel-title {
+    white-space: nowrap ;
+    padding: 0 5px 0 0 ;
+}
+
+.html-slidepanel-content {
+    display: inline-block ;
+    margin: 0 ;
+    font-size: var(--font-size) ;
+}
+
+.html-slidepanel-icon {
+    display: inline-block ;
+    margin: 0 5px 5px 0 ;
+    line-height: var(--line-height) ;
+    font-size: var(--font-size) ;
+}
+
+.html-slidepanel-center {
+    margin: 5px auto ;
+    display: block ;
+}

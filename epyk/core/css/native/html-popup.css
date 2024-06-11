@@ -1,0 +1,63 @@
+.html-popup {
+    display: None ;
+}
+
+.html-popup-background {
+    width: 100% ;
+    position: fixed ;
+    height: 100% ;
+    background-color: #bdbdbd66 ;
+    left: 0 ;
+    top: 0
+    text-align: center
+}
+
+.html-popup-nobackground {
+    position: absolute ;
+    margin: auto ;
+    min-width: 600px ;
+    max-width: 90% ;
+    left: 50% ;
+    transform: translate(-50%, -25%) ;
+}
+
+.html-popup-window {
+    vertical-align: middle ;
+    padding: 10px ;
+    box-shadow: 2px 3px 5px var(--theme);
+    top: 200px ;
+    max-width: 90% ;
+    max-height: 80% ;
+    min-width: 600px ;
+    left: 50% ;
+    transform: translate(-50%, -25%) ;
+    position: fixed ;
+    background: var(--white) ;
+}
+
+.html-popup-body {
+    height: 100% ;
+    max-height: 85vh;
+    padding: auto ;
+    vertical-align: middle ;
+}
+
+.html-popup-container {
+    max-height: 85vh;
+    overflow:scroll;
+}
+
+.html-popup-close {
+    border-radius: 20px ;
+    top: 5px ;
+    margin: -15px -15px 0 0 ;
+    font-size: var(--line-height) ;
+    right: 5px ;
+    position: absolute ;
+    color: var(--theme) ;
+    background-color: var(--white) ;
+}
+
+.html-popup-close:hover {
+    color: var(--theme-dark) ;
+}
