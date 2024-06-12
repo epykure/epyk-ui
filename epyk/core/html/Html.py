@@ -1172,7 +1172,8 @@ the same signature and return).
         return self
 
     def add_style(self, css_classes: Optional[Union[str, list]] = None, css_attrs: Optional[dict] = None,
-                  clear_first: bool = False, keep_css_keys: Optional[tuple] = ("width", "height")):
+                  clear_first: bool = False, keep_css_keys: Optional[tuple] = ("width", "height"),
+                  keep_html_class: bool = False):
         """Add CSS styles (inline and classes) to the component.
 
         This function could also remove all the predefined CSS style first.
@@ -1182,7 +1183,10 @@ the same signature and return).
         :param css_attrs: Optional. The CSS attributes
         :param clear_first: Optional. Remove all the predefined CSS Inline style and classes for the component
         :param keep_css_keys: Optional. List of attributes to maintain (default width and height)
+        :param keep_html_class: Optional. Keep the default based CSS Class configuration for components
         """
+        if not keep_html_class:
+          self.html_class = None
         if clear_first:
             self.attr["class"].clear()
             if keep_css_keys is not None:

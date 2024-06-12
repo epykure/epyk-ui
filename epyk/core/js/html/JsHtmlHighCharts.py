@@ -15,7 +15,7 @@ class HighCharts(JsHtml.JsHtmlRich):
     def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
         self.component.options.managed = False
         self.component.js_code = html_code
-        js_code = JsUtils.jsConvertData(self.component.js_code, None).toStr()
+        js_code = JsUtils.jsConvertData(self.component.js_code, None)
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){

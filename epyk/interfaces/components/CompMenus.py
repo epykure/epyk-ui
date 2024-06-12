@@ -379,7 +379,8 @@ class Menus:
 
   def buttons(self, data: list = None, color: str = None, width: Union[tuple, int] = ("auto", ""),
               height: Union[tuple, int] = (None, 'px'), html_code: str = None,
-              helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+              helper: str = None, options: dict = None, profile: Union[bool, dict] = None
+              ) -> html.HtmlButton.Buttons:
     """  
 
     Usage::

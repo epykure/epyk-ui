@@ -860,6 +860,7 @@ class Col(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('bootstrap',)
     _option_cls = OptPanel.OptionGrid
     tag = 'div'
+    html_class: str = None
 
     def __init__(self, page, components, position: str, width: types.SIZE_TYPE, height: types.SIZE_TYPE, align: str,
                  helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE, html_code: str = None):
@@ -959,6 +960,7 @@ class Row(Html.Html):
     name = 'Column'
     requirements = ('bootstrap',)
     _option_cls = OptPanel.OptionGrid
+    html_class: str = None
 
     def __init__(self, page, components, position: str, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
                  align: str, helper: str, options: types.OPTION_TYPE, profile: types.PROFILE_TYPE,
@@ -1084,6 +1086,7 @@ class Grid(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('bootstrap',)
     tag = 'div'
     _option_cls = OptPanel.OptionGrid
+    html_class: str = None
 
     def __init__(self, page: primitives.PageModel, rows: list, width: tuple, height: tuple, align: str, position: str,
                  options: types.OPTION_TYPE, profile: Optional[Union[bool, dict]], html_code: str = None):
