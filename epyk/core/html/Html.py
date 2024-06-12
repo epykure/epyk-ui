@@ -396,7 +396,7 @@ the same signature and return).
     tag = None
     style_urls: List[str] = None
     # Common CSS definition
-    html_class: str = "html-base"
+    html_class: Optional[str] = "html-base"
     html_class_full_path: Path = Path(__file__).parent.parent / "css" / "native" / "html-base.css"
 
     def __init__(self, page: primitives.PageModel, vals, html_code: Optional[str] = None,

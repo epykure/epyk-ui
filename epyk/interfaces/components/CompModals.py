@@ -15,7 +15,7 @@ class Modals:
         self.page = ui.page
 
     def forms(self, components: html.Html.Html, action: str, method: str, header=None, footer=None,
-              helper: types.HELPER_TYPE = None) -> html.HtmlContainer.Modal:
+              helper: types.HELPER_TYPE = None, html_code: str = None) -> html.HtmlContainer.Modal:
         """Simple interface to create a html form within a modal.
 
         Usage::
@@ -38,19 +38,22 @@ class Modals:
         :param header:
         :param footer:
         :param helper:
+        :param html_code:
         """
         if not type(components) == list:
             components = [components]
         form = html.HtmlContainer.Form(self.page, components, helper)
         form.submit(method, action)
-        modal = html.HtmlContainer.Modal(self.page, [], header, footer, False, helper)
+        modal = html.HtmlContainer.Modal(
+            self.page, [], header, footer, False, helper, html_code=html_code)
         modal += form
         modal.form = form
         html.Html.set_component_skin(modal)
         return modal
 
     def disclaimer(self, disc_list, header=None, footer=None, submit: bool = True, validation_text: str = 'AGREE',
-                   action: str = None, add_buttons=None, helper: types.HELPER_TYPE = None) -> html.HtmlContainer.Modal:
+                   action: str = None, add_buttons=None, html_code: str = None, helper: types.HELPER_TYPE = None
+                   ) -> html.HtmlContainer.Modal:
         """Disclaimer that will appear as a modal.
 
         Usage::
@@ -78,7 +81,8 @@ class Modals:
         """
         for obj in disc_list:
             obj.css({'margin': '40px', 'width': 'auto', 'text-align': 'justify'})
-        modal = html.HtmlContainer.Modal(self.page, disc_list, header, footer, False, helper)
+        modal = html.HtmlContainer.Modal(
+            self.page, disc_list, header, footer, False, helper, html_code=html_code)
         modal.col.css({'width': '450px', 'height': '700px'})
         if add_buttons or submit:
             submit_row = self.page.ui.row([]) if not add_buttons else self.page.ui.row(add_buttons)
@@ -119,7 +123,7 @@ class Modals:
         return html_pr
 
     def icon(self, components: List[html.Html.Html] = None, icon: str = None, width: types.SIZE_TYPE = (100, '%'),
-             height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """Display a generic popup with an icon.
 
@@ -157,17 +161,20 @@ class Modals:
             success_div = self.page.ui.div(icon_success)
             success_div.style.css.text_align = "center"
             components.insert(0, success_div)
-        acknowledgement = self.page.ui.button("Ok", align="center", options=dfl_options.get("button", {}))
+        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile, html_code=html_code)
+        acknowledgement = self.page.ui.button(
+            dfl_options.get("button", {}).get("text", "Ok"), options=dfl_options.get("button"),
+            align="center", html_code=popup.sub_html_code("button"))
         acknowledgement.style.css.margin_top = 10
-        components.append(acknowledgement)
-        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+        popup.add(acknowledgement)
         popup.acknowledgement = acknowledgement
+        popup.button = popup.acknowledgement
         acknowledgement.click([popup.dom.hide()])
         html.Html.set_component_skin(popup)
         return popup
 
     def validation(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
-                   height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+                   height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
                    profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """
 
@@ -197,12 +204,16 @@ class Modals:
             dfl_options.update(options)
         if not isinstance(components, list):
             components = [components]
-        validate = self.page.ui.buttons.validate("Validate")
-        cancel = self.page.ui.buttons.cancel()
+        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile, html_code=html_code)
+        validate = self.page.ui.buttons.validate(
+            "Validate", html_code=popup.sub_html_code("validate"), options=dfl_options.get("validate"))
+        cancel = self.page.ui.buttons.cancel(
+            text=dfl_options.get("cancel", {}).get("text", "Cancel"),
+            html_code=popup.sub_html_code("validate"), options=dfl_options.get("cancel"))
         row = self.page.ui.row([validate, cancel], position="top", align="center")
         row.options.autoSize = False
-        components.append(row)
-        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+        popup.add(row)
+
         popup.validate = validate
         popup.cancel = cancel
         cancel.click([popup.dom.hide()])
@@ -210,7 +221,7 @@ class Modals:
         return popup
 
     def acknowledge(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
-                    height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+                    height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
                     profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """Display a popup with a ok button to validate the message has been displayed.
 
@@ -239,9 +250,11 @@ class Modals:
             dfl_options.update(options)
         if not isinstance(components, list):
             components = [components]
-        acknowledgement = self.page.ui.button("Ok", align="center")
-        components.append(acknowledgement)
-        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile, html_code=html_code)
+        acknowledgement = self.page.ui.button(
+            dfl_options.get("button", {}).get("text", "Ok"), options=dfl_options.get("button"),
+            align="center", html_code=popup.sub_html_code("button"))
+        popup.add(acknowledgement)
         popup.acknowledgement = acknowledgement
         popup.button = popup.acknowledgement
         acknowledgement.click([popup.dom.hide()])
@@ -249,7 +262,7 @@ class Modals:
         return popup
 
     def popup(self, components: List[html.Html.Html] = None, title: str = None, width: types.SIZE_TYPE = (80, '%'),
-              height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """Display a generic popup.
 
@@ -278,14 +291,14 @@ class Modals:
         dfl_options = {'margin': 10, 'closure': icon_details["icon"], 'top': 100}
         if options is not None:
             dfl_options.update(options)
-        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile)
+        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile, html_code=html_code)
         if title is not None:
             popup.add_title(title)
         html.Html.set_component_skin(popup)
         return popup
 
     def error(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
-              height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
               profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """Display an error popup.
 
@@ -311,14 +324,14 @@ class Modals:
         if options is not None:
             dfl_options.update(options)
         popup = self.icon(components=components, icon="error", width=width, height=height,
-                          options=dfl_options, profile=profile)
+                          options=dfl_options, profile=profile, html_code=html_code)
         popup.window.style.css.border = "3px solid %s" % self.page.theme.danger.light
         popup.container[0].style.css.color = self.page.theme.danger.base
         html.Html.set_component_skin(popup)
         return popup
 
     def info(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
-             height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """Display an info popup.
 
@@ -341,12 +354,13 @@ class Modals:
         :param profile: Optional. A flag to set the component performance storage
         """
         popup = self.icon(
-            components=components, icon="question", width=width, height=height, options=options, profile=profile)
+            components=components, icon="question", width=width, height=height, options=options, profile=profile,
+            html_code=html_code)
         html.Html.set_component_skin(popup)
         return popup
 
     def success(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, '%'),
-                height: types.SIZE_TYPE = (None, 'px'), options: dict = None,
+                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
                 profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
         """Display a success popup.
 
@@ -369,14 +383,17 @@ class Modals:
         :param profile: Optional. A flag to set the component performance storage
         """
         popup = self.icon(
-            components=components, icon="check", width=width, height=height, options=options, profile=profile)
+            components=components, icon="check", width=width, height=height, options=options, profile=profile,
+            html_code=html_code)
         popup.window.style.css.border = "3px solid %s" % self.page.theme.success.light
         popup.container[0].style.css.color = self.page.theme.success.base
         html.Html.set_component_skin(popup)
         return popup
 
-    def loading(self, text: str = "", width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
-                options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
+    def loading(self, text: str = "", icon: str = "fas fa-spinner fa-pulse", width: types.SIZE_TYPE = (100, '%'),
+                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, options: dict = None,
+                profile: types.PROFILE_TYPE = None
+                ) -> html.HtmlPopup.Popup:
         """Display a success popup.
 
         Usage::
@@ -397,9 +414,11 @@ class Modals:
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         """
+        if options is None:
+            options = {}
         component = self.page.ui.text(text)
-        popup = self.icon(components=[component], icon="fas fa-spinner fa-pulse", width=width, height=height,
-                          options=options, profile=profile)
+        popup = self.icon(components=[component], icon=icon, width=width, height=height,
+                          options=options, profile=profile, html_code=html_code)
         popup.window.style.css.border = "3px solid %s" % self.page.theme.success.light
         popup.container[0].style.css.color = self.page.theme.success.base
         popup.text = component
@@ -419,7 +438,8 @@ class Modals:
 
     def stepper(self, records=None, components: List[html.Html.Html] = None, shape: str = "arrow",
                 title: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
-                options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlPopup.Popup:
+                html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+                ) -> html.HtmlPopup.Popup:
         """
 
         :param records:
@@ -428,6 +448,7 @@ class Modals:
         :param title:
         :param width:
         :param height:
+        :param html_code:
         :param options:
         :param profile:
         """
@@ -436,16 +457,21 @@ class Modals:
                 components = [components]
         else:
             components = []
-        stepper = getattr(self.page.ui.steppers, shape)(records)
+
+        popup = self.popup(components=components, width=width, height=height, options=options, profile=profile,
+                           html_code=html_code)
+
+        stepper = getattr(self.page.ui.steppers, shape)(
+            records, html_code=popup.sub_html_code("stepper", auto_inc=True))
         stepper.style.css.inline_block()
         stepper.style.css.margin = "auto"
         stepper.style.css.width = "auto"
         stepper.options.line = False
-        components.insert(0, self.page.ui.div([stepper], align="center"))
+        popup.container.insert(0, self.page.ui.div([stepper], align="center"))
         if title is not None:
-            title = self.page.ui.title(title)
-            components.insert(0, title)
-        popup = self.popup(components=components, width=width, height=height, options=options, profile=profile)
+            title = self.page.ui.title(title, html_code=popup.sub_html_code("title", auto_inc=True))
+            popup.container.insert(0, title)
+
         popup.title = title
         popup.window.style.css.min_width = "auto"
         popup.window.style.css.width = "auto"

@@ -568,20 +568,26 @@ class ClassHtml:
         """Clear all the Style, Classes and CSS attributes for the HTML component.
         Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
 
+        This will also remove the base CSS Class in the property html_class define for this component.
+
         :return: self to allow the chaining.
         """
+        self.component.html_class = None
         self.classList['main'] = OrderedSet()
         self.component.attr['class'] = self.classList['main']
         self._css_class = None
         return self
 
-    def clear_class(self, classname: str):
+    def clear_class(self, classname: str, keep_html_class: bool = True):
         """Remove a class from the main class object attribute.
 
-        :param classname: The CSS class name to be removed for the component.
+        :param classname: The CSS class name to be removed for the component
+        :param keep_html_class: Optional. Keep the default based CSS Class configuration for components
 
         :return: The style property for chaining.
         """
+        if not keep_html_class:
+            self.component.html_class = None
         classes = OrderedSet()
         for cls in self.classList['main']:
             if classname.lower() != cls.classname:
@@ -613,13 +619,16 @@ class ClassHtml:
         self.css.attrs = self.component.attr['css']
         return self
 
-    def clear(self, no_default: bool = False):
+    def clear(self, no_default: bool = False, keep_html_class: bool = True):
         """Remove the predefined class and set the default one for the div components.
 
         :param no_default: Optional. Remove the default class
+        :param keep_html_class: Optional. Keep the default based CSS Class configuration for components
 
         :return: self to allow the chaining.
         """
+        if not keep_html_class:
+            self.component.html_class = None
         self.classList['main'] = OrderedSet()
         if Defaults_css.DEFAULT_STYLE == 'no_border':
             if no_default:
@@ -632,18 +641,19 @@ class ClassHtml:
         self.component.attr['class'] = self.classList['main']
         return self
 
-    def clear_all(self, no_default: bool = False):
+    def clear_all(self, no_default: bool = False, keep_html_class: bool = True):
         """Clear all the Style, Classes and CSS attributes for the HTML component.
 
         Once this function is called it is possible to add new CSS attributes or classes using the different catalog.
         Set the default style to no margin and no padding.
 
         :param no_default: Optional. Remove the default class.
+        :param keep_html_class: Optional. Keep the default based CSS Class configuration for components
 
         :return: self to allow the chaining.
         """
         self.clear_style()
-        self.clear(no_default)
+        self.clear(no_default, keep_html_class=keep_html_class)
         return self
 
     def builder(self, name: str, js_frg: str):

@@ -18,7 +18,8 @@ class Stepper(Html.Html):
   tag = "ul"
 
   def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, color: Optional[str],
-               options: Optional[dict], profile: Optional[Union[dict, bool]], verbose: bool = False):
+               options: Optional[dict], profile: Optional[Union[dict, bool]], verbose: bool = False,
+               html_code: str = None):
     dfl_options = {'svg_style': {'display': 'block', 'width': 100, 'height': height[0] - 20}, 'circle_factor': 2,
                    'text_style': {'display': 'block', 'text-align': 'center'},
                    'backgrounds': {
@@ -31,7 +32,7 @@ class Stepper(Html.Html):
     dfl_options.update(options)
     super(Stepper, self).__init__(
       page, records, options=dfl_options, profile=profile, css_attrs={"list-style-type": 'none', "width": width},
-      verbose=verbose)
+      verbose=verbose, html_code=html_code)
     self.color = self.page.theme.greys[-1] if color is None else color
     self.css({'color': self.color, "margin": 0, 'display': 'inline-block', 'padding': 0})
 

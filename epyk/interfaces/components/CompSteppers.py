@@ -13,7 +13,7 @@ class Steppers:
 
   def stepper(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
               height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
-              profile: Union[dict, bool] = False) -> html.HtmlStepper.Stepper:
+              profile: Union[dict, bool] = False, html_code: str = None) -> html.HtmlStepper.Stepper:
     """ Entry point for the stepper object.
 
     Usage::
@@ -35,7 +35,7 @@ class Steppers:
     dft_options = {"line": True}
     if options is not None:
       dft_options.update(options)
-    st = html.HtmlStepper.Stepper(self.page, records, width, height, color, dft_options, profile)
+    st = html.HtmlStepper.Stepper(self.page, records, width, height, color, dft_options, profile, html_code=html_code)
     st.style.add_classes.div.stepper()
     if dft_options.get("media", True):
       st.style.css_class.media({
@@ -47,7 +47,7 @@ class Steppers:
     return st
 
   def arrow(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
-            height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+            height: Union[tuple, int] = (70, 'px'), color: str = None, html_code: str = None, options: dict = None,
             profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
     """ Create a stepper with arrows for nodes.
 
@@ -70,12 +70,12 @@ class Steppers:
     dft_options = {"shape": 'arrow'}
     if options is not None:
       dft_options.update(options)
-    component = self.stepper(records, width, height, color, dft_options, profile)
+    component = self.stepper(records, width, height, color, dft_options, profile, html_code=html_code)
     html.Html.set_component_skin(component)
     return component
 
   def rectangle(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
-                height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+                height: Union[tuple, int] = (70, 'px'), color: str = None, html_code: str = None, options: dict = None,
                 profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
     """ Create a stepper with rectangles for nodes.
 
@@ -91,12 +91,12 @@ class Steppers:
     dft_options = {"shape": 'rectangle'}
     if options is not None:
       dft_options.update(options)
-    component = self.stepper(records, width, height, color, dft_options, profile)
+    component = self.stepper(records, width, height, color, dft_options, profile, html_code=html_code)
     html.Html.set_component_skin(component)
     return component
 
   def triangle(self, records: List[dict] = None, width: Union[tuple, int] = ("auto", ''),
-               height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+               height: Union[tuple, int] = (70, 'px'), color: str = None, html_code: str = None, options: dict = None,
                profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
     """ Create a stepper with triangle for nodes.
 
@@ -112,12 +112,12 @@ class Steppers:
     dft_options = {"shape": 'triangle'}
     if options is not None:
       dft_options.update(options)
-    component = self.stepper(records, width, height, color, dft_options, profile)
+    component = self.stepper(records, width, height, color, dft_options, profile, html_code=html_code)
     html.Html.set_component_skin(component)
     return component
 
   def vertical(self, records: List[dict] = None, shape: str = 'circle', width: Union[tuple, int] = ("auto", ''),
-               height: Union[tuple, int] = (70, 'px'), color: str = None, options: dict = None,
+               height: Union[tuple, int] = (70, 'px'), color: str = None, html_code: str = None, options: dict = None,
                profile: Union[dict, bool] = None) -> html.HtmlStepper.Stepper:
     """ Entry point for the stepper object.
 
@@ -141,6 +141,6 @@ class Steppers:
     dft_options = {"line": False, "shape": shape}
     if options is not None:
       dft_options.update(options)
-    st = html.HtmlStepper.Stepper(self.page, records, width, height, color, dft_options, profile)
+    st = html.HtmlStepper.Stepper(self.page, records, width, height, color, dft_options, profile, html_code=html_code)
     html.Html.set_component_skin(st)
     return st

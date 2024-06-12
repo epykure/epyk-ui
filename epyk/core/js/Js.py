@@ -264,6 +264,35 @@ class JsStorage:
             js_funcs_exist = [js_funcs_exist]
         return self.__js.if_(var, js_funcs_exist + [var], profile=profile).else_(js_funcs, profile=profile)
 
+    def from_config(self, options: dict) -> JsObjects.JsObject.JsObject:
+        """Interface to get the right caching setup.
+
+        Possible options:
+            code: The variable name
+            type: Optional. Caching type. local, session or global
+            value: Optional. The value to set (or function to use.
+            setOnce: Optional. Enable mechanism to store value. Default False
+            profile: Optional. Set the profile to None
+
+        :param js_code: Variable name and cache key
+        :param value: Optional. Cache value
+        :param set_once: Optional. Flag or object to set variable only once
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if options.get("type") == "session":
+            return self.session(
+                js_code=options["code"], value=options.get("value"),
+                set_once=options.get("setOnce", False), profile=options.get("profile"))
+
+        if options.get("type") == "local":
+            return self.local(
+                js_code=options["code"], value=options.get("value"),
+                set_once=options.get("setOnce", False), profile=options.get("profile"))
+
+        return self.global_(
+                js_code=options["code"], value=options.get("value"),
+                set_once=options.get("setOnce", False), profile=options.get("profile"))
+
 
 class JsBase:
 

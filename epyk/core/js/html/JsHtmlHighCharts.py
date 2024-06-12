@@ -16,6 +16,8 @@ class HighCharts(JsHtml.JsHtmlRich):
         self.component.options.managed = False
         self.component.js_code = html_code
         js_code = JsUtils.jsConvertData(self.component.js_code, None)
+        if hasattr(js_code, "toStr"):
+            js_code = js_code.toStr()
         if js_code.startswith("window"):
             js_code = js_code[7:-1]
         return JsUtils.jsWrap('''(function(containerId, tag, htmlCode, jsCode, ctx, attrs){
