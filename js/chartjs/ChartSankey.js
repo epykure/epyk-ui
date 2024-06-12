@@ -20,7 +20,7 @@ function chartSankey(data, options){
             if ((typeof options.datasets !== 'undefined') && (typeof options.datasets[series] !== 'undefined')){
                       dataSet = Object.assign(dataset, options.datasets[series])}
         })
-    }
-    iif(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(dataSet, null)}
+    } ;
+    if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(dataSet, null)} ;
     return {datasets: datasets}
 }
