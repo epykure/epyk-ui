@@ -5,15 +5,22 @@
     border: 1px solid var(--grey);
     max-height: 60%;
     background: var(--white) ;
+    font-size: var(--font-size) ;
+    font-family: var(--font-family) ;
 }
 
 .contents-table-item {
     display: block;
-    width: 100%
+    width: 100% ;
+}
+
+.contents-table-item:hover {
+    text-decoration: None ;
 }
 
 .contents-item-active {
-    background-color: var(--selected);
+    color: var(--selected) ;
+    font-weight: 700 ;
 }
 
 .contents-table-title {
