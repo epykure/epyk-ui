@@ -47,6 +47,8 @@ class OptionPanelSliding(Options):
 
   @expanded.setter
   def expanded(self, flag: bool):
+    if self.component.category == "hamburger" and flag:
+      self.component.icon.classList.add("change-hamburger")
     self.set(flag)
 
   @property

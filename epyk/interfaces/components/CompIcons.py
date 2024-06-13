@@ -1674,11 +1674,12 @@ class Icons:
         html.Html.set_component_skin(div)
         return div
 
-    def hamburger(self, width=(15, 'px'), height=(2, 'px'), color=None, options=None, profile=None):
+    def hamburger(self, open:bool = True, width=(15, 'px'), height=(2, 'px'), color=None, options=None, profile=None):
         """
 
         https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_menu_icon_js
 
+        :param open: Icon status.
         :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
         :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
         :param color: String. Optional. The font color in the component. Default inherit
@@ -1704,15 +1705,21 @@ class Icons:
         bar3.style.css.display = "block"
         bar3.style.css.margin = "%spx 0" % height[0]
         bar3.style.css.transition = 0.4
-        component = self.page.ui.div([bar1, bar2, bar3], width=width, options=options, profile=profile)
-        component.style.add_custom_class({"transform": "rotate(-45deg) translate(-3px, 1px)"}, "change-hamburger .bar1")
-        component.style.add_custom_class({"transform": "rotate(45deg) translate(-4px, -3px)"}, "change-hamburger .bar3")
-        component.style.add_custom_class({"opacity": 0}, "change-hamburger .bar2")
+        if open:
+            component = self.page.ui.div([bar1, bar2, bar3], width=width, options=options, profile=profile)
+            component.classList.add("change-hamburger")
+            component.style.add_custom_class({"transform": "rotate(-45deg) translate(-3px, 1px)"}, "change-hamburger .bar1")
+            component.style.add_custom_class({"transform": "rotate(45deg) translate(-4px, -3px)"}, "change-hamburger .bar3")
+            component.style.add_custom_class({"opacity": 0}, "change-hamburger .bar2")
+        else:
+            component = self.page.ui.div([bar1, bar2, bar3], width=width, options=options, profile=profile)
+            component.style.add_custom_class({"transform": "rotate(-45deg) translate(-3px, 1px)"}, "change-hamburger .bar1")
+            component.style.add_custom_class({"transform": "rotate(45deg) translate(-4px, -3px)"}, "change-hamburger .bar3")
+            component.style.add_custom_class({"opacity": 0}, "change-hamburger .bar2")
         component.style.css.cursor = "pointer"
         component.set_icon = str
-        component.click([
-            component.dom.classList.toggle("change-hamburger")
-        ])
+
+        component.click([component.dom.classList.toggle("change-hamburger")])
         html.Html.set_component_skin(component)
         return component
 

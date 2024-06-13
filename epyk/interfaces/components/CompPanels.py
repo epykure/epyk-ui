@@ -501,7 +501,8 @@ class Panels:
       dfl_options.update(options)
     html_slide = html.HtmlContainer.PanelSlide(
       self.page, components, title, color, width, height, html_code, helper, dfl_options, profile)
-    html_slide.icon = self.page.ui.icons.hamburger()
+    html_slide.category = "hamburger"
+    html_slide.icon = self.page.ui.icons.hamburger(dfl_options["expanded"])
     html_slide.icon.options.managed = False
     html_slide.icon.style.css.float = html_slide.options.icon_position
     html_slide.icon.style.css.margin_top = 3
