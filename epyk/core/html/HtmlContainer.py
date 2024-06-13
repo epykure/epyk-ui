@@ -217,6 +217,7 @@ class PanelSlide(Panel):
     name = 'Slide Panel'
     _option_cls = OptPanel.OptionPanelSliding
     tag = 'div'
+    category = None
 
     style_urls = [
         Path(__file__).parent.parent / "css" / "native" / "html-panel-slide.css"
@@ -234,11 +235,15 @@ class PanelSlide(Panel):
                  height: types.SIZE_TYPE, html_code: Optional[str], helper,
                  options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
         self.requirements = (page.icons.family,)
+        if components:
+            for c in components:
+                c.options.managed = False
         super(PanelSlide, self).__init__(
             page, components, None, color, width, height, html_code, helper, options, profile)
         self.add_helper(helper)
         self.icon = self.page.ui.icon("", html_code=self.sub_html_code("icon"))
-        self.icon.classList.add(self.style_refs["html-slidepanel-icon"])
+        self.icon.add_style(self.style_refs["html-slidepanel-icon"], clear_first=True)
+        self.icon.options.managed = False
         if hasattr(title, 'options'):
             self.text = title
             self.text.options.managed = False
@@ -307,6 +312,13 @@ class PanelSlide(Panel):
     def __add__(self, component: Html.Html):
         """Add items to a container """
         self.val[1] += component
+        component.options.managed = False
+        return self
+
+    def insert(self, n, component: Html.Html):
+        """Insert a component at a given position in the content panel"""
+        self.val[1].insert(n, component)
+        component.options.managed = False
         return self
 
     def __str__(self):

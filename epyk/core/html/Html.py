@@ -1185,9 +1185,9 @@ the same signature and return).
         :param keep_css_keys: Optional. List of attributes to maintain (default width and height)
         :param keep_html_class: Optional. Keep the default based CSS Class configuration for components
         """
-        if not keep_html_class:
-          self.html_class = None
         if clear_first:
+            if not keep_html_class:
+                self.html_class = None
             self.attr["class"].clear()
             if keep_css_keys is not None:
                 if css_attrs is None:

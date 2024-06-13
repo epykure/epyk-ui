@@ -1773,9 +1773,9 @@ class JsDoms(JsObject.JsObject):
           the insertBefore method will insert the new_node at the end
         """
         if existing_node is None:
-            self._js.append("%s.insertBefore(%s, %s)" % (self.varId, new_node, self.firstChild))
+            self._js.append("%s?.insertBefore(%s, %s)" % (self.varId, new_node, self.firstChild))
         else:
-            self._js.append("%s.insertBefore(%s, %s)" % (self.varId, new_node, existing_node))
+            self._js.append("%s?.insertBefore(%s, %s)" % (self.varId, new_node, existing_node))
         return self
 
     def appendAfter(self, new_node, existing_node):
