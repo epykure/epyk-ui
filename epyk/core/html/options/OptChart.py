@@ -60,6 +60,22 @@ class OptionsCoreChart(Options):
     def colors(self, values: List[str]):
         self._config(values)
 
+    @property
+    def series(self):
+        return self._config_get()
+
+    @series.setter
+    def series(self, values):
+        self._config(values)
+
+    @property
+    def params(self):
+        return self._config_get()
+
+    @params.setter
+    def params(self, values: List[str]):
+        self._config(values)
+
 
 class OptionsChart(OptionsWithTemplates):
     component_properties = ("opacity", "get_width", "get_height")

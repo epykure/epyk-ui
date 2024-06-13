@@ -409,6 +409,7 @@ class Modals:
         `Use case <https://github.com/epykure/epyk-templates/blob/master/locals/components/modals.py>`_
 
         :param text: Optional. The loading text
+        :param icon: Optional.
         :param width: Optional. A tuple with the integer for the component width and its unit
         :param height: Optional. A tuple with the integer for the component height and its unit
         :param options: Optional. Specific Python options available for this component
@@ -417,9 +418,31 @@ class Modals:
         if options is None:
             options = {}
         component = self.page.ui.text(text)
-        popup = self.icon(components=[component], icon=icon, width=width, height=height,
-                          options=options, profile=profile, html_code=html_code)
-        popup.window.style.css.border = "3px solid %s" % self.page.theme.success.light
+
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = {'margin': 10, 'closure': False, 'top': 100, 'escape': False}
+        if options is not None:
+            dfl_options.update(options)
+        components = [component]
+        if icon is not None:
+            icon_success = self.page.ui.icon(icon)
+            icon_success.style.css.font_size = 50
+            icon_success.style.css.margin_bottom = 20
+            icon_success.style.css.margin_top = 10
+            success_div = self.page.ui.div(icon_success)
+            success_div.style.css.text_align = "center"
+            components.insert(0, success_div)
+        popup = html.HtmlPopup.Popup(self.page, components, width, height, dfl_options, profile, html_code=html_code)
+        popup.options.close_on_background = False
+        html.Html.set_component_skin(popup)
+
+        popup.window.style.css.border = "None"
+        popup.window.style.css.box_shadow = "None"
+        popup.window.style.css.background = "None"
+        popup.window.style.css.padding = 0
+        popup.container.style.css.overflow = "hidden"
+        popup.container.style.css.text_align = "center"
         popup.container[0].style.css.color = self.page.theme.success.base
         popup.text = component
 

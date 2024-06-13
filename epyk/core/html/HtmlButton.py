@@ -56,6 +56,31 @@ class Button(Html.Html):
         self.classList.add(self.style_refs["html-button"])
         self.set_attrs(name="data-count", value=0)
 
+    def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
+              source_event: Optional[str] = None, on_ready: bool = False):
+        """The onclick event occurs when the user clicks on an element.
+
+        Usage::
+          div = page.ui.div()
+          div.click([page.js.alert("This is a test")])
+
+        `Learn more <https://www.w3schools.com/jsref/event_onclick.asp>`_
+
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        :param source_event: Optional. The source target for the event
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        if on_ready:
+            self.page.body.onReady([self.dom.events.trigger("click")])
+        js_funcs.insert(
+            0, self.dom.setAttribute("data-count", self.dom.getAttribute("data-count").toNumber() + 1))
+        if self.options.max:
+            js_funcs.append(self.dom.setAttribute("disabled", 'true'))
+        return self.on("click", js_funcs, profile, source_event)
+
     @property
     def options(self) -> OptButton.OptionsButton:
         """Property to set all the possible object for a button.

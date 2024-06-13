@@ -1592,14 +1592,29 @@ class Modal(Html.Html):
     name = 'Modal Popup'
     tag = 'div'
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-popup.css",
+    ]
+
+    style_refs = {
+        "html-popup": "html-popup",
+        "html-popup-background": "html-popup-background",
+        "html-popup-nobackground": "html-popup-nobackground",
+        "html-popup-window": "html-popup-window",
+        "html-popup-body": "html-popup-body",
+        "html-popup-container": "html-popup-container",
+        "html-popup-close": "html-popup-close",
+    }
+
     def __init__(
             self, page: primitives.PageModel, components: List[Html.Html], header, footer, submit, helper,
-            html_code = None):
+            html_code = None, options = None):
         """Constructor for the modal item.
         This object is composed of three parts: a header, which is a row of object, a body which is a column and a footer
         which is a row they all accept collections of html objects and are configurable just like the normal rows and
         column objects.
         """
+        options = options or {}
         super(Modal, self).__init__(page, [], html_code=html_code)
         self.add_helper(helper)
         self.doSubmit = submit
@@ -1628,9 +1643,11 @@ class Modal(Html.Html):
         self.col = page.ui.col([self.__header, self.__body, self.__footer], html_code=self.sub_html_code("col")).css({
             'width': 'auto'}, reset=True)
         self.col.style.add_classes.div.modal_content()
+        self.col.style.css.margin_top = "10% !IMPORTANT"
         self.col.options.managed = False
         self.val.append(self.col)
         self.__outOfScopeClose = True
+        self.classList.add("html-popup-background")
         for component in components:
             self.__add__(component)
 

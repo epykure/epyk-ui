@@ -72,6 +72,15 @@ class OptionsButton(Options):
     def templateError(self, value: str):
         self._config("function(data){return %s}" % value, js_type=True)
 
+    @property
+    def max(self):
+        """Max number of click on the button"""
+        return self.get()
+        
+    @max.setter
+    def max(self, num: float):
+        self.set(num)
+
 
 class OptionsBadge(Options):
     component_properties = ("show_empty", "zeros_as_empty")

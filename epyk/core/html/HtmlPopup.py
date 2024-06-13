@@ -117,6 +117,8 @@ class Popup(Html.Html):
         return self
 
     def __str__(self):
+        if self.options.close_on_background:
+            self.click([self.page.js.if_(self.page.js.object("event.target === this"), [self.dom.hide()])])
         if self.options.closure:
             self.close.classList.add(self.style_refs["html-popup-close"])
             self.close.options.managed = False

@@ -674,6 +674,14 @@ class OptionPopup(Options):
     self.set(flag)
 
   @property
+  def close_on_background(self):
+    return self.get(True)
+
+  @close_on_background.setter
+  def close_on_background(self, flag: bool):
+    self.set(flag)
+
+  @property
   def closure(self):
     """ """
     return self.get(False)
