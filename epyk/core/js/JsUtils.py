@@ -368,6 +368,9 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
         return data_expr
 
     for dataflow in flow:
+        if dataflow.get("level") == "item":
+            # shortcut to simple transforms on items on dataset
+            dataflow["name"] = "function(dataset){dataset.forEach(function(item){%s}); return dataset}" % dataflow["name"]
         if "file" in dataflow:
             ext_js_file = Path(dataflow["file"])
             if page is not None:
