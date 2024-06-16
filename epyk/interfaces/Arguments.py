@@ -158,7 +158,7 @@ def clean_opt(inputs: dict, options: dict) -> dict:
     """
     if inputs:
         if "params" in inputs:
-            options.setdefault("ek", {}).setdefault("params", {}).update(inputs["params"])
+            options.setdefault("ek", {}).setdefault("params", []).extend(inputs["params"])
             del inputs["params"]
 
         if "series" in inputs:
