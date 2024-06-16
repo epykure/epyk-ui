@@ -202,7 +202,9 @@ class ECharts:
         dfl_options = Arguments.clean_opt(options, {
             "ek": {
                 "chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns},
-                "series": {"roseType": "radius", "radius": [20, 140], "center": ['50%', '50%'], "itemStyle": {"borderRadius": 5}}
+                "series": {
+                    "roseType": "radius", "radius": [20, 140], "center": ['50%', '50%'],
+                    "itemStyle": {"borderRadius": 5}}
             }})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
