@@ -158,15 +158,15 @@ def clean_opt(inputs: dict, options: dict) -> dict:
     """
     if inputs:
         if "params" in inputs:
-            options["ek"]["params"] = inputs["params"]
+            options.setdefault("ek", {}).setdefault("params", {}).update(inputs["params"])
             del inputs["params"]
 
         if "series" in inputs:
-            options["ek"]["series"] = inputs["series"]
+            options.setdefault("ek", {}).setdefault("series", {}).update(inputs["series"])
             del inputs["series"]
 
         if "names" in inputs:
-            options["ek"]["names"] = inputs["names"]
+            options.setdefault("ek", {}).setdefault("names", {}).update(inputs["names"])
             del inputs["names"]
 
         options.update(inputs)
