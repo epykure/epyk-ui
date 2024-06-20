@@ -596,7 +596,7 @@ window.prevScrollpos = currentScrollPos;
     if fixed:
       self.page.body.style.css.padding_bottom = height[0]
     else:
-      component.style.css.position = None
+      component.style.css.position = 'initial'
     html.Html.set_component_skin(component)
     return component
 

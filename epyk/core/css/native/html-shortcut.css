@@ -1,0 +1,7 @@
+.html-shortcut {
+    background: page.theme.colors[1] ;
+    position: fixed ;
+    overflow: hidden;
+    z-index: 20 ;
+    padding: 0 ;
+}

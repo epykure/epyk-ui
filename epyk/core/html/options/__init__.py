@@ -17,6 +17,24 @@ from epyk.core.data.DataClass import DataClass
 from epyk.core.js import JsUtils
 
 
+def _r_config_js(k: str, v, attrs: dict):
+    """Recursive JavaScript configuration.
+
+    :param k: Attribute's name
+    :param attrs: Attribute's values
+    """
+    if isinstance(v, dict):
+        sub_result = []
+        for ks, vs in v.items():
+            sub_result.append(_r_config_js(ks, vs, attrs))
+        return "%s: {%s}" % (k, ",".join(sub_result))
+
+    if not hasattr(v, "config_js"):
+        return "%s: %s" % (k, JsUtils.jsConvertData(v, None, force=True))
+
+    return "%s: %s" % (k, v.config_js(attrs=attrs.get(k, {})).toStr())
+
+
 class Options(DataClass):
     component_properties = ()
     with_builder = True
@@ -543,7 +561,7 @@ class Options(DataClass):
                 if k in self.value_enums:
                     v = self.value_enums[k].join(v)
                 if k not in self.value_enums and k in self.__config_sub_levels:
-                    js_attrs.append("%s: %s" % (k, v.config_js(attrs=attrs.get(k, {})).toStr()))
+                    js_attrs.append(_r_config_js(k, v, attrs))
                 elif k in self.__config_sub__enum_levels:
                     js_attrs.append(
                         "%s: [%s]" % (k, ", ".join([s.config_js(attrs=attrs.get(k, {})).toStr() for s in v])))

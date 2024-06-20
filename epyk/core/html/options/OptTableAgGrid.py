@@ -181,6 +181,30 @@ class Column(Options):
         self._config(value)
 
     @property
+    def cellEditor(self):
+        return self._config_get()
+
+    @cellEditor.setter
+    def cellEditor(self, value: dict):
+        self._config(value)
+
+    @property
+    def cellEditorPopup(self):
+        return self._config_get()
+
+    @cellEditorPopup.setter
+    def cellEditorPopup(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def cellEditorParams(self):
+        return self._config_get()
+
+    @cellEditorParams.setter
+    def cellEditorParams(self, values: dict):
+        self._config(values)
+
+    @property
     def cellRenderers(self) -> CellRenderer:
         """
         `Related Pages <https://www.ag-grid.com/archive/27.1.0/javascript-data-grid/component-cell-renderer/>`_

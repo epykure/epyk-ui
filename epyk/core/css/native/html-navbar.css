@@ -1,0 +1,14 @@
+.html-navbar {
+    font-size: var(--font-size) ;
+    display: block ;
+    margin: 0 ;
+    vertical-align: top ;
+    left: 0 ;
+    box-sizing: border-box ;
+    padding: 0 5px 0 2px ;
+    position: fixed ;
+    background_color: var(--white) ;
+    border_bottom = 1px solid var(--grey) ;
+    top: 0 ;
+    z-index: 510 ;
+}

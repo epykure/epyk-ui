@@ -69,6 +69,14 @@ class OptionsCoreChart(Options):
         self._config(values)
 
     @property
+    def names(self):
+        return self._config_get()
+
+    @names.setter
+    def names(self, values):
+        self._config(values)
+
+    @property
     def params(self):
         return self._config_get()
 

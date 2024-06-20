@@ -1097,6 +1097,202 @@ class OptionToolbox(Options):
         self._config(val)
 
 
+class OptionTimeline(Options):
+
+    @property
+    def autoPlay(self) -> bool:
+        return self._config_get()
+
+    @autoPlay.setter
+    def autoPlay(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def axisType(self) -> str:
+        return self._config_get()
+
+    @axisType.setter
+    def axisType(self, val: str):
+        self._config(val)
+
+    @property
+    def bottom(self) -> int:
+        return self._config_get()
+
+    @bottom.setter
+    def bottom(self, val: int):
+        self._config(val)
+
+    @property
+    def data(self) -> list:
+        return self._config_get()
+
+    @data.setter
+    def data(self, values: list):
+        self._config(values)
+
+    @property
+    def height(self) -> int:
+        return self._config_get()
+
+    @height.setter
+    def height(self, val: int):
+        self._config(val)
+
+    @property
+    def inverse(self) -> bool:
+        return self._config_get()
+
+    @inverse.setter
+    def inverse(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def left(self) -> int:
+        return self._config_get()
+
+    @left.setter
+    def left(self, val: int):
+        self._config(val)
+
+    @property
+    def orient(self) -> str:
+        return self._config_get()
+
+    @orient.setter
+    def orient(self, val: str):
+        self._config(val)
+
+    @property
+    def playInterval(self) -> int:
+        return self._config_get()
+
+    @playInterval.setter
+    def playInterval(self, val: int):
+        self._config(val)
+
+    @property
+    def right(self) -> int:
+        return self._config_get()
+
+    @right.setter
+    def right(self, val: int):
+        self._config(val)
+
+    @property
+    def symbol(self) -> str:
+        return self._config_get()
+
+    @symbol.setter
+    def symbol(self, val: str):
+        self._config(val)
+
+    @property
+    def top(self) -> int:
+        return self._config_get()
+
+    @top.setter
+    def top(self, val: int):
+        self._config(val)
+
+    @property
+    def width(self) -> int:
+        return self._config_get()
+
+    @width.setter
+    def width(self, val: int):
+        self._config(val)
+
+
+class OptionsBaseOption(Options):
+
+    @property
+    def animationDuration(self) -> int:
+        return self._config_get()
+
+    @animationDuration.setter
+    def animationDuration(self, num: int):
+        self._config(num)
+
+    @property
+    def animationDurationUpdate(self) -> int:
+        return self._config_get()
+
+    @animationDurationUpdate.setter
+    def animationDurationUpdate(self, num: int):
+        self._config(num)
+
+    @property
+    def animationEasing(self) -> str:
+        return self._config_get()
+
+    @animationEasing.setter
+    def animationEasing(self, val: str):
+        self._config(val)
+
+    @property
+    def animationEasingUpdate(self) -> str:
+        return self._config_get()
+
+    @animationEasingUpdate.setter
+    def animationEasingUpdate(self, val: str):
+        self._config(val)
+
+    @property
+    def grid(self) -> bool:
+        """Shortcut to set list of titles"""
+        return self._config_get()
+
+    @grid.setter
+    def grid(self, values: list):
+        self._config(values)
+
+    @property
+    def options(self) -> bool:
+        """"""
+        return self._config_get()
+
+    @options.setter
+    def options(self, values: list):
+        self._config(values)
+
+    @property
+    def timeline(self) -> OptionTimeline:
+        """ """
+        return self._config_sub_data("timeline", OptionTimeline)
+
+    @property
+    def title(self) -> bool:
+        return self._config_get()
+
+    @title.setter
+    def title(self, values: Union[dict, list]):
+        self._config(values)
+
+    @property
+    def tooltip(self) -> OptionTooltip:
+        """ """
+        return self._config_sub_data("tooltip", OptionTooltip)
+
+    @property
+    def xAxis(self) -> OptionXAxis:
+        """ """
+        return self._config_sub_data("xAxis", OptionXAxis)
+
+    @property
+    def yAxis(self) -> OptionXAxis:
+        """ """
+        return self._config_sub_data("yAxis", OptionYAxis)
+
+    @property
+    def visualMap(self) -> List[dict]:
+        return self._config_get()
+
+    @visualMap.setter
+    def visualMap(self, val: List[dict]):
+        self._config(val)
+
+
 class EChartOptions(OptionsWithTemplates):
 
     @property
@@ -1130,6 +1326,11 @@ class EChartOptions(OptionsWithTemplates):
     @animationEasingUpdate.setter
     def animationEasingUpdate(self, val: str):
         self._config(val)
+
+    @property
+    def baseOption(self) -> OptionsBaseOption:
+        """Core attributes for all charting libraries"""
+        return self._config_sub_data("baseOption", OptionsBaseOption)
 
     @property
     def dataset(self) -> List[dict]:
@@ -1168,6 +1369,11 @@ class EChartOptions(OptionsWithTemplates):
     @grid.setter
     def grid(self, values: list):
         self._config(values)
+
+    @property
+    def timeline(self) -> OptionTimeline:
+        """ """
+        return self._config_sub_data("timeline", OptionTimeline)
 
     @property
     def title(self) -> bool:
