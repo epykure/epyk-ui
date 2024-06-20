@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from pathlib import Path
 from typing import Union, Optional, List
 from epyk.core.py import primitives
 
@@ -20,10 +21,19 @@ from epyk.core.html.options import OptList
 class HtmlNavBar(Html.Html):
     name = 'Nav Bar'
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-navbar.css"
+    ]
+
+    style_refs = {
+        "html-navbar": "html-navbar",
+    }
+
     def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]], width: tuple,
                  height: tuple, options: Optional[dict], html_code: str, profile: Optional[Union[dict, bool]]):
         super(HtmlNavBar, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                          profile=profile, options=options)
+        self.classList.add(self.style_refs["html-navbar"])
         self.scroll, self.background = None, True
         if components is not None:
             if not isinstance(components, list):
@@ -32,13 +42,6 @@ class HtmlNavBar(Html.Html):
                 self.__add__(c)
         self.buttons = []
         self.avatar = None
-
-    @property
-    def style(self) -> GrpClsMenu.ClassNav:
-        """ Property to the CSS Style of the component. """
-        if self._styleObj is None:
-            self._styleObj = GrpClsMenu.ClassNav(self)
-        return self._styleObj
 
     def move(self):
         """ Move the object to this position in the final page. """
@@ -172,21 +175,25 @@ class HtmlNavBar(Html.Html):
 class HtmlFooter(Html.Html):
     name = 'footer'
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-footer.css"
+    ]
+
+    style_refs = {
+        "html-footer": "html-footer",
+    }
+
     def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: tuple,
                  height: tuple, options: Optional[dict], profile: Optional[Union[dict, bool]]):
         super(HtmlFooter, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                          options=options, profile=profile)
+        self.classList.add(self.style_refs["html-footer"])
         self.__col_lst = None
         if components is not None:
             if not isinstance(components, list):
                 components = [components]
             for component in components:
                 self.__add__(component)
-
-        # Set the colors
-        self.style.css.background_color = page.theme.greys[0]
-        self.style.css.border_top = "1px solid %s" % page.theme.greys[4]
-        self.style.css.color = page.theme.greys[6]
 
     @property
     def sections(self) -> list:
@@ -201,13 +208,6 @@ class HtmlFooter(Html.Html):
         :param col_lst:
         """
         self.__col_lst = col_lst
-
-    @property
-    def style(self) -> GrpClsMenu.ClassFooter:
-        """ Property to the CSS Style of the component. """
-        if self._styleObj is None:
-            self._styleObj = GrpClsMenu.ClassFooter(self)
-        return self._styleObj
 
     def __add__(self, component: Union[Html.Html, str]):
         """ Add items to the footer """
@@ -408,19 +408,26 @@ class PanelsBar(Html.Html):
 class Shortcut(Html.Html):
     name = 'shortcut'
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-shortcut.css"
+    ]
+
+    style_refs = {
+        "html-shortcut": "html-shortcut",
+    }
+
     def __init__(self, page: primitives.PageModel, components: List[Html.Html],
                  logo: Union[str, Html.Html], width: tuple, height: tuple, html_code: Optional[str],
                  options: Optional[dict], profile: Optional[Union[dict, bool]]):
         super(Shortcut, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                        profile=profile)
+        self.classList.add(self.style_refs["html-shortcut"])
         self.logo = logo
         if hasattr(self.logo, 'options'):
             self.logo.options.managed = False
         self.__options = options
         for component in components:
             self.__add__(component)
-        self.css({"background": page.theme.colors[1], "position": 'fixed', 'overflow': 'hidden', 'z-index': 20})
-        self.style.css.padding = 0
         if options['position'] in ['left', 'right']:
             self.css({'text-align': 'center'})
         elif options['position'] == 'top':
@@ -478,7 +485,7 @@ class Shortcut(Html.Html):
 
     def __str__(self):
         if self.logo is None:
-            self.logo = self.page.ui.icons.epyk()
+            self.logo = self.page.ui.icons.epyk(size=(20, "px"))
         else:
             self.logo.style.css.margin_top = 5
             self.logo.style.css.display = 'block'

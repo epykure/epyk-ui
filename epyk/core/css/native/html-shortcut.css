@@ -1,5 +1,5 @@
 .html-shortcut {
-    background: page.theme.colors[1] ;
+    background: var(--theme-lighter) ;
     position: fixed ;
     overflow: hidden;
     z-index: 20 ;
