@@ -91,9 +91,9 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.options.ek.background_colors = bg_colors
         for i, rec in enumerate(self.options.js_tree.get("series", [])):
             if self.options.ek.chart.type in ["pie", "polarArea"]:
-                rec.color = self.options.colors
+                rec.color = self.options.ek.colors
             else:
-                rec.color = self.options.colors[i]
+                rec.color = self.options.ek.colors[i]
             rec.borderWidth = 1
 
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None) -> str:
@@ -176,10 +176,10 @@ class EChartsRadar(ECharts):
         return super().options
 
 class EChartsTreeMap(ECharts):
-    _option_cls = OptChartECharts.EChartTreeMapOptions
+    _option_cls = OptChartECharts.EChartTreeOptions
 
     @property
-    def options(self) -> OptChartECharts.EChartTreeMapOptions:
+    def options(self) -> OptChartECharts.EChartTreeOptions:
         """Chart specific options"""
         return super().options
 

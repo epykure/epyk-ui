@@ -16,6 +16,7 @@ from epyk.core.css import Selector
 from epyk.core.css.styles import GrpClsMenu
 from epyk.core.html.HtmlList import Li
 from epyk.core.html.options import OptList
+from epyk.core.html.options import OptPanel
 
 
 class HtmlNavBar(Html.Html):

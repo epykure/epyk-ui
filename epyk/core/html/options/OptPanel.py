@@ -746,3 +746,15 @@ class OptionPopup(Options):
   @z_index.setter
   def z_index(self, value: int):
     self.set(value)
+
+
+class OptionNavBar(Options):
+  ...
+
+
+class OptionSideBar(Options):
+  ...
+
+
+class OptionFooter(Options):
+  ...

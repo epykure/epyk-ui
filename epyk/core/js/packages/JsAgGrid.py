@@ -354,6 +354,10 @@ class AgGrid(JsPackage):
   #  Common table javascript interface
   #  -----------------------------------------
 
+  @property
+  def api(self):
+    return JsObjects.JsObject.JsObject.get("%s.api" % self.varId)
+
   def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False, dataflows: List[dict] = None):
     row = JsUtils.dataFlows(data, dataflows, self.page)
     return JsObjects.JsVoid(
@@ -675,14 +679,54 @@ class AgGrid(JsPackage):
     """
     return JsObjects.JsObject.JsObject("%s.api.getFilterModel()" % self.varId)
 
+  def getAdvancedFilterModel(self):
+    """Get the state of the Advanced Filter. Used for saving Advanced Filter state.
+
+    `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-advanced/>`_
+    """
+    return JsObjects.JsObject.JsObject("%s.api.getAdvancedFilterModel()" % self.varId)
+
+  def setColumnFilterModel(self, column, data: types.JS_DATA_TYPES):
+    """Sets the filter model for the specified column. Setting a model of null will reset the filter (make inactive).
+
+    `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-api/>`_
+
+
+    :param column:
+    :param data:
+    """
+    column = JsUtils.jsConvertData(column, None)
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObject.JsObject("%s.api.setColumnFilterModel(%s, %s)" % (self.varId, column, data))
+
+  def getColumnFilterModel(self, column):
+    """Gets the current filter model for the specified column. Will return null if no active filter.
+
+    `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-api/>`_
+
+    :param column:
+    """
+    column = JsUtils.jsConvertData(column, None)
+    return JsObjects.JsObject.JsObject("%s.api.getColumnFilterModel(%s)" % (self.varId, column))
+
   def setFilterModel(self, data: types.JS_DATA_TYPES):
     """Sets the state of all the advanced filters.
     Provide it with what you get from getFilterModel() to restore filter state.
 
     `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models>`_
+
+    :param data:
     """
     data = JsUtils.jsConvertData(data, None)
     return JsObjects.JsObject.JsObject("%s.api.setFilterModel(%s)" % (self.varId, data))
+
+  def setAdvancedFilterModel(self, data: types.JS_DATA_TYPES):
+    """Set the state of the Advanced Filter. Used for restoring Advanced Filter state
+
+    `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-advanced/>`_
+    """
+    data = JsUtils.jsConvertData(data, None)
+    return JsObjects.JsObject.JsObject("%s.api.setAdvancedFilterModel(%s)" % (self.varId, data))
 
   def destroyFilter(self):
     """Sets the state of all the advanced filters.
@@ -1025,6 +1069,9 @@ var fakeServer = {
     }, 500);
   }});''' % (js_code, self.varId)])
       return rest_call
+
+  def onFilterChanged(self):
+    return JsObjects.JsVoid("%s.api.onFilterChanged()" % self.varId)
 
   @property
   def _(self):

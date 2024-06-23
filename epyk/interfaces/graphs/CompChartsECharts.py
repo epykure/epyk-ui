@@ -266,3 +266,54 @@ class ECharts:
                     Arguments.rupdate(new_series, dfl_options["ek"]["names"][new_series["name"]])
                 s.data.append(new_series)
         return chart
+
+    def sunburst(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+              html_code: str = None, **kwargs) -> graph.GraphECharts.EChartsTreeMap:
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "sunburst", "x_axis": x_axis, "y_columns": y_columns}}})
+        data = self.page.data.to_hyr(record or [], y_columns, x_axis)
+        chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
+        chart.builder_name = "EkTreeECharts"
+        chart.colors(self.page.theme.charts)
+        if data:
+            chart.options.series.type = dfl_options["ek"]["chart"]["type"]
+            chart.options.series.radius = [0, '90%']
+            chart.options.series.data = data
+        chart.options.toolbox.feature.saveAsImage = {}
+        return chart
+
+    def treemap(self, record: list = None, y_columns: list = None, x_axis: str = None, profile: types.PROFILE_TYPE = None,
+              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+              html_code: str = None, **kwargs) -> graph.GraphECharts.EChartsTreeMap:
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "treemap", "x_axis": x_axis, "y_columns": y_columns}}})
+        data = self.page.data.to_hyr(record or [], y_columns, x_axis)
+        chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
+        chart.builder_name = "EkTreeECharts"
+        chart.colors(self.page.theme.charts)
+        if data:
+            chart.options.series.type = dfl_options["ek"]["chart"]["type"]
+            chart.options.series.data = data
+        chart.options.toolbox.feature.saveAsImage = {}
+        return chart
+
+    def tree(self, record: list = None, y_columns: list = None, x_axis: str = None,
+                profile: types.PROFILE_TYPE = None,
+                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"), options: dict = None,
+                html_code: str = None, **kwargs) -> graph.GraphECharts.EChartsTreeMap:
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = Arguments.clean_opt(options, {
+            "ek": {"chart": {"type": "tree", "x_axis": x_axis, "y_columns": y_columns}}})
+        data = self.page.data.to_hyr(record or [], y_columns, x_axis)
+        chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
+        chart.builder_name = "EkTreeECharts"
+        chart.colors(self.page.theme.charts)
+        if data:
+            chart.options.series.type = dfl_options["ek"]["chart"]["type"]
+            chart.options.series.data = data
+        chart.options.toolbox.feature.saveAsImage = {}
+        return chart

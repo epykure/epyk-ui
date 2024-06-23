@@ -1287,8 +1287,10 @@ class Tabs(Html.Html):
 
     def add_panel(self, name: str, div: Html.Html = None, icon: str = None, selected: bool = False,
                   css_tab: dict = None, css_tab_clicked: dict = None, width: tuple = None,
-                  tooltip: str = None):
+                  tooltip: str = None, menu: Html.Html = None):
         """Add a panel / tab to a tabs container.
+
+         https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_display_element_hover
 
         :param name: The panel name.
         :param div: HTML Component.
@@ -1298,6 +1300,7 @@ class Tabs(Html.Html):
         :param css_tab_clicked: Optional. The CSS attributes to be added to the HTML component
         :param width: Optional. A tuple with the integer for the component width and its unit
         :param tooltip: Optional. Add a tooltip to the tab
+        :param menu: Optional. Ada a sub panel between the tab and content
         """
         width = Arguments.size(width or self.options.width, unit="px")
         if not hasattr(div, 'options'):
@@ -1353,7 +1356,7 @@ class Tabs(Html.Html):
                                                                                                    propagate=True) if css_cls_name is not None else "",
                                                                  ] + show_div)])
         tab.options.managed = False
-        self.__panel_objs[name] = {"tab": tab_container, "content": div}
+        self.__panel_objs[name] = {"tab": tab_container, "content": div, "menu": menu}
         if selected:
             self.__selected = name
         return self

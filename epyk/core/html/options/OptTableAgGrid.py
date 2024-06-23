@@ -595,6 +595,15 @@ class Column(Options):
         self._config(val)
 
     @property
+    def filterParams(self):
+        """   """
+        return self._config_get()
+
+    @filterParams.setter
+    def filterParams(self, values: dict):
+        self._config(values)
+
+    @property
     def flex(self):
         """It's often required that one or more columns fill the entire available space in the grid. For this scenario,
         it is possible to use the flex config.
@@ -1489,6 +1498,19 @@ class TableConfig(OptionsWithTemplates):
     @editType.setter
     def editType(self, value: str):
         self._config(value)
+
+    @property
+    def enableAdvancedFilter(self):
+        """The Advanced Filter allows for complex filter conditions to be entered across columns in a
+        single type-ahead input, as well as within a hierarchical visual builder.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-advanced/>`_
+        """
+        return self._config_get()
+
+    @enableAdvancedFilter.setter
+    def enableAdvancedFilter(self, flag: bool):
+        self._config(flag)
 
     @property
     def enableColResize(self):

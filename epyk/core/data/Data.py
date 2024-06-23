@@ -19,6 +19,7 @@ import sys
 import json
 import pickle
 import importlib
+from typing import List
 
 from epyk.core.py import primitives
 
@@ -492,3 +493,35 @@ class DataSrc:
     """
     requires("grpc", reason='Missing Package', install='grpcio', source_script=__file__, raise_except=True)
     return DataGrpc.DataGrpc(service_name, path, module, host, port)
+
+  def to_hyr(self, data: List[dict], depth: List[str], value: str) -> list:
+    """Creates a hierarchy structure from a dataset
+
+    :param data: A traditional dataset
+    :param depth: hierarchy structure
+    :param value: value retrieved
+    """
+    tree, active_branch = {}, {}
+    for rec in data:
+      active_branch = tree
+      for d in depth:
+        if d not in rec:
+          break
+
+        active_branch.setdefault(rec[d], {})
+        active_branch = active_branch[rec[d]]
+      active_branch[value] = rec.get(value, 0) + active_branch.get(value, 0)
+
+    def process_node(branch: dict, hyr: list, path: list):
+      for k, v in branch.items():
+        if isinstance(v, dict):
+          path.append(k)
+          hyr.append({"name": k, "children": [], "path": "/".join(path)})
+          process_node(v, hyr[-1]["children"], path)
+        else:
+          path.append(k)
+          hyr.append({"name": k, "value": v, "path": "/".join(path)})
+
+    results = []
+    process_node(tree, results, [])
+    return results

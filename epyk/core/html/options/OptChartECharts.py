@@ -235,7 +235,6 @@ class OptionAxisLabel(Options):
         self._config(val)
 
 
-
 class OptionSplitArea(Options):
 
     @property
@@ -854,6 +853,14 @@ class OptionSeries(Options):
         self._config(val)
 
     @property
+    def levels(self) -> list:
+        return self._config_get()
+
+    @levels.setter
+    def levels(self, values: list):
+        self._config(values)
+
+    @property
     def lineStyle(self) -> OptionLineStyle:
         return self._config_sub_data("lineStyle", OptionLineStyle)
 
@@ -912,7 +919,6 @@ class OptionSeries(Options):
     @stack.setter
     def stack(self, vals: str):
         self._config(vals)
-
 
     @property
     def startAngle(self) -> float:
@@ -1447,8 +1453,11 @@ class EChartRadarOptions(EChartOptions):
         return self._config_sub_data("radar", OptionRadar)
 
 
-class EChartTreeMapOptions(EChartOptions):
-    ...
+class EChartTreeOptions(EChartOptions):
+
+    @property
+    def series(self) -> OptionSeries:
+        return self._config_sub_data("series", OptionSeries)
 
 
 class EChartSankeyOptions(EChartOptions):

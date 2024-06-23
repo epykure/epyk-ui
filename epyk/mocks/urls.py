@@ -96,3 +96,8 @@ ENERGY_DATA = "https://raw.githubusercontent.com/owid/energy-data/master/owid-en
 
 # Aggrid
 AGGRID_OLYMPIC_WINNERS = "https://www.ag-grid.com/example-assets/olympic-winners.json"
+
+# ECharts
+CONFIDENCE_BAND = "https://echarts.apache.org/examples/data/asset/data/confidence-band.json"
+LIFE_EXPECTANCY = "https://echarts.apache.org/examples/data/asset/data/life-expectancy.json"
+DISK_SPACE = "https://echarts.apache.org/examples/data/asset/data/disk.tree.json"
