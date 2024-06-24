@@ -100,7 +100,7 @@ class Select(Html.Html):
         if self._vals:
             selection = []
             for v in self._vals:
-                if v.get("selected"):
+                if isinstance(v, dict) and v.get("selected"):
                     selection.append(v["value"])
             if selection:
                 if multiple:
