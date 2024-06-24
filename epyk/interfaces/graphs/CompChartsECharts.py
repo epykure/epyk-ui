@@ -273,7 +273,7 @@ class ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "sunburst", "x_axis": x_axis, "y_columns": y_columns}}})
-        data = self.page.data.to_hyr(record or [], y_columns, x_axis)
+        data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
         chart.builder_name = "EkTreeECharts"
         chart.colors(self.page.theme.charts)
@@ -290,7 +290,7 @@ class ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "treemap", "x_axis": x_axis, "y_columns": y_columns}}})
-        data = self.page.data.to_hyr(record or [], y_columns, x_axis)
+        data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
         chart.builder_name = "EkTreeECharts"
         chart.colors(self.page.theme.charts)
@@ -308,7 +308,7 @@ class ECharts:
         height = Arguments.size(height, unit="px")
         dfl_options = Arguments.clean_opt(options, {
             "ek": {"chart": {"type": "tree", "x_axis": x_axis, "y_columns": y_columns}}})
-        data = self.page.data.to_hyr(record or [], y_columns, x_axis)
+        data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
         chart.builder_name = "EkTreeECharts"
         chart.colors(self.page.theme.charts)
