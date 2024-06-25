@@ -100,4 +100,5 @@ AGGRID_OLYMPIC_WINNERS = "https://www.ag-grid.com/example-assets/olympic-winners
 # ECharts
 CONFIDENCE_BAND = "https://echarts.apache.org/examples/data/asset/data/confidence-band.json"
 LIFE_EXPECTANCY = "https://echarts.apache.org/examples/data/asset/data/life-expectancy.json"
+LIFE_EXPECTANCY_TABLE = "https://echarts.apache.org/examples/data/asset/data/life-expectancy-table.json"
 DISK_SPACE = "https://echarts.apache.org/examples/data/asset/data/disk.tree.json"

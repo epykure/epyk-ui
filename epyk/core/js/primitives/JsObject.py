@@ -554,6 +554,9 @@ class JsObject(primitives.JsDataModel):
 
         :return: The corresponding Javascript object
         """
+        if hasattr(key, "startswith") and key.startswith("?"):
+            return JsObject("%s?.[%s]" % (self.varId, JsUtils.jsConvertData(key, None)))
+
         return JsObject("%s[%s]" % (self.varId, JsUtils.jsConvertData(key, None)))
 
     def keys(self):

@@ -167,7 +167,7 @@ def jformatter(group: str = None, name: str = None, refresh: bool = False, async
           component.page.properties.js.add_constructor(component.builder_name, None)
         elif internal_native_builder.exists():
           component.page.js.customFile(
-            "%s.js" % component.builder_name, path=internal_native_builder, authorize=True)
+            "%s.js" % component.builder_name, path=internal_native_path, authorize=True)
           component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
           component.page.properties.js.add_constructor(component.builder_name, None)
         else:

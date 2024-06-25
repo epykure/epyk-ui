@@ -49,9 +49,9 @@ function ekTreeECharts(data, options){
         dataSet = []; processNode(tree, dataSet, []);
 
         if (typeof options._ek.series !== 'undefined'){
-          dataSet = Object.assign(chartContext.series, options._ek.series)}
+          Object.assign(chartContext.series, options._ek.series)}
         if ((typeof options._ek.names !== 'undefined') && (typeof options._ek.names[series] !== 'undefined')){
-          dataSet = Object.assign(chartContext.series, options._ek.names[series])} ;
+          Object.assign(chartContext.series, options._ek.names[series])} ;
 
         chartContext.series.data = dataSet;
         return chartContext
