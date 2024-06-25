@@ -14,7 +14,7 @@ function ekTreeECharts(data, options){
         delete options.names;
     };
 
-    let chartContext = {series: {}, name: options._ek.chart.x_axis};
+    let chartContext = {series: {type: options._ek.chart.type}, name: options._ek.chart.x_axis};
     Object.assign(chartContext, options);
     delete chartContext._ek;
 

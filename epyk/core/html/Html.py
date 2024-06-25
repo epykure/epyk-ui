@@ -121,7 +121,7 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
                     component.page.properties.resources[native_builder.name] = native_builder
                 elif internal_native_builder.exists():
                     component.page.js.customFile(
-                      "%s.js" % component.builder_name, path=internal_native_builder, authorize=True)
+                      "%s.js" % component.builder_name, path=internal_native_path, authorize=True)
                     component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
                     component.page.properties.js.add_constructor(component.builder_name, None)
                     component.page.properties.resources[internal_native_builder.name] = internal_native_builder

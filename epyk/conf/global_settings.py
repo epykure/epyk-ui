@@ -7,6 +7,7 @@ DEBUG = False
 # Native CSS is used to override the style_urls defined for certain components
 NATIVE_JS_PATH = os.environ.get("NATIVE_JS_PATH")
 NATIVE_CSS_PATH = os.environ.get("NATIVE_CSS_PATH")
+PRIMARY_RESOURCE_PATHS = [] # Multi native path used for both CSS and JSS resources. Default NATIVE_ will be used as fallbacks
 
 # Theme path will be used by colors and icons function to set default values.
 # This can be used to override paths for:
