@@ -15,8 +15,7 @@ class Forms:
   def new(self,
           components: List[html.Html.Html] = None,
           helper: Optional[str] = None) -> html.HtmlContainer.Form:
-    """  
-    Creates a new empty form.
+    """Creates a new empty form.
 
     :tags:
     :categories:
@@ -33,9 +32,8 @@ class Forms:
     return form
 
   def date(self, html_code: str = "Current", profile: types.PROFILE_TYPE = None,
-           options: types.OPTION_TYPE = None, helper: str = None):
-    """  
-    Create a DatePicker object.
+           options: types.OPTION_TYPE = None, helper: str = None) -> html.HtmlContainer.Form:
+    """Create a DatePicker object.
 
     :tags:
     :categories:
@@ -71,8 +69,7 @@ class Forms:
             profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None,
             helper: str = None) -> html.HtmlContainer.Form:
-    """  
-    Create two DatePicker objects for current and previous.
+    """Create two DatePicker objects for current and previous.
 
     :tags:
     :categories:
@@ -111,8 +108,6 @@ class Forms:
 
     :tags:
     :categories:
-
-    Usage::
 
     Underlying HTML Objects:
 

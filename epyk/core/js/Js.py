@@ -159,7 +159,8 @@ class JsStorage:
 
         return self.__js.localStorage.setItem(js_code, value)
 
-    def session(self, js_code: str, value = None, set_once: Union[bool, dict] = False, profile: Optional[Union[dict, bool]] = None) -> JsObjects.JsObject.JsObject:
+    def session(self, js_code: str, value = None, set_once: Union[bool, dict] = False,
+                profile: Optional[Union[dict, bool]] = None) -> JsObjects.JsObject.JsObject:
         """Cache data to the browser session storage.
 
         Usage::

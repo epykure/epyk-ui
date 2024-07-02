@@ -1439,6 +1439,14 @@ class TableConfig(OptionsWithTemplates):
         self._config(data, js_type=True)
 
     @property
+    def components(self):
+        return self._config_get()
+
+    @components.setter
+    def components(self, values: dict):
+        self._config(values, js_type=True)
+
+    @property
     def defaultColDef(self) -> DefaultColDef:
         """
         Contains properties that all columns will inherit.

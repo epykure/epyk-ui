@@ -24,8 +24,7 @@ class Fields:
            width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            tooltip: str = None, options: types.OPTION_TYPE = None, helper: str = None,
            profile: types.PROFILE_TYPE = None) -> html.HtmlText.Text:
-    """
-    Add the HTML text component to the page.
+    """Add the HTML text component to the page.
 
     :tags:
     :categories:
@@ -38,9 +37,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlText.Text`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/tag_font.asp
+    `w3schools <https://www.w3schools.com/tags/tag_font.asp>`_
 
     Templates:
 
@@ -100,8 +97,7 @@ class Fields:
            width: types.SIZE_TYPE = (None, "px"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
            helper: str = None) -> html.HtmlDates.DatePicker:
-    """
-    This component is based on the Jquery Date Picker object.
+    """This component is based on the Jquery Date Picker object.
 
     :tags:
     :categories:
@@ -115,14 +111,9 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
-    Related Pages:
-
-      https://jqueryui.com/datepicker/
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `jqueryui <https://jqueryui.com/datepicker/>`_
+    `Template date <https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py>`_
+    `Template Field <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
@@ -157,8 +148,7 @@ class Fields:
   def today(self, label: str = None, icon: str = "calendar", color: str = None, width: types.SIZE_TYPE = (None, "px"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
             options: types.OPTION_TYPE = None, helper: str = None) -> html.HtmlDates.DatePicker:
-    """
-    This component is based on the Jquery Date Picker object.
+    """This component is based on the Jquery Date Picker object.
 
     :tags:
     :categories:
@@ -172,14 +162,9 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
-    Related Pages:
-
-      https://jqueryui.com/datepicker/
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `datepicker <https://jqueryui.com/datepicker/>`_
+    `Template date <https://github.com/epykure/epyk-templates/blob/master/locals/components/dates.py>`_
+    `Template Field <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :categories: Inputs,Texts
     :tags: Dates
@@ -210,8 +195,7 @@ class Fields:
   def cob(self, label: str = None, icon: str = "calendar", color: str = None, width: types.SIZE_TYPE = (None, "px"),
           height: types.SIZE_TYPE = (None, "px"), html_code: str = None, profile: types.PROFILE_TYPE = None,
           options: types.OPTION_TYPE = None, helper: str = None) -> html.HtmlDates.DatePicker:
-    """
-    This component is based on the Jquery Date Picker object.
+    """This component is based on the Jquery Date Picker object.
 
     :tags:
     :categories:
@@ -224,13 +208,8 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlDates.DatePicker`
 
-    Related Pages:
-
-      https://jqueryui.com/datepicker/
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `jqueryui <https://jqueryui.com/datepicker/>`_
+    `Template Field <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param label: Optional. The text of label to be added to the component
     :param icon: Optional. The component icon content from font-awesome references
@@ -258,8 +237,7 @@ class Fields:
   def now(self, deltatime: int = 0, label: str = None, icon: str = "clock", color: str = None, html_code: str = None,
           profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
           helper: str = None) -> html.HtmlDates.TimePicker:
-    """
-    This component is based on the Jquery Time Picker object.
+    """This component is based on the Jquery Time Picker object.
 
     :tags:
     :categories:
@@ -273,13 +251,8 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlDates.TimePicker`
 
-    Related Pages:
-
-      https://github.com/jonthornton/jquery-timepicker
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `jonthornton <https://github.com/jonthornton/jquery-timepicker>`_
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param deltatime: Optional
     :param label: Optional. The text of label to be added to the component
@@ -299,8 +272,7 @@ class Fields:
   def time(self, value: str = None, label: str = None, icon: str = "clock", color: str = None, html_code: str = None,
            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None,
            helper: str = None) -> html.HtmlDates.TimePicker:
-    """
-    This component is based on the Jquery Time Picker object.
+    """This component is based on the Jquery Time Picker object.
 
     :tags:
     :categories:
@@ -314,13 +286,8 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlDates.TimePicker`
 
-    Related Pages:
-
-      https://github.com/jonthornton/jquery-timepicker
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `jonthornton <https://github.com/jonthornton/jquery-timepicker>`_
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to the time component. Default now
     :param label: Optional. The text of label to be added to the component
@@ -354,9 +321,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -397,9 +362,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -442,9 +405,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldAutocomplete`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -486,9 +447,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -523,9 +482,7 @@ class Fields:
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
              helper: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldInput:
-    """
-    Create a hidden HTML component.
-    This is used to store values which are not visible on the page.
+    """Create a hidden HTML component. This is used to store values which are not visible on the page.
 
     :tags:
     :categories:
@@ -538,9 +495,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldInput`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -579,9 +534,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldInteger`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -618,9 +571,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldFile`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -661,9 +612,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldPassword`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -700,9 +649,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldTextArea`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -739,13 +686,8 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldCheckBox`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_input_type_checkbox.asp
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `w3schools <https://www.w3schools.com/tags/att_input_type_checkbox.asp>`_
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param label: Optional. The text of label to be added to the component
@@ -785,13 +727,8 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.Radio`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_input_type_radio.asp
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `w3schools <https://www.w3schools.com/tags/att_input_type_radio.asp>`_
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default False
     :param label: Optional. The text of label to be added to the component
@@ -821,8 +758,7 @@ class Fields:
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
             options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldRange:
-    """
-    The <input type="range"> defines a control for entering a number whose exact value is not important.
+    """The <input type="range"> defines a control for entering a number whose exact value is not important.
     Default range is 0 to 100. However, you can set restrictions on what numbers are accepted with the attributes below.
     - max - specifies the maximum value allowed
     - min - specifies the minimum value allowed
@@ -840,13 +776,8 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldRange`
 
-    Related Pages:
-
-      https://www.w3schools.com/tags/att_input_type_range.asp
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `w3schools <https://www.w3schools.com/tags/att_input_type_range.asp>`_
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component. Default empty string
     :param min:
@@ -886,9 +817,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to the component. Default False
     :param label: Optional. The text of label to be added to the component
@@ -939,9 +868,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
@@ -988,9 +915,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
@@ -1041,9 +966,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
  -
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
@@ -1088,9 +1011,7 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlInput.FieldSelect`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py
+    `Templates fields <https://github.com/epykure/epyk-templates/blob/master/locals/components/fields.py>`_
 
     :param value: Optional. The value to be displayed to this component
     :param label: Optional. The text of label to be added to the component
@@ -1128,8 +1049,6 @@ class Fields:
     :tags:
     :categories:
 
-    Usage::
-
     :param label: Optional. The text of label to be added to the component
     :param text: Optional. The string value to be displayed in the component
     :param align: Optional. The text-align property within this component
@@ -1165,8 +1084,6 @@ class Fields:
     :tags:
     :categories:
 
-    Usage::
-
     :param label: Optional. The text of label to be added to the component
     :param value: Optional. The value to be displayed to this component. Default T
     :param align: Optional. The text-align property within this component
@@ -1201,8 +1118,7 @@ class Fields:
              width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (20, 'px'),
              html_code: str = None, options: types.OPTION_TYPE = None,
              profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.Div:
-    """
-    Add a toggle component.
+    """Add a toggle component.
 
     :tags:
     :categories:
@@ -1215,15 +1131,10 @@ class Fields:
 
       - :class:`epyk.core.html.HtmlRadio.Switch`
 
-    Related Pages:
-
-      http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch
-      https://codepen.io/mburnette/pen/LxNxNg
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py
+    `thecodeplayer <http://thecodeplayer.com/walkthrough/pure-css-on-off-toggle-switch>`_
+    `codepen <`https://codepen.io/mburnette/pen/LxNxNg>`_
+    `Template button <https://github.com/epykure/epyk-templates/blob/master/locals/components/button.py>`_
+    `Template switch <https://github.com/epykure/epyk-templates/blob/master/locals/components/switch.py>`_
 
     :param record: Optional. The list of dictionaries with the data
     :param label: Optional. The toggle static label displayed
@@ -1394,8 +1305,6 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage::
-
     :param start_date:
     :param end_date:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -1436,8 +1345,6 @@ class Timelines:
 
     :tags:
     :categories:
-
-    Usage::
 
     :param start_date:
     :param days:
@@ -1482,8 +1389,6 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage::
-
     :param start_date:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -1523,8 +1428,6 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage::
-
     :param value:
     :param label: Optional.
     :param icon: Optional.
@@ -1553,8 +1456,6 @@ class Timelines:
 
     :tags:
     :categories:
-
-    Usage::
 
     :param completion_date:
     :param icon: Optional.
@@ -1596,8 +1497,6 @@ class Timelines:
     :tags:
     :categories:
 
-    Usage::
-
     :param time:
     :param icon: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -1622,8 +1521,6 @@ class Timelines:
 
     :tags:
     :categories:
-
-    Usage::
 
     :param value: The workload percentage.
     :param width: Optional. A tuple with the integer for the component width and its unit.
@@ -1658,8 +1555,6 @@ class Timelines:
 
     :tags:
     :categories:
-
-    Usage::
 
     :param records:
     :param width: Optional. A tuple with the integer for the component width and its unit

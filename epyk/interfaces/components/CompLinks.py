@@ -15,7 +15,7 @@ class Links:
 
   def external(self, text: str, url: str, icon: str = None, align: str = "left", helper: str = None,
                height: types.SIZE_TYPE = (None, 'px'), decoration=False, html_code: str = None, options: dict = None,
-               profile: types.PROFILE_TYPE = None):
+               profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
     """  
 
     Usage::
@@ -26,13 +26,8 @@ class Links:
 
       - :class:`epyk.core.html.HtmlLinks.ExternalLink`
 
-    Related Pages:
-
-      https://www.w3schools.com/TagS/att_a_href.asp
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
+    `w3schools <https://www.w3schools.com/TagS/att_a_href.asp>`_
+    `Templates Link <https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py>`_
 
     :param text: Optional. The string value to be displayed in the component
     :param url: Optional. The string url of the link
@@ -59,7 +54,7 @@ class Links:
 
   def button(self, text: str = "", url: str = "", icon: str = None, helper: str = None,
              height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
-             options: dict = None, profile: types.PROFILE_TYPE = None):
+             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
     """  
 
     Underlying HTML Objects:
@@ -70,9 +65,7 @@ class Links:
 
       page.ui.links.button()
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
+    `Templates Link <https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py>`_
 
     :param text: Optional. The string value to be displayed in the component
     :param url: The destination page when clicked
@@ -97,9 +90,8 @@ class Links:
 
   def link(self, text: str = "", url: str = "", icon: str = None, align: str = "left", tooltip: str = None,
            helper: str = None, height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
-           options: dict = None, profile: types.PROFILE_TYPE = None):
-    """  
-    Python interface to the common Hyperlink.
+           options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
+    """Python interface to the common Hyperlink.
 
     Usage::
 
@@ -140,9 +132,8 @@ class Links:
     return html_link
 
   def data(self, text: str, value, width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'),
-           fmt: str = 'txt', options: dict = None, profile: types.PROFILE_TYPE = None):
-    """  
-    Python interface to the Hyperlink to retrieve data.
+           fmt: str = 'txt', options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.DataLink:
+    """Python interface to the Hyperlink to retrieve data.
 
     Usage::
 
@@ -153,9 +144,7 @@ class Links:
 
       - :class:`epyk.core.html.HtmlLinks.DataLink`
 
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py
+    `Templates: Link <https://github.com/epykure/epyk-templates/blob/master/locals/components/links.py>`_
 
     :param text: The string value to be displayed in the component
     :param value: The value to be displayed to this component.
@@ -173,9 +162,8 @@ class Links:
 
   def colored(self, text: str = "", url: str = "", icon: str = None, helper: str = None, color: str = None,
               height: types.SIZE_TYPE =(None, 'px'), decoration: bool = False, html_code: str = None,
-              options: dict = None, profile: types.PROFILE_TYPE = None):
-    """  
-    Display a link with the same layout than a buttons.colored HTML component.
+              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
+    """Display a link with the same layout than a buttons.colored HTML component.
 
     Usage::
 
@@ -213,9 +201,9 @@ class Links:
 
   def upload(self, url: str = "#", text: str = "", icon: str = "upload", helper: str = None,
              height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
-             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """  
-    HTML component to upload files.
+             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+             ) -> html.HtmlLinks.ExternalLink:
+    """HTML component to upload files.
 
     Usage::
 
@@ -257,9 +245,9 @@ class Links:
 
   def download(self, url: str = "#", text: str = "", icon: str = "download", helper: str = None,
                height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
-               html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
-    """  
-    HTML component to upload files.
+               html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+               ) -> html.HtmlLinks.ExternalLink:
+    """HTML component to upload files.
 
     Usage::
 

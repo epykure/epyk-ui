@@ -139,7 +139,7 @@ class Media:
   def camera(self, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
              profile: types.PROFILE_TYPE = None, options: dict = None):
-    """   Add a video from the server to the page.
+    """Add a video from the server to the page.
     The format for the video must be MP4.
 
     Usage::
