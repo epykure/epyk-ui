@@ -812,13 +812,16 @@ offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
 setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
             self.varName, self.varName, color, self.varName, time))
 
-    def disable(self, flag: bool = True):
-        """
+    def disable(self, flag: bool = True, mouse: str = None):
+        """Change the button's disable attribute.
 
-        :param flag: Optional.
+        :param flag: Optional. Flag to disable/ enable the button
+        :param mouse: Optional. CSS Style for the mouse
         """
-        flag = JsUtils.jsConvertData(flag, None)
-        return JsFncs.JsFunctions("%s.disabled = %s" % (self.varName, flag))
+        mouse = mouse or ("not-allowed" if flag else "pointer")
+        return JsFncs.JsFunctions("%s.style.cursor = %s; %s.disabled = %s" % (
+            self.varName, JsUtils.jsConvertData(mouse, None),
+            self.varName, JsUtils.jsConvertData(flag, None)))
 
     def release(self, by_name: bool = False):
         """

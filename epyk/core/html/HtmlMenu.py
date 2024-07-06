@@ -245,15 +245,28 @@ class ContextMenu(Html.Html):
     source = None
     _option_cls = OptList.OptionsLi
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-menu.css",
+    ]
+
+    style_refs = {
+        "html-menu": "html-menu",
+    }
+
     def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: str, height: str,
                  visible: bool, html_code: Optional[str], options: Optional[dict],
                  profile: Optional[Union[dict, bool]]):
+        options = options or {}
         super(ContextMenu, self).__init__(page, [], css_attrs={"width": width, "height": height}, html_code=html_code,
                                           profile=profile, options=options)
-        self.css({'display': 'block' if visible else 'none', 'position': 'absolute', 'z-index': 400,
-                  'padding': 0, 'margin': 0, 'background-color': self.page.theme.greys[0],
-                  'border': '1px solid %s' % self.page.theme.success.light, 'border-radius': '2px'})
-        self.style.configs.shadow()
+        self.classList.add(self.style_refs["html-menu"])
+        self.style.css.display = 'block' if visible else 'none'
+        self.style.configs.shadow(
+            hexa_color=options.get("shadow", {}).get("hexa_color"),
+            size=options.get("shadow", {}).get("size", 1),
+            opacity=options.get("shadow", {}).get("opacity", 0.5),
+            position=options.get("shadow", {}).get("position"),
+            radius=options.get("shadow", {}).get("radius"))
         for component in components:
             self.__add__(component)
 

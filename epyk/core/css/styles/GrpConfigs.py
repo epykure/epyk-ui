@@ -101,7 +101,7 @@ class ClsConfigs:
 
     :return: The CSS object to allow the functions chaining.
     """
-    rgb = Colors.getHexToRgb(self.component.page.theme.greys[-1] if hexa_color is None else hexa_color)
+    rgb = Colors.getHexToRgb(self.component.page.theme.greys[3] if hexa_color is None else hexa_color)
     if position == 'right':
       self.component.style.css.box_shadow = "%(size)spx 0 %(size)spx -%(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
         "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
@@ -111,7 +111,8 @@ class ClsConfigs:
     else:
       self.component.style.css.box_shadow = "0 0 %(size)spx rgba(%(r)s, %(g)s, %(b)s, %(opac)s)" % {
         "r": rgb[0], "g": rgb[1], "b": rgb[2], 'opac': opacity, 'size': size}
-    self.component.style.css.border_radius = radius
+    if radius:
+      self.component.style.css.border_radius = radius
     return self
 
   def rounded_icons(self, padding: int = 8):

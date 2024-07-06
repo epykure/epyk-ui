@@ -1,5 +1,6 @@
 import os
 
+
 # Set the debug / verbose flag for the entire framework (if not specified)
 DEBUG = False
 
