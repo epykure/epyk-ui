@@ -6,9 +6,9 @@ function hchartsBubble(data, options){
         if (typeof options.x_axis === 'function') {xDefs = options.x_axis(data, options)} else {xDefs = options.x_axis} ;
         yDefs.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){
-            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);}
+            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);};
             yDefs.forEach(function(series){
-                if (options.rDim){temp[series][rec[xDefs] = {y: rec[series], x: rec[xDefs], z: rec[options.rDim[0]]}}
+                if (options.rDim){temp[series][rec[xDefs]] = {y: rec[series], x: rec[xDefs], z: rec[options.rDim[0]]}}
                 else {temp[series][rec[xDefs]] = {y: rec[series], x: rec[xDefs], z: 2}}
              })
         });
@@ -19,7 +19,7 @@ function hchartsBubble(data, options){
           let seriesData = {name: series, data: dataset};
           if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(seriesData, i)}
           datasets.push(seriesData);
-        })
+        });
         options.series = datasets;
     };
     return options

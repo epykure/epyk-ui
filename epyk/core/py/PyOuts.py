@@ -217,7 +217,9 @@ class PyOuts:
             for source, event_funcs in source_funcs.get_event().items():
                 str_funcs = JsUtils.jsConvertFncs(event_funcs['content'], toStr=True)
                 onloadParts.append("%s.addEventListener('%s', function(event){%s})" % (source, event, str_funcs))
-
+        # Add the various ready states
+        for state, on_ready_frg in self.page._props.get('js', {}).get('readyState', {}).items():
+            onloadParts.append("if (document.readyState = '%s') {%s}" % (state, ";".join(on_ready_frg)))
         if self.page is not None:
             import_mng = self.page.imports
         else:

@@ -7,9 +7,7 @@ function hchartsPie(data, options){
         yDefs.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){
             if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);}
-            yDefs.forEach(function(series){
-                temp[series][rec[xDefs]] = rec[series]
-             })
+            yDefs.forEach(function(series){temp[series][rec[xDefs]] = rec[series]})
         });
         let datasets = [];
         yDefs.forEach(function(series, i){
@@ -27,7 +25,7 @@ function hchartsPie(data, options){
               seriesData = Object.assign(seriesData, options.datasets[series])} ;
           if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(seriesData, i)}
           datasets.push(seriesData);
-        })
+        });
         options.series = datasets;
     };
     return options

@@ -32,6 +32,8 @@ from epyk.core.js.JsUtils import jsWrap as js_callback, urlInputs as url_input
 from epyk.core.js.Imports import Package as package, save_resources, string_to_base64
 from epyk.core.js.Imports import PACKAGE_STATUS, JS_IMPORTS, CSS_IMPORTS
 
+from epyk.core.js.treemap import add as treemap_add
+
 #
 from epyk.core.py.PyRest import PyRest as rest
 

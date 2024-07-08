@@ -16,7 +16,6 @@ from epyk.core.css import Selector
 from epyk.core.css.styles import GrpClsMenu
 from epyk.core.html.HtmlList import Li
 from epyk.core.html.options import OptList
-from epyk.core.html.options import OptPanel
 
 
 class HtmlNavBar(Html.Html):
@@ -45,14 +44,14 @@ class HtmlNavBar(Html.Html):
         self.avatar = None
 
     def move(self):
-        """ Move the object to this position in the final page. """
+        """Move the object to this position in the final page. """
         super(HtmlNavBar, self).move()
         self.style.css.position = None
         self.page.body.style.css.padding_top = 0
         return self
 
     def __add__(self, component: Html.Html):
-        """ Add items to the footer """
+        """Add items to the footer """
         if not hasattr(component, 'options'):
             component = self.page.ui.div(component, html_code=self.sub_html_code("menu", auto_inc=True))
             component.style.add_classes.div.color_hover()
@@ -73,8 +72,7 @@ class HtmlNavBar(Html.Html):
         return self
 
     def no_background(self, to_top: bool = True):
-        """
-        Remove the default navigation bar background and remove the padding.
+        """Remove the default navigation bar background and remove the padding.
 
         :param to_top: Optional. To define if the padding must be removed
         """
@@ -86,14 +84,14 @@ class HtmlNavBar(Html.Html):
         return self
 
     def set_theme(self):
+        """Set a default style for the component with background and border bottom"""
         self.style.css.background_color = self.page.theme.colors[0]
         self.style.css.border_bottom = "1px solid %s" % self.page.theme.greys[0]
         return self
 
     def add_right(self, component: Union[Html.Html, List[Html.Html]], css: Optional[dict] = None, prepend: bool = False,
                   with_css_cls: bool = True) -> Html.Html:
-        """
-        Add component to the right.
+        """Add component to the right.
 
         :param component: Internal component to the framework
         :param css: Optional. The CSS attributes
@@ -143,8 +141,7 @@ class HtmlNavBar(Html.Html):
         return component
 
     def add_text(self, text: Union[Html.Html, str]) -> Html.Html:
-        """
-        Add an item to the nav bar.
+        """Add an item to the nav bar.
 
         Usage::
 
@@ -220,8 +217,7 @@ class HtmlFooter(Html.Html):
         return self
 
     def __getitem__(self, i: int) -> Html.Html:
-        """
-        Return the internal column in the row for the given index.
+        """Return the internal column in the row for the given index.
 
         :param i: the column index.
         """
@@ -272,12 +268,11 @@ class ContextMenu(Html.Html):
 
     @property
     def options(self) -> OptList.OptionsLi:
-        """ Component options. """
+        """Component options"""
         return super().options
 
     def add_item(self, value: str, icon: Optional[str] = None):
-        """
-        Add Item to the context menu.
+        """Add Item to the context menu.
 
         :param value:
         :param icon: Optional. The Font awesome icon
@@ -286,15 +281,28 @@ class ContextMenu(Html.Html):
         return self
 
     def add(self, component: Html.Html) -> Html.Html:
-        """
+        """Add component to the menu container.
+
         :param component: Internal component to the framework.
         """
         self.__add__(component)
         return self.val[-1].val
 
+    def set(self, name: Union[Html.Html, str], js_funcs) -> Html.Html:
+        """Set a item with a click function to the menu
+
+        :param name: Item component or name
+        :param js_funcs: JavaScript function when clicked
+        """
+        menu = self.add(name)
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        menu.click(js_funcs)
+        return self.val[-1].val
+
     def __add__(self, component: Html.Html):
         """
-        :param component: The new HTML component to be added to the main component.
+        :param component: The new HTML component to be added to the main component
         """
         if not hasattr(component, 'options'):
             if isinstance(component, dict):
@@ -374,11 +382,10 @@ class PanelsBar(Html.Html):
         self.menus.style.css.padding = '5px 0'
 
     def add_panel(self, text: str, content: Html.Html):
-        """
-        Add a panel to the panel bar.
+        """Add a panel to the panel bar.
 
-        :param text: The anchor visible linked to a panel.
-        :param content: The panel.
+        :param text: The anchor visible linked to a panel
+        :param content: The panel
         """
         content.style.css.padding = "0 5px"
         if not hasattr(text, 'options'):

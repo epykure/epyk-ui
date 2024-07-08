@@ -26,7 +26,7 @@ function bBLine(data, options){
             if(temp[series][x] == undefined){dataSet.push(null)} else {dataSet.push(temp[series][x])}});
           columns.push(dataSet)
         });
-        var result = {columns: columns, type: options.type, categories: labels}
+        var result = {columns: columns, type: options.type, categories: labels};
         if (typeof(options.axis) !== "undefined"){result.axis = options.axis}
       };
       if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(result, null)} ;

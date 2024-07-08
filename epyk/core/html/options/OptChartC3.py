@@ -2052,7 +2052,7 @@ class C3(OptChart.OptionsChart):
 
     @bindto.setter
     def bindto(self, cols):
-        self._config(cols)
+        self._config(JsUtils.jsConvertData(cols, None), js_type=True)
 
     @property
     def axis(self) -> OptionAxis:

@@ -235,8 +235,7 @@ class JsSessionStorage:
 
         return JsObject.JsObject("sessionStorage.getItem(%s)" % key)
 
-    def removeItem(self, data, key: Union[str, primitives.JsDataModel] = None, is_py_data: bool = False,
-                   js_funcs: Union[list, str] = None):
+    def removeItem(self,  key: Union[primitives.JsDataModel, str]):
         """Syntax for REMOVING ALL saved data from sessionStorage.
 
         The sessionStorage object stores data for only one session (the data is deleted when the browser tab is closed).
@@ -247,13 +246,10 @@ class JsSessionStorage:
 
         `Related Pages <https://www.w3schools.com/jsref/met_storage_removeitem.asp>`_
 
-        :param data:
         :param key: Optional.
-        :param is_py_data: Optional.
-        :param js_funcs: Optional.
         """
-        data = JsUtils.jsConvert(data, key, is_py_data, js_funcs)
-        return JsFncs.JsFunction("sessionStorage.removeItem(%s)" % data)
+        key = JsUtils.jsConvertData(key, None)
+        return JsFncs.JsFunction("sessionStorage.removeItem(%s)" % key)
 
     def clear(self):
         """Syntax for REMOVING ALL saved data from sessionStorage

@@ -7,7 +7,7 @@ function hcharts(data, options){
 
         yDefs.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){
-            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);}
+            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);};
             yDefs.forEach(function(series){temp[series][rec[xDefs]] = rec[series]})
         });
         options.xAxis.categories = labels;
@@ -22,7 +22,7 @@ function hcharts(data, options){
               seriesData = Object.assign(seriesData, options.datasets[series])};
           if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(seriesData, i)}
           datasets.push(seriesData);
-        })
+        });
         options.series = datasets;
     };
     return options

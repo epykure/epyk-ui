@@ -35,7 +35,7 @@ function ekTreeECharts(data, options){
                     else {activeBranch[name] = row[name]}
                 }
             })
-        })
+        });
         function processNode(branch, hyr, path){
             Object.keys(branch).forEach(function(key) {
                 let v = branch[key];
@@ -52,7 +52,6 @@ function ekTreeECharts(data, options){
           Object.assign(chartContext.series, options._ek.series)}
         if ((typeof options._ek.names !== 'undefined') && (typeof options._ek.names[series] !== 'undefined')){
           Object.assign(chartContext.series, options._ek.names[series])} ;
-
         chartContext.series.data = dataSet;
         return chartContext
     }

@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Optional, Any, Type, Callable, List, Union
+from typing import Optional, Any, Type, Callable, List, Union, Tuple
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -319,7 +319,7 @@ class XMLHttpRequest:
         self.page, self.__headers, self.url = page, {}, url
         self.__mod_name, self.__mod_path, self.method, self.__data_ref = None, None, method_type, "data"
         self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
-        self.__on, self.__url = {}, url
+        self.__on, self.__url, self.__cache = {}, url, {}
         self.__stringify = True
         self.__url_prefix, self.__responseType = "", 'json'
         self.varId, self.profile, self.timeout, self.asynchronous = js_code, False, None, asynchronous
@@ -342,6 +342,24 @@ class XMLHttpRequest:
     @response.setter
     def response(self, value: str):
         self.__data_ref = value
+
+    def set_cache(self, name: str = None, type: str = None, data: Optional[dict] = None,
+                  components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
+                  missing: List[str] = None, exists: List[str] = None):
+        """Add a custom caching dimension to the XMLHttpRequest.
+        It is still possible to tru to
+
+        :param name: The cache name
+        :param keys: The keys for the cache - The url will be used otherwise
+        :param type: The cache type
+        """
+        setOnce = {}
+        if missing:
+            setOnce["missing"] = missing
+        if exists:
+            setOnce["exists"] = exists
+        self.__cache = {"name": name, "data": data, "components": components, "type": type, "setOnce": setOnce}
+        return self
 
     def get_response(self, data_ref: str = None, keys: List[str] = None) -> str:
         """Get a value from the response.
@@ -739,6 +757,10 @@ class XMLHttpRequest:
             request.append("%s.setRequestHeader(%s, %s)" % (
                 self.varId, JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)))
         if self.__req_success is not None:
+            if self.__cache and self.page:
+                self.__req_success.insert(0, self.page.js.storage.from_config(
+                    {"code": self.__cache["name"], "data": self.__cache["data"], "value": JsUtils.jsWrap(self.response),
+                     "components": self.__cache["components"], "type": self.__cache["type"]}))
             if self.__req_fail is not None:
                 request.append("%s.onload = function(){}" % self.varId)
             else:
@@ -758,6 +780,14 @@ class XMLHttpRequest:
         request.append(self.__req_send)
         if self.profile is not None and self.profile:
             JsUtils.PROFILE_COUNT += 1
+
+        if self.__cache and self.page:
+            var_cache = self.page.js.storage.from_config({
+                "code": self.__cache["name"], "data": self.__cache["data"], "value": JsUtils.jsWrap(self.response),
+                "components": self.__cache["components"], "type": self.__cache["type"]})
+            self.page.js.if_(var_cache, [], profile=self.profile).else_(request, profile=self.profile)
+            return ";".join(request)
+
         return ";".join(request)
 
     def to_promise(self, js_code: str = "pRes") -> JsPromise:

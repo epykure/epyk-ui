@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+from pathlib import Path
 from typing import Union, Optional
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -205,20 +205,34 @@ class Loading(Html.Html):
   name = 'Loading'
   tag = "div"
 
+  style_urls = [
+    Path(__file__).parent.parent / "css" / "native" / "html-loading.css",
+  ]
+
+  style_refs = {
+    "html-loading": "html-loading",
+    "html-loading-fixed": "html-loading-fixed",
+    "html-loading-page": "html-loading-page",
+  }
+
   def __init__(self, page: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
                html_code: Optional[str], profile: Optional[Union[bool, dict]]):
-    icon_details = self.page.icons.get("spin")
+    icon_details = page.icons.get("spin")
     if icon_details['icon_family'] != 'bootstrap-icons':
       self.requirements = (icon_details['icon_family'],)
     super(Loading, self).__init__(page, text, html_code=html_code, profile=profile)
     self.color = self.page.theme.greys[-1] if color is None else color
     self.size = size[0]
-    self.css({'color': self.color, 'font-size': "%s%s" % (size[0], size[1]), 'z-index': 5, 'margin': 0})
     self.add_icon("%s fa-spin" % icon_details["icon"], html_code=self.htmlCode,
                   css={"font-size": "%spx" % (self.size+8)}, family=icon_details["icon_family"])
+    self.classList.add(self.style_refs["html-loading"])
     if options.get('fixed', False):
       self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
-      self.css({"position": 'fixed', 'bottom': '0px', 'right': '5px'})
+      self.classList.add(self.style_refs["html-loading-fixed"])
+      self.add_span("%s..." % text, position="after", css={"width": 'auto'})
+    if options.get('page', False):
+      self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
+      self.classList.add(self.style_refs["html-loading-page"])
       self.add_span("%s..." % text, position="after", css={"width": 'auto'})
     else:
       self.add_span("%s..." % text, position="after", css={"width": '100%', "margin": "5px"})

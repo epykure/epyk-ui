@@ -587,13 +587,23 @@ class AgGrid(JsPackage):
     :param rows:
     :param dataflows: Chain of data transformations
     """
-    if self.component.options.rowTotal:
-      return JsObjects.JsVoid("%s.api.setRowData(%s); %s" % (
-        self.varId, JsUtils.dataFlows(rows, dataflows, self.page),
-        self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
+    if min(self.page.imports.pkgs.ag_grid.version) > '31.0.0':
+      if self.component.options.rowTotal:
+        return JsObjects.JsVoid("%s.api.setGridOption('rowData', %s); %s" % (
+          self.varId, JsUtils.dataFlows(rows, dataflows, self.page),
+          self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
 
-    return JsObjects.JsVoid("%s.api.setRowData(%s)" % (
-      self.varId, JsUtils.dataFlows(rows, dataflows, self.page)))
+      return JsObjects.JsVoid("%s.api.setGridOption('rowData', %s)" % (
+        self.varId, JsUtils.dataFlows(rows, dataflows, self.page)))
+
+    else:
+      if self.component.options.rowTotal:
+        return JsObjects.JsVoid("%s.api.setRowData(%s); %s" % (
+          self.varId, JsUtils.dataFlows(rows, dataflows, self.page),
+          self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
+
+      return JsObjects.JsVoid("%s.api.setRowData(%s)" % (
+        self.varId, JsUtils.dataFlows(rows, dataflows, self.page)))
 
   def showColumn(self, column):
     """

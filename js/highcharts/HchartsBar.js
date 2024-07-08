@@ -6,7 +6,7 @@ function hchartsBar(data, options){
         if (typeof options.x_axis === 'function') {xDefs = options.x_axis(data, options)} else {xDefs = options.x_axis} ;
         yDefs.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){
-            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);}
+            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);};
             yDefs.forEach(function(series){temp[series][rec[xDefs]] = rec[series]})
         });
         if (Array.isArray(options.xAxis)){options.xAxis[0].categories = labels;}
@@ -23,7 +23,7 @@ function hchartsBar(data, options){
               seriesData = Object.assign(seriesData, options.datasets[series])};
           if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(seriesData, i)}
           datasets.push(seriesData);
-        })
+        }) ;
         options.series = datasets;
     };
     return options

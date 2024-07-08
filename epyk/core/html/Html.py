@@ -1,7 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import os
 import re
 import json
 import collections
@@ -95,7 +94,18 @@ def inprogress(func):
     return new_func
 
 
-def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False):
+def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False,
+            required_funcs: List[str] = None):
+    """Set a builder for a component.
+    This will load the corresponding JavaScript file to allow the refresh on the Js side of teh component.
+
+    :parap group: Group of builders (corresponding to a folder in the native section)
+    :parap name: Builder's file name
+    :parap refresh: Force the refresh of the builder definition (default false)
+    :parap asynchronous: Set the builder function as async (default false)
+    :parap required_funcs: List of required functions to be added
+    """
+
     def decorator(func):
         @functools.wraps(func)
         def new_func(*args, **kwargs):
@@ -103,28 +113,11 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
             if name is not None:
                 component.builder_name = name
             if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
-                native_path = global_settings.NATIVE_JS_PATH
-                if group is not None:
-                    internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native", group)
-                else:
-                    internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
-                if native_path is None:
-                    native_path = internal_native_path
-                else:
-                    logging.debug("NATIVE | JS | file %s.js used from %s" % (component.builder_name, native_path))
-                native_builder = Path(native_path, "%s.js" % component.builder_name)
-                internal_native_builder = Path(internal_native_path, "%s.js" % component.builder_name)
-                if native_builder.exists():
-                    component.page.js.customFile("%s.js" % component.builder_name, path=native_path, authorize=True)
+                is_loaded = JsUtils.addJsResources(
+                    component.page._props["js"]['constructors'], component.builder_name + ".js", sub_folder=group,
+                    required_funcs=required_funcs)
+                if is_loaded:
                     component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
-                    component.page.properties.js.add_constructor(component.builder_name, None)
-                    component.page.properties.resources[native_builder.name] = native_builder
-                elif internal_native_builder.exists():
-                    component.page.js.customFile(
-                      "%s.js" % component.builder_name, path=internal_native_path, authorize=True)
-                    component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
-                    component.page.properties.js.add_constructor(component.builder_name, None)
-                    component.page.properties.resources[internal_native_builder.name] = internal_native_builder
                 else:
                     if not component.builder_name or component._js__builder__ is None:
                         raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
@@ -144,49 +137,46 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
     return decorator
 
 
-def jformatter(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False):
-  def decorator(func):
-    @functools.wraps(func)
-    def new_func(*args, **kwargs):
-      component = args[0]
-      if name is not None:
-        component.builder_name = name
-      if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
-        native_path = global_settings.NATIVE_JS_PATH
-        if group is not None:
-          internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native", group)
-        else:
-          internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
-        if native_path is None:
-          native_path = internal_native_path
-        native_builder = Path(native_path, "%s.js" % component.builder_name)
-        internal_native_builder = Path(internal_native_path, "%s.js" % component.builder_name)
-        if native_builder.exists():
-          component.page.js.customFile("%s.js" % component.builder_name, path=native_path, authorize=True)
-          component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
-          component.page.properties.js.add_constructor(component.builder_name, None)
-        elif internal_native_builder.exists():
-          component.page.js.customFile(
-            "%s.js" % component.builder_name, path=internal_native_path, authorize=True)
-          component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
-          component.page.properties.js.add_constructor(component.builder_name, None)
-        else:
-          if not component.builder_name or component._js__builder__ is None:
-            raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
+def jformatter(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False,
+               required_funcs: List[str] = None):
+    """Set a Formatter for a component.
+    This will load the corresponding JavaScript file to allow the refresh on the Js side of teh component.
 
-          if component.async_builder or asynchronous:
-            component.page.properties.js.add_constructor(
-              component.builder_name, "async function %s(data, options){%s}" % (
-                component.builder_name, component._js__builder__))
-          else:
-            component.page.properties.js.add_constructor(
-              component.builder_name, "function %s(data, options){%s}" % (
-                component.builder_name, component._js__builder__))
-      return func(*args, **kwargs)
+    :parap group: Group of formatters (corresponding to a folder in the native section)
+    :parap name: Formatter's file name
+    :parap refresh: Force the refresh of the Formatter definition (default false)
+    :parap asynchronous: Set the Formatter function as async (default false)
+    :parap required_funcs: List of required functions to be added
+    """
+    def decorator(func):
+        @functools.wraps(func)
+        def new_func(*args, **kwargs):
+            component = args[0]
+            if name is not None:
+                component.builder_name = name
+            if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
+                is_loaded = JsUtils.addJsResources(
+                    component.page._props["js"]['constructors'], component.builder_name + ".js", sub_folder=group,
+                    required_funcs=required_funcs)
+                if is_loaded:
+                    component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
+                else:
+                    if not component.builder_name or component._js__builder__ is None:
+                        raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
 
-    return new_func
+                    if component.async_builder or asynchronous:
+                        component.page.properties.js.add_constructor(
+                            component.builder_name, "async function %s(data, options){%s}" % (
+                                component.builder_name, component._js__builder__))
+                    else:
+                        component.page.properties.js.add_constructor(
+                            component.builder_name, "function %s(data, options){%s}" % (
+                                component.builder_name, component._js__builder__))
+            return func(*args, **kwargs)
 
-  return decorator
+        return new_func
+
+    return decorator
 
 
 def set_component_skin(component: primitives.HtmlModel):
@@ -386,9 +376,9 @@ class Components(collections.OrderedDict):
 
 class Html(primitives.HtmlModel):
     """Parent class for all the HTML components. All the function defined here are available in the children classes.
-Child class can from time to time re implement the logic but the function will always get the same meaning (namely
-the same signature and return).
-"""
+    Child class can from time to time re implement the logic but the function will always get the same meaning (namely
+    the same signature and return).
+    """
     requirements = None
     defined_code = False
     builder_name, _js__builder__, async_builder = None, None, False
@@ -1428,7 +1418,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
                 css_class = 'class="%s"' % class_data
         elif css_class_names is not None:
             py_cls_names = [cls.get_ref() if hasattr(cls, 'get_ref') else cls for cls in css_class_names['main']]
-            css_class = 'class="%s"' % " ".join(list(filter(lambda x: x is not None, py_cls_names))) if len(py_cls_names) > 0 else ""
+            css_class = 'class="%s"' % " ".join(list(filter(lambda x: x is not None, py_cls_names))) if len(
+                py_cls_names) > 0 else ""
         attrs["class"] = css_class[7:-1]
 
         if with_id:
@@ -1687,7 +1678,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
             ["var data = %s" % data_map.toStr()] + js_funcs, toStr=True)
         return self.on("paste", str_fncs, profile, source_event)
 
-    def contextMenu(self, menu, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
+    def contextMenu(self, menu = None, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
         """Attach a context menu to a component and set a function to called before the display.
 
         TODO Test context menu
@@ -1697,6 +1688,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         :param profile: Optional. A flag to set the component performance storage
         """
         if not hasattr(menu, 'source'):
+            if menu is None:
+                menu = []
             menu = self.page.ui.menus.contextual(menu)
         self.context_menu = menu
         menu.source = self
@@ -1769,8 +1762,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return fnc_call
 
     def build_from_url(self, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
-              dataflows: List[dict] = None):
+                       profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
+                       dataflows: List[dict] = None):
         """Return the JavaScript fragment to refresh the component content from url parameters.
         This could be usually used at the start when component is loaded.
 
@@ -2259,7 +2252,8 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
                 self.footer.html())
 
         return '<%s %s>\n%s\n</%s>' % (self.tag,
-            self.get_attrs(css_class_names=self.style.get_classes(), with_id=False), self._html_content, self.tag)
+                                       self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
+                                       self._html_content, self.tag)
 
 
 class Component(Html):

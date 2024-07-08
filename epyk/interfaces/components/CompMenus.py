@@ -702,7 +702,7 @@ class Menus:
   def contextual(self, record: list = None, width: Union[tuple, int] = (None, '%'),
                  height: Union[tuple, int] = (None, 'px'),
                  html_code: str = None, visible: bool = False, options: dict = None,
-                 profile: Union[bool, dict] = None):
+                 profile: Union[bool, dict] = None) -> html.HtmlMenu.ContextMenu:
     """  
     Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work.

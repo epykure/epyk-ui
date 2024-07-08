@@ -56,7 +56,7 @@ function ekRadarECharts(data, options){
             let dataSet = {name: series, value: values} ;
             if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(dataSet, i)} ;
             dataSet.data.push(dataSet);
-        })
+        });
         chartContext.series.push(dataSet);
     };
 

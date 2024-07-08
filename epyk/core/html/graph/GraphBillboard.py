@@ -128,7 +128,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Property shortcut the D3 underlying base classes"""
         if self._d3 is None:
             self._d3 = JsD3.D3Select(
-                page=self.page, selector="d3.select('#%s')" % self.htmlCode, set_var=False, component=self)
+                page=self.page, selector="d3.select('#%s')" % self.html_code, set_var=False, component=self)
         return self._d3
 
     def _set_js_code(self, html_code: str, js_code: str):

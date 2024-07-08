@@ -4,12 +4,15 @@
 import os
 import re
 import json
+import logging
 import functools
 from pathlib import Path
 from typing import Union, Optional, List, Any
 from epyk.core.py import primitives
 from epyk.core.py import types
 
+from epyk.conf import global_settings
+from epyk.core.js import treemap
 from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
 
@@ -559,3 +562,51 @@ def urlInputs(key: str, dflt: str = "") -> JsObject.JsObject:
     return JsObject.JsObject.get('''(function(key, dflt){
 const urlParams = new URLSearchParams(window.location.search); return urlParams.get(key)  || dflt })(%s, %s)''' % (
     jsConvertData(key, None), jsConvertData(dflt, None)))
+
+
+def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, full_path: str = None,
+                   required_funcs: List[str] = None) -> bool:
+    """Add chained resources to the page.
+    required_funcs must be defined in the internal treemap mapping to be added to the JavaScript resources.
+    If it is a bespoke mapping definition the function `ek.treemap_add` must be used.
+
+    :param constructors; Global constructor
+    :param file_nam; JavaScript filename (with the extension_
+    :param sub_folder; The sub folder for relative path definition
+    :param full_path; The full path for absolute path definition
+    :param required_funcs: List of required functions defined in the treemap
+    """
+    possible_paths = []
+    if global_settings.PRIMARY_RESOURCE_PATHS:
+        possible_paths.extend(global_settings.PRIMARY_RESOURCE_PATHS)
+    if global_settings.NATIVE_JS_PATH:
+        possible_paths.append(global_settings.NATIVE_JS_PATH)
+    if sub_folder is not None:
+        possible_paths.append(Path(Path(__file__).resolve().parent, "..", "js", "native", sub_folder))
+    else:
+        possible_paths.append(Path(Path(__file__).resolve().parent, "..", "js", "native"))
+    if required_funcs:
+        for req in required_funcs:
+            if req in treemap._FUNCTIONS_MAP:
+                f = treemap._FUNCTIONS_MAP[req]
+                addJsResources(
+                    constructors, f["file"], sub_folder=f.get("folder"), full_path=f.get("path"),
+                    required_funcs=f.get("required_funcs"))
+            else:
+                logging.warn("NATIVE | JS | Definition not found for %s - use ek.treemap_add" % req)
+    if full_path:
+        js_file = Path(full_path, file_nam)
+        if js_file.exists():
+            with open(js_file) as fp:
+                constructors[file_nam] = fp.read()
+    else:
+        for p in possible_paths:
+            js_file = Path(p, file_nam)
+            if js_file.exists():
+                with open(js_file) as fp:
+                    constructors[file_nam] = fp.read()
+                return True
+        else:
+            logging.warn("NATIVE | JS | File not loaded %s" % file_nam)
+
+    return False
