@@ -783,10 +783,11 @@ class XMLHttpRequest:
 
         if self.__cache and self.page:
             var_cache = self.page.js.storage.from_config({
-                "code": self.__cache["name"], "data": self.__cache["data"], "value": JsUtils.jsWrap(self.response),
+                "code": self.__cache["name"], "data": self.__cache["data"],
                 "components": self.__cache["components"], "type": self.__cache["type"]})
-            self.page.js.if_(var_cache, [], profile=self.profile).else_(request, profile=self.profile)
-            return ";".join(request)
+            return self.page.js.if_(
+                var_cache, ["let %s = %s" % (self.response, var_cache)] + self.__req_success[1:],
+                profile=self.profile).else_(request, profile=self.profile).toStr()
 
         return ";".join(request)
 

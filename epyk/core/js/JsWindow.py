@@ -156,6 +156,15 @@ class JsLocalStorage:
         """
         return JsFncs.JsFunction("localStorage.clear()")
 
+    def clear_all(self, alias: str):
+        """Clear all caches starting with the alias.
+
+        :param alias: Alias to match (using startswith)
+        """
+        return JsFncs.JsFunction('''Object.keys(localStorage).forEach(function(key){
+if (key == %(match)s || key.startsWith(%(match)s + '_')) {localStorage.removeItem(key)}})
+''' % {"match": JsUtils.jsConvertData(alias, None)})
+
 
 class JsSessionStorage:
     """
@@ -261,6 +270,15 @@ class JsSessionStorage:
           https://www.w3schools.com/jsref/prop_win_sessionstorage.asp
         """
         return JsFncs.JsFunction("sessionStorage.clear()")
+
+    def clear_all(self, alias: str):
+        """Clear all caches starting with the alias.
+
+        :param alias: Alias to match (using startswith)
+        """
+        return JsFncs.JsFunction('''Object.keys(sessionStorage).forEach(function(key){
+if (key == %(match)s || key.startsWith(%(match)s + '_')) {sessionStorage.removeItem(key)}})
+''' % {"match": JsUtils.jsConvertData(alias, None)})
 
 
 class JsHistory:

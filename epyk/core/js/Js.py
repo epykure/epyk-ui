@@ -106,7 +106,43 @@ class JsStorage:
 
     def __init__(self, js_base):
         self.page = js_base.page
-        self.__js = js_base
+        self.__js , self._caches = js_base, {}
+
+    def name(self, js_code: str, data: Optional[dict] = None,
+             components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None):
+        if (not data and not components) or self.page is None:
+            return JsUtils.jsWrap(JsUtils.jsConvertData(js_code, None, force=True))
+
+        if not data:
+            dyn_data = []
+            for c in components:
+                if hasattr(c, "dom"):
+                    dyn_data.append(c.dom.content.toStr())
+                else:
+                    dyn_data.append(self.page.components[c].dom.content.toStr())
+            if dyn_data:
+                return JsUtils.jsWrap(JsUtils.jsConvertData(js_code, None, force=True) + " + '_' +" +  " + '_' + ".join(dyn_data))
+
+            return JsUtils.jsWrap(JsUtils.jsConvertData(js_code, None, force=True))
+
+        if not components:
+            dyn_data = [JsUtils.jsConvertData(v, None, force=True) for v in data.values()]
+            if dyn_data:
+                return JsUtils.jsWrap(JsUtils.jsConvertData(js_code, None, force=True) + " + '_' +" +  " + '_' + ".join(dyn_data))
+
+            return JsUtils.jsWrap(JsUtils.jsConvertData(js_code, None, force=True))
+
+        dyn_data = []
+        for c in components:
+            if hasattr(c, "dom"):
+                dyn_data.append(c.dom.content.toStr())
+            else:
+                dyn_data.append(self.page.components[c].dom.content.toStr())
+        dyn_data.extend([JsUtils.jsConvertData(v, None, force=True) for v in data.values()])
+        if dyn_data:
+            return JsUtils.jsWrap(JsUtils.jsConvertData(js_code, None, force=True) + " + '_' +" +  " + '_' + ".join(dyn_data))
+
+        return JsUtils.jsWrap(JsUtils.jsConvertData(js_code, None, force=True))
 
     def cache(self, js_code: str, value, set_once: bool = False):
         """
@@ -118,7 +154,9 @@ class JsStorage:
         self.__js.caches.open("page").put(js_code, value)
         return value
 
-    def local(self, js_code: str, value = None, set_once: bool = False, profile: Optional[Union[dict, bool]] = None) -> JsObjects.JsObject.JsObject:
+    def local(self, js_code: str, value = None, set_once: bool = False, data: Optional[dict] = None,
+              components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
+              profile: Optional[Union[dict, bool]] = None) -> JsObjects.JsObject.JsObject:
         """Cache data to the browser local storage (shared between tabs).
 
         Usage::
@@ -132,34 +170,39 @@ class JsStorage:
         :param js_code: Variable name and cache key
         :param value: Optional. Cache value
         :param set_once: Optional. Flag or object to set variable only once
+        :param data:
+        :param components:
         :param profile: Optional. A flag to set the component performance storage
         """
         if value is None:
-            return self.__js.localStorage.getItem(js_code)
+            code = self.name(js_code, data, components)
+            return self.__js.localStorage.getItem(code)
 
+        self._caches[js_code] = "local"
         if set_once:
             if isinstance(set_once, dict):
                 if "value" in set_once:
                     return self.undefined(
                         JsUtils.jsConvertData(set_once["value"], None),
-                        [self.local(js_code, value, False)] + set_once.get("missing", []),
-                        set_once.get("exists", []),
-                        profile=profile
+                        [self.local(js_code, value, False, data=data, components=components)] + set_once.get("missing", []),
+                        set_once.get("exists", []), profile=profile
                     )
 
                 return self.undefined(
-                    self.local(js_code),
+                    self.local(js_code, data=data, components=components),
                     [self.local(js_code, value, False)] + set_once.get("missing", []),
-                    set_once.get("exists", []),
-                    profile=profile
+                    set_once.get("exists", []), profile=profile
                 )
 
             return self.undefined(
-                self.local(js_code), [self.local(js_code, value, False)], profile=profile)
+                self.local(js_code, data=data, components=components),
+                [self.local(js_code, value, False)], profile=profile)
 
-        return self.__js.localStorage.setItem(js_code, value)
+        code = self.name(js_code, data, components)
+        return self.__js.localStorage.setItem(code, value)
 
-    def session(self, js_code: str, value = None, set_once: Union[bool, dict] = False,
+    def session(self, js_code: str, value = None, set_once: Union[bool, dict] = False, data: Optional[dict] = None,
+                components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
                 profile: Optional[Union[dict, bool]] = None) -> JsObjects.JsObject.JsObject:
         """Cache data to the browser session storage.
 
@@ -180,6 +223,7 @@ class JsStorage:
         if value is None:
             return self.__js.sessionStorage.getItem(js_code)
 
+        self._caches[js_code] = "session"
         if set_once:
             if isinstance(set_once, dict):
                 if "value" in set_once:
@@ -202,7 +246,8 @@ class JsStorage:
 
         return self.__js.sessionStorage.setItem(js_code, value)
 
-    def global_(self, js_code: str, value = None, set_once: Union[bool, dict] = False,
+    def global_(self, js_code: str, value = None, set_once: Union[bool, dict] = False, data: Optional[dict] = None,
+                components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
                 profile: Optional[Union[dict, bool]] = None):
         """Cache data using a global variable.
 
@@ -223,10 +268,11 @@ class JsStorage:
         :param set_once: Optional. Flag or object to set variable only once
         :param profile: Optional. A flag to set the component performance storage
         """
-        js_code = JsUtils.jsConvertData(js_code, None)
         if value is None:
-            return JsObjects.JsObject.JsObject.get("window[%s]" % js_code)
+            code = JsUtils.jsConvertData(self.name(js_code, data, components), None)
+            return JsObjects.JsObject.JsObject.get("window[%s]" % code)
 
+        self._caches[js_code] = "global"
         if set_once:
             if isinstance(set_once, dict):
                 if "value" in set_once:
@@ -248,7 +294,8 @@ class JsStorage:
                 self.global_(js_code), [self.global_(js_code, value, False)], profile=profile)
 
         value = JsUtils.jsConvertData(value, None)
-        return JsObjects.JsObject.JsObject(value, "window[%s]" % js_code, set_var=True)
+        code = JsUtils.jsConvertData(self.name(js_code, data, components), None)
+        return JsObjects.JsObject.JsObject(value, "window[%s]" % code, set_var=True)
 
     def undefined(self, var, js_funcs: Union[list, str], js_funcs_exist: Union[list, str] = None,
                   profile: Optional[Union[dict, bool]] = False):
@@ -271,28 +318,54 @@ class JsStorage:
         Possible options:
             code: The variable name
             type: Optional. Caching type. local, session or global
-            value: Optional. The value to set (or function to use.
+            value: Optional. The value to set (or function to use)
             setOnce: Optional. Enable mechanism to store value. Default False
             profile: Optional. Set the profile to None
 
         :param js_code: Variable name and cache key
         :param value: Optional. Cache value
-        :param set_once: Optional. Flag or object to set variable only once
+        :param set_once: Optional. Flag or object {missing, exists} to set variable only once
         :param profile: Optional. A flag to set the component performance storage
         """
         if options.get("type") == "session":
             return self.session(
-                js_code=options["code"], value=options.get("value"),
-                set_once=options.get("setOnce", False), profile=options.get("profile"))
+                js_code=options["code"], value=options.get("value"), data=options.get("data"),
+                components=options.get("components"), set_once=options.get("setOnce", False),
+                profile=options.get("profile"))
 
         if options.get("type") == "local":
             return self.local(
-                js_code=options["code"], value=options.get("value"),
-                set_once=options.get("setOnce", False), profile=options.get("profile"))
+                js_code=options["code"], value=options.get("value"), data=options.get("data"),
+                components=options.get("components"), set_once=options.get("setOnce", False),
+                profile=options.get("profile"))
 
         return self.global_(
-                js_code=options["code"], value=options.get("value"),
-                set_once=options.get("setOnce", False), profile=options.get("profile"))
+                js_code=options["code"], value=options.get("value"), data=options.get("data"),
+                components=options.get("components"), set_once=options.get("setOnce", False), profile=options.get("profile"))
+
+    def clear(self, js_code: str, type: str = None, data: Optional[dict] = None,
+              components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None
+              ):
+        type = type or self._caches.get(js_code)
+        code = self.name(js_code, data, components)
+        if type == "local":
+            return self.__js.localStorage.removeItem(code)
+
+        if type == "session":
+            return self.__js.sessionStorage.removeItem(code)
+
+        return JsUtils.jsWrap("delete window[%s]" % JsUtils.jsConvertData(code, None))
+
+    def clear_all(self, js_code: str, type: str = None):
+        if type == "local":
+            return self.__js.localStorage.clear_all(js_code)
+
+        if type == "session":
+            return self.__js.sessionStorage.clear_all(js_code)
+
+        return JsUtils.jsWrap('''Object.keys(window).forEach(function(key){
+if (key == %(match)s || key.startsWith(%(match)s + '_')) {console.log(key)}})
+''' % {"match": JsUtils.jsConvertData(js_code, None)})
 
 
 class JsBase:
@@ -314,12 +387,14 @@ class JsBase:
         self.alert = self.window.alert
         self.log = self.console.log
         self._breadcrumb, self.__data, self.__location = None, None, None
-        self.__media_recorder, self.__accounting = None, None
+        self.__media_recorder, self.__accounting, self.__storage = None, None, None
 
     @property
     def storage(self):
         """Data Storage interface"""
-        return JsStorage(self)
+        if not self.__storage:
+            self.__storage = JsStorage(self)
+        return self.__storage
 
     @property
     def accounting(self):
@@ -490,6 +565,12 @@ class JsBase:
         from epyk.core.js.packages import JsMoment
 
         return JsMoment.Moment(page=self.page)
+
+    def add(self, name: str, sub_folder: str = None, full_path: str = None, required_funcs: List[str] = None):
+        is_loaded = JsUtils.addJsResources(
+            self.page._props["js"]['constructors'], name, sub_folder=sub_folder, full_path=full_path,
+            required_funcs=required_funcs)
+        return is_loaded
 
     def eval(self, data: Union[primitives.JsDataModel, str], js_conv_func: Optional[Union[str, list]] = None):
         """The eval() function evaluates JavaScript code represented as a string.
@@ -859,7 +940,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
             headers: Optional[dict] = None,
             asynchronous: bool = False, stringify: bool = True,
-            dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
+            dataflows: List[dict] = None, options: dict = None) -> JsObjects.XMLHttpRequest:
         """Create a GET HTTP request.
 
         Usage::
@@ -902,6 +983,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         if headers is not None:
             for k, v in headers.items():
                 request.setRequestHeader(k, v)
+        if options and "cache" in options:
+            request.set_cache(
+                options["cache"]["name"], options["cache"].get("type", "local"), data=data, components=components)
         return request
 
     def rest(self, method: str, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None,
@@ -909,7 +993,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
              components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
              profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
              asynchronous: bool = False, stringify: bool = True,
-             dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
+             dataflows: List[dict] = None, options: dict = None) -> JsObjects.XMLHttpRequest:
         """Create a POST HTTP request.
 
         :param method: The REST method used
@@ -928,7 +1012,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             # Redirect to the specific get method
             return self.get(
                 url=url, data=data, js_code=js_code, is_json=is_json, components=components, headers=headers,
-                asynchronous=asynchronous)
+                asynchronous=asynchronous, options=options)
 
         method_type = JsUtils.jsConvertData(method, None)
         url = JsUtils.jsConvertData(url, None)
@@ -952,6 +1036,9 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         if headers is not None:
             for k, v in headers.items():
                 request.setRequestHeader(k, v)
+        if options and "cache" in options:
+            request.set_cache(
+                options["cache"]["name"], options["cache"].get("type", "local"), data=data, components=components)
         return request
 
     def post(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
@@ -959,7 +1046,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
              components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
              profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
              asynchronous: bool = False, stringify: bool = True,
-             dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
+             dataflows: List[dict] = None, options: dict = None) -> JsObjects.XMLHttpRequest:
         """Create a POST HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
@@ -977,14 +1064,14 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         return self.rest("POST", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
-                         dataflows=dataflows)
+                         dataflows=dataflows, options=options)
 
     def put(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
             is_json: bool = True,
             components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
             profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
             asynchronous: bool = False, stringify: bool = True,
-            dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
+            dataflows: List[dict] = None, options: dict = None) -> JsObjects.XMLHttpRequest:
         """Create a PUT HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
@@ -1002,14 +1089,14 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         return self.rest("PUT", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
-                         dataflows=dataflows)
+                         dataflows=dataflows, options=options)
 
     def patch(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
               is_json: bool = True,
               components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
               profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
               asynchronous: bool = False, stringify: bool = True,
-              dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
+              dataflows: List[dict] = None, options: dict = None) -> JsObjects.XMLHttpRequest:
         """Create a PATH HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
@@ -1027,14 +1114,14 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         return self.rest("PATH", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
-                         dataflows=dataflows)
+                         dataflows=dataflows, options=options)
 
     def delete(self, url: Union[str, primitives.JsDataModel], data: Optional[dict] = None, js_code: str = "response",
                is_json: bool = True,
                components: Optional[List[Union[Tuple[primitives.HtmlModel, str], primitives.HtmlModel]]] = None,
                profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
                asynchronous: bool = False, stringify: bool = True,
-               dataflows: List[dict] = None) -> JsObjects.XMLHttpRequest:
+               dataflows: List[dict] = None, options: dict = None) -> JsObjects.XMLHttpRequest:
         """Create a DELETE HTTP request.
 
         `Related Pages <https://pythonise.com/series/learning-flask/flask-http-methods>`_
@@ -1052,7 +1139,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         return self.rest("DELETE", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
-                         dataflows=dataflows)
+                         dataflows=dataflows, options=options)
 
     def queueMicrotask(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """The queueMicrotask() method, which is exposed on the Window or Worker interface, queues a microtask to be
