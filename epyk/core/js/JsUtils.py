@@ -565,7 +565,7 @@ const urlParams = new URLSearchParams(window.location.search); return urlParams.
 
 
 def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, full_path: str = None,
-                   required_funcs: List[str] = None) -> bool:
+                   required_funcs: List[str] = None, verbose: bool = True) -> bool:
     """Add chained resources to the page.
     required_funcs must be defined in the internal treemap mapping to be added to the JavaScript resources.
     If it is a bespoke mapping definition the function `ek.treemap_add` must be used.
@@ -575,6 +575,7 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
     :param sub_folder; The sub folder for relative path definition
     :param full_path; The full path for absolute path definition
     :param required_funcs: List of required functions defined in the treemap
+    :param verbose: Show extra log messages
     """
     possible_paths = []
     if global_settings.PRIMARY_RESOURCE_PATHS:
@@ -591,9 +592,10 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
                 f = treemap._FUNCTIONS_MAP[req]
                 addJsResources(
                     constructors, f["file"], sub_folder=f.get("folder"), full_path=f.get("path"),
-                    required_funcs=f.get("required_funcs"))
+                    required_funcs=f.get("required_funcs"), verbose=verbose)
             else:
-                logging.warn("NATIVE | JS | Definition not found for %s - use ek.treemap_add" % req)
+                if verbose:
+                    logging.debug("NATIVE | JS | Definition not found for %s - use ek.treemap_add" % req)
     if full_path:
         js_file = Path(full_path, file_nam)
         if js_file.exists():
@@ -607,6 +609,7 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
                     constructors[file_nam] = fp.read()
                 return True
         else:
-            logging.warn("NATIVE | JS | File not loaded %s" % file_nam)
+            if verbose:
+                logging.debug("NATIVE | JS | File not loaded %s" % file_nam)
 
     return False

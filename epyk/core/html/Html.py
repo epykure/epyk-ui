@@ -115,7 +115,7 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
             if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
                 is_loaded = JsUtils.addJsResources(
                     component.page._props["js"]['constructors'], component.builder_name + ".js", sub_folder=group,
-                    required_funcs=required_funcs)
+                    required_funcs=required_funcs, verbose=False)
                 if is_loaded:
                     component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
                 else:
@@ -157,7 +157,7 @@ def jformatter(group: str = None, name: str = None, refresh: bool = False, async
             if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
                 is_loaded = JsUtils.addJsResources(
                     component.page._props["js"]['constructors'], component.builder_name + ".js", sub_folder=group,
-                    required_funcs=required_funcs)
+                    required_funcs=required_funcs, verbose=False)
                 if is_loaded:
                     component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
                 else:
