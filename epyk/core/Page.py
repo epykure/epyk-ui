@@ -11,7 +11,7 @@ try:
 except NameError:
     basestring = str
 
-from epyk.core.js import Imports
+from epyk.core.js import Imports, JsUtils
 from epyk.interfaces import Interface
 from epyk.core.css import themes
 from epyk.core.css import Classes
@@ -140,6 +140,9 @@ class JsProperties:
         :param builder_def: The builder definition function
         """
         self._context['onReady'].add(builder_def)
+
+    def add_on_ready_state(self, state: str, builder_def: str ):
+        self._context['readyState'].setdefault(state, []).append(builder_def)
 
     def add_constructor(self, name: str, content: str, override: bool = False, verbose: bool = False) -> str:
         """Register the constructor function and return its reference.
@@ -428,12 +431,13 @@ class Report:
         self._props = {'js': {
             # JavaScript framework triggered after the HTML. Impact the entire page
             'onReady': OrderedSet(),
+            'readyState': {},
             'events': {},
             'functions': {},
             # Local worker sections
             'workers': {},
             # Static and generic builders
-            'constructors': {},
+            'constructors': collections.OrderedDict(),
             # Input data used in the various component (Page global variables)
             'datasets': {},
             # Global server configurations used for connection to the backend
@@ -712,6 +716,48 @@ class Report:
         :return: The framework available data source
         """
         return data.Data.DataSrc(self)
+
+    def complete(self, js_funcs, profile = None):
+        """The document and all sub-resources have finished loading.
+        The state indicates that the load event is about to fire.
+
+        `Doc <https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState>`_
+
+        :param js_funcs: The Javascript functions to be added to this section
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        self.properties.js.add_on_ready_state(
+            "complete", JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+
+    def interactive(self, js_funcs, profile = None):
+        """The document has finished loading and the document has been parsed but sub-resources such as scripts,
+        images, stylesheets and frames are still loading.
+        The state indicates that the DOMContentLoaded event is about to fire.
+
+        `Doc <https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState>`_
+
+        :param js_funcs: The Javascript functions to be added to this section
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        self.properties.js.add_on_ready_state(
+            "interactive", JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
+
+    def loading(self, js_funcs, profile = None):
+        """The document is still loading.
+
+        `Doc <https://developer.mozilla.org/en-US/docs/Web/API/Document/readyState>`_
+
+        :param js_funcs: The Javascript functions to be added to this section
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        self.properties.js.add_on_ready_state(
+            "loading", JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
 
     def register(self, ext_components: Union[list, dict]):
         """This function allows you to register external Components (namely coming from Pyk Reports)
