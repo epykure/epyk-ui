@@ -62,6 +62,8 @@ function ekMapECharts(data, options){
                         dataSet.data.push(vector)
                     } else {
                         let vector = {"name": x, "value": temp[series][x][series]};
+                        if (typeof options._ek.params !== 'undefined'){
+                            options._ek.params.forEach(function(p){vector[p] = temp[series][x][p]})};
                         Object.assign(vector, options);
                         dataSet.data.push(vector)
                     }

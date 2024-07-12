@@ -722,6 +722,7 @@ class XMLHttpRequest:
             elif isinstance(json_data, dict):
                 if is_json:
                     self.data.update(json_data)
+
                 else:
                     for k, v in json_data.items():
                         self.data.attr(k, v)

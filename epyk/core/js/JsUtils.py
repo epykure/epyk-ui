@@ -583,9 +583,9 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
     if global_settings.NATIVE_JS_PATH:
         possible_paths.append(global_settings.NATIVE_JS_PATH)
     if sub_folder is not None:
-        possible_paths.append(Path(Path(__file__).resolve().parent, "..", "js", "native", sub_folder))
+        possible_paths.append(Path(__file__).parent / "native" / sub_folder)
     else:
-        possible_paths.append(Path(Path(__file__).resolve().parent, "..", "js", "native"))
+        possible_paths.append(Path(__file__).parent / "native")
     if required_funcs:
         for req in required_funcs:
             if req in treemap._FUNCTIONS_MAP:
