@@ -351,6 +351,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     It is also possible to use {{ htmlCode }} or to create specific variables using the prepare method.
     """
     standalone: bool = True
+    name: str = "Standalone Component"
 
     selector: str
     requirements: Tuple[str]

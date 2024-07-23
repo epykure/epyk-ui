@@ -8,11 +8,57 @@ from epyk.conf import global_settings
 # Returns the js location base on current file path
 PACKAGE_PATH = Path(__file__).parent
 
+# Required extra functions for build-in components' builders
+_BUILDERS_MAP = {
+    "qRCode": ["setCss"],
+    "radio": ["setCss"],
+    "alert": ["setCss"],
+    "audio": ["setCss"],
+    "badge": ["setCss"],
+    "blockQuote": ["setCss"],
+    "button": ["getDataFromTemplate", "setCss"],
+    "buttonData": ["setCss"],
+    "textArea": ["setCss"],
+    "pre": ["setCss"],
+    "codeEditor": ["setCss"],
+    "fieldset": ["getDataFromTemplate", "setCss"],
+    "label": ["getDataFromTemplate", "setCss"],
+    "emoji": ["setCss"],
+    "help": ["setCss"],
+    "htmlIcon": ["setCss"],
+    "input": ["setCss"],
+    "inputCheckbox": ["setCss"],
+    "listBrackets": ["setCss"],
+    "numeric": ["getDataFromTemplate", "setCss"],
+    "paragraph": ["getDataFromTemplate", "setCss"],
+    "highlights": ["getDataFromTemplate"],
+
+    # Echarts
+    "ekECharts": ["getChartContext"],
+    "ekMapECharts": ["getChartContext"],
+    "ekPieECharts": ["getChartContext"],
+    "ekRadarECharts": ["getChartContext"],
+    "ekScatterECharts": ["getChartContext"],
+    "ekTreeECharts": ["getChartContext"],
+}
+
 # Internal definition with the resources mapping
 _FUNCTIONS_MAP = {
     "createStyleElement": {
         "folder": "utils",
         "file": "StyleCreateElement.js"
+    },
+    "setCss": {
+        "folder": "utils",
+        "file": "StyleCss.js"
+    },
+    "getChartContext": {
+        "folder": "utils",
+        "file": "ContextCharts.js"
+    },
+    "getDataFromTemplate": {
+        "folder": "utils",
+        "file": "TemplateData.js"
     }
 }
 
@@ -22,8 +68,8 @@ def add(func: str, full_path: str = None, override: bool = False) -> bool:
     Those JavaScript will be ordered and added to a external JavaScript resource.
 
     :param func: JavaScript file with the extension (or the mapping)
-    :param full_path: The file full path
-    :param override: Flag to override if already exists)
+    :param full_path: Optional. The file full path
+    :param override: Optional. Flag to override if already exists)
     """
     global _FUNCTIONS_MAP
 

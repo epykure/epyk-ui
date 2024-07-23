@@ -1,6 +1,6 @@
 
 
-function easePick(htmlObj, data, options){
+function datesRange(htmlObj, data, options){
     if (!options?.input?.element){options.input.element = document.getElementById(htmlObj.id + "_input")}
     let pickerId = htmlObj.id + 'Id';
     if (!window[htmlObj.id + 'Id']){

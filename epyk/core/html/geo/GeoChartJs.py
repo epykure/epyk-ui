@@ -19,7 +19,7 @@ class Choropleth(GraphChartJs.Chart):
     # geo_map = "https://cdn.jsdelivr.net/npm/world-atlas@2/countries-10m.json"
     _option_cls = OptChartJs.OptionsGeo
     _chart__type = "choropleth"
-    builder_name = "GeoChoropleth"
+    builder_module = "GeoChoropleth"
 
     @property
     def options(self) -> OptChartJs.OptionsGeo:
@@ -29,7 +29,7 @@ class Choropleth(GraphChartJs.Chart):
         """
         return super().options
 
-    @Html.jbuider("chartjs")
+    @Html.jbuilder("chartjs")
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
               stop_state: bool = True, dataflows: List[dict] = None):
@@ -61,7 +61,7 @@ class ChoroplethUs(Choropleth):
     name = 'ChartJs Choropleth US'
     geo_map = "https://unpkg.com/us-atlas/states-10m.json"
     _option_cls = OptChartJs.OptionsGeo
-    builder_name = "GeoChoroplethUs"
+    builder_module = "GeoChoroplethUs"
 
     @property
     def options(self) -> OptChartJs.OptionsGeo:
@@ -76,7 +76,7 @@ class ChoroplethCountry(Choropleth):
     name = 'ChartJs Choropleth Country'
     geo_map = "https://raw.githubusercontent.com/markmarkoh/datamaps/master/src/js/data/fra.json"
     _option_cls = OptChartJs.OptionsGeo
-    builder_name = "GeoChoroplethCountry"
+    builder_module = "GeoChoroplethCountry"
 
     @property
     def options(self) -> OptChartJs.OptionsGeo:

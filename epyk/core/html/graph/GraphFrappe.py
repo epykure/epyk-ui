@@ -20,7 +20,7 @@ class Frappe(MixHtmlState.HtmlOverlayStates, Html.Html):
     tag = "div"
     _chart__type = 'axis-mixed'
     _option_cls = OptChartFrappe.FrappeLine
-    builder_name = "FCharts"
+    builder_module = "FCharts"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         super(Frappe, self).__init__(

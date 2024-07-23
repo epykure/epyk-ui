@@ -1094,7 +1094,7 @@ class Row(Html.Html):
 
 class Grid(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'Grid'
-    builder_name = 'BsGrid'
+    builder_module = 'BsGrid'
     requirements = ('bootstrap',)
     tag = 'div'
     _option_cls = OptPanel.OptionGrid

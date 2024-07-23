@@ -784,7 +784,7 @@ class Buttons:
     def checkboxes(self, record=None, color: str = None, width: types.SIZE_TYPE = (100, "%"),
                    height: types.SIZE_TYPE = (None, "px"), align: str = 'left',
                    html_code: str = None, tooltip: str = '', options: types.OPTION_TYPE = None,
-                   profile: types.PROFILE_TYPE = None):
+                   profile: types.PROFILE_TYPE = None) -> html.HtmlButton.Checkbox:
         """Python wrapper to the HTML checkbox elements.
 
         Tips: record data should be in the format expected by the component. If needed a data helper can be used.

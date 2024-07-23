@@ -216,7 +216,7 @@ class TimePicker(Html.Html):
 
 
 class CountDownDate(Html.Html):
-    name = 'Countdown'
+    name = 'Count Down Date'
     tag = "div"
 
     def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, hour: int, minute: int, second: int,

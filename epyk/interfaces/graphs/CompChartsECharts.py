@@ -27,7 +27,7 @@ class ECharts:
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": kind, "x_axis": x, "y_columns": y}}})
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
-        chart.builder_name = "EkPlotECharts"
+        chart.set_builder("ekPlotECharts", in_module=True)
         chart.options.toolbox.feature.saveAsImage = {}
         if record:
             for series in record:
@@ -91,7 +91,7 @@ class ECharts:
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkPieECharts"
+        chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
@@ -112,7 +112,7 @@ class ECharts:
             "chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns}, "series": {"radius": ['40%', '70%']}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkPieECharts"
+        chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
@@ -135,7 +135,7 @@ class ECharts:
         }})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkPieECharts"
+        chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
@@ -208,7 +208,7 @@ class ECharts:
             }})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkPieECharts"
+        chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
@@ -231,7 +231,7 @@ class ECharts:
         chart.colors(self.page.theme.charts)
         chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", "value")
         chart.options.xAxis.type = dfl_options.get("xAxis", {}).get("type", "value")
-        chart.builder_name = "EkScatterECharts"
+        chart.set_builder("ekScatterECharts", in_module=True)
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
             for i, dataset in enumerate(data['datasets']):
@@ -250,7 +250,7 @@ class ECharts:
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "radar", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.EChartsRadar(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkRadarECharts"
+        chart.set_builder("ekRadarECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
@@ -275,7 +275,7 @@ class ECharts:
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "sunburst", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkTreeECharts"
+        chart.set_builder("ekTreeECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         if data:
             chart.options.series.type = dfl_options["ek"]["chart"]["type"]
@@ -292,7 +292,7 @@ class ECharts:
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "treemap", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkTreeECharts"
+        chart.set_builder("ekTreeECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         if data:
             chart.options.series.type = dfl_options["ek"]["chart"]["type"]
@@ -310,7 +310,7 @@ class ECharts:
             "ek": {"chart": {"type": "tree", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "EkTreeECharts"
+        chart.set_builder("ekTreeECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         if data:
             chart.options.series.type = dfl_options["ek"]["chart"]["type"]

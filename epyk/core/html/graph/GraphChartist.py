@@ -16,7 +16,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     tag = "div"
     _option_cls = OptChartist.OptionsChartistLine
     requirements = ('chartist',)
-    builder_name = "EkChartist"
+    builder_module = "EkChartist"
     _chart__type = "Line"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
@@ -142,7 +142,7 @@ class ChartBar(Chart):
 
 class ChartPie(Chart):
     _chart__type = 'Pie'
-    builder_name = "EkChartistPie"
+    builder_module = "EkChartistPie"
     _option_cls = OptChartist.OptionsChartistPie
 
     @property

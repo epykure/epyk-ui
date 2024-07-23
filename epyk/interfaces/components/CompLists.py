@@ -626,7 +626,8 @@ class Lists:
         return html_d
 
     def checks(self, data=None, width: types.SIZE_TYPE = ('auto', ""), height: types.SIZE_TYPE = (None, 'px'),
-               html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
+               html_code: str = None, helper: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+               ) -> html.HtmlList.Items:
         """ Add a list component with checkbox items.
 
         Usage::

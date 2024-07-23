@@ -4204,9 +4204,9 @@ class ImportManager:
         """
         return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
 
-    def jsResolve(self, js_aliases: List[str], local_js: Optional[dict] = None, excluded: Optional[List[str]] = None):
-        """
-        Return the list of Javascript modules to add to the header.
+    def jsResolve(self, js_aliases: List[str], local_js: Optional[dict] = None, excluded: Optional[List[str]] = None,
+                  local_title=""):
+        """Return the list of Javascript modules to add to the header.
 
         Usage::
 
@@ -4217,6 +4217,7 @@ class ImportManager:
         :param local_js: Optional. The external file overrides with the full path
         :param excluded: Optional. Packages excluded from the result object
            (mandatory for some frameworks already onboarding modules)
+        :param local_title: Optional. Local JavaScript file title description
 
         :return: The string to be added to the header
         """
@@ -4299,7 +4300,7 @@ class ImportManager:
                         mod_title, mod_type, url_module, extra_configs))
         if local_js is not None and len(local_js) > 0:
             for local_js_file in local_js:
-                js.append('<script language="javascript" type="text/javascript" src="%s"></script>' % local_js_file)
+                js.append('<script title="%s" language="javascript" type="text/javascript" src="%s"></script>' % (local_title, local_js_file))
         return "\n".join(js)
 
     def jsURLs(self, expr: str):

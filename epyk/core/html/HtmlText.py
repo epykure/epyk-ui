@@ -488,7 +488,7 @@ class Paragraph(MixHtmlState.HtmlStates, Html.Html):
 
 
 class BlockQuote(Html.Html):
-    name = 'Block quotation'
+    name = 'Block Quote'
     tag = "blockquote"
 
     def __init__(self, page: primitives.PageModel, text, author, color, width, height, html_code, helper, options,
@@ -618,7 +618,7 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
 
 class Numeric(MixHtmlState.HtmlStates, Html.Html):
     """Numeric component"""
-    name = 'Number'
+    name = 'Numeric'
     tag = "div"
     requirements = ('accounting',)
     _option_cls = OptText.OptionsNumber

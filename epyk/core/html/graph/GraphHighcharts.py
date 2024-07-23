@@ -19,7 +19,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('highcharts',)
     _chart__type = None
     _option_cls = OptChartHighcharts.OptionsHighcharts
-    builder_name = "Hcharts"
+    builder_module = "Hcharts"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         self.height = height[0]

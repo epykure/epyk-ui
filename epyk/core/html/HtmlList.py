@@ -594,7 +594,7 @@ class Items(Html.Html):
 
 
 class ListTournaments(Html.Html):
-    name = 'Brackets'
+    name = 'List Brackets'
     tag = "div"
     requirements = ('jquery-bracket',)
     _option_cls = OptList.OptionsListBrackets

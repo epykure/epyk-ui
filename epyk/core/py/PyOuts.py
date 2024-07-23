@@ -243,7 +243,7 @@ class PyOuts:
             'cssImports': import_mng.cssResolve(
                 self.page.cssImport, self.page.cssLocalImports, excluded=self.excluded_packages),
             'jsImports': import_mng.jsResolve(
-                self.page.jsImports, self.page.jsLocalImports, excluded=self.excluded_packages)
+                self.page.jsImports, self.page.jsLocalImports, excluded=self.excluded_packages, local_title="constructors")
         }
         return results
 

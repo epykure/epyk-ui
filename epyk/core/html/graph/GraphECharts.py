@@ -17,7 +17,7 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
     name = 'ECharts'
     tag = "div"
     _option_cls = OptChartECharts.EChartOptions
-    builder_name = "EkECharts"
+    builder_module = "EkECharts"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         super(ECharts, self).__init__(

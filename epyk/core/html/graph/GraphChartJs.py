@@ -143,7 +143,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('chart.js',)
     _option_cls = OptChartJs.ChartJsOptions
     _chart__type = None
-    builder_name = "ChartLine"
+    builder_module = "ChartLine"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         self.height = height[0]
@@ -614,7 +614,7 @@ class ChartLine(Chart):
 class ChartBubble(Chart):
     _chart__type = 'bubble'
     _option_cls = OptChartJs.OptionsBubble
-    builder_name = "ChartBubble"
+    builder_module = "ChartBubble"
 
     def new_dataset(self, index, data, label, colors=None, opacity=None, kind=None, **kwargs):
         """Add a new series to the chart datasets.
@@ -725,7 +725,7 @@ class ChartBar(ChartLine):
 class ChartPolar(Chart):
     _chart__type = 'polarArea'
     _option_cls = OptChartJs.OptionsPolar
-    builder_name = "ChartPolar"
+    builder_module = "ChartPolar"
 
     @property
     def options(self) -> OptChartJs.OptionsPolar:
@@ -787,7 +787,7 @@ class ChartHBar(ChartBar):
 class ChartPie(Chart):
     _chart__type = 'pie'
     _option_cls = OptChartJs.OptionsPie
-    builder_name = "ChartPie"
+    builder_module = "ChartPie"
 
     @property
     def options(self) -> OptChartJs.OptionsPie:
@@ -835,7 +835,7 @@ class ChartPie(Chart):
 class ChartRadar(Chart):
     _chart__type = 'radar'
     _option_cls = OptChartJs.OptionsRadar
-    builder_name = "ChartRadar"
+    builder_module = "ChartRadar"
 
     @property
     def options(self) -> OptChartJs.OptionsRadar:
@@ -883,7 +883,7 @@ class ChartRadar(Chart):
 
 class ChartScatter(Chart):
     _chart__type = 'scatter'
-    builder_name = "ChartScatter"
+    builder_module = "ChartScatter"
 
     def new_dataset(self, index: int, data, label: str, colors: List[str] = None,
                     kind: str = None, **kwargs) -> JsChartJs.DataSetScatterLine:
@@ -924,7 +924,7 @@ class ChartTreeMap(Chart):
     requirements = ('chart.js', 'chartjs-chart-treemap')
     _chart__type = 'treemap'
     _option_cls = OptChartJs.OptionsTreeMap
-    builder_name = "ChartTreeMap"
+    builder_module = "ChartTreeMap"
 
     @property
     def options(self) -> OptChartJs.OptionsTreeMap:
@@ -993,7 +993,7 @@ if (item){
 class ChartMatrix(Chart):
     requirements = ('chart.js', 'chartjs-chart-matrix')
     _chart__type = 'matrix'
-    builder_name = "ChartMatrix"
+    builder_module = "ChartMatrix"
 
     def new_dataset(self, index: int, data, label: str = "", colors: List[str] = None, opacity: float = None,
                     kind: str = None, **kwargs) -> JsChartJs.DataSetPie:
@@ -1036,7 +1036,7 @@ class ChartMatrix(Chart):
 class ChartSankey(Chart):
     requirements = ('chart.js', 'chartjs-chart-sankey')
     _chart__type = 'sankey'
-    builder_name = "ChartSankey"
+    builder_module = "ChartSankey"
     _option_cls = OptChartJs.OptionsSankey
 
     @property
@@ -1077,7 +1077,7 @@ class ChartVenn(Chart):
 class ChartHyr(Chart):
     requirements = ('chart.js', 'chartjs-plugin-hierarchical')
     _chart__type = 'bar'
-    builder_name = "ChartHyr"
+    builder_module = "ChartHyr"
 
 
 class ChartExts(ChartPie):

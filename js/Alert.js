@@ -15,5 +15,6 @@ function alert(htmlObj, data, options){
       feed.innerHTML = data; htmlObj.appendChild(feed);
       var s = htmlObj.style; s.opacity = 1; htmlObj.style.display = 'block';
       if(options.time != null){
-        (function fade(){(s.opacity-=.1)<0?s.display="none": setTimeout(fade, options.time)})()}
+        (function fade(){(s.opacity-=.1)<0?s.display="none": setTimeout(fade, options.time)})()};
+      setCss(htmlObj, options) ;
 }

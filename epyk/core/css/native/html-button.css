@@ -37,8 +37,8 @@
 
 .html-button.selected {
     color: var(--white) !IMPORTANT ;
-    border-color: var(--theme-dark) !IMPORTANT ;
-    background-color: var(--theme-dark) !IMPORTANT;
+    border-color: var(--selected) !IMPORTANT ;
+    background-color: var(--selected) !IMPORTANT;
 }
 
 .html-button-loader {

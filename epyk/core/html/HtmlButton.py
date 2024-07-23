@@ -324,7 +324,7 @@ class Button(Html.Html):
 
 
 class Checkbox(Html.Html):
-    name = 'Check Box'
+    name = 'Button Check Box'
     requirements = ('font-awesome', 'bootstrap', 'jquery')
     _option_cls = OptButton.OptCheckboxes
     tag = "div"

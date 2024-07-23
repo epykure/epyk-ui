@@ -1,6 +1,6 @@
 
 
-function lastUpdated(htmlObj, data, options){
+function lastUpdate(htmlObj, data, options){
     if (typeof options.template === "undefined"){
         if(options.showdown){var converter = new showdown.Converter(options.showdown); data = converter.makeHtml(data)}
         if(options._children > 0){htmlObj.appendChild(document.createTextNode(data))}

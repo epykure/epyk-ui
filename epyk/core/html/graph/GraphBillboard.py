@@ -188,7 +188,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
 class ChartLine(Chart):
     _type = 'line'
-    builder_name = "BBLine"
+    builder_module = "BBLine"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         super(ChartLine, self).__init__(page, width, height, html_code, options, profile)
@@ -236,7 +236,7 @@ class ChartBar(ChartLine):
 
 class ChartScatter(ChartLine):
     _type = 'scatter'
-    builder_name = "BBScatter"
+    builder_module = "BBScatter"
 
     def labels(self, labels: list, series_id: str = 'x'):
         """
@@ -250,7 +250,7 @@ class ChartScatter(ChartLine):
 class ChartPie(ChartLine):
     _type = 'pie'
     _option_cls = OptChartC3.C3Pie
-    builder_name = "BBPie"
+    builder_module = "BBPie"
 
     def labels(self, labels: list, series_id: str = 'x'):
         """

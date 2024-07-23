@@ -1,6 +1,6 @@
 
 
-function dropDown(htmlObj, data, options){
+function dropDownSelect(htmlObj, data, options){
     if(options.clearDropDown){htmlObj.innerHTML = ""};
       data.forEach(function(rec){
         if ((rec.items != undefined) && (rec.items.length > 0)) {

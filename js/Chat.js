@@ -9,8 +9,7 @@ function chat(htmlObj, data, options){
       var now = new Date();
       var dateStringWithTime = moment(now).format('YYYY-MM-DD HH:mm:ss');
       var dateNews = document.createElement("p");
-      dateNews.style.margin = 0;
-      dateNews.style.fontWeight = 'bold';
+      dateNews.style.margin = 0; dateNews.style.fontWeight = 'bold';
       dateNews.innerHTML = dateStringWithTime;
       htmlObj.querySelector("div").prepend(dateNews);
 }

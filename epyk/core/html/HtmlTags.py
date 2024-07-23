@@ -162,7 +162,7 @@ class HtmlGeneric(Html.Html):
 
 class HtmlGenericLink(HtmlGeneric):
     name = 'tagLink'
-    builder_name = "HtmlGeneric"
+    builder_module = "HtmlGeneric"
 
     @property
     def ipopup(self):

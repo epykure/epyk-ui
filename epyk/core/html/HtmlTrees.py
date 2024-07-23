@@ -17,7 +17,7 @@ from epyk.core.css.styles import GrpClsList
 class Tree(Html.Html):
     name = 'List Expandable'
     _option_cls = OptTrees.OptionsTree
-    builder_name = "HtmlTree"
+    builder_module = "HtmlTree"
     tag = "ul"
 
     def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],

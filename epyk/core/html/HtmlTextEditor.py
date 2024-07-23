@@ -20,7 +20,7 @@ from epyk.core.css.styles import GrpClsCodeMirror
 
 
 class Console(Html.Html):
-    name = 'Console'
+    name = 'EkConsole'
     _option_cls = OptText.OptionsConsole
     tag = "div"
 
@@ -239,7 +239,7 @@ class Cell(Html.Html):
 
 
 class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
-    name = 'Code'
+    name = 'Code Editor'
     requirements = ('codemirror',)
     _option_cls = OptCodeMirror.OptionsCode
     tag = "div"
@@ -383,7 +383,7 @@ class Tags(Html.Html):
 
 
 class MarkdownReader(MixHtmlState.HtmlOverlayStates, Html.Html):
-    name = 'markdown'
+    name = 'Markdown Reader'
     tag = "div"
     requirements = ('highlight.js', 'showdown')
     _option_cls = OptText.OptionsText

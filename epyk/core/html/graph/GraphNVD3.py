@@ -221,7 +221,7 @@ nv.utils.windowResize(%(chart)s.update);%(state)s''' % {
 
 
 class ChartLine(Chart):
-    builder_name = "ChartLine"
+    builder_module = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Line:
@@ -275,7 +275,7 @@ class ChartFocusLine(ChartLine):
 
 
 class ChartBar(Chart):
-    builder_name = "ChartBar"
+    builder_module = "ChartBar"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Bar:
@@ -379,7 +379,7 @@ class ChartMultiBar(ChartBar):
 
 
 class ChartPie(Chart):
-    builder_name = "ChartPie"
+    builder_module = "ChartPie"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Pie:
@@ -433,7 +433,7 @@ class ChartHistoBar(ChartBar):
 
 
 class ChartParallelCoord(Chart):
-    builder_name = "ChartSunbrust"
+    builder_module = "ChartSunbrust"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3ParallelCoordinates:
@@ -462,7 +462,7 @@ class ChartParallelCoord(Chart):
 
 
 class ChartSunbrust(Chart):
-    builder_name = "ChartSunbrust"
+    builder_module = "ChartSunbrust"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3Sunburst:
@@ -496,7 +496,7 @@ class ChartSunbrust(Chart):
 
 
 class ChartBoxPlot(Chart):
-    builder_name = "ChartLine"
+    builder_module = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3BoxPlot:
@@ -547,7 +547,7 @@ class ChartBoxPlot(Chart):
 
 
 class ChartCandlestick(Chart):
-    builder_name = "ChartLine"
+    builder_module = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3CandlestickBar:
@@ -558,7 +558,7 @@ class ChartCandlestick(Chart):
 
 
 class ChartOhlcBar(Chart):
-    builder_name = "ChartLine"
+    builder_module = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3OhlcBar:
@@ -569,7 +569,7 @@ class ChartOhlcBar(Chart):
 
 
 class ChartForceDirected(Chart):
-    builder_name = "ChartLine"
+    builder_module = "ChartLine"
 
     @property
     def dom(self) -> JsNvd3.JsNvd3ForceDirectedGraph:

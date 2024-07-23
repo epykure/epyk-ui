@@ -1,6 +1,6 @@
 
 
-function checkbox(htmlObj, data, options){
+function buttonCheckBox(htmlObj, data, options){
     htmlObj = $(htmlObj);
     htmlObj.empty();
     data.forEach(function(rec){

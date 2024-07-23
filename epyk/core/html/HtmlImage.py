@@ -418,7 +418,7 @@ class ImgCarousel(Html.Html):
 
 class Icon(Html.Html):
     name = 'Icon'
-    builder_name = "HtmlIcon"
+    builder_module = "HtmlIcon"
     tag = "i"
 
     def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile):

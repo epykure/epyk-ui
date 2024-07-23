@@ -14,7 +14,7 @@ class VegaEmdedCharts(MixHtmlState.HtmlOverlayStates, Html.Html):
     requirements = ('vega-embed',)
     _option_cls = OptChartVega.OptionsChart
     _chart__type = "VegaChart"
-    builder_name = "VCharts"
+    builder_module = "VCharts"
 
     def __init__(self, report, data, width, height, html_code, options, profile):
         super(VegaEmdedCharts, self).__init__(

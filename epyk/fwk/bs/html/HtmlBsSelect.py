@@ -21,7 +21,7 @@ from epyk.core.js.packages import JsSelect
 class Select(Html.Html):
   requirements = ('bootstrap-select', )
   name = 'Select'
-  builder_name = "SelectPicker"
+  builder_module = "SelectPicker"
   _option_cls = OptSelect.OptionsSelectJs
 
   def __init__(self, page: primitives.PageModel, records, html_code, width, height, profile, multiple, options):

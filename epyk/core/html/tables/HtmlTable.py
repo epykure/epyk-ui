@@ -65,7 +65,7 @@ class Row(Html.Html):
 class Cell(MixHtmlState.HtmlStates, Html.Html):
     name = 'Cell'
     _option_cls = OptTable.OptionsTableCell
-    builder_name = "Text"
+    builder_module = "Text"
 
     def __init__(self, page: primitives.PageModel, text, is_header, options=None):
         super(Cell, self).__init__(page, text, options=options)

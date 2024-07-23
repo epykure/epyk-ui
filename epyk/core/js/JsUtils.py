@@ -596,17 +596,19 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
             else:
                 if verbose:
                     logging.debug("NATIVE | JS | Definition not found for %s - use ek.treemap_add" % req)
+    # Set a common format for the builder names
+    builder_name = "%s%s" % (file_nam[0].lower(), file_nam[1:-3])
     if full_path:
         js_file = Path(full_path, file_nam)
         if js_file.exists():
             with open(js_file) as fp:
-                constructors[file_nam] = fp.read()
+                constructors[builder_name] = fp.read()
     else:
         for p in possible_paths:
             js_file = Path(p, file_nam)
             if js_file.exists():
                 with open(js_file) as fp:
-                    constructors[file_nam] = fp.read()
+                    constructors[builder_name] = fp.read()
                 return True
         else:
             if verbose:

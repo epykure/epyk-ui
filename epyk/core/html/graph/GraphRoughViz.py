@@ -18,7 +18,7 @@ class RoughViz(MixHtmlState.HtmlOverlayStates, Html.Html):
     tag = "div"
     _chart__type = 'Line'
     _option_cls = OptChartRoughViz.RoughVizLine
-    builder_name = "RvCharts"
+    builder_module = "RvCharts"
 
     def __init__(self, page, width, height, html_code, options, profile):
         super(RoughViz, self).__init__(

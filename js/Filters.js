@@ -1,7 +1,7 @@
 
 
 function filters(htmlObj, data, options){
-    var panel = htmlObj.querySelector('[name=panel]'); panel.innerHTML = '';
+  var panel = htmlObj.querySelector('[name=panel]'); panel.innerHTML = '';
   if (typeof data !== 'undefined'){
   data.forEach(function(val){
     if(typeof val === 'string'){

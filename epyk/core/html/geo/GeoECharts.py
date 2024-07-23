@@ -9,7 +9,7 @@ from epyk.core.js.packages import packageImport
 class Maps(GraphECharts.ECharts):
     name = 'ECharts Geo'
     _option_cls = OptChartECharts.EChartGeoOptions
-    builder_name = "EkMapECharts"
+    builder_module = "EkMapECharts"
 
     @property
     def options(self) -> OptChartECharts.EChartGeoOptions:

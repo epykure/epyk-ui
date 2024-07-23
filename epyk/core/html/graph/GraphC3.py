@@ -188,7 +188,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
         self.__defined_options = defined_options
         return js_expr
 
-    @Html.jbuider("c3")
+    @Html.jbuilder("c3")
     def generate(self, data: etypes.JS_DATA_TYPES, options=None,
                  profile: etypes.PROFILE_TYPE = False, dataflows: List[dict] = None) -> str:
         """
@@ -212,7 +212,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
 
 class ChartLine(Chart):
     _type = 'line'
-    builder_name = "C3Line"
+    builder_module = "C3Line"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         super(ChartLine, self).__init__(page, width, height, html_code, options, profile)
@@ -263,7 +263,7 @@ class ChartBar(ChartLine):
 
 class ChartScatter(ChartLine):
     _type = 'scatter'
-    builder_name = "C3Scatter"
+    builder_module = "C3Scatter"
 
     def labels(self, labels: list, series_id: str = 'x'):
         """
@@ -277,7 +277,7 @@ class ChartScatter(ChartLine):
 class ChartPie(ChartLine):
     _type = 'pie'
     _option_cls = OptChartC3.C3Pie
-    builder_name = "C3Pie"
+    builder_module = "C3Pie"
 
     def labels(self, labels: list, series_id: str = 'x'):
         """
@@ -359,7 +359,7 @@ class ChartGauge(ChartPie):
 class ChartStanford(ChartLine):
     _type = 'stanford'
     _option_cls = OptChartC3.C3Stanford
-    builder_name = "C3Stanford"
+    builder_module = "C3Stanford"
 
     def epoch(self, series: list, name: str):
         """

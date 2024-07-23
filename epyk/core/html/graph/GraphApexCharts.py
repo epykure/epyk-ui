@@ -114,7 +114,7 @@ class Chart(MixHtmlState.HtmlOverlayStates, Html.Html):
     tag = "div"
     requirements = ('apexcharts',)
     _option_cls = OptChartApex.OptionsLine
-    builder_name = "ApCharts"
+    builder_module = "ApCharts"
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         self.height = height[0]
@@ -378,7 +378,7 @@ class Pie(Chart):
 
 class RadialBar(Chart):
     _option_cls = OptChartApex.OptionsPie
-    builder_name = "ApRadialBar"
+    builder_module = "ApRadialBar"
 
     @property
     def options(self) -> OptChartApex.OptionsPie:
@@ -391,7 +391,7 @@ class RadialBar(Chart):
 
 class Bubble(Chart):
     _option_cls = OptChartApex.OptionsArea
-    builder_name = "ApBubble"
+    builder_module = "ApBubble"
 
     @property
     def options(self) -> OptChartApex.OptionsArea:

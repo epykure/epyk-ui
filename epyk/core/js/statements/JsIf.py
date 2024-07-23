@@ -61,6 +61,9 @@ class JsIf:
     return self
 
   def toStr(self):
+    if not self._js:
+      return ""
+
     str_data = ["if(%s){%s}" % (self._js[0][0], ";".join(map(lambda x: str(x),  self._js[0][1])))]
     for condition, funcs in self._js[1:]:
       str_data.append("else if(%s){%s}" % (condition, ";".join(funcs)))

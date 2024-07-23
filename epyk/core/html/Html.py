@@ -9,7 +9,7 @@ import logging
 import inspect
 
 from pathlib import Path
-from typing import Union, Optional, List, Any
+from typing import Union, Optional, List, Any, Dict
 from epyk.conf import global_settings
 from epyk.core.py import primitives, types
 
@@ -18,6 +18,7 @@ from epyk.core.js import Js
 from epyk.core.js import Imports
 from epyk.core.js.html import JsHtml
 from epyk.core.js import packages
+from epyk.core.js import treemap
 from epyk.core.js.packages import JsQuery
 from epyk.core.js.packages import packageImport
 
@@ -46,7 +47,8 @@ def cleanData(value: str):
 
       :param value: The value to clean
       """
-    return regex.sub('', value.strip())
+    if value:
+        return regex.sub('', value.strip())
 
 
 # ---------------------------------------------------------------------------------------------------------
@@ -94,7 +96,7 @@ def inprogress(func):
     return new_func
 
 
-def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False,
+def jbuilder(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False,
             required_funcs: List[str] = None):
     """Set a builder for a component.
     This will load the corresponding JavaScript file to allow the refresh on the Js side of teh component.
@@ -113,14 +115,16 @@ def jbuider(group: str = None, name: str = None, refresh: bool = False, asynchro
             if name is not None:
                 component.builder_name = name
             if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
-                is_loaded = JsUtils.addJsResources(
-                    component.page._props["js"]['constructors'], component.builder_name + ".js", sub_folder=group,
-                    required_funcs=required_funcs, verbose=False)
-                if is_loaded:
-                    component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
-                else:
+                is_loaded = False
+                if component.builder_module:
+                    is_loaded = JsUtils.addJsResources(
+                        component.page._props["js"]['constructors'], component.builder_module + ".js", sub_folder=group,
+                        required_funcs=required_funcs or treemap._BUILDERS_MAP.get(component.builder_name, []),
+                        verbose=False)
+                if not is_loaded:
                     if not component.builder_name or component._js__builder__ is None:
-                        raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
+                        raise ValueError("No builder defined for this HTML component %s, expected name=%s" % (
+                            component.__class__.__name__, component.builder_name))
 
                     if component.async_builder or asynchronous:
                         component.page.properties.js.add_constructor(
@@ -143,7 +147,7 @@ def jformatter(group: str = None, name: str = None, refresh: bool = False, async
     This will load the corresponding JavaScript file to allow the refresh on the Js side of teh component.
 
     :parap group: Group of formatters (corresponding to a folder in the native section)
-    :parap name: Formatter's file name
+    :parap name: Formatters file name
     :parap refresh: Force the refresh of the Formatter definition (default false)
     :parap asynchronous: Set the Formatter function as async (default false)
     :parap required_funcs: List of required functions to be added
@@ -155,14 +159,16 @@ def jformatter(group: str = None, name: str = None, refresh: bool = False, async
             if name is not None:
                 component.builder_name = name
             if not component.page.properties.js.has_constructor(component.builder_name) or refresh:
-                is_loaded = JsUtils.addJsResources(
-                    component.page._props["js"]['constructors'], component.builder_name + ".js", sub_folder=group,
-                    required_funcs=required_funcs, verbose=False)
-                if is_loaded:
-                    component.builder_name = "%s%s" % (component.builder_name[0].lower(), component.builder_name[1:])
-                else:
+                is_loaded = False
+                if component.builder_module:
+                    is_loaded = JsUtils.addJsResources(
+                        component.page._props["js"]['constructors'], component.builder_module + ".js", sub_folder=group,
+                        required_funcs=required_funcs or treemap._BUILDERS_MAP.get(component.builder_name, []),
+                        verbose=False)
+                if not is_loaded:
                     if not component.builder_name or component._js__builder__ is None:
-                        raise ValueError("No builder defined for this HTML component %s" % component.__class__.__name__)
+                        raise ValueError("No builder defined for this HTML component %s, expected name=%s" % (
+                            component.__class__.__name__, component.builder_name))
 
                     if component.async_builder or asynchronous:
                         component.page.properties.js.add_constructor(
@@ -381,7 +387,10 @@ class Html(primitives.HtmlModel):
     """
     requirements = None
     defined_code = False
-    builder_name, _js__builder__, async_builder = None, None, False
+    _js__builder__, async_builder = None, False
+    # Se the module name JavaScript file and the function name
+    # TODO Make builder format function or JavaScript like classes
+    builder_module, builder_name, builder_cls = None, None, False
     _option_cls = Options
     tag = None
     style_urls: List[str] = None
@@ -400,7 +409,7 @@ class Html(primitives.HtmlModel):
         for package in self.requirements or []:
             if isinstance(package, tuple):
                 self.require.add(package[0], package[1], verbose=verbose)
-            if isinstance(package, dict):
+            elif isinstance(package, dict):
                 alias = list(package.keys())[0]
                 self.require.add(alias, version=package[alias].get("version"), verbose=verbose,
                                  incl_css=package[alias].get("css", False), incl_js=package[alias].get("js", False))
@@ -458,9 +467,21 @@ class Html(primitives.HtmlModel):
 
         self.page.components[self.html_code] = self
         self._vals, self.badge = vals, ""
+
+        if self.builder_module:
+            if self.builder_name is None:
+                self.builder_name = "%s%s" % (self.builder_module[0].lower(), self.builder_module[1:])
+
         if self.builder_name is None:
-            self.builder_name = self.__class__.__name__
-        self._internal_components = [self.htmlCode]
+            if hasattr(self.__class__, "name"):
+                _name = cleanData(self.__class__.name)
+                self.builder_name = "%s%s" % (_name[0].lower(), _name[1:])
+            else:
+                self.builder_name = "%s%s" % (self.__class__.__name__[0].lower(), self.__class__.__name__[1:])
+            if self.builder_module is None:
+                self.builder_module = "%s%s" % (self.builder_name[0].upper(), self.builder_name[1:])
+
+        self._internal_components = [self.html_code]
 
     def with_profile(self, profile: types.PROFILE_TYPE, event: Optional[str] = None,
                      element_id: Optional[str] = None) -> dict:
@@ -534,7 +555,8 @@ class Html(primitives.HtmlModel):
 
         return self.val[i]
 
-    def set_builder(self, name: str, all_components: bool = True):
+    def set_builder(self, name: str, all_components: bool = True, in_module: Union[str, bool] = False,
+                    required_funcs: List[str] = None, funcs_map: Dict[str, dict] = None):
         """Change the default builder definition.
 
         This method can be used to externalise the JavaScript expression to dedicated modules.
@@ -552,11 +574,31 @@ class Html(primitives.HtmlModel):
           btn.click([btn.build("Clicked"), btn2.build("Clicked")])
 
         :param name: The builder name (alias but also function name)
-        :param all_components: Apply the builder change to all components generated from this class
+        :param all_components: Optional. Apply the builder change to all components generated from this class
+        :param in_module: Optional. Either the module name or a flag to let the framework deduce the name
+        :param required_funcs: Optional. The list of required functions needed to use the builder
+        :param funcs_map: Optional. Defined function schema to properly add them to the JavaScript section
         """
         self.builder_name = name
+        if in_module:
+            if in_module is True:
+                self.builder_module = "%s%s" % (name[0].upper(), name[1:])
+            elif in_module is not False:
+                self.builder_module = in_module
+
         if all_components:
             self.__class__.builder_name = name
+            if in_module:
+                if in_module is True:
+                    self.__class__.builder_module = "%s%s" % (name[0].upper(), name[1:])
+                elif in_module is not False:
+                    self.__class__.builder_module = in_module
+
+        if required_funcs is not None:
+            treemap._BUILDERS_MAP[name] = required_funcs
+
+        if funcs_map is not None:
+            treemap._FUNCTIONS_MAP.update(funcs_map)
 
     @property
     def style(self) -> GrpCls.ClassHtml:
@@ -1725,7 +1767,7 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         self.js.varName = js_code
         self.dom.varName = "document.getElementById(%s)" % JsUtils.jsConvertData(html_code, None)
 
-    @jbuider()
+    @jbuilder()
     def build(self, data: types.JS_DATA_TYPES = None, options: types.OPTION_TYPE = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
               stop_state: bool = True, dataflows: List[dict] = None):
@@ -2226,8 +2268,10 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
                         css_files.append(c_file)
             css_content = css_files_loader(
                 css_files, style_vars=style_vars, resources=self.page.properties.resources)
-            self.page.headers.links.stylesheet(
-                "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
+            if css_content:
+                self.page.properties.css.add_text(css_content, map_id="CSS VarMap")
+                #self.page.headers.links.stylesheet(
+                #    "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
 
     def __str__(self):
         # Add Core CSS definition

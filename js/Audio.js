@@ -6,5 +6,6 @@ function audio(htmlObj, data, options){
     for(var key in options){
       if(key === 'autoplay'){htmlObj.autoplay = options.autoplay}
       else{source.setAttribute(key, options[key])}};
-    htmlObj.appendChild(source)
+    htmlObj.appendChild(source);
+    setCss(htmlObj, options) ;
 }

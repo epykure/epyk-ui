@@ -44,7 +44,7 @@ class Option(Html.Html):
 
 
 class Optgroup(Html.Html):
-    name = 'Select Option'
+    name = 'Select Option Group'
     builder_name = False
     tag = "optgroup"
 
@@ -61,7 +61,7 @@ class Select(Html.Html):
     requirements = ('bootstrap-select',)
     name = 'Select'
     tag = "select"
-    builder_name = "SelectPicker"
+    builder_module = "SelectPicker"
     _option_cls = OptSelect.OptionsSelectJs
 
     style_urls = [
