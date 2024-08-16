@@ -53,7 +53,8 @@ build/*
 
 # Entire documentation ignored for the moment
 doc/*
-
+ts/*
 #
 epyk/core/js/native/*
 ts/*/node_modules/*
+utils/hc_json.py
