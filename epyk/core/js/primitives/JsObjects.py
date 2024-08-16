@@ -42,6 +42,7 @@ class JsPromiseRecords(primitives.JsDataModel):
 
     def __init__(self, promise):
         self.promise = promise
+        self.page = promise.page
 
     def get(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """
@@ -120,13 +121,13 @@ class JsPromiseRecords(primitives.JsDataModel):
 class JsPromise:
 
     def __init__(self, data: types.JS_DATA_TYPES, profile: types.PROFILE_TYPE = False,
-                 async_await: bool = False):
-        self.data, self.profile, self.async_await = data, profile, async_await
+                 async_await: bool = False, page = None):
+        self.data, self.profile, self.async_await, self.page = data, profile, async_await, page
         self.__thens, self.__catch = [], []
 
     @staticmethod
-    def new(data: types.JS_DATA_TYPES, profile: types.PROFILE_TYPE = False, async_await: bool = False):
-        return JsPromise("new Promise(%s)" % data, profile=profile, async_await=async_await)
+    def new(data: types.JS_DATA_TYPES, profile: types.PROFILE_TYPE = False, async_await: bool = False, page = None):
+        return JsPromise("new Promise(%s)" % data, profile=profile, async_await=async_await, page=page)
 
     def set(self, js_code: str, async_await: bool = None):
         if async_await is None:
@@ -227,6 +228,37 @@ return data}
             result.append(
                 "catch(function(error){%s})" % JsUtils.jsConvertFncs(self.__catch, toStr=True, profile=self.profile))
         return ".".join(result)
+
+    def cache(self, name: str, type: str = "local"):
+        """Cache data from the promise.
+
+        :param name: Cache name
+        :param type: Type of cache to used (default local)
+        """
+        return self.then([self.page.js.storage.from_config(
+            {"code": name, "value": JsUtils.jsWrap("data"), "type": type}), "return data"])
+
+    def emit(self, name: str, targets: list = None, bubbles: bool = True,
+             cancelable: bool = False, defaultPrevented: bool = False):
+        """Emit a signal during the promise process to trigger some sub processes for defined target components.
+
+        :param name: Signal's name
+        :param targets: List of HTML components to get the signal
+        :param bubbles: A boolean value, which is true if the event bubbles up through the DOM tree
+        :param cancelable: make the event cancelable
+        :param defaultPrevented: A boolean value indicating whether or not the call to Event.preventDefault() canceled the event
+        """
+        options = []
+        for k, v in {
+            "bubbles": bubbles, "detail": JsUtils.jsWrap("data", None),
+            "cancelable": cancelable, "defaultPrevented": defaultPrevented}.items():
+            options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+        name = JsUtils.jsConvertData(name, None)
+        if targets:
+            s_targets = ["%s.dispatchEvent(evt)" % t.dom.varId for t in targets]
+            return self.then("let evt = new CustomEvent(%s, {%s}); %s; return data" % (name, ",".join(options), ";".join(s_targets)))
+
+        return self.then("let evt = new CustomEvent(%s, {%s}); document.dispatchEvent(evt); return data" % (name, ",".join(options)))
 
     def __str__(self):
         return self.toStr()
@@ -802,9 +834,9 @@ class XMLHttpRequest:
         self.__req_success.append("if(%(id)s.status == 200){resolve(%(r)s)} else {reject(%(id)s.status)}" % {
             "id": self.varId, "r": self.response})
         if js_code is None:
-            return JsPromise.new("function(resolve, reject){%s}" % self.toStr())
+            return JsPromise.new("function(resolve, reject){%s}" % self.toStr(), page=self.page)
 
-        return JsPromise.new("function(resolve, reject){%s}" % self.toStr()).set(js_code)
+        return JsPromise.new("function(resolve, reject){%s}" % self.toStr(), page=self.page).set(js_code)
 
 
 class JsObjects:

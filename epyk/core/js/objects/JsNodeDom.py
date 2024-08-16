@@ -895,6 +895,31 @@ class JsDoms(JsObject.JsObject):
         self._js.append('dispatchEvent(%s)' % event)
         return self
 
+    def emit(self, name: str, data: Any, targets: list = None, bubbles: bool = True,
+             cancelable: bool = False, defaultPrevented: bool = False) -> JsUtils.jsWrap:
+        """Emit a signal during the promise process to trigger some sub processes for defined target components.
+
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Event/bubbles>`_
+
+        :param name: Signal's name
+        :param targets: List of HTML components to get the signal
+        :param bubbles: A boolean value, which is true if the event bubbles up through the DOM tree
+        :param cancelable: make the event cancelable
+        :param defaultPrevented: a boolean value indicating whether or not the call to Event.preventDefault() canceled the event
+        """
+        options = []
+        for k, v in {
+            "bubbles": bubbles, "detail": JsUtils.jsWrap(data, None),
+            "cancelable": cancelable, "defaultPrevented": defaultPrevented}.items():
+            options.append("%s: %s" % (k, JsUtils.jsConvertData(v, None)))
+        name = JsUtils.jsConvertData(name, None)
+        if targets:
+            s_targets = ["%s.dispatchEvent(evt)" % t.dom.varId for t in targets]
+            return JsUtils.jsWrap("let evt = new CustomEvent(%s, {%s}); %s" % (name, ",".join(options), ";".join(s_targets)))
+
+        return JsUtils.jsWrap("let evt = new CustomEvent(%s, {%s}); document.dispatchEvent(evt)" % (name, ",".join(options)))
+
+
     def addOnReady(self, js_funcs: types.JS_FUNCS_TYPES):
         """The ready event occurs when the DOM (document object model) has been loaded.
 
