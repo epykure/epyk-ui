@@ -18,7 +18,7 @@ from epyk.core.css import Defaults as cssDefaults
 
 
 class Comments(Html.Html):
-    name = 'Comment'
+    name = 'Comments'
     _option_cls = OptNet.OptionsChat
 
     def __init__(self, page: primitives.PageModel, record, width, height, html_code, options, profile):

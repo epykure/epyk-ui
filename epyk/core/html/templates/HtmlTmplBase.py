@@ -7,9 +7,7 @@ STATIC_PAGE = '''
 %(header)s
 %(jsImports)s
 %(cssImports)s
-<style>
 %(cssStyle)s
-</style>
 </head>
 %(body)s
 <script>

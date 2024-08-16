@@ -3,10 +3,12 @@
 
 from typing import Any, Callable
 from epyk.core.py import primitives
+from epyk.conf.global_settings import ASSETS_STATIC_CONFIG, ASSETS_STATIC_ROUTE
 import json
 
 
 class DataConfig:
+    """JavaScript Dashboard configuration"""
 
     def __init__(self):
         self.keys = {}
@@ -19,7 +21,7 @@ class DataConfig:
         return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
     def get(self, key: str, dfl: Any = "", doc: str = ""):
-        """ Get the key from the configuration on the JavaScript side and add the documentation.
+        """Set the key from the configuration on the JavaScript side and add the documentation.
 
         :param key: The key to look up from the JavaScript configuration
         :param dfl: Optional. The default value in the configuration
@@ -32,7 +34,7 @@ class DataConfig:
         return JsObjects.JsObjects.get("window['page_config']['%s']" % key)
 
     def fromConfig(self, k: str, default: Any = None, page: primitives.PageModel = None,
-                   end_point: str = "/static/configs"):
+                   end_point: str = "/static/configs") -> str:
         """ Get the configuration for loading the report from json files.
         This will allow the creation of templates on the Python side and configuration in a static manner in json.
 
@@ -69,7 +71,7 @@ class DataConfig:
 ''' % {"static": end_point, "script": page.json_config_file, "key": k, "dflt": default}
 
     def to_json(self, sort_keys: bool = True, indent: int = 4) -> str:
-        """ Return the json configuration inputs for the page.
+        """Return the json configuration inputs for the page.
 
         :param sort_keys: Optional. Set the order for the keys
         :param indent: Optional. Add number of indent to the Json
@@ -167,12 +169,12 @@ class DataEvents:
 
     @property
     def tabulator(self) -> TabulatorEvents:
-        """ Interface to the Tabulator events. """
+        """Interface to the Tabulator events"""
         return TabulatorEvents()
 
     @property
     def files(self):
-        """ """
+        """Data Transfer files object"""
         from epyk.core.js.primitives import JsObjects
         return JsObjects.JsArray.JsArray.get("Array.from(event.dataTransfer.files)")
 
@@ -193,6 +195,16 @@ class DataEvents:
         result.aggs = DataCore.DataAggregators(js_code="data")
         result.fltrs = DataCore.DataFilters(js_code="data")
         return result
+
+    @property
+    def detail(self):
+        """Detail attribute for event signal"""
+        from epyk.core.js.objects import JsNodeDom
+        return JsNodeDom.JsDoms.get("event.detail")
+
+    def signal(self, name: str) -> str:
+        """Standard label for signals"""
+        return "signal:%s" % name
 
     @property
     def target(self):
@@ -228,9 +240,7 @@ class DataEvents:
     def response(self):
         """Get the response from a promise event in the then statement.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise
+        `Promise <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise>`_
         """
         from epyk.core.js.primitives import JsObjects
         return JsObjects.JsObjects.get("response")
@@ -278,19 +288,15 @@ class DataEvents:
     def d3(self):
         """Get a D3 component. Wrap the d3.select(this) statement.
 
-        Related Pages:
-
-          https://www.tutorialspoint.com/d3js/d3js_selections.htm
+        `D3Js <https://www.tutorialspoint.com/d3js/d3js_selections.htm>`_
         """
         from epyk.core.js.packages import JsD3
-
         return JsD3.D3Select(selector="d3.select(this)", set_var=False)
 
     @property
     def leaflet(self):
         """ """
         from epyk.core.js.packages import JsLeaflet
-
         return JsLeaflet.LEvent(selector="d3.select(this)", set_var=False)
 
     @property
@@ -302,9 +308,9 @@ class DataEvents:
         """A special data callback for promise or chained expressions.
 
         :param fnc: JavaScript function
-        :param builder: Special case for builder function. Run function and return data for the chaining
-        :param with_data: A data as fist attribute
-        :param kwargs: Any other parameter for the function
+        :param builder: Optional. Special case for builder function. Run function and return data for the chaining
+        :param with_data: Optional. A data as fist attribute
+        :param kwargs: Optional. Any other parameter for the function
         """
         from epyk.core.js.primitives import JsObjects
         from epyk.core.js import JsUtils
@@ -449,9 +455,7 @@ class GeolocationCoordinates:
         """Returns a GeolocationCoordinates object defining the current location.
         This feature is available only in secure contexts (HTTPS), in some or all supporting browsers.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
+        `GeolocationPosition <https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition>`_
         """
         from epyk.core.js.primitives import JsObject
 
@@ -551,9 +555,7 @@ class GeolocationCoordinates:
     def timestamp(self):
         """Returns a DOMTimeStamp representing the time at which the location was retrieved.
 
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition
+        `GeolocationPosition <https://developer.mozilla.org/en-US/docs/Web/API/GeolocationPosition>`_
         """
         from epyk.core.js.primitives import JsNumber
         return JsNumber.JsNumber.get("%s.timestamp" % self.varName)

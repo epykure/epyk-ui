@@ -237,7 +237,7 @@ class OptionsSlider(Options):
         value = '''
 if ($("#%(htmlCode)s").find('output').length){var label = $("#%(htmlCode)s").find('output')[0]}
 else {var label = $('<output></output>'); label.css(%(options)s); $("#%(htmlCode)s").append(label)}
-$(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options": options, "fmt_html": fmt_html}
+$(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.html_code, "options": options, "fmt_html": fmt_html}
       else:
         if readout_format is True:
           readout_format = {"type": "number", "precision": precision, "thousand": ",", "decimal": "."}
@@ -250,11 +250,10 @@ $(label).html(%(fmt_html)s)''' % {"htmlCode": self.component.htmlCode, "options"
         else:
           fmt_html = "ui.values[0] +' - '+ ui.values[1]" if self.component.is_range else "ui.value"
         self.force_show_current = True
-        value = ''' 
-%(builder)s(document.getElementsByName('out_%(htmlCode)s')[0], %(fmt_html)s, %(builderOptions)s)''' % {
-          "builder": "%s%s" % (self.component.output.builder_name[0].lower(), self.component.output.builder_name[1:]),
-          "builderOptions": self.component.output.options.config_js(),
-          "fmt_html": fmt_html, "htmlCode": self.component.html_code}
+        output_component = self.component.output
+        value = '''%(builder)s(document.getElementsByName('%(htmlCode)s')[0], %(fmt_html)s, %(builderOptions)s)''' % {
+          "builder": self.js_tree['out_builder_fnc'], "builderOptions": output_component.options.config_js(),
+          "fmt_html": fmt_html, "htmlCode": self.component.output.html_code}
       if js_funcs is None:
         js_funcs = []
       if delay_ms:

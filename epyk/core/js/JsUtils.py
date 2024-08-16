@@ -11,7 +11,6 @@ from typing import Union, Optional, List, Any
 from epyk.core.py import primitives
 from epyk.core.py import types
 
-from epyk.conf import global_settings
 from epyk.core.js import treemap
 from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
@@ -577,6 +576,8 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
     :param required_funcs: List of required functions defined in the treemap
     :param verbose: Show extra log messages
     """
+    from epyk.conf import global_settings
+
     possible_paths = []
     if global_settings.PRIMARY_RESOURCE_PATHS:
         possible_paths.extend(global_settings.PRIMARY_RESOURCE_PATHS)

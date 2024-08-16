@@ -1204,11 +1204,12 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """
         fetch_name = "await fetch" if async_await else "fetch"
         if options is None:
-            return JsObjects.JsPromise("%s(%s)" % (fetch_name, JsUtils.jsConvertData(url, None)), profile, async_await)
+            return JsObjects.JsPromise(
+                "%s(%s)" % (fetch_name, JsUtils.jsConvertData(url, None)), profile, async_await, page=self.page)
 
         return JsObjects.JsPromise(
             "%s(%s, %s)" % (fetch_name, JsUtils.jsConvertData(url, None), JsUtils.jsConvertData(options, None)),
-            profile, async_await)
+            profile, async_await, page=self.page)
 
     def await_promises(self, promises: list, js_funcs: list, before_js_funcs: list = None, data_ref = "responses") -> JsUtils.jsWrap:
         """Add sync to async promises.

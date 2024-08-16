@@ -14,6 +14,7 @@ from epyk.core.js.primitives import JsObjects
 
 
 class DataAggregators:
+    """JavaScript data aggregators"""
 
     def __init__(self, js_code: str = None, page: primitives.PageModel = None, chain = None, parent = None):
         self.varName, self.__chain = js_code, chain
@@ -299,6 +300,7 @@ class DataAggregators:
 
 
 class DataFilters:
+    """JavaScript data filters"""
 
     def __init__(self, js_code: str = None, filter_map: dict = None, page: primitives.PageModel = None):
         self.varName, self.__filters = js_code, OrderedSet()

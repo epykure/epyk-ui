@@ -36,17 +36,18 @@ from epyk.core.js.treemap import add as treemap_add
 
 #
 from epyk.core.py.PyRest import PyRest as rest
-
 from epyk.web import jupyter, npm, react, angular, svelte, vue
 
 # Attach the generic data transforms
 from epyk.core.data import DataCore
 aggs = DataCore.DataAggregators()
+"""JavaScript data aggregators"""
 fltrs = DataCore.DataFilters()
-
+"""JavaScript data filters"""
 Page = Rpt.Report
-
+"""Shortcut to standard dashboard features """
 LOG_SERVICE = None
+""" """
 
 
 def css_inline(attrs: dict = None) -> CssInline:

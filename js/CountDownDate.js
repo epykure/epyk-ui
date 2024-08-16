@@ -1,6 +1,7 @@
 
 
 function countDownDate(htmlObj, data, options){
+      setCss(htmlObj, options, true);
       var endDate = new Date(data.year, data.month-1, data.day, data.hour, data.minute, data.second);
       var now = new Date().getTime(); var distance = endDate.getTime() - now;
       if(distance < 0){distance = -distance}

@@ -17,7 +17,7 @@ class Components:
   def pivots(self, rows: Union[list, primitives.HtmlModel] = None, columns: Union[list, primitives.HtmlModel] = None,
              width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ('auto', ""), html_code: str = None,
              options: Union[dict, bool] = None,
-             profile: types.PROFILE_TYPE = None):
+             profile: types.PROFILE_TYPE = None) -> HtmlDashboard.Pivots:
     """  
 
     :tags:
@@ -65,7 +65,7 @@ class Components:
       columns_options["max"] = dflt_options.get("max", {}).get("columns")
       columns_options["delete"] = dflt_options.get("delete_columns", True)
       component.columns = self.page.ui.lists.drop(
-        html_code="%s_columns" % component.htmlCode, options=columns_options)
+        html_code="%s_columns" % component.html_code, options=columns_options)
       component.columns.style.css.margin_top = 0
       if columns is not None:
         component.rows.add_items(columns)

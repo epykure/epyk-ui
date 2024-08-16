@@ -29,12 +29,13 @@ class JsShapes:
   var defs = document.createElementNS(svgns, 'defs');
   var gradient = document.createElementNS(svgns, 'linearGradient');
   if(typeof step.status === "undefined"){step.status= "waiting"};
-  for (var i = 0, length = options.colors[step.status].length; i < length; i++) {
-    var stop = document.createElementNS(svgns, 'stop');
-    stop.setAttribute('offset', options.colors[step.status][i].offset);
-    stop.setAttribute('stop-color', options.colors[step.status][i].color);
-    gradient.appendChild(stop)}
-  
+  if(options.colors[step.status]){
+      for (var i = 0, length = options.colors[step.status].length; i < length; i++) {
+        var stop = document.createElementNS(svgns, 'stop');
+        stop.setAttribute('offset', options.colors[step.status][i].offset);
+        stop.setAttribute('stop-color', options.colors[step.status][i].color);
+        gradient.appendChild(stop)}
+  };
   gradient.id = 'gradient' + step.status + htmlObj.id; gradient.setAttribute('x1', '0'); gradient.setAttribute('x2', '0'); 
   gradient.setAttribute('y1', '0'); gradient.setAttribute('y2', '1');
   defs.appendChild(gradient);

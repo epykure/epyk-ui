@@ -11,7 +11,7 @@ function geoChoropleth(htmlObj, data, options, callbacks){
                   if (g.properties.name in data){
                     chartContext.data.datasets[0].data.push({value: data[g.properties.name], feature: g})}
                   else {chartContext.data.datasets[0].data.push({value: 0, feature: g})}
-              })
+              });
               if(typeof window[htmlObj.id + '_obj'] !== 'undefined'){
                 window[htmlObj.id + '_obj'].data = chartContext.data;
                 window[htmlObj.id + '_obj'].update()

@@ -10,28 +10,41 @@ PACKAGE_PATH = Path(__file__).parent
 
 # Required extra functions for build-in components' builders
 _BUILDERS_MAP = {
-    "qRCode": ["setCss"],
-    "radio": ["setCss"],
-    "alert": ["setCss"],
+    "alert": ["setCss", "getHtmlData"],
     "audio": ["setCss"],
     "badge": ["setCss"],
-    "blockQuote": ["setCss"],
+    "blockQuote": ["setCss", "getHtmlData"],
     "button": ["getDataFromTemplate", "setCss"],
     "buttonData": ["setCss"],
-    "textArea": ["setCss"],
-    "pre": ["setCss"],
+    "chat": ["setCss", "getHtmlData"],
     "codeEditor": ["setCss"],
-    "fieldset": ["getDataFromTemplate", "setCss"],
-    "label": ["getDataFromTemplate", "setCss"],
+    "colorsPicker": ["setCss"],
+    "contextMenu": ["setCss"],
+    "countDownDate": ["setCss"],
+    "dataLink": ["getDataFromTemplate", "setCss"],
+    "datePicker": ["setCss"],
+    "datesRange": ["setCss"],
+    "elapsed": ["getDataFromTemplate", "setCss"],
     "emoji": ["setCss"],
+    "externalLink": ["getDataFromTemplate", "setCss"],
+    "fieldset": ["getDataFromTemplate", "setCss"],
+    "genericTag": ["getDataFromTemplate", "setCss"],
     "help": ["setCss"],
+    "highlights": ["getDataFromTemplate", "getHtmlData"],
     "htmlIcon": ["setCss"],
     "input": ["setCss"],
     "inputCheckbox": ["setCss"],
+    "label": ["getDataFromTemplate", "setCss"],
+    "lastUpdate": ["setCss"],
     "listBrackets": ["setCss"],
+    "markdownReader": ["setCss", "getHtmlData"],
+    "media": ["setCss"],
     "numeric": ["getDataFromTemplate", "setCss"],
     "paragraph": ["getDataFromTemplate", "setCss"],
-    "highlights": ["getDataFromTemplate"],
+    "pre": ["setCss"],
+    "qRCode": ["setCss"],
+    "radio": ["setCss"],
+    "textArea": ["setCss"],
 
     # Echarts
     "ekECharts": ["getChartContext"],
@@ -59,6 +72,11 @@ _FUNCTIONS_MAP = {
     "getDataFromTemplate": {
         "folder": "utils",
         "file": "TemplateData.js"
+    },
+    "getHtmlData": {
+        "folder": "utils",
+        "file": "MarkdownData.js",
+        "packages": ["showdown"],
     }
 }
 

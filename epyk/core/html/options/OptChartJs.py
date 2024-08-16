@@ -467,7 +467,7 @@ function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().s
         :param js_funcs:
         :param profile:
         """
-        self._config("function(label, index, labels) {console.log(label); return 1}", js_type=True)
+        self._config("function(label, index, labels) {return 1}", js_type=True)
         return self
 
     def mapTo(self, mapping: dict):

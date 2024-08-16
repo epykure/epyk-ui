@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+from pathlib import Path
 from typing import Union, Optional
 from epyk.core.py import primitives
 from epyk.core.py import PyRest
@@ -644,6 +644,8 @@ class Header:
     :param sizes: Optional
     :param img_type: Optional
     """
+    from epyk.conf.global_settings import (ASSETS_SPLIT, ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH, ASSETS_STATIC_PUBLIC)
+
     if url in [
       'https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo.ico',
       'https://raw.githubusercontent.com/epykure/epyk-ui/master/epyk/static/images/epyklogo_dev.ico',
@@ -651,9 +653,17 @@ class Header:
       icon_name = url.split("/")
       with open(os.path.join(os.path.abspath(
         os.path.dirname(__file__)), "..", "..", "static", "images", icon_name[-1]), "rb") as fp:
-        base64_bytes = base64.b64encode(fp.read())
-        base64_message = base64_bytes.decode('ascii')
-        url = "data:image/x-icon;base64,%s" % base64_message
+        if ASSETS_SPLIT:
+          public_file_path = Path(ASSETS_STATIC_PATH) / ASSETS_STATIC_PUBLIC
+          if not public_file_path.exists():
+            public_file_path.mkdir(parents=True, exist_ok=True)
+          with open(public_file_path / icon_name[-1], "wb") as fw:
+            fw.write(fp.read())
+          url = "%s/%s/%s" % (ASSETS_STATIC_ROUTE, ASSETS_STATIC_PUBLIC, icon_name[-1])
+        else:
+          base64_bytes = base64.b64encode(fp.read())
+          base64_message = base64_bytes.decode('ascii')
+          url = "data:image/x-icon;base64,%s" % base64_message
     extension = url.split(".")[-1].lower()
     if ".%s" % extension in self.mime_mapping:
       img_type = self.mime_mapping[".%s" % extension]

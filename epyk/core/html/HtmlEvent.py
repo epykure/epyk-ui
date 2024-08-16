@@ -11,6 +11,7 @@ from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html.options import OptColors
+from epyk.core.js import treemap
 from epyk.core.html.options import OptSliders
 from epyk.core.html.options import OptList
 
@@ -275,26 +276,31 @@ class Slider(Html.Html):
                 "jqId": self.js.varId,
                 "outComp": self.__output.js.jquery.varId}])
             self.options.js_tree['out_builder_opts'] = self.__output.options.config_js()
-            native_path = os.environ.get("NATIVE_JS_PATH")
-            internal_native_path = Path(Path(__file__).resolve().parent, "..", "js", "native")
-            if native_path is None:
-                native_path = internal_native_path
-            native_builder = Path(native_path, "%s.js" % self.__output.builder_name)
-            internal_native_builder = Path(internal_native_path, "%s.js" % self.__output.builder_name)
-            if native_builder.exists():
-                self.page.js.customFile("%s.js" % self.__output.builder_name, path=native_path)
-                self.options.js_tree['out_builder_fnc'] = "%s%s" % (
-                self.__output.builder_name[0].lower(), self.__output.builder_name[1:])
-                self.page.properties.js.add_constructor(self.__output.builder_name, None)
-            elif internal_native_builder.exists():
-                self.page.js.customFile("%s.js" % self.__output.builder_name, path=internal_native_builder)
-                self.options.js_tree['out_builder_fnc'] = "%s%s" % (
-                    self.__output.builder_name[0].lower(), self.__output.builder_name[1:])
-                self.__output.page.properties.js.add_constructor(self.__output.builder_name, None)
-            else:
-                self.page.properties.js.add_constructor(self.__output.builder_name,
-                                                        "function %s(htmlObj, data, options){%s}" % (
-                                                            self.__output.builder_name, self.__output._js__builder__))
+
+            if not self.page.properties.js.has_constructor(self.__output.builder_name):
+                is_loaded = False
+                if self.__output.builder_module:
+                    is_loaded = JsUtils.addJsResources(
+                        self.page._props["js"]['constructors'], self.__output.builder_module + ".js",
+                        required_funcs=treemap._BUILDERS_MAP.get(self.__output.builder_name, []),
+                        verbose=False)
+                    self.options.js_tree['out_builder_fnc'] = "%s%s" % (
+                        self.__output.builder_name[0].lower(), self.__output.builder_name[1:])
+                if not is_loaded:
+                    if not self.__output.builder_name or self.__output._js__builder__ is None:
+                        raise ValueError("No builder defined for this HTML component %s, expected name=%s" % (
+                            self.__output.__class__.__name__, self.__output.builder_name))
+
+                    self.options.js_tree['out_builder_fnc'] = self.__output.builder_name
+                    if self.__output.async_builder:
+                        self.page.properties.js.add_constructor(
+                            self.__output.builder_name, "async function %s(htmlObj, data, options){%s}" % (
+                                self.__output.builder_name, self.__output._js__builder__))
+                    else:
+                        self.page.properties.js.add_constructor(
+                            self.__output.builder_name, "function %s(htmlObj, data, options){%s}" % (
+                                self.__output.builder_name, self.__output._js__builder__))
+
         return self.__output
 
     @output.setter

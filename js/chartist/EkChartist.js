@@ -7,7 +7,7 @@ function ekChartist(data, options){
         if (typeof options.x_axis === 'function') {xDefs = options.x_axis(data, options)} else {xDefs = options.x_axis} ;
         yDefs.forEach(function(series){temp[series] = {}});
         data.forEach(function(rec){
-            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs);}
+            if (!labels.includes(rec[xDefs])){labels.push(rec[xDefs]);}
             yDefs.forEach(function(series){
                 temp[series][rec[xDefs]] = rec[series]
              })

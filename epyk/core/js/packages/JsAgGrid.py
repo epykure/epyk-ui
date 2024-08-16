@@ -558,11 +558,19 @@ class AgGrid(JsPackage):
 
     :param col_defs: The new table definition. If None update the existing ones.
     """
-    if col_defs is None:
-      return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (
-        self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
+    if min(self.page.imports.pkgs.ag_grid.version) > '31.0.0':
+      if col_defs is None:
+        return JsObjects.JsVoid("%s.api.setGridOption('columnDefs', %s)" % (
+          self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
 
-    return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
+      return JsObjects.JsVoid("%s.api.setGridOption('columnDefs', %s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
+
+    else:
+      if col_defs is None:
+        return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (
+          self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
+
+      return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
 
   def setDomLayout(self, data: types.JS_DATA_TYPES):
     """Gets columns to adjust in size to fit the grid horizontally

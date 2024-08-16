@@ -36,9 +36,9 @@ datatable = DataPy.Datatable()
 tree = DataPy.Tree()
 
 events = DataEvent.DataEvents()
-
+"""Events variables shortcut"""
 configs = DataEvent.DataConfig()
-
+"""JavaScript Dashboard configuration"""
 loops = DataEvent.DataLoops()
 
 primitives = DataEvent.DataPrimitives()
@@ -58,7 +58,7 @@ class Sent:
     self.__data = data
 
   def get(self, name: str = None):
-    """ Set the option attribute to be added on the Javascript side during the component build.
+    """Set the option attribute to be added on the Javascript side during the component build.
 
     :param name: The attribute name
     """

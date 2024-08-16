@@ -10,7 +10,6 @@ import inspect
 
 from pathlib import Path
 from typing import Union, Optional, List, Any, Dict
-from epyk.conf import global_settings
 from epyk.core.py import primitives, types
 
 from epyk.core.js import JsUtils
@@ -376,7 +375,7 @@ class Components(collections.OrderedDict):
 
         :param component: HTML component.
         """
-        self[component.htmlCode] = component
+        self[component.html_code] = component
         return self
 
 
@@ -1517,6 +1516,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         profile = self.with_profile(profile, event=event)
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
+        if event.startswith("signal:"):
+            js_funcs.insert(0, "let data = event.detail")
         source_event = source_event or self.dom.varId
         if event not in self._browser_data['mouse']:
             self._browser_data['mouse'][event] = {}
@@ -1824,10 +1825,8 @@ var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
         return JsUtils.jsWrap('''(function(param){
 const queryString = window.location.search; const urlParams = new URLSearchParams(queryString);
 if (urlParams.has(param)){paramValue = urlParams.get(param); %s}; 
-})(%s)''' % (self.build(
-            JsUtils.jsWrap("paramValue"), options=options, profile=profile, component_id=component_id,
-            dataflows=dataflows),
-             JsUtils.jsConvertData(self.html_code, None)))
+})(%s)''' % (self.build(JsUtils.jsWrap("paramValue"), options=options, profile=profile, component_id=component_id,
+            dataflows=dataflows), JsUtils.jsConvertData(self.html_code, None)))
 
     def refresh(self):
         """Component refresh function. Javascript function which can be called in any Javascript event.
@@ -2252,17 +2251,18 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
 
         :param style_vars: Theme variables
         """
+        from epyk.conf.global_settings import THEME_SASS_PATH
         # Add CSS proxy mapping from the body
         if self.page.body.css_map_files:
             css_files = self.page.body.css_map_files
-            if global_settings.THEME_SASS_PATH:
+            if THEME_SASS_PATH:
                 css_files = []
                 for f in self.page.body.css_map_files:
                     c_file = Path(f)
-                    n_file = Path(global_settings.THEME_SASS_PATH, c_file.name)
+                    n_file = Path(THEME_SASS_PATH, c_file.name)
                     if n_file.exists():
                         logging.debug("NATIVE | CSS | file %s used from %s" % (
-                            c_file.name, global_settings.THEME_SASS_PATH))
+                            c_file.name, THEME_SASS_PATH))
                         css_files.append(n_file)
                     else:
                         css_files.append(c_file)
@@ -2333,7 +2333,7 @@ class Component(Html):
     @property
     def var(self) -> str:
         """Return the javaScript object reference after the builder. """
-        return "window['%s']" % self.htmlCode
+        return "window['%s']" % self.html_code
 
     def add_item(self, component: Union[Html, str]):
         """Add the sub item to the list of items.
@@ -2444,7 +2444,7 @@ class StructComponent(Html):
 
         values = self.write_values()
         values["attrs"] = self.get_attrs(css_class_names=self.style.get_classes())
-        values["htmlCode"] = self.htmlCode
+        values["htmlCode"] = self.html_code
         if self._js__builder__ is not None:
             self.page.properties.js.add_builders(self.refresh())
         return self.str_repr.format(**values)

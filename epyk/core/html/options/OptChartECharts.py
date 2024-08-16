@@ -1418,10 +1418,10 @@ class EChartOptions(OptionsWithTemplates):
     def series(self) -> OptionSeries:
         """ """
         s = self._config_sub_data_enum("series", OptionSeries)
-        i = len(self.js_tree["series"]) - 1 % len(self.ek.colors)
         if self.ek.chart.type in ("pie", "radar"):
             s.color = self.ek.colors
         else:
+            i = len(self.js_tree["series"]) - 1 % len(self.ek.colors)
             s.color = self.ek.colors[i]
         return s
 

@@ -129,19 +129,19 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param dataflows: Chain of data transformations
         """
         self.js_code = component_id
-        builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
-            self.builder_name, JsUtils.dataFlows(data or [], dataflows, self.page),
-            self.options.config_js(options).toStr()), profile).toStr()
-
         if data is not None:
+            builder_fnc = JsUtils.jsWrap("%s(%s, %s)" % (
+                self.builder_name, JsUtils.dataFlows(data or [], dataflows, self.page),
+                self.options.config_js(options).toStr()), profile).toStr()
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(self.html_code)
             return '%(chartId)s.clear();%(chartId)s.setOption(%(builder)s, true);%(state)s' % {
                 'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
 
+        builder_fnc = self.options.config_js(options).toStr()
         return '''%(chartId)s = window.echarts.init(document.getElementById(%(hmlCode)s)); %(chartId)s.setOption(%(builder)s);
-        ''' % {"chartId": self.js_code, "hmlCode": JsUtils.jsConvertData(component_id or self.htmlCode, None),
+        ''' % {"chartId": self.js_code, "hmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
                'builder': builder_fnc}
 
     @property

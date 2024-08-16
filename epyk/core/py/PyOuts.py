@@ -1,8 +1,8 @@
 import inspect
 import os
-import sys
 import time
 import json
+import collections
 
 from typing import Optional, List, Dict, Any, Union
 from epyk.core.py import primitives
@@ -128,16 +128,18 @@ class PyOuts:
         self.__requireJs, self.__requireJs_attrs, self.__jupyter_cell = None, {}, False
 
     def _to_html_obj(self, htmlParts: Optional[List[str]] = None, cssParts: Optional[Dict[str, Any]] = None,
-                     split_js: bool = False):
+                     splitOpts: dict = None):
         """
         Create the HTML result object from the report definition.
 
         :param htmlParts: Optional. HTML Content of the page
         :param cssParts: Optional. CSS classes content of the page
-        :param split_js: Optional. Flag to specify if JS, CSS and HTML need to be written in different files
+        :param splitOpts: Optional. Flag to specify if JS, CSS and HTML need to be written in different files
 
         :return: A python dictionary with the HTML results
         """
+        from epyk.conf.global_settings import  ASSETS_STATIC_ROUTE
+
         order_components = list(self.page.components.keys())
         if htmlParts is None:
             htmlParts, cssParts = [], {}
@@ -154,7 +156,8 @@ class PyOuts:
                         component.options.managed = False
                 #
                 cssParts.update(component.style.get_classes_css())
-        onloadParts, onloadPartsCommon = list(self.page.properties.js.frgs), {}
+        onloadParts, onloadPartsCommon = list(self.page.properties.js.frgs), collections.OrderedDict()
+        # TODO: Link this with imports.attach_data()
         for data_id, data in self.page._props.get("data", {}).get('sources', {}).items():
             onloadParts.append("var data_%s = %s" % (data_id, json.dumps(data)))
 
@@ -224,10 +227,14 @@ class PyOuts:
             import_mng = self.page.imports
         else:
             import_mng = Imports.ImportManager(page=self.page)
-        self.page.jsLocalImports.add(
-            "data:text/js;base64,%s" % Imports.string_to_base64(JsGlobals.set_global_options(
-                self.page._props.get('js', {}).get("constructors", {}),
-                self.page.properties.js.get_init_options())))
+
+        if splitOpts and splitOpts.get("split", False) and splitOpts.get("path"):
+            onloadPartsCommon.update(self.page._props.get('js', {}).get("constructors", {}))
+        else:
+            self.page.jsLocalImports.add(
+                "data:text/js;base64,%s" % Imports.string_to_base64(JsGlobals.set_global_options(
+                    self.page._props.get('js', {}).get("constructors", {}),
+                    self.page.properties.js.get_init_options())))
         # Set the env variable if the exports is using to load packages
         onloadParts.insert(
           0,
@@ -464,7 +471,7 @@ if (typeof icon === "undefined"){
         return path
 
     def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None,
-                  print_paths: Union[bool, dict] = False, run_id: Union[bool, str] = True):
+                  print_paths: Union[bool, dict] = None, run_id: Union[bool, str] = True):
         """
         Function used to generate a static HTML page for the report.
 
@@ -486,20 +493,20 @@ if (typeof icon === "undefined"){
 
         :return: The file full path.
         """
+        from epyk.conf.global_settings import (ASSETS_SPLIT, ASSETS_SPLIT_MINIFY, ASSETS_PRINT_PATHS, ASSETS_OUT_PATH,
+                                               ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH, ASSETS_STATIC_JS,
+                                               ASSETS_STATIC_CSS)
+
         t1_start = time.process_time()
 
         # For templates configuration
         from epyk import configs
-
-        if "HTML_PRINT_PATH" in os.environ:
-            # Env variables can override defined arguments.
-            print_paths = os.environ.get("HTML_PRINT_PATH", 'N') == 'Y'
+        if ASSETS_PRINT_PATHS is None:
+            print_paths = print_paths
+        else:
+            print_paths = ASSETS_PRINT_PATHS
         options = options or {}
-        if path is None:
-            if "HTML_OUT_PATH" in os.environ:
-                path = os.environ["HTML_OUT_PATH"]
-            else:
-                path = os.path.join(os.getcwd(), "outs")
+        path = path or ASSETS_OUT_PATH
         if not os.path.exists(path):
             os.makedirs(path)
         if name is None:
@@ -528,40 +535,43 @@ if (typeof icon === "undefined"){
                 htmlParts.append(component.html())
             cssParts.update(component.style.get_classes_css())
         body = str(self.page.body.set_content(self.page, "\n".join(htmlParts)))
-        results = self._to_html_obj(htmlParts, cssParts, split_js=options.get("split", False) in (True, 'js'))
-        if options.get("split", False):
-            static_path = path
-            static_url = self.page.imports.static_url or "."
-            if options["split"] is True or options["split"] == "css":
-                css_filename = "%s.min" % name if options.get("minify", False) else name
+        results = self._to_html_obj(htmlParts, cssParts, splitOpts={
+            "split": options.get("split", ASSETS_SPLIT) in (True, 'js'), "path": ASSETS_STATIC_PATH, "name": name,
+            "minify": options.get("minify", ASSETS_SPLIT_MINIFY)})
+        if options.get("split", ASSETS_SPLIT):
+            static_path = ASSETS_STATIC_PATH
+            static_url = self.page.imports.static_url or ASSETS_STATIC_ROUTE
+            if options.get("split", ASSETS_SPLIT) in [True, "css"]:
+                css_filename = "%s.min" % name if options.get("minify", ASSETS_SPLIT_MINIFY) else name
                 results['cssImports'] = '%s\n<link rel="stylesheet" href="%s/%s.css" type="text/css">\n\n' % (
-                    results['cssImports'], options.get("css_route", '%s/css' % static_url), css_filename)
+                    results['cssImports'], options.get("css_route", '%s/%s' % (static_url, ASSETS_STATIC_CSS)), css_filename)
                 if options.get("static_path") is not None:
                     static_path = os.path.join(path, options.get("static_path"))
-                if not os.path.exists(os.path.join(static_path, 'css')):
-                    os.makedirs(os.path.join(static_path, 'css'))
-                css_file_path = os.path.join(static_path, 'css', "%s.css" % css_filename)
+                if not os.path.exists(os.path.join(static_path, ASSETS_STATIC_CSS)):
+                    os.makedirs(os.path.join(static_path, ASSETS_STATIC_CSS))
+                css_file_path = os.path.join(static_path, ASSETS_STATIC_CSS, "%s.css" % css_filename)
                 with open(css_file_path, "w") as f:
-                    if options.get("minify", False):
+                    if options.get("minify", ASSETS_SPLIT_MINIFY):
                         f.write(results['cssStyle'].replace("\n", ""))
                     else:
                         f.write(results['cssStyle'])
                     results['cssStyle'] = ""  # empty the styles as written in an external file.
                 if print_paths:
-                    print("css", "file:///%s" % css_file_path.replace("\\", "/"))
-            if options["split"] is True or options["split"] == "js":
-                js_filename = "%s.min" % name if options.get("minify", False) else name
-                body = '%s\n\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (
-                    body, options.get("js_route", '%s/js' % static_url), js_filename)
-                if not os.path.exists(os.path.join(static_path, 'js')):
-                    os.makedirs(os.path.join(static_path, 'js'))
-                js_file_path = os.path.join(static_path, 'js', "%s.js" % js_filename)
+                    print("css:", "file:///%s" % css_file_path.replace("\\", "/"))
+            if options.get("split", ASSETS_SPLIT) in [True, "js"]:
+                minify = options.get("minify", ASSETS_SPLIT_MINIFY)
+                js_filename = "%s.min" % name if minify else name
+                body = '%s\n<script language="javascript" type="text/javascript" src="%s/%s.js"></script>' % (
+                    body, options.get("js_route", '%s/%s' % (static_url, ASSETS_STATIC_JS)), js_filename)
+                if not os.path.exists(os.path.join(static_path, ASSETS_STATIC_JS)):
+                    os.makedirs(os.path.join(static_path, ASSETS_STATIC_JS))
+                minify = options.get("minify", ASSETS_SPLIT_MINIFY)
+                js_file_path = os.path.join(static_path, ASSETS_STATIC_JS, "%s.js" % js_filename)
                 with open(js_file_path, "w") as f:
-                    funcs = [JsLinter.parse(v, minify=options.get("minify", False)) for v in
-                             results['jsFrgsCommon'].values()]
+                    funcs = [JsLinter.parse(v, minify=minify) for v in results['jsFrgsCommon'].values()]
                     f.write("\n\n".join(funcs))
                 if print_paths:
-                    print("js", "file:///%s" % js_file_path.replace("\\", "/"))
+                    print("js:", "file:///%s" % js_file_path.replace("\\", "/"))
 
         # Add the worker sections when no server available
         for js_id, wk_content in self.page._props.get('js', {}).get("workers", {}).items():
@@ -569,15 +579,17 @@ if (typeof icon === "undefined"){
         with open(html_file_path, "w") as f:
             results['body'] = body
             results['header'] = self.page.headers
+            if results.get("cssStyle"):
+                results["cssStyle"] = "<style>%s</style>" % results["cssStyle"]
             f.write(HtmlTmplBase.STATIC_PAGE % results)
         if print_paths:
             if isinstance(print_paths, dict):
                 link_args = ""
                 if "args" in print_paths:
                     link_args = "?%s" % "&".join(["%s=%s" % (k, v) for k, v in print_paths["args"].items()])
-                print("html", "file:///%s%s" % (html_file_path.replace("\\", "/"), link_args))
+                print("html:", "file:///%s%s" % (html_file_path.replace("\\", "/"), link_args))
             else:
-                print("html", "file:///%s" % html_file_path.replace("\\", "/"))
+                print("html:", "file:///%s" % html_file_path.replace("\\", "/"))
 
         if configs.keys:
             with open(os.path.join(path, "%s.json" % name), "w") as fp:
@@ -603,7 +615,7 @@ if (typeof icon === "undefined"){
                 html_parts.append(component.html())
             css_parts.update(component.style.get_classes_css())
         body = str(self.page.body.set_content(self.page, "\n".join(html_parts)))
-        results = self._to_html_obj(html_parts, css_parts, split_js=True)
+        results = self._to_html_obj(html_parts, css_parts, splitOpts={"split": True})
         results['body'] = body.replace("<body", "<div").replace("</body>", "</div>")
         return results
 
@@ -713,6 +725,8 @@ if (typeof icon === "undefined"){
             body += '\n<script id="%s" type="javascript/worker">\n%s\n</script>' % (js_id, wk_content)
         results['body'] = body
         results['header'] = self.page.headers
+        if results.get("cssStyle"):
+            results["cssStyle"] = "<style>%s</style>" % results["cssStyle"]
         return self.html_tmpl.strip() % results
 
     @property
