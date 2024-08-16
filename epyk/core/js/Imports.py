@@ -12,7 +12,7 @@ import collections
 import logging
 import base64
 import traceback
-from typing import Union, Optional, List, Dict
+from typing import Union, Optional, List, Dict, Any
 from pathlib import Path
 
 try:
@@ -4221,6 +4221,9 @@ class ImportManager:
 
         :return: The string to be added to the header
         """
+        from epyk.conf.global_settings import (ASSETS_SPLIT, ASSETS_SPLIT_MINIFY, ASSETS_PRINT_PATHS, ASSETS_OUT_PATH,
+                                               ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH, ASSETS_STATIC_JS)
+
         js = []
         if self.set_exports:
             js.append("<script>var exports = {};</script>")
@@ -4266,9 +4269,17 @@ class ImportManager:
                             js_content = b"".join(tmp_file)
                         else:
                             js_content = fp.read()
-                        base64_bytes = base64.b64encode(js_content)
-                        base64_message = base64_bytes.decode('ascii')
-                        url_module = "data:text/js;base64,%s" % base64_message
+                        if ASSETS_SPLIT:
+                            js_path = Path(ASSETS_STATIC_PATH) / ASSETS_STATIC_JS
+                            if not js_path.exists():
+                                js_path.mkdir(parents=True, exist_ok=True)
+                            with open(js_path / self.jsImports[js_alias]['title'], "wb") as fp:
+                                fp.write(js_content)
+                            url_module = "%s/%s/%s" % (ASSETS_STATIC_ROUTE, ASSETS_STATIC_JS, self.jsImports[js_alias]['title'])
+                        else:
+                            base64_bytes = base64.b64encode(js_content)
+                            base64_message = base64_bytes.decode('ascii')
+                            url_module = "data:text/js;base64,%s" % base64_message
                 elif self.self_contained:
                     try:
                         headers = {
@@ -4763,6 +4774,29 @@ class ImportManager:
                     css_module["cdnjs"] = cdnjs
                 self.jsImports[alias]["main"][script_cdnjs_path(alias, css_module)] = version
                 self.jsImports[alias]["type"][script_cdnjs_path(alias, css_module)] = 'stylesheet'
+
+    def attach_data(self, name: str, data: Any, **kwargs):
+        """Attach data to a common data.
+
+        :param name: Main JavaScript variable name
+        :param data: JavaScript Data written to the file
+        :param kwargs: Optional. Other key / values data to register to the file
+        """
+        from epyk.conf.global_settings import ASSETS_SPLIT, ASSETS_STATIC_DATA, ASSETS_STATIC_PATH, ASSETS_STATIC_ROUTE
+        main_data = ["var %s = %s;" % (name.upper(), json.dumps(data))]
+        for k, v in kwargs.items():
+            main_data.append("var %s = %s;" % (k.upper(), json.dumps(v)))
+        if ASSETS_SPLIT:
+            data_path = Path(ASSETS_STATIC_PATH) / ASSETS_STATIC_DATA
+            if not data_path.exists():
+                data_path.mkdir(parents=True, exist_ok=True)
+            with open(data_path / ("%s.js" % name), "w") as fp:
+                fp.write("\n".join(main_data))
+            self.page.headers.add_script(
+                "%s/%s/%s.js" % (ASSETS_STATIC_ROUTE, ASSETS_STATIC_DATA, name), {"title": "static data"})
+        else:
+            self.page.properties.js.add_constructor(name, "\n".join(main_data))
+        return self.page.js.getVar(name.upper())
 
 
 class Package:

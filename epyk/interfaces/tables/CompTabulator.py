@@ -4,6 +4,7 @@
 from typing import Union
 from epyk.interfaces import Arguments
 from epyk.core.html import tables as html_tables
+from epyk.core.js.JsUtils import isJsData, jsWrap
 
 
 class Tabulators:
@@ -42,14 +43,17 @@ class Tabulators:
         cols = cols or []
         rows = rows or []
         if records is not None and not cols and not rows:
-            cols = list(records[0].keys())
+            if isJsData(records):
+                cols = jsWrap("(function(){let h = []; for (k in %s[0]){h.push({field: k, title: k})}; return h})()" % records)
+            else:
+                cols = list(records[0].keys())
 
         table_options_dflts = {'selectable': False, 'index': '_row', 'pagination': 'local',
                                'paginationSize': 25, 'resizableRows': False, 'movableColumns': True}
         if options is not None:
             table_options_dflts.update(options)
 
-        if not records or len(records) < table_options_dflts["paginationSize"]:
+        if not records or (not isJsData(records) and len(records) < table_options_dflts["paginationSize"]):
             del table_options_dflts["pagination"]
             del table_options_dflts["paginationSize"]
 
@@ -62,8 +66,11 @@ class Tabulators:
             self.page, records, width, height, html_code, table_options_dflts, profile)
         table._json_config = json
         table.options.layouts.fitColumns()
-        for c in cols + rows:
-            table.add_column(c)
+        if isJsData(cols):
+            table.options._config(cols, "columns", js_type=True)
+        else:
+            for c in cols + rows:
+                table.add_column(c)
         if rows:
             table.options.attr("rows_def", {"headerFilter": True, "fields": rows})
         return table
@@ -92,9 +99,13 @@ class Tabulators:
         cols = cols or []
         rows = rows or []
         if records is not None and not cols and not rows:
-            cols = list(records[0].keys())
-            if '_children' in cols:
-                cols.remove('_children')
+            if isJsData(records):
+                cols = jsWrap(
+                    "(function(){let h = []; for (k in %s[0]){h.push({field: k, title: k})}; return h})()" % records)
+            else:
+                cols = list(records[0].keys())
+                if '_children' in cols:
+                    cols.remove('_children')
         table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
                                'movableColumns': False}
         if options is not None:
@@ -108,8 +119,11 @@ class Tabulators:
             self.page, records, width, height, html_code, table_options_dflts, profile)
         table._json_config = json
         table.options.layouts.fitColumns()
-        for c in cols + rows:
-            table.add_column(c)
+        if isJsData(cols):
+            table.options._config(cols, "columns", js_type=True)
+        else:
+            for c in cols + rows:
+                table.add_column(c)
         table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {
             "css": {"background": self.page.theme.colors[0]}}})
         table.options.attr("columns_def", {"formatter": "numbersFormat", 'formatterParams': {
@@ -153,7 +167,11 @@ class Tabulators:
         cols = cols or []
         rows = rows or []
         if records is not None and not cols and not rows:
-            cols = list(records[0].keys())
+            if isJsData(records):
+                cols = jsWrap(
+                    "(function(){let h = []; for (k in %s[0]){h.push({field: k, title: k})}; return h})()" % records)
+            else:
+                cols = list(records[0].keys())
 
         table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
                                'movableColumns': False}
@@ -167,8 +185,11 @@ class Tabulators:
         table = html_tables.HtmlTableTabulator.Table(
             self.page, records, width, height, html_code, table_options_dflts, profile)
         table._json_config = json
-        for c in rows + cols:
-            table.add_column(c)
+        if isJsData(cols):
+            table.options._config(cols, "columns", js_type=True)
+        else:
+            for c in rows + cols:
+                table.add_column(c)
         if rows:
             table.options.attr("rows_def", {"headerFilter": True, "fields": rows})
         return table
@@ -201,7 +222,11 @@ class Tabulators:
         cols = cols or []
         rows = rows or []
         if records is not None and not cols and not rows:
-            cols = list(records[0].keys())
+            if isJsData(records):
+                cols = jsWrap(
+                    "(function(){let h = []; for (k in %s[0]){h.push({field: k, title: k})}; return h})()" % records)
+            else:
+                cols = list(records[0].keys())
 
         table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
                                'movableColumns': False}
@@ -214,11 +239,15 @@ class Tabulators:
             table.add_column(c)
             table.get_column(c).exts.formatters.style(css={"background": self.page.theme.colors[0]})
             table.get_column(c).headerFilter = True
-        for c in cols:
-            table.add_column(c)
-            table.get_column(c).exts.formatters.trafficlight(css={"background": "white"})
-            table.get_column(c).headerSort = False
-            table.get_column(c).headerVertical = 'flip'
+
+        if isJsData(cols):
+            table.options._config(cols, "columns", js_type=True)
+        else:
+            for c in cols:
+                table.add_column(c)
+                table.get_column(c).exts.formatters.trafficlight(css={"background": "white"})
+                table.get_column(c).headerSort = False
+                table.get_column(c).headerVertical = 'flip'
         table.options.attr("rows_def", {
             "headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {"css": {
                 "background": self.page.theme.colors[0]}}})
@@ -261,13 +290,16 @@ class Tabulators:
         cols = cols or []
         rows = rows or []
         if records is not None and not cols and not rows:
-            cols = list(records[0].keys())
+            if isJsData(records):
+                cols = jsWrap(
+                    "(function(){let h = []; for (k in %s[0]){h.push({field: k, title: k})}; return h})()" % records)
+            else:
+                cols = list(records[0].keys())
 
         table_options_dflts = {'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
                                'movableColumns': False}
         if options is not None:
             table_options_dflts.update(options)
-
         json = {}
         if 'json' in table_options_dflts:
             json = table_options_dflts["json"].fromConfig(html_code, {}, page=self.page)
@@ -280,9 +312,12 @@ class Tabulators:
             table.add_column(c)
             table.get_column(c).exts.formatters.style(css={"background": self.page.theme.colors[0]})
             table.get_column(c).headerFilter = True
-        for c in cols:
-            table.add_column(c)
-            table.get_column(c).exts.formatters.number_format(css={"background": "white"})
+        if isJsData(cols):
+            table.options._config(cols, "columns", js_type=True)
+        else:
+            for c in cols:
+                table.add_column(c)
+                table.get_column(c).exts.formatters.number_format(css={"background": "white"})
         table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {
             "css": {"background": self.page.theme.colors[0]}}})
         table.options.attr("columns_def", {"formatter": "numbersFormat", 'formatterParams': {
@@ -317,7 +352,11 @@ class Tabulators:
         cols = cols or []
         rows = rows or []
         if records is not None and not cols and not rows:
-            cols = list(records[0].keys())
+            if isJsData(records):
+                cols = jsWrap(
+                    "(function(){let h = []; for (k in %s[0]){h.push({field: k, title: k})}; return h})()" % records)
+            else:
+                cols = list(records[0].keys())
 
         table_options_dflts = {"steps": 100, 'selectable': False, 'dataTree': True, 'dataTreeStartExpanded': False,
                                'movableColumns': False}
@@ -330,10 +369,13 @@ class Tabulators:
             table.add_column(c)
             table.get_column(c).exts.formatters.style(css={"background": self.page.theme.colors[0]})
             table.get_column(c).headerFilter = True
-        for c in cols:
-            table.add_column(c)
-            table.get_column(c).exts.formatters.intensity(
-                steps=table_options_dflts["steps"], colors=["white", self.page.theme.danger.base])
+        if isJsData(cols):
+            table.options._config(cols, "columns", js_type=True)
+        else:
+            for c in cols:
+                table.add_column(c)
+                table.get_column(c).exts.formatters.intensity(
+                    steps=table_options_dflts["steps"], colors=["white", self.page.theme.danger.base])
         table.options.attr("rows_def", {"headerFilter": True, "formatter": 'cssStyle', 'formatterParams': {
             "css": {"background": self.page.theme.colors[0]}}})
         table.options.attr("columns_def", {"formatter": "numbersIntensity", 'formatterParams': {
