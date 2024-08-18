@@ -4,6 +4,7 @@
 from epyk.core.py import types
 from epyk.interfaces import Arguments
 from epyk.core.html import tables as html_tables
+from epyk.core.js.JsUtils import isJsData, jsWrap
 
 
 class AgGrid:
@@ -60,15 +61,22 @@ class AgGrid:
         rows = rows or []
         if not cols and not rows:
             if records is not None and records:
-                cols = list(records[0].keys())
+                if isJsData(records):
+                    cols = jsWrap(
+                        "(function(){let h = []; for (k in %s[0]){h.push({field: k, headerName: k.charAt(0).toUpperCase() + k.slice(1)})}; return h})()" % records)
+                else:
+                    cols = list(records[0].keys())
 
         table_options_dfls = {'headerHeight': 30, 'rowHeight': 25}
         if options is not None:
             table_options_dfls.update(options)
         table = html_tables.HtmlTableAgGrid.Table(self.page, records, width, height, html_code, table_options_dfls,
                                                   profile)
-        for c in cols + rows:
-            table.add_column(c, title=c.capitalize())
+        if isJsData(cols):
+            table.options._config(cols, "columnDefs", js_type=True)
+        else:
+            for c in cols + rows:
+                table.add_column(c, title=c.capitalize())
         if height[0] == "auto":
             table.options.onGridReady(["param.api.setDomLayout('autoHeight')"])
         return table

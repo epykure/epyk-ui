@@ -434,8 +434,7 @@ JS_IMPORTS = {
                      'npm_path': 'js'},
         'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
-        'modules': [{'script': 'fontawesome.js', 'path': 'releases/v%(version)s/js/',
-                     'cdnjs': 'https://use.fontawesome.com'}],
+        'modules': [{'script': 'fontawesome.js', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
         'website': 'https://fontawesome.com/'},
 
     # Javascript packages to handle DataTables
@@ -2745,6 +2744,10 @@ class ImportModule:
         if self.overriden:
             return
 
+        # TODO Find way to fix the change of name in a better way
+        mapped_name = self._name
+        if not self.community_version and self._name == "ag-grid-community":
+            mapped_name = "ag-grid-enterprise"
         new_js = collections.OrderedDict()
         for v in JS_IMPORTS[self._name]["modules"]:
             if os.path.exists(v['cdnjs']):
@@ -2753,7 +2756,7 @@ class ImportModule:
             node_path = v.get("node_path", "")
             if not node_path.endswith("/"):
                 node_path += "/"
-            new_js["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
+            new_js["%s/%s/%s%s" % (static_url, mapped_name, node_path, v["script"])] = self.version
         if new_js:
             self._js["main"] = new_js
         if self._css:
@@ -2765,7 +2768,7 @@ class ImportModule:
                 node_path = v.get("node_path", "")
                 if not node_path.endswith("/"):
                     node_path += "/"
-                new_css["%s/%s/%s%s" % (static_url, self._name, node_path, v["script"])] = self.version
+                new_css["%s/%s/%s%s" % (static_url, mapped_name, node_path, v["script"])] = self.version
             if new_css:
                 self._css["main"] = new_css
         self.overriden = True
@@ -2794,7 +2797,7 @@ class ImportModule:
             JS_IMPORTS['ag-grid-community']["register"]["module"] = "ag-grid-enterprise.min"
             JS_IMPORTS['ag-grid-community']["register"]["npm"] = "ag-grid-enterprise"
             JS_IMPORTS['ag-grid-community']['modules'] = [
-                {'script': 'ag-grid-enterprise.min.js', 'path': 'ag-grid-enterprise@%(version)s/dist/',
+                {'script': 'ag-grid-enterprise.min.js', 'node_path': 'dist/', 'path': 'ag-grid-enterprise@%(version)s/dist/',
                  'cdnjs': JSDELIVER},
             ]
             self._js["main"] = {
@@ -2805,7 +2808,7 @@ class ImportModule:
             self._js["versions"] = [version]
 
             CSS_IMPORTS['ag-grid-community']['modules'] = [
-                {'script': 'ag-grid.min.css', 'path': 'ag-grid-enterprise@%(version)s/styles/', 'cdnjs': JSDELIVER},
+                {'script': 'ag-grid.min.css', 'node_path': 'styles/', 'path': 'ag-grid-enterprise@%(version)s/styles/', 'cdnjs': JSDELIVER},
             ]
             self._css["main"] = {
                 "%s/ag-grid-enterprise@%s/styles/ag-grid.min.css" % (JSDELIVER, version): version}
@@ -4258,28 +4261,32 @@ class ImportManager:
                         continue
 
                     self.jsImports[js_alias]['title'] = os.path.split(url_module)[-1]
-                    with open(url_module, "rb") as fp:
-                        if mod_type == "text/javascript":
-                            # export cannot be used in javascript scripts not set as modules
-                            tmp_file = []
-                            for line in fp.readlines():
-                                for m_expr, m_rep in {b"^export ": b""}.items():
-                                    line = re.sub(m_expr, m_rep, line)
-                                tmp_file.append(line)
-                            js_content = b"".join(tmp_file)
-                        else:
-                            js_content = fp.read()
-                        if ASSETS_SPLIT:
-                            js_path = Path(ASSETS_STATIC_PATH) / ASSETS_STATIC_JS
-                            if not js_path.exists():
-                                js_path.mkdir(parents=True, exist_ok=True)
-                            with open(js_path / self.jsImports[js_alias]['title'], "wb") as fp:
-                                fp.write(js_content)
-                            url_module = "%s/%s/%s" % (ASSETS_STATIC_ROUTE, ASSETS_STATIC_JS, self.jsImports[js_alias]['title'])
-                        else:
-                            base64_bytes = base64.b64encode(js_content)
-                            base64_message = base64_bytes.decode('ascii')
-                            url_module = "data:text/js;base64,%s" % base64_message
+                    module_exists = os.path.exists(url_module)
+                    if module_exists:
+                        with open(url_module, "rb") as fp:
+                            if mod_type == "text/javascript":
+                                # export cannot be used in javascript scripts not set as modules
+                                tmp_file = []
+                                for line in fp.readlines():
+                                    for m_expr, m_rep in {b"^export ": b""}.items():
+                                        line = re.sub(m_expr, m_rep, line)
+                                    tmp_file.append(line)
+                                js_content = b"".join(tmp_file)
+                            else:
+                                js_content = fp.read()
+                            if ASSETS_SPLIT:
+                                js_path = Path(ASSETS_STATIC_PATH) / ASSETS_STATIC_JS
+                                if not js_path.exists():
+                                    js_path.mkdir(parents=True, exist_ok=True)
+                                with open(js_path / self.jsImports[js_alias]['title'], "wb") as fp:
+                                    fp.write(js_content)
+                                url_module = "%s/%s/%s" % (ASSETS_STATIC_ROUTE, ASSETS_STATIC_JS, self.jsImports[js_alias]['title'])
+                            else:
+                                base64_bytes = base64.b64encode(js_content)
+                                base64_message = base64_bytes.decode('ascii')
+                                url_module = "data:text/js;base64,%s" % base64_message
+                    else:
+                        logging.warning("Missing File: %s" % url_module)
                 elif self.self_contained:
                     try:
                         headers = {
