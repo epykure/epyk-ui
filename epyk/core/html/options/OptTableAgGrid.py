@@ -2301,7 +2301,11 @@ class TableConfig(OptionsWithTemplates):
 
     @rowClassRules.setter
     def rowClassRules(self, values: Union[str, dict]):
-        self._config(values)
+        if isinstance(values, dict):
+            r = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in values.items()]
+            self._config("{%s}" % ",".join(r), js_type=True)
+        else:
+            self._config(values)
 
     @property
     def rowHeight(self):

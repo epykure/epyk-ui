@@ -2074,6 +2074,9 @@ class Body(Html):
         :param sync: Optional. Specify if the type of loading event
         :param filename: Optional. The filename for the configuration
         """
+        if end_point is None:
+            from epyk.conf.global_settings import ASSETS_STATIC_ROUTE, ASSETS_STATIC_CONFIG
+            end_point = "%s/%s" % (ASSETS_STATIC_ROUTE, ASSETS_STATIC_CONFIG)
         if self.page.json_config_file is None:
             raise ValueError("json_config_file must be attached to the page to load the corresponding configuration")
 
@@ -2272,6 +2275,31 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
                 self.page.properties.css.add_text(css_content, map_id="CSS VarMap")
                 #self.page.headers.links.stylesheet(
                 #    "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
+
+    def show(self, component, js_funcs: types.JS_FUNCS_TYPES, load_flag: str = None, profile: types.PROFILE_TYPE = None):
+        """Trigger an event when component is in the viewport.
+
+        Usage::
+
+            table_load_flag = "isTableLoaded"
+            table = page.ui.tables.aggrids.table(rows=["athlete", "country", "sport", 'year'], html_code="tb1")
+            page.body.show(table, [
+                "console.log('Visible')",
+                page.js.fetch(urls.AGGRID_OLYMPIC_WINNERS).json().process(table.js.setRowData)
+            ], load_flag=table_load_flag)
+
+        :param component: Component used to trigger the event
+        :param js_funcs: JavaScript functions
+        :param load_flag: Optional. Variable name / flag to avoid multiple triggers
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        load_flag = load_flag or "%s_isLoaded" % component.html_code
+        self.scroll([
+            self.page.js.if_("(%s) && !%s" % (component.dom.isInViewPort, self.js.getVar(load_flag)), js_funcs + [
+                self.js.setVar(load_flag, True)], profile=profile)])
+        return self
 
     def __str__(self):
         # Add Core CSS definition

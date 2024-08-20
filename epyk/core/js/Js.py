@@ -1722,6 +1722,21 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
 
         return JsObjects.JsObject.JsObject.get(js_code)
 
+    def setVar(self, js_code: Union[str, primitives.JsDataModel], data: Any) -> JsObjects.JsObject.JsObject:
+        """Set a global / window Javascript variable.
+
+        Usage::
+
+            table_load_flag = "isTableLoaded"
+            page.js.setVar(table_load_flag, False)
+
+        :param js_code: The Variable name
+        :param data: The Variable content
+        """
+        js_code = JsUtils.jsConvertData(js_code, None)
+        js_data = JsUtils.jsConvertData(data, None)
+        return JsObjects.JsObject.JsObject.get("window[%s] = %s" % (js_code, js_data))
+
     def info(self, data: Union[str, primitives.JsDataModel], css_style: Optional[dict] = None,
              icon: str = "fas fa-spinner fa-spin", seconds: int = 10000):
         """Display a message.
