@@ -96,7 +96,7 @@ class JsPromiseRecords(primitives.JsDataModel):
 
         :param column:
         :param value:
-        :param operator: Optional. 
+        :param operator: Optional.
         :param keep: Optional.
         """
         column = JsUtils.jsConvertData(column, None)
