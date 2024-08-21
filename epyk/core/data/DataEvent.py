@@ -3,7 +3,6 @@
 
 from typing import Any, Callable
 from epyk.core.py import primitives
-from epyk.conf.global_settings import ASSETS_STATIC_CONFIG, ASSETS_STATIC_ROUTE
 import json
 
 
@@ -194,6 +193,39 @@ class DataEvents:
         result = JsObjects.JsObjects.get("data")
         result.aggs = DataCore.DataAggregators(js_code="data")
         result.fltrs = DataCore.DataFilters(js_code="data")
+        return result
+
+    @property
+    def headers(self):
+        """Get headers from a XMLHttpRequest response
+
+        Usage::
+
+            s_query = web.js.get("/url", data={"value": 45, "ok": "test"})
+            b.click([js_query.onSuccess([web.js.console.log(pk.events.headers)])])
+            """
+        from epyk.core.js.primitives import JsObjects
+        result = JsObjects.JsObjects.get("headers")
+        return result
+
+    def header(self, name: str, ref: str = "headers"):
+        """Get specific header value from a XMLHttpRequest response
+
+        Usage::
+
+            s_query = web.js.get("/url", data={"value": 45, "ok": "test"})
+            b.click([js_query.onSuccess([
+                web.js.if_(pk.events.header("valid") == "Yes", [web.js.console.log(pk.events.header("content-type"))])
+            ])])
+
+        :param name: Header's name
+        :param ref: header response variable reference
+        """
+        from epyk.core.js.primitives import JsObjects
+        from epyk.core.js import JsUtils
+
+        name = JsUtils.jsConvertData(name, None)
+        result = JsObjects.JsObjects.get("%s[%s]" % (ref, name))
         return result
 
     @property

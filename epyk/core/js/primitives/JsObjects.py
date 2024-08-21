@@ -351,7 +351,7 @@ class XMLHttpRequest:
         self.page, self.__headers, self.url = page, {}, url
         self.__mod_name, self.__mod_path, self.method, self.__data_ref = None, None, method_type, "data"
         self.__req_success, self.__req_fail, self.__req_send, self.__req_end = None, None, None, None
-        self.__on, self.__url, self.__cache = {}, url, {}
+        self.__on, self.__url, self.__cache, self.__headers_ref = {}, url, {}, "headers"
         self.__stringify = True
         self.__url_prefix, self.__responseType = "", 'json'
         self.varId, self.profile, self.timeout, self.asynchronous = js_code, False, None, asynchronous
@@ -369,11 +369,21 @@ class XMLHttpRequest:
 
     @property
     def response(self) -> str:
+        """Response response variable reference on the JavaScript side - default data"""
         return self.__data_ref
 
     @response.setter
     def response(self, value: str):
         self.__data_ref = value
+
+    @property
+    def headers(self) -> str:
+        """Response headers variable reference on the JavaScript side - default headers"""
+        return self.__headers_ref
+
+    @headers.setter
+    def headers(self, value: str):
+        self.__headers_ref = value
 
     def set_cache(self, name: str = None, type: str = None, data: Optional[dict] = None,
                   components: Optional[Union[Tuple[primitives.HtmlModel, str], List[primitives.HtmlModel]]] = None,
@@ -774,12 +784,54 @@ class XMLHttpRequest:
             self.__req_send = "%s.send()" % self.varId
         return self
 
+    def getResponseHeader(self, headerName: str) -> JsString.JsString:
+        """The XMLHttpRequest method getResponseHeader() returns the string containing the text of a particular
+        header's value.
+
+        `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getResponseHeader>`_
+
+        Usage::
+
+            s_query = web.js.get("/url", data={"value": 45, "ok": "test"})
+            b.click([js_query.onSuccess([web.js.console.log(s_query.getResponseHeader("content-type"))])])
+
+        :param headerName: A string indicating the name of the header you want to return the text value of.
+        """
+        headerName = JsUtils.jsConvertData(headerName, None)
+        return JsString.JsString.get("%s.getResponseHeader(%s)" % (self.varId, headerName))
+
+    def getAllResponseHeaders(self) -> JsString.JsString:
+        """The XMLHttpRequest method getAllResponseHeaders() returns all the response headers, separated by CRLF, as a
+        string, or returns null if no response has been received.
+
+        `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders>`_
+
+        Usage::
+
+            s_query = web.js.get("/url", data={"value": 45, "ok": "test"})
+            b.click([js_query.onSuccess([web.js.console.log(s_query.getAllResponseHeaders())])])
+        """
+        return JsString.JsString.get("%s.getAllResponseHeaders()" % self.varId)
+
+    def getResponseHeaders(self) -> JsString.JsString:
+        """The XMLHttpRequest method getAllResponseHeaders() returns all the response headers, separated by CRLF, as a
+        string, or returns null if no response has been received.
+
+        `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest/getAllResponseHeaders>`_
+
+        Usage::
+
+            s_query = web.js.get("/url", data={"value": 45, "ok": "test"})
+            b.click([js_query.onSuccess([web.js.console.log(s_query.getResponseHeaders())])])
+        """
+        return JsString.JsString.get(r"(function(r){return r.split('\r\n').reduce(function (acc, current, i){var parts = current.split(': ');acc[parts[0]] = parts[1];return acc;}, {})})(%s.getAllResponseHeaders())" % self.varId)
+
     def toStr(self):
         request = [
-            "var %s = new XMLHttpRequest()" % self.varId,
+            "let %s = new XMLHttpRequest()" % self.varId,
             "%s.responseType = '%s'" % (self.varId, self.__responseType)]
         if self.profile is not None and self.profile:
-            request.insert(0, "var t_post%s = performance.now()" % JsUtils.PROFILE_COUNT)
+            request.insert(0, "let t_post%s = performance.now()" % JsUtils.PROFILE_COUNT)
         if self.timeout is not None:
             request.append("%s.timeout = %s" % (self.varId, self.timeout))
         if self.__url_prefix:
@@ -797,9 +849,9 @@ class XMLHttpRequest:
             if self.__req_fail is not None:
                 request.append("%s.onload = function(){}" % self.varId)
             else:
-                request.append("%(varId)s.onload = function(){var %(dataRef)s = %(varId)s.response; %(jsFncs)s}" % {
-                    'varId': self.varId, 'dataRef': self.response,
-                    'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True, profile=self.profile)})
+                request.append("%(varId)s.onload = function(){let %(dataRef)s = %(varId)s.response; let %(hdrRef)s = %(reshdrs)s; %(jsFncs)s}" % {
+                    'varId': self.varId, 'dataRef': self.response, "reshdrs": self.getResponseHeaders().toStr(),
+                    'hdrRef': self.headers, 'jsFncs': JsUtils.jsConvertFncs(self.__req_success, toStr=True, profile=self.profile)})
         if self.__req_end is not None:
             request.append("%(varId)s.onloadend = function(){%(jsFncs)s}" % {
                 'varId': self.varId, 'jsFncs': JsUtils.jsConvertFncs(self.__req_end, toStr=True, profile=self.profile)})
