@@ -59,7 +59,7 @@ class JsPromiseRecords(primitives.JsDataModel):
         """
 
         :param columns:
-        :param to:
+        :param to: Optional.
         :param profile: Optional. A flag to set the component performance storage.
         """
         cast_cols = {}
@@ -96,8 +96,8 @@ class JsPromiseRecords(primitives.JsDataModel):
 
         :param column:
         :param value:
-        :param operator:
-        :param keep:
+        :param operator: Optional. 
+        :param keep: Optional.
         """
         column = JsUtils.jsConvertData(column, None)
         value = JsUtils.jsConvertData(value, None)
@@ -127,9 +127,21 @@ class JsPromise:
 
     @staticmethod
     def new(data: types.JS_DATA_TYPES, profile: types.PROFILE_TYPE = False, async_await: bool = False, page = None):
+        """
+
+        :param data:
+        :param profile: Optional. A flag to set the component performance storage
+        :param async_await: Optional.
+        :param page: Optional. Page context
+        """
         return JsPromise("new Promise(%s)" % data, profile=profile, async_await=async_await, page=page)
 
     def set(self, js_code: str, async_await: bool = None):
+        """
+
+        :param js_code:
+        :param async_await:
+        """
         if async_await is None:
             async_await = self.async_await
         if async_await:
@@ -188,9 +200,8 @@ class JsPromise:
 let fileContent = %s.split(/\\r?\\n/); let data = []; let fileHeader = fileContent[0].split(',');
 for (var i=1; i < fileContent.length; i++){
   let splitLine = fileContent[i].split(','); let row = {}; fileHeader.forEach(function(h, j){row[h] = splitLine[j]}) 
-  %s; data.push(row)}; 
-return data}
-''' % (js_code, js_code, JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))], profile))
+  %s; data.push(row)}; return data}''' % (
+            js_code, js_code, JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))], profile))
 
     def catch(self, js_funcs: types.JS_FUNCS_TYPES):
         """
@@ -202,16 +213,41 @@ return data}
         self.__catch.extend(js_funcs)
         return self
 
+    def headers(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+        """Allow actions on the response headers.
+
+        Usage::
+
+            page.body.onReady([
+                page.js.console.log("Start Call"),
+                page.js.fetch(urls.AGGRID_OLYMPIC_WINNERS).headers([
+                    page.js.console.log(pk.events.header)
+                ]).json().process(...).then([page.js.console.log("Completed")])])
+
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        return self.then("function(response){let headers = response.headers; %s; return response}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
+
     def json(self):
         """Get the json response once received"""
         return self.then("(response) => response.json()")
 
     def process(self, callback: Callable):
-        """ """
+        """
+
+        :param callback:
+        """
         return self.then(JsUtils.jsConvertData(callback(JsObject.JsObject.get("data")), None))
 
     def onSuccess(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
-        """Shortcut to replicated post and get requests """
+        """Shortcut to replicated post and get requests
+v
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
+        """
         return self.json().then(
             "function(data){%s}" % JsUtils.jsConvertFncs(js_funcs or [], toStr=True, profile=profile))
 
@@ -233,7 +269,7 @@ return data}
         """Cache data from the promise.
 
         :param name: Cache name
-        :param type: Type of cache to used (default local)
+        :param type: Optional. Type of cache to used (default local)
         """
         return self.then([self.page.js.storage.from_config(
             {"code": name, "value": JsUtils.jsWrap("data"), "type": type}), "return data"])
@@ -243,10 +279,10 @@ return data}
         """Emit a signal during the promise process to trigger some sub processes for defined target components.
 
         :param name: Signal's name
-        :param targets: List of HTML components to get the signal
-        :param bubbles: A boolean value, which is true if the event bubbles up through the DOM tree
-        :param cancelable: make the event cancelable
-        :param defaultPrevented: A boolean value indicating whether or not the call to Event.preventDefault() canceled the event
+        :param targets: Optional. List of HTML components to get the signal
+        :param bubbles: Optional. A boolean value, which is true if the event bubbles up through the DOM tree
+        :param cancelable: Optional. make the event cancelable
+        :param defaultPrevented: Optional. A boolean value indicating whether or not the call to Event.preventDefault() canceled the event
         """
         options = []
         for k, v in {
