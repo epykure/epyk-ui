@@ -1139,7 +1139,7 @@ class Grid(MixHtmlState.HtmlOverlayStates, Html.Html):
 container.innerHTML = ""; let results = {}; let componentsHolders = []; let i = 0;
 data.forEach(function(row){
   if (!results[row[options.pivot]]){results[row[options.pivot]] = []}; results[row[options.pivot]].push(row)}); 
-let keys = Object.keys(results); let rowsNum = Math.ceil(keys.length / options.columns);
+let keys = Object.keys(results); let rowsNum = Math.ceil(keys.length / options.columns);   
 for (let n=0; n < rowsNum; n++) {
     let row = document.createElement("div"); row.setAttribute('class', options.class_row); 
     for (let c=0; c < options.columns; c++) {let k = keys[i];

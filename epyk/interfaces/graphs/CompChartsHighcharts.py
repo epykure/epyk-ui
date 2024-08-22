@@ -84,7 +84,7 @@ class Highcharts:
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
-        chart.builder_name = "HchartsBar"
+        chart.set_builder("hchartsBar", in_module=True)
         if data:
             chart.options.xAxis.categories = data["labels"]
             for dataset in data['datasets']:
@@ -105,7 +105,7 @@ class Highcharts:
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
-        chart.builder_name = "HchartsBar"
+        chart.set_builder("hchartsBar", in_module=True)
         if data:
             chart.options.xAxis.categories = data["labels"]
             for dataset in data['datasets']:
@@ -146,7 +146,7 @@ class Highcharts:
             dfl_options.update(options)
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "HchartsPie"
+        chart.set_builder("hchartsPie", in_module=True)
         chart.colors(self.page.theme.charts)
         if data:
             for dataset in data['datasets']:
@@ -166,7 +166,7 @@ class Highcharts:
             dfl_options.update(options)
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "HchartsPie"
+        chart.set_builder("hchartsPie", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.plotOptions.pie.innerSize = 50
         if data:
@@ -187,7 +187,7 @@ class Highcharts:
             dfl_options.update(options)
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
-        chart.builder_name = "HchartsPie"
+        chart.set_builder("hchartsPie", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.plotOptions.pie.dataLabels.enabled = True
         chart.options.plotOptions.pie.dataLabels.distance = -50
@@ -215,7 +215,7 @@ class Highcharts:
         data = self.page.data.chartJs.xyz(record, y_columns, x_axis, r_values)
         chart = graph.GraphHighcharts.Chart(self.page, width, height, html_code, dfl_options, profile)
         chart.options.chart.zoomType = "xy"
-        chart.builder_name = "HchartsBubble"
+        chart.set_builder("hchartsBubble", in_module=True)
         chart.colors(self.page.theme.charts)
         if data:
             for dataset in data['datasets']:

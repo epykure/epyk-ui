@@ -864,7 +864,7 @@ class XMLHttpRequest:
 
     def toStr(self):
         request = [
-            "let %s = new XMLHttpRequest()" % self.varId,
+            "var %s = new XMLHttpRequest()" % self.varId,
             "%s.responseType = '%s'" % (self.varId, self.__responseType)]
         if self.profile is not None and self.profile:
             request.insert(0, "let t_post%s = performance.now()" % JsUtils.PROFILE_COUNT)

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 import base64
 import os
+from pathlib import Path
 
 from epyk.core.js import Imports
 
@@ -29,10 +30,9 @@ OVERRIDES = None
 
 
 def get_class_override(css_cls):
-    """
-    Hook to override predefined CSS classes for all the reports in the project.
+    """Hook to override predefined CSS classes for all the reports in the project.
 
-    :param css_cls: Style. The CSS Class in the framework.
+    :param css_cls: Style. The CSS Class in the framework
     """
     if OVERRIDES is None:
         return css_cls
@@ -64,8 +64,7 @@ class Catalog:
 
     def font_face(self, font_family: str, src: str, stretch: str = "normal", style: str = "normal",
                   weight: str = "normal"):
-        """
-        With the @font-face rule, web designers do not have to use one of the "web-safe" fonts anymore.
+        """With the @font-face rule, web designers do not have to use one of the "web-safe" fonts anymore.
 
         In the @font-face rule you must first define a name for the font (e.g. myFirstFont), and then point to
         the font file.
@@ -73,37 +72,28 @@ class Catalog:
         Entry to get a font family from a local file to avoid loading it online.
         This is safer but also improve the speed of the website.
 
-        Related Pages:
+        `w3schools <https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp>`_
 
-          https://www.w3schools.com/cssref/css3_pr_font-face_rule.asp
-
-        Usage::
-
-        :param font_family: Defines the name of the font.
-        :param src: Defines the URL(s) where the font should be downloaded from.
-        :param stretch: Optional. Defines how the font should be stretched. Default value is "normal".
-        :param style: Optional. Defines how the font should be styled. Default value is "normal".
-        :param weight: Optional. Defines the boldness of the font. Default value is "normal".
+        :param font_family: Defines the name of the font
+        :param src: Defines the URL(s) where the font should be downloaded from
+        :param stretch: Optional. Defines how the font should be stretched. Default value is "normal"
+        :param style: Optional. Defines how the font should be styled. Default value is "normal"
+        :param weight: Optional. Defines the boldness of the font. Default value is "normal"
         """
         self.page.properties.css.font_face(font_family, src, stretch, style, weight)
         return self
 
     def _class_type(self, cls_type: str):
-        """
-        Change the current class type to the one defined and return the internal class object.
+        """Change the current class type to the one defined and return the internal class object.
 
-        Usage::
-
-
-        :param cls_type: The alias of the class other or main.
+        :param cls_type: The alias of the class other or main
         """
         self.__class_list_type = self.__class_list[cls_type]
         return self
 
     @property
     def other(self):
-        """
-        Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
+        """Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
 
         Usage::
 
@@ -115,8 +105,7 @@ class Catalog:
 
     @property
     def main(self):
-        """
-        Get the list of CSS Classes added to the component and to the class tag of the component.
+        """Get the list of CSS Classes added to the component and to the class tag of the component.
 
         Usage::
 
@@ -128,17 +117,14 @@ class Catalog:
 
     @property
     def std(self) -> CatalogStd.CatalogStd:
-        """
-        Shortcut to standard CSS classes (for layout purposes like margin, padding...).
+        """Shortcut to standard CSS classes (for layout purposes like margin, padding...).
 
         Usage::
 
           t1 = page.ui.title("Templates structure")
           t1.style.add_classes.std.margin(7)
 
-        Related Pages:
-
-          https://getbootstrap.com/docs/4.0/utilities/spacing/
+        `getbootstrap <https://getbootstrap.com/docs/4.0/utilities/spacing/>`_
         """
         if "std" not in self.__ctx:
             self.__ctx['std'] = CatalogStd.CatalogStd(self.page, self.__class_list)
@@ -146,8 +132,7 @@ class Catalog:
 
     @property
     def button(self) -> CatalogButton.CatalogButton:
-        """
-        CSS Classes specific to the buttons components.
+        """CSS Classes specific to the buttons components.
 
         Usage::
 
@@ -160,8 +145,7 @@ class Catalog:
 
     @property
     def select(self) -> CatalogSelect.CatalogSelect:
-        """
-        CSS Classes specific to the select compatibility components.
+        """CSS Classes specific to the select compatibility components.
 
         Usage::
 
@@ -174,8 +158,7 @@ class Catalog:
 
     @property
     def screens(self) -> CatalogMedia.CatalogMedia:
-        """
-        CSS Classes specific to the screen compatibility components.
+        """CSS Classes specific to the screen compatibility components.
 
         Usage::
 
@@ -188,8 +171,7 @@ class Catalog:
 
     @property
     def icon(self) -> CatalogIcons.CatalogIcon:
-        """
-        CSS Classes specific to the Icon components.
+        """CSS Classes specific to the Icon components.
 
         Usage::
 
@@ -202,8 +184,7 @@ class Catalog:
 
     @property
     def layout(self) -> CatalogLayout.CatalogLayout:
-        """
-        CSS Classes specific to Layout / Container components.
+        """CSS Classes specific to Layout / Container components.
 
         Usage::
 
@@ -216,8 +197,7 @@ class Catalog:
 
     @property
     def dropdown(self) -> CatalogTree.CssStyleDropdown:
-        """
-        CSS Classes specific to the DropDown components.
+        """CSS Classes specific to the DropDown components.
 
         Usage::
 
@@ -230,8 +210,7 @@ class Catalog:
 
     @property
     def table(self) -> CatalogTable.CatalogTable:
-        """
-        CSS Classes specific to the Table components.
+        """CSS Classes specific to the Table components.
 
         Usage::
 
@@ -244,8 +223,7 @@ class Catalog:
 
     @property
     def chart(self) -> CatalogButton.CatalogButton:
-        """
-        CSS Classes specific to Chart components.
+        """CSS Classes specific to Chart components.
 
         Usage::
 
@@ -258,8 +236,7 @@ class Catalog:
 
     @property
     def link(self) -> CatalogLink.CatalogLink:
-        """
-        CSS Classes specific to Link components.
+        """CSS Classes specific to Link components.
 
         Usage::
 
@@ -272,8 +249,7 @@ class Catalog:
 
     @property
     def date(self) -> CatalogInput.CatalogDate:
-        """
-        CSS Classes specific to Date components.
+        """CSS Classes specific to Date components.
 
         Usage::
 
@@ -286,8 +262,7 @@ class Catalog:
 
     @property
     def text(self) -> CatalogText.CatalogText:
-        """
-        CSS Classes specific to Text components.
+        """CSS Classes specific to Text components.
 
         Usage::
 
@@ -300,8 +275,7 @@ class Catalog:
 
     @property
     def input(self) -> CatalogInput.CatalogInput:
-        """
-        CSS Classes specific to Input components.
+        """CSS Classes specific to Input components.
 
         Usage::
 
@@ -314,8 +288,7 @@ class Catalog:
 
     @property
     def image(self) -> CatalogImg.CatalogImg:
-        """
-        CSS Classes specific to Image components.
+        """CSS Classes specific to Image components.
 
         Usage::
 
@@ -328,8 +301,7 @@ class Catalog:
 
     @property
     def div(self) -> CatalogDiv.CatalogDiv:
-        """
-        CSS Classes specific to Div / Container components.
+        """CSS Classes specific to Div / Container components.
 
         Usage::
 
@@ -342,8 +314,7 @@ class Catalog:
 
     @property
     def shapes(self) -> CatalogDiv.CatalogShapes:
-        """
-        CSS Classes specific to Div / Container components.
+        """CSS Classes specific to Div / Container components.
 
         Usage::
 
@@ -356,8 +327,7 @@ class Catalog:
 
     @property
     def radio(self) -> CatalogRadio.CatalogRadio:
-        """
-        CSS Classes specific to Radio button components.
+        """CSS Classes specific to Radio button components.
 
         Usage::
 
@@ -369,10 +339,9 @@ class Catalog:
         return self.__ctx['radio']
 
     def custom(self, css_cls):
-        """
-        Register a bespoke external class to the report object.
+        """Register a bespoke external class to the report object.
 
-        :param css_cls: Class. The python class to be used as a CSS Class in the framework.
+        :param css_cls: Class. The python class to be used as a CSS Class in the framework
 
         :return: self for the chaining.
         """
@@ -382,37 +351,50 @@ class Catalog:
         return self
 
     def customFile(self, filename: str, path: str = None):
-        """
-        Add an external CSS file to the final HTML report.
-        If the file is defined with a local absolute path the content will be endocded and included to the page.
+        """Add an external CSS file to the final HTML report.
+        If the file is defined with a local absolute path the content will be encoded and included to the page.
 
-        Usage::
-
-
-        :param filename: The file name.
+        :param filename: The file name
         :param path: Optional. The full path of the external CSS file. If None the user part in Imports.STATIC_PATH
-                     will be used.
+                     will be used
 
         :return: self for the chaining.
         """
+        from epyk.conf.global_settings import ASSETS_STATIC_CSS, ASSETS_SPLIT, ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH, ASSETS_SPLIT_MINIFY
         if path is None:
-            self.page.cssLocalImports.add("%s/css/%s" % (Imports.STATIC_PATH.replace("\\", "/"), filename))
+            self.page.cssLocalImports.add("%s/%s/%s" % (Imports.STATIC_PATH.replace("\\", "/"), ASSETS_STATIC_CSS, filename))
         else:
             file_path = os.path.join(path, filename)
             if os.path.exists(file_path):
-                with open(file_path, "rb") as fp:
-                    base64_bytes = base64.b64encode(fp.read())
-                    base64_content = base64_bytes.decode("ascii")
-                self.page.cssLocalImports.add("data:text/css;base64,%s" % base64_content)
+                if not ASSETS_SPLIT:
+                    with open(file_path, "rb") as fp:
+                        base64_bytes = base64.b64encode(fp.read())
+                        base64_content = base64_bytes.decode("ascii")
+                    self.page.cssLocalImports.add("data:text/css;base64,%s" % base64_content)
+                else:
+                    with open(file_path, "r") as fp:
+                        content = fp.read()
+                    css_target_folder = Path(ASSETS_STATIC_PATH) / ASSETS_STATIC_CSS
+                    if not css_target_folder.exists():
+                        css_target_folder.mkdir(parents=True, exist_ok=True)
+                    if ASSETS_SPLIT_MINIFY and not ".min." in filename:
+                        filename = filename[:-4] + ".min.css"
+                    css_target_file = css_target_folder / filename
+                    with open(str(css_target_file), "w") as fp:
+                        if ASSETS_SPLIT_MINIFY:
+                            # TODO Improve CSS minifying
+                            fp.write("".join([line.strip() for line in content.split("\n")]))
+                        else:
+                            fp.write(content)
+                    self.page.cssLocalImports.add("%s/%s/%s" % (ASSETS_STATIC_ROUTE, ASSETS_STATIC_CSS, filename))
             else:
                 self.page.cssLocalImports.add("%s/%s" % (path, filename))
         return self
 
     def customText(self, text: str):
-        """
-        Add a bespoke CSS fragment.
+        """Add a bespoke CSS fragment.
 
-        :param text: The CSS fragment to be added to the HTML report. This can be a class or a group of class.
+        :param text: The CSS fragment to be added to the HTML report. This can be a class or a group of class
 
         :return: self for the chaining.
         """
@@ -420,8 +402,7 @@ class Catalog:
         return self
 
     def anonymous_cls(self, attrs: dict):
-        """
-        Create a bespoke class based on the various attributes.
+        """Create a bespoke class based on the various attributes.
         This will internal build the class and return it.
 
         Usage::
@@ -431,7 +412,7 @@ class Catalog:
             '_attrs': {'color': 'green', 'cursor': 'pointer'},
             '_hover': {'color': 'red'}})
 
-        :param attrs: The expected class attributes.
+        :param attrs: The expected class attributes
 
         :return: The Python class
         """
@@ -445,15 +426,14 @@ class Catalog:
         return meta_cls
 
     def external(self, classname: str):
-        """
-        Add external CSS classes to a component.
+        """Add external CSS classes to a component.
 
         Usage::
 
           t1 = page.ui.title("Templates structure")
           t1.style.add_classes.external("cssClassReference")
 
-        :param classname: The external class name to be added.
+        :param classname: The external class name to be added
 
         :return: self for the chaining.
         """
