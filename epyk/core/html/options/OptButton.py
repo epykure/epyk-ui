@@ -11,6 +11,24 @@ class OptionsButton(Options):
     component_properties = ("category",)
 
     @property
+    def badge(self):
+        """ Button category to specify the style. """
+        return self._config_get(None)
+
+    @badge.setter
+    def badge(self, value: str):
+        self._config(value)
+
+    @property
+    def icon(self):
+        """ Button category to specify the style. """
+        return self._config_get(None)
+
+    @icon.setter
+    def icon(self, value: str):
+        self._config(value)
+
+    @property
     def category(self):
         """ Button category to specify the style. """
         return self.get("validate")
@@ -21,12 +39,10 @@ class OptionsButton(Options):
 
     @property
     def multiple(self):
-        """
-        Property to define if multiple buttons can be selected at the same time.
+        """Property to define if multiple buttons can be selected at the same time.
         Default value is false.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.options.multiple = False
 
@@ -40,11 +56,9 @@ class OptionsButton(Options):
 
     @property
     def group(self):
-        """
-        Property to set the group name of a button.
+        """Property to set the group name of a button.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.options.group = "buttons"
 
@@ -134,8 +148,7 @@ class OptMedia(Options):
 
     @property
     def controls(self):
-        """
-        Specifies that video controls should be displayed (such as a play/pause button etc).
+        """Specifies that video controls should be displayed (such as a play/pause button etc).
 
         Related Pages:
 
@@ -152,8 +165,7 @@ class OptMedia(Options):
 
     @property
     def loop(self):
-        """
-        Specifies that the video will start over again, every time it is finished.
+        """Specifies that the video will start over again, every time it is finished.
 
         Related Pages:
 
@@ -170,8 +182,7 @@ class OptMedia(Options):
 
     @property
     def preload(self):
-        """
-        Specifies if and how the author thinks the video should be loaded when the page loads.
+        """Specifies if and how the author thinks the video should be loaded when the page loads.
 
         Related Pages:
 
@@ -192,8 +203,7 @@ class OptMedia(Options):
 
     @property
     def muted(self):
-        """
-        Specifies that the audio output of the video should be muted.
+        """Specifies that the audio output of the video should be muted.
 
         The muted attribute is a boolean attribute.
 
@@ -214,8 +224,7 @@ class OptMedia(Options):
 
     @property
     def poster(self):
-        """
-        Specifies an image to be shown while the video is downloading, or until the user hits the play button.
+        """Specifies an image to be shown while the video is downloading, or until the user hits the play button.
 
         The poster attribute specifies an image to be shown while the video is downloading,
         or until the user hits the play button.
@@ -235,12 +244,7 @@ class OptMedia(Options):
 
     @property
     def autoplay(self):
-        """
-        Set the autoplay flag.
-
-        Specifies that the video will start playing as soon as it is ready.
-
-        Usage::
+        """Set the autoplay flag. Specifies that the video will start playing as soon as it is ready.
 
         :prop flag: Optional. Default value is true.
         """
@@ -256,7 +260,7 @@ class OptCheckboxes(Options):
 
     @property
     def icon(self):
-        """ The font-awesome icon reference. """
+        """The font-awesome icon reference"""
         return self._config_get("fas fa-check")
 
     @icon.setter

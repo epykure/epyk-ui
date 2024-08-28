@@ -10,7 +10,6 @@ from epyk.core.py import primitives
 from epyk.core.py import types
 
 from epyk.core.html import Html
-from epyk.core.html.options import OptColors
 from epyk.core.js import treemap
 from epyk.core.html.options import OptSliders
 from epyk.core.html.options import OptList
@@ -205,13 +204,12 @@ class Dialog(Html.Html):
         """
         return super().options
 
-    _js__builder__ = '''if(options.empty){%(jqId)s.empty()}; %(jqId)s.append('<p>'+ data +'</p>'); %(jqId)s.dialog(options)''' % {
-        "jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
+    _js__builder__ = '''if(options.empty){%(jqId)s.empty()}; %(jqId)s.append('<p>'+ data +'</p>'); 
+%(jqId)s.dialog(options)''' % {"jqId": JsQuery.decorate_var("htmlObj", convert_var=False)}
 
     @property
     def js(self) -> JsQueryUi.Dialog:
-        """Open content in an interactive overlay.
-        `Package Doc <https://jqueryui.com/dialog/>`_
+        """Open content in an interactive overlay. `Package Doc <https://jqueryui.com/dialog/>`_
 
         :return: A Javascript Dom object
         """
@@ -491,7 +489,7 @@ options.values = [new Date(data[0]).getTime() / 1000, new Date(data[1]).getTime(
 
     @property
     def dom(self) -> JsHtmlJqueryUI.JsHtmlSliderDates:
-        """The Javascript Dom object. """
+        """The Javascript Dom object"""
         if self._dom is None:
             self._dom = JsHtmlJqueryUI.JsHtmlSliderDates(self, page=self.page)
         return self._dom
@@ -677,8 +675,8 @@ class Filters(Html.Html):
     def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """Javascript event triggered by the enter key.
 
-        :param js_funcs: The JavaScript events.
-        :param profile: Optional. A flag to set the component performance storage.
+        :param js_funcs: The JavaScript events
+        :param profile: Optional. A flag to set the component performance storage
         """
         self.__enter_def = True
         if not isinstance(js_funcs, list):
@@ -690,9 +688,9 @@ class Filters(Html.Html):
     def drop(self, js_funcs: types.JS_FUNCS_TYPES, prevent_default: bool = True, profile: types.PROFILE_TYPE = None):
         """
 
-        :param js_funcs: The Javascript functions.
+        :param js_funcs: The Javascript functions
         :param prevent_default:
-        :param profile: Optional. A flag to set the component performance storage.
+        :param profile: Optional. A flag to set the component performance storage
         """
         self.style.css.border = "1px dashed black"
         self.tooltip("Drag and drop values here")
@@ -701,8 +699,8 @@ class Filters(Html.Html):
     def delete(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """
 
-        :param js_funcs: The Javascript functions.
-        :param profile: Optional. A flag to set the component performance storage.
+        :param js_funcs: The Javascript functions
+        :param profile: Optional. A flag to set the component performance storage
         """
         if self.__enter_def:
             raise ValueError("delete on chip must be triggered before enter")
@@ -811,7 +809,6 @@ class ColorsPicker(Html.Html):
         """A new color is selected
 
         `Coloris <https://coloris.js.org>`_
-
         """
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
@@ -822,7 +819,6 @@ class ColorsPicker(Html.Html):
         """The color picker is closed and the selected color has changed
 
         `Coloris <https://coloris.js.org>`_
-
         """
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]

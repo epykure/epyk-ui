@@ -51,10 +51,26 @@ class Button(Html.Html):
         if icon is not None and not text:
             self.icon.style.css.margin_right = None
         if icon is not None:
+            self.options.icon = icon
             self.icon.style.css.color = "inherit"
         self.tooltip(tooltip)
         self.classList.add(self.style_refs["html-button"])
         self.set_attrs(name="data-count", value=0)
+
+    def add_badge(self, value, background_color: str = None, parent_html_code: str = None, **kwargs):
+        """Add badge to a defined component.
+
+        Usage::
+            inp = page.ui.input()
+            tu = page.ui.buttons.thumbs_up(badge=34, text="RRR")
+            tu.click([tu.build("AAA", options={"badge": inp.dom.content, "icon": "far fa-thumbs-down"})])
+
+        :param value: Badge value
+        :param background_color: Badge's background color
+        :param parent_html_code: Badge's parent code
+        """
+        self.options.badge = value
+        return super().add_badge(value, background_color=background_color, parent_html_code=parent_html_code, **kwargs)
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               source_event: Optional[str] = None, on_ready: bool = False):
@@ -76,7 +92,8 @@ class Button(Html.Html):
         if on_ready:
             self.page.body.onReady([self.dom.events.trigger("click")])
         js_funcs.insert(
-            0, self.dom.setAttribute("data-count", self.dom.getAttribute("data-count").toNumber() + 1))
+            0,
+            self.dom.setAttribute("data-count", self.dom.getAttribute("data-count").toNumber() + 1))
         if self.options.max:
             js_funcs.append(self.dom.setAttribute("disabled", 'true'))
         return self.on("click", js_funcs, profile, source_event)
@@ -86,7 +103,6 @@ class Button(Html.Html):
         """Property to set all the possible object for a button.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.options.multiple = False
         """
@@ -95,11 +111,9 @@ class Button(Html.Html):
     @property
     def dom(self) -> JsHtml.JsHtmlButton:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           but = page.ui.button("Click Me")
           page.js.console.log(but.dom.content)
         """
@@ -111,7 +125,6 @@ class Button(Html.Html):
         """Remove the default button background and remove the padding.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.no_background()
         """
@@ -123,7 +136,6 @@ class Button(Html.Html):
         """Click event which redirect to another page.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.goto("http://www.epyk-studio.com")
 
@@ -148,7 +160,6 @@ class Button(Html.Html):
         """Property to the CSS Style of the component.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.style.css.margin = "5px"
         """
@@ -160,7 +171,6 @@ class Button(Html.Html):
         """Add the HTML tag to disable the button.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.disable()
 
@@ -183,7 +193,6 @@ class Button(Html.Html):
         """Special click event to keep in memory the state of the component.
 
         Usage::
-
           but = page.ui.button("Click Me")
 
         :param js_press_funcs: Optional. Javascript functions
@@ -225,7 +234,6 @@ class Button(Html.Html):
         """Change the color of the button background when the mouse is hover.
 
         Usage::
-
           page.ui.buttons.remove("remove").color("blue")
 
         :param color: the color of the component (text and borders)
@@ -241,16 +249,15 @@ class Button(Html.Html):
         This property should allow another JavaScript framework to build the component.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.properties
         """
-        return {"tag": self.name, 'selector': self.htmlCode}
+        return {"tag": self.name, 'selector': self.html_code}
 
     def __str__(self):
         str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
         self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
-        return '<{tag} {attrs}>{content}{badge}</{tag}>'.format(
+        return '<{tag} {attrs}><span name="button-content">{content}</span>{badge}</{tag}>'.format(
             tag=self.tag, attrs=self.get_attrs(css_class_names=self.style.get_classes()), badge=self.badge,
             content=str_div)
 
@@ -259,13 +266,12 @@ class Button(Html.Html):
         """Display a loading message in the component.
 
         Usage::
-
           btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
-        :param disable: Disable the button
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
+        :param disable: Optional. Disable the button
         """
         if label is not None:
             self.options.templateLoading = label
@@ -293,13 +299,12 @@ class Button(Html.Html):
         """Display an error message in the component.
 
         Usage::
-
           btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
-        :param disable: Disable the button
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
+        :param disable: Optional. Disable the button
         """
         if label is not None:
             self.options.templateError = label
@@ -351,11 +356,9 @@ class Checkbox(Html.Html):
     @property
     def dom(self) -> JsHtml.JsHtmlButtonChecks:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           data = [
             {"value": "Test 1", "checked": True, "name": 'name'},
             {"value": "Test 2", "dsc": 'description'}]
@@ -368,14 +371,11 @@ class Checkbox(Html.Html):
         return self._dom
 
     def tooltip(self, value: Optional[str], location: str = 'top', options: Optional[dict] = None):
-        """Add the Tooltip feature when the mouse is over the component.
-
-        This tooltip version is coming from Bootstrap.
+        """Add the Tooltip feature when the mouse is over the component. This tooltip version is coming from Bootstrap.
 
         TODO: Use the options parameter.
 
         Usage::
-
           check = page.ui.buttons.check()
           check.tooltip("Tooltip")
 
@@ -391,7 +391,6 @@ class Checkbox(Html.Html):
     def click(self, js_funcs: Union[list, str], profile: Optional[Union[dict, bool]] = None,
               source_event: str = "$(document)", on_ready: bool = False):
         """Add a click event on the checkbox component.
-
         TODO: Find way to remove jquery
 
         :param js_funcs: Javascript functions
@@ -449,12 +448,12 @@ class CheckButton(Html.Html):
 
     @property
     def options(self) -> OptButton.OptCheck:
-        """Property to set all the possible object for check button. """
+        """Property to set all the possible object for check button"""
         return super().options
 
     @property
     def dom(self) -> JsHtml.JsHtmlButtonMenu:
-        """The Javascript Dom object. """
+        """The Javascript Dom object"""
         if self._dom is None:
             self._dom = JsHtml.JsHtmlButtonMenu(self, page=self.page)
         return self._dom
@@ -462,7 +461,6 @@ class CheckButton(Html.Html):
     @property
     def js(self) -> JsComponents.CheckButton:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
 
         :return: A Javascript Dom object
@@ -473,7 +471,7 @@ class CheckButton(Html.Html):
 
     @property
     def style(self) -> GrpClsButton.ClassButtonCheckBox:
-        """Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
         return self._styleObj
@@ -483,7 +481,6 @@ class CheckButton(Html.Html):
         """Click even on the checkbox item.
 
         Usage::
-
           ch = page.ui.buttons.check(label="Label")
           ch.click(page.js.alert("true"), page.js.alert("false"))
 
@@ -552,7 +549,6 @@ class IconEdit(Html.Html):
         """Add a spin effect to the icon.
 
         Usage::
-
           icon = page.ui.icons.awesome("")
           icon.spin()
 
@@ -565,7 +561,6 @@ class IconEdit(Html.Html):
         """Add a pulse effect to the icon.
 
         Usage::
-
           icon = page.ui.icons.awesome("")
           icon.pulse()
 
@@ -578,7 +573,6 @@ class IconEdit(Html.Html):
         """Add a border to the icon.
 
         Usage::
-
           icon = page.ui.icons.awesome("")
           icon.border()
 
@@ -591,7 +585,6 @@ class IconEdit(Html.Html):
         """To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
 
         Usage::
-
           icon = page.ui.icons.awesome("")
           icon.rotate(90)
 
@@ -606,7 +599,6 @@ class IconEdit(Html.Html):
         """Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
 
         Usage::
-
           icon = page.ui.icons.awesome("")
           icon.pull()
 
@@ -729,7 +721,6 @@ class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Property to set all the possible object for a button.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.options.multiple = False
         """
@@ -738,11 +729,9 @@ class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
     @property
     def dom(self) -> JsHtml.JsHtmlButtons:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           but = page.ui.button("Click Me")
           page.js.console.log(but.dom.content)
         """
@@ -753,7 +742,6 @@ class Buttons(MixHtmlState.HtmlOverlayStates, Html.Html):
     @property
     def js(self) -> JsComponents.Buttons:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
 
         :return: A Javascript Dom object
@@ -827,9 +815,9 @@ class ButtonMenuItem:
         """Javascript click events of the items in the menu.
 
         :param js_funcs: The Javascript functions
-        :param profile: Boolean. Optional. A flag to set the component performance storage
+        :param profile: Optional. A flag to set the component performance storage
         :param source_event: Optional. Override the source component on which the component is defined
-        :param on_ready: Boolean. Optional. Specify if the event needs to be trigger when the page is loaded
+        :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
         """
         return self.on("click", js_funcs, profile, source_event, on_ready)
 
@@ -864,7 +852,6 @@ class ButtonMenu(Html.Html):
         """Property to set all the possible object for a button.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.options.multiple = False
         """
@@ -875,7 +862,6 @@ class ButtonMenu(Html.Html):
         """Property to the CSS Style of the component.
 
         Usage::
-
           self.style.css.margin = "5px"
         """
         if self._styleObj is None:
@@ -948,12 +934,7 @@ class ButtonMore(Html.Html):
         """Add an event click to the component.
 
         Usage::
-
-          b = page.studio.buttons.more([
-            {"text": "Item 1"},
-            {"text": "Item 2"},
-          ], profile=True)
-
+          b = page.studio.buttons.more([{"text": "Item 1"}, {"text": "Item 2"}], profile=True)
           b.click([page.js.console.log("test")])
 
         :param js_funcs: A Javascript Python function
@@ -1071,7 +1052,6 @@ class ButtonFilter(Html.Html):
         """Property to set all the possible object for a button.
 
         Usage::
-
           but = page.ui.button("Click Me")
           but.options.multiple = False
         """
@@ -1080,11 +1060,9 @@ class ButtonFilter(Html.Html):
     @property
     def dom(self) -> JsHtml.JsHtmlButtonFilter:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           but = page.ui.button("Click Me")
           page.js.console.log(but.dom.content)
         """

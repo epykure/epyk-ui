@@ -570,7 +570,7 @@ class Images:
   def icon(self, icon: str = None, family: str = None, width: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, height: types.SIZE_TYPE = (None, "px"), color: str = None,
            tooltip: str = None, align: str = "left", options: types.OPTION_TYPE = None,
-           profile: types.PROFILE_TYPE = None, badge: str = None) -> html.HtmlImage.Icon:
+           profile: types.PROFILE_TYPE = None, badge: str = None, text: str = "") -> html.HtmlImage.Icon:
     """Add an icon to the page.
 
     :tags:
@@ -597,7 +597,8 @@ class Images:
     :param align: Optional. The text-align property within this component
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
-    :param badge: Optional.
+    :param badge: Optional. Badge value next to the icon
+    :param text: Optional. Text label to be added to the icon
     """
     width = Arguments.size(width, "px")
     height = Arguments.size(height, "px")
@@ -607,7 +608,7 @@ class Images:
     options["icon_family"] = family or icon_details["icon_family"]
     component = html.HtmlImage.Icon(
       self.page, icon_details["icon"], width=width, height=height, color=color or 'inherit', tooltip=tooltip,
-      options=options, html_code=html_code, profile=profile)
+      options=options, html_code=html_code, profile=profile, text=text)
     if width[0] is not None and width[1] == 'px':
       notches = options.get("font-factor", 0)
       component.style.css.font_size = "%s%s" % (width[0]-notches, width[1])
@@ -616,6 +617,8 @@ class Images:
       component.style.css.display = "block"
     if badge:
       component.add_badge(badge)
+    if text:
+      component.style.css.user_select = None
     html.Html.set_component_skin(component)
     return component
 

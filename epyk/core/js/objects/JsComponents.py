@@ -20,11 +20,11 @@ class Radio(JsPackage):
         self._js, self._jquery = [], None
 
     def check(self):
-        """Set the status of the Check / Radio component to checked. """
+        """Set the status of the Check / Radio component to checked"""
         return JsUtils.jsWrap("%s.checked = true" % self.component.input.dom.varName)
 
     def uncheck(self):
-        """ Set the status of the Check / Radio component to unchecked. """
+        """Set the status of the Check / Radio component to unchecked"""
         return JsUtils.jsWrap("%s.checked = false" % self.component.input.dom.varName)
 
     def is_checked(self, js_funcs: Union[list, str], else_funcs: Union[list, str] = None,
@@ -62,14 +62,12 @@ class Radio(JsPackage):
         return JsUtils.jsWrap("if(!%s.checked){%s}" % (self.component.input.dom.varName, js_funcs))
 
     def uncheck_all(self, name: Union[str, primitives.JsDataModel] = None):
-        """ Set the status of the Check / Radio component to unchecked. """
+        """Set the status of the Check / Radio component to unchecked"""
         name = JsUtils.jsConvertData(name or self.component.input.attr["name"], None)
         return JsUtils.jsWrap("document.body.querySelectorAll('input[name=%s]').forEach((s) => {s.checked = false})" % name)
 
     def set_value(self, value: Union[str, primitives.JsDataModel] = None, name: Union[str, primitives.JsDataModel] = None):
-        """
-
-        """
+        """ """
         name = JsUtils.jsConvertData(name or self.component.input.attr["name"], None)
         if not value:
             return self.uncheck_all(name).extend(self.check())
@@ -132,7 +130,7 @@ class Menu(JsPackage):
 
     @property
     def content(self):
-        """Return the content of the component. """
+        """Return the content of the component"""
         return JsHtml.ContentFormatters(self.page, "%s.innerHTML" % self.varName)
 
     def set_text(self, value: Union[str, primitives.JsDataModel]):
@@ -150,9 +148,7 @@ class Menu(JsPackage):
 
           item.js.set_url("https://stackoverflow.com")
 
-        Related Pages:
-
-          https://www.w3schools.com/tags/att_a_href.asp
+        `w3schools <https://www.w3schools.com/tags/att_a_href.asp>`_
 
         :param value: The url link
         :param target: Optional. The target mode of the link component
@@ -167,13 +163,13 @@ class Switch(JsPackage):
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
+        self.htmlCode = js_code if js_code is not None else component.html_code
         self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
         self.component, self.page = component, page
         self._js, self._jquery = [], None
 
     def toggle(self):
-        """Simulate a click event on the component. """
+        """Simulate a click event on the component"""
         return JsObjects.JsObjects.get(self.component.switch.click())
 
     def val(self, data: Union[bool, primitives.JsDataModel]):
@@ -183,18 +179,18 @@ class Switch(JsPackage):
         """
         data = JsUtils.jsConvertData(data, None)
         return JsObjects.JsObjects.get('''%(varName)s.querySelector('input').checked = %(flag)s; 
-        if(%(flag)s) {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.on}
-        else {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.off}''' % {
-            "varName": self.varName, "flag": data, "htmlCode": self.htmlCode})
+if(%(flag)s) {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.on}
+else {%(varName)s.querySelector('p').innerHTML = %(htmlCode)s_data.off}''' % {
+    "varName": self.varName, "flag": data, "htmlCode": self.htmlCode})
 
     def false(self):
-        """Set the switch component to False. """
+        """Set the switch component to False"""
         return JsObjects.JsObjects.get(
             "%s.querySelector('input').checked = false; %s.querySelector('p').innerHTML = %s_data.off" % (
                 self.varName, self.varName, self.htmlCode))
 
     def true(self):
-        """Set the switch component to True. """
+        """Set the switch component to True"""
         return JsObjects.JsObjects.get(
             "%s.querySelector('input').checked = true; %s.querySelector('p').innerHTML = %s_data.on" % (
                 self.varName, self.varName, self.htmlCode))
@@ -204,7 +200,7 @@ class Alerts(JsPackage):
 
     def __init__(self, component, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
+        self.htmlCode = js_code if js_code is not None else component.html_code
         self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
         self.component, self.page = component, page
         self._js, self._jquery = [], None
@@ -225,7 +221,7 @@ class News(JsPackage):
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
+        self.htmlCode = js_code if js_code is not None else component.html_code
         self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
         self.component, self.page = component, page
         self._js, self._jquery = [], None
@@ -239,7 +235,7 @@ class Chat(JsPackage):
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
+        self.htmlCode = js_code if js_code is not None else component.html_code
         self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
         self.component, self.page = component, page
         self._js, self._jquery = [], None
@@ -254,7 +250,7 @@ class Room(JsPackage):
 
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
-        self.htmlCode = js_code if js_code is not None else component.htmlCode
+        self.htmlCode = js_code if js_code is not None else component.html_code
         self.varName, self.varData, self.__var_def = "document.getElementById('%s')" % self.htmlCode, "", None
         self.component, self.page = component, page
         self._js, self._jquery = [], None

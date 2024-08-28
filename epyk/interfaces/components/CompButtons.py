@@ -1039,7 +1039,7 @@ class Buttons:
 
     def thumbs_up(self, width: Union[tuple, int] = ("auto", ""), height: Union[tuple, int] = (None, "px"),
                   align: str = "left", html_code: Optional[str] = None, tooltip: Optional[str] = None,
-                  badge: str = None,
+                  badge: str = None, text: str = "",
                   profile: Union[dict, bool] = None, options: Optional[dict] = None):
         """Button with the font awesome icon far fa-thumbs-up.
 
@@ -1059,8 +1059,8 @@ class Buttons:
         :param options: Optional. Specific Python options available for this component
         """
         component = self.button(
-            icon="far fa-thumbs-up", width=width, height=height, html_code=html_code, tooltip=tooltip, profile=profile,
-            options=options, align=align, badge=badge)
+            icon="far fa-thumbs-up", text=text, width=width, height=height, html_code=html_code, tooltip=tooltip,
+            profile=profile, options=options, align=align, badge=badge)
         component.options.templateError = Defaults_html.TEMPLATE_ERROR_ICON
         component.options.templateLoading = Defaults_html.TEMPLATE_LOADING_ICON
         component.style.css.background = self.page.theme.success.base

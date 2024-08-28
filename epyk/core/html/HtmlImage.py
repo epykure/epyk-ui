@@ -147,8 +147,8 @@ if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k
         if status:
             return ''' 
 document.getElementById('%(htmlId)s').src = "error_link";
-document.getElementById('%(htmlId)s').onerror = function(){ this.onerror=null;this.src=%(label)s;}
-  ''' % {"htmlId": self.htmlCode, 'label': JsUtils.jsConvertData(label, None)}
+document.getElementById('%(htmlId)s').onerror = function(){this.onerror=null;this.src=%(label)s;}
+''' % {"htmlId": self.htmlCode, 'label': JsUtils.jsConvertData(label, None)}
 
         return ""
 
@@ -201,7 +201,7 @@ class AnimatedImage(Html.Html):
           img2.from_plot(plt)
           img2.style.css.display = "inline-block"
 
-        :param plt: matplotlib.pyplot. The ploting features in matplotlib
+        :param plt: matplotlib.pyplot. The plotting features in matplotlib
 
         :return: self to allow the chaining.
         """
@@ -280,13 +280,11 @@ class ImgCarousel(Html.Html):
                 html_code=self.sub_html_code("next")).css(
                 {"position": 'absolute', "font-size": '35px', "padding": '8px', "right": '10px', 'top': '50%'})
             self.next.options.managed = False
-
             self.previous = self.page.ui.icon(
                 options.get("arrows-left", "fas fa-chevron-left"),
                 html_code=self.sub_html_code("prev")).css(
                 {"position": 'absolute', "font-size": '35px', "padding": '8px', "left": '10px', 'top': '50%'})
             self.previous.options.managed = False
-
             if options.get("keyboard", False):
                 self.page.body.keyup.left([self.previous.dom.events.trigger("click")])
                 self.page.body.keyup.right([self.next.dom.events.trigger("click")])
@@ -295,7 +293,6 @@ class ImgCarousel(Html.Html):
         if not options.get('arrows', True):
             self.next.style.css.display = "none"
             self.previous.style.css.display = "none"
-
         if self.items:
             self.items[selected].css({"display": 'block'})
             self.set_nav_dots()
@@ -311,9 +308,8 @@ class ImgCarousel(Html.Html):
 
     def add_plot(self, plot, title: str = "", width: types.SIZE_TYPE = "auto"):
         """
-
-        :param plot: matplotlib.pyplot. The ploting features in matplotlib
-        :param title: The chart title
+        :param plot: matplotlib.pyplot. The plotting features in matplotlib
+        :param title: Optional. The chart title
         :param width: Optional.
 
         :return: self to allow the chaining.
@@ -421,10 +417,10 @@ class Icon(Html.Html):
     builder_module = "HtmlIcon"
     tag = "i"
 
-    def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile):
+    def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile, text: str = ""):
         if options['icon_family'] is not None and options['icon_family'] != 'bootstrap-icons':
             self.requirements = (options['icon_family'],)
-        super(Icon, self).__init__(page, "", css_attrs={"color": color, "width": width, "height": height},
+        super(Icon, self).__init__(page, text, css_attrs={"color": color, "width": width, "height": height},
                                    html_code=html_code, profile=profile)
         if options['icon_family'] == 'office-ui-fabric-core':
             self.attr['class'].add("ms-Icon")
@@ -441,7 +437,6 @@ class Icon(Html.Html):
                 self.page.ext_packages = {}
             self.page.ext_packages.update(PkgImports.BOOTSTRAP)
             self.page.cssImport.add("bootstrap-icons")
-
         if value is not None:
             self.attr['class'].add(value)
         self.attr['aria-hidden'] = 'true'
@@ -478,14 +473,13 @@ class Icon(Html.Html):
 
     @property
     def style(self) -> GrpClsImage.ClassIcon:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpClsImage.ClassIcon(self)
         return self._styleObj
 
     def spin(self):
         """Add the spin class to the font awesome icon.
-
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
         """
         if 'font-awesome' in self.requirements:
@@ -494,7 +488,6 @@ class Icon(Html.Html):
 
     def pulse(self):
         """Add the pulse class to the font awesome icon.
-
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
         """
         if 'font-awesome' in self.requirements:
@@ -503,7 +496,6 @@ class Icon(Html.Html):
 
     def border(self):
         """Add a border to the icon.
-
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons>`_
         """
         if 'font-awesome' in self.requirements:
@@ -514,7 +506,6 @@ class Icon(Html.Html):
         """Icons inherit the font-size of their parent container which allow them to match any text you might use with
         them. With the following classes, we can increase or decrease the size of icons relative to that inherited
         font-size.
-
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/sizing-icons>`_
 
         :param value: The value of the size factor for the icon
@@ -529,7 +520,6 @@ class Icon(Html.Html):
     def fixed_width(self):
         """Add a class of fa-fw on the HTML element referencing your icon to set one or more icons to the same fixed
         width.
-
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/fixed-width-icons>`_
         """
         if 'font-awesome' in self.requirements:
@@ -538,7 +528,6 @@ class Icon(Html.Html):
 
     def rotate(self, value: int):
         """To arbitrarily rotate and flip icons, use the fa-rotate-* and fa-flip-* classes when you reference an icon.
-
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/rotating-icons>`_
 
         :param value: The rotation angle
@@ -567,7 +556,6 @@ class Icon(Html.Html):
 
     def pull(self, position: str = 'left'):
         """Use fa-border and fa-pull-right or fa-pull-left for easy pull quotes or article icons.
-
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons>`_
 
         :param position: Optional. The icon pull position
@@ -833,7 +821,7 @@ class SlideShow(Html.Html):
 
     def add_plot(self, plot, width: tuple = (220, 'px')):
         """
-        :param plot: matplotlib.pyplot. The ploting features in matplotlib.
+        :param plot: matplotlib.pyplot. The plotting features in matplotlib.
         :param width: Optional.
 
         :return: self to allow the chaining.
@@ -897,7 +885,7 @@ class SlideShow(Html.Html):
         """
         :param js_funcs: The JavaScript fragments
         :param profile: Optional. A flag to set the component performance storage
-        :param source_event: The source target for the event
+        :param source_event: Optional. The source target for the event
         """
         return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.js_code, profile)
 
@@ -906,7 +894,7 @@ class SlideShow(Html.Html):
         """
         :param js_funcs: The JavaScript fragments
         :param profile: Optional. A flag to set the component performance storage
-        :param source_event: The source target for the event
+        :param source_event: Optional. The source target for the event
         """
         return self._events("indexChanged", js_funcs, source_event or "%s.events" % self.js_code, profile, add=False)
 
@@ -1111,7 +1099,7 @@ class SlideShow(Html.Html):
         self.components = {}
         return self
 
-    def add(self, component: Html.Html):
+    def add(self, component: Html.Html, **kwargs):
         """Add a component to the slider container.
 
         :param component: A component to be added to the slider container
@@ -1137,7 +1125,7 @@ class Background(HtmlContainer.Div):
 
     def build(self, value: Union[str, list, primitives.JsDataModel] = None, options: dict = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
-              dataflows: List[dict] = None, **kwargs):
+              dataflows: List[dict] = None, **kwargs) -> str:
         """
         :param value: Optional. Component data
         :param options: Optional. Specific Python options available for this component

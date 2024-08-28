@@ -24,6 +24,7 @@ from epyk.core.js import JsMsgAlerts
 from epyk.core.js import JsMediaRecorder
 from epyk.core.js import JsSpeechRecognition
 from epyk.core.js import JsCacheStorage
+from epyk.core.js import treemap
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
@@ -1965,6 +1966,34 @@ if (!existingStyle && (styleElementId !== 'css_')) {
         logging.debug(
             "Caches not available for all browsers: https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage#browser_compatibility")
         return JsCacheStorage.CacheStorage(self.page)
+
+    def warnings(self, js_funcs, attrs: dict = None, name: str = "signOffModal", module: str = "WarningsPopup",
+                 required_funcs: List[str] = None, group: str = "utils",
+                 profile: Optional[Union[bool, dict]] = None) -> Optional[JsUtils.jsWrap]:
+        """Add a popup window before triggering the event.
+
+        Usage::
+            ic = page.ui.icon("far fa-thumbs-up", text="0")
+            ic.click(page.js.warnings([ic.dom.increment(by=-1)]))
+
+        :param js_funcs: List of JavaScript events to be triggered
+        :param attrs: Popup static attributes
+        :param name: JavaScript popup function - default signOffModal
+        :param module: JavaScript popup module - default WarningsPopup
+        :param required_funcs: Required JavaScript modules
+        :param group: Sub folder with the module location - default utils
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        """
+        self.page.properties.css.add_text(".warning-model:focus{outline: None}", map_id="warning-model")
+        attrs = attrs or {}
+        is_loaded = JsUtils.addJsResources(
+            self.page._props["js"]['constructors'], module + ".js", sub_folder=group,
+            required_funcs=required_funcs or treemap._BUILDERS_MAP.get(name, []),
+            verbose=False)
+        if is_loaded:
+            return JsUtils.jsWrap("%s(event, function(event){%s}, %s)" % (
+                name, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
+                JsUtils.jsConvertData(attrs, None)))
 
 
 class JsConsole:

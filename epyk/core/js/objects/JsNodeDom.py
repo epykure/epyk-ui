@@ -1344,7 +1344,7 @@ class JsDoms(JsObject.JsObject):
         """
         return self.css("display", "none")
 
-    def show(self, display_value: str = None, duration: int = None) -> 'JsDoms':
+    def show(self, display_value: str = None, duration: int = None, focus: bool = False) -> 'JsDoms':
         """
 
         Usage::
@@ -1359,6 +1359,8 @@ class JsDoms(JsObject.JsObject):
         self.css("display", display_value or self.display_value)
         if duration is not None:
             self._js.append("setTimeout(function(){%s.style.display = 'none'}, %s)" % (self.varId, duration * 1000))
+        if focus:
+            self._js.append("%s.focus()" % self.varId)
         return self
 
     def toggle(self, attr: str = "display", val_1: str = None, val_2: str = "none") -> 'JsDoms':
@@ -1890,6 +1892,15 @@ class JsDoms(JsObject.JsObject):
 
     def focus(self) -> JsString.JsString:
       return JsString.JsString.get("%s?.focus()" % self.varId)
+
+    def tooltip(self, attribute_value):
+        """Shortcut to set the DOM component title.
+
+        :param attribute_value: The value of the attribute you want to add
+        """
+        self._js.append("%s.title = %s" % (
+            self.varId, JsUtils.jsConvertData(attribute_value, None)))
+        return self
 
 
 class JsDomsList(JsArray.JsArray):

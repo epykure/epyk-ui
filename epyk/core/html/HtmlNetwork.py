@@ -1,6 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+from datetime import datetime
 from typing import Optional
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -57,12 +58,15 @@ class Comments(Html.Html):
             self._js = JsComponents.Chat(self, page=self.page)
         return self._js
 
-    def add(self, text: str, time: str, **kwargs):
+    def add(self, text: str, time: str = None, time_format: str = "%Y-%m-%d %H:%M:%S", **kwargs):
         """Add a text message.
 
         :param text: The text message
-        :param time: the timestamp
+        :param time: Optional. the timestamp
+        :param time_format: Optional. Time format. Default %Y-%m-%d %H:%M:%S
         """
+        if time is None:
+            time = datetime.now().strftime(time_format)
         self.val.append({"text": text, "time": time})
         return self
 
@@ -77,7 +81,7 @@ class Comments(Html.Html):
         """
         if self.options.readonly:
             self.options.readonly = False
-            self.input = self.page.ui.input(html_code="%s_input" % self.htmlCode)
+            self.input = self.page.ui.input(html_code=self.sub_html_code("input"))
             self.input.options.managed = False
             self.input.style.css.text_align = 'left'
         if not isinstance(js_funcs, list):
@@ -92,7 +96,7 @@ class Comments(Html.Html):
 
         :param socket:
         :param channel:
-        :param js_funcs: The Javascript functions
+        :param js_funcs: Optional. The Javascript functions
         :param profile: Optional. A flag to set the component performance storage
         """
         if self.options.readonly:
@@ -107,9 +111,9 @@ class Comments(Html.Html):
             self.input.dom.empty()], profile=profile)
         return self
 
-    def subscribe(self, socket, channel, data=None, options=None, js_funcs=None, profile=None):
-        """Subscribe to a socket channel.
-        Data received from the socket are defined as a dictionary with a field data.
+    def subscribe(self, socket, channel, data=None, options=None, js_funcs: types.JS_FUNCS_TYPES = None,
+                  profile: types.PROFILE_TYPE = None):
+        """Subscribe to a socket channel. Data received from the socket are defined as a dictionary with a field data.
         The content of data will be used by this component.
 
         :param socket: Socket. A python socket object
@@ -128,16 +132,14 @@ class Comments(Html.Html):
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
         return '''
-      <div %(attr)s>
-        <span>%(counter)s Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
-        %(inputTag)s
-        <div class='scroll_content' style="height:%(height)spx;margin:0;padding:5px 0;overflow:auto">
-          <div name="comms"></div>
-        </div>
-      </div>
-      ''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), "counter": self.counter.html(),
-             'height': int(self.css("height")[:-2]) - 70,
-             'inputTag': '' if self.input is None else self.input.html()}
+<div %(attr)s>
+<span>%(counter)s Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
+%(inputTag)s
+<div class='scroll_content' style="height:%(height)spx;margin:0;padding:5px 0;overflow:auto">
+  <div name="comms"></div>
+</div>
+</div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), "counter": self.counter.html(),
+             'height': int(self.css("height")[:-2]) - 70, 'inputTag': '' if self.input is None else self.input.html()}
 
 
 class Bot(Html.Html):
@@ -298,7 +300,7 @@ class Chat(Html.Html):
         <div style="margin:0;padding:5px 0;height:%(height)spx;overflow:auto"></div>
         %(counter)s
       </div>
-      ''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.htmlCode,
+      ''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.html_code,
              'height': int(self.css("height")[:-2]) - 70,
              'inputTag': '' if self.input is None else self.input.html(), "counter": self.counter.html()}
 

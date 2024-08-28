@@ -19,6 +19,9 @@ class Stars(JsHtml.JsHtmlRich):
         """The Javascript value of the component.
         This returned only a value corresponding to the state of the component.
         """
+        if self.component.popup:
+            return JsHtml.ContentFormatters(self.page, "{value: %s.dataset.level, text: %s}" % (self.varName, self.component.popup.text.dom.content.toStr()))
+
         return JsHtml.ContentFormatters(self.page, "%s.dataset.level" % self.varName)
 
     def selection(self):
