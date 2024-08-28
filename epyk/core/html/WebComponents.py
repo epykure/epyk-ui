@@ -24,7 +24,7 @@ class Component:
 
     @property
     def tag(self) -> str:
-        """ Create a tag for the HTML component. This will be used by some JavaScript framework like Angular. """
+        """Create a tag for the HTML component. This will be used by some JavaScript framework like Angular"""
         return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
 
     def ts(self, name: Optional[str] = None):

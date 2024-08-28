@@ -219,7 +219,7 @@ class Input(Html.Html):
 
     def enter(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
               on_ready: bool = False):
-        """Add an javascript action when the key enter is pressed on the keyboard.
+        """Add a javascript action when the key enter is pressed on the keyboard.
 
         Usage::
 
@@ -289,7 +289,6 @@ class Input(Html.Html):
 
     def readonly(self, flag: bool = True):
         """Set the input component to be readonly.
-
         `w3schools <https://www.w3schools.com/tags/att_input_readonly.asp>`_
 
         :param flag: Optional. Add the HTML readonly tag to the component
@@ -336,7 +335,7 @@ class Input(Html.Html):
         if literal is not None:
             self.page.body.onReady('''
 %(jqId)s.autocomplete(Object.assign({source: %(vals)s}, %(options)s))%(css)s;
-%(jqId)s.autocomplete("instance")._renderItem = function( ul, item ) {
+%(jqId)s.autocomplete("instance")._renderItem = function(ul, item) {
       return $( "<li>" ).append(`<div>%(literal)s</div>`).appendTo(ul)}''' % {
                 "jqId": JsQuery.decorate_var(self.dom.varId, convert_var=False), "vals": values, "options": options,
                 "css": css_attrs, "literal": literal})
@@ -534,7 +533,6 @@ else{%(jqId)s.autocomplete(options)}''' % {"jqId": JsQuery.decorate_var("htmlObj
     @property
     def js(self) -> JsQueryUi.Autocomplete:
         """ The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
         """
         if self._js is None:
@@ -573,7 +571,6 @@ class InputTime(Input):
     @property
     def options(self) -> OptInputs.OptionsTimePicker:
         """Property to set all the input TimePicker component properties.
-
         `jqueryui <https://timepicker.co/options/>`_
         """
         return super().options
@@ -588,7 +585,6 @@ class InputTime(Input):
     @property
     def js(self) -> JsTimepicker.Timepicker:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
         """
         if self._js is None:
@@ -644,7 +640,6 @@ class InputDate(Input):
     @property
     def options(self) -> OptInputs.OptionsDatePicker:
         """Property to set all the input DatePicker component properties.
-
         `timepicker <https://timepicker.co/options/>`_
         """
         return super().options
@@ -652,7 +647,6 @@ class InputDate(Input):
     @property
     def js(self) -> JsQueryUi.Datepicker:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
         """
         if self._js is None:
@@ -703,7 +697,6 @@ else {return [true, '', '']}''' % {
     def format_dates(self, class_name: str, dts: List[str] = None, css: Optional[dict] = None, tooltip: str = "",
                      profile: types.PROFILE_TYPE = None, dataflows: List[dict] = None):
         """Change the CSS style for some selected dates in the DatePicker.
-
         This function can be also used on the Javascript side from the js property.
 
         :param class_name: The name of the CSS added to the page with the CSS attributes
@@ -745,12 +738,11 @@ class InputInteger(Input):
 
     @property
     def options(self) -> OptInputs.OptionsInputInteger:
-        """ Property to set all the input component properties. """
+        """Property to set all the input component properties"""
         return super().options
 
     def quantity(self):
         """Add quantity shortcuts to the component.
-
         This will then check the input and remap if they are K, M and B to the corresponding value.
         """
         factors, units_lookup = {'K': 1000, 'M': 1000000, 'B': 1000000000}, []
@@ -876,7 +868,6 @@ class FieldAutocomplete(Field):
 
         A Date object containing the selected time is passed as the first argument of the callback.
         Note: the variable time is a function parameter received in the Javascript side.
-
         `jqueryui <https://api.jqueryui.com/autocomplete/#event-change>`_
 
         :param js_funcs: Javascript functions
@@ -890,9 +881,7 @@ class FieldAutocomplete(Field):
 
     def search(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """Triggered before a search is performed, after minLength and delay are met.
-
         If canceled, then no request will be started and no items suggested.
-
         `jqueryui <https://api.jqueryui.com/autocomplete/#event-search>`_
 
         :param js_funcs: Javascript functions
@@ -910,7 +899,6 @@ class FieldAutocomplete(Field):
         The default action is to replace the text field's value with the value of the focused item, though only
         if the event was triggered by a keyboard interaction.
         Canceling this event prevents the value from being updated, but does not prevent the menu item from being focused.
-
         `jqueryui <https://api.jqueryui.com/autocomplete/#event-focus>`_
 
         :param js_funcs: Javascript functions
@@ -924,7 +912,6 @@ class FieldAutocomplete(Field):
 
     def close(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
         """Triggered when the menu is hidden. Not every close event will be accompanied by a change event.
-
         `jqueryui <ttps://api.jqueryui.com/autocomplete/#event-close>`_
 
         :param js_funcs: Javascript functions
@@ -941,7 +928,6 @@ class FieldAutocomplete(Field):
 
         The default action is to replace the text field's value with the value of the selected item.
         Canceling this event prevents the value from being updated, but does not prevent the menu from closing.
-
         `jqueryui <ttps://api.jqueryui.com/autocomplete/#event-select>`_
 
         :param js_funcs: Javascript functions
@@ -959,7 +945,6 @@ class FieldAutocomplete(Field):
         Useful for local manipulation of suggestion data, where a custom source option callback is not required.
         This event is always triggered when a search completes, even if the menu will not be shown because there are no
         results or the Autocomplete is disabled.
-
         `jqueryui <ttps://api.jqueryui.com/autocomplete/#event-response>`_
 
         :param js_funcs: Javascript functions
@@ -1106,7 +1091,6 @@ class InputCheckbox(Html.Html):
     @property
     def js(self) -> JsComponents.Radio:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
         """
         if self._js is None:
@@ -1152,7 +1136,6 @@ class Radio(Html.Html):
     @property
     def dom(self) -> JsHtmlField.Radio:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
         """
         if self._dom is None:
@@ -1162,7 +1145,6 @@ class Radio(Html.Html):
     @property
     def js(self) -> JsComponents.Radio:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
         """
         if self._js is None:
@@ -1173,8 +1155,8 @@ class Radio(Html.Html):
         """Add badge to a defined component.
 
         :param value: Badge value
-        :param background_color: Badge's background color
-        :param parent_html_code: Badge's parent code
+        :param background_color: Optional. Badge's background color
+        :param parent_html_code: Optional. Badge's parent code
         """
         if self.label:
             self.label.add_badge(value, background_color)
@@ -1239,9 +1221,9 @@ class TextArea(Html.Html):
 
         :param values: static values for the autocomplete
         :param prefix: The prefix to be added to the selected item
-        :param min_length: The min length before displaying the result
-        :param options: Autocomplete extra options
-        :param dataflows: Chain of data transformations
+        :param min_length: Optional. The min length before displaying the result
+        :param options: Optional. Autocomplete extra options
+        :param dataflows: Optional. Chain of data transformations
         :param css: Optional. CSS attributes
         """
         values = JsUtils.dataFlows(values, dataflows, self.page)
@@ -1267,9 +1249,7 @@ class TextArea(Html.Html):
     @packages.packageImport('jqueryui', 'jqueryui')
     def autocomplete_from(self, xml_http_request, min_length: int = 3, prefix: str = None, options: dict = None,
                           with_cache: bool = True, dataflows: List[dict] = None, css: dict = None):
-        """Add autocomplete features on textarea from remote service.
-
-        This will use jquery UI.
+        """Add autocomplete features on textarea from remote service. This will use jquery UI.
 
         Usage::
 
@@ -1410,9 +1390,7 @@ var %(cachedVar)s;
     @property
     def dom(self) -> JsHtmlField.Textarea:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
-
         `w3schools <https://www.w3schools.com/js/js_htmldom.asp/>`_
         """
         if self._dom is None:
@@ -1422,7 +1400,6 @@ var %(cachedVar)s;
     def change(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
                source_event: str = None, on_ready: bool = False):
         """The input event fires when the value of an <input>, <select>, or <textarea> element has been changed.
-
         `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/input_event/>`_
 
         :param js_funcs: Javascript functions
@@ -1519,7 +1496,6 @@ class Search(Html.Html):
     @property
     def dom(self) -> JsHtmlField.JsHtmlFields:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
         """
         if self._dom is None:

@@ -35,9 +35,7 @@ class ExternalLink(Html.Html):
     @property
     def dom(self) -> JsHtml.JsHtmlLink:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
-
         :return: A Javascript Dom object
         """
         if self._dom is None:
@@ -58,9 +56,7 @@ class ExternalLink(Html.Html):
 
     def anchor(self, component: Html.Html):
         """Create a link to an HTML component defined in the page.
-
         This will create a shortcut to directly scroll to this component.
-
         :param component: A link to this HTML component
         """
         self.val["url"] = "#%s" % component.html_code
@@ -70,7 +66,7 @@ class ExternalLink(Html.Html):
     def no_decoration(self, color: Optional[str] = None):
         """Property to remove the list default style.
 
-        :param color: Optional. The color code.
+        :param color: Optional. The color code
         """
         self.style.css.text_decoration = None
         self.style.list_style_type = None
@@ -88,7 +84,7 @@ class ExternalLink(Html.Html):
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The component reference (the htmlCode)
-        :param dataflows: Chain of data transformations
+        :param dataflows: Optional. Chain of data transformations
         """
         if not hasattr(data, 'toStr'):
             if not isinstance(data, dict):
@@ -109,9 +105,9 @@ class ExternalLink(Html.Html):
 
           btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
         """
         self.options.templateLoading = label
         if status:
@@ -127,9 +123,9 @@ class ExternalLink(Html.Html):
 
           btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
         """
         self.options.templateError = label
         if status:
@@ -152,7 +148,7 @@ class DataLink(Html.Html):
 
     @property
     def options(self) -> OptText.OptionsLink:
-        """Property to set all the possible object for a button. """
+        """Property to set all the possible object for a button"""
         return super().options
 
     @property
@@ -176,9 +172,9 @@ class DataLink(Html.Html):
 
           btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
         """
         self.options.templateLoading = label
         if status:
@@ -194,9 +190,9 @@ class DataLink(Html.Html):
 
           btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
         """
         self.options.templateError = label
         if status:

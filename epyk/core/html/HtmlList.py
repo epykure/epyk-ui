@@ -55,7 +55,7 @@ class Li(Html.Html):
         return self
 
     def add_label(self, text: str, css: Optional[dict] = None, position: str = "before",
-                  for_: Optional[Html.Html] = None, html_code: Optional[str] = None,
+                  for_: Optional[Html.Html] = None, html_code: Optional[str] = None, align: str = None,
                   options: Optional[dict] = None):
         """Add an elementary label component.
 
@@ -65,6 +65,7 @@ class Li(Html.Html):
         :param css: Optional. A dictionary with the CSS style to be added to the component
         :param position: Optional. The position
         :param for_: Optional. Specifies which form element a label is bound to
+        :param align: Optional. Text alignment
         :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
         :param options: Optional. Specific Python options available for this component
         """
@@ -155,8 +156,7 @@ class List(Html.Html):
 
     @property
     def options(self) -> OptList.OptionsLi:
-        """Property to the component options.
-        Options can either impact the Python side or the Javascript builder.
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -438,7 +438,7 @@ class Items(Html.Html):
     def items_style(self, style_type: str = None, css_attrs: dict = None):
         """Function to load a predefined style for the items of the components.
 
-        :param style_type. The alias of the style to apply
+        :param style_type. Optional. The alias of the style to apply
         :param css_attrs. Optional. Items CSS attributes
         """
         li_item_style = {}
@@ -472,7 +472,6 @@ class Items(Html.Html):
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None,
               source_event: Optional[str] = None, on_ready: bool = False):
         """The onclick event occurs when the user clicks on an element of the list.
-
         Tips: Use the pk.events.value to get the item value.
 
         Usage::

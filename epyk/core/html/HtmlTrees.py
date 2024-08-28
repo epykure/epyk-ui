@@ -38,7 +38,6 @@ class Tree(Html.Html):
     @property
     def dom(self) -> JsHtmlTree.JsHtmlTree:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
 
         :return: A Javascript Dom object
@@ -49,10 +48,7 @@ class Tree(Html.Html):
 
     @property
     def options(self) -> OptTrees.OptionsTree:
-        """Property to the component options.
-
-        Options can either impact the Python side or the Javascript builder.
-
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
         Python can pass some options to the JavaScript layer.
         """
         return super().options

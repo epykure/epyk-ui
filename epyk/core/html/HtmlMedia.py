@@ -65,7 +65,7 @@ class Media(Html.Html):
 
     @property
     def options(self) -> OptButton.OptMedia:
-        """ Property to set all the possible object for a Media (video and audio). """
+        """Property to set all the possible object for a Media (video and audio)"""
         return super().options
 
     def __str__(self):
@@ -147,12 +147,12 @@ class Camera(Html.Html):
 
     @property
     def options(self) -> OptButton.OptMedia:
-        """Property to set all the possible object for a Media (video and audio). """
+        """Property to set all the possible object for a Media (video and audio)"""
         return super().options
 
     @property
     def dom(self) -> JsHtml.JsMedia:
-        """The Javascript Dom object. """
+        """The Javascript Dom object"""
         if self._dom is None:
             self._dom = JsHtml.JsMedia(self, page=self.page)
         return self._dom

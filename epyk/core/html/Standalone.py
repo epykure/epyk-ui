@@ -69,7 +69,7 @@ def load_component(component_path: Path, raise_exception: bool = True) -> dict:
             - <selector>.js
 
     :param component_path: The root path for the component definition
-    :param raise_exception: Flag to stop the process and raise an exception
+    :param raise_exception: Optional. Flag to stop the process and raise an exception
     """
     if component_path.is_dir():
         component_config_path = Path(component_path, "component.json")
@@ -147,11 +147,11 @@ def %s(%s):
 
 
 def get_static_method(func_name: str, library: str = None, set_exports: bool = False) -> str:
-    """ Get the appropriate function name based on the component definition.
+    """Get the appropriate function name based on the component definition.
 
     :param func_name: The original function name
-    :param library: Component part of a specific library
-    :param set_exports: Use export module to get object properties
+    :param library: Optional. Component part of a specific library
+    :param set_exports: Optional. Use export module to get object properties
     """
     if library:
         func_name = "%s.%s" % (library, func_name)
@@ -165,18 +165,18 @@ class DomComponent(JsHtml.JsHtml):
 
     @property
     def container(self):
-        """ Get the DOM container created by the process """
+        """Get the DOM container created by the process"""
         return JsNodeDom.JsDoms.get('document.querySelector("#" + %s).closest("div[name=%s]")' % (
             JsUtils.jsConvertData(self.component.html_code, None), self.component.selector))
 
     @property
     def element(self):
-        """ Return always the real DOM element. """
+        """Return always the real DOM element"""
         return JsNodeDom.JsDoms.get("document.getElementById(%s)" % JsUtils.jsConvertData(self.component.html_code, None))
 
     @property
     def content(self) -> JsHtml.ContentFormatters:
-        """ Get the component content. - can be overriden with js mapping value: getComponentValue() for instance """
+        """Get the component content. - can be overridden with js mapping value: getComponentValue() for instance"""
         if "value" in self.component.js_funcs_map:
             return JsHtml.ContentFormatters(self.page, "%s.%s()" % (
                 self.component.js_code, self.component.js_funcs_map["value"]))
@@ -186,14 +186,13 @@ class DomComponent(JsHtml.JsHtml):
 
     @property
     def lastChild(self):
-        """ Get the last child from the component container """
+        """Get the last child from the component container"""
         return JsNodeDom.JsDoms.get("document.getElementById(%s).lastChild" % JsUtils.jsConvertData(self.component.html_code, None))
 
     def get_child_by_tag(self, tag: str):
-        """Get a child by tag from the component container
+        """Get a child by tag from the component container.
 
         Usage::
-
             page.onDOMContentLoaded([
                 page.js.console.log(comp.dom.get_child_by_tag("div[name=label]"))])
 
@@ -211,13 +210,12 @@ class DomComponent(JsHtml.JsHtml):
         return JsNodeDom.JsDoms.get(tag)
 
     def addWidget(self, values = None, options=None, container: str = None, fnc: str = None):
-        """Remove the component from the page scope and attach it to the container.
-        The HTML builder is skipped here.
+        """Remove the component from the page scope and attach it to the container. The HTML builder is skipped here.
 
-        :param values: Initial values to build the JavaScript component
-        :param options: Options to set the JavaScript component
-        :param container: Anchor for the component
-        :param fnc: Append method in the component (default append%(className)sTo)
+        :param values: Optional. Initial values to build the JavaScript component
+        :param options: Optional. Options to set the JavaScript component
+        :param container: Optional. Anchor for the component
+        :param fnc: Optional. Append method in the component (default append%(className)sTo)
         """
         self.component.options.managed = False
         if fnc is None:
@@ -241,7 +239,6 @@ class JsComponents(JsPackage):
 
     def build(self, data: types.JS_DATA_TYPES, options: types.JS_DATA_TYPES = None, fnc: str = "build"):
         """
-
         :param data: Optional. Component data
         :param options: Optional. Specific Python options available for this component
         :param fnc: Optional. The underlying method used in the template
@@ -252,7 +249,6 @@ class JsComponents(JsPackage):
 
     def empty(self, options: types.JS_DATA_TYPES = None, fnc: str = "empty"):
         """Empty the content of the container.
-
         This will call the underlying empty function which must be defined in the JavaScript component.
 
         :param options: Optional. Specific Python options available for this component
@@ -263,9 +259,7 @@ class JsComponents(JsPackage):
             self.varName, fnc, JsUtils.jsConvertData(options, None)))
 
     def set(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None, fnc: str = "set"):
-        """Set the content of the container.
-        This method usually is used fto init / reset the component.
-
+        """Set the content of the container. This method usually is used fto init / reset the component.
         This will call the underlying set function which must be defined in the JavaScript component.
 
         :param data: Optional. The value
@@ -279,7 +273,6 @@ class JsComponents(JsPackage):
 
     def custom(self, func_name: str, **kwargs):
         """Map a custom method not yet defined in the Python schema.
-
         This will accept also any kwargs in order to pass this to the JavaScript underlying method.
 
         Usage::
@@ -295,7 +288,7 @@ class JsComponents(JsPackage):
     def trim(self, fnc: str = None):
         """Trim a JavaScript component with the specific features of the component.
 
-        :param fnc: Static method to define / pain the component (Default trim%(className)s)
+        :param fnc: Optional. Static method to define / pain the component (Default trim%(className)s)
         """
         fnc = fnc or self.trimFunc or "trim%s" % self.component.__class__.__name__
         fnc = get_static_method(fnc, self.component.library, self.component.set_exports)
@@ -306,7 +299,7 @@ class SdOptions(OptionsWithTemplates):
 
     @property
     def container(self):
-        """Button category to specify the style. """
+        """Button category to specify the style"""
         return self.get({"display": "inline-block"})
 
     @container.setter
@@ -328,7 +321,7 @@ class SdOptions(OptionsWithTemplates):
         """Set of options passed to the JavaScript layer to build / update the component.
 
         :param values: The dictionary to be passed to the JavaScript layer within the builder
-        :param js_keys: The list of keys coming from JavaScript
+        :param js_keys: Optional. The list of keys coming from JavaScript
         :return: The underlying component for chaining
         """
         for k, v in values.items():
@@ -416,18 +409,17 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @property
     def proxy_class(self):
-        """Underlying class name used to build the object """
+        """Underlying class name used to build the object"""
         return  get_static_method(self.__class__.__name__, self.library, self.set_exports)
 
     @property
     def options(self) -> SdOptions:
-        """Property to set all the possible object for a standalone component. """
+        """Property to set all the possible object for a standalone component"""
         return super().options
 
     @property
     def dom(self) -> DomComponent:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
@@ -446,7 +438,6 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     @property
     def js(self) -> JsComponents:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
 
         :return: A Javascript Dom object.
@@ -459,7 +450,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
     def directives(cls, framework: str = None) -> dict:
         """Load structure directives for the HTML templates
 
-        :param framework: The JavaScript framework
+        :param framework: Optional. The JavaScript framework
         """
         framework = framework or "python"
         if cls.toml_directives_url is not None:
@@ -501,8 +492,8 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. The object reference ID
-        :param stop_state:
-        :param dataflows: Chain of data transformations
+        :param stop_state: Optional.
+        :param dataflows: Optional. Chain of data transformations
         """
         # check if there is no nested HTML components in the data
         if isinstance(data, dict):
@@ -546,7 +537,7 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
             on_ready=on_ready)
 
     def html_extension(self, html: str):
-        """Update the HTML content of a component
+        """Update the HTML content of a component.
 
         :param html: The HTML string expression
         """
@@ -576,15 +567,14 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
 
     @classmethod
     def get_import(cls, path: str, suffix: str = "", root_path: Union[Path, str] = None, is_ts: bool = True) -> str:
-        """Get the import statement to be added to a module.
-        This would work with ts or js files.
+        """Get the import statement to be added to a module. This would work with ts or js files.
 
         If the root_path of the application file is added, the process will check if the component file exists.
 
         :param path: The component file path
-        :param suffix:Suffix import for Component or Modules derived from the core builder
-        :param root_path: The application file path (within the app/ folder)
-        :param is_ts: Flag to specify the file format (ts or js)
+        :param suffix: Optional.  Suffix import for Component or Modules derived from the core builder
+        :param root_path: Optional. The application file path (within the app / folder)
+        :param is_ts: Optional. Flag to specify the file format (ts or js)
         """
         if root_path is not None:
             script_path = Path(root_path, "%s.%s" % (path, "ts" if is_ts else 'js'))
@@ -676,8 +666,8 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         It is recommended to have each component definition segregated in a dedicated folder,
 
         :param path: Component(s) path
-        :param is_parent: Flag to specify if the process will load multiple components
-        :param raise_exception: Flag to raise an exception if component not loaded
+        :param is_parent: Optional. Flag to specify if the process will load multiple components
+        :param raise_exception: Optional. Flag to raise an exception if component not loaded
         """
         components = {}
         if is_parent:
@@ -753,7 +743,7 @@ class Resources:
         :param selector: Component's selector
         :param func_name: Optional. The function name (default calling function)
         :param requirements: optional. External requirements
-        :param kwargs: Must be all arguments in the JavaScript method (in order with defaults)
+        :param kwargs: Optional. Must be all arguments in the JavaScript method (in order with defaults)
         """
         func_name = func_name or sys._getframe().f_back.f_code.co_name
         c = self.get_method_from(selector, func_name, requirements)

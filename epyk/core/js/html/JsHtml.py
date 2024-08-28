@@ -263,13 +263,13 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def element(self):
-        """Return always the real DOM element. """
+        """Return always the real DOM element"""
         if self.component is not None:
             return "document.getElementById('%s')" % self.component.html_code
 
     @property
     def val(self):
-        """Return a Javascript val object. """
+        """Return a Javascript val object"""
         return JsObjects.JsObjects.get(
             "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
                 self.htmlCode, self.content.toStr()))
@@ -285,7 +285,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def isInViewPort(self) -> JsBoolean.JsBoolean:
-        """Check if the component is in the visible part of the page (the viewport). """
+        """Check if the component is in the visible part of the page (the viewport)"""
         flag = JsBoolean.JsBoolean(
             "!(rect.bottom < 0 || rect.top - viewHeight >= 0)", js_code="visibleFlag", set_var=True, is_py_data=False)
         flag._js.insert(0, self.page.js.viewHeight.setVar('viewHeight'))
@@ -293,7 +293,7 @@ class JsHtml(JsNodeDom.JsDoms):
         return JsFncs.JsAnonymous(flag.r).return_("visibleFlag").call()
 
     def onViewPort(self, js_funcs: types.JS_FUNCS_TYPES):
-        """Trigger some code when the component is visible on the visible part of the page (the viewpport).
+        """Trigger some code when the component is visible on the visible part of the page (the viewport).
 
         :param js_funcs: The Javascript events
         """
@@ -311,24 +311,24 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def content(self) -> ContentFormatters:
-        """Get the component content. """
+        """Get the component content"""
         if self.component.attr.get('type') == "number":
             return ContentFormatters(self.page, "parseFloat(%s.value)" % self.varName)
 
         return ContentFormatters(self.page, "%s.value" % self.varName)
 
     def empty(self) -> str:
-        """Empty the component. """
+        """Empty the component"""
         return '%s.value = ""' % self.varName
 
     @property
     def events(self) -> JsNodeDom.JsDomEvents:
-        """Link to the events attached to a Javascript DOM object. """
+        """Link to the events attached to a Javascript DOM object"""
         return JsNodeDom.JsDomEvents(self.component)
 
     @property
     def jquery(self) -> JsQuery.JQuery:
-        """Link to the JQuery functions. """
+        """Link to the JQuery functions"""
         if self._jquery is None:
             self._jquery = JsQuery.JQuery(
                 component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.html_code), set_var=False)
@@ -336,7 +336,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def d3(self) -> JsD3.D3Select:
-        """Wrapper to the D3 library. """
+        """Wrapper to the D3 library"""
         if self._d3 is None:
             self._d3 = JsD3.D3Select(
                 component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.html_code)
@@ -344,7 +344,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def jquery_ui(self) -> JsQueryUi.JQueryUI:
-        """Wrapper to the JqueryUI component. """
+        """Wrapper to the JqueryUI component"""
         if self._jquery_ui is None:
             self._jquery_ui = JsQueryUi.JQueryUI(
                 component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.html_code), set_var=False,
@@ -353,7 +353,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def objects(self) -> JsObjects.JsObjects:
-        """Interface to the main Javascript Classes and Primitives. """
+        """Interface to the main Javascript Classes and Primitives"""
         return JsObjects.JsObjects(page=self.page, component=self.component)
 
     @property
@@ -366,7 +366,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @property
     def format(self) -> Formatters:
-        """Specific formatters for the HTML components. """
+        """Specific formatters for the HTML components"""
         return Formatters(self.page, self.content.toStr())
 
     def style(self, attrs: dict):
@@ -391,8 +391,7 @@ class JsHtml(JsNodeDom.JsDoms):
 
     def registerFunction(self, fnc_name: str, js_funcs: types.JS_FUNCS_TYPES, pmts: Optional[list] = None,
                          profile: types.PROFILE_TYPE = None):
-        """Javascript Framework extension.
-        Register a predefined Javascript function.
+        """Javascript Framework extension. Register a predefined Javascript function.
         This is only dedicated to specific Javascript transformation functions.
 
         :param fnc_name: The function name
@@ -409,20 +408,15 @@ class JsHtml(JsNodeDom.JsDoms):
         """Hide the component.
 
         Usage::
-
           input.js.hide()
 
-        Related Pages:
-
-          https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/
+        `gomakethings <https://gomakethings.com/how-to-show-and-hide-elements-with-vanilla-javascript/>`_
         """
         return self.css("display", "none")
 
-    def show(self, inline: Optional[str] = None, duration: Optional[int] = None, display_value: Optional[str] = None):
-        """
-        Show the component.
-
-        This will use the display attribute of the component.
+    def show(self, inline: Optional[str] = None, duration: Optional[int] = None,
+             display_value: Optional[str] = None, focus: bool = False):
+        """Show the component. This will use the display attribute of the component.
 
         Usage::
 
@@ -438,13 +432,15 @@ class JsHtml(JsNodeDom.JsDoms):
         """
         display_value = display_value or self.display_value
         if duration is not None:
-            return super(JsHtml, self).show('inline-block' if inline else display_value, duration)
+            return super(JsHtml, self).show('inline-block' if inline else display_value, duration, focus=focus)
+
+        if focus:
+            return super(JsHtml, self).show('inline-block' if inline else display_value, focus=focus)
 
         return JsUtils.jsConvertData(self.css("display", 'inline-block' if inline else display_value), None)
 
     def display(self, flag: bool, inline: Optional[str] = None, display_value: Optional[str] = None):
-        """
-        Change the CSS display attribute.
+        """Change the CSS display attribute.
 
         Related Pages:
 
@@ -459,8 +455,7 @@ class JsHtml(JsNodeDom.JsDoms):
             flag, self.show(inline, display_value=display_value).r, self.hide().r))
 
     def visible(self, flag: bool = True, inverse: bool = False):
-        """
-        The visibility property specifies whether or not an element is visible.
+        """The visibility property specifies whether or not an element is visible.
 
         Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from
         the document layout!
@@ -486,8 +481,7 @@ class JsHtml(JsNodeDom.JsDoms):
             "(function(flag){if(!flag){ return 'hidden' } else {return 'visible'}})(%s)" % flag)).r
 
     def invisible(self):
-        """
-        The visibility property specifies whether or not an element is visible.
+        """The visibility property specifies whether or not an element is visible.
 
         Tip: Hidden elements take up space on the page. Use the display property to both hide and remove an element from
         the document layout!
@@ -504,12 +498,11 @@ class JsHtml(JsNodeDom.JsDoms):
         return self.css("visibility", "hidden").r
 
     def select(self):
-        """   Select the content of the HTMl component. """
+        """Select the content of the HTMl component"""
         return JsObjects.JsObjects.get("%s.select()" % self.varName)
 
     def focus(self, prevent_scroll: bool = False):
-        """
-        Add focus to the content of the HTMl component.
+        """Add focus to the content of the HTMl component.
 
         Related Pages:
 
@@ -523,8 +516,7 @@ class JsHtml(JsNodeDom.JsDoms):
             self.varName, JsUtils.jsConvertData(prevent_scroll, None)))
 
     def toggle(self, attr: str = "display", val_1: Optional[str] = None, val_2: str = "none"):
-        """
-        Toggle (hide / show) the display of the component.
+        """Toggle (hide / show) the display of the component.
 
         Usage::
 
@@ -553,8 +545,8 @@ class JsHtml(JsNodeDom.JsDoms):
           s.dom.highlight()
           s.dom.highlight(css_attrs={"background": "red"}),
 
-        :param css_attrs: Optional. The CSS attributes.
-        :param time_event: Optional. The time of the event.
+        :param css_attrs: Optional. The CSS attributes
+        :param time_event: Optional. The time of the event
         """
         if css_attrs is None:
             css_attrs, css_attrs_origin = {}, {}
@@ -577,13 +569,11 @@ class JsHtml(JsNodeDom.JsDoms):
                     css_attrs_origin[k] = self.component.attr[k]
                 else:
                     css_attrs_origin[k] = "none"
-        return '''%s; setTimeout(function(){%s}, %s)
-      ''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
+        return '''%s; setTimeout(function(){%s}, %s)''' % (self.css(css_attrs).r, self.css(css_attrs_origin).r, time_event)
 
     def loadHtml(self, components: List[primitives.HtmlModel], append: bool = False,
                  profile: types.PROFILE_TYPE = None):
-        """
-        Load during a Javascript event a component within the one using this method.
+        """Load during a Javascript event a component within the one using this method.
         This cannot be tested during the Python execution and should be tested in the browser.
 
         Tip: It is possible to add a break point to debug in the browser by adding.
@@ -597,7 +587,7 @@ class JsHtml(JsNodeDom.JsDoms):
             d.dom.loadHtml(page.ui.texts.label("test label").css({"color": 'blue', 'float': 'none'}))])
 
         :param components: The different HTML objects to be added to the component
-        :param append: Mention if the component should replace or append the data
+        :param append: Optional. Mention if the component should replace or append the data
         :param profile: Optional. A flag to set the component performance storage
 
         :return: The Javascript string to be added to the page
@@ -613,13 +603,12 @@ class JsHtml(JsNodeDom.JsDoms):
         return JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
 
     def options(self, options: Optional[dict] = None):
-        """
-        Return the builder options used to generate the object on the Javascript side.
+        """Return the builder options used to generate the object on the Javascript side.
         This is not necessarily the same object as the component options as some can be only used on the Python side.
 
         This will not change the original option object used during the first object creation.
 
-        :param options: Optional. The value to be changed.
+        :param options: Optional. The value to be changed
         """
         opt = dict(self.component._jsStyles)
         if options is not None:
@@ -627,8 +616,7 @@ class JsHtml(JsNodeDom.JsDoms):
         return opt
 
     def trigger(self, event: str):
-        """
-        Shortcut to the trigger event.
+        """Shortcut to the trigger event.
 
         Related Pages:
 
@@ -640,17 +628,17 @@ class JsHtml(JsNodeDom.JsDoms):
 
     @packageImport("html2canvas")
     def capture(self):
-        """ Copy a screenshot of the component to the Clipboard """
+        """Copy a screenshot of the component to the Clipboard"""
         return '''html2canvas(%(id)s).then((canvas) => {
   canvas.toBlob(blob => navigator.clipboard.write([new ClipboardItem({'image/png': blob})]))})''' % {
             "id": self.component.dom.varId}
 
     def press(self):
-        """ DOM event to trigger a click based on the pressed' aria tag """
+        """DOM event to trigger a click based on the pressed' aria tag"""
         return self.page.js.if_(self.component.aria.js_is("pressed", "false"), [self.trigger("click")])
 
     def unpress(self):
-        """ DOM event to trigger a click based on the pressed' aria tag """
+        """DOM event to trigger a click based on the pressed' aria tag"""
         return self.page.js.if_(self.component.aria.js_is("pressed", "true"), [self.trigger("click")])
 
     def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
@@ -673,7 +661,7 @@ class JsHtmlRich(JsHtml):
 
     @property
     def val(self):
-        """  Return the val object. """
+        """Return the val object"""
         values = ["'%s': %s" % (k, self.page.components[k].dom.content.toStr()) for k in
                   self.component._internal_components]
         return JsObjects.JsObjects.get(
@@ -693,13 +681,12 @@ else {return domObl.innerHTML}})(%(varName)s)''' % {"varName": self.varName})
 
     @property
     def format(self):
-        """ Specific formatters for the HTML components. """
+        """Specific formatters for the HTML components"""
         return Formatters(self.page, "%s.innerHTML" % self.varName)
 
     def toggleContent(self, current_val: str, new_val: str, current_funcs: types.JS_FUNCS_TYPES = None,
                       new_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
-        """
-        Toggle (change) the content of the HTML component.
+        """Toggle (change) the content of the HTML component.
 
         :param current_val: The content of the HTML component
         :param new_val: The new content of the HTML component
@@ -714,8 +701,7 @@ if(%(varName)s.innerHTML == %(content)s){%(varName)s.innerHTML = %(content2)s; %
 else {%(varName)s.innerHTML = %(content)s; %(jsFncs2)s}
 ''' % {'varName': self.varName, 'content2': content2, 'content': content,
        'jsFncs': JsUtils.jsConvertFncs(current_funcs, toStr=True, profile=profile),
-       'jsFncs2': JsUtils.jsConvertFncs(new_funcs, toStr=True, profile=profile)
-       })
+       'jsFncs2': JsUtils.jsConvertFncs(new_funcs, toStr=True, profile=profile)})
 
     def select(self):
         """  Select the content of the HTMl component. """
@@ -749,7 +735,7 @@ return frag.firstChild.outerHTML})(%s)''' % (json.dumps({}), value)
         return JsObjects.JsObjects.get("%s.innerHTML += %s" % (self.htmlCode, value))
 
     def empty(self):
-        """ Empty the content of the HTML component using the innerHTML JavaScript property. """
+        """Empty the content of the HTML component using the innerHTML JavaScript property"""
         return JsUtils.jsWrap('%s.innerHTML = ""' % self.varName)
 
 
@@ -772,20 +758,22 @@ class JsHtmlButton(JsHtml):
 
     @property
     def val(self):
-        return JsObjects.JsObjects.get('''{%s: {value: %s.innerHTML, timestamp: Date.now(), 
-offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s}}
-''' % (self.htmlCode, self.varName, self.getAttribute('data-locked'), self.getAttribute('name')))
+        return JsObjects.JsObjects.get('''{%s: {value: %s, timestamp: Date.now(), 
+offset: new Date().getTimezoneOffset(), locked: %s === 'true', name: %s, 
+icon: %s.querySelector('i')?.getAttribute('class'), 
+badge: %s.querySelectorAll('[name=\"badge-value\"]')[0]?.innerHTML}}
+''' % (self.component.html_code, self.content.toStr(), self.getAttribute('data-locked'), self.getAttribute('name'),
+       self.varName, self.varName))
 
     @property
     def content(self):
-        return ContentFormatters(self.page, "%s.innerHTML" % self.varName)
+        return ContentFormatters(
+            self.page, "%s.querySelectorAll('span[name=\"button-content\"]')[0].innerHTML" % self.varName)
 
     def loading(self, flag: bool, multiple: bool = False):
-        """
-        Add a loading icon to the button.
+        """Add a loading icon to the button.
 
         Usage::
-
           b = component.ui.button("test")
           b.click([
             b.dom.loading(True),
@@ -837,7 +825,7 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
             funcs = JsFncs.JsFunctions(self.css("color", ''))
             funcs.append(self.css("background-color", ''))
             funcs.append(self.css("cursor", "pointer"))
-            funcs.append(self.attr('data-locked', False))
+            funcs.append(self.attr('data-locked', False).r)
         return funcs
 
     def lock(self, not_allowed: bool = True):
@@ -849,35 +837,28 @@ setTimeout(function() {%s.style.borderColor = bgColor}, %s)''' % (
         funcs.append(self.css("background-color", self.getComputedStyle('background-color')))
         if not_allowed:
             funcs.append(self.css("cursor", "not-allowed"))
-            funcs.append(self.attr('data-locked', True))
+            funcs.append(self.attr('data-locked', True).r)
         else:
             funcs.append(self.css("cursor", "default"))
-            funcs.append(self.attr('data-locked', True))
+            funcs.append(self.attr('data-locked', True).r)
         return funcs
 
-    def empty(self):
-        return '%s.innerHTML = ""' % self.varName
+    def empty(self) -> str:
+        return '%s.querySelectorAll(\'span[name="button-content"]\')[0].innerHTML = ""' % self.varName
 
 
 class JsHtmlButtonChecks(JsHtml):
 
     @property
     def val(self):
-        """
-        Get the full content of the list.
-
-        This will return the current list status. Selected items but also the full content.
-        It will return also the common parameters.
+        """Get the full content of the list. This will return the current list status.
+        Selected items but also the full content. It will return also the common parameters.
         """
         return ""
 
     @property
     def content(self):
-        """
-        Get the content of the list.
-
-        This will return all the selected items in a list.
-        """
+        """Get the content of the list. This will return all the selected items in a list"""
         return ""
 
     def disable(self):
@@ -886,10 +867,7 @@ class JsHtmlButtonChecks(JsHtml):
 
     def add(self, data: Union[str, primitives.JsDataModel, float, dict, list], is_unique: bool = True,
             css_style: Optional[dict] = None, position: str = "bottom"):
-        """
-        Add an item to the list.
-
-        This will add the item at the end of the list by default.
+        """Add an item to the list. This will add the item at the end of the list by default.
         By default the list will not add duplicated entries.
 
         Usage::
@@ -926,8 +904,7 @@ if (%(unique)s){%(jqId)s.find('span').each(function(){
 }) ''' % {"styls": css_style, "options": {}, "jqId": self.jquery.varId, "unique": is_unique, "jsData": data})
 
     def empty(self):
-        """
-        Empty the list content.
+        """Empty the list content.
 
         Usage::
 
@@ -941,8 +918,7 @@ if (%(unique)s){%(jqId)s.find('span').each(function(){
         return '%s.empty()' % self.jquery.varId
 
     def delete(self, data: types.JS_DATA_TYPES, data_ref: str = "compData"):
-        """
-        Delete an item to the checkbox buttons.
+        """Delete an item to the checkbox buttons.
 
         Usage::
 
@@ -964,8 +940,7 @@ else {%(jqId)s.find('span').each(function(){
 })}''' % {"jsData": data, "jqId": self.jquery.varId, "dataRef": data_ref})
 
     def check(self, data: types.JS_DATA_TYPES, data_ref: str = "compData"):
-        """
-        Check an a checkbox.
+        """Check an a checkbox.
 
         Usage::
 
@@ -991,12 +966,11 @@ var %(dataRef)s = %(jsData)s;
 
     @property
     def current(self):
-        """  Return the current value in the list. """
+        """Return the current value in the list"""
         return JsObjects.JsVoid("$(this).find('p').text()")
 
     def css_label(self, data: types.JS_DATA_TYPES, attrs: dict, data_ref: str = "compData"):
-        """
-        Change the CSS style of a given item.
+        """Change the CSS style of a given item.
 
         Usage::
 
@@ -1042,17 +1016,38 @@ class JsHtmlIcon(JsHtml):
     def val(self):
         """ """
         return JsObjects.JsObjects.get(
-            "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
-                self.htmlCode, self.component.dom.getAttribute("class")))
+            "{%s: {value: %s, timestamp: Date.now(), offset: new Date().getTimezoneOffset(), label: %s}}" % (
+                self.component.html_code, self.content, self.label))
 
     @property
     def content(self):
         """ """
         return self.component.dom.getAttribute("class")
 
-    def spin(self, status: bool = True):
+    @property
+    def label(self):
+        """Get the Icon label value"""
+        return self.component.dom.innerHTML()
+
+    def increment(self, by: int = 1, start: int = 0, end: int = None):
+        """Change the label value attached to the icon.
+        This will extract the number from the label and increment it.
+
+        :param by: increment value
+        :param start: start position for the number in the label
+        :param end: end position for the number in the label
         """
-        Add spin class to the font awesome.
+        start = JsUtils.jsConvertData(start, None)
+        end = JsUtils.jsConvertData(end, None)
+        return JsUtils.jsWrap('''
+(function(htmlObj, by, start, end){
+    let currentValue = htmlObj.innerHTML;
+    let num = parseFloat(currentValue.slice(start, currentValue.length)) + by;
+    htmlObj.innerHTML = currentValue.slice(0, start) + num + currentValue.substr(currentValue.length + end); 
+})(%s, %s, %s, %s)''' % (self.varName, by, start, end))
+
+    def spin(self, status: bool = True):
+        """Add spin class to the font awesome.
 
         :param status: Optional. The spin status
         """
@@ -1062,8 +1057,7 @@ class JsHtmlIcon(JsHtml):
         return self.component.dom.classList.remove("fa-spin")
 
     def pulse(self, status: bool = True):
-        """
-        Add pulse class to the font awesome.
+        """Add pulse class to the font awesome.
 
         :param status: Optional. The spin status
         """
@@ -1077,14 +1071,14 @@ class JsHtmlList(JsHtml):
 
     @property
     def val(self):
-        """ Return the standard value object with the fields (value, timestamp, offset). """
+        """Return the standard value object with the fields (value, timestamp, offset)"""
         return JsObjects.JsObjects.get(
             "{%s: {value: %s.querySelector('[data-select=true]').innerHTML, timestamp: Date.now(), offset: new Date().getTimezoneOffset()}}" % (
                 self.htmlCode, self.varName))
 
     @property
     def content(self):
-        """ Return the values of the items in the list. """
+        """Return the values of the items in the list"""
         return JsObjects.JsArray.JsArray.get('''
 (function(){
    var values = []; %(component)s.querySelectorAll("%(item)s").forEach(function(dom){values.push(dom.innerText)});
@@ -1097,8 +1091,7 @@ class JsHtmlList(JsHtml):
         return self.component.dom.getAttribute("class")
 
     def add(self, item: str, unique: bool = True, draggable: bool = False):
-        """
-        Add a new item to the list.
+        """Add a new item to the list.
 
         :param item: The Item to be added to the list
         :param unique: Optional. Only add the item if it is not already in the list
@@ -1139,8 +1132,7 @@ if ((typeof listItemOptions.max === 'undefined') || (listItemOptions.max === nul
           "options": options})
 
     def append(self, items: list, unique: bool = True, draggable: bool = False):
-        """
-        Add new items to the list.
+        """Add new items to the list.
 
         :param items: The Items to be added to the list
         :param unique: Optional. Only add the item if it is not already in the list
@@ -1157,15 +1149,13 @@ if ((typeof listItemOptions.max === 'undefined') || (listItemOptions.max === nul
 
     @property
     def dropped_value(self):
-        """
-        Get the current dropped values to the list.
+        """Get the current dropped values to the list.
         Object can be structure (DOM) so the text content is wrapped in a specific variable.
         """
         return JsObjects.JsString.JsString.get("wrapper.innerText")
 
     def unactive(self, current_index: int = -1, data_ref: str = "list_items"):
-        """
-        Set to unactive all the items in the list.
+        """Set to unactive all the items in the list.
 
         Usage::
 
@@ -1220,8 +1210,7 @@ class JsHtmlNumeric(JsHtmlRich):
         ], toStr=True, profile=profile)
 
     def add(self, item: float):
-        """
-        Add a value to the component value.
+        """Add a value to the component value.
 
         :param item: The value to be added
         """
@@ -1238,8 +1227,7 @@ class JsHtmlLink(JsHtml):
         return ContentFormatters(self.page, "%s.innerText" % self.varName)
 
     def url(self, url: str):
-        """
-        The href attribute specifies the URL of the page the link goes to.
+        """The href attribute specifies the URL of the page the link goes to.
 
         Related Pages::
 
@@ -1251,8 +1239,7 @@ class JsHtmlLink(JsHtml):
         return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
 
     def href(self, url: str):
-        """
-        The href attribute specifies the URL of the page the link goes to.
+        """The href attribute specifies the URL of the page the link goes to.
 
         Related Pages::
 
@@ -1264,8 +1251,7 @@ class JsHtmlLink(JsHtml):
         return JsFncs.JsFunctions("%s.href = %s" % (self.varName, url))
 
     def target(self, name: str):
-        """
-        The target attribute specifies where to open the linked document.
+        """The target attribute specifies where to open the linked document.
 
         Related Pages::
 
@@ -1282,9 +1268,7 @@ class JsMedia(JsHtml):
     # TODO: Implement properly this with JsMediaRecorder
 
     def start(self):
-        """
-        Start the camera.
-        This can only work with https and localhost urls.
+        """Start the camera. This can only work with https and localhost urls.
 
         Related Pages::
 
@@ -1396,9 +1380,7 @@ class JsHtmlTable(JsHtml):
 class JsHtmlLi(JsHtmlRich):
 
     def has_state(self, state: str, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Check if the item in the list has a specific class.
-        If it is the case it will run the function.
+        """Check if the item in the list has a specific class. If it is the case it will run the function.
 
         :param state: The CSS class
         :param js_funcs: The function to run if the state is defined
@@ -1408,8 +1390,7 @@ class JsHtmlLi(JsHtmlRich):
             self.varName, JsUtils.jsConvertData(state, None)), js_funcs, profile=profile)
 
     def is_active(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
-        """
-        Check if the item in the list has the class active.
+        """Check if the item in the list has the class active.
 
         :param js_funcs: The function to run if the state is defined
         :param profile: Optional. A flag to set the component performance storage
@@ -1421,14 +1402,14 @@ class JsHtmlButtons(JsHtmlRich):
 
     @property
     def val(self):
-        """Return the val object. """
+        """Return the val object"""
         delimiter = JsUtils.jsConvertData(self.component.options.delimiter, None)
         return JsObjects.JsObjects.get(
             "{'%s': %s.split(%s)}" % (self.component.html_code, self.content.toStr(), delimiter))
 
     @property
     def content(self):
-        """Return the values of the items in the list. """
+        """Return the values of the items in the list"""
         delimiter = JsUtils.jsConvertData(self.component.options.delimiter, None)
         selected = JsUtils.jsConvertData(self.component.options.selected, None)
         return JsObjects.JsArray.JsArray.get('''(function(){

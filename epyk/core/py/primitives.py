@@ -20,6 +20,7 @@ class DomModel:
   isInViewPort = None
   classList = None
   jquery = None
+  varName = None
 
   def getAttribute(self, value):
     ...
@@ -40,6 +41,9 @@ class DomModel:
 class OptionModel:
   verbose = False
   config_default = None
+
+  delimiter = None
+  selected = None
 
 
 class HtmlModel:

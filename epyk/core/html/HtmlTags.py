@@ -131,9 +131,9 @@ class HtmlGeneric(Html.Html):
 
           btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
         """
         self.options.templateLoading = label
         if status:
@@ -149,9 +149,9 @@ class HtmlGeneric(Html.Html):
 
           btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
-        :param status: The message status (true is active)
-        :param label: The message template
-        :param data: The message parameter to feed the template
+        :param status: Optional. The message status (true is active)
+        :param label: Optional. The message template
+        :param data: Optional. The message parameter to feed the template
         """
         self.options.templateError = label
         if status:

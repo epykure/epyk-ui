@@ -11,9 +11,6 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptSelect
 from epyk.core.data.DataPy import SelectionBox
 
-# The list of CSS classes
-from epyk.core.css.styles import GrpClsList
-
 #
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlSelect
@@ -134,7 +131,6 @@ class Select(Html.Html):
     def js(self) -> JsSelect.JSelect:
         """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
-
         `Package Doc <https://developer.snapappointments.com/bootstrap-select/methods/>`_
 
         :return: A Javascript Dom object
@@ -202,15 +198,14 @@ selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_
     def ajax(self, url: str, js_data="function (){return {q: '{{{q}}}'}}", is_json: bool = True,
              method: str = "POST", options: Optional[dict] = None):
         """Create a AJAX request.
+        `Package Doc <https://github.com/truckingsim/Ajax-Bootstrap-Select>`_
 
-    `Package Doc <https://github.com/truckingsim/Ajax-Bootstrap-Select>`_
-
-    :param url: The request URL for the ajax call
-    :param js_data: Optional. The value of the item to be removed from the list
-    :param is_json: Optional. A flag to specific if the data are json (default True)
-    :param method: Optional. The HTTP request method. Default Post
-    :param options: Optional. The specific properties for the ajax request
-    """
+        :param url: The request URL for the ajax call
+        :param js_data: Optional. The value of the item to be removed from the list
+        :param is_json: Optional. A flag to specific if the data are json (default True)
+        :param method: Optional. The HTTP request method. Default Post
+        :param options: Optional. The specific properties for the ajax request
+        """
         self.options.liveSearch = True
         options = options or {}
         if 'ajax' not in options:

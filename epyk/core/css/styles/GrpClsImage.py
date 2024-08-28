@@ -14,14 +14,10 @@ class ClassIcon(GrpCls.ClassHtml):
 
   @property
   def css(self) -> AttrClsImage.AttrIcon:
-    """
-    Property to the underlying CSS definition to be added to the style HTML tag of a component.
+    """Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
-
       self.css.border = "1px solid black"
-
-    :rtype: AttrClsImage.AttrIcon
     """
     if self._css_struct is None:
       self._css_struct = AttrClsImage.AttrIcon(self.component)
@@ -38,10 +34,7 @@ class ClassTinySlider(GrpCls.ClassHtml):
 
   @property
   def cls_tns_button(self) -> Classes.CatalogImg.CatalogImg:
-    """
-
-    :rtype: Classes.CatalogImg.CatalogImg
-    """
+    """ """
     if self._css_tns_button is None:
       self._css_tns_button = Classes.CatalogImg.CatalogImg(
         self.component.page, self.classList['other'], component=self.component).tns_button()
@@ -49,10 +42,7 @@ class ClassTinySlider(GrpCls.ClassHtml):
 
   @property
   def cls_tns_active(self) -> Classes.CatalogImg.CatalogImg:
-    """
-
-    :rtype: Classes.CatalogImg.CatalogImg
-    """
+    """ """
     if self._css_tns_active is None:
       self._css_tns_active = Classes.CatalogImg.CatalogImg(
         self.component.page, self.classList['other'], component=self.component).tns_button_active()

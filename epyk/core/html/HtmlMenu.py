@@ -202,7 +202,6 @@ class HtmlFooter(Html.Html):
     @sections.setter
     def sections(self, col_lst: list):
         """
-
         :param col_lst:
         """
         self.__col_lst = col_lst
@@ -280,7 +279,7 @@ class ContextMenu(Html.Html):
         self += {"value": value, 'icon': icon}
         return self
 
-    def add(self, component: Html.Html) -> Html.Html:
+    def add(self, component: Html.Html, **kwargs) -> Html.Html:
         """Add component to the menu container.
 
         :param component: Internal component to the framework.
@@ -458,13 +457,13 @@ class Shortcut(Html.Html):
 
     @property
     def style(self) -> GrpClsMenu.ClassShortcut:
-        """ Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpClsMenu.ClassShortcut(self)
         return self._styleObj
 
     def __add__(self, component: Html.Html):
-        """ Add items to a container """
+        """Add items to a container"""
         if not hasattr(component, 'options'):
             component = self.page.ui.icons.awesome(component)
             component.icon.style.css.font_size = 20
@@ -493,7 +492,6 @@ class Shortcut(Html.Html):
     def add_logo(self, icon: str, path: Optional[str] = None, align: str = "center",
                  width: tuple = (32, 'px'), height: tuple = (32, 'px')):
         """
-
         :param icon: The component icon content from font-awesome references
         :param path: Optional.
         :param align: Optional. A string with the horizontal position of the component

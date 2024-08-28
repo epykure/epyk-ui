@@ -52,12 +52,10 @@ class UpDown(Html.Html):
 
     @property
     def options(self) -> OptText.OptionsNumberMoves:
-        """Property to the component options.
-        Options can either impact the Python side or the Javascript builder.
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
         Python can pass some options to the JavaScript layer.
 
         Usage::
-
           move = page.ui.numbers.move(100, 60, height=120, helper="Show delta with yesterday")
           move.options.digits_percent = 4
         """
@@ -151,16 +149,15 @@ class BlockText(Html.Html):
         return super().options
 
     _js__builder__ = '''
-      htmlObj.find('div').first().html(data.title); htmlObj.find('div').last().empty(); var content;
-      if (typeof data.text === 'string' || data.text instanceof String) {content = data.text.split("\\n")}
-      else {content = data.text}
-      content.forEach(function(line){htmlObj.find('div').last().append('<p class="py_csstext">'+ line +'</a>')});
-      if(options.showdown){var converter = new showdown.Converter(options.showdown); data.text = converter.makeHtml(data.text)} 
-      htmlObj.find('div').last().html(data.text);
-      if (data.color != undefined) {htmlObj.find('div').last().css('color', data.color)};
-      if(typeof data.button != 'undefined'){
-        htmlObj.find("a").html(data.button.text); htmlObj.find("a").attr('href', data.button.url)}
-      '''
+htmlObj.find('div').first().html(data.title); htmlObj.find('div').last().empty(); var content;
+if (typeof data.text === 'string' || data.text instanceof String) {content = data.text.split("\\n")}
+else {content = data.text}
+content.forEach(function(line){htmlObj.find('div').last().append('<p class="py_csstext">'+ line +'</a>')});
+if(options.showdown){var converter = new showdown.Converter(options.showdown); data.text = converter.makeHtml(data.text)} 
+htmlObj.find('div').last().html(data.text);
+if (data.color != undefined) {htmlObj.find('div').last().css('color', data.color)};
+if(typeof data.button != 'undefined'){
+    htmlObj.find("a").html(data.button.text); htmlObj.find("a").attr('href', data.button.url)}'''
 
     def __str__(self):
         items = [
@@ -193,9 +190,7 @@ class TextWithBorder(Html.Html):
 
     @property
     def options(self) -> OptText.OptionsText:
-        """Property to the component options.
-        Options can either impact the Python side or the Javascript builder.
-
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -320,27 +315,26 @@ class Delta(Html.Html):
         return super().options
 
     _js__builder__ = '''
-       jHtmlObj = jQuery(htmlObj); 
-       if(typeof data === "number"){data = {number: data}};
-       if(typeof data.prevNumber === 'undefined'){data.prevNumber = accounting.unformat(jHtmlObj.find('div').first().text())};
-       var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; 
-       var currVal = accounting.formatNumber(data.number, options.digits, options.thousand_sep, options.decimal_sep); 
-       if(typeof data.thresold1 === 'undefined'){data.thresold1 = options.thresold1};
-       if(typeof data.thresold2 === 'undefined'){data.thresold2 = options.thresold2};
-       if(variation > data.thresold1){warning = '<i style="color:'+ options.red +';" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;'};
-       if(typeof data.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
-       else if(typeof options.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + options.url+ '">'+ currVal +'</a>'}
-       if(typeof data.label !== 'undefined'){currVal = data.label +" "+ currVal} else {currVal = options.label +" "+ currVal}
-       var progressElt = jHtmlObj.find('#progress');
-       progressElt.attr("title", variation + "%");
-       progressElt.progressbar({value: variation}).tooltip({track: true});
-
-       if(variation > data.thresold1){progressElt.children().css({'background': options.red})} 
-       else if(variation > data.thresold2){progressElt.children().css({'background': options.orange})} 
-       else{progressElt.children().css({'background': options.green})}
-       jHtmlObj.find('div').first().html(warning + currVal);
-       jHtmlObj.find('div').first().css({"white-space": "nowrap"});
-       jHtmlObj.find('div').last().html(options.previous_label + accounting.formatNumber(data.prevNumber, options.digits, options.thousand_sep, options.decimal_sep));
+jHtmlObj = jQuery(htmlObj); 
+if(typeof data === "number"){data = {number: data}};
+if(typeof data.prevNumber === 'undefined'){data.prevNumber = accounting.unformat(jHtmlObj.find('div').first().text())};
+var variation = 100 * (data.number - data.prevNumber) / data.prevNumber; var warning = ''; 
+var currVal = accounting.formatNumber(data.number, options.digits, options.thousand_sep, options.decimal_sep); 
+if(typeof data.thresold1 === 'undefined'){data.thresold1 = options.thresold1};
+if(typeof data.thresold2 === 'undefined'){data.thresold2 = options.thresold2};
+if(variation > data.thresold1){warning = '<i style="color:'+ options.red +';" title="'+ variation +' increase" class="fas fa-exclamation-triangle"></i>&nbsp;&nbsp;'};
+if(typeof data.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + data.url+ '">'+ currVal +'</a>'}
+else if(typeof options.url !== 'undefined'){currVal = '<a style="text-decoration:none;color:'+ data.color +'" href="' + options.url+ '">'+ currVal +'</a>'}
+if(typeof data.label !== 'undefined'){currVal = data.label +" "+ currVal} else {currVal = options.label +" "+ currVal}
+var progressElt = jHtmlObj.find('#progress');
+progressElt.attr("title", variation + "%");
+progressElt.progressbar({value: variation}).tooltip({track: true});
+if(variation > data.thresold1){progressElt.children().css({'background': options.red})} 
+else if(variation > data.thresold2){progressElt.children().css({'background': options.orange})} 
+else{progressElt.children().css({'background': options.green})}
+jHtmlObj.find('div').first().html(warning + currVal);
+jHtmlObj.find('div').first().css({"white-space": "nowrap"});
+jHtmlObj.find('div').last().html(options.previous_label + accounting.formatNumber(data.prevNumber, options.digits, options.thousand_sep, options.decimal_sep));
       '''
 
     def __str__(self):
@@ -515,7 +509,8 @@ class ContentsTable(Html.Html):
         super(ContentsTable, self).__init__(page, [], html_code=html_code, profile=profile, options=options,
                                             css_attrs={"width": width, "height": height})
         self.title = self.page.ui.div(html_code="%s_title" % self.html_code)
-        self.title += self.page.ui.text(title, html_code="%s_title_text" % self.html_code).css({"width": 'auto', 'display': 'inline-block'})
+        self.title += self.page.ui.text(title, html_code="%s_title_text" % self.html_code).css(
+            {"width": 'auto', 'display': 'inline-block'})
         self.title += self.page.ui.text("[hide]", html_code="%s_title_toggle" % self.html_code).css({
             "width": '30px', 'display': 'inline-block', 'margin-left': '5px',
             'font-size': self.page.body.style.globals.font.normal(-5)})
@@ -546,8 +541,7 @@ else{
 
     def anchor(self, text: str, level: int = 0, anchor: str = '#', options: Optional[dict] = None, html_code: str = None):
         """Add link to the content table.
-
-        `Related Pages <https://www.w3schools.com/tags/tag_a.asp>`_
+        `w3schools <https://www.w3schools.com/tags/tag_a.asp>`_
 
         :param text: The link label
         :param level: Optional. The depth of the link in the document tree
@@ -756,9 +750,7 @@ class Composite(Html.Html):
 
     @property
     def options(self) -> OptText.OptionsComposite:
-        """Property to the component options.
-        Options can either impact the Python side or the Javascript builder.
-
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -767,7 +759,6 @@ class Composite(Html.Html):
     def dom(self) -> JsHtml.JsHtmlRich:
         """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
-
         This is the only flexible component in which this DOM object can be changed.
 
         :return: A Javascript Dom object
@@ -782,7 +773,7 @@ class Composite(Html.Html):
 
     @property
     def style(self) -> GrpCls.ClassHtmlEmpty:
-        """  Property to the CSS Style of the component. """
+        """Property to the CSS Style of the component"""
         if self._styleObj is None:
             self._styleObj = GrpCls.ClassHtmlEmpty(self)
         return self._styleObj
@@ -908,17 +899,14 @@ class Status(Html.Html):
 
     @property
     def options(self) -> OptText.OptionsStatus:
-        """Property to the component options.
-        Options can either impact the Python side or the Javascript builder.
-
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
         Python can pass some options to the JavaScript layer.
         """
         return super().options
 
     _js__builder__ = '''if(options.showdown){
-  var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data)}  
-else {var content = data}
-htmlObj.innerHTML = content;
+var converter = new showdown.Converter(options.showdown); var content = converter.makeHtml(data)}  
+else {var content = data};htmlObj.innerHTML = content;
 if(typeof options.css !== 'undefined'){for(var k in options.css){htmlObj.style[k] = options.css[k]}}'''
 
     def __str__(self):

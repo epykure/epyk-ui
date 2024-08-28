@@ -42,10 +42,10 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
         return self
 
     def x_label(self, value: etypes.JS_DATA_TYPES):
-        """ Set the label of the x-axis.
+        """Set the label of the x-axis.
 
-    :param value: The axis label.
-    """
+        :param value: The axis label
+        """
         if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
             self.component.options.scales.xAxes.title.text = value
             self.component.options.scales.xAxes.title.display = True
@@ -74,10 +74,9 @@ class OptionsChartSharedChartJs(OptChart.OptionsChartShared):
         return self
 
     def y_label(self, value: etypes.JS_DATA_TYPES):
-        """
-        Set the label of the y-axis.
+        """Set the label of the y-axis.
 
-        :param value: The axis label.
+        :param value: The axis label
         """
         if min(self.component.page.imports.pkgs.chart_js.version) > '3.0.0':
             self.component.options.scales.yAxes.title.text = value
@@ -95,7 +94,7 @@ class OptionLabelFont(Options):
 
     @property
     def size(self):
-        """ Change the font-size. """
+        """Change the font-size"""
         return self._config_get()
 
     @size.setter
@@ -104,12 +103,9 @@ class OptionLabelFont(Options):
 
     @property
     def family(self):
-        """
-        Change the font family.
+        """Change the font family.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+        `chartjs <https://www.chartjs.org/docs/latest/samples/subtitle/basic.html>`_
         """
         return self._config_get()
 
@@ -119,12 +115,9 @@ class OptionLabelFont(Options):
 
     @property
     def weight(self):
-        """
-        Change the font weight.
+        """Change the font weight.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+        `chartjs <https://www.chartjs.org/docs/latest/samples/subtitle/basic.html>`_
         """
         return self._config_get()
 
@@ -134,12 +127,9 @@ class OptionLabelFont(Options):
 
     @property
     def style(self):
-        """
-        Change the CSS font style property.
+        """Change the CSS font style property.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/subtitle/basic.html
+        `chartjs <https://www.chartjs.org/docs/latest/samples/subtitle/basic.html>`_
         """
         return self._config_get()
 
@@ -151,12 +141,9 @@ class OptionLabelFont(Options):
 class OptionAxesTicksMajor(Options):
     @property
     def fontColor(self):
-        """
-        Change the font color.
+        """Change the font color.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -169,12 +156,9 @@ class OptionAxesTicks(Options):
 
     @property
     def color(self):
-        """
-        Change the font color.
+        """Change the font color.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -184,12 +168,9 @@ class OptionAxesTicks(Options):
 
     @property
     def fontColor(self):
-        """
-        Change the font color.
+        """Change the font color.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -199,12 +180,9 @@ class OptionAxesTicks(Options):
 
     @property
     def textStrokeColor(self):
-        """
-        Change the font color.
+        """Change the font color.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -214,12 +192,9 @@ class OptionAxesTicks(Options):
 
     @property
     def backdropColor(self):
-        """
-        Change the font color.
+        """Change the font color.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -229,12 +204,9 @@ class OptionAxesTicks(Options):
 
     @property
     def fontSize(self):
-        """
-        Change the labels CSS font size.
+        """Change the labels CSS font size.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -245,10 +217,7 @@ class OptionAxesTicks(Options):
     @property
     def beginAtZero(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -270,9 +239,7 @@ class OptionAxesTicks(Options):
     def max(self):
         """
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -284,9 +251,7 @@ class OptionAxesTicks(Options):
     def min(self):
         """
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -296,13 +261,10 @@ class OptionAxesTicks(Options):
 
     @property
     def mirror(self):
-        """
-        Flips tick labels around axis, displaying the labels inside the chart instead of outside.
+        """Flips tick labels around axis, displaying the labels inside the chart instead of outside.
         Note: Only applicable to vertical scales.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -313,9 +275,7 @@ class OptionAxesTicks(Options):
     @property
     def maxTicksLimit(self):
         """
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -326,10 +286,7 @@ class OptionAxesTicks(Options):
     @property
     def suggestedMin(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -340,10 +297,7 @@ class OptionAxesTicks(Options):
     @property
     def suggestedMax(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `chartjs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -353,13 +307,10 @@ class OptionAxesTicks(Options):
 
     @property
     def stepSize(self):
-        """
-        Force the step size.
+        """Force the step size.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
-          https://www.chartjs.org/docs/3.7.0/samples/scales/linear-step-size.html
+        `chartjs line<https://www.chartjs.org/docs/latest/charts/line.html>`_
+        `chartjs <https://www.chartjs.org/docs/3.7.0/samples/scales/linear-step-size.html>`_
         """
         return self._config_get()
 
@@ -408,12 +359,9 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
 
     @packageImport("accounting")
     def toNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
-        """
-        Convert to number using the accounting Javascript module-
+        """Convert to number using the accounting Javascript module-
 
-        Related Pages:
-
-          https://openexchangerates.github.io/accounting.js/
+        `openexchangerates <https://openexchangerates.github.io/accounting.js/>`_
 
         :param digit: Optional. The number of digit to be displayed
         :param thousand_sep: Optional. The thousand symbol separator
@@ -425,11 +373,7 @@ var pointVal = label/%s; return accounting.formatNumber(pointVal, %s, %s) + '%s'
 
     def fcallback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
         """
-
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/scale-options/ticks.html
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/scale-options/ticks.html>`_
 
         :param js_funcs:
         :param profile:
@@ -441,14 +385,7 @@ function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().s
     @property
     def callback(self):
         """
-
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/scale-options/ticks.html
-
-        :param js_funcs:
-        :param profile:
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/scale-options/ticks.html>`_
         """
         return self._config_get()
 
@@ -457,12 +394,9 @@ function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().s
         self._config(val)
 
     def userCallback(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
-        """
-        Convert to number using the accounting Javascript module-
+        """Convert to number using the accounting Javascript module-
 
-        Related Pages:
-
-          https://openexchangerates.github.io/accounting.js/
+        `accounting <https://openexchangerates.github.io/accounting.js/>`_
 
         :param js_funcs:
         :param profile:
@@ -471,10 +405,9 @@ function(obj){return new Date(obj.getLabelForValue(val))})(this).toISOString().s
         return self
 
     def mapTo(self, mapping: dict):
-        """
-        Map the values to a static dictionary.
+        """Map the values to a static dictionary.
 
-        :param mapping: The mapping table.
+        :param mapping: The mapping table
         """
         self._config(
             "function(label, index, labels) {var mapping = %s; if (labels in mapping){return mapping[labels]}; return labels}" % mapping,
@@ -486,7 +419,7 @@ class OptionLabels(Options):
 
     @property
     def fontColor(self):
-        """ Change the color. """
+        """Change the color"""
         return self._config_get()
 
     @fontColor.setter
@@ -498,12 +431,9 @@ class OptionAxesBorder(Options):
 
     @property
     def display(self):
-        """
-        If false, do not display grid lines for this axis.
+        """If false, do not display grid lines for this axis.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -513,13 +443,10 @@ class OptionAxesBorder(Options):
 
     @property
     def color(self):
-        """
-        The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
-        to the second grid line and so on.
+        """The color of the grid lines. If specified as an array, the first color applies to the first grid line, the
+        second to the second grid line and so on.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -529,12 +456,9 @@ class OptionAxesBorder(Options):
 
     @property
     def dash(self):
-        """
-        Length and spacing of dashes on grid lines.
+        """Length and spacing of dashes on grid lines.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -544,12 +468,9 @@ class OptionAxesBorder(Options):
 
     @property
     def dashOffset(self):
-        """
-        Offset for line dashes.
+        """Offset for line dashes.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -559,12 +480,9 @@ class OptionAxesBorder(Options):
 
     @property
     def width(self):
-        """
-        Offset for line dashes.
+        """Offset for line dashes.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -577,12 +495,9 @@ class OptionAxesGridLine(Options):
 
     @property
     def display(self):
-        """
-        If false, do not display grid lines for this axis.
+        """If false, do not display grid lines for this axis.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -592,12 +507,9 @@ class OptionAxesGridLine(Options):
 
     @property
     def circular(self):
-        """
-        If true, gridlines are circular (on radar chart only).
+        """If true, gridlines are circular (on radar chart only).
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -607,13 +519,10 @@ class OptionAxesGridLine(Options):
 
     @property
     def color(self):
-        """
-        The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
-        to the second grid line and so on.
+        """The color of the grid lines. If specified as an array, the first color applies to the first grid line, the
+        second to the second grid line and so on.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html#grid-line-configuration>`_
         """
         return self._config_get()
 
@@ -623,8 +532,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def borderColor(self):
-        """
-        The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
+        """The color of the grid lines. If specified as an array, the first color applies to the first grid line, the second
         to the second grid line and so on.
 
         Related Pages:
@@ -643,8 +551,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def borderDash(self):
-        """
-        Length and spacing of dashes on grid lines.
+        """Length and spacing of dashes on grid lines.
 
         Related Pages:
 
@@ -662,8 +569,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def borderDashOffset(self):
-        """
-        Offset for line dashes.
+        """Offset for line dashes.
 
         Related Pages:
 
@@ -681,8 +587,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def borderWidth(self):
-        """
-        Offset for line dashes.
+        """Offset for line dashes.
 
         Related Pages:
 
@@ -700,8 +605,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def lineWidth(self):
-        """
-        Stroke width of grid lines.
+        """Stroke width of grid lines.
 
         Related Pages:
 
@@ -715,8 +619,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def drawBorder(self):
-        """
-        If true, draw border at the edge between the axis and the chart area.
+        """If true, draw border at the edge between the axis and the chart area.
 
         Related Pages:
 
@@ -730,8 +633,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def drawOnChartArea(self):
-        """
-        If true, draw lines on the chart area inside the axis lines.
+        """If true, draw lines on the chart area inside the axis lines.
         This is useful when there are multiple axes and you need to control which grid lines are drawn.
 
         Related Pages:
@@ -746,8 +648,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def drawTicks(self):
-        """
-        If true, draw lines beside the ticks in the axis area beside the chart.
+        """If true, draw lines beside the ticks in the axis area beside the chart.
 
         Related Pages:
 
@@ -761,8 +662,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def tickMarkLength(self):
-        """
-        Length in pixels that the grid lines will draw into the axis area.
+        """Length in pixels that the grid lines will draw into the axis area.
 
         Related Pages:
 
@@ -777,10 +677,7 @@ class OptionAxesGridLine(Options):
     @property
     def tickColor(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/axes/styling.html
+        `ChartJs <https://www.chartjs.org/docs/latest/axes/styling.html>`_
         """
         return self._config_get()
 
@@ -790,8 +687,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def zeroLineWidth(self):
-        """
-        Stroke width of the grid line for the first index (index 0).
+        """Stroke width of the grid line for the first index (index 0).
 
         Related Pages:
 
@@ -805,8 +701,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def zeroLineColor(self):
-        """
-        Stroke color of the grid line for the first index (index 0).
+        """Stroke color of the grid line for the first index (index 0).
 
         Related Pages:
 
@@ -820,8 +715,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def zeroLineBorderDash(self):
-        """
-        Length and spacing of dashes of the grid line for the first index (index 0).
+        """Length and spacing of dashes of the grid line for the first index (index 0).
 
         Related Pages:
 
@@ -835,8 +729,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def zeroLineBorderDashOffset(self):
-        """
-        Offset for line dashes of the grid line for the first index (index 0).
+        """Offset for line dashes of the grid line for the first index (index 0).
 
         Related Pages:
 
@@ -850,8 +743,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def offsetGridLines(self):
-        """
-        If true, grid lines will be shifted to be between labels. This is set to true for a bar chart by default.
+        """If true, grid lines will be shifted to be between labels. This is set to true for a bar chart by default.
 
         Related Pages:
 
@@ -865,8 +757,7 @@ class OptionAxesGridLine(Options):
 
     @property
     def z(self):
-        """
-        z-index of gridline layer. Values <= 0 are drawn under datasets, > 0 on top.
+        """z-index of gridline layer. Values <= 0 are drawn under datasets, > 0 on top.
 
         Related Pages:
 
@@ -906,10 +797,9 @@ class OptionAxesScaleLabel(Options):
         self._config(val)
 
     def label(self, value: str):
-        """
-        Shortcut to the labelString and display property.
+        """Shortcut to the labelString and display property.
 
-        :param value: The label value.
+        :param value: The label value
         """
         self.labelString = value
         self.display = True
@@ -938,8 +828,7 @@ class OptionTitle(Options):
 
     @property
     def align(self):
-        """
-        Alignment of the title
+        """Alignment of the title
 
         Related Pages:
 
@@ -954,8 +843,7 @@ class OptionTitle(Options):
 
     @property
     def display(self):
-        """
-        Is the title shown?
+        """Is the title shown?
 
         Related Pages:
 
@@ -970,8 +858,7 @@ class OptionTitle(Options):
 
     @property
     def fullSize(self):
-        """
-        Marks that this box should take the full width/height of the canvas.
+        """Marks that this box should take the full width/height of the canvas.
         If false, the box is sized and placed above/beside the chart area.
 
         Related Pages:
@@ -986,8 +873,7 @@ class OptionTitle(Options):
 
     @property
     def text(self):
-        """
-        Set the Chart title.
+        """Set the Chart title.
 
         Usage::
 
@@ -995,9 +881,7 @@ class OptionTitle(Options):
           bar.options.plugins.title.text = pk.js_callback("function(){return Math.random()}")
           bar.options.plugins.title.display = True
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/other-charts/pie.html
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/other-charts/pie.html>`_
         """
         return self._config_get('')
 
@@ -1007,12 +891,9 @@ class OptionTitle(Options):
 
     @property
     def color(self):
-        """
-        Color of text.
+        """Color of text.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/other-charts/pie.html
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/other-charts/pie.html>`_
         """
         return self._config_get()
 
@@ -1022,12 +903,9 @@ class OptionTitle(Options):
 
     @property
     def position(self):
-        """
-        Position of title
+        """Position of title
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/title.html
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/title.html>`_
         """
         return self._config_get("top")
 
@@ -1069,12 +947,9 @@ class OptionTitle(Options):
 
     @property
     def padding(self):
-        """
-        Padding to apply around the title. Only top and bottom are implemented.
+        """Padding to apply around the title. Only top and bottom are implemented.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/title.html
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/title.html>`_
         """
         return self._config_get(10)
 
@@ -1092,12 +967,9 @@ class OptionTitle(Options):
 
     @property
     def font(self) -> OptionLabelFont:
-        """
-        Fonts.
+        """Fonts.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/general/fonts.html
+        `ChartJs <https://www.chartjs.org/docs/latest/general/fonts.html>`_
         """
         return self._config_sub_data("font", OptionLabelFont)
 
@@ -1141,10 +1013,7 @@ class OptionAxes(Options):
     @property
     def reverse(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html>`_
         """
         return self._config_get()
 
@@ -1169,10 +1038,7 @@ class OptionAxes(Options):
     @property
     def stacked(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `ChartJs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -1192,10 +1058,7 @@ class OptionAxes(Options):
     @property
     def id(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `ChartJs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -1206,10 +1069,7 @@ class OptionAxes(Options):
     @property
     def offset(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `ChartJs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -1220,10 +1080,7 @@ class OptionAxes(Options):
     @property
     def position(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `ChartJs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -1234,10 +1091,7 @@ class OptionAxes(Options):
     @property
     def suggestedMin(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/charts/line.html
+        `ChartJs <https://www.chartjs.org/docs/latest/charts/line.html>`_
         """
         return self._config_get()
 
@@ -1248,7 +1102,6 @@ class OptionAxes(Options):
     @property
     def suggestedMax(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -1262,8 +1115,6 @@ class OptionAxes(Options):
     @property
     def stepSize(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -1292,7 +1143,6 @@ class OptionAxes(Options):
     @property
     def grid(self) -> OptionAxesGridLine:
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
@@ -1303,7 +1153,6 @@ class OptionAxes(Options):
     @property
     def border(self) -> OptionAxesBorder:
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/other-charts/scatter-multi-axis.html
@@ -1317,8 +1166,7 @@ class OptionAxes(Options):
 
     @property
     def title(self) -> OptionTitle:
-        """
-        Namespace: options.scales[scaleId].title, it defines options for the scale title.
+        """Namespace: options.scales[scaleId].title, it defines options for the scale title.
         Note that this only applies to cartesian axes.
 
         Related Pages:
@@ -1329,13 +1177,10 @@ class OptionAxes(Options):
 
     @property
     def scaleLabel(self) -> OptionAxesScaleLabel:
-        """
-    """
         return self._config_sub_data("scaleLabel", OptionAxesScaleLabel)
 
     def add_label(self, text: str, color: str = None):
         """
-
         :param text:
         :param color:
         """
@@ -1347,7 +1192,6 @@ class OptionAxes(Options):
 
     def category(self, vals):
         """
-
         :param vals:
         """
         self.type = "category"
@@ -1375,7 +1219,6 @@ class OptionScalePointLabels(Options):
     @property
     def font(self) -> OptionLabelFont:
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/other-charts/polar-area-center-labels.html
@@ -1388,7 +1231,6 @@ class OptionScaleR(Options):
     @property
     def pointLabels(self) -> OptionScalePointLabels:
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/other-charts/polar-area-center-labels.html
@@ -1400,25 +1242,18 @@ class OptionScales(Options):
 
     @property
     def xAxes(self) -> OptionAxes:
-        """
-        Shortcut property to the last x_axes definition.
-        Use the function x_axes to be more specific.
-        """
+        """Shortcut property to the last x_axes definition. Use the function x_axes to be more specific."""
         return self.x_axes()
 
     @property
     def yAxes(self) -> OptionAxes:
-        """
-        Shortcut property to the last y_axis definition.
-        Use the function y_axis to be more specific.
-
+        """Shortcut property to the last y_axis definition. Use the function y_axis to be more specific.
         y_axis is useful when multiple y axes are used for the same chart.
         """
         return self.y_axis()
 
     def add_axis(self, value: str) -> OptionAxes:
-        """
-        Add a bespoke series to the chart.
+        """Add a bespoke series to the chart.
 
         :param value: The series alias
         """
@@ -1429,8 +1264,7 @@ class OptionScales(Options):
         return self._config_sub_data("y", OptionAxes)
 
     def y_axis(self, i: int = None) -> OptionAxes:
-        """
-        Get a specific y axis.
+        """Get a specific y axis.
 
         :param i: optional. Default take the latest one
         """
@@ -1447,12 +1281,11 @@ class OptionScales(Options):
         return self.js_tree["yAxes"][i]
 
     def add_x_axis(self) -> OptionAxes:
-        """ Add a X axis to a chart component. """
+        """Add a X axis to a chart component"""
         return self._config_sub_data("x", OptionAxes)
 
     def x_axes(self, i: int = None) -> OptionAxes:
-        """
-        Get a specific x axis.
+        """Get a specific x axis.
 
         :param i: optional. Default take the latest one
         """
@@ -1469,22 +1302,22 @@ class OptionScales(Options):
 
     @property
     def r(self) -> OptionScaleR:
-        """ Add options to the r scale. """
+        """Add options to the r scale"""
         return self._config_sub_data("r", OptionScaleR)
 
     @property
     def x(self) -> OptionAxes:
-        """ Add options to the x axis. """
+        """Add options to the x axis"""
         return self._config_sub_data("x", OptionAxes)
 
     @property
     def y(self) -> OptionAxes:
-        """  Add options to the y axis. """
+        """Add options to the y axis"""
         return self._config_sub_data("y", OptionAxes)
 
     @property
     def y2(self) -> OptionAxes:
-        """  Add options to a y2 axis. """
+        """Add options to a y2 axis"""
         return self._config_sub_data("y2", OptionAxes)
 
 
@@ -1508,7 +1341,6 @@ class OptionScaleGeo(Options):
 
     def set_projection(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None):
         """
-
         :param js_funcs:
         :param profile:
         """
@@ -1615,7 +1447,6 @@ class OptionPadding(Options):
     @property
     def left(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -1629,7 +1460,6 @@ class OptionPadding(Options):
     @property
     def right(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -1643,7 +1473,6 @@ class OptionPadding(Options):
     @property
     def top(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -1657,7 +1486,6 @@ class OptionPadding(Options):
     @property
     def bottom(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -1700,13 +1528,9 @@ class OptionLegend(Options):
 
     @property
     def align(self):
-        """
-        Alignment of the legend.
+        """Alignment of the legend.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/legend.html
-
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/legend.html>`_
         """
         return self._config_get("center")
 
@@ -1716,13 +1540,9 @@ class OptionLegend(Options):
 
     @property
     def display(self):
-        """
-        Is the legend shown?
+        """Is the legend shown?
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/legend.html
-
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/legend.html>`_
         """
         return self._config_get(True)
 
@@ -1732,13 +1552,9 @@ class OptionLegend(Options):
 
     @property
     def position(self):
-        """
-        Position of the legend
-        values are top, left, bottom, right
+        """Position of the legend values are top, left, bottom, right
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/legend.html
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/legend.html>`_
         """
         return self._config_get()
 
@@ -1748,12 +1564,9 @@ class OptionLegend(Options):
 
     @property
     def reverse(self):
-        """
-        Legend will show datasets in reverse order.
+        """Legend will show datasets in reverse order.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/legend.html
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/legend.html>`_
         """
         return self._config_get(False)
 
@@ -1763,13 +1576,9 @@ class OptionLegend(Options):
 
     @property
     def rtl(self):
-        """
-        true for rendering the legends from right to left.
+        """true for rendering the legends from right to left.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/legend.html
-
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/legend.html>`_
         """
         return self._config_get(False)
 
@@ -1807,8 +1616,7 @@ class OptionInteractionLine(Options):
     @property
     def intersect(self):
         """
-
-        https://www.chartjs.org/docs/latest/samples/line/interpolation.html
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/line/interpolation.html>`_
         """
         return self._config_get(False)
 
@@ -1859,10 +1667,7 @@ class OptionChartAreaBorder(Options):
     @property
     def borderColor(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html>`_
         """
         return self._config_get()
 
@@ -1873,10 +1678,7 @@ class OptionChartAreaBorder(Options):
     @property
     def borderWidth(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
+        `ChartJs <https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html>`_
         """
         return self._config_get()
 
@@ -1887,7 +1689,6 @@ class OptionChartAreaBorder(Options):
     @property
     def borderDash(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
@@ -1901,7 +1702,6 @@ class OptionChartAreaBorder(Options):
     @property
     def borderDashOffset(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/plugins/chart-area-border.html
@@ -1918,7 +1718,6 @@ class OptionQuadrants(Options):
     @property
     def topLeft(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
@@ -1932,7 +1731,6 @@ class OptionQuadrants(Options):
     @property
     def topRight(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
@@ -1946,7 +1744,6 @@ class OptionQuadrants(Options):
     @property
     def bottomRight(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
@@ -1960,7 +1757,6 @@ class OptionQuadrants(Options):
     @property
     def bottomLeft(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/samples/plugins/quadrants.html
@@ -1977,12 +1773,9 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-labels')
     def labels(self) -> ChartJsLabels.Labels:
-        """
-        Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
+        """Chart.js plugin to display labels on pie, doughnut and polar area chart. Original Chart.PieceLabel.js
 
-        Related Pages:
-
-          https://github.com/emn178/chartjs-plugin-labels
+        `ChartJs <https://github.com/emn178/chartjs-plugin-labels>`_
         """
         logging.warning("DEPRECATED module - should use datalabels instead")
         return self._config_sub_data("labels", ChartJsLabels.Labels)
@@ -1996,20 +1789,16 @@ class OptionChartJsPlugins(Options):
 
     @property
     def title(self) -> OptionTitle:
-        """
-        The chart title defines text to draw at the top of the chart.
+        """The chart title defines text to draw at the top of the chart.
 
-        Related Pages:
-
-          https://www.chartjs.org/docs/latest/configuration/title.html
+        `ChartJs <https://www.chartjs.org/docs/latest/configuration/title.html>`_
         """
         return self._config_sub_data("title", OptionTitle)
 
     @property
     def subtitle(self) -> OptionTitle:
-        """
-        Subtitle is a second title placed under the main title, by default. It has exactly the same configuration options
-        with the main title
+        """Subtitle is a second title placed under the main title, by default. It has exactly the same configuration
+        options with the main title
 
         Related Pages:
 
@@ -2025,8 +1814,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-datalabels')
     def datalabels(self) -> ChartJsDataLabels.Datalabels:
-        """
-        Display labels on data for any type of charts.
+        """Display labels on data for any type of charts.
 
         Related Pages:
 
@@ -2042,8 +1830,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-deferred')
     def deferred(self) -> ChartJsDeferred.Deferred:
-        """
-        Chart.js plugin to defer initial chart updates until the user scrolls and the canvas appears inside the
+        """Chart.js plugin to defer initial chart updates until the user scrolls and the canvas appears inside the
         viewport, and thus trigger the initial chart animations when the user is likely to see them.
 
         Related Pages:
@@ -2060,8 +1847,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-hierarchical')
     def hierarchical(self) -> ChartJsHierarchical.Hierarchical:
-        """
-        Adds hierarchical scales that can be collapsed, expanded, and focused
+        """Adds hierarchical scales that can be collapsed, expanded, and focused
 
         Related Pages:
 
@@ -2074,8 +1860,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-zoom')
     def zoom(self) -> ChartJsZoom.Zoom:
-        """
-        A zoom and pan plugin for Chart.js. Currently requires Chart.js >= 2.6.0
+        """A zoom and pan plugin for Chart.js. Currently requires Chart.js >= 2.6.0
 
         Related Pages:
 
@@ -2091,8 +1876,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-crosshair')
     def crosshair(self) -> ChartJsCrosshair.Crosshair:
-        """
-        Adds a data crosshair to line and scatter charts
+        """Adds a data crosshair to line and scatter charts
 
         Related Pages:
 
@@ -2107,8 +1891,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-annotation')
     def annotation(self) -> ChartJsAnnotation.Annotation:
-        """
-        An annotation plugin for Chart.js >= 2.4.0
+        """An annotation plugin for Chart.js >= 2.4.0
 
         This plugin draws lines and boxes on the chart area.
 
@@ -2134,8 +1917,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-stacked100')
     def stacked100(self) -> Optional[ChartJsStacked.Stacked100]:
-        """
-        This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
+        """This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
         #TODO add check on the chart types.
 
         Related Pages:
@@ -2153,8 +1935,7 @@ class OptionChartJsPlugins(Options):
     @property
     @packageImport('chartjs-plugin-dragdata')
     def dragdata(self) -> Optional[ChartJsDragData.DragData]:
-        """
-        This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
+        """This plugin for Chart.js that makes your bar chart to 100% stacked bar chart.
 
         Related Pages:
 
@@ -2219,8 +2000,6 @@ class ChartJsOptions(OptChart.OptionsChart):
 
     @property
     def elements(self) -> OptionElements:
-        """
-    """
         return self._config_sub_data("elements", OptionElements)
 
     @property
@@ -2276,7 +2055,6 @@ class OptionPieAnimation(Options):
     @property
     def animateRotate(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -2290,7 +2068,6 @@ class OptionPieAnimation(Options):
     @property
     def animateScale(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/docs/latest/charts/line.html
@@ -2307,7 +2084,6 @@ class OptionsBar(ChartJsOptions):
     @property
     def stacked(self):
         """
-
         Related Pages:
 
           https://www.chartjs.org/samples/latest/charts/bar/stacked.html
@@ -2409,7 +2185,7 @@ class OptionsBubble(ChartJsOptions):
 
     @property
     def datasets(self) -> OptChartJsDataSets.Bubble:
-        """ Common datasets configuration for all series """
+        """Common datasets configuration for all series """
         return OptChartJsDataSets.Bubble(self.component, page=self.page)
 
 
@@ -2417,8 +2193,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def showLines(self):
-        """
-        If false, the line is not drawn for this dataset.
+        """If false, the line is not drawn for this dataset.
 
         Related Pages:
 
@@ -2433,8 +2208,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def spanGaps(self):
-        """
-        If true, lines will be drawn between points with no or null data.
+        """If true, lines will be drawn between points with no or null data.
         If false, points with null data will create a break in the line. Can also be a number specifying the maximum gap
         length to span. The unit of the value depends on the scale used.
 
@@ -2451,8 +2225,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def tension(self):
-        """
-        Bezier curve tension of the line.
+        """Bezier curve tension of the line.
         Set to 0 to draw straightlines. This option is ignored if monotone cubic interpolation is used.
 
         Related Pages:
@@ -2467,8 +2240,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def backgroundColor(self):
-        """
-        The line fill color.
+        """The line fill color.
 
         Related Pages:
 
@@ -2482,8 +2254,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def borderCapStyle(self):
-        """
-        Cap style of the line.
+        """Cap style of the line.
 
         Related Pages:
 
@@ -2497,8 +2268,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def borderColor(self):
-        """
-        The line color.
+        """The line color.
 
         Related Pages:
 
@@ -2512,8 +2282,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def borderDash(self):
-        """
-        Length and spacing of dashes.
+        """Length and spacing of dashes.
 
         Related Pages:
 
@@ -2527,8 +2296,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def borderDashOffset(self):
-        """
-        Offset for line dashes.
+        """Offset for line dashes.
 
         Related Pages:
 
@@ -2542,8 +2310,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def borderJoinStyle(self):
-        """
-        Line joint style.
+        """Line joint style.
 
         Related Pages:
 
@@ -2557,8 +2324,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def borderWidth(self):
-        """
-        The line width (in pixels).
+        """The line width (in pixels).
 
         Related Pages:
 
@@ -2577,8 +2343,7 @@ class OptionsLine(ChartJsOptions):
 
     @property
     def fill(self):
-        """
-        How to fill the area under the line.
+        """How to fill the area under the line.
 
         Related Pages:
 
@@ -2605,8 +2370,7 @@ class OptionsPolar(ChartJsOptions):
 
     @property
     def startAngle(self):
-        """
-        Starting angle to draw arcs for the first item in a dataset. In degrees, 0 is at top.
+        """Starting angle to draw arcs for the first item in a dataset. In degrees, 0 is at top.
 
         Related Pages:
 
@@ -2635,10 +2399,7 @@ class OptionChartJsTooltipsCallbacks(Options):
     @property
     def label(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+        `ChartJs <https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html>`_
         """
         return self._config_get()
 
@@ -2651,10 +2412,9 @@ class OptionChartJsTooltipsCallbacks(Options):
     def labelNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = ".",
                     decimal_sep: etypes.JS_DATA_TYPES = ","):
         """
-
-        :param digit: Optional. Decimal point separator.
-        :param thousand_sep: Optional. thousands separator.
-        :param decimal_sep: Optional. Decimal point separator.
+        :param digit: Optional. Decimal point separator
+        :param thousand_sep: Optional. thousands separator
+        :param decimal_sep: Optional. Decimal point separator
         """
         thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
         decimal_sep = JsUtils.jsConvertData(decimal_sep, None)
@@ -2672,10 +2432,10 @@ class OptionChartJsTooltipsCallbacks(Options):
                       decimal_sep: etypes.JS_DATA_TYPES = ","):
         """
 
-        :param symbol: Optional. Default currency symbol is ''.
-        :param digit: Optional. Decimal point separator.
+        :param symbol: Optional. Default currency symbol is ''
+        :param digit: Optional. Decimal point separator
         :param thousand_sep: Optional. thousands separator.
-        :param decimal_sep: Optional. Decimal point separator.
+        :param decimal_sep: Optional. Decimal point separator
         """
         symbol = JsUtils.jsConvertData(symbol, None)
         thousand_sep = JsUtils.jsConvertData(thousand_sep, None)
@@ -2692,10 +2452,7 @@ return data.datasets[tooltipItem.datasetIndex].label +': '+ accounting.formatMon
     @property
     def value(self):
         """
-
-        Related Pages:
-
-          https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+        `ChartJs <https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html>`_
         """
         return self._config_get()
 
@@ -2709,7 +2466,6 @@ class OptionChartJsTooltipsPieCallbacks(OptionChartJsTooltipsCallbacks):
     @packageImport("accounting")
     def labelNumber(self, digit: int = 0, thousand_sep: etypes.JS_DATA_TYPES = "."):
         """
-
         :param digit: Optional. Decimal point separator
         :param thousand_sep: Optional. thousands separator
         """
@@ -2793,8 +2549,6 @@ class OptionChartJsTooltips(Options):
     @property
     def backgroundColor(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2808,12 +2562,10 @@ class OptionChartJsTooltips(Options):
     @property
     def titleColor(self):
         """
+        Related Pages:
 
-
-    Related Pages:
-
-      https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
-    """
+          https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
+        """
         return self._config_get('#fff')
 
     @titleColor.setter
@@ -2823,8 +2575,6 @@ class OptionChartJsTooltips(Options):
     @property
     def titleAlign(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2838,8 +2588,6 @@ class OptionChartJsTooltips(Options):
     @property
     def titleSpacing(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2853,8 +2601,6 @@ class OptionChartJsTooltips(Options):
     @property
     def titleMarginBottom(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2868,8 +2614,6 @@ class OptionChartJsTooltips(Options):
     @property
     def bodyColor(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2883,8 +2627,6 @@ class OptionChartJsTooltips(Options):
     @property
     def bodyAlign(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2898,8 +2640,6 @@ class OptionChartJsTooltips(Options):
     @property
     def bodySpacing(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2913,8 +2653,6 @@ class OptionChartJsTooltips(Options):
     @property
     def footerColor(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2928,8 +2666,6 @@ class OptionChartJsTooltips(Options):
     @property
     def footerAlign(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2943,8 +2679,6 @@ class OptionChartJsTooltips(Options):
     @property
     def footerSpacing(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2958,8 +2692,6 @@ class OptionChartJsTooltips(Options):
     @property
     def footerMarginTop(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2973,8 +2705,6 @@ class OptionChartJsTooltips(Options):
     @property
     def caretPadding(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -2988,8 +2718,6 @@ class OptionChartJsTooltips(Options):
     @property
     def caretSize(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3003,8 +2731,6 @@ class OptionChartJsTooltips(Options):
     @property
     def cornerRadius(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3018,8 +2744,6 @@ class OptionChartJsTooltips(Options):
     @property
     def multiKeyBackground(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3033,8 +2757,6 @@ class OptionChartJsTooltips(Options):
     @property
     def displayColors(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3048,8 +2770,6 @@ class OptionChartJsTooltips(Options):
     @property
     def boxWidth(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3063,8 +2783,6 @@ class OptionChartJsTooltips(Options):
     @property
     def boxHeight(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3078,8 +2796,6 @@ class OptionChartJsTooltips(Options):
     @property
     def boxPadding(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3093,8 +2809,6 @@ class OptionChartJsTooltips(Options):
     @property
     def usePointStyle(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3108,8 +2822,6 @@ class OptionChartJsTooltips(Options):
     @property
     def borderColor(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3123,8 +2835,6 @@ class OptionChartJsTooltips(Options):
     @property
     def borderWidth(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3138,8 +2848,6 @@ class OptionChartJsTooltips(Options):
     @property
     def rtl(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3153,8 +2861,6 @@ class OptionChartJsTooltips(Options):
     @property
     def textDirection(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3168,8 +2874,6 @@ class OptionChartJsTooltips(Options):
     @property
     def xAlign(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3183,8 +2887,6 @@ class OptionChartJsTooltips(Options):
     @property
     def yAlign(self):
         """
-
-
         Related Pages:
 
           https://www.chartjs.org/docs/3.7.0/configuration/tooltip.html
@@ -3360,6 +3062,6 @@ class OptionsSankey(ChartJsOptions):
     @property
     def parsing(self) -> OptionChartJsSankeyParsing:
         """
-        https://github.com/kurkle/chartjs-chart-sankey
+        `ChartJs <https://github.com/kurkle/chartjs-chart-sankey>`_
         """
         return self._config_sub_data("parsing", OptionChartJsSankeyParsing)

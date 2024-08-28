@@ -909,7 +909,7 @@ class Col(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         return super().options
 
-    def add(self, component: Html.Html):
+    def add(self, component: Html.Html, **kwargs):
         """Add items to a container.
 
         :param component:
@@ -1058,7 +1058,7 @@ class Row(Html.Html):
     def __len__(self):
         return len(self.val)
 
-    def add(self, components: Union[Html.Html, List[Html.Html]]):
+    def add(self, components: Union[Html.Html, List[Html.Html]], **kwargs):
         """ Add items to a container """
         # hack to propagate the height of the row to the underlying columns
         if not isinstance(components, Col):
@@ -1996,12 +1996,12 @@ class GridStack(Html.Html):
 
     @property
     def options(self) -> OptGridstack.OptionsGridStack:
-        """Property to set all the possible object for a gridstack. """
+        """Property to set all the possible object for a gridstack"""
         return super().options
 
     @property
     def js(self) -> JsGridstack.GS:
-        """ Gridstack javascript API """
+        """Gridstack javascript API"""
         if self._js is None:
             self._js = JsGridstack.GS(self, page=self.page, js_code=self.html_code)
         return self._js

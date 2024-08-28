@@ -46,8 +46,7 @@ class Console(Html.Html):
 
     @property
     def options(self) -> OptText.OptionsConsole:
-        """Property to the component options.
-        Options can either impact the Python side or the Javascript builder.
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
         Python can pass some options to the JavaScript layer.
         """
         return super().options
@@ -137,19 +136,17 @@ class Editor(Html.Html):
         return self.action(icon, js_funcs, tooltip, css_attrs)
 
     def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None, css_attrs: dict = None):
-        """Emtpy run button.
-        This function will just add the icon on the actions panel.
+        """Emtpy run button. This function will just add the icon on the actions panel.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
         :param tooltip: Optional. Text to be displayed when mouse is hover
-        :param css_attrs: Optional . Default {"margin-right": '5px'}
+        :param css_attrs: Optional. Default {"margin-right": '5px'}
         """
         return self.action(icon, js_funcs, tooltip, css_attrs)
 
     def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None, css_attrs: dict = None):
-        """Emtpy save button.
-        This function will just add the icon on the actions panel.
+        """Emtpy save button. This function will just add the icon on the actions panel.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
@@ -207,8 +204,7 @@ class Cell(Html.Html):
         icon_button.options.managed = False
 
     def run(self, js_funcs: Union[list, str], icon: str = "play", tooltip: Optional[str] = None):
-        """Emtpy run button.
-        This function will just add the icon on the actions panel.
+        """Emtpy run button. This function will just add the icon on the actions panel.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
@@ -218,8 +214,7 @@ class Cell(Html.Html):
         return self.action(icon, js_funcs, tooltip)
 
     def save(self, js_funcs: Union[list, str], icon: str = "save", tooltip: Optional[str] = None):
-        """Emtpy save button.
-        This function will just add the icon on the actions panel.
+        """Emtpy save button. This function will just add the icon on the actions panel.
 
         :param icon: The font awesome icon
         :param js_funcs: Optional. The Javascript functions
@@ -263,14 +258,13 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
 
     @property
     def options(self) -> OptCodeMirror.OptionsCode:
-        """ Property to set all the possible object for a button. """
+        """Property to set all the possible object for a button"""
         return super().options
 
     @property
     def js(self) -> JsCodeMirror.CM:
         """A lot of CodeMirror features are only available through its API.
         Thus, you need to write code (or use add-ons) if you want to expose them to your users.
-
         `Package Doc <https://codemirror.net/doc/manual.html#api>`_
         """
         if self._js is None:
@@ -293,7 +287,6 @@ class CodeEditor(MixHtmlState.HtmlOverlayStates, Html.Html):
     def addon(self):
         """The add-on directory in the distribution contains a number of reusable components that implement extra
         editor functionality.
-
         `Package Doc <https://codemirror.net/doc/manual.html#addons>`_
         """
         return self.options.addons
@@ -402,7 +395,6 @@ class MarkdownReader(MixHtmlState.HtmlOverlayStates, Html.Html):
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           div = page.ui.div(htmlCode="testDiv")
           print(div.dom.content)
 

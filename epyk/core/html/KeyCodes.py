@@ -15,7 +15,6 @@ class KeyCode:
     def custom(self, rule: str, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None,
                source_event: Optional[str] = None):
         """
-
         :param rule: Bespoke keys combination
         :param js_funcs: Javascript functions
         :param profile: Optional. A flag to set the component performance storage

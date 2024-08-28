@@ -68,9 +68,8 @@ class Popup(Html.Html):
             self._js = JsHtmlPopup.JsHtmlPopup(page=self.page, component=self)
         return self._js
 
-    def add(self, component: Html.Html):
-        """Add a component to the popup.
-        If this is a list then they will be added in a row.
+    def add(self, component: Html.Html, **kwargs):
+        """Add a component to the popup. If this is a list then they will be added in a row.
 
         :param component: The component to be added to the underlying list
         """
@@ -93,7 +92,7 @@ class Popup(Html.Html):
 
     @property
     def options(self) -> OptPanel.OptionPopup:
-        """Property to set all the possible object for a button. """
+        """Property to set all the possible object for a button"""
         return self.__options
 
     def add_title(self, text: str, align: str = 'center', level: Optional[int] = 5, css: Optional[dict] = None,

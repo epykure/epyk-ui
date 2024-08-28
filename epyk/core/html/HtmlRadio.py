@@ -49,7 +49,6 @@ class Radio(Html.Html):
     @property
     def dom(self) -> JsHtmlField.Radio:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript by default.
         """
         if self._dom is None:
@@ -59,7 +58,6 @@ class Radio(Html.Html):
     @property
     def js(self) -> JsComponents.Radio:
         """The Javascript functions defined for this component.
-
         Those can be specific ones for the module or generic ones from the language.
         """
         if self._js is None:
@@ -196,7 +194,6 @@ class Switch(Html.Html):
                                      css_attrs={"width": width, "height": height, 'color': color}, verbose=verbose)
         self.style.add_classes.radio.switch_checked()
         self._clicks = {'on': [], 'off': [], "profile": False}
-
         is_on = options.get("is_on", False)
         self.checkbox = page.ui.inputs.checkbox(
           is_on, width=(None, "%"), html_code=self.sub_html_code("check"), options=options.get("checkbox"))
@@ -204,7 +201,6 @@ class Switch(Html.Html):
         self.checkbox.options.managed = False
         if is_on:
             self.checkbox.attr["checked"] = is_on
-
         self.switch_label = page.ui.texts.label(
           page.entities.non_breaking_space, html_code=self.sub_html_code("label"), options=options.get("label"))
         self.switch_label.style.clear_all(no_default=True)
@@ -214,7 +210,6 @@ class Switch(Html.Html):
         self.switch_label.style.add_classes.radio.switch_label()
         self.switch_label.options.managed = False
         self.switch_label.style.css.line_height = int(self.page.body.style.globals.line_height / 2)
-
         self.switch_text = page.ui.tags.p(
           self.val['on'] if is_on else self.val['off'], html_code=self.sub_html_code("text"))
         self.switch_text.css({"display": "inline-block", "margin-left": "3px", "font-weight": "bold", "margin-top": 0})
@@ -222,7 +217,6 @@ class Switch(Html.Html):
         self.switch_text.style.css.font_size = int(self.page.body.style.globals.line_height / 2) + 2
         self.switch_text.options.managed = False
         self.switch_text.style.css.line_height = int(self.page.body.style.globals.line_height / 2) + 2
-
         self.switch = self.dom.querySelector("label")
 
     @property

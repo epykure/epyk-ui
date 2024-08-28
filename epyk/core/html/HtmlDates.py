@@ -425,9 +425,9 @@ class Calendar(Html.Html):
         :param name:
         :param start:
         :param capacity:
-        :param frequency:
-        :param weekend: Optional. Flag to specify if the weekends should be considered.
-        :param options:
+        :param frequency: Optional.
+        :param weekend: Optional. Flag to specify if the weekends should be considered
+        :param options: Optional.
         """
         dt = datetime.date(*map(lambda x: int(x), start.split("-")))
         c = []
