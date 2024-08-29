@@ -117,16 +117,30 @@ class JsLocation:
     def __init__(self, page: primitives.PageModel = None):
         self.page = page
 
-    @property
-    def hostname(self) -> JsString.JsString:
-        """
-        The hostname property sets or returns the hostname of a URL.
+    def part(self, i: int, from_: str = None) -> JsString.JsString:
+        """Extract a part of the current url.
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/URL#Properties>`_
 
         Usage::
+            ic = page.ui.icon("far fa-thumbs-up", text="0")
+            ic.click(page.js.warnings([page.js.console.log(page.js.const("file"))])
 
-          page.location.hostname
+        :param i: Position in the url to be extracted
+        :param from_: Starting position in the url
+        """
+        if from_:
+            from_ = JsUtils.jsConvertData(from_, None)
+            return JsString.JsString.get("location.href.split('/' + %s + '/')[1].split('/')[%s]" % (from_, i))
 
+        return JsString.JsString.get("(new URL(location.href).pathname).split( '/' )[%s]" % i)
+
+    @property
+    def hostname(self) -> JsString.JsString:
+        """The hostname property sets or returns the hostname of a URL.
         `Related Pages <https//www.w3schools.com/jsref/obj_location.asp>`_
+
+        Usage::
+          page.location.hostname
 
         :return: Return the hostname property.
         """
@@ -134,14 +148,11 @@ class JsLocation:
 
     @property
     def pathname(self) -> JsString.JsString:
-        """
-        The hostname property sets or returns the hostname of a URL.
+        """The hostname property sets or returns the hostname of a URL.
+        `Related Pages <https//www.w3schools.com/jsref/obj_location.asp>`_
 
         Usage::
-
           jsObj.location.pathname
-
-        `Related Pages <https//www.w3schools.com/jsref/obj_location.asp>`_
 
         :return: Return the pathname property.
         """
@@ -149,14 +160,11 @@ class JsLocation:
 
     @property
     def host(self) -> JsString.JsString:
-        """
-        The host property sets or returns the hostname and port of a URL.
+        """The host property sets or returns the hostname and port of a URL.
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_host.asp>`_
 
         Usage::
-
           jsObj.location.host
-
-        `Related Pages <https//www.w3schools.com/jsref/prop_loc_host.asp>`_
 
         :return: Return the hostname and port of the current URL.
         """
@@ -164,14 +172,11 @@ class JsLocation:
 
     @property
     def hash(self) -> JsObject.JsObject:
-        """
-        The hash property sets or returns the anchor part of a URL, including the hash sign (#).
+        """The hash property sets or returns the anchor part of a URL, including the hash sign (#).
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_hash.asp>`_
 
         Usage::
-
           jsObj.location.hash
-
-        `Related Pages <https//www.w3schools.com/jsref/prop_loc_hash.asp>`_
 
         :return: A String, representing the anchor part of the URL, including the hash sign (#).
         """
@@ -179,9 +184,7 @@ class JsLocation:
 
     @property
     def search(self) -> JsString.JsString:
-        """
-        The search property sets or returns the querystring part of a URL, including the question mark (?).
-
+        """The search property sets or returns the querystring part of a URL, including the question mark (?).
         `Related Pages <https//www.w3schools.com/jsref/prop_loc_search.asp>`_
 
         :return: A String, representing the querystring part of a URL, including the question mark (?).
@@ -190,18 +193,14 @@ class JsLocation:
 
     @property
     def urlSearchParams(self) -> URLSearchParams:
-        """
-        The URLSearchParams() constructor creates and returns a new URLSearchParams object.
-
+        """The URLSearchParams() constructor creates and returns a new URLSearchParams object.
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/URLSearchParams>`_
         """
         return URLSearchParams("location.search")
 
     @property
     def port(self) -> JsString.JsString:
-        """
-        The port property sets or returns the port number the server uses for a URL.
-
+        """The port property sets or returns the port number the server uses for a URL.
         `Related Pages <https//www.w3schools.com/jsref/prop_loc_port.asp>`_
 
         :return: A String, representing the port number of a URL.
@@ -210,14 +209,11 @@ class JsLocation:
 
     @property
     def origin(self) -> JsString.JsString:
-        """
-        The origin property returns the protocol, hostname and port number of a URL.
+        """The origin property returns the protocol, hostname and port number of a URL.
+        `Related Pages <https//www.w3schools.com/jsref/prop_loc_origin.asp>`_
 
         Usage::
-
           page.js.location.origin + page.js.location.pathname
-
-        `Related Pages <https//www.w3schools.com/jsref/prop_loc_origin.asp>`_
 
         :return: A String, representing the protocol (including ://), the domain name (or IP address) and port number
           (including the colon sign (:) of the URL. For URL's using the "file:" protocol, the return value differs
@@ -227,14 +223,11 @@ class JsLocation:
 
     @classmethod
     def href(cls, href: Union[str, primitives.JsDataModel] = None, secured: bool = False) -> JsObject.JsObject:
-        """
-        The href property sets or returns the entire URL of the current component.
+        """The href property sets or returns the entire URL of the current component.
+        `Related Pages <https://www.w3schools.com/jsref/prop_loc_href.asp>`_
 
         Usage::
-
           page.js.location.href("https://www.w3schools.com/howto/howto_js_fullscreen.asp")
-
-        `Related Pages <https://www.w3schools.com/jsref/prop_loc_href.asp>`_
 
         :param href: Optional. Set the href property
         :param secured: Optional. The secured flag
@@ -254,14 +247,11 @@ class JsLocation:
                      replace: Union[str, primitives.JsDataModel] = None,
                      window_id: str = "window", data: dict = None, secured: bool = False, keep_state: bool = True
                      ) -> JsFncs.JsFunction:
-        """
-        Opens a new browser window in a new tab (duplicated but part of the Window module).
+        """Opens a new browser window in a new tab (duplicated but part of the Window module).
+        `Related Pages <https://www.w3schools.com/Jsref/met_win_open.asp>`_
 
         Usage::
-
           page.js.location.open_new_tab("www.google.fr")
-
-        `Related Pages <https://www.w3schools.com/Jsref/met_win_open.asp>`_
 
         :param url: Optional. Specifies the URL of the page to open.
           If no URL is specified, a new window/tab with about:blank is opened
@@ -287,9 +277,8 @@ class JsLocation:
             url = str(url) + '+ "?" + %s' % ' +"&"+ '.join(attrs)
         if specs is None:
             return JsFncs.JsFunction('''%s.open((function(url, keepState){
-    if (!keepState) { return url} ;
-    const urlTargets = new URL(url) ; 
-    const urlTargetParams = new URLSearchParams(urlTargets.search) ;
+    if (!keepState) {return url};
+    const urlTargets = new URL(url); const urlTargetParams = new URLSearchParams(urlTargets.search) ;
     const urlParams = new URLSearchParams(window.location.search) ;
     for(const entry of urlParams.entries()) { 
         if (!urlTargetParams.has(entry[0])){urlTargetParams.append(entry[0], entry[1])}};
@@ -301,9 +290,8 @@ class JsLocation:
         specs = JsUtils.jsConvertData(specs, None)
         replace = JsUtils.jsConvertData(replace, None)
         return JsFncs.JsFunction('''%s.open((function(url, keepState){
-    if (!keepState) { return url} ;
-    const urlTargets = new URL(url) ; 
-    const urlTargetParams = new URLSearchParams(urlTargets.search) ;
+    if (!keepState) {return url};
+    const urlTargets = new URL(url); const urlTargetParams = new URLSearchParams(urlTargets.search) ;
     const urlParams = new URLSearchParams(window.location.search) ;
     for(const entry of urlParams.entries()) { 
         if (!urlTargetParams.has(entry[0])){urlTargetParams.append(entry[0], entry[1])}};
@@ -314,28 +302,23 @@ class JsLocation:
     @classmethod
     def download(cls, url: Union[str, primitives.JsDataModel],
                  name: Union[str, primitives.JsDataModel] = 'download') -> JsObjects.JsVoid:
-        """
-        Download data from the url.
+        """Download data from the url.
 
         :param url: The url of the image
         :param name: Optional. The name of the file
         """
         url = JsUtils.jsConvertData(url, None)
         name = JsUtils.jsConvertData(name, None)
-        return JsObjects.JsVoid('''
-var link = document.createElement('a'); document.body.appendChild(link);
+        return JsObjects.JsVoid('''var link = document.createElement('a'); document.body.appendChild(link);
 link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % {'name': name, 'url': url})
 
     def mail(self, mails: List[str], subject: str, body: str):
-        """
-        The mailto link when clicked opens users default email program or software.
+        """The mailto link when clicked opens users default email program or software.
         A new email page is created with "To" field containing the address of the name specified on the link by default.
+        `Related Pages <http://www.tutorialspark.com/html5/HTML5_email_mailto.php>`_
 
         Usage::
-
           page.js.location.mail(["test@gmail.com"], "This is a test", "This is the email's content")
-
-        `Related Pages <http://www.tutorialspark.com/html5/HTML5_email_mailto.php>`_
 
         :param mails: The email addresses
         :param subject: The email's subject
@@ -350,11 +333,8 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
 
     @classmethod
     def reload(cls, force_get: bool = False):
-        """
-        The reload() method is used to reload the current document.
-
+        """The reload() method is used to reload the current document.
         The reload() method does the same as the reload button in your browser.
-
         `Related Pages <https//www.w3schools.com/jsref/met_loc_reload.asp>`_
 
         :param force_get: Optional. Specifies the type of reloading:
@@ -366,9 +346,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
 
     @classmethod
     def assign(cls, url: Union[str, primitives.JsDataModel]) -> JsFncs.JsFunction:
-        """
-        The assign() method loads a new document.
-
+        """The assign() method loads a new document.
         `Related Pages <https//www.w3schools.com/jsref/met_loc_assign.asp>`_
 
         :param url: Specifies the URL of the page to navigate to
@@ -378,8 +356,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
 
     @classmethod
     def replace(cls, url: Union[str, primitives.JsDataModel], secured: bool = False) -> JsFncs.JsFunction:
-        """
-        The replace() method replaces the current document with a new one.
+        """The replace() method replaces the current document with a new one.
 
         The difference between this method and assign(), is that replace() removes the URL of the current document
         from the document history, meaning that it is not possible to use the "back" button to navigate back to the
@@ -397,9 +374,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
 
     @classmethod
     def postTo(cls, url: str, data: dict, method: str = "POST", target: str = "_blank"):
-        """
-        This method will create an internal form and submit the response exactly like a post of a form to another page.
-
+        """This method will create an internal form and submit the response exactly like a post of a form to another page.
         `Related Pages <https://www.w3schools.com/jsref/dom_obj_form.asp>`_
 
         :param url: The target url
@@ -410,8 +385,7 @@ link.download = %(name)s; link.href = %(url)s; link.click(); link.remove()''' % 
         inputs = []
         for k, v in data.items():
             js_val = JsUtils.jsConvertData(v, None)
-            inputs.append('''
-var input = document.createElement("input"); input.name = "%s"; 
+            inputs.append('''var input = document.createElement("input"); input.name = "%s"; 
 input.type = "hidden"; input.value = %s; form.appendChild(input)''' % (k, js_val))
         return ''' 
 var form = document.createElement("form"); form.method = "%s"; form.target = "%s"; form.action = "%s"; %s;
@@ -420,9 +394,7 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
     @classmethod
     def getUrlFromData(cls, data: Union[dict, primitives.JsDataModel],
                        options: Optional[Union[dict, primitives.JsDataModel]] = None):
-        """
-        Convert data to a URL.
-
+        """Convert data to a URL.
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Blob>`_
 
         :param data: Input data to be converted
@@ -441,8 +413,7 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
                          charset: str = "utf-8",
                          end_line: Union[str, primitives.JsDataModel] = "\r\n",
                          ):
-        """
-        Convert data to a URL.
+        """Convert data to a URL.
 
         :param data: A JavaScript array
         :param delimiter: Optional. The column delimiter
@@ -459,12 +430,10 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
 
     def url(self, params: Union[dict, primitives.JsDataModel] = None,
             removed_params: List[str] = None) -> JsString.JsString:
-        """
-        Get the current url value.
-        This function can also apply some filters on the existing parameters.
+        """Get the current url value. This function can also apply some filters on the existing parameters.
 
-        :param params: Parameters to be changed / added
-        :param removed_params: Parameters to be removed
+        :param params: Optional. Parameters to be changed / added
+        :param removed_params: Optional. Parameters to be removed
         """
         params = params or {}
         removed_params = removed_params or []
@@ -527,10 +496,10 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
             "sComponents": "{%s}" % ", ".join(["%s: %s" % (k, v)for k, v in select_components.items()])})
 
     def animate_anchor(self, class_name: str, time: int = 3000) -> JsFncs.JsFunction:
-        """ Animate the selected component when the page.
+        """Animate the selected component when the page.
 
         :param class_name: The new class name
-        :param time: The time the class will be using in (ms)
+        :param time: Optional. The time the class will be using in (ms)
         """
         return JsFncs.JsFunction('''
 (function(){        

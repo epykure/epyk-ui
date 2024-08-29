@@ -1995,6 +1995,22 @@ if (!existingStyle && (styleElementId !== 'css_')) {
                 name, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile),
                 JsUtils.jsConvertData(attrs, None)))
 
+    def const(self, name: str, value: str = None):
+        """Add a constant to the page. Variable will be in uppercase.
+
+        Usage::
+            page.body.onReady([page.js.const("file", page.js.location.part(1, from_="locals"))])
+
+        :param name: Constant variable's name
+        :param value: Optional. Constant variable's value
+        """
+        if value:
+            value = JsUtils.jsConvertData(value, None)
+            return JsUtils.jsWrap("const %s = %s" % (name.upper(), value))
+
+        return JsObject.JsObject.get(name.upper())
+
+
 
 class JsConsole:
     """This is a wrapper to the Console.
