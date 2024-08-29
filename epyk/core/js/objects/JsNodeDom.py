@@ -1575,13 +1575,13 @@ class JsDoms(JsObject.JsObject):
             attribute_name = "%s%s" % (split_css[0], split_css[1].title())
         return JsString.JsString("getComputedStyle(%s).%s" % (self.varId, attribute_name), is_py_data=False)
 
-    def getBoundingClientRect(self) -> JsNodeDomRect.JsDOMRect:
+    def getBoundingClientRect(self, unit: bool = False) -> JsNodeDomRect.JsDOMRect:
         """The getBoundingClientRect() method returns the size of an element and its position relative to the viewport.
 
         `w3schools <https://www.w3schools.com/jsref/met_element_getboundingclientrect.asp>`_
         `mozilla <https://developer.mozilla.org/en-US/docs/Web/API/DOMRect>`_
         """
-        return JsNodeDomRect.JsDOMRect("%s.getBoundingClientRect()" % self.varId)
+        return JsNodeDomRect.JsDOMRect("%s.getBoundingClientRect()" % self.varId, unit=unit)
 
     @property
     def hasChildNodes(self) -> JsBoolean.JsBoolean:

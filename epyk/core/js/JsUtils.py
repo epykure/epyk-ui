@@ -564,7 +564,7 @@ const urlParams = new URLSearchParams(window.location.search); return urlParams.
 
 
 def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, full_path: str = None,
-                   required_funcs: List[str] = None, verbose: bool = True) -> bool:
+                   required_funcs: List[str] = None, verbose: bool = None) -> bool:
     """Add chained resources to the page.
     required_funcs must be defined in the internal treemap mapping to be added to the JavaScript resources.
     If it is a bespoke mapping definition the function `ek.treemap_add` must be used.

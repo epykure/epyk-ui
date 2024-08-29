@@ -138,8 +138,12 @@ class Tables:
     :param profile: Optional. A flag to set the component performance storage
     """
     records = records or []
+    options = options or {}
     if len(records) > 0 and not cols and not rows:
-      cols = list(records[0].keys())
+      if not options.get("no_header"):
+        cols = list(records[0].keys())
+      else:
+        cols = [i for i in range(len(records[0]))]
     table = html_tables.HtmlTable.Bespoke(
       self.page, records, cols or [], rows or [], width, height, html_code, options, profile)
     return table

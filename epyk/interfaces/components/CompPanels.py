@@ -14,7 +14,7 @@ class Panels:
 
   def panel(self, components: List[html.Html.Html] = None, title: str = None, color: str = None, width: types.SIZE_TYPE = (100, "%"),
             height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None, options: dict = None,
-            profile: types.PROFILE_TYPE = False):
+            profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Panel:
     """Add a simple div panel to the page.
 
     :tags:
@@ -45,14 +45,14 @@ class Panels:
 
   def pills(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
             align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
-            profile: types.PROFILE_TYPE = False):
+            profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
     """Python wrapper to the Bootstrap Pills interface.
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     :tags:
     :categories:
 
     Usage::
-
       tab = page.ui.panels.pills()
       for i in range(5):
         tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
@@ -60,8 +60,6 @@ class Panels:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
-
-    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
  
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -91,14 +89,14 @@ class Panels:
 
   def boxes(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
             align: str = "left", html_code: str = None, helper: str = None, options: dict = None,
-            profile: types.PROFILE_TYPE = False):
+            profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
     """Python wrapper to the Bootstrap rectangle boxes interface.
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     :tags:
     :categories:
 
     Usage::
-
       tab = page.ui.panels.boxes()
       for i in range(5):
         tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
@@ -106,8 +104,6 @@ class Panels:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
-
-    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
  
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -140,12 +136,12 @@ class Panels:
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
            profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
     """Python wrapper for a multi Tabs component.
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     :tags:
     :categories:
 
     Usage::
-
       tab = page.ui.panels.tabs()
       for i in range(5):
         tab.add_panel("Panel %s" % i, rptObj.ui.text("test %s" % i))
@@ -153,8 +149,6 @@ class Panels:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
-
-    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
  
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -177,8 +171,9 @@ class Panels:
 
   def arrows_up(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
                 html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
-                profile: types.PROFILE_TYPE = False):
+                profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.TabsArrowsUp:
     """Python wrapper for a multi Tabs component.
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     :tags:
     :categories:
@@ -187,10 +182,6 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.TabsArrowsUp`
 
-    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
-
-    Usage::
- 
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -218,8 +209,9 @@ class Panels:
 
   def arrows_down(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
                   html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
-                  profile: types.PROFILE_TYPE = False):
+                  profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.TabsArrowsDown:
     """Python wrapper for a multi Tabs component.
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     :tags:
     :categories:
@@ -227,10 +219,6 @@ class Panels:
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlContainer.TabsArrowsDown`
-
-    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
-
-    Usage::
  
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -260,8 +248,9 @@ class Panels:
 
   def menu(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
            html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
-           profile: types.PROFILE_TYPE = False):
+           profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
     """Python wrapper to the Bootstrap Pills interface.
+    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
     :tags:
     :categories:
@@ -270,10 +259,6 @@ class Panels:
 
       - :class:`epyk.core.html.HtmlContainer.Tabs`
 
-    `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
-
-    Usage::
- 
     :param color: Optional. The font color in the component. Default inherit
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -309,7 +294,6 @@ class Panels:
     :categories:
 
     Usage::
-
       text = page.ui.text("Test")
       page.ui.panels.sliding([text], title="Panel title")
 
@@ -357,7 +341,6 @@ class Panels:
     :categories:
 
     Usage::
-
       number = page.ui.rich.number(500, "Test", height=(150, 'px'))
       number_2 = page.ui.rich.number(500, "Test 2 ", options={"url": "http://www.google.fr"})
       div = page.ui.layouts.panelsplit(left=number, right=number_2)
@@ -389,19 +372,17 @@ class Panels:
               height: types.SIZE_TYPE = (60, "px"), html_code: str = None, helper: str = None,
               options: dict = None, profile: types.PROFILE_TYPE = None):
     """Chip component with only the filtering section.
+    `Example <https://www.w3schools.com/howto/howto_css_contact_chips.asp>`_
 
     :tags:
     :categories:
 
     Usage::
-
       filters = page.ui.panels.filters()
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlEvent.Filters`
-
-    `Example <https://www.w3schools.com/howto/howto_css_contact_chips.asp>`_
  
     :param items: Optional.
     :param category: Optional.
@@ -429,17 +410,14 @@ class Panels:
     return chip
 
   def nav(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
-          options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None, helper: str = None):
+          options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None,
+          helper: str = None) -> html.HtmlMenu.PanelsBar:
     """
 
     :tags:
     :categories:
 
-    Usage::
-
-    Templates:
-
-      https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py
+    `Templates <https://github.com/epykure/epyk-templates/blob/master/locals/components/bars.py>`_
  
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -460,13 +438,10 @@ class Panels:
                 align: str = "center", width=(100, "%"), height=(None, "px"),
                 html_code: str = None, helper: str = None, options: dict = None, profile: Union[dict, bool] = False
                 ) -> html.HtmlContainer.PanelSlide:
-    """
-    Add hamburger panel.
+    """Add hamburger panel.
 
     :tags:
     :categories:
-
-    Usage::
 
     Underlying HTML Objects:
 
@@ -528,7 +503,8 @@ class Slidings:
     self.page = ui.page
 
   def right(self, components: List[html.Html.Html], title: str = "", color=None, align="center", width=(100, "%"),
-            height=(None, "px"), html_code=None, helper=None, options=None, profile=False):
+            height=(None, "px"), html_code=None, helper=None, options=None,
+            profile=False) -> html.HtmlContainer.PanelSlide:
     """Sliding panels with the arrow on the right.
 
     :tags:
@@ -560,7 +536,8 @@ class Slidings:
 
   def left(self, components: List[html.Html.Html], title: str = "", color: str = None, align: str = "center",
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-           helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
+           helper: str = None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelSlide:
     """Sliding panels with the arrow on the left.
 
     :tags:
@@ -588,7 +565,8 @@ class Slidings:
 
   def plus(self, components, title: str = "", color: str = None, align: str = "center",
            width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"), html_code: str = None,
-           helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None):
+           helper: str = None, options: types.OPTION_TYPE = None,
+           profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelSlide:
     """Same component than sliding with a different style.
 
     :tags:

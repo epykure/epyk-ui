@@ -113,7 +113,10 @@ class Bespoke(MixHtmlState.HtmlOverlayStates, Html.Html):
         data = []
         self._fields, self._header = rows + cols, None
         for rec in records:
-            data.append([rec.get(c, "") for c in self._fields])
+            if options and not options.get("no_header"):
+                data.append([rec.get(c, "") for c in self._fields])
+            else:
+                data.append([rec[c] for c in self._fields])
         super(Bespoke, self).__init__(
             page, data, html_code=html_code, profile=profile, css_attrs={"width": width, "height": height},
             options=options)

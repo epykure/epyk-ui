@@ -5,7 +5,7 @@
 
 import logging
 from pathlib import Path
-from typing import Union, Optional, List
+from typing import Union, Optional, List, Tuple
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -1360,6 +1360,49 @@ class Tabs(Html.Html):
         if selected:
             self.__selected = name
         return self
+
+    def add_sub_menus(
+            self, name: str, values: List[list], width: Tuple[int, str] = (100, "px"), css_attrs: dict = None) -> Div:
+        """Add a panel with sub menus.
+
+        Usage::
+            p = page.ui.panels.pills(height=60)
+            p.add_panel("Pill 1", "test")
+            p.add_sub_menus("Pill 1", [[{"text": "col1 %s" % i, "url": "#"} for i in range(10)], [{"text": "col2 %s" % i} for i in range(10)]])
+
+        :param name: Panel's name
+        :param values: The list of columns to add to the sub menu
+        :param width: Optional. The column width
+        :param css_attrs: Optional. Menu panel's CSS attributes
+        """
+        links = []
+        for row in values:
+            col_links = []
+            for col in row:
+                if isinstance(col, dict):
+                    a = self.page.ui.link(**col)
+                    a.style.css.display = "block"
+                    a.style.css.padding = "3px 5px"
+                    col_links.append(a)
+                else:
+                    col_links.append(col)
+            links.append(self.page.ui.div(col_links, width=width))
+        sub_items = self.page.ui.div(links)
+        sub_items.style.css.display = None
+        sub_items.style.css.min_height = "150px"
+        sub_items.style.css.background = self.page.theme.white
+        sub_items.style.css.position = "absolute"
+        if not css_attrs:
+            sub_items.css(css_attrs)
+        self.__panel_objs[name]["tab"].add(sub_items)
+        self.__panel_objs[name]["tab"].hover([
+            sub_items.dom.css({
+                "left": self.__panel_objs[name]["tab"].dom.parentNode.getBoundingClientRect(unit=True).window_left,
+                "width": self.__panel_objs[name]["tab"].dom.parentNode.getComputedStyle("width")}).r,
+            sub_items.dom.show(display_value="block")])
+        self.__panel_objs[name]["tab"].on("mouseout", [sub_items.dom.hide()])
+        return sub_items
+
 
     def __str__(self):
         if self.__selected is not None:
