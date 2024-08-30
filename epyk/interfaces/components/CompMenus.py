@@ -14,13 +14,10 @@ class Menus:
 
   def top(self, data: List[dict] = None, color: str = None, width: Union[tuple, int] = (100, "%"),
           height: Union[tuple, int] = (30, 'px'), html_code: str = None,
-          helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """  
-    Add a menu item at the top of the page.
-    The menu will be fixed on the page, always visible
+          helper: str = None, options: dict = None, profile: Union[bool, dict] = None) -> html.HtmlContainer.Div:
+    """Add a menu item at the top of the page. The menu will be fixed on the page, always visible
 
     Usage::
-
       page.ui.menus.top([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
 
     Underlying HTML Objects:
@@ -98,13 +95,11 @@ class Menus:
 
   def bottom(self, data: List[dict] = None, color: str = None, width: Union[tuple, int] = (100, "%"),
              height: Union[tuple, int] = (30, 'px'), html_code: str = None,
-             helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """  
-    Add a menu item at the bottom of the page.
-    The menu will be fixed on the page, always visible.
+             helper: str = None, options: dict = None, profile: Union[bool, dict] = None
+             ) -> html.HtmlContainer.Div:
+    """Add a menu item at the bottom of the page. The menu will be fixed on the page, always visible.
 
     Usage::
-
       page.ui.menus.bottom([{"value": "Menu 1", 'children': ["Item 1", "Item 2"]},"Menu 1 2"])
 
     Underlying HTML Objects:
@@ -181,16 +176,11 @@ class Menus:
 
   def menu(self, data: list = None, color: str = None, width: Union[tuple, int] = (100, "%"),
            height: Union[tuple, int] = (None, 'px'), html_code: str = None,
-           helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+           helper: str = None, options: dict = None, profile: Union[bool, dict] = None) -> html.HtmlContainer.Col:
     """  
 
     Usage::
-
-      page.ui.menus.menu([
-        {"value": "File", "children": [
-          {"url": "Test", "text": "Test"}
-        ]}
-      ])
+      page.ui.menus.menu([{"value": "File", "children": [{"url": "Test", "text": "Test"}]}])
 
     Underlying HTML Objects:
 
@@ -261,12 +251,7 @@ class Menus:
     """  
 
     Usage::
-
-      page.ui.menus.bar([
-        {"value": "File", "children": [
-          {"url": "Test", "text": "Test"}
-        ]}
-      ])
+      page.ui.menus.bar([{"value": "File", "children": [{"url": "Test", "text": "Test"}]}])
 
     Underlying HTML Objects:
 
@@ -332,22 +317,18 @@ class Menus:
     return row
 
   def icons(self, data: List[Union[str, dict]] = None, width=(100, '%'), height: Union[tuple, int] = (None, 'px'), align: str = "center",
-            options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Add a menu bar with font awesome icons.
+            html_code: str = None, options: dict = None, profile: Union[bool, dict] = False) -> html.HtmlContainer.Div:
+    """Add a menu bar with font awesome icons.
 
     Usage::
-
-      icons = page.ui.menus.icons([
-          "bi-1-circle-fill",
-          "bi-search-heart-fill",
-          "bi-x-circle-fill",
-      ], options={"icon_family": "bootstrap-icons"})
+      icons = page.ui.menus.icons(
+        ["bi-1-circle-fill", "bi-search-heart-fill", "bi-x-circle-fill"], options={"icon_family": "bootstrap-icons"})
 
     :param data: Optional. Parameter bar icons
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param align: Optional. A string with the horizontal position of the component
+    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
@@ -358,18 +339,21 @@ class Menus:
     div.style.css.text_align = "right"
     icons = []
     if data:
-      for d in data:
+      for i, d in enumerate(data):
         if isinstance(d, dict):
           if "width" not in d:
             d["width"] = (15, 'px')
           if "options" not in d:
             d["options"] = {}
+          if "html_code" not in d:
+            d["html_code"] = "%s_%s" % (html_code, i)
           if "icon_family" not in d["options"]:
             d["options"]["icon_family"] = dfl_options.get("icon_family", self.page.icons.family)
           icons.append(self.page.ui.icons.fluent(**d))
         else:
+          icon_code = None if not html_code else "%s_%s" % (html_code, i)
           icons.append(self.page.ui.icons.fluent(
-            icon=d, text="", width=(15, 'px'), options={
+            icon=d, text="", width=(15, 'px'), html_code=icon_code, options={
               "icon_family": dfl_options.get("icon_family", self.page.icons.family)}))
         icons[-1].style.css.margin = "0 %spx 0 0" % dfl_options["margin-right"]
         div.add(icons[-1])
@@ -384,11 +368,8 @@ class Menus:
     """  
 
     Usage::
-
       bs = page.ui.buttons.buttons(["Button", "Button 2", "Button 3"])
-      bs[2].click([
-        page.js.alert(bs[2].dom.content)
-      ])
+      bs[2].click([page.js.alert(bs[2].dom.content)])
 
     Underlying HTML Objects:
 
@@ -413,11 +394,10 @@ class Menus:
 
   def images(self, data: list = None, path: str = None, width: Union[tuple, int] = (100, '%'),
              height: Union[tuple, int] = (None, 'px'), align: str = "center",
-             options: dict = None, profile: Union[bool, dict] = False):
+             options: dict = None, profile: Union[bool, dict] = False) -> html.HtmlContainer.Div:
     """  
 
     Usage::
-
       page.ui.menus.images(["https://jupyter.org/favicon.ico", "https://codepen.io//favicon.ico"])
 
     :param path:
@@ -457,11 +437,10 @@ class Menus:
 
   def right(self, data=None, color: str = None, width: Union[tuple, int] = (100, "%"),
             height: Union[tuple, int] = (30, 'px'), html_code: str = None,
-            helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
+            helper: str = None, options: dict = None, profile: Union[bool, dict] = None) -> html.HtmlContainer.Div:
     """  
 
     Usage::
-
       page.ui.lists.
 
     :param data:
@@ -525,15 +504,12 @@ class Menus:
 
   def divisor(self, data, divider: bool = None, width: Union[tuple, int] = (100, '%'),
               height: Union[tuple, int] = (None, 'px'), options: dict = None,
-              profile: Union[bool, dict] = False):
-    """  
-    Add list of items separated by a symbol (default BLACK_RIGHT_POINTING_TRIANGLE).
+              profile: Union[bool, dict] = False) -> html.HtmlContainer.Div:
+    """Add list of items separated by a symbol (default BLACK_RIGHT_POINTING_TRIANGLE).
     The components will be based on Links.
 
     Usage::
-
-      record = []
-      page.ui.menus.divisor(record)
+      page.ui.menus.divisor([])
 
     Underlying HTML Objects:
 
@@ -542,10 +518,10 @@ class Menus:
 
     :param data:
     :param divider: symbols.shape | String. The symbol between the links.
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
-    :param options: Dictionary. Optional. Specific Python options available for this component
-    :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
     """
     if divider is None:
       divider = self.page.symbols.shapes.BLACK_RIGHT_POINTING_TRIANGLE
@@ -565,11 +541,10 @@ class Menus:
 
   def button(self, value, components: Union[html.Html.Html, List[html.Html.Html]], symbol: str = None,
              width: Union[tuple, int] = ("auto", ''), height: Union[tuple, int] = (None, 'px'), options: dict = None,
-             profile: Union[bool, dict] = False):
+             profile: Union[bool, dict] = False) -> html.HtmlContainer.Div:
     """  
 
     Usage::
-
       mb = page.ui.menus.button("Value", page.ui.button("sub button"))
       mb.items[0].click([page.js.alert(mb.items[0].dom.content)])
 
@@ -606,11 +581,10 @@ class Menus:
 
   def toolbar(self, data: list = None, width: Union[tuple, int] = ("auto", ''),
               height: Union[tuple, int] = (None, 'px'), options: dict = None,
-              profile: Union[bool, dict] = False):
+              profile: Union[bool, dict] = False) -> html.HtmlContainer.Div:
     """  
 
     Usage::
-
       tb = page.ui.menus.toolbar(["fas fa-paint-brush", "fas fa-code"])
       tb[1].link.val = 4589
       tb[1].tooltip("This is a tooltip")
@@ -654,29 +628,21 @@ class Menus:
     return div
 
   def selections(self, data, width=(150, 'px'), height=('auto', ''), html_code: str = None,
-                 helper: str = None, options: dict = None, profile: Union[bool, dict] = None):
-    """  
-    Menu using Jquery UI external module.
+                 helper: str = None, options: dict = None, profile: Union[bool, dict] = None) -> html.HtmlEvent.Menu:
+    """Menu using Jquery UI external module.
 
     Usage::
-
         page.ui.menus.selections(["Item 1", "Item 2"])
-
         page.ui.menus.selections([
           {'value': "fas fa-exclamation-triangle", 'items': [
-            {"value": 'value 1'},
-            {"value": 'value 2'},
-            {"value": 'value 3'},
-          ]},
+            {"value": 'value 1'}, {"value": 'value 2'}, {"value": 'value 3'}]},
             "fas fa-exclamation-triangle"])
 
     Underlying HTML Objects:
 
       - :class:`epyk.core.html.HtmlEvent.Menu`
 
-    Related Pages:
-
-      https://jqueryui.com/menu/
+    `jqueryui <https://jqueryui.com/menu/>`_
 
     :param data:
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -703,18 +669,14 @@ class Menus:
                  height: Union[tuple, int] = (None, 'px'),
                  html_code: str = None, visible: bool = False, options: dict = None,
                  profile: Union[bool, dict] = None) -> html.HtmlMenu.ContextMenu:
-    """  
-    Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
+    """Set a bespoke Context Menu on an Item. This will create a popup on the page with action.
     This component is generic is need to be added to a component to work.
 
     Usage::
-
       menu = page.ui.contextual([{"text": 'text', 'event': 'alert("ok")'}])
       page.ui.title("Test").attach_menu(menu)
 
-    Templates:
-
-        https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py
+    `Templates <https://github.com/epykure/epyk-templates/blob/master/locals/components/contextmenu.py>`_
 
     :param record: Optional.
     :param width: Optional. A tuple with the integer for the component width and its unit
@@ -733,11 +695,10 @@ class Menus:
 
   def pills(self, data: List = None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (50, 'px'),
             html_code: str = None, helper: str = None,
-            options: dict = None, profile: Union[bool, dict] = False):
+            options: dict = None, profile: Union[bool, dict] = False) -> html.HtmlContainer.Div:
     """  
 
     Usage::
-
       page.ui.pills.
 
     :param data: Optional.

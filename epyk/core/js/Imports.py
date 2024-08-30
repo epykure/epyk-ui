@@ -1882,7 +1882,7 @@ JS_IMPORTS = {
     # highlight
     'highlight.js': {
         "license": "BSD-3-Clause license",
-        'version': '11.8.0',
+        'version': '11.9.0',
         'website': 'https://highlightjs.org/',
         'repository': 'https://github.com/highlightjs/highlight.js',
         # 'register': {'alias': 'hljs', 'npm': 'highlight.js', 'npm_path': 'lib/core'},

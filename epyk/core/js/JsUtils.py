@@ -330,7 +330,7 @@ def isNotDefined(varName: str):
     return "typeof %s === 'undefined'" % varName
 
 
-def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None) -> str:
+def dataFlows(data: Any, flow: Optional[list], page: primitives.PageModel = None, verbose: bool = None) -> str:
     """All the chaining of data flow transformation to feed the various widgets.
     flow must point to function with the following signature (data, {obj1, obj2, .... objN=0})
 
@@ -370,6 +370,10 @@ def dataFlows(data: Any, flow: Optional[dict], page: primitives.PageModel = None
         return data_expr
 
     for dataflow in flow:
+        if page and "file" in dataflow:
+            addJsResources(
+                page._props["js"]['constructors'], dataflow["file"], sub_folder=dataflow.get("folder"),
+                full_path=dataflow.get("path"), required_funcs=dataflow.get("required_funcs"), verbose=verbose)
         if dataflow.get("level") == "item":
             # shortcut to simple transforms on items on dataset
             dataflow["name"] = "function(dataset){dataset.forEach(function(item){%s}); return dataset}" % dataflow["name"]
