@@ -25,7 +25,6 @@ from epyk.core.js.packages import JsComponents
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsJqueryUI
-from epyk.core.css import Defaults as cssDefaults
 
 
 class ProgressBar(Html.Html):
@@ -569,7 +568,6 @@ class SkillBar(Html.Html):
 
 
 class OptionsBar(Html.Html):
-    requirements = (cssDefaults.ICON_FAMILY,)
     name = 'Options'
     _option_cls = OptSliders.OptionBar
     tag = "div"
@@ -584,6 +582,18 @@ class OptionsBar(Html.Html):
             self += rec
         if self.options.draggable:
             self.draggable()
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def options(self) -> OptSliders.OptionBar:
@@ -614,7 +624,6 @@ class OptionsBar(Html.Html):
 
 
 class SignIn(Html.Html):
-    requirements = (cssDefaults.ICON_FAMILY,)
     name = 'SignIn'
 
     def __init__(self, page: primitives.PageModel, text: Optional[str], size: tuple, icon: Optional[str],
@@ -624,6 +633,18 @@ class SignIn(Html.Html):
         self.css({"text-align": "center", "padding": 0, 'color': self.page.theme.colors[3],
                   "margin": 0, "border-radius": "%s%s" % (size[0], size[1]), "display": "inline-block",
                   "border": "1px solid %s" % self.page.theme.colors[3], 'cursor': 'pointer'})
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     def __str__(self):
         if not hasattr(self.page, 'user') or self.page.user == 'local':
@@ -643,7 +664,6 @@ class SignIn(Html.Html):
 
 class Filters(Html.Html):
     name = 'Filters'
-    requirements = (cssDefaults.ICON_FAMILY,)
     _option_cls = OptList.OptionsTagItems
 
     def __init__(self, page: primitives.PageModel, items, width, height, html_code, helper, options, profile,
@@ -661,6 +681,18 @@ class Filters(Html.Html):
         self.selections.css({'min-height': '30px', 'padding': '5px 2px'})
         self.add_helper(helper, options=options.get("helper"))
         self.__enter_def = False
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def options(self) -> OptList.OptionsTagItems:

@@ -405,7 +405,7 @@ class Html(primitives.HtmlModel):
         self.components = Components()
         self.page = page
         self.require = Required(page)
-        for package in self.requirements or []:
+        for package in self.get_requirements(page, options):
             if isinstance(package, tuple):
                 self.require.add(package[0], package[1], verbose=verbose)
             elif isinstance(package, dict):
@@ -481,6 +481,22 @@ class Html(primitives.HtmlModel):
                 self.builder_module = "%s%s" % (self.builder_name[0].upper(), self.builder_name[1:])
 
         self._internal_components = [self.html_code]
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Return an updated list of requirements for the component based on its configuration.
+        External requirements are, in most of the cases static but they can be updated with this function.
+        A component can override this method to change the requirements list.
+
+        This method is used in the init to enrich the external requirement for the page.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if cls.requirements is None:
+            return ()
+
+        return cls.requirements
 
     def with_profile(self, profile: types.PROFILE_TYPE, event: Optional[str] = None,
                      element_id: Optional[str] = None) -> dict:
@@ -854,9 +870,8 @@ class Html(primitives.HtmlModel):
         :return: The Html object.
         """
         self.icon = ""
-        defined_families = ('office-ui-fabric-core', 'material-design-icons', 'font-awesome', 'bootstrap-icons')
-        if family is not None and self.options.verbose and family not in defined_families:
-            logging.warning("Family %s not defined in %s" % (family, defined_families))
+        if family is not None and self.options.verbose and family not in Defaults_css.DEFINED_FAMILIES:
+            logging.warning("Family %s not defined in %s" % (family, Defaults_css.DEFINED_FAMILIES))
 
         if family is None:
             family = self.page.icons.family

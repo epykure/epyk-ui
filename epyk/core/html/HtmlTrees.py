@@ -3,6 +3,7 @@
 
 from typing import Union, Optional, List, Tuple
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.html import Defaults
@@ -25,8 +26,6 @@ class Tree(Html.Html):
                  verbose: bool = False):
         options = options or {}
         icon_details = page.icons.get("folder_open")
-        if icon_details['icon_family'] != 'bootstrap-icons':
-            self.requirements = (icon_details['icon_family'],)
         super(Tree, self).__init__(page, records, profile=profile, options=options, html_code=html_code,
                                    css_attrs={"width": width, 'height': height}, verbose=verbose)
         self.options.icon_open = icon_details["icon"]
@@ -34,6 +33,18 @@ class Tree(Html.Html):
         self.add_helper(helper, options=options.get("helper"))
         self.attr["data-depth"] = 1
         self.css(self.options.style)
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def dom(self) -> JsHtmlTree.JsHtmlTree:

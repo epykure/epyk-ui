@@ -54,6 +54,10 @@ ASSETS_STATIC_JS = os.environ.get("ASSETS_STATIC_JS", "js")
 ASSETS_STATIC_PUBLIC = os.environ.get("ASSETS_STATIC_PUBLIC", "public")
 """ Folder and url end route for other resources (images, icons...) """
 
+# Icons global settings
+ICONS_FAMILY = os.environ.get("ICONS_FAMILY", 'font-awesome')
+""" Default family reference """
+
 
 def add_static_sub_folders(names: List[str]):
     """Add sub folder to the static path.

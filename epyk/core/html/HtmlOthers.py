@@ -102,8 +102,6 @@ class Stars(Html.Html):
             for i in range(best):
                 colors.append(color)
 
-        if icon_details and icon_details[0]['icon_family'] != 'bootstrap-icons':
-            self.requirements = (icon_details[0]['icon_family'],)
         super(Stars, self).__init__(page, val, html_code=html_code, profile=profile, options=options)
         # Add the HTML components
         self._spans, self.popup = [], None
@@ -126,6 +124,18 @@ class Stars(Html.Html):
         if self.helper:
             self.helper.css({"margin": '1px 4px'})
         self.css({'text-align': align, "display": 'block'})
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def options(self) -> OptText.OptionsSurveys:
@@ -231,12 +241,22 @@ class Help(Html.Html):
     def __init__(self, page: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
                  html_code: Optional[str], options: Optional[dict]):
         icon_details = page.icons.get("info")
-        if icon_details['icon_family'] != 'bootstrap-icons':
-            self.requirements = (icon_details['icon_family'],)
         super(Help, self).__init__(page, val, html_code=html_code, css_attrs={"width": width}, profile=profile)
         self.attr['class'].add(icon_details["icon"])
         self.attr['title'] = val
         self._jsStyles = options
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def style(self) -> GrpClsLayout.ClassHelp:
@@ -259,6 +279,7 @@ class Loading(Html.Html):
 
     style_refs = {
         "html-loading": "html-loading",
+        "html-loading-message": "html-loading-message",
         "html-loading-fixed": "html-loading-fixed",
         "html-loading-page": "html-loading-page",
     }
@@ -266,24 +287,41 @@ class Loading(Html.Html):
     def __init__(self, page: primitives.PageModel, text: str, color: str, size: tuple, options: Optional[dict],
                  html_code: Optional[str], profile: Optional[Union[bool, dict]]):
         icon_details = page.icons.get("spin")
-        if icon_details['icon_family'] != 'bootstrap-icons':
-            self.requirements = (icon_details['icon_family'],)
         super(Loading, self).__init__(page, text, html_code=html_code, profile=profile)
         self.color = self.page.theme.greys[-1] if color is None else color
         self.size = size[0]
-        self.add_icon("%s fa-spin" % icon_details["icon"], html_code=self.htmlCode,
+        self.message = self.page.ui.div("")
+        self.message.style.clear_all()
+        self.message.options.managed = False
+        self.add_icon("%s fa-spin" % icon_details["icon"], html_code=self.html_code,
                       css={"font-size": "%spx" % (self.size + 8)}, family=icon_details["icon_family"])
         self.classList.add(self.style_refs["html-loading"])
         if options.get('fixed', False):
             self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
             self.classList.add(self.style_refs["html-loading-fixed"])
-            self.add_span("%s..." % text, position="after", css={"width": 'auto'})
+            self.span = self.page.ui.tags.span("%s..." % text, width="auto")
         if options.get('page', False):
             self.icon.css({"margin-right": '5px', "font-size": 'inherit'})
             self.classList.add(self.style_refs["html-loading-page"])
-            self.add_span("%s..." % text, position="after", css={"width": 'auto'})
+            self.span = self.page.ui.tags.span("%s..." % text, width="auto")
+            self.message.attr["class"].add("html-loading-message")
+            self.span.options.managed = False
         else:
-            self.add_span("%s..." % text, position="after", css={"width": '100%', "margin": "5px"})
+            self.span = self.page.ui.tags.span("%s..." % text)
+            self.span.style.css.margin = "5px"
+        self.span.options.managed = False
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     def fixed(self, css: Optional[dict] = None, icon_css: Optional[dict] = None):
         """Set css attributes of the loading div to be fixed.
@@ -305,7 +343,9 @@ class Loading(Html.Html):
         return self
 
     def __str__(self):
-        return '<%(t)s %(a)s></%(t)s>' % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
+        return '<%(t)s %(a)s>%(s)s%(c)s</%(t)s>' % {
+            "a": self.get_attrs(css_class_names=self.style.get_classes()), "s": self.span.html(),
+            "c": self.message.html(), "t": self.tag}
 
 
 class HtmlJson(Html.Html):
@@ -431,8 +471,6 @@ class Slides(Html.Html):
     def __init__(self, page: primitives.PageModel, start, width: tuple, height: tuple, options: Optional[dict],
                  html_code: str, profile: Optional[Union[dict, bool]]):
         icon_details_right = page.icons.get("arrow_right")
-        if icon_details_right['icon_family'] != 'bootstrap-icons':
-            self.requirements = (icon_details_right['icon_family'],)
         icon_details_left = page.icons.get("arrow_left")
         super(Slides, self).__init__(page, [], options=options, html_code=html_code,
                                      css_attrs={"width": width, 'height': height}, profile=profile)
@@ -511,6 +549,18 @@ class Slides(Html.Html):
         page.body.keydown.right([self.next.dom.events.trigger("click")])
         page.body.keydown.left([self.previous.dom.events.trigger("click")])
         self.style.css.padding = "0 20px 20px 20px"
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def options(self) -> OptText.OptionsText:

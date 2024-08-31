@@ -5,6 +5,7 @@
 from pathlib import Path
 from typing import Union, Optional, List
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.html import Html
 from epyk.core.css import Colors
@@ -16,16 +17,13 @@ from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
-from epyk.core.css import Defaults as cssDefaults
-
-# The list of CSS classes
 from epyk.core.css.styles import GrpClsText
 
 
 class UpDown(Html.Html):
     name = 'Up and Down'
     tag = "div"
-    requirements = (cssDefaults.ICON_FAMILY, 'accounting')
+    requirements = ('accounting',)
     _option_cls = OptText.OptionsNumberMoves
 
     def __init__(self, page: primitives.PageModel, record: dict, components: List[Html.Html], color: Optional[str],
@@ -49,6 +47,18 @@ class UpDown(Html.Html):
                 self.add(component)
         self.val['color'] = self.page.theme.colors[-1] if color is None else color
         self.options.label = record.get('label', '')
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],) + cls.requirements
+
+        return (page.icons.family,) + cls.requirements
 
     @property
     def options(self) -> OptText.OptionsNumberMoves:
@@ -171,7 +181,6 @@ if(typeof data.button != 'undefined'){
 
 
 class TextWithBorder(Html.Html):
-    requirements = (cssDefaults.ICON_FAMILY,)
     name = 'Text with Border and Icon'
     _option_cls = OptText.OptionsText
 
@@ -187,6 +196,18 @@ class TextWithBorder(Html.Html):
         if 'color' not in self.val:
             self.val['color'] = self.page.theme.colors[-1]
         self.css({"border-color": self.val['colorTitle'], 'margin-top': '20px'})
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def options(self) -> OptText.OptionsText:

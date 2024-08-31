@@ -56,10 +56,10 @@ class OptionPanelSliding(Options):
     """  
     Add the open icon item.
     """
-    if "material-design-icons" in self.component.requirements:
+    if "material-design-icons" in self.component.require.js:
       return self.get("material-icons")
 
-    if "office-ui-fabric-core" in self.component.requirements:
+    if "office-ui-fabric-core" in self.component.require.js:
       return self.get("ms-Icon ms-Icon--CaretSolidDown")
 
     return self.get("fas fa-caret-down")
@@ -73,10 +73,10 @@ class OptionPanelSliding(Options):
     """  
     Add the close icon item.
     """
-    if "material-design-icons" in self.component.requirements:
+    if "material-design-icons" in self.component.require.js:
       return self.get("material-icons")
 
-    if "office-ui-fabric-core" in self.component.requirements:
+    if "office-ui-fabric-core" in self.component.require.js:
       return self.get("ms-Icon ms-Icon--CaretSolidUp")
 
     return self.get("fas fa-caret-up")

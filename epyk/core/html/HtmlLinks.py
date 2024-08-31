@@ -102,7 +102,6 @@ class ExternalLink(Html.Html):
         """Display a loading message in the component.
 
         Usage::
-
           btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
         :param status: Optional. The message status (true is active)
@@ -120,7 +119,6 @@ class ExternalLink(Html.Html):
         """Display an error message in the component.
 
         Usage::
-
           btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
         :param status: Optional. The message status (true is active)
@@ -169,7 +167,6 @@ class DataLink(Html.Html):
         """Display a loading message in the component.
 
         Usage::
-
           btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
         :param status: Optional. The message status (true is active)
@@ -187,7 +184,6 @@ class DataLink(Html.Html):
         """Display an error message in the component.
 
         Usage::
-
           btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
         :param status: Optional. The message status (true is active)

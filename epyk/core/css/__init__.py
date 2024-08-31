@@ -16,7 +16,8 @@ def css_files_loader(
         selector: str = None,
         style_vars: Optional[Dict[str, str]] = None,
         minify: bool = True,
-        resources: Dict[str, Path] = None
+        resources: Dict[str, Path] = None,
+        verbose: bool = None
 ) -> str:
     """Get the CSS content from CSS component files.
 
@@ -24,6 +25,8 @@ def css_files_loader(
     :param selector: Optional. The container selector definition
     :param style_vars: Optional. The value to replace in the CSS template file (SCSS file)
     :param minify: Optional. Flag to minify or not the CSS content
+    :param resources: Optional.
+    :param verbose: Show extra log messages
     """
     style_vars = style_vars or {}
     regex = re.compile(Defaults_css.REG_EXP_SECTOR)
@@ -34,8 +37,9 @@ def css_files_loader(
             if global_settings.NATIVE_CSS_PATH is not None:
                 over_path = Path(global_settings.NATIVE_CSS_PATH) / path_css_file.name
                 if over_path.exists():
-                    logging.debug("NATIVE | CSS | file %s used from %s" % (
-                        path_css_file.name, global_settings.NATIVE_CSS_PATH))
+                    if verbose or (verbose is None and global_settings.DEBUG):
+                        logging.debug("NATIVE | CSS | file %s used from %s" % (
+                            path_css_file.name, global_settings.NATIVE_CSS_PATH))
                     css_file = str(over_path)
                     path_css_file = over_path
             css_file = str(css_file)
@@ -45,7 +49,8 @@ def css_files_loader(
                         if not path_css_file.name in resources:
                             resources[path_css_file.name] = path_css_file
                         else:
-                            logging.debug("NATIVE | CSS | %s already loaded" % path_css_file)
+                            if verbose or (verbose is None and global_settings.DEBUG):
+                                logging.debug("NATIVE | CSS | %s already loaded" % path_css_file)
                             continue
 
                     css_formatted.append("/* CSS From file %s */" % css_file)
@@ -56,7 +61,8 @@ def css_files_loader(
                             # Important to replace by starting with the longest string to avoid issues
                             css_data = css_data.replace("$%s" % k, style_vars[k])
                         if "$" in css_data:
-                            logging.warning("CSS | Loader | Issue when processing file: %s" % css_file)
+                            if verbose or (verbose is None and global_settings.DEBUG):
+                                logging.warning("CSS | Loader | Issue when processing file: %s" % css_file)
                         for m in regex.findall(css_data):
                             if selector is not None:
                                 container_ref = "div[name=%s]" % selector
@@ -92,8 +98,8 @@ def export_scss_files(out_path: str = None):
     out_theme_path = Path(out_path, "%s.SCSS" % Defaults_css.THEME.upper())
     scss_colors(file_path=str(out_theme_path), theme=themes.get_theme(), override=True)
 
-    out_icons_path = Path(out_path, "%s.SCSS" % Defaults_css.ICON_FAMILY.upper())
-    scss_icons(file_path=str(out_icons_path), family=Defaults_css.ICON_FAMILY, override=True)
+    out_icons_path = Path(out_path, "%s.SCSS" % global_settings.ICONS_FAMILY.upper())
+    scss_icons(file_path=str(out_icons_path), family=global_settings.ICONS_FAMILY, override=True)
 
 
 def scss_colors(file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None, override: bool = False):
@@ -101,7 +107,6 @@ def scss_colors(file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None
     It will generate a schema based on the default theme definition.
 
     Usages::
-
         import epyk as ek
         ek.helpers.scss_colors()
 
@@ -176,9 +181,9 @@ def scss_icons(file_path: str = "ICONS.SCSS", family: str = None, override: bool
                 match = re.search("^\$(.*):(.*);", l)
                 if match:
                     Defaults_css.ICON_MAPPINGS[family][match.group(1).strip()] = match.group(2).strip()
-                    Defaults_css.ICON_FAMILY = family
+                    global_settings.ICONS_FAMILY = family
     else:
-        family = family or Defaults_css.ICON_FAMILY
+        family = family or global_settings.ICONS_FAMILY
         with open(file_path, "w") as fp:
             fp.write("/* Auto generated SCSS files for icons definition */ \n\n")
             for k, v in Defaults_css.ICON_MAPPINGS[family].items():

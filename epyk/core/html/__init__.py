@@ -27,10 +27,12 @@ from . import Header
 from . import tables
 from . import graph
 from . import Defaults as Defaults_html
+from ...conf.global_settings import DEBUG
 
 import re
 from pathlib import Path
 from typing import Optional
+import logging
 
 
 def html_formatter(
@@ -38,16 +40,17 @@ def html_formatter(
         values: Optional[dict] = None,
         new_var_format: Optional[str] = None,
         ref_expr: Optional[str] = None,
-        directives: Optional[dict] = None
+        directives: Optional[dict] = None,
+        verbose: bool = None
 ) -> dict:
-    """
-    Format a string to provide a valid HTML string for a target web framework.
+    """Format a string to provide a valid HTML string for a target web framework.
 
     :param html_content: HTML content as a string
     :param values: Optional. Values to be replaced by the Python
     :param new_var_format: Optional. Variable format for the target web framework (default {{ }})
     :param ref_expr: Optional. Special string for the component DOM identifier
     :param directives: Optional. The directive expression for the framework
+    :param verbose: Show extra log messages
     """
     if values is not None and new_var_format is not None:
         raise ValueError("Both values and var_format cannot be defined")
@@ -58,7 +61,8 @@ def html_formatter(
         for ref, content in directives.items():
             directive_def = "[%s]" % ref
             if directive_def not in html_content:
-                print("-- Directive [%s] missing, in template\n %s" % (ref, html_content))
+                if verbose or (verbose is None and DEBUG):
+                    logging.warning("-- Directive [%s] missing, in template\n %s" % (ref, html_content))
             html_content = html_content.replace(directive_def, content.strip())
             if ref in ["class", "style"]:
                 # special template directives

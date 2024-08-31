@@ -1138,6 +1138,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
         :param stringify: Optional. Stringify the request data for json exchange
         :param dataflows: Chain of data transformations
+        :param options:
         """
         return self.rest("DELETE", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,

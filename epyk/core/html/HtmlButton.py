@@ -330,7 +330,7 @@ class Button(Html.Html):
 
 class Checkbox(Html.Html):
     name = 'Button Check Box'
-    requirements = ('font-awesome', 'bootstrap', 'jquery')
+    requirements = ('bootstrap', 'jquery')
     _option_cls = OptButton.OptCheckboxes
     tag = "div"
 
@@ -347,6 +347,18 @@ class Checkbox(Html.Html):
         self.css({'text-align': align, 'color': 'inherit' if color is None else color, 'padding': '5px'})
         if tooltip:
             self.tooltip(tooltip)
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],) + cls.requirements
+
+        return (page.icons.family,) + cls.requirements
 
     @property
     def options(self) -> OptButton.OptCheckboxes:

@@ -12,7 +12,6 @@ from epyk.core.py import types
 from epyk.interfaces import Arguments
 
 from epyk.core.html import Html
-from epyk.core.html import Defaults
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
@@ -234,7 +233,6 @@ class PanelSlide(Panel):
                  title: Union[Html.Html, str], color: Optional[str], width: types.SIZE_TYPE,
                  height: types.SIZE_TYPE, html_code: Optional[str], helper,
                  options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
-        self.requirements = (page.icons.family,)
         if components:
             for c in components:
                 c.options.managed = False
@@ -254,6 +252,18 @@ class PanelSlide(Panel):
         self.title.classList.add(self.style_refs["html-slidepanel-title"])
         self.title.options.managed = False
         self._vals, self.__clicks, self.__clicks_open = [self.title] + self._vals, [], []
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def panel(self):
@@ -1509,7 +1519,6 @@ class IFrame(Html.Html):
 
 class IconsMenu(Html.Html):
     name = 'Icons Menu'
-    requirements = ('font-awesome',)
     tag = "div"
 
     def __init__(self, icon_names: list, page: primitives.PageModel, width, height, html_code, helper, profile):
@@ -1521,11 +1530,23 @@ class IconsMenu(Html.Html):
         for icon_name in icon_names:
             self.add_icon(icon_name)
 
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
+
     def __getitem__(self, i):
         return self._icons[i]
 
     def add_icon(self, text: str, css: Optional[dict] = None, position: str = "after", family: Optional[str] = None,
-                 html_code: Optional[str] = None):
+                 html_code: Optional[str] = None, **kwargs):
         """Add an icon to the HTML object.
 
         Usage::
@@ -1756,7 +1777,6 @@ class Modal(Html.Html):
 
 class Indices(Html.Html):
     name = 'Index'
-    requirements = ('font-awesome',)
     _option_cls = OptPanel.OptionsPanelPoints
     tag = 'div'
 
@@ -1789,6 +1809,18 @@ class Indices(Html.Html):
         self.last = self.page.ui.icon("fas fa-angle-double-right", width=(20, 'px'),
                                       html_code=self.sub_html_code("icon_last")).css({"display": 'inline-block'})
         self.last.options.managed = False
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def options(self) -> OptPanel.OptionsPanelPoints:

@@ -2,6 +2,7 @@ import inspect
 import json
 
 from typing import List, Union
+from epyk.conf import global_settings
 from epyk.core import Page as Rpt
 from epyk._version import __version__
 from epyk.core.data import events

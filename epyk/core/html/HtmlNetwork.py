@@ -15,7 +15,6 @@ from epyk.core.js.html import JsHtmlNetwork
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsNetwork
-from epyk.core.css import Defaults as cssDefaults
 
 
 class Comments(Html.Html):
@@ -413,7 +412,6 @@ class Room(Html.Html):
 
 
 class DropFile(Html.Html):
-    requirements = (cssDefaults.ICON_FAMILY,)
     name, inputType = 'Drop File Area', "file"
     _option_cls = OptNet.OptionFiles
 
@@ -474,6 +472,18 @@ class DropFile(Html.Html):
             self.sync = self.page.ui.icon("fas fa-sync-alt")
             self.sync.options.managed = False
             self.sync.style.css.margin_left = 5
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def dom(self) -> JsHtmlNetwork.JsHtmlDropFiles:

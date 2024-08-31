@@ -56,8 +56,8 @@ class Theme:
         self.__colors = {"all": {}}
         for c in sys_categories:
             if not hasattr(self, "_%s" % c):
-                print("RRRR: %s" % c)
-                print(getattr(self, "_Theme__%s" % c, []))
+                #TODO - To be reviewed
+                ...
             else:
                 self.__colors[c] = getattr(self, "_%s" % c, [])
         for c in sys_color_ranges:

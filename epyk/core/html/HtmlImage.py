@@ -16,7 +16,6 @@ from epyk.core.html.options import OptButton
 from epyk.core.html.options import OptImg
 
 from epyk.core.css.styles import GrpClsImage
-from epyk.core.css import Defaults as cssDefaults
 
 # The list of Javascript classes
 from epyk.core.js.html import JsHtml
@@ -418,8 +417,6 @@ class Icon(Html.Html):
     tag = "i"
 
     def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile, text: str = ""):
-        if options['icon_family'] is not None and options['icon_family'] != 'bootstrap-icons':
-            self.requirements = (options['icon_family'],)
         super(Icon, self).__init__(page, text, css_attrs={"color": color, "width": width, "height": height},
                                    html_code=html_code, profile=profile)
         if options['icon_family'] == 'office-ui-fabric-core':
@@ -442,6 +439,18 @@ class Icon(Html.Html):
         self.attr['aria-hidden'] = 'true'
         if tooltip is not None:
             self.tooltip(tooltip)
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
              target: str = "_blank", source_event: str = None):
@@ -712,7 +721,7 @@ class Emoji(Html.Html):
 
 class Badge(Html.Html):
     name = 'Badge'
-    requirements = (cssDefaults.ICON_FAMILY, 'bootstrap')
+    requirements = ('bootstrap', )
     _option_cls = OptButton.OptionsBadge
     tag = "span"
 
@@ -748,6 +757,18 @@ class Badge(Html.Html):
         self.attr['class'].add("badge")
         if tooltip is not None:
             self.tooltip(tooltip)
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],) + cls.requirements
+
+        return (page.icons.family,) + cls.requirements
 
     @property
     def dom(self) -> JsHtml.JsHtml:

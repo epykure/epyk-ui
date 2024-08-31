@@ -1049,10 +1049,20 @@ class FieldSelect(Field):
         html_input.options.iconBase = "iconBase"
         icon_details = page.icons.get("check")
         html_input.options.tickIcon = icon_details["icon"]
-        if icon_details['icon_family'] != 'bootstrap-icons':
-            self.requirements = (icon_details['icon_family'],)
         super(FieldSelect, self).__init__(
             page, html_input, label, icon, width, height, html_code, helper, options, profile)
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
 
 class InputCheckbox(Html.Html):
@@ -1440,8 +1450,6 @@ class Search(Html.Html):
 
     def __init__(self, page: primitives.PageModel, text, placeholder, color, width, height, html_code, tooltip,
                  extensible, options, profile):
-        if options.get('icon_family') is not None and options['icon_family'] != 'bootstrap-icons':
-            self.requirements = (options['icon_family'],)
         super(Search, self).__init__(page, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
         self.color = 'inherit' if color is None else color
         self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
@@ -1452,8 +1460,8 @@ class Search(Html.Html):
             self.style.add_classes.layout.search_extension(max_width=width)
         self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
         if options["icon"]:
-            self.add_icon(options["icon"], css={"color": page.theme.colors[4]}, html_code=self.htmlCode,
-                          family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.htmlCode
+            self.add_icon(options["icon"], css={"color": page.theme.colors[4]}, html_code=self.html_code,
+                          family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.html_code
             self.icon.style.css.z_index = 10
             self.icon.style.css.font_factor(-3)
             self.dom.trigger = self.icon.dom.trigger
@@ -1492,6 +1500,18 @@ class Search(Html.Html):
         self.input.style.css.background = "inherit"
         self.input.style.css.padding_left = self.page.body.style.globals.line_height
         self.input.attr["type"] = "search"
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None and options['icon_family'] != 'bootstrap-icons':
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def dom(self) -> JsHtmlField.JsHtmlFields:

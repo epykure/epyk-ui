@@ -361,6 +361,7 @@ def dataFlows(data: Any, flow: Optional[list], page: primitives.PageModel = None
     :param data: Input data
     :param flow: Data flow processes (name and parameters)
     :param page: Page object with the full context
+    :param verbose: Show extra log messages
     """
     data_expr = jsConvertData(data, None, force=True)
     if not flow:

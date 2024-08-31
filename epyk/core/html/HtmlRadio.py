@@ -12,7 +12,6 @@ from epyk.core.js.html import JsHtmlField
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsComponents
 
-from epyk.core.css import Defaults as cssDefaults
 from epyk.core.html import Defaults as htmlDefaults
 
 
@@ -115,7 +114,6 @@ class Radio(Html.Html):
 
 
 class Tick(Html.Html):
-    requirements = (cssDefaults.ICON_FAMILY,)
     name = 'Tick'
     tag = "span"
 
@@ -146,6 +144,18 @@ class Tick(Html.Html):
         self.style.css.float = position
         if text is not None:
             self.span.css({"line-height": '%spx' % 25, 'vertical-align': 'middle'})
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def dom(self) -> JsHtmlSelect.Tick:
