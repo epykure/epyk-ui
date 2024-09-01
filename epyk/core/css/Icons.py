@@ -1,11 +1,13 @@
 import re
+import logging
 from typing import Optional, Any, Dict
 from . import Defaults as Defaults_css
+from ...conf import global_settings
 
 
 def defined_icons()-> Dict[str, str]:
     """Return a copy of the internal icon mapping """
-    return dict(Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY])
+    return dict(Defaults_css.ICON_MAPPINGS[global_settings.ICONS_FAMILY])
 
 
 def get_icon(alias: str) -> Optional[str]:
@@ -13,7 +15,7 @@ def get_icon(alias: str) -> Optional[str]:
 
     :param alias: The icon alias from the internal mapping
     """
-    return Defaults_css.ICON_MAPPINGS[Defaults_css.ICON_FAMILY][alias]
+    return Defaults_css.ICON_MAPPINGS[global_settings.ICONS_FAMILY][alias]
 
 
 def set_family(alias: str):
@@ -24,14 +26,14 @@ def set_family(alias: str):
     if alias not in Defaults_css.ICON_MAPPINGS:
         raise ValueError("Family %s is not defined in the internal mapping" % alias)
 
-    Defaults_css.ICON_FAMILY = alias
+    global_settings.ICONS_FAMILY = alias
 
 
 class IconModel:
 
     def __init__(self, page):
         self.page = page
-        self._family, self._category = Defaults_css.ICON_FAMILY, "CLASS"
+        self._family, self._category = global_settings.ICONS_FAMILY, "CLASS"
         self.__icons = {}
 
     @property
@@ -50,7 +52,6 @@ class IconModel:
     @property
     def family(self) -> str:
         """Set the icon family to be used in the page.
-
         This will have to be defined first before loading any components.
         """
         return self._family
@@ -66,7 +67,6 @@ class IconModel:
         By using this it is important to align _ICON_MAPPINGS variables to point to the updated icon classes
 
         Usage::
-
           page = pk.Page()
           page.icons.other("bootstrap-icons", {"edit": 'bi bi-2-circle'})
           page.ui.icons.edit("test")
@@ -83,17 +83,23 @@ class IconModel:
         if icons_map is not None:
             Defaults_css.ICON_MAPPINGS[self._family] = icons_map
 
-    def get(self, alias: Optional[str], family: str = None, options: dict = None) -> dict:
+    def get(self, alias: Optional[str], family: str = None, options: dict = None, verbose: bool = None) -> dict:
         """Return the icon properties based on the internal mapping
 
         :param alias: The full icon definition or an alias from the internal mapping
         :param family: Optional. The icon family
         :param options: Optional. The common component options
+        :param verbose: Show extra log messages
         :return: The icon properties
         """
         if options is not None:
             family = options.get("icon_family")
         family = family or self.family
+        if verbose or (verbose is None and global_settings.DEBUG):
+            # This will display only entries which are defined in the shortcut mapping
+            # bespoke names won't be seen as warnings
+            if alias in Defaults_css.ICON_MAPPINGS["font-awesome"] and not alias in Defaults_css.ICON_MAPPINGS.get(family, {}):
+                logging.warning("Icon %s missing from family %s" % (alias, family))
         icon = Defaults_css.ICON_MAPPINGS.get(family, {}).get(alias, alias)
         if icon is None:
             return {"icon": Defaults_css.ICON_MAPPINGS[self.family].get(alias, alias), "icon_family": self.family}
@@ -109,7 +115,6 @@ class IconModel:
         """
         self.page.ext_packages.update(imports)
         self.page.imports.reload()
-        Defaults_css.ICON_MAPPINGS[alias] = imports
         if set_default:
             self._family = alias
 
@@ -131,7 +136,6 @@ class IconModel:
         """Load the SASS file to set the icons' definition.
 
         Usage::
-
             page = pk.Page()
 
         :param file_path: The full file path
@@ -144,3 +148,13 @@ class IconModel:
                 self.__icons[tag.strip()] = value.strip()
         self._family = "SCSS"
         Defaults_css.ICON_MAPPINGS[self._family] = self.__icons
+
+    def add_icons(self, icons: Dict[str, str], name: str = None):
+        """Add Icons to the family internal definition.
+        Framework will not use direct class names in components but alias instead.
+
+        :param icons: Icons mapping rules
+        :param name: Optional. Family Name
+        """
+        name = name or self.family
+        Defaults_css.ICON_MAPPINGS.setdefault(name, {}).update(icons)

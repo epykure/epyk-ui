@@ -4,9 +4,11 @@
 from typing import Optional, Union
 from epyk.core.py import primitives
 from epyk.core.html import Defaults as defaultHtml
+from epyk.conf.global_settings import ICONS_FAMILY
 
 
 REG_EXP_SECTOR = r"([A-Za-z0-9\:\.,\>\<\@\#\+\*\-\ \=\"'\[\]]*){([#A-Za-z0-9\%\ \,\-\\\"\:\*\;\+\!\(\)\-\.]*) }"
+""" Regular expression to parse the CSS files and extract the definition """
 
 
 class Font:
@@ -60,7 +62,7 @@ class Icon:
 
     @property
     def family(self):
-        return ICON_FAMILY
+        return ICONS_FAMILY
 
     def small_size(self, step: int = 0, unit: str = None) -> str:
         """Icon small format.
@@ -101,12 +103,10 @@ def header(step: int = 0) -> str:
 
 def inline(css_attrs: dict, important: bool = False) -> str:
     """Convert a CSS attributes dictionary to a online CSS Style to be added to the dom object.
+    `w3schools <https://www.w3schools.com/css/css_howto.asp>`_
 
     Usage::
-
       inline({"color": "red"})
-
-    `w3schools <https://www.w3schools.com/css/css_howto.asp>`_
 
     :param css_attrs: The CSS Attributes
     :param important: Optional. Set the attributes to important. Default False
@@ -119,7 +119,6 @@ def inline(css_attrs: dict, important: bool = False) -> str:
 
 def px_to_em(value: float, with_unit: bool = True) -> Union[str, float]:
     """Convert the pixel value to em.
-
     `w3schools <https://www.w3schools.com/cssref/css_pxtoemconversion.asp>`_
 
     :param value: A pixel value
@@ -134,7 +133,6 @@ def px_to_em(value: float, with_unit: bool = True) -> Union[str, float]:
 
 def em_to_px(value: float, with_unit: bool = True) -> Union[str, float]:
     """Convert an em value in pixel.
-
     `w3schools <https://www.w3schools.com/cssref/css_pxtoemconversion.asp>`_
 
     :param value: The em value
@@ -155,7 +153,9 @@ DARK_MODE = False
 
 # Icon global settings
 DEFAULT_STYLE = "no_border"
-ICON_FAMILY = 'font-awesome'
+""" """
+DEFINED_FAMILIES = ('office-ui-fabric-core', 'material-design-icons', 'font-awesome', 'bootstrap-icons')
+""" """
 ICON_MAPPINGS = {
     "font-awesome": {
         "danger": "fas fa-stop-circle",
@@ -244,13 +244,15 @@ def get_icon(alias: Optional[str], family: str = None) -> dict:
     :param alias: The icon reference in the components
     :param family: Optional. The defined family (if different from the page icon family)
     """
-    icon = ICON_MAPPINGS[family or ICON_FAMILY].get(alias, alias)
+    icon = ICON_MAPPINGS[family or ICONS_FAMILY].get(alias, alias)
     if icon is None:
         return {"icon": ICON_MAPPINGS['font-awesome'].get(alias, alias), "icon_family": 'font-awesome'}
 
-    return {"icon": icon, "icon_family": ICON_FAMILY}
+    return {"icon": icon, "icon_family": ICONS_FAMILY}
 
 
+ICON_FAMILY = ICONS_FAMILY
+""" Deprecated family definition - to use ICONS_FAMILY from global_settings instead """
 # Default CSS Styles
 BODY_CONTAINER = None  # The body CSS dictionary
 BODY_STYLE = None
