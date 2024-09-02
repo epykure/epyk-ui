@@ -736,7 +736,7 @@ class AgGrid(JsPackage):
         return JsObjects.JsArray.JsArray.get('''
 (function(table) {let rowData = []; table.api.forEachNode(node => rowData.push(node.data)); return rowData})(%s)''' % self.varId)
 
-    def getSelectedRows(self):
+    def getSelectedRows(self) -> JsObjects.JsArray.JsArray:
         """Returns a list of selected rows (i.e. row data that you provided).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """

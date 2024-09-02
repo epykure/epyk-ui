@@ -2216,7 +2216,7 @@ class JsJson:
     """
 
     def parse(self, data: Union[str, primitives.JsDataModel],
-              js_result_func: Optional[str] = None, js_conv_func: Optional[Union[str, list]] = None):
+              js_result_func: Optional[str] = None, js_conv_func: Optional[Union[str, list]] = None) -> JsFncs.JsFunction:
         """Parses a JSON string and returns a JavaScript object.
 
         `Related Pages <https://www.w3schools.com/js/js_json_parse.asp>`_
@@ -2236,9 +2236,8 @@ class JsJson:
         return JsFncs.JsFunction("JSON.parse(%s)" % data)
 
     def stringify(self, data: Union[str, primitives.JsDataModel],
-                  replacer=None, space: int = 0, js_conv_func: Optional[Union[str, list]] = None):
+                  replacer=None, space: int = 0, js_conv_func: Optional[Union[str, list]] = None) -> JsString.JsString:
         """The JSON.stringify() method converts JavaScript objects into strings.
-
         `Related Pages <https://www.w3schools.com/js/js_json_stringify.asp>`_
 
         :param data: The value to convert to a string.
