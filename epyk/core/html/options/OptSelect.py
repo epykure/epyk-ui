@@ -440,7 +440,7 @@ class OptionsSelectJs(OptionsSelect):
     def selected(self, value):
         if hasattr(self.component, "_vals"):
             for rec in self.component._vals:
-                if rec.get("selected"):
+                if not rec.get("selected"):
                     rec["selected"] = False
                 if rec["value"] == value:
                     rec["selected"] = True
