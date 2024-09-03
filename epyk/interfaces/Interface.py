@@ -683,7 +683,8 @@ class Components:
             profile)
 
     def loading(self, text: str = "Loading", color: Union[str, bool] = None, options: types.OPTION_TYPE = None,
-                html_code: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.Loading:
+                html_code: str = None, visible: bool = True, z_index: int = 300, profile: types.PROFILE_TYPE = None
+                ) -> html.HtmlOthers.Loading:
         """Entry point to the loading component.
 
         This component will create a
@@ -694,12 +695,18 @@ class Components:
         :param color: Optional. The font color in the component. Default inherit
         :param options: Optional. Specific Python options available for this component
         :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        :param visible: Optional. Set the initial state for the component (block or None) - Default True
+        :param z_index: Optional. specifies the stack order of an element (which element should be placed in front of,
+            or behind, the others).
         :param profile: Optional. A flag to set the component performance storage
         """
         html_loading = html.HtmlOthers.Loading(
             self.page, text, color, (self.page.body.style.globals.font.size, 'px'), options or {}, html_code,
             profile)
         html.Html.set_component_skin(html_loading)
+        html_loading.style.css.z_index = z_index
+        if not visible:
+            html_loading.style.css.display = "None"
         return html_loading
 
     def breadcrumb(self, values=None, selected: Optional[int] = None, width: types.SIZE_TYPE = (100, '%'),
