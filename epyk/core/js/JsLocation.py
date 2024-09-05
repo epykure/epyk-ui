@@ -110,6 +110,16 @@ class URLSearchParams:
             "(function(){const urlParams = new URLSearchParams(%s); urlParams.delete(%s); window.location.search = urlParams})()" % (
                 self.query, key))
 
+    def all(self, stringify: bool = True) -> JsObject.JsObject:
+        """Convert all url parameters to an object.
+
+        :param stringify: For the object conversion to a String.
+        """
+        if stringify:
+            return JsObject.JsObject.get("JSON.stringify(Object.fromEntries(new URLSearchParams(window.location.search)))")
+
+        return JsObject.JsObject.get("Object.fromEntries(new URLSearchParams(window.location.search))")
+
 
 class JsLocation:
     """  JavaScript Location module. """

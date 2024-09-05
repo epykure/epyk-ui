@@ -54,6 +54,36 @@ class ExternalLink(Html.Html):
             self._js = JsHtmlField.Href(self, page=self.page)
         return self._js
 
+    def download(self, name: str, url: Union[str, primitives.JsDataModel], method: str = "GET", data: Optional[dict] = None,
+             js_code: str = "response", is_json: bool = True,
+             components = None, profile: Optional[Union[dict, bool]] = None, headers: Optional[dict] = None,
+             asynchronous: bool = True, stringify: bool = True,
+             dataflows: List[dict] = None, options: dict = None):
+        """Shortcut for the download feature.
+
+        :param name: Filename
+        :param url: The url path of the HTTP request
+        :param method: The REST method used
+        :param data: Optional. Corresponding to a JavaScript object
+        :param js_code: Optional. The variable name created in the Javascript (default response)
+        :param is_json: Optional. Specify the type of object passed
+        :param components: Optional. This will add the component value to the request object
+        :param profile: Optional. A flag to set the component performance storage
+        :param headers: Optional. The request headers
+        :param asynchronous: Optional. Async flag: true (asynchronous) or false (synchronous)
+        :param stringify: Optional. Stringify the request data for json exchange
+        :param dataflows: Optional. Chain of data transformations
+        :param options: Optional.
+        """
+        return self.click([
+            self.page.js.rest(
+                method, url, data=data, is_json=is_json, components=components, options=options,
+                profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
+                dataflows=dataflows).responseType("blob").onSuccess([
+                self.page.js.location.download(
+                    self.page.js.location.getUrlFromData(self.page.js.object("%s.response" % js_code)), name=name)])
+        ])
+
     def anchor(self, component: Html.Html):
         """Create a link to an HTML component defined in the page.
         This will create a shortcut to directly scroll to this component.

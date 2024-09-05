@@ -481,7 +481,6 @@ class XMLHttpRequest:
         """
         return JsNumber.JsNumber("%s.status" % self.varId)
 
-    @property
     def responseType(self, value: Optional[str] = None) -> JsString.JsString:
         """The XMLHttpRequest property responseType is an enumerated string value specifying the type of data contained in
         the response.

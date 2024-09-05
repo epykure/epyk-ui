@@ -1007,7 +1007,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param headers: Optional. The request headers
         :param asynchronous: Optional. Async flag: true (asynchronous) or false (synchronous)
         :param stringify: Optional. Stringify the request data for json exchange
-        :param dataflows: Chain of data transformations
+        :param dataflows: Optional. Chain of data transformations
         :param options: 
         """
         if method.upper() == "GET":

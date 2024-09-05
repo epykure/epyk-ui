@@ -1115,3 +1115,16 @@ class JsWindow:
         :param profile: Optional. A flag to set the component performance storage
         """
         return self.addEventListener("focus", js_funcs, window_id, profile)
+
+    def counter(self, name: str, i: int = None, start: int = 0):
+        """Set a global counter to the page.
+
+        :param name: Counter variable name
+        :param i: increment / decrement value
+        :param start: Starting value for the counter
+        """
+        name = JsUtils.jsConvertData(name, None)
+        if i is None:
+            return JsNumber.JsNumber.get("window[%(name)s]" % {"name": name})
+
+        return JsUtils.jsWrap("window[%(name)s] = (window[%(name)s] ?? %(start)s) + %(i)s" % {"name": name, "start": start, "i": i})

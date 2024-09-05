@@ -1,12 +1,13 @@
 
 
-function externalLink(htmlObj, data, options){
+function externallink(htmlObj, data, options){
     setCss(htmlObj, options, true); data = getDataFromTemplate(data, options);
     if(typeof data === 'undefined'){data = {text: ''}}
-    var text = "";
+    let text = "";
     if((typeof data.text !== 'undefined') && (data.text)){text = data.text}
     else if (data.text) {text = data.text}
-    else {text = data}
+    else if (typeof data === "object") {text = htmlObj.innerHTML}
+    else {text = data};
     if (options.type_number == 'money'){
         text = accounting.formatMoney(text, options.symbol, options.digits, options.thousand_sep,
         options.decimal_sep, options.format)}
