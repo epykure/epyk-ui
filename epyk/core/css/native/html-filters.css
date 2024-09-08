@@ -1,0 +1,33 @@
+.html-filters {
+    position: relative ;
+}
+
+.html-filters-input {
+    text-align: left !IMPORTANT ;
+    padding: 0 5px !IMPORTANT;
+}
+
+.html-filters-selection {
+    min-height: 30px ;
+    padding: 5px 2px ;
+}
+
+.html-filters-clear {
+    font-size: var(--font-size) ;
+    position: absolute ;
+    top: -3px ;
+    right: 5px ;
+}
+
+.html-filters-maxHeight {
+    overflow: hidden ;
+}
+
+.html-filters-showAll {
+    position: absolute ;
+    cursor: pointer ;
+    bottom: 0 ;
+    right: 5px ;
+    padding: 0 2px ;
+    background: var(--background-color) ;
+}

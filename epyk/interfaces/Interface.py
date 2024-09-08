@@ -859,7 +859,7 @@ class Components:
         html.Html.set_component_skin(h_qrcode)
         return h_qrcode
 
-    def captcha(self, text: str = "Submit", width: types.SIZE_TYPE = (None, 'px'),
+    def captcha(self, text: str = "Submit", width: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
                 height: types.SIZE_TYPE = (None, 'px'), options: types.OPTION_TYPE = None,
                 profile: types.PROFILE_TYPE = None) -> html.HtmlOthers.HtmlCaptcha:
         """
@@ -876,7 +876,7 @@ class Components:
         """
         width = Arguments.size(width, unit="px")
         height = Arguments.size(height, unit="px")
-        captcha = html.HtmlOthers.HtmlCaptcha(self.page, text, width, height, options or {}, profile)
+        captcha = html.HtmlOthers.HtmlCaptcha(self.page, text, width, height, options or {}, html_code, profile)
         html.Html.set_component_skin(captcha)
         return captcha
 
@@ -1257,6 +1257,27 @@ class Components:
     def selectors(self):
         """Get the list of bespoke selector aliases loaded as components """
         return self.page._props["schema"].keys()
+
+    def quill(
+            self, text: str = "", width: types.SIZE_TYPE = (None, 'px'), height: types.SIZE_TYPE = (330, 'px'),
+            html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None
+    ) -> html.HtmlOthers.HtmlQuill:
+        """Quill is a modern rich text editor built for compatibility and extensibility.
+
+        Usage::
+          page.ui.quill()
+
+        :param text: Optional.
+        :param width: Optional. A tuple with the integer for the component width and its unit
+        :param height: Optional. A tuple with the integer for the component height and its unit
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        """
+        width = Arguments.size(width, unit="px")
+        height = Arguments.size(height, unit="px")
+        ql = html.HtmlOthers.HtmlQuill(self.page, text, width, height, options or {}, html_code, profile)
+        html.Html.set_component_skin(ql)
+        return ql
 
 
 class WebComponents:

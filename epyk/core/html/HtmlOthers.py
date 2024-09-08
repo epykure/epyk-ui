@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from pathlib import Path
-from typing import Union, Optional
+from typing import Union, Optional, List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -9,11 +9,14 @@ from epyk.core.html import Html
 from epyk.core.html.options import OptJsonFormatter
 from epyk.core.html.options import OptText
 from epyk.core.html.options import OptQrCode
+from epyk.core.html.options import OptQuill
 
 from epyk.core.js.html import JsHtmlStars
 from epyk.core.js.html import JsHtmlJson
+from epyk.core.js.html import JsHtmlQuill
 from epyk.core.js.packages import JsJsonFormatter
 from epyk.core.js.packages import JsQrCode
+from epyk.core.js.packages import JsQuill
 from epyk.core.js.primitives import JsObjects
 
 from epyk.core.js import JsUtils
@@ -688,8 +691,8 @@ class HtmlCaptcha(Html.Html):
     requirements = ('google-captcha',)
 
     def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
-                 profile: Optional[Union[bool, dict]]):
-        super(HtmlCaptcha, self).__init__(page, record, profile=profile, options=options,
+                 html_code: str, profile: Optional[Union[bool, dict]]):
+        super(HtmlCaptcha, self).__init__(page, record, profile=profile, options=options, html_code=html_code,
                                           css_attrs={"height": height, "width": width})
         self.attr["data-callback"] = "onSubmit"
         self.attr["data-action"] = "submit"
@@ -698,3 +701,61 @@ class HtmlCaptcha(Html.Html):
     def __str__(self):
         return '<%s %s>%s</%s>' % (
         self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)
+
+
+class HtmlQuill(Html.Html):
+    name = 'Wysiwyg'
+    tag = "div"
+    requirements = ('quill',)
+    _option_cls = OptQuill.OptionsQuill
+
+    def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
+                 html_code: str, profile: Optional[Union[bool, dict]]):
+        super(HtmlQuill, self).__init__(
+            page, record, profile=profile, options=options, html_code=html_code, css_attrs={
+                "height": height, "width": width})
+
+    def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
+              profile: types.PROFILE_TYPE = None, component_id: str = None,
+              stop_state: bool = True, dataflows: List[dict] = None):
+        """Update Quill component with context and / or data changes.
+
+        :param data: Optional. Text
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        :param component_id: Optional. Not used
+        :param stop_state: Remove the top panel for the component state (error, loading...)
+        :param dataflows: Chain of data transformations
+        """
+        builder_fnc = self.options.config_js(options).toStr()
+        if data:
+            data = self.js.setText(JsUtils.dataFlows(data, dataflows, self.page)).toStr()
+        return '''%(chartId)s = new Quill(document.getElementById(%(hmlCode)s), %(builder)s); %(expr)s
+                ''' % {
+            "chartId": self.js_code, "hmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
+            'builder': builder_fnc, "expr": data}
+
+    @property
+    def dom(self) -> JsHtmlQuill.Quill:
+        """Return all the Javascript functions defined for an HTML Component.
+        Those functions will use plain javascript available for a DOM element by default.
+        """
+        if self._dom is None:
+            self._dom = JsHtmlQuill.Quill(component=self, page=self.page)
+        return self._dom
+
+    @property
+    def js(self) -> JsQuill.Quill:
+        """Return the Javascript internal object.
+
+        :return: A Javascript object
+        """
+        if self._js is None:
+            self._js = JsQuill.Quill(
+                selector="window['%s']" % self.js_code, set_var=False, component=self, page=self.page)
+        return self._js
+
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return '<%s %s>%s</%s>' % (
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)

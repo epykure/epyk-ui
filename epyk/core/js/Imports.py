@@ -303,6 +303,22 @@ JS_IMPORTS = {
         'website': 'https://momentjs.com/',
     },
 
+    'quill': {
+        "version": "2.0.2",
+        'repository': 'https://quilljs.com/',
+        'register': {'alias': 'quill', 'module': 'quill.min', 'npm': 'quill'},
+        'license': 'MIT license',
+        'modules': [
+            {'script': 'quill.min.js', 'node_path': 'dist/', 'path': 'quill/%(version)s/', 'cdnjs': CDNJS_REPO},
+            #{'script': 'quill.core.min.js', 'node_path': 'dist/', 'path': 'quill/%(version)s/', 'cdnjs': CDNJS_REPO},
+        ],
+        'assets': [
+            {'script': 'quill.js.map', 'node_path': 'dist/', 'path': 'quill/%(version)s/', 'cdnjs': CDNJS_REPO},
+            {'script': 'quill.core.js.map', 'node_path': 'dist/', 'path': 'quill/%(version)s/', 'cdnjs': CDNJS_REPO},
+        ],
+        'website': 'https://momentjs.com/',
+    },
+
     # AG Grid tables
     'ag-grid-community': {
         'website': 'https://www.ag-grid.com/javascript-grid/',
@@ -2013,6 +2029,13 @@ CSS_IMPORTS = {
         'modules': [
             {'script': 'apexcharts.css', 'node_path': 'dist/', 'path': 'apexcharts/%(version)s/',
              'cdnjs': CDNJS_REPO}]},
+
+    # The Quill CDN links
+    'quill': {
+        'modules': [
+            #{'script': 'quill.core.min.css', 'node_path': 'dist/', 'path': 'quill/%(version)s/', 'cdnjs': CDNJS_REPO},
+            {'script': 'quill.snow.min.css', 'node_path': 'dist/', 'path': 'quill/%(version)s/', 'cdnjs': CDNJS_REPO},
+        ]},
 
     # fluent ui icons
     'office-ui-fabric-core': {

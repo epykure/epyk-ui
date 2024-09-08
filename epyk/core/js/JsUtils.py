@@ -42,7 +42,6 @@ def fromVersion(data: dict):
     if a method is not yet available in the current state of the Javascript modules.
 
     Usage::
-
       .fromVersion({'jqueryui': '1.12.0'})
 
     :param data: Set the minimum version of a package for a specific function
@@ -75,7 +74,6 @@ def untilVersion(data: dict, new_feature: str):
     This decorator will also propose an alternative with the new feature to.
 
     Usage::
-
         .untilVersion({'jqueryui': '1.12.0'}, "new function")
 
     :param data: The maximum version number for a function by packages
@@ -109,7 +107,6 @@ def isJsData(js_data: Union[str, primitives.JsDataModel, float, dict, list]):
     """Common function to check if the object exists in Python.
 
     Usage::
-
        JsUtils.isJsData(attr)
 
     :param js_data: The Python Javascript data
@@ -223,7 +220,6 @@ def getJsValid(value: str, fail: bool = True):
     Even if the function will fail it will propose a valid name to replace the one passed in input
 
     Usage::
-
       >>> getJsValid("test-js", False)
       'testjs'
 
@@ -337,7 +333,6 @@ def dataFlows(data: Any, flow: Optional[list], page: primitives.PageModel = None
     TODO: Add Aggs and Filters
 
     usage::
-
         i_var = page.ui.inputs.input("test", html_code="invar")
         i_var2 = page.ui.inputs.input(html_code="invar2")
         i_var2.validation(required=True)
@@ -449,7 +444,6 @@ class JsFile:
         """Write the Javascript piece of code to the file.
 
         Usage::
-
           dt = JsDate.new("2019-05-03")
           f.writeJs([dt,
             Js.JsConsole().log(dt.getDay()),
@@ -569,7 +563,7 @@ const urlParams = new URLSearchParams(window.location.search); return urlParams.
 
 
 def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, full_path: str = None,
-                   required_funcs: List[str] = None, verbose: bool = None) -> bool:
+                   required_funcs: List[str] = None, verbose: bool = None, logs: dict = None) -> bool:
     """Add chained resources to the page.
     required_funcs must be defined in the internal treemap mapping to be added to the JavaScript resources.
     If it is a bespoke mapping definition the function `ek.treemap_add` must be used.
@@ -580,9 +574,12 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
     :param full_path; The full path for absolute path definition
     :param required_funcs: List of required functions defined in the treemap
     :param verbose: Show extra log messages
+    :param logs: Logs object to track files loaded and locations
     """
     from epyk.conf import global_settings
 
+    if logs is None:
+        logs = {}
     possible_paths = []
     if global_settings.PRIMARY_RESOURCE_PATHS:
         possible_paths.extend(global_settings.PRIMARY_RESOURCE_PATHS)
@@ -598,7 +595,7 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
                 f = treemap._FUNCTIONS_MAP[req]
                 addJsResources(
                     constructors, f["file"], sub_folder=f.get("folder"), full_path=f.get("path"),
-                    required_funcs=f.get("required_funcs"), verbose=verbose)
+                    required_funcs=f.get("required_funcs"), verbose=verbose, logs=logs)
             else:
                 if verbose:
                     logging.debug("NATIVE | JS | Definition not found for %s - use ek.treemap_add" % req)
@@ -607,12 +604,14 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
     if full_path:
         js_file = Path(full_path, file_nam)
         if js_file.exists():
+            logs[file_nam] = js_file
             with open(js_file) as fp:
                 constructors[builder_name] = fp.read()
     else:
         for p in possible_paths:
             js_file = Path(p, file_nam)
             if js_file.exists():
+                logs[file_nam] = js_file
                 with open(js_file) as fp:
                     constructors[builder_name] = fp.read()
                 return True
@@ -621,3 +620,66 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
                 logging.debug("NATIVE | JS | File not loaded %s" % file_nam)
 
     return False
+
+
+class DefinedResource:
+
+    def __init__(self, page, file_nam: str, sub_folder: str = None, full_path: str = None,
+                   required_funcs: List[str] = None):
+        if not file_nam.upper().endswith(".JS"):
+            file_nam = file_nam + ".js"
+        self.page = page
+        self._files_map = {}
+        self.file_nam = file_nam
+        exists = addJsResources(
+            page._props["js"]['constructors'], file_nam=file_nam, sub_folder=sub_folder, full_path=full_path,
+            required_funcs=required_funcs, logs=self._files_map)
+        if not exists:
+            raise Exception("NATIVE | JS | Defined resource not available - %s/%s" % (sub_folder, file_nam))
+
+    def func(self, name: str, debug: bool = None, profile: bool = None) -> jsWrap:
+        """Return a JavaScript function name to be used in Js expressions.
+
+        :param name: JavaScript function name
+        :param debug: Flag to check if function exists in the JavaScript resource
+        :param profile: Wrap content the return profiling information
+        """
+        from epyk.conf import global_settings
+
+        if debug or global_settings.DEBUG:
+            with open(self._files_map[self.file_nam]) as fp:
+                content = fp.read()
+                if "function %s" % name not in content:
+                    raise Exception("NATIVE | JS | Function %s missing from file %s" % (name, self._files_map[self.file_nam]))
+        return jsWrap(name, profile=profile)
+
+    def on_event(self, name: str, debug: bool = None, profile: bool = None) -> jsWrap:
+        """Return a JavaScript function call using an event object to be used in Js expressions.
+
+        :param name: JavaScript function name
+        :param debug: Flag to check if function exists in the JavaScript resource
+        :param profile: Wrap content the return profiling information
+        """
+        from epyk.conf import global_settings
+
+        if debug or global_settings.DEBUG:
+            with open(self._files_map[self.file_nam]) as fp:
+                content = fp.read()
+                if "function %s" % name not in content:
+                    raise Exception("NATIVE | JS | Function %s missing from file %s" % (name, self._files_map[self.file_nam]))
+        return jsWrap("%s(event)" % name, profile=profile)
+
+    def call(self, name: str, data_ref: str = "data", flows: List[dict] = None, verbose: bool = None,
+             profile: bool = None) -> jsWrap:
+        """Return a JavaScript function call using an event object to be used in Js expressions.
+        #TODO Move the data_ref value to a global module with all default data references.
+
+        :param name: JavaScript function name
+        :param data_ref: Data reference in the JavaScript expression
+        :param flows: dataflows used to convert the data
+        :param verbose: Show extra log messages
+        :param profile: Wrap content the return profiling information
+        """
+        if flows is not None:
+            data_ref = dataFlows(jsWrap(data_ref), flows, self.page, verbose=verbose)
+        return jsWrap("%s(%s)" % (name, data_ref), profile=profile)

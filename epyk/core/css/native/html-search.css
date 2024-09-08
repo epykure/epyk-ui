@@ -1,0 +1,40 @@
+.html-search {
+    display: inline-block ;
+    margin-bottom: 2px ;
+    box-sizing: border-box ;
+    position: relative ;
+}
+
+.html-search-input {
+    text-align: left !IMPORTANT;
+    padding-left: 2px ;
+    padding-right: 2px ;
+    background: inherit ;
+}
+
+.html-search-icon {
+    z-index: 10 ;
+    margin: 5px 5px 5px 5px !IMPORTANT;
+    cursor: pointer ;
+    position: absolute ;
+    vertical-align: top ;
+}
+
+.html-search-ext {
+    box-sizing: border-box ;
+    border-radius: 4px ;
+    width: 140px ;
+    background-repeat: no-repeat ;
+    padding: 5px 0px ;
+    -webkit-transition: width 0.4s ease-in-out ;
+    color: inherit ;
+    transition: width 0.4s ease-in-out ;
+}
+
+.html-search-ext:focus {
+    outline: 0
+}
+
+.html-search-ext:hover {
+    width: 100% ;
+}

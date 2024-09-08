@@ -189,3 +189,52 @@ class OptionFiles(Options):
     @format.setter
     def format(self, values):
         self._config(values)
+
+
+class OptionsComments(OptionsChat):
+    component_properties = ('timestamp', "timestamp_format")
+
+    @property
+    def feed(self) -> str:
+        """ """
+        return self._config_get(self.component.style_refs["html-comments-feed"])
+
+    @feed.setter
+    def feed(self, value):
+        self._config(value)
+
+    @property
+    def title(self) -> str:
+        """ """
+        return self.get("Comments")
+
+    @title.setter
+    def title(self, value):
+        self.set(value)
+
+    @property
+    def sort_label(self) -> str:
+        """ """
+        return self.get("")
+
+    @sort_label.setter
+    def sort_label(self, value):
+        self.set(value)
+
+    @property
+    def timestamp(self) -> str:
+        """ """
+        return self._config_get(self.component.style_refs["html-comments-timestamp"])
+
+    @timestamp.setter
+    def timestamp(self, value):
+        self._config(value)
+
+    @property
+    def timestamp_format(self) -> str:
+        """ """
+        return self._config_get('YYYY-MM-DD HH:mm:ss')
+
+    @timestamp_format.setter
+    def timestamp_format(self, value):
+        self._config(value)

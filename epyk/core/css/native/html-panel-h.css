@@ -1,0 +1,26 @@
+.html-panel-h {
+    width: 100vw;
+    display: flex;
+}
+
+.html-panel-h-pane {
+  padding: 1em;
+}
+
+.html-panel-h-left {
+
+}
+
+.html-panel-h-right {
+  position: relative;
+  flex-grow: 1;
+}
+
+.html-panel-h-gutter {
+  width: 4px;
+  height: 100%;
+  background: var(--grey);
+  position: absolute;
+  top: 0;
+  left: 0;
+}

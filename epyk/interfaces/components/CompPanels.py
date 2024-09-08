@@ -332,7 +332,7 @@ class Panels:
     return html_slide
 
   def split(self, left: html.Html.Html = None, right: html.Html.Html = None, width: types.SIZE_TYPE = (100, '%'),
-            height: types.SIZE_TYPE = (200, 'px'), left_width: types.SIZE_TYPE = (160, 'px'), resizable: bool = True,
+            height: types.SIZE_TYPE = (None, 'px'), left_width: types.SIZE_TYPE = (80, 'vw'), resizable: bool = True,
             helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelSplit:
     """
@@ -350,6 +350,7 @@ class Panels:
       - :class:`epyk.core.html.HtmlContainer.PanelSlide`
 
     `Example <https://codepen.io/rstrahl/pen/eJZQej>`_
+    `Example <https://codepen.io/mdorusko/pen/BaoEWvy>`_
 
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
@@ -365,6 +366,41 @@ class Panels:
     height = Arguments.size(height, unit="px")
     html_split = html.HtmlContainer.PanelSplit(
       self.page, width, height, left_width, left, right, resizable, helper, options, profile)
+    html.Html.set_component_skin(html_split)
+    return html_split
+
+  def vertical(self, top: html.Html.Html = None, bottom: html.Html.Html = None, width: types.SIZE_TYPE = (100, '%'),
+            height: types.SIZE_TYPE = (330, 'px'), top_height: types.SIZE_TYPE = (80, '%'), resizable: bool = True,
+            helper: str = None, options: types.OPTION_TYPE = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelVSplit:
+    """
+
+    :tags:
+    :categories:
+
+    Usage::
+
+    Underlying HTML Objects:
+
+      - :class:`epyk.core.html.HtmlContainer.PanelSlide`
+
+    `Example <https://codepen.io/rstrahl/pen/eJZQej>`_
+    `Example <https://codepen.io/mdorusko/pen/BaoEWvy>`_
+
+    :param width: Optional. A tuple with the integer for the component width and its unit
+    :param height: Optional. A tuple with the integer for the component height and its unit
+    :param top_height: Optional.
+    :param top: Optional.
+    :param bottom: Optional.
+    :param resizable: Optional.
+    :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific Python options available for this component
+    :param profile: Optional. A flag to set the component performance storage
+    """
+    width = Arguments.size(width, unit="%")
+    height = Arguments.size(height, unit="px")
+    html_split = html.HtmlContainer.PanelVSplit(
+      self.page, width, height, top_height, top, bottom, resizable, helper, options, profile)
     html.Html.set_component_skin(html_split)
     return html_split
 

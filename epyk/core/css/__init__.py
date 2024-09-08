@@ -63,7 +63,10 @@ def css_files_loader(
                         if "$" in css_data:
                             if verbose or (verbose is None and global_settings.DEBUG):
                                 logging.warning("CSS | Loader | Issue when processing file: %s" % css_file)
-                        for m in regex.findall(css_data):
+                        # Get the media styles first
+                        media_split = css_data.split("@media")
+                        # Process standard CSS classes
+                        for m in regex.findall(media_split[0]):
                             if selector is not None:
                                 container_ref = "div[name=%s]" % selector
                                 if container_ref in m[0]:
@@ -72,6 +75,10 @@ def css_files_loader(
                                     css_formatted.append("%s %s { %s }" % (container_ref, m[0], m[1]))
                             else:
                                 css_formatted.append("%s { %s }" % (m[0], m[1]))
+                        if len(media_split) > 1:
+                            #TODO parse this css to add the selector for web frameworks,
+                            for media in media_split[1:]:
+                                css_formatted.append("@media %s" % media)
                 else:
                     raise ValueError("CSS file format not supported %s - only (.css and .scss)" % css_file)
 

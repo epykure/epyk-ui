@@ -121,7 +121,7 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
               stop_state: bool = True, dataflows: List[dict] = None):
         """Update the chart with context and / or data changes.
 
-        :param data: Optional. The full datasets object expected by ChartJs
+        :param data: Optional. The full datasets object expected by ECharts
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param component_id: Optional. Not used

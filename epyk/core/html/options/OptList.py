@@ -1,6 +1,8 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import collections
+
 from epyk.core.html.options import Options
 from epyk.core.js.packages import packageImport
 from epyk.core.js import JsUtils
@@ -11,8 +13,7 @@ class OptionsLi(Options):
 
   @property
   def item_type(self):
-    """
-    """
+    """ """
     return self._config_get("li")
 
   @item_type.setter
@@ -21,8 +22,7 @@ class OptionsLi(Options):
 
   @property
   def delete(self):
-    """
-    """
+    """ """
     return self.get(True)
 
   @delete.setter
@@ -31,8 +31,7 @@ class OptionsLi(Options):
 
   @property
   def max(self):
-    """
-    """
+    """ """
     return self.get(None)
 
   @max.setter
@@ -41,8 +40,7 @@ class OptionsLi(Options):
 
   @property
   def source(self):
-    """
-    """
+    """ """
     return self.get(None)
 
   @source.setter
@@ -76,7 +74,7 @@ class OptionsItems(Options):
 
   @property
   def delimiter(self):
-    """ Value used to aggregate and split string values """
+    """Value used to aggregate and split string values"""
     return self._config_get(",")
 
   @delimiter.setter
@@ -85,7 +83,7 @@ class OptionsItems(Options):
 
   @property
   def inline(self):
-    """ inline property for the items """
+    """inline property for the items"""
     return self.li_style.get("display") == "inline-block"
 
   @inline.setter
@@ -99,9 +97,7 @@ class OptionsItems(Options):
 
   @property
   def style(self):
-    """
-    Item CSS Style
-    """
+    """Item CSS Style"""
     return self._config_get({})
 
   @style.setter
@@ -110,9 +106,7 @@ class OptionsItems(Options):
 
   @property
   def li_style(self):
-    """
-    List Item CSS Style
-    """
+    """List Item CSS Style"""
     return self._config_get({})
 
   @li_style.setter
@@ -121,7 +115,7 @@ class OptionsItems(Options):
 
   @property
   def li_height(self):
-    """ List Item line height CSS Style """
+    """List Item line height CSS Style"""
     return self.li_style.get("line-height")
 
   @li_height.setter
@@ -132,7 +126,7 @@ class OptionsItems(Options):
 
   @property
   def badge(self):
-    """ Get the badge style """
+    """Get the badge style"""
     return self._config_get({})
 
   @badge.setter
@@ -141,9 +135,7 @@ class OptionsItems(Options):
 
   @property
   def delete(self):
-    """
-    Add a delete icon
-    """
+    """Add a delete icon"""
     return self._config_get(False)
 
   @delete.setter
@@ -152,9 +144,7 @@ class OptionsItems(Options):
 
   @property
   def checked(self):
-    """
-    Check default value for radio and check lists
-    """
+    """Check default value for radio and check lists"""
     return self._config_get(False)
 
   @checked.setter
@@ -163,10 +153,9 @@ class OptionsItems(Options):
 
   @property
   def checked_key(self):
-    """ The key in the data with the boolean to check / uncheck an item.
+    """The key in the data with the boolean to check / uncheck an item.
 
     Usages::
-
       its = page.ui.lists.items(["menu %s" % i for i in range(10)])
       its.options.checked_key = "selected"
     """
@@ -178,9 +167,7 @@ class OptionsItems(Options):
 
   @property
   def icon(self):
-    """
-    Check default value for radio and check lists
-    """
+    """Check default value for radio and check lists"""
     return self._config_get("")
 
   @icon.setter
@@ -189,8 +176,7 @@ class OptionsItems(Options):
 
   @property
   def text_click(self):
-    """
-    Expand the click event to the label for check and radio components.
+    """Expand the click event to the label for check and radio components.
     This is a way to define if the click event should be done on the full component or not.
     """
     return self._config_get(False)
@@ -201,9 +187,7 @@ class OptionsItems(Options):
 
   @property
   def items_type(self):
-    """
-    Change the type of items in the dynamic list.
-    """
+    """Change the type of items in the dynamic list"""
     return self._config_get("text")
 
   @items_type.setter
@@ -214,9 +198,7 @@ class OptionsItems(Options):
 
   @property
   def items_space(self):
-    """
-    Keep the LI margin between the items.
-    """
+    """Keep the LI margin between the items"""
     return self._config_get(True)
 
   @items_space.setter
@@ -225,9 +207,7 @@ class OptionsItems(Options):
 
   @property
   def info_icon(self):
-    """
-    Set the delete icon
-    """
+    """Set the delete icon"""
     return self._config_get("fas fa-info-circle fa-xs")
 
   @info_icon.setter
@@ -236,9 +216,7 @@ class OptionsItems(Options):
 
   @property
   def delete_icon(self):
-    """
-    Set the delete icon
-    """
+    """Set the delete icon"""
     return self._config_get("fas fa-trash-alt")
 
   @delete_icon.setter
@@ -247,9 +225,7 @@ class OptionsItems(Options):
 
   @property
   def delete_position(self):
-    """
-    Set the position and CSS attributes of the delete icon
-    """
+    """Set the position and CSS attributes of the delete icon"""
     return self._config_get({"float": 'right', 'marginRight': '10px', 'marginTop': '5px'})
 
   @delete_position.setter
@@ -260,13 +236,9 @@ class OptionsItems(Options):
 
   @property
   def markdown(self):
-    """
-    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    """Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
-
-    Related Pages:
-
-      https://github.com/showdownjs/showdown
+    `showdown <https://github.com/showdownjs/showdown>`_
     """
     return self._config_get(False)
 
@@ -284,11 +256,9 @@ class OptionsItems(Options):
 
   @property
   def max_selected(self):
-    """
-    Set a max selected item for a normal list.
+    """Set a max selected item for a normal list.
 
     Usages::
-
       its = page.ui.lists.items(["menu %s" % i for i in range(10)])
       its.options.max_selected = 2
       its.select_type()
@@ -302,13 +272,9 @@ class OptionsItems(Options):
 
   @property
   def showdown(self):
-    """
-    Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
+    """Showdown is a Javascript Markdown to HTML converter, based on the original works by John Gruber.
     Showdown can be used client side (in the browser) or server side (with NodeJs).
-
-    Related Pages:
-
-      https://github.com/showdownjs/showdown
+    `showdown <https://github.com/showdownjs/showdown>`_
     """
     return self._config_get(False)
 
@@ -322,9 +288,7 @@ class OptionsItems(Options):
 
   @property
   def style_select(self):
-    """
-    Internal CSS class name to be used when the component is selected.
-    """
+    """Internal CSS class name to be used when the component is selected"""
     return self._config_get(None)
 
   @style_select.setter
@@ -333,10 +297,7 @@ class OptionsItems(Options):
 
   @property
   def click(self):
-    """
-    Option property to defined click event on list items.
-    By default this is None.
-    """
+    """Option property to defined click event on list items. By default this is None"""
     return self._config_get('null')
 
   @click.setter
@@ -345,10 +306,7 @@ class OptionsItems(Options):
 
   @property
   def draggable(self):
-    """
-    Property to defined JavaScript draggable events to the list items.
-    By default items are not draggable.
-    """
+    """Property to defined JavaScript draggable events to the list items. By default items are not draggable"""
     return self._config_get('false')
 
   @draggable.setter
@@ -357,9 +315,7 @@ class OptionsItems(Options):
 
   @property
   def prefix(self):
-    """
-
-    """
+    """ """
     return self._config_get("")
 
   @prefix.setter
@@ -368,9 +324,7 @@ class OptionsItems(Options):
 
   @property
   def label(self):
-    """
-    A text label use in the design of some components.
-    """
+    """A text label use in the design of some components"""
     return self._config_get("")
 
   @label.setter
@@ -379,9 +333,7 @@ class OptionsItems(Options):
 
   @property
   def group(self):
-    """
-    Set the group name for radio boxes
-    """
+    """Set the group name for radio boxes"""
     return self._config_get(None)
 
   @group.setter
@@ -390,7 +342,28 @@ class OptionsItems(Options):
 
 
 class OptionsTagItems(Options):
-  component_properties = ('delete', 'max_height')
+  component_properties = ('delete', 'max_height', "clear", "show_all", "reduce")
+
+  @property
+  def clear(self):
+    """
+
+    :prop css:
+    """
+    return self._config_get(True)
+
+  @clear.setter
+  def clear(self, flag: bool):
+    if flag and not self.component.clear:
+      self.component.clear = self.page.ui.text("&#215;clear", html_code=self.component.sub_html_code("clear"))
+      self.component.clear.classList.add(self.component.style_refs["html-filters-clear"])
+      self.component.clear.options.managed = False
+      self.component.clear.click([self.component.dom.clear()])
+    elif not flag:
+      #TODO review _browser_data for removed components
+      self.component.clear._browser_data['mouse'] = collections.OrderedDict()
+      self.component.clear = None
+    self._config(flag)
 
   @property
   def visible(self):
@@ -406,8 +379,7 @@ class OptionsTagItems(Options):
 
   @property
   def delete(self):
-    """
-    Display the deleted icon on the different items
+    """Display the deleted icon on the different items
 
     :prop attrs: Dictionary or False. The deleted icon properties
     """
@@ -479,8 +451,7 @@ class OptionsTagItems(Options):
 
   @property
   def max_height(self):
-    """
-    Max height property for the filter tags container.
+    """Max height property for the filter tags container.
     This will then display a show all and reduce button if the size if above this value.
 
     :prop int css: All the CSS attributes to add the any items
@@ -489,12 +460,13 @@ class OptionsTagItems(Options):
 
   @max_height.setter
   def max_height(self, num: int):
+    if num:
+      self.component.classList.add(self.component.style_refs["html-filters"])
     self._config(num)
 
   @property
   def draggable(self):
-    """
-    Set the component draggable and define JavaScript events
+    """Set the component draggable and define JavaScript events.
 
     :prop js_funcs: String. The JavaScript functions.
     """
@@ -503,6 +475,30 @@ class OptionsTagItems(Options):
   @draggable.setter
   def draggable(self, js_funcs):
     self._config(js_funcs, js_type=True)
+
+  @property
+  def reduce(self):
+    """Set the component draggable and define JavaScript events.
+
+    :prop js_funcs: String. The JavaScript functions.
+    """
+    return self._config_get("reduce")
+
+  @reduce.setter
+  def reduce(self, value):
+    self._config(value)
+
+  @property
+  def show_all(self):
+    """Set the component draggable and define JavaScript events.
+
+    :prop js_funcs: String. The JavaScript functions.
+    """
+    return self._config_get("show all")
+
+  @show_all.setter
+  def show_all(self, value):
+    self._config(value)
 
 
 class OptionsListBrackets(Options):
@@ -542,8 +538,7 @@ class OptionsListBrackets(Options):
 
   @property
   def centerConnectors(self):
-    """
-    route connectors between matches instead of seats.
+    """route connectors between matches instead of seats.
 
     Related Pages:
 
@@ -560,10 +555,7 @@ class OptionsListBrackets(Options):
   @property
   def disableHighlight(self):
     """
-
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop flag: Boolean.
     """
@@ -577,9 +569,7 @@ class OptionsListBrackets(Options):
   def skipSecondaryFinal(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop flag: Boolean.
     """
@@ -593,9 +583,7 @@ class OptionsListBrackets(Options):
   def skipConsolationRound(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop flag: Boolean.
     """
@@ -609,9 +597,7 @@ class OptionsListBrackets(Options):
   def skipGrandFinalComeback(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop flag: Boolean.
     """
@@ -625,9 +611,7 @@ class OptionsListBrackets(Options):
   def dir(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop value: String.
     """
@@ -641,9 +625,7 @@ class OptionsListBrackets(Options):
   def userData(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop value: String.
     """
@@ -657,9 +639,7 @@ class OptionsListBrackets(Options):
   def teamWidth(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop num: String.
     """
@@ -673,9 +653,7 @@ class OptionsListBrackets(Options):
   def scoreWidth(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop num: String.
     """
@@ -689,9 +667,7 @@ class OptionsListBrackets(Options):
   def matchMargin(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop num: String.
     """
@@ -705,9 +681,7 @@ class OptionsListBrackets(Options):
   def roundMargin(self):
     """
 
-    Related Pages:
-
-      http://www.aropupu.fi/bracket/
+    `bracket <http://www.aropupu.fi/bracket/>`_
 
     :prop num: String.
     """

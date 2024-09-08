@@ -1447,41 +1447,47 @@ var %(cachedVar)s;
 
 class Search(Html.Html):
     name = 'Search'
+    tag = "div"
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-search.css",
+    ]
+
+    style_refs = {
+        "html-search": "html-search",
+        "html-search-input": "html-search-input",
+        "html-search-ext": "html-search-ext",
+        "html-search-icon": "html-search-icon",
+    }
 
     def __init__(self, page: primitives.PageModel, text, placeholder, color, width, height, html_code, tooltip,
                  extensible, options, profile):
         super(Search, self).__init__(page, "", html_code=html_code, css_attrs={"height": height}, profile=profile)
         self.color = 'inherit' if color is None else color
-        self.css({"display": "inline-block", "margin-bottom": '2px', 'box-sizing': 'border-box'})
+        self.classList.add(self.style_refs["html-search"])
         if not extensible:
-            self.style.add_classes.layout.search()
             self.style.css.width = "%s%s" % (width[0], width[1])
         else:
-            self.style.add_classes.layout.search_extension(max_width=width)
+
+            self.classList.add(self.style_refs["html-search-ext"])
         self.add_input(text, options=options).input.set_attrs({"placeholder": placeholder, "spellcheck": False})
         if options["icon"]:
             self.add_icon(options["icon"], css={"color": page.theme.colors[4]}, html_code=self.html_code,
                           family=options.get("icon_family")).icon.attr['id'] = "%s_button" % self.html_code
-            self.icon.style.css.z_index = 10
+            self.icon.classList.add(self.style_refs["html-search-icon"])
             self.icon.style.css.font_factor(-3)
             self.dom.trigger = self.icon.dom.trigger
         else:
             self.icon = False
-        self.style.css.position = "relative"
-
+        self.input.classList.add(self.style_refs["html-search-input"])
         if options.get("position", 'left') == 'left':
-            self.input.css({"text-align": 'left', 'padding-left': '2px', 'padding-right': '2px'})
             if self.icon:
                 self.input.css({'padding-left': '%spx' % self.page.body.style.globals.line_height})
-                self.icon.css(
-                    {"margin": '5px 5px 5px 5px', 'display': 'block', 'cursor': 'pointer', 'position': 'absolute',
-                     'vertical-align': 'top'})
+                self.icon.css({'display': 'block'})
         else:
-            self.input.css({"text-align": 'left', 'padding-left': "2px", 'padding-right': '2px'})
             if self.icon:
                 self.input.css({'padding-right': '%spx' % self.page.body.style.globals.line_height})
-                self.icon.css({"margin": '5px 5px 5px 5px', 'cursor': 'pointer', "right": 0,
-                               'position': 'absolute', 'vertical-align': 'top'})
+                self.icon.css({"right": 0})
         if options.get("groups") is not None:
             self.select = self.page.ui.select([{"value": g, "name": g} for g in options.get("groups")],
                                               width=(200, 'px'), html_code=self.sub_html_code("select"))
@@ -1497,7 +1503,6 @@ class Search(Html.Html):
             if self.icon:
                 self.icon.css({"margin": '-35px 5px 5px 205px'})
         self.tooltip(tooltip)
-        self.input.style.css.background = "inherit"
         self.input.style.css.padding_left = self.page.body.style.globals.line_height
         self.input.attr["type"] = "search"
 
@@ -1538,7 +1543,6 @@ class Search(Html.Html):
         """Add an javascript action when the key enter is pressed on the keyboard.
 
         Usage::
-
           component.enter(" alert() ")
 
         :param js_funcs: The Javascript functions
@@ -1550,13 +1554,14 @@ class Search(Html.Html):
         """
         if self.icon:
             self.click(js_funcs)
-            return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
+            return self.on("keydown", ["if(event.keyCode == 13){event.preventDefault(); %(jsFnc)s}" % {
                 "jsFnc": self.icon.dom.events.trigger("click")}], profile=profile, source_event=source_event,
                            on_ready=on_ready)
 
-        return self.on("keydown", ["if (event.keyCode  == 13) {event.preventDefault(); %(jsFnc)s} " % {
+        return self.on("keydown", ["if(event.keyCode  == 13){event.preventDefault(); %(jsFnc)s}" % {
             "jsFnc": JsUtils.jsConvertFncs(
                 js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
 
     def __str__(self):
-        return '<div %(attr)s></div>' % {"attr": self.get_attrs(css_class_names=self.style.get_classes())}
+        return '<%(tag)s %(attr)s></%(tag)s>' % {
+            "attr": self.get_attrs(css_class_names=self.style.get_classes()), "tag": self.tag}

@@ -854,10 +854,10 @@ class Tags(JsHtml.JsHtmlRich):
         """
         return JsObjects.JsObjects.get(''' 
 (function(dom){var index = -1; var children = dom.childNodes; var count = 0; 
-  for(child in children){if((typeof children[child] === 'object') && (children[child].querySelector('span[name=chip_value]') != null) && children[child].querySelector('span[name=chip_value]').textContent == %(tezt)s){
-      if(children[child].getAttribute('data-category') == %(category)s){ index = count; break; }
+  for(child in children){if((typeof children[child] === 'object') && (children[child].querySelector('span[name=chip_value]') != null) && children[child].querySelector('span[name=chip_value]').textContent == %(text)s){
+      if(children[child].getAttribute('data-category') == %(category)s){index = count; break;}
   }; count++; }; return index})(%(panel)s)''' % {
-          "tezt": text, "category": category, "panel": self.querySelector("div[name=panel]")})
+          "text": text, "category": category, "panel": self.querySelector("div[name=panel]")})
 
     def values(self, category: Union[str, primitives.JsDataModel] = None):
         if category is None:
@@ -920,7 +920,7 @@ class Tags(JsHtml.JsHtmlRich):
 
         if no_duplicate:
             return JsObjects.JsObjects.get('''if ((%(duplicated)s == -1) && (%(text)s != '')){ 
-chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s}) }
+addChip(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, disabled: false, fixed: %(fixed)s}, {%(options)s}) }
 ''' % {'name': name, 'category': category, 'duplicated': self.is_duplicated(text, category),
      'panel': self.querySelector("div[name=panel]"), 'fixed': fixed, 'text': text,
      'options': ",".join(js_options)})
@@ -928,8 +928,8 @@ chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: %(text)s, dis
         return JsObjects.JsObjects.get('''var itemLabel = %(text)s;
 if(Array.isArray(itemLabel)){
   itemLabel.forEach(function(item){
-    chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: item, disabled: false, fixed: %(fixed)s}, {%(options)s})})}
-else {chipAdd(%(panel)s, {name: %(name)s, category: %(category)s, value: itemLabel, disabled: false, fixed: %(fixed)s}, {%(options)s})}
+    addChip(%(panel)s, {name: %(name)s, category: %(category)s, value: item, disabled: false, fixed: %(fixed)s}, {%(options)s})})}
+else {addChip(%(panel)s, {name: %(name)s, category: %(category)s, value: itemLabel, disabled: false, fixed: %(fixed)s}, {%(options)s})}
 ''' % {'name': name, 'category': category, 'panel': self.querySelector("div[name=panel]"), 'fixed': fixed,
        'text': text, 'options': ",".join(js_options), "maxHeight": self.component._jsStyles["max_height"]})
 

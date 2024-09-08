@@ -666,19 +666,33 @@ class Filters(Html.Html):
     name = 'Filters'
     _option_cls = OptList.OptionsTagItems
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-filters.css",
+    ]
+
+    style_refs = {
+        "html-filters": "html-filters",
+        "html-filters-maxHeight": "html-filters-maxHeight",
+        "html-filters-input": "html-filters-input",
+        "html-filters-selection": "html-filters-selection",
+        "html-filters-clear": "html-filters-clear",
+    }
+
     def __init__(self, page: primitives.PageModel, items, width, height, html_code, helper, options, profile,
                  verbose: bool = False):
         options = options or {}
+        self.clear = None
         super(Filters, self).__init__(page, items, html_code=html_code, profile=profile, options=options,
                                       css_attrs={"width": width, "min-height": height}, verbose=verbose)
+        self.classList.add(self.style_refs["html-filters"])
         self.input = self.page.ui.input(options=options.get("input"))
-        self.input.style.css.text_align = 'left'
-        self.input.style.css.padding = '0 5px'
+        self.input.classList.add(self.style_refs["html-filters-input"])
+        self.input.style.css.display = None
         self.input.options.managed = False
         self.selections = self.page.ui.div()
         self.selections.options.managed = False
         self.selections.attr["name"] = "panel"
-        self.selections.css({'min-height': '30px', 'padding': '5px 2px'})
+        self.selections.classList.add(self.style_refs["html-filters-selection"])
         self.add_helper(helper, options=options.get("helper"))
         self.__enter_def = False
 
@@ -785,50 +799,14 @@ class Filters(Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
-        self.page.properties.js.add_constructor('ChipAdd', '''function chipAdd(panel, record, options){
-if(typeof(record.category !== "undefined")){options.category = record.category}
-var div = document.createElement("div"); 
-for (var key in options.item_css){div.style[key] = options.item_css[key]};
-div.setAttribute('data-category', record.category);
-if(typeof(record.css !== "undefined")){
-  for (var key in record.css){ div.style[key] = record.css[key]}};
-var content = document.createElement("span"); 
-for (var key in options.value_css){ content.style[key] = options.value_css[key]};
-content.setAttribute('name', 'chip_value'); content.innerHTML = record.value; 
-if(options.visible){
-  var p = document.createElement("p"); 
-  for (var key in options.category_css){p.style[key] = options.category_css[key]};
-  p.innerHTML = record.name; div.appendChild(p)}
-div.appendChild(content);
-if(!record.fixed && options.delete){
-  var icon = document.createElement("i"); 
-  for (var key in options.icon_css){icon.style[key] = options.icon_css[key] };
-  icon.classList.add('fas'); icon.classList.add('fa-times'); 
-  icon.addEventListener('click', function(){eval(options.delete)});
-  div.appendChild(icon)}
-if(typeof options.draggable !== 'undefined'){
-  div.setAttribute('draggable', true); div.style.cursor = 'grab';
-  div.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value) }
-}
-panel.appendChild(div);
-
-const maxHeight = options.max_height;
-if(maxHeight > 0){
-  panel.style.maxHeight = ""+ maxHeight + "px";
-  panel.style.overflow = "hidden"; panel.style.position = "relative";
-  var div = document.createElement("div"); div.style.color = "#3366BB";
-  div.innerHTML = "Show all"; div.style.position = "absolute"; 
-  div.style.bottom = 0; div.style.cursor = "pointer";
-  div.addEventListener("click", function(event){ 
-    var targetElement = event.target || event.srcElement;
-    if (targetElement.innerHTML != "reduce"){panel.style.maxHeight = null; targetElement.innerHTML = "reduce"} 
-    else {panel.style.maxHeight = ""+ maxHeight + "px"; targetElement.innerHTML = "Show all"}});
-  div.style.right = "5px"; panel.appendChild(div)
-}}''')
         if not self.options.visible:
             self.input.style.css.display = False
-        return '''<div %(attrs)s>%(input)s%(selections)s</div>%(helper)s''' % {
-            'attrs': self.get_attrs(css_class_names=self.style.get_classes()),
+        if self.clear:
+            clear_btn = self.clear.html()
+        else:
+            clear_btn = ""
+        return '''<div %(attrs)s>%(input)s%(selections)s%(clear)s</div>%(helper)s''' % {
+            'attrs': self.get_attrs(css_class_names=self.style.get_classes()), "clear": clear_btn,
             'input': self.input.html(), 'selections': self.selections.html(), 'helper': self.helper}
 
 

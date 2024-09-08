@@ -1,0 +1,36 @@
+.html-comments {
+    padding: 5px
+}
+
+.html-comments-icon {
+    margin: 0 5px 0 20px ;
+    cursor: pointer ;
+    display: inline-block ;
+}
+
+.html-comments-counter {
+    display: inline-block ;
+    margin: 0 ;
+    padding: 0 ;
+    cursor: pointer ;
+    font-weight: 900 ;
+}
+
+.html-comments-input {
+    text-align:left !IMPORTANT
+}
+
+.html-comments-content {
+    margin: 0 ;
+    padding: 5px 0 ;
+    overflow: auto ;
+}
+
+.html-comments-feed {
+    margin: 0 0 5px 0 ;
+}
+
+.html-comments-timestamp {
+    margin: 0 ;
+    font-weight: bold ;
+}

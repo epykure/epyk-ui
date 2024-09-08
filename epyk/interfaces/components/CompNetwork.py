@@ -17,7 +17,7 @@ class Network:
         self.page = ui.page
 
     def comments(self, html_code: str = None, record: List[dict] = None, width: types.SIZE_TYPE = (100, '%'),
-                 height: types.SIZE_TYPE = (200, 'px'), profile: types.PROFILE_TYPE = None,
+                 height: types.SIZE_TYPE = (330, 'px'), profile: types.PROFILE_TYPE = None,
                  options: dict = None) -> html.HtmlNetwork.Comments:
         """Python wrapper to a div item composed to several sub html items to display message
 

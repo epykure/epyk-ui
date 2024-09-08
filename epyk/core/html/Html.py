@@ -762,6 +762,8 @@ class Html(primitives.HtmlModel):
     @property
     def classList(self):
         """Shortcut to the class properties for the dom object"""
+        if not self.attr:
+            self.attr = {'class': self.style.classList['main'], 'css': self.style.css.attrs}
         return self.attr["class"]
 
     def prepend_child(self, component: primitives.HtmlModel, profile: types.PROFILE_TYPE = None):

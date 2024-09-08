@@ -1,0 +1,28 @@
+.html-panel-v {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #d2d2d2;
+  overflow: hidden;
+}
+
+.html-panel-v-gutter {
+  flex: 0 0 auto;
+  height: 4px;
+  background: var(--grey);
+}
+
+.html-panel-v-pane {
+  padding: 1em;
+}
+
+.html-panel-v-top {
+  flex: 0 0 auto;
+  height: 150px;
+  white-space: nowrap;
+  background: var(--white);
+}
+
+.html-panel-v-bottom {
+  min-height: 150px;
+  background: var(--white);
+}
