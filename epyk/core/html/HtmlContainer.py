@@ -23,7 +23,6 @@ from epyk.core.js.html import JsHtmlPanels
 from epyk.core.js.packages import JsGridstack
 
 # The list of CSS classes
-from epyk.core.css import Defaults as cssDefaults
 from epyk.core.css.styles import GrpClsContainer
 
 
@@ -146,70 +145,222 @@ class Panel(Html.Html):
 
 
 class PanelSplit(Html.Html):
-    requirements = ('jqueryui',)
-    name = 'Panel Split'
+    name = 'Panel Horizontal Split'
     tag = 'div'
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-panel-h.css",
+    ]
+
+    style_refs = {
+        "html-panel-h": "html-panel-h",
+        "html-panel-h-gutter": "html-panel-h-gutter",
+        "html-panel-h-pane": "html-panel-h-pane",
+        "html-panel-h-left": "html-panel-h-left",
+        "html-panel-h-right": "html-panel-h-right",
+    }
 
     def __init__(self, page: primitives.PageModel, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
                  left_width: types.SIZE_TYPE, left_obj, right_obj, resizable: bool, helper,
                  options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
+        self.__resizable = resizable
         super(PanelSplit, self).__init__(page, None, profile=profile, options=options,
                                          css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
-        self.left_width, self.resizable = left_width, resizable
-        self.html_left, self.html_right = None, None
-        if left_obj is not None:
-            self.left(left_obj)
-        if right_obj is not None:
-            self.right(right_obj)
-        self.css_left = {'flex': '0 0 auto', 'overflow': 'auto', 'padding': '5px', 'min-width': '100px',
-                         'width': "%s%s" % (self.left_width[0], self.left_width[1]), 'white-space': 'nowrap'}
-        self.css_right = {'flex': '0 1 auto', 'overflow': 'auto', 'padding': '5px', 'width': '100%',
-                          'background': self.page.theme.greys[0],
-                          'border-left': '3px solid %s' % self.page.theme.success.base}
-        self.css({'display': 'flex', 'flex-direction': 'row', 'overflow': 'hidden', 'xtouch-action': 'none'})
+        self.classList.add(self.style_refs["html-panel-h"])
+        self.gutter = self.page.ui.div(html_code=self.sub_html_code("gutter"))
+        self.gutter.style.clear_all(False, True)
+        self.gutter.options.managed = False
+        self.gutter.classList.add(self.style_refs["html-panel-h-gutter"])
+        self.panels = {
+            "left": self.page.ui.div([], html_code=self.sub_html_code("left")),
+            "right": self.page.ui.div([self.gutter], html_code=self.sub_html_code("right"))}
+        self.panels["left"].style.clear_all(False, True)
+        self.panels["left"].style.css.width = Arguments.size(left_width, unit="px", toStr=True)
+        self.panels["left"].classList.add(self.style_refs["html-panel-h-pane"])
+        self.panels["left"].classList.add(self.style_refs["html-panel-h-left"])
+        self.panels["left"].options.managed = False
+        self.panels["right"].style.clear_all(False, True)
+        self.panels["right"].classList.add(self.style_refs["html-panel-h-pane"])
+        self.panels["right"].classList.add(self.style_refs["html-panel-h-right"])
+        self.panels["right"].options.managed = False
+        if left_obj:
+            if not isinstance(left_obj, list):
+                left_obj = [left_obj]
+            for o in left_obj:
+                self.left(o)
+        if right_obj:
+            if not isinstance(right_obj, list):
+                right_obj = [right_obj]
+            for o in right_obj:
+                self.right(o)
         self.add_helper(helper)
+        if resizable:
+            self.gutter.style.css.cursor = "col-resize"
+            self.gutter.dblclick([
+                self.panels["left"].dom.css("width", "100%").r,
+                self.panels["right"].dom.toggle()
+            ])
 
     def left(self, component: Html.Html):
         """Add the left component to the panel.
 
         Usage::
-
           split_panel = page.ui.panels.split()
           split_panel.left(page.ui.col([page.ui.text("Left")]))
 
         :param component: An HTML component
         """
-        component.options.managed = False
-        self.html_left = component
+        self.panels["left"].add(component)
         return self
 
     def right(self, component: Html.Html):
         """Add the right component to the panel.
 
         Usage::
-
           split_panel = page.ui.panels.split()
           split_panel.right(page.ui.col([page.ui.text("Right")]))
 
         :param component: An HTML component
         """
-        component.options.managed = False
-        self.html_right = component
+        self.panels["right"].add(component)
         return self
 
+    def toggle(self, button, panel: str = 'right'):
+        """Toggle (show / hide) a given panel based on an external component click.
+
+        :param button: The external component used to trigger the change
+        :param panel: The panel alias.
+        """
+        side_panel = "left" if panel == "right" else "right"
+        if panel == "left":
+            return button.click([
+                self.page.js.if_(self.panels[panel].dom.css("display") == "none", [
+                    self.panels[side_panel].dom.css("width", "auto").r]).else_([self.panels[side_panel].dom.css("width", "100%").r]),
+                self.panels[panel].dom.toggle()
+            ])
+
+        return button.click([
+            self.panels[side_panel].dom.css("width", "100%").r,
+            self.panels[panel].dom.toggle()
+        ])
+
     def __str__(self):
-        self.page.properties.js.add_builders([
-            '$("#%(htmlCode)s_left").resizable({handleSelector: ".splitter", resizeHeight: false});' % {
-                'htmlCode': self.htmlCode},
-            '$("#%(htmlCode)s_right").resizable({handleSelector: ".splitter-horizontal", resizeWidth: true})' % {
-                'htmlCode': self.htmlCode}])
-        return '''<div %(attrs)s>
-  <%(tag)s style="%(css_left)s" id="%(htmlCode)s_left" class="panel-left">%(left)s</div>
-  <div style="%(css_right)s" id="%(htmlCode)s_right" class="panel-right">%(right)s</div>
-</%(tag)s>%(helper)s''' % {
-            "attrs": self.get_attrs(css_class_names=self.style.get_classes()), "htmlCode": self.htmlCode,
-            'left': self.html_left.html(), 'right': self.html_right.html(), "helper": self.helper, "tag": self.tag,
-            'css_left': cssDefaults.inline(self.css_left), 'css_right': cssDefaults.inline(self.css_right)}
+        if self.__resizable:
+            dr = JsUtils.DefinedResource(self.page, "PanelResizerH", "utils")
+            self.gutter.on("mousedown", dr.on_event("resizerH"))
+        return '''<%(tag)s %(attrs)s>%(left)s%(right)s</%(tag)s>%(helper)s''' % {
+            "attrs": self.get_attrs(css_class_names=self.style.get_classes()), 'left': self.panels["left"].html(),
+            'right': self.panels["right"].html(), "helper": self.helper, "tag": self.tag}
+
+
+class PanelVSplit(Html.Html):
+    name = 'Panel Vertical Split'
+    tag = 'div'
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-panel-v.css",
+    ]
+
+    style_refs = {
+        "html-panel-v": "html-panel-v",
+        "html-panel-v-gutter": "html-panel-v-gutter",
+        "html-panel-v-pane": "html-panel-v-pane",
+        "html-panel-v-top": "html-panel-v-top",
+        "html-panel-v-bottom": "html-panel-v-bottom",
+    }
+
+    def __init__(self, page: primitives.PageModel, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
+                 top_height: types.SIZE_TYPE, top_obj, bottom_obj, resizable: bool, helper,
+                 options: types.OPTION_TYPE, profile: types.PROFILE_TYPE):
+        self.__resizable = resizable
+        super(PanelVSplit, self).__init__(page, None, profile=profile, options=options,
+                                         css_attrs={"width": width, "height": height, 'white-space': 'nowrap'})
+        self.classList.add(self.style_refs["html-panel-v"])
+        self.gutter = self.page.ui.div(html_code=self.sub_html_code("gutter"))
+        self.gutter.style.clear_all(False, True)
+        self.gutter.options.managed = False
+        self.gutter.classList.add(self.style_refs["html-panel-v-gutter"])
+        self.panels = {
+            "top": self.page.ui.div([], html_code=self.sub_html_code("top")),
+            "bottom": self.page.ui.div([], html_code=self.sub_html_code("bottom"))}
+        self.panels["top"].style.clear_all(False, True)
+        self.panels["top"].style.css.height = Arguments.size(top_height, unit="px", toStr=True)
+        self.panels["top"].classList.add(self.style_refs["html-panel-v-pane"])
+        self.panels["top"].classList.add(self.style_refs["html-panel-v-top"])
+        self.panels["top"].options.managed = False
+        self.panels["bottom"].style.clear_all(False, True)
+        self.panels["bottom"].classList.add(self.style_refs["html-panel-v-pane"])
+        self.panels["bottom"].classList.add(self.style_refs["html-panel-v-bottom"])
+        self.panels["bottom"].options.managed = False
+        if top_obj:
+            if not isinstance(top_obj, list):
+                top_obj = [top_obj]
+            for o in top_obj:
+                self.top(o)
+        if bottom_obj:
+            if not isinstance(bottom_obj, list):
+                bottom_obj = [bottom_obj]
+            for o in bottom_obj:
+                self.bottom(o)
+        self.add_helper(helper)
+        if resizable:
+            self.gutter.style.css.cursor = "row-resize"
+            self.gutter.dblclick([
+                self.panels["top"].dom.css("width", "100%").r,
+                self.panels["bottom"].dom.toggle()
+            ])
+
+    def top(self, component: Html.Html):
+        """Add the left component to the panel.
+
+        Usage::
+          split_panel = page.ui.panels.split()
+          split_panel.left(page.ui.col([page.ui.text("Left")]))
+
+        :param component: An HTML component
+        """
+        self.panels["top"].add(component)
+        return self
+
+    def bottom(self, component: Html.Html):
+        """Add the right component to the panel.
+
+        Usage::
+          split_panel = page.ui.panels.split()
+          split_panel.right(page.ui.col([page.ui.text("Right")]))
+
+        :param component: An HTML component
+        """
+        self.panels["bottom"].add(component)
+        return self
+
+    def toggle(self, button, panel: str = 'bottom'):
+        """Toggle (show / hide) a given panel based on an external component click.
+
+        :param button: The external component used to trigger the change
+        :param panel: The panel alias.
+        """
+        side_panel = "top" if panel == "bottom" else "bottom"
+        if panel == "top":
+            return button.click([
+                self.page.js.if_(self.panels[panel].dom.css("display") == "none", [
+                    self.panels[side_panel].dom.css("width", "auto").r]).else_([self.panels[side_panel].dom.css("width", "100%").r]),
+                self.panels[panel].dom.toggle()
+            ])
+
+        return button.click([
+            self.panels[side_panel].dom.css("width", "100%").r,
+            self.panels[panel].dom.toggle()
+        ])
+
+    def __str__(self):
+        if self.__resizable:
+            dr = JsUtils.DefinedResource(self.page, "PanelResizerV", "utils")
+            self.gutter.on("mousedown", dr.on_event("resizerV"))
+        return '''<%(tag)s %(attrs)s>%(top)s%(gutter)s%(bottom)s</%(tag)s>%(helper)s''' % {
+            "attrs": self.get_attrs(css_class_names=self.style.get_classes()),
+            'top': self.panels["top"].html(), 'bottom': self.panels["bottom"].html(), "helper": self.helper,
+            "tag": self.tag, "gutter": self.gutter.html()}
 
 
 class PanelSlide(Panel):
