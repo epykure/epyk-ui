@@ -3,6 +3,7 @@
 
 from datetime import datetime
 from typing import Optional
+from pathlib import Path
 from epyk.core.py import primitives
 from epyk.core.py import types
 
@@ -19,26 +20,54 @@ from epyk.core.css.styles import GrpClsNetwork
 
 class Comments(Html.Html):
     name = 'Comments'
-    _option_cls = OptNet.OptionsChat
+    tag = "div"
+    _option_cls = OptNet.OptionsComments
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-comments.css",
+    ]
+
+    style_refs = {
+        "html-comments": "html-comments",
+        "html-comments-counter": "html-comments-counter",
+        "html-comments-input": "html-comments-input",
+        "html-comments-icon": "html-comments-icon",
+        "html-comments-content": "html-comments-content",
+        "html-comments-timestamp": "html-comments-timestamp",
+        "html-comments-feed": "html-comments-feed",
+    }
 
     def __init__(self, page: primitives.PageModel, record, width, height, html_code, options, profile):
         super(Comments, self).__init__(page, record, css_attrs={"width": width, 'height': height}, html_code=html_code,
                                        profile=profile, options=options)
-        self.css({'padding': '5px'})
-        self.input = None
-        self.counter = page.ui.texts.span("0", width=(None, 'px'))
+        self.classList.add(self.style_refs["html-comments"])
+        self.input, self.icon = None, None
+        self.counter = page.ui.texts.span("0", width=(None, 'px'), html_code=self.sub_html_code("counter"))
+        self.counter.style.clear_all(no_default = True, keep_html_class = False)
         self.counter.options.managed = False
         self.counter.attr["name"] = "count"
-        self.counter.css({"display": "inline-block", "margin": 0, "padding": 0, "cursor": "pointer"})
+        self.counter.classList.add(self.style_refs["html-comments-counter"])
         if not self.options.readonly:
-            self.input = page.ui.input(html_code="%s_input" % self.htmlCode)
+            self.input = page.ui.input(html_code=self.sub_html_code("input"))
             self.input.options.managed = False
-            self.input.style.css.text_align = 'left'
+            self.input.classList.add(self.style_refs["html-comments-input"])
             if "background" in options:
                 self.input.style.css.background = options["background"]
 
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
+
     @property
-    def options(self) -> OptNet.OptionsChat:
+    def options(self) -> OptNet.OptionsComments:
         """Property to the comments component options.
         Optional can either impact the Python side or the Javascript builder.
 
@@ -128,17 +157,43 @@ class Comments(Html.Html):
         socket.on(channel, [self.js.add(data)] + js_funcs, profile=profile)
         return self
 
+    def sort(self, icon: str = "fas fa-sort-amount-up", title: str = "Sort by", options: dict = None):
+        """Display a sorting feature for comment to the title.
+
+        :param icon: Icon alias
+        :param title: Label
+        :param options: Settings for the component
+        """
+        if options and options.get('icon_family') is not None:
+            family = options.get('icon_family')
+        else:
+            family = self.page.icons.family
+        self.options.sort_label = title
+        self.icon = self.page.ui.images.icon(icon, html_code=self.sub_html_code("icon"), family=family, options=options)
+        return self.icon
+
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
+        comment_content = self.style_refs["html-comments-content"]
+        comment_icon = self.style_refs["html-comments-icon"]
+        try:
+            height = "%spx" % (int(self.css("height")[:-2]) - 70)
+        except:
+            height = "auto"
+        icon_content = ""
+        if self.icon:
+            icon_content = self.icon.html()
         return '''
-<div %(attr)s>
-<span>%(counter)s Comments <i style="margin:0 5px 0 20px;cursor:pointer;display:inline-block" class="fas fa-sort-amount-up"></i>Sort by</span>
+<%(tag)s %(attr)s>
+<span>%(counter)s %(title)s %(icon)s%(sort)s</span>
 %(inputTag)s
-<div class='scroll_content' style="height:%(height)spx;margin:0;padding:5px 0;overflow:auto">
+<div class='%(content)s' style="height:%(height)s">
   <div name="comms"></div>
-</div>
-</div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), "counter": self.counter.html(),
-             'height': int(self.css("height")[:-2]) - 70, 'inputTag': '' if self.input is None else self.input.html()}
+</div></%(tag)s>''' % {
+            'attr': self.get_attrs(css_class_names=self.style.get_classes()), "counter": self.counter.html(),
+            'height': height, 'inputTag': '' if self.input is None else self.input.html(),
+            "tag": self.tag, "title": self.options.title, "icon": icon_content,
+            "sort": self.options.sort_label, "content": comment_content, "icon_style": comment_icon}
 
 
 class Bot(Html.Html):
