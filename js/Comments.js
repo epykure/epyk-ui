@@ -6,7 +6,7 @@ function comments(htmlObj, data, options){
             comments = [{text: data, time: moment(now).format(options.timestamp_format)}];
           } else {comments = data}
           comments.forEach(function(comment){
-            if (!typeof comment !== "object"){
+            if (typeof comment !== "object"){
                 comment = {text: comment, time: moment((new Date())).format(options.timestamp_format)}};
             let feed = document.createElement("p"); feed.classList.add(options.feed);
             if(options.showdown){

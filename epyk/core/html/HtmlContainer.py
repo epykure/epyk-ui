@@ -176,10 +176,12 @@ class PanelSplit(Html.Html):
             "right": self.page.ui.div([self.gutter], html_code=self.sub_html_code("right"))}
         self.panels["left"].style.clear_all(False, True)
         self.panels["left"].style.css.width = Arguments.size(left_width, unit="px", toStr=True)
+        self.panels["left"].style.css.overflow_x = "auto"
         self.panels["left"].classList.add(self.style_refs["html-panel-h-pane"])
         self.panels["left"].classList.add(self.style_refs["html-panel-h-left"])
         self.panels["left"].options.managed = False
         self.panels["right"].style.clear_all(False, True)
+        self.panels["right"].style.css.overflow_x = "auto"
         self.panels["right"].classList.add(self.style_refs["html-panel-h-pane"])
         self.panels["right"].classList.add(self.style_refs["html-panel-h-right"])
         self.panels["right"].options.managed = False
@@ -285,10 +287,12 @@ class PanelVSplit(Html.Html):
             "bottom": self.page.ui.div([], html_code=self.sub_html_code("bottom"))}
         self.panels["top"].style.clear_all(False, True)
         self.panels["top"].style.css.height = Arguments.size(top_height, unit="px", toStr=True)
+        self.panels["top"].style.css.overflow_y = "auto"
         self.panels["top"].classList.add(self.style_refs["html-panel-v-pane"])
         self.panels["top"].classList.add(self.style_refs["html-panel-v-top"])
         self.panels["top"].options.managed = False
         self.panels["bottom"].style.clear_all(False, True)
+        self.panels["bottom"].style.css.overflow_y = "auto"
         self.panels["bottom"].classList.add(self.style_refs["html-panel-v-pane"])
         self.panels["bottom"].classList.add(self.style_refs["html-panel-v-bottom"])
         self.panels["bottom"].options.managed = False

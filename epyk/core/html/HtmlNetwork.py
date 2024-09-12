@@ -48,7 +48,7 @@ class Comments(Html.Html):
         self.counter.attr["name"] = "count"
         self.counter.classList.add(self.style_refs["html-comments-counter"])
         if not self.options.readonly:
-            self.input = page.ui.input(html_code=self.sub_html_code("input"))
+            self.input = page.ui.input(html_code=self.sub_html_code("input"), width=None)
             self.input.options.managed = False
             self.input.classList.add(self.style_refs["html-comments-input"])
             if "background" in options:
@@ -109,9 +109,10 @@ class Comments(Html.Html):
         """
         if self.options.readonly:
             self.options.readonly = False
-            self.input = self.page.ui.input(html_code=self.sub_html_code("input"))
-            self.input.options.managed = False
-            self.input.style.css.text_align = 'left'
+            if not self.input:
+                self.input = self.page.ui.input(html_code=self.sub_html_code("input"))
+                self.input.options.managed = False
+                self.input.style.css.text_align = 'left'
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs] if js_funcs is not None else []
         self.input.enter(js_funcs + [
@@ -185,8 +186,10 @@ class Comments(Html.Html):
             icon_content = self.icon.html()
         return '''
 <%(tag)s %(attr)s>
-<span>%(counter)s %(title)s %(icon)s%(sort)s</span>
-%(inputTag)s
+    <label style="display: flex;">
+        <span>%(counter)s %(title)s %(icon)s%(sort)s</span>
+        %(inputTag)s
+    </label>
 <div class='%(content)s' style="height:%(height)s">
   <div name="comms"></div>
 </div></%(tag)s>''' % {
