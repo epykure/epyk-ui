@@ -358,6 +358,20 @@ class DataEvents:
         return JsObjects.JsObjects.get(
             "(data) => %s" % JsUtils.jsConvertData(fnc(JsUtils.jsWrap("data"), **kwargs), None))
 
+    def ref(self, name: str):
+        """Get any event references
+
+        Usage::
+            table.options.onCellDoubleClicked(
+                [page.js.if_(pk.events.ref("param")["column"]["colId"] == "athlete", [...])]
+            )
+
+        :param name: JavaScript event reference or argument
+        :return: JavaScript object
+        """
+        from epyk.core.js.primitives import JsObjects
+        return JsObjects.JsObjects.get(name)
+
 
 class DataLoops:
 
