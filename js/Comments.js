@@ -12,9 +12,18 @@ function comments(htmlObj, data, options){
             if(options.showdown){
               let converter = new showdown.Converter(options.showdown);
               comment.text = converter.makeHtml(comment.text.trim())};
-            feed.innerHTML = comment.text; htmlObj.querySelector("div").prepend(feed);
-            let dateNews = document.createElement("p"); dateNews.classList.add(options.timestamp) ;
-            dateNews.innerHTML = comment.time; htmlObj.querySelector("div").prepend(dateNews);
-          }); document.getElementById(htmlObj.id  + "_counter").innerHTML = data.length ;
+            feed.setAttribute("name", "comment-value");
+            if (options.template){feed.innerHTML = eval("`" + options.template + "`")}
+            else {feed.innerHTML = comment.text;};
+            htmlObj.querySelector("div").prepend(feed);
+            if(options.categories){
+                for (const [key, value] of Object.entries(options.categories)) {
+                  if (comment[key]){feed.classList.add(value)}}};
+            if (comment.time){
+                let dateNews = document.createElement("p"); dateNews.classList.add(options.timestamp) ;
+                dateNews.innerHTML = comment.time; htmlObj.querySelector("div").prepend(dateNews);
+            }
+          });
+          document.getElementById(htmlObj.id  + "_counter").innerHTML = htmlObj.querySelectorAll("p[name='comment-value']").length ;
     }
 }
