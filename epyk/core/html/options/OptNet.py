@@ -195,12 +195,35 @@ class OptionsComments(OptionsChat):
     component_properties = ('timestamp', "timestamp_format")
 
     @property
+    def categories(self) -> dict:
+        """ Mapping tables for the comments styles """
+        return self.get({})
+
+    @categories.setter
+    def categories(self, values):
+        self._config(values)
+
+    @property
     def feed(self) -> str:
         """ """
         return self._config_get(self.component.style_refs["html-comments-feed"])
 
     @feed.setter
     def feed(self, value):
+        self._config(value)
+
+    @property
+    def template(self) -> str:
+        """ Set a template for the comment.
+        Must be a literal expression for example using comment variable
+
+        usage::
+            comms.options.template = "<b>${comment.name}</b>${comment.text}"
+        """
+        return self._config_get()
+
+    @template.setter
+    def template(self, value: str):
         self._config(value)
 
     @property
