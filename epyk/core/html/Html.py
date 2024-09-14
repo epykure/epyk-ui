@@ -2203,6 +2203,16 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
             self._template.style.clear_all()
         return self._template
 
+    @property
+    def widgets(self) -> List[str]:
+        """ Get the list of widgets defined to the page """
+        names = set()
+        for component in self.page.components.values():
+            name = component.name
+            if name != "Body":
+                names.add(component.name)
+        return sorted(names)
+
     def add_header(self, components: Html, **kwargs):
         """Add a header to the page.
 
