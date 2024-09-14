@@ -1090,7 +1090,7 @@ class JsHtmlList(JsHtml):
         """ Return the class name of the list item. """
         return self.component.dom.getAttribute("class")
 
-    def add(self, item: str, unique: bool = True, draggable: bool = False):
+    def add(self, item: types.JS_DATA_TYPES, unique: bool = True, draggable: bool = False):
         """Add a new item to the list.
 
         :param item: The Item to be added to the list
