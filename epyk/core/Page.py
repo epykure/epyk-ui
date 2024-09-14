@@ -1012,6 +1012,9 @@ class Report:
             if pkg not in Imports.JS_IMPORTS:
                 if pkg in Imports.CSS_IMPORTS:
                     packages[pkg] = Imports.CSS_IMPORTS[pkg].get('license')
+                    plans = Imports.CSS_IMPORTS[pkg].get('pricing')
+                    if not plans:
+                        plans = Imports.JS_IMPORTS.get(pkg, {}).get('pricing')
                     if plans and commercial:
                         packages.setdefault("commercial", {})[pkg] = plans
         return packages
