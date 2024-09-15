@@ -1,0 +1,15 @@
+.html-item-radio {
+	padding: 0 ;
+	white-space: nowrap ;
+	display: block ;
+}
+
+.html-item-radio-input {
+	vertical-align: middle ;
+}
+
+.html-item-radio-label {
+	margin-left: 5px ;
+	margin-bottom: 0px !IMPORTANT;
+	vertical-align: middle ;
+}

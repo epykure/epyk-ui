@@ -37,6 +37,7 @@ _BUILDERS_MAP = {
     "label": ["getDataFromTemplate", "setCss"],
     "lastUpdate": ["setCss"],
     "listBrackets": ["setCss"],
+    "listStandard": ["setCss"],
     "markdownReader": ["setCss", "getHtmlData"],
     "media": ["setCss"],
     "numeric": ["getDataFromTemplate", "setCss"],
@@ -78,6 +79,111 @@ _FUNCTIONS_MAP = {
         "file": "MarkdownData.js",
         "packages": ["showdown"],
     }
+}
+
+
+_ITEMS_MAP = {
+    "badge": {
+        "folder": "items",
+        "file": "ItemBadge.js",
+        "css": {
+            "file": "html-items-badge.css",
+            "folder": "items",
+        }
+    },
+    "box": {
+        "folder": "items",
+        "file": "ItemBox.js",
+        "css": {
+            "file": "html-items-box.css",
+            "folder": "items",
+        }
+    },
+    "button": {
+        "folder": "items",
+        "file": "ItemButton.js",
+        "css": {
+            "file": "html-items-button.css",
+            "folder": "items",
+        }
+    },
+    "check": {
+        "folder": "items",
+        "file": "ItemCheck.js",
+        "css": {
+            "file": "html-items-check.css",
+            "folder": "items",
+        }
+    },
+    "icon": {
+        "folder": "items",
+        "file": "ItemIcon.js",
+        "css": {
+            "file": "html-items-icon.css",
+            "folder": "items",
+        }
+    },
+    "link": {
+        "folder": "items",
+        "file": "ItemLink.js",
+        "css": {
+            "file": "html-items-link.css",
+            "folder": "items",
+        }
+    },
+    "logs": {
+        "folder": "items",
+        "file": "ItemLogs.js",
+        "css": {
+            "file": "html-items-logs.css",
+            "folder": "items",
+        }
+    },
+    "period": {
+        "folder": "items",
+        "file": "ItemPeriod.js",
+        "css": {
+            "file": "html-items-period.css",
+            "folder": "items",
+        }
+    },
+    "radio": {
+        "folder": "items",
+        "file": "ItemRadio.js",
+        "css": {
+            "file": "html-items-radio.css",
+            "folder": "items",
+        }
+    },
+    "status": {
+        "folder": "items",
+        "file": "ItemStatus.js",
+        "css": {
+            "file": "html-items-status.css",
+            "folder": "items",
+        }
+    },
+    "text": {
+        "folder": "items",
+        "file": "ItemText.js"
+    },
+    "timeline": {
+        "folder": "items",
+        "file": "ItemTimeline.js",
+        "css": {
+            "file": "html-items-timeline.css",
+            "folder": "items",
+        }
+    },
+    "tweet": {
+        "folder": "items",
+        "file": "ItemTweet.js",
+        "css": {
+            "file": "html-items-tweet.css",
+            "folder": "items",
+        }
+    },
+
 }
 
 

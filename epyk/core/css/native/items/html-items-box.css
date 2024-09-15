@@ -1,0 +1,16 @@
+.html-item-box {
+    border-radius: 5px ;
+    padding: 2px
+}
+
+.html-item-box-title {
+    fontW-weight: bold ;
+}
+
+.html-item-box-icons {
+    text-align: right ;
+}
+
+.html-item-box-icon {
+    margin-right: 5px ;
+}

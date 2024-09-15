@@ -15,6 +15,9 @@ from epyk.core.js import treemap
 from epyk.core.js import Imports
 from epyk.core.js.primitives import JsObject
 
+from epyk.core.css import css_files_loader
+
+
 PROFILE_COUNT = 0
 
 
@@ -683,3 +686,26 @@ class DefinedResource:
         if flows is not None:
             data_ref = dataFlows(jsWrap(data_ref), flows, self.page, verbose=verbose)
         return jsWrap("%s(%s)" % (name, data_ref), profile=profile)
+
+    def attach_style(self, file_name: str, folder: str = None, path: str = None):
+        """Attach a specific CSS file for the JavaScript resource.
+        This file will be added to the dashboard as string.
+
+        :param file_name: CSS file name
+        :param folder: Optional. CSS file sub folder
+        :param path: Optional. CSS file full path
+        """
+        style_vars = self.page.theme.all()
+        style_vars.update(self.page.body.style.globals.vars())
+        # Add CSS proxy mapping from the body
+        self.page.body.set_css_maps(style_vars)
+        if path:
+            css_file = Path(path) / file_name
+        elif folder:
+            css_file = Path(__file__).parent.parent / "css" / "native" / folder / file_name
+        else:
+            css_file = Path(__file__).parent.parent / "css" / "native" / file_name
+        css_content = css_files_loader(
+            [css_file], style_vars=style_vars, resources=self.page.properties.resources)
+        if css_content:
+            self.page.properties.css.add_text(css_content, map_id=file_name)

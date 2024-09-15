@@ -56,6 +56,9 @@ def css_files_loader(
                     css_formatted.append("/* CSS From file %s */" % css_file)
                     with open(css_file) as fp:
                         css_data = " ".join([line.strip() for line in fp])
+                        if minify:
+                            # Remove all the comment from the string
+                            css_data = re.sub(r'/\*.*/\*?', '', css_data)
                         css_data = css_data.replace(":host", "")
                         for k in sorted(style_vars, key=lambda k: len(k), reverse=True):
                             # Important to replace by starting with the longest string to avoid issues
@@ -70,11 +73,11 @@ def css_files_loader(
                             if selector is not None:
                                 container_ref = "div[name=%s]" % selector
                                 if container_ref in m[0]:
-                                    css_formatted.append("%s { %s }" % (m[0], m[1]))
+                                    css_formatted.append("%s{%s}" % (m[0].strip(), m[1].strip()))
                                 else:
-                                    css_formatted.append("%s %s { %s }" % (container_ref, m[0], m[1]))
+                                    css_formatted.append("%s %s{%s}" % (container_ref, m[0].strip(), m[1].strip()))
                             else:
-                                css_formatted.append("%s { %s }" % (m[0], m[1]))
+                                css_formatted.append("%s{%s}" % (m[0].strip(), m[1].strip()))
                         if len(media_split) > 1:
                             #TODO parse this css to add the selector for web frameworks,
                             for media in media_split[1:]:
@@ -83,13 +86,16 @@ def css_files_loader(
                     raise ValueError("CSS file format not supported %s - only (.css and .scss)" % css_file)
 
             else:
+                if minify:
+                    # Remove all the comment from the string
+                    css_file = re.sub(r'/\*.*/\*?', '', css_file)
                 for k, v in style_vars.items():
                     css_file = css_file.replace("$%s" % k, v).replace(":host", "")
                 for m in regex.findall(css_file):
                     if selector is not None:
-                        css_formatted.append("div[name=%s] > %s { %s }" % (selector, m[0], m[1]))
+                        css_formatted.append("div[name=%s] > %s {%s}" % (selector, m[0].strip(), m[1].strip()))
                     else:
-                        css_formatted.append("%s { %s }" % (m[0], m[1]))
+                        css_formatted.append("%s {%s}" % (m[0].strip(), m[1].strip()))
     if minify:
         return " ".join(css_formatted)
 

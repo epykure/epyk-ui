@@ -1,0 +1,22 @@
+.html-item-link {
+	white-space: nowrap ;
+	color: inherit ;
+}
+
+.html-item-link-icon {
+	margin-right: 5px ;
+	color: var(--theme) ;
+	
+}
+
+.html-item-link-dsc {
+	display: inline-block ;
+	margin-left: 5px ;
+}
+
+
+.html-item-link-image {
+	width: 10px ;
+	height: 10px ;
+	margin-right: 5px ;
+}

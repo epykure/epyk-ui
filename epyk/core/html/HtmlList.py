@@ -8,15 +8,16 @@ common list object.
 List are standard and very popular HTML objects, please have a look at the below websites if you need further
 information to manipulate them in your report
 """
-
-from typing import Union, Optional
+import logging
+from pathlib import Path
+from typing import Union, Optional, Dict
 from typing import List as type_List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
 from epyk.core.js import Imports
 from epyk.core.js import JsUtils
-from epyk.core.js.packages import JsQuery
+from epyk.core.js import treemap
 from epyk.core.html import Html
 from epyk.core.html.options import OptList
 
@@ -30,6 +31,14 @@ from epyk.core.css.styles import GrpClsList
 class Li(Html.Html):
     name = 'Entries'
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-list.css",
+    ]
+
+    style_refs = {
+        "html-list-item": "html-list-item",
+    }
+
     def __init__(self, page: primitives.PageModel, text: Union[str, Html.Html], options: dict = None,
                  html_code: str = None):
         super(Li, self).__init__(page, text, html_code=html_code)
@@ -39,7 +48,7 @@ class Li(Html.Html):
             self.item_type = "li"
         if hasattr(text, 'options'):
             text.options.managed = False
-        self.css({'font-size': 'inherit', 'margin': "1px 5px", 'padding': 0})
+        self.classList.add(self.style_refs["html-list-item"])
 
     def __add__(self, component: Html.Html):
         """Add items to a container"""
@@ -137,9 +146,17 @@ class Li(Html.Html):
 
 
 class List(Html.Html):
-    name = 'List'
+    name = 'List Standard'
     tag = "ul"
     _option_cls = OptList.OptionsLi
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-list.css",
+    ]
+
+    style_refs = {
+        "html-list": "html-list",
+    }
 
     def __init__(self, page: primitives.PageModel, data: list, color, width: tuple, height: tuple, html_code: str,
                  helper: str, options: dict, profile: types.PROFILE_TYPE):
@@ -147,7 +164,7 @@ class List(Html.Html):
                                    html_code=html_code, profile=profile, options=options)
         self.add_helper(helper, options=options.get("helper"))
         self.color = color if color is not None else self.page.theme.greys[-1]
-        self.css({'padding': 0, 'margin': "1px", 'list-style-position': 'inside'})
+        self.classList.add(self.style_refs["html-list"])
         self.items = None
         for item in data:
             self.add_item(item)
@@ -203,14 +220,16 @@ class List(Html.Html):
 
         if js_funcs is None:
             js_funcs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
-                        self.dom.add(JsObjects.JsObjects.get(
-                            "(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))]
+                        self.dom.add(JsObjects.JsObjects.get('''(function(){
+if(typeof wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} 
+else{return wrapper.firstChild.innerText}})()'''))]
         else:
             if not isinstance(js_funcs, list):
                 js_funcs = [js_funcs]
             js_funcs = ["var wrapper = document.createElement('div'); wrapper.innerHTML = data",
-                        self.dom.add(JsObjects.JsObjects.get(
-                            "(function(){if(typeof  wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML} else{ return wrapper.firstChild.innerText}})()"))] + js_funcs
+                        self.dom.add(JsObjects.JsObjects.get('''(function(){
+if(typeof wrapper.firstChild.innerText === 'undefined'){return wrapper.innerHTML}
+else{return wrapper.firstChild.innerText}})()'''))] + js_funcs
         return super(List, self).drop(js_funcs, prevent_default, profile)
 
     def __add__(self, component: Li):
@@ -240,7 +259,7 @@ class List(Html.Html):
         """
         self.items = self.items or []
         li_obj = Li(self.page, d, options={"item_type": self.options.item_type},
-                    html_code="%s_%s" % (self.htmlCode, len(self.items)))
+                    html_code="%s_%s" % (self.html_code, len(self.items)))
         if self.options.delete:
             li_obj.click(["this.remove()"])
             li_obj.style.css.cursor = "pointer"
@@ -354,9 +373,18 @@ function(evt){evt.style.display = evt.style.display === "none" ? "" : "none"})' 
 
 
 class Items(Html.Html):
-    name = 'Items'
+    name = 'List Items'
     _option_cls = OptList.OptionsItems
     tag = "ul"
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-list.css",
+    ]
+
+    style_refs = {
+        "html-list": "html-list",
+        "html-items-bullet": "html-items-bullet",
+    }
 
     def __init__(self, page: primitives.PageModel, records, width: tuple, height: tuple, options: Optional[dict],
                  html_code: str, profile: Optional[Union[bool, dict]], helper: str):
@@ -364,6 +392,7 @@ class Items(Html.Html):
         super(Items, self).__init__(page, records, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"width": width, 'height': height})
         self._vals = records
+        self.classList.add(self.style_refs["html-list"])
         if html_code in self.page.inputs:
             if not isinstance(self.page.inputs[html_code], list):
                 inputs_vals = self.page.inputs[html_code].split(",")
@@ -379,6 +408,18 @@ class Items(Html.Html):
                         v[self.options.checked_key] = False
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"}, options=options.get("helper"))
         self.__external_item = False
+
+    @classmethod
+    def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
+        """Update requirements with the defined Icons' family.
+
+        :param page: Page context
+        :param options: Component input options
+        """
+        if options and options.get('icon_family') is not None:
+            return (options['icon_family'],)
+
+        return (page.icons.family,)
 
     @property
     def style(self) -> GrpClsList.ClassItems:
@@ -400,41 +441,6 @@ class Items(Html.Html):
             records = values
         self._vals = records
 
-    _js__builder__ = ''' htmlObj.innerHTML = "";
-      data.forEach(function(item, i){
-        if(options.showdown){var converter = new showdown.Converter(options.showdown); 
-          converter.setOption("display", "inline-block"); var content = item; 
-          if(typeof item.content !== 'undefined'){content = item.content}
-          else if(typeof item.text !== 'undefined'){content = item.text};
-          var content = converter.makeHtml(content).replace("<p>", "<p style='display:inline-block;margin:0'>")};
-        var li = document.createElement("li");
-        Object.keys(options.li_style).forEach(function(key){li.style[key] = options.li_style[key]});
-        if(typeof item.type === 'undefined'){window[options.prefix+ options.items_type](li, item, options)}
-        else{window[options.prefix + item.type](li, item, options)};
-        if(typeof item.tooltip !== 'undefined'){
-          var info = document.createElement("i");
-          info.classList.add(...options.info_icon.split(" ")); info.style.position = 'absolute';
-          info.style.top = "4px"; info.style.right = "20px";
-          li.style.position = "relative";
-          info.setAttribute('title', item.tooltip); 
-          info.setAttribute('data-html', true); 
-          info.setAttribute('data-placement', 'right'); 
-          info.setAttribute('data-toggle', 'tooltip'); 
-          li.lastChild.style.display = 'inline-block'; li.appendChild(info);
-          %s.tooltip();
-        }
-        if(options.delete){
-          var close = document.createElement("i");
-          close.classList.add(...options.delete_icon.split(" ")); close.style.position = 'absolute';
-          close.style.right = "0"; close.style.cursor = 'pointer';
-          close.onclick = function(event){this.parentNode.remove()};
-          li.style.position = "relative";
-          for (const [key, value] of Object.entries(options.delete_position)){
-            close.style[key] = value}
-          li.lastChild.style.display = 'inline-block'; li.appendChild(close)}
-        if(options.items_space){li.style.margin = "5px 0"; li.style.padding = "2px 0"}
-        htmlObj.appendChild(li)})''' % JsQuery.decorate_var("info", convert_var=False)
-
     def items_style(self, style_type: str = None, css_attrs: dict = None):
         """Function to load a predefined style for the items of the components.
 
@@ -443,10 +449,7 @@ class Items(Html.Html):
         """
         li_item_style = {}
         if style_type == "bullets":
-            li_item_style = {
-                "display": 'inline-block', 'padding': '0 5px', 'margin-right': '2px',
-                'background': self.page.theme.greys[2],
-                'border': '1px solid %s' % self.page.theme.greys[2], 'border-radius': '10px'}
+            self.options.items_class = "%s %s" % (self.options.items_class, self.style_refs["html-items-bullet"])
         if css_attrs is not None:
             li_item_style.update(css_attrs)
         self.options.li_style = li_item_style
@@ -475,7 +478,6 @@ class Items(Html.Html):
         Tips: Use the pk.events.value to get the item value.
 
         Usage::
-
           status = page.ui.timelines.issues(height=150)
           status.click([page.js.console.log("value", skip_data_convert=True)])
 
@@ -484,10 +486,7 @@ class Items(Html.Html):
         :param source_event: Optional. The source target for the event
         :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
         """
-        if not isinstance(js_funcs, list):
-            js_funcs = []
-        self.options.click = "function(event, value){%s} " % JsUtils.jsConvertFncs(
-            js_funcs, toStr=True, profile=profile)
+        self.options.click = "function(event, value){%s}" % JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
         return self
 
     def draggable(self, js_funcs: types.JS_FUNCS_TYPES = None, options: types.OPTION_TYPE = None,
@@ -503,18 +502,18 @@ class Items(Html.Html):
         if not isinstance(js_funcs, list):
             js_funcs = [js_funcs]
         js_funcs.append('event.dataTransfer.setData("text", value)')
-        self.options.draggable = "function(event, value){%s} " % JsUtils.jsConvertFncs(
+        self.options.draggable = "function(event, value){%s}" % JsUtils.jsConvertFncs(
             js_funcs, toStr=True, profile=profile)
         return self
 
-    def add_type(self, name: str, item_def: Optional[str] = None, func_name: Optional[str] = None,
-                 dependencies: list = None):
+    def add_type(self, file_nam: str, sub_folder: Optional[str] = None, func_name: Optional[str] = None,
+                 dependencies: list = None, full_path: str = None, required_funcs: type_List[str] = None,
+                 css: Dict[str, str] = None):
         """Add a bespoke item type with it is specific style and components.
 
         TODO: Create a tutorial to explain how to extend list types.
 
         Usage::
-
           items = page.ui.lists.items(records.to_dict(orient="records"))
             items.add_type("demo", '''
             var item = document.createElement("DIV");
@@ -534,10 +533,13 @@ class Items(Html.Html):
             item.appendChild(country)
           ''')
 
-        :param name: The reference of this type name in the framework
-        :param item_def: Optional. The definition of the items (examples in JsHtmlList.py)
+        :param file_nam:
+        :param sub_folder:
         :param func_name: Optional. The external function name used to build the items
         :param dependencies: Optional. The external module dependencies
+        :param full_path:
+        :param required_funcs:
+        :param css:
         """
         if dependencies is not None:
             for d in dependencies:
@@ -545,48 +547,56 @@ class Items(Html.Html):
                     self.page.jsImports.add(d)
                 if d in Imports.CSS_IMPORTS:
                     self.page.cssImport.add(d)
-        self.style.css.padding_left = 0
-        self.css({"list-style": 'none'})
-        self.options.items_type = name
-        if func_name is not None:
-            self.__external_item = True
-            item_type_name = "%s%s" % (self.options.prefix, self.options.items_type)
-            self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
-                item_type_name,
-                JsHtmlList.JsItemsDef(self).custom("var item = %s(htmlObj, data, options)" % func_name)))
-        else:
-            item_type_name = "%s%s" % (self.options.prefix, self.options.items_type)
-            self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
-                item_type_name, JsHtmlList.JsItemsDef(self).custom(item_def)))
+
+        if file_nam not in treemap._ITEMS_MAP:
+            treemap._ITEMS_MAP[file_nam] = {
+                "folder": sub_folder, "file": full_path, "required_funcs": required_funcs,
+                "builder": func_name or (file_nam[0].lower() + file_nam[1:-3])}
+            if css:
+                treemap._ITEMS_MAP[file_nam]["css"] = css
         return self
 
-    def select_type(self, name: Optional[str] = None, style: Optional[dict] = None,
-                    selected_style: Optional[dict] = None):
+    def load_type(self, name: Optional[str] = None, style: Optional[dict] = None, verbose: bool = None) -> str:
         """Set the CSS Style of the items in the list.
         It is possible to use predefined style or to pass bespoke ones.
         Style will be set at list type level so all the list in the page will be using it.
 
         :param name: Optional. The list type name to be used
         :param style: Optional. The CSS style to be applied to the item
-        :param selected_style: Optional. The css style to be applied when selected
+        :param verbose: Optional.
         """
-        li_attrs = self.options.style
-        if style is None:
-            li_attrs["padding"] = "2px 5px"
-        else:
+        if style:
+            li_attrs = self.options.style
             li_attrs.update(style)
-        self.options.style = li_attrs
-        self.style.add_custom_class(selected_style or self.style.defined.selected_text_background_color(),
-                                    classname="list_%s_selected" % (name or self.options.items_type))
+            self.options.style = li_attrs
+        if name and name in treemap._ITEMS_MAP:
+            items_def = treemap._ITEMS_MAP[name]
+            jsr = JsUtils.DefinedResource(
+                self.page, items_def["file"], items_def.get("folder"), items_def.get("path"),
+                items_def.get("required_funcs"))
+            if "css" in items_def:
+                css_def = items_def["css"]
+                jsr.attach_style(css_def["file"], css_def.get("folder"), css_def.get("path"))
+            return items_def.get("builder", items_def["file"][0].lower() + items_def["file"][1:-3])
+
+        if verbose:
+            logging.debug("[WIDGET] MISSING | %s in List definition " % name)
+        return name
+
+    def set_type_from_str(self, func_name: str, js_expr: str, css_expr: str = None):
+        """Quick way to load a new item for a list.
+
+        :param func_name: Function name in the Js expression
+        :param js_expr: Entire Js file with one or multiple functions
+        :param css_expr: CSS expression to load CSS Classes
+        """
+        self.page._props["js"]['constructors'][func_name] = js_expr
+        if css_expr:
+            self.page.properties.css.add_text(css_expr, map_id=func_name)
+        self.options._config(func_name, name="items_type")
+        return self
 
     def __str__(self):
-        item_type_name = "%s%s" % (self.options.prefix, self.options.items_type)
-        self.options.style_select = "list_%s_selected" % self.options.items_type
-        # add all the shape definitions
-        if not self.page.properties.js.has_constructor(item_type_name) and not self.__external_item:
-            shapes = JsHtmlList.JsItemsDef(self)
-            self.page.properties.js.add_constructor(item_type_name, "function %s(htmlObj, data, options){%s}" % (
-                item_type_name, getattr(shapes, self.options.items_type)(self.page)))
         self.page.properties.js.add_builders(self.refresh())
         return '<%s %s></%s>%s' % (
           self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag, self.helper)

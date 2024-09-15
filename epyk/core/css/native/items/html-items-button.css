@@ -1,0 +1,19 @@
+.html-item-button {
+	clear: both ;
+	line-height: var(--line-height) ;
+	display: inline-block ;
+}
+
+.html-item-button-text {
+	display: inline-block ;
+	padding: 0 ;
+	min-width: 140px ; 
+}
+
+.html-item-button-button {
+	float: right ; 
+	padding: 0 5px ;
+	display: inline-block ;
+	margin: 0 ;
+	border: 0 ;
+}

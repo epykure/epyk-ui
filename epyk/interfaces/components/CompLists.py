@@ -211,14 +211,14 @@ class Lists:
         component.style.css.min_height = 40
         component.css({"display": "inline-block", "margin-top": '5px',
                        'border': "1px dashed %s" % self.page.theme.greys[4]})
-        if component.style.css.width.endswith("%") and component.style.css.margin.endswith("px"):
+        if component.style.css.width.endswith("%") and component.style.css.margin and component.style.css.margin.endswith("px"):
             component.style.css.width = "calc({} - {}px)".format(
                 component.style.css.width, 2 * int(component.style.css.margin[:-2]))
         component.style.css.padding = 5
         html.Html.set_component_skin(component)
         return component
 
-    def items(self, records: list = None, width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = ("auto", ""),
+    def items(self, records: list = None, width: types.SIZE_TYPE = (None, "%"), height: types.SIZE_TYPE = ("auto", ""),
               options: dict = None, html_code: str = None, profile: types.PROFILE_TYPE = None, helper: str = None
               ) -> html.HtmlList.Items:
         """Add a JavaScript based list component.
@@ -704,7 +704,7 @@ class Lists:
         """
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dft_options = {"badge": {"background": 'red', 'color': 'white', "items_type": 'badge'}}
+        dft_options = {"items_type": 'badge'}
         if options is not None:
             dft_options.update(options)
         html_list = html.HtmlList.Items(self.page, data or [], width, height, dft_options, html_code, profile, helper)

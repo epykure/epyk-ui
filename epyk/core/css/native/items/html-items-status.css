@@ -1,0 +1,26 @@
+.html-item-status {
+    font-size: var(--font-size) ;
+	border-bottom: 1px solid var(--white) ;
+	border-top: 1px solid var(--white) ;
+	
+}
+
+.html-item-status-info {
+	display: inline-block ;
+	padding-left: 2px;
+}
+
+.html-item-status-log {
+	margin: 0 ;
+	background: var(--grey) ;
+	display: inline-block ;
+	width: 90px ;
+	font-weight: 900 ;
+	text-align: center ;
+	padding-top: 2px ;
+	padding-bottom: 2px ;
+}
+
+.html-item-status-log-color {
+	color: var(--white) ;
+}

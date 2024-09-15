@@ -1,0 +1,25 @@
+.html-item-period {
+	width: calc(100% - 10px) ;
+	padding: 5px ;
+	margin: 0 5px 5px 5px ;
+	border: 1px solid #e9e9e9 ;
+}
+
+.html-item-period-title {
+	font-weight: bold ;
+	font-size: calc(var(--font-size) + 2px) ;
+	display: inline-block ;
+	vertical-align: top ;
+}
+
+.html-item-period-content {
+	display: inline-block ;
+	width: calc(100% - 80px) ;
+	padding: 2px 2px 2px 5px ;
+	margin-left: 5px ;
+}
+
+.html-item-period-range {
+	font-size: calc(var(--font-size) - 3px) ;
+	
+}

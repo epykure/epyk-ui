@@ -1,0 +1,21 @@
+.html-item-check {
+	padding: 0 ;
+	white-space: nowrap ;
+	display: block ;
+}
+
+.html-item-check-input {
+	vertical-align: middle ;
+}
+
+
+.html-item-check-label {
+	margin-left: 5px ;
+	margin-bottom: 0px !IMPORTANT;
+	vertical-align: middle ;
+}
+
+.html-item-check-right {
+	margin: 5px ;
+	margin-right: 5px ;
+}

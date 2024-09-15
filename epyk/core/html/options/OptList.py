@@ -9,7 +9,25 @@ from epyk.core.js import JsUtils
 
 
 class OptionsLi(Options):
-  component_properties = ("item_type",)
+  component_properties = ("item_type", "items_class")
+
+  @property
+  def categories(self) -> dict:
+    """ Mapping tables for the comments styles """
+    return self.get({})
+
+  @categories.setter
+  def categories(self, values):
+    self._config(values)
+
+  @property
+  def items_class(self) -> str:
+    """CSS Class set to each items in the list"""
+    return self._config_get("html-list-item")
+
+  @items_class.setter
+  def items_class(self, value: str):
+    self._config(value)
 
   @property
   def item_type(self):
@@ -69,8 +87,17 @@ class OptionsLi(Options):
 
 
 class OptionsItems(Options):
-  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable', 'prefix',
-                          'max_selected', 'text_click', "delimiter")
+  component_properties = ("delete_icon", 'delete_position', 'info_icon', 'li_style', 'click', 'draggable',
+                          'max_selected', 'text_click', "delimiter", "items_class", "label")
+
+  @property
+  def categories(self) -> dict:
+    """ Mapping tables for the comments styles """
+    return self.get({})
+
+  @categories.setter
+  def categories(self, values):
+    self._config(values)
 
   @property
   def delimiter(self):
@@ -175,6 +202,15 @@ class OptionsItems(Options):
     self._config(attrs)
 
   @property
+  def label(self) -> str:
+    """"""
+    return self._config_get("")
+
+  @label.setter
+  def label(self, value: str):
+    self._config(value)
+
+  @property
   def text_click(self):
     """Expand the click event to the label for check and radio components.
     This is a way to define if the click event should be done on the full component or not.
@@ -186,24 +222,23 @@ class OptionsItems(Options):
     self._config(flag)
 
   @property
-  def items_type(self):
-    """Change the type of items in the dynamic list"""
-    return self._config_get("text")
+  def items_class(self) -> str:
+    """CSS Class set to each items in the list"""
+    return self._config_get("html-list-item")
 
-  @items_type.setter
-  def items_type(self, text):
-    self._config(text)
-    self._config(text not in (
-      'link', 'badge', 'text', 'icon', 'timeline', 'check', 'radio', 'logs', 'status'), name="items_space")
+  @items_class.setter
+  def items_class(self, value: str):
+    self._config(value)
 
   @property
-  def items_space(self):
-    """Keep the LI margin between the items"""
-    return self._config_get(True)
+  def items_type(self):
+    """Change the type of items in the dynamic list"""
+    return self._config_get()
 
-  @items_space.setter
-  def items_space(self, flag):
-    self._config(flag)
+  @items_type.setter
+  def items_type(self, text: str):
+    func_name = self.component.load_type(text)
+    self._config(func_name)
 
   @property
   def info_icon(self):
@@ -226,12 +261,12 @@ class OptionsItems(Options):
   @property
   def delete_position(self):
     """Set the position and CSS attributes of the delete icon"""
-    return self._config_get({"float": 'right', 'marginRight': '10px', 'marginTop': '5px'})
+    return self._config_get({"float": 'right', "color": self.page.theme.danger.base, 'marginTop': '1px'})
 
   @delete_position.setter
   def delete_position(self, attrs):
     if attrs == "right":
-      attrs = {"float": 'right', 'marginRight': '10px', 'marginTop': '5px'}
+      attrs = {"float": 'right', "color": self.page.theme.danger.base, 'marginTop': '1px'}
     self._config(attrs)
 
   @property
@@ -312,24 +347,6 @@ class OptionsItems(Options):
   @draggable.setter
   def draggable(self, value):
     self._config(value, js_type=True)
-
-  @property
-  def prefix(self):
-    """ """
-    return self._config_get("")
-
-  @prefix.setter
-  def prefix(self, value):
-    self._config(value)
-
-  @property
-  def label(self):
-    """A text label use in the design of some components"""
-    return self._config_get("")
-
-  @label.setter
-  def label(self, value: str):
-    self._config(value)
 
   @property
   def group(self):

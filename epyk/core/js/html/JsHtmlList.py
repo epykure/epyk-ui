@@ -15,43 +15,19 @@ class JsItemsDef:
 
     def __init__(self, component: primitives.HtmlModel):
         self.component = component
+        self.page = component.page
 
     def _item(self, item_def):
         return '''%(item_def)s; htmlObj.appendChild(item)''' % {'item_def': item_def}
 
-    def text(self, page: primitives.PageModel):
+    def text(self):
         """
         Add text items to the list
 
         :param page: Page object. The internal page object
         """
-        item_def = '''
-var item = document.createElement("DIV");  
-if(options.click != null){ 
-  item.style.cursor = 'pointer'; item.setAttribute('name', 'value'); item.setAttribute('data-valid', false);
-  item.onclick = function(event){
-     var selectedLen = htmlObj.parentElement.querySelectorAll(".list_text_selected").length;
-     var dataValue = item.getAttribute('data-valid');
-     if (dataValue == 'true' || options.max_selected == null || selectedLen < options.max_selected ){
-       var value = this.innerHTML; options.click(event, value);
-       if(dataValue == 'true'){
-         item.classList.remove('list_text_selected'); item.setAttribute('data-valid', false)}
-       else{item.classList.add('list_text_selected'); item.setAttribute('data-valid', true) }
-     }
-  }
-} else {
-  item.setAttribute('name', 'value'); item.setAttribute('data-valid', true);}
-if(options.draggable != false){ 
-  item.setAttribute('draggable', true); item.style.cursor = 'grab';
-  item.ondragstart = function(event){ var value = this.innerHTML; options.draggable(event, value)}
-}
-if(typeof options.style !== 'undefined'){
-  Object.keys(options.style).forEach(function(key){item.style[key] = options.style[key] })}
-if(typeof data === 'object'){ 
-  if(typeof data.style !== 'undefined'){
-    Object.keys(data.style).forEach(function(key){item.style[key] = data.style[key] })}
-  item.innerHTML = data.text} else { item.innerHTML = data }'''
-        return self._item(item_def)
+        JsUtils.DefinedResource(self.page, file_nam="ItemText.js", sub_folder="items")
+        return "let item = itemText(htmlObj, data, options); htmlObj.appendChild(item)"
 
     def logs(self, page: primitives.PageModel):
         """
@@ -711,7 +687,7 @@ if(itemOptions.delete){
   if (cls != null){li.classList.add(cls)}
 } ''' % {'comp': self.varName, 'options': self.component.options.config_js(options), 'value': value,
          'event': "prepend" if before else 'appendChild', 'cls': JsUtils.jsConvertData(css_cls, None),
-         'shape': "%s%s" % (self.component.options.prefix, self.component.options.items_type)})
+         'shape': self.component.options.items_type})
 
     def append(self, items: list, css_attrs: dict = None, css_cls: str = None, options: dict = None):
         """

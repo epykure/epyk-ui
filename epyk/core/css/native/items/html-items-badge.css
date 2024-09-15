@@ -1,0 +1,8 @@
+.html-item-badge {
+    font-size: calc(var(--font-size) - 3px) ;
+    background-color: var(--theme) ;
+    color: var(--white) ;
+    border-radius: 50% ;
+    padding: 0 3px ;
+    margin-left: 5px ;
+}

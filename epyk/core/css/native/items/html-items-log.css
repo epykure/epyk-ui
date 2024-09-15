@@ -1,0 +1,14 @@
+.html-item-log {
+    font-size: calc(var(--font-size) - 3px) ;
+    border-left: 4px solid var(--theme);
+    border-top: 1px solid var(--grey) ;
+    border-bottom: 1px solid var(--grey) ;
+}
+
+.html-item-log-content {
+    background: var(--theme) ;
+    margin: 0 5px;
+    display: inline-block;
+    font-weight: 900;
+    min-width: 95px;
+}
