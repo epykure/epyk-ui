@@ -346,11 +346,18 @@ class AgGrid(JsPackage):
         :param filename: Filename
         :param options: Download option
         """
-        filename = filename or "%s.csv" % self.component.html_code
-        if not options:
-            options = {}
-        options["fileName"] = filename
-        return self.exportDataAsCsv(options)
+        if filename and filename.endswith(".xls"):
+            if not options:
+                options = {}
+            options["fileName"] = filename
+            return self.exportDataAsExcel(options)
+
+        else:
+            filename = filename or "%s.csv" % self.component.html_code
+            if not options:
+                options = {}
+            options["fileName"] = filename
+            return self.exportDataAsCsv(options)
 
     def show_column(self, column: str):
         return self.columnApi.setColumnVisible(column, False)
@@ -417,11 +424,47 @@ class AgGrid(JsPackage):
 
         return JsObjects.JsVoid("%s.api.exportDataAsCsv()" % self.varId)
 
+    def exportDataAsExcel(self, excel_export_params: dict = None):
+        """Downloads an Excel export of the grid's data.
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/excel-export-api/#excelexportparams>`_
+
+        :param excel_export_params: CSV export options
+        """
+        if excel_export_params is not None:
+            return JsObjects.JsVoid(
+                "%s.api.exportDataAsExcel(%s)" % (self.varId, JsUtils.jsConvertData(excel_export_params, None)))
+
+        return JsObjects.JsVoid("%s.api.exportDataAsExcel()" % self.varId)
+
     def getColumnDefs(self):
         """Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
         `Related Pages <https://www.ag-grid.com/documentation/javascript/column-updating-definitions/>`_
         """
         return JsObjects.JsObject.JsObject("%s.api.getColumnDefs()" % self.varId)
+
+    def getDataAsCsv(self, params: dict  = None) -> JsObjects.JsString.JsString:
+        """Similar to exportDataAsCsv, except returns the result as a string rather than download it.
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-api/>`_
+
+        :param params
+        """
+        if not params:
+            return JsObjects.JsString.JsString.get("%s.api.getDataAsCsv(%s)" % (
+                self.varId, JsUtils.jsConvertData(params, None)))
+
+        return JsObjects.JsString.JsString.get("%s.api.getDataAsCsv()" % self.varId)
+
+    def getDataAsExcel(self, params: dict = None) -> JsObjects.JsString.JsString:
+        """Similar to exportDataAsExcel, except instead of downloading a file, it will return a Blob to be processed by the user.
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-api/>`_
+
+        :param params
+        """
+        if not params:
+            return JsObjects.JsString.JsString.get("%s.api.getDataAsExcel(%s)" % (
+                self.varId, JsUtils.jsConvertData(params, None)))
+
+        return JsObjects.JsString.JsString.get("%s.api.getDataAsExcel()" % self.varId)
 
     def getDisplayedRowAtIndex(self, index):
         """Returns the displayed rowNode at the given index.
