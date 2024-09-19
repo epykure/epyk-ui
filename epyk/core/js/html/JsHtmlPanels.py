@@ -225,9 +225,24 @@ class JsHtmlTabs(JsHtml.JsHtml):
 class JsHtmlIFrame(JsHtml.JsHtml):
 
     def src(self, src: Union[str, primitives.JsDataModel]):
-        src = JsUtils.jsConvertData(src, None)
+        """The src attribute specifies the address of the document to embed in an iframe.
+
+        :param src: Specifies the URL of the document to embed in the iframe.
+        """
         return self.setAttribute("src", src)
 
     def srcdoc(self, content: Union[str, primitives.JsDataModel]):
-        content = JsUtils.jsConvertData(content, None)
+        """The srcdoc attribute specifies the HTML content of the page to show in the inline frame.
+        Tip: This attribute is expected to be used together with the sandbox and seamless attributes.
+
+        :param content: HTML content
+        """
         return self.setAttribute("srcdoc", content)
+
+    def add_style(self, content: Union[str, primitives.JsDataModel]):
+        """Add CSS Style from String content in the JavaScript section
+
+        :param content: CSS Fragment as a String
+        """
+        content = JsUtils.jsConvertData(content, None)
+        return JsUtils.jsWrap('document.head.appendChild(document.createElement("style")).innerHTML= %s' % content)
