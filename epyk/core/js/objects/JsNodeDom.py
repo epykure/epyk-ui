@@ -1130,7 +1130,7 @@ class JsDoms(JsObject.JsObject):
         :param attribute_value: The value of the attribute you want to add
         """
         attribute_name = JsUtils.jsConvertData(attribute_name, None)
-        self._js.append("%s.setAttribute(%s, %s)" % (
+        self._js.append("%s?.setAttribute(%s, %s)" % (
             self.varId, attribute_name, JsUtils.jsConvertData(attribute_value, None)))
         return self
 

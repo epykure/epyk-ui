@@ -38,7 +38,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/global-style-customisation-variables/>`_
 
         Usage::
-
             table = page.ui.tables.aggrids.table(rows=["athlete", "country", "sport", 'year'])
             table.theme("balham")
 
@@ -84,7 +83,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Set columns definition.
 
         Usage::
-
           grid = page.ui.tables.aggrids.table()
           grid.add_column("col1", "Column")
           grid.headers({"col1": {"headerName": "Column 1"}})
@@ -129,7 +127,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Add internal CSS classes.
 
         Usage::
-
           grid = page.ui.tables.aggrids.table()
           grid.style.strip({"color": "blue"})
         """
@@ -142,7 +139,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Ag Grid table options.
 
         Usage::
-
           grid = page.ui.tables.aggrids.table()
           grid.options.paginationPageSize = 2
         """
@@ -174,7 +170,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Add a column to the column definition for the table.
 
         Usage::
-
           grid = page.ui.tables.aggrids.table()
           grid.add_column("test", "Test Column")
 
@@ -198,7 +193,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
     def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None):
         """Common JavaScript function to set the table definition.
         If options are defined the definition will be specific to the column definition.
-
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/row-selection/>`_
 
         :param options: Optional. The table API attributes. If None return current definition.
@@ -227,7 +221,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Quick Filter is a piece of text given to the grid (typically the user will type it in somewhere in your
         application) that is used to filter rows by comparing against the data in all columns. This can be used in
         addition to column-specific filtering.
-
         `Aggrid <https://ag-grid.com/javascript-data-grid/filter-quick/>`_
 
         :param label: Input's label
@@ -252,7 +245,6 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """Common JavaScript function to add rows to the table.
 
         Usage::
-
           grid = page.ui.tables.aggrids.table()
           grid.add_column("col1", "Column")
           btn_aggrid = page.ui.button("Aggrid").click([grid.build([{"col1": "row %s" % i}for i in range(n)])])
@@ -274,20 +266,18 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
                 self.js.showNoRowsOverlay().toStr(), state_expr)
         # TODO Review this for V31
         return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s); if(!%(rows)s){%(noRows)s}' % {
-            'tableId': self.js_code, 'config': self.options.config_js(options), 'htmlCode': self.dom.varName,
+            'tableId': self.js_code, 'config': self.options.config_js(options, incl_settings=False), 'htmlCode': self.dom.varName,
             "rows": self.js.getDisplayedRowCount().toStr(), "noRows": self.js.showNoRowsOverlay().toStr()
         }
 
     def click(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None, source_event: str = None,
               on_ready: bool = False, data_ref: str = "data"):
         """The onclick event occurs when the user clicks on an element.
+        `Related Pages <https://www.w3schools.com/jsref/event_onclick.asp>`_
 
         Usage::
-
           div = page.ui.div()
           div.click([page.js.alert("This is a test")])
-
-        `Related Pages <https://www.w3schools.com/jsref/event_onclick.asp>`_
 
         :param js_funcs: A Javascript Python function
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console
