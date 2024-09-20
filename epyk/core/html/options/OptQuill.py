@@ -1,8 +1,37 @@
 from epyk.core.html.options import Options
 
 
-class OptionsQuillModHistory(Options):
-    ...
+class OptionsQuillHistory(Options):
+
+    @property
+    def delay(self) -> bool:
+        """Changes occurring within the delay number of milliseconds are merged into a single change. """
+        return self._config_get(1000)
+
+    @delay.setter
+    def delay(self, num: int):
+        self._config(num)
+
+    @property
+    def maxStack(self) -> bool:
+        """CMaximum size of the history's undo/redo stack. Merged changes with the delay option counts as a singular
+        change."""
+        return self._config_get(100)
+
+    @maxStack.setter
+    def maxStack(self, num: int):
+        self._config(num)
+
+    @property
+    def userOnly(self) -> bool:
+        """By default all changes, whether originating from user input or programmatically through the API, are
+        treated the same and change be undone or redone by the history module. If userOnly is set to true, only
+        user changes will be undone or redone."""
+        return self._config_get(False)
+
+    @userOnly.setter
+    def userOnly(self, flag: bool):
+        self._config(flag)
 
 
 class OptionsQuillModules(Options):
@@ -16,6 +45,24 @@ class OptionsQuillModules(Options):
     @syntax.setter
     def syntax(self, flag: bool):
         self._config(flag)
+
+    @property
+    def history(self) -> OptionsQuillHistory:
+        """The History module is responsible for handling undo and redo for Quill. It can be configured with the
+        following options:
+        `quilljs <https://quilljs.com/docs/modules/history>`_
+        """
+        return self._config_sub_data("modules", OptionsQuillHistory)
+
+    @property
+    def toolbar(self) -> bool:
+        """Whether to instantiate the editor to read-only mode.
+        """
+        return self._config_get()
+
+    @toolbar.setter
+    def toolbar(self, html_code: str):
+        self._config(html_code)
 
 
 class OptionsQuill(Options):
@@ -50,7 +97,7 @@ class OptionsQuill(Options):
         """
         `quilljs <https://quilljs.com/docs/configuration>`_
         """
-        return OptionsQuillModules(self, 'modules')
+        return self._config_sub_data("modules", OptionsQuillModules)
 
     @property
     def placeholder(self) -> str:

@@ -5,7 +5,7 @@ from typing import Union, Optional, List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
-from epyk.core.html import Html
+from epyk.core.html import Html, HtmlContainer
 from epyk.core.html.options import OptJsonFormatter
 from epyk.core.html.options import OptText
 from epyk.core.html.options import OptQrCode
@@ -709,11 +709,60 @@ class HtmlQuill(Html.Html):
     requirements = ('quill',)
     _option_cls = OptQuill.OptionsQuill
 
+    class Toolbar(HtmlContainer.Div):
+
+        def select(self, cls: str, values: list, auto_prefix: bool = True):
+            """Add select to the toolbar.
+
+            :param cls: CSS Class name for the component
+            :param values: Component values
+            :param auto_prefix: Auto prefix class name with ql if missing
+            """
+            sl = self.page.ui.div([], tag="select", html_code=self.sub_html_code("_button", auto_inc=True))
+            if values:
+                for v in values:
+                    if not isinstance(v, dict):
+                        v = {"value": v}
+                    opt = self.page.ui.div(v.get("text", ""), tag="option", html_code=self.sub_html_code("_button", auto_inc=True))
+                    opt.attr["value"] = v["value"]
+                    sl.add(opt)
+            sl.style.clear_all(True, False)
+            if auto_prefix and not cls.startswith("ql"):
+                sl.classList.add("ql-%s" % cls)
+                sl.attr["class"] = "ql-%s" % cls
+            else:
+                sl.classList.add(cls)
+            self.add(sl)
+            return sl
+
+        def button(self, cls: str, auto_prefix: bool = True):
+            """Add button to the toolbar.
+
+            :param cls: CSS Class name for the component
+            :param auto_prefix: Auto prefix class name with ql if missing
+            """
+            bt = self.page.ui.div("", tag="button", html_code=self.sub_html_code("_button", auto_inc=True))
+            bt.style.clear_all(True, False)
+            if auto_prefix and not cls.startswith("ql"):
+                bt.classList.add("ql-%s" % cls)
+            else:
+                bt.classList.add(cls)
+            self.add(bt)
+            return bt
+
     def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
                  html_code: str, profile: Optional[Union[bool, dict]]):
         super(HtmlQuill, self).__init__(
             page, record, profile=profile, options=options, html_code=html_code, css_attrs={
                 "height": height, "width": width})
+        self.toolbar = None
+
+    @property
+    def options(self) -> OptQuill.OptionsQuill:
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
+        Python can pass some options to the JavaScript layer.
+        """
+        return super().options
 
     def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
               profile: types.PROFILE_TYPE = None, component_id: str = None,
@@ -734,6 +783,19 @@ class HtmlQuill(Html.Html):
                 ''' % {
             "chartId": self.js_code, "hmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
             'builder': builder_fnc, "expr": data}
+
+    def set_toolbar(self) -> Toolbar:
+        """The Toolbar module allow users to easily format Quill's contents.
+        `Quill <https://quilljs.com/docs/modules/toolbar>`_
+        """
+        self.toolbar = self.Toolbar(
+            self.page, [], None, None, None, None, None,
+            False, "", None, self.sub_html_code("toolbar"),
+            "div", None, {}, None)
+        self.toolbar.style.clear_all(True, False)
+        self.toolbar.options.managed = False
+        self.options.modules.toolbar = "#%s" % self.sub_html_code("toolbar")
+        return self.toolbar
 
     @property
     def dom(self) -> JsHtmlQuill.Quill:
@@ -757,5 +819,10 @@ class HtmlQuill(Html.Html):
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
+        if self.toolbar:
+            return '%s<%s %s>%s</%s>' % (
+                self.toolbar.html(), self.tag,
+                self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)
+
         return '<%s %s>%s</%s>' % (
             self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)
