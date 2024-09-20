@@ -47,6 +47,7 @@ class Comments(Html.Html):
         self.counter.options.managed = False
         self.counter.attr["name"] = "count"
         self.counter.classList.add(self.style_refs["html-comments-counter"])
+        self.actions = []
         if not self.options.readonly:
             self.input = page.ui.input(html_code=self.sub_html_code("input"), width=None)
             self.input.options.managed = False
@@ -184,10 +185,18 @@ class Comments(Html.Html):
         icon_content = ""
         if self.icon:
             icon_content = self.icon.html()
+        actions_html = []
+        for action in self.actions:
+            if hasattr(action, "html"):
+                action.options.managed = False
+                actions_html.append(action.html())
+            else:
+                actions_html.append(action)
         return '''
 <%(tag)s %(attr)s>
-    <label style="display: flex;">
+    <label class="html-comments-label">
         <span>%(counter)s %(title)s %(icon)s%(sort)s</span>
+        %(actions)s
         %(inputTag)s
     </label>
 <div class='%(content)s' style="height:%(height)s">
@@ -195,7 +204,7 @@ class Comments(Html.Html):
 </div></%(tag)s>''' % {
             'attr': self.get_attrs(css_class_names=self.style.get_classes()), "counter": self.counter.html(),
             'height': height, 'inputTag': '' if self.input is None else self.input.html(),
-            "tag": self.tag, "title": self.options.title, "icon": icon_content,
+            "tag": self.tag, "title": self.options.title, "icon": icon_content, "actions": "".join(actions_html),
             "sort": self.options.sort_label, "content": comment_content, "icon_style": comment_icon}
 
 
