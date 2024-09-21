@@ -100,11 +100,11 @@ def jbuilder(group: str = None, name: str = None, refresh: bool = False, asynchr
     """Set a builder for a component.
     This will load the corresponding JavaScript file to allow the refresh on the Js side of teh component.
 
-    :parap group: Optional. Group of builders (corresponding to a folder in the native section)
-    :parap name: Optional. Builder's file name
-    :parap refresh: Optional. Force the refresh of the builder definition (default false)
-    :parap asynchronous: Optional. Set the builder function as async (default false)
-    :parap required_funcs: Optional. List of required functions to be added
+    :param group: Optional. Group of builders (corresponding to a folder in the native section)
+    :param name: Optional. Builder's file name
+    :param refresh: Optional. Force the refresh of the builder definition (default false)
+    :param asynchronous: Optional. Set the builder function as async (default false)
+    :param required_funcs: Optional. List of required functions to be added
     """
 
     def decorator(func):
@@ -145,11 +145,11 @@ def jformatter(group: str = None, name: str = None, refresh: bool = False, async
     """Set a Formatter for a component.
     This will load the corresponding JavaScript file to allow the refresh on the Js side of teh component.
 
-    :parap group: Optional. Group of formatters (corresponding to a folder in the native section)
-    :parap name: Optional. Formatters file name
-    :parap refresh: Optional. Force the refresh of the Formatter definition (default false)
-    :parap asynchronous: Optional. Set the Formatter function as async (default false)
-    :parap required_funcs: Optional. List of required functions to be added
+    :param group: Optional. Group of formatters (corresponding to a folder in the native section)
+    :param name: Optional. Formatters file name
+    :param refresh: Optional. Force the refresh of the Formatter definition (default false)
+    :param asynchronous: Optional. Set the Formatter function as async (default false)
+    :param required_funcs: Optional. List of required functions to be added
     """
     def decorator(func):
         @functools.wraps(func)

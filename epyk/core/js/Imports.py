@@ -4252,7 +4252,8 @@ class ImportManager:
 
         js = []
         if self.set_exports:
-            js.append("<script>var exports = {};</script>")
+            # Fix for missing require function
+            js.append("<script>var exports = {}; function require(a){return window[a]}</script>")
         # self.__add_imports([(None, None, self._report.ext_packages)])
         js_aliases = self.cleanImports(js_aliases, JS_IMPORTS)
         for js_alias in js_aliases:
@@ -4570,6 +4571,8 @@ class ImportManager:
 
         mod_entry = {'css': {}, 'js': {}}
         for mod in config['modules']:
+            if "version" not in mod and "version" in config:
+                mod["version"] = config["version"]
             if mod['script'].endswith(".css"):
                 if "cdnjs" not in mod:
                     mod["cdnjs"] = CDNJS_REPO
@@ -4591,7 +4594,7 @@ class ImportManager:
         if len(mod_entry['css']) > 0:
             CSS_IMPORTS.setdefault(alias, {}).update(mod_entry['css'])
             self.cssImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
-            for pkg in mod_entry.get('js', {}).get("modules", []):
+            for pkg in mod_entry.get('css', {}).get("modules", []):
                 self.cssImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config["version"])
         if len(mod_entry['js']) > 0:
             JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])
