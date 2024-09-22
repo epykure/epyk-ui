@@ -958,6 +958,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param headers: Optional. The request headers
         :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
         :param dataflows: Chain of data transformations
+        :param options: Optional. Internal XMLHttpRequest interface's options
         """
         method_type = JsUtils.jsConvertData('GET', None)
         url = JsUtils.jsConvertData(url, None)
@@ -1008,7 +1009,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param asynchronous: Optional. Async flag: true (asynchronous) or false (synchronous)
         :param stringify: Optional. Stringify the request data for json exchange
         :param dataflows: Optional. Chain of data transformations
-        :param options: 
+        :param options: Optional. Internal XMLHttpRequest interface's options
         """
         if method.upper() == "GET":
             # Redirect to the specific get method
@@ -1063,6 +1064,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
         :param stringify: Optional. Stringify the request data for json exchange
         :param dataflows: Chain of data transformations
+        :param options: Optional. Internal XMLHttpRequest interface's options
         """
         return self.rest("POST", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
@@ -1088,6 +1090,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
         :param stringify: Optional. Stringify the request data for json exchange
         :param dataflows: Chain of data transformations
+        :param options: Optional. Internal XMLHttpRequest interface's options
         """
         return self.rest("PUT", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
@@ -1113,6 +1116,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
         :param stringify: Optional. Stringify the request data for json exchange
         :param dataflows: Chain of data transformations
+        :param options: Optional. Internal XMLHttpRequest interface's options
         """
         return self.rest("PATH", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,
@@ -1138,7 +1142,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param asynchronous: Async flag: true (asynchronous) or false (synchronous)
         :param stringify: Optional. Stringify the request data for json exchange
         :param dataflows: Chain of data transformations
-        :param options:
+        :param options: Optional. Internal XMLHttpRequest interface's options
         """
         return self.rest("DELETE", url=url, data=data, js_code=js_code, is_json=is_json, components=components,
                          profile=profile, headers=headers, asynchronous=asynchronous, stringify=stringify,

@@ -463,13 +463,17 @@ class JsObject(primitives.JsDataModel):
         js_obj = ",".join([JsUtils.jsConvertData(s, None) for s in sources])
         return JsObject("Object.assign(%s, %s)" % (JsUtils.jsConvertData(target, None), js_obj), is_py_data=False)
 
+    def merge(self, obj):
+        """Merge two objects/dictionaries by creating a third one.
+
+        :param obj: second object to merge with the existing one
+        """
+        return JsObject("Object.assign({}, %s, %s)" % (self.varId, JsUtils.jsConvertData(obj, None)))
+
     def create(self, proto=None, propertiesObject=None):
         """The Object.create() method creates a new object, using an existing object as the prototype of the newly
         created object.
-
-        Related Pages:
-
-          https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create
+        `mozilla <https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create>`_
 
         :param proto: The object which should be the prototype of the newly-created object.
         :param propertiesObject: Optional. If specified and not undefined, an object whose enumerable own properties
@@ -638,6 +642,7 @@ class JsObject(primitives.JsDataModel):
         """
         This is not a standard Javascript method for an object.
         It is only defined for some objects like the Datatable data()
+        It is only defined for some objects like the Datatable data()
         """
         from epyk.core.js.primitives import JsArray
 
@@ -660,7 +665,6 @@ class JsObject(primitives.JsDataModel):
         """
 
         Usage::
-
           row["Date"] = row["Date"].toISOString().slice(0, 10);
 
         :param header:
@@ -668,7 +672,7 @@ class JsObject(primitives.JsDataModel):
         from epyk.core.js.primitives import JsArray
 
         if header is None:
-            return JsArray.JsArray.get('''(function(data){var results = []; var header = data[0]; 
+            return JsArray.JsArray.get('''(function(data){let results = []; let header = data[0]; 
 data.slice(1).forEach(function(rec){var row = []; rec.forEach(function(r, i){row[header[i]] = r}); 
 results.push(row)}); return results})(%s)''' % self.varName)
 
@@ -696,6 +700,13 @@ results.push(row)}); return results})(%s)''' % self.varName)
         record = JsObject.get(js_code)
         record._js = [funcs.toStr()] + record._js
         return record
+
+    def toUrl(self):
+        """Convert object to an url string"""
+        from epyk.core.js.primitives import JsString
+
+        return JsString.JsString.get('''(function(data){let urlParts = []; for (
+const [key, value] of Object.entries(data)){urlParts.push(key +"="+ value);};return encodeURI(urlParts.join("&"))})(%s)''' % self.varId)
 
     @property
     def r(self):

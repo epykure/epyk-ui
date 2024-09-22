@@ -8,6 +8,7 @@ from epyk.core.js.html import JsHtml
 
 from epyk.core.js import packages
 from epyk.core.js import JsUtils
+from epyk.core.js.objects.JsData import Datamap
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.statements import JsIf
 
@@ -249,6 +250,24 @@ class Textarea(JsHtml.JsHtmlRich):
 
 class Href(JsHtml.JsHtmlRich):
 
-    def sync(self):
-        return "let currentHref = %(comp)s.href.split('?'); %(comp)s.href = currentHref[0] + window.location.search" % {
-            "comp": self.component.dom.varName}
+    def sync(self) -> JsUtils.jsWrap:
+        """Sync component's url with the page url"""
+        return JsUtils.jsWrap("let currentHref = %(comp)s.href.split('?'); %(comp)s.href = currentHref[0] + window.location.search" % {
+            "comp": self.component.dom.varName})
+
+    def update(self, data: types.JS_DATA_TYPES = None, components: list = None, sync: bool = True) -> JsUtils.jsWrap:
+        """Update the component' url based on other components
+
+        :param data: Optional. Static or dynamic parameters to add to the component's url
+        :param components: Optional. HTML component to add to the url
+        :param sync: Optional. Sync component url with the page url first
+        """
+        dt_map = Datamap(components, data)
+        if not sync:
+            return JsUtils.jsWrap(
+                "let currentHref = %(comp)s.href.split('?'); %(comp)s.href = currentHref[0] +'?'+ %(url)s" % {
+                    "comp": self.component.dom.varName, "url": dt_map.toUrl().toStr()})
+
+        return JsUtils.jsWrap("let currentHref = %(comp)s.href.split('?'); %(comp)s.href = currentHref[0] +'?'+ %(url)s" % {
+            "comp": self.component.dom.varName,
+            "url": self.page.js.location.urlSearchParams.all(stringify=False).merge(dt_map).toUrl().toStr()})
