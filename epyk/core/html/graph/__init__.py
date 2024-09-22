@@ -18,3 +18,4 @@ from . import GraphVega
 from . import GraphChartist
 from . import GraphHighcharts
 from . import GraphECharts
+from . import GraphAgCharts

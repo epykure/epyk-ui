@@ -333,6 +333,20 @@ JS_IMPORTS = {
              'cdnjs': CDNJS_REPO}]
     },
 
+    # AG Charts
+    'ag-charts-community': {
+        'website': 'https://www.ag-grid.com/charts/javascript/quick-start/',
+        'repository': 'https://github.com/ag-grid/ag-charts',
+        'version': '10.2.0',
+        'enterprise': '10.2.0',
+        'license': 'MIT license',
+        "pricing": "https://www.ag-grid.com/charts/license-pricing/",
+        "register": {"alias": "agCharts", "module": "ag-charts-community.min", "npm": 'ag-charts-community'},
+        'modules': [
+            {'script': 'ag-charts-community.js', 'node_path': 'dist/',
+              'path': 'ag-charts-community@%(version)s/dist/umd/', 'cdnjs': JSDELIVER}]
+    },
+
     # module for tabulator
     'tabulator-tables': {
         'req': [{'alias': 'promise-polyfill'}, {'alias': 'moment'}],
@@ -2808,12 +2822,14 @@ class ImportModule:
         :param version: Set the package version number
         :param license_key: Optional. The license key
         """
-        pgks = ("ag-grid-community",)
+        pgks = ("ag-grid-community", 'ag-charts-community')
         if self._name not in pgks:
             raise NotImplementedError("Noting implemented for this package %s, please contact epyk team" % self._name)
 
         self.community_version = False
         self.page.imports.add(self._name)
+        if self._name == 'ag-charts-community':
+            version = version or JS_IMPORTS[self._name]["enterprise"]
         if self._name == 'ag-grid-community':
             version = version or JS_IMPORTS['ag-grid-community']["enterprise"]
             JS_IMPORTS['ag-grid-community']["version"] = version
