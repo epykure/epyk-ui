@@ -1606,18 +1606,49 @@ class TabsArrowsUp(Tabs):
 
 
 class IFrame(Html.Html):
-    name = 'IFrame'
-    tag = "iframe"
+    name: str = 'IFrame'
+    tag: str = "iframe"
+    set_exports: bool = False
+    _option_cls = OptPanel.OptionIFrame
 
-    def __init__(self, report, url, width, height, helper, profile):
-        super(IFrame, self).__init__(report, url, css_attrs={"width": width, "height": height}, profile=profile)
+    def __init__(self, report, url, width, height, helper, profile, options):
+        super(IFrame, self).__init__(report, url, css_attrs={"width": width, "height": height},
+                                     profile=profile, options=options)
         self.css({"overflow-x": 'hidden'})
         self.attr["frameborder"] = "0"
         self.attr["scrolling"] = "no"
         self.add_helper(helper)
         self.headers, self.body, self.scripts = [], [], []
 
-    _js__builder__ = 'htmlObj.src = data'
+    def _load_component(self, component: Html.Html):
+        """Load a component into the Iframe.
+
+        :param component: HTML component to be added to the page
+        """
+        if hasattr(component, "options"):
+            if component.requirements:
+                for r in self.page.imports.jsResolve(component.requirements).split("\n"):
+                    self.to_header(r, force=True)
+                for r in self.page.imports.cssResolve(component.requirements).split("\n"):
+                    self.to_header(r, force=True)
+            c = {}
+            JsUtils.addJsResources(c, component.builder_module + ".js", verbose=False)
+            for v in c.values():
+                self.scripts.append(v)
+            self.onReady(component.refresh())
+            component.options.managed = False
+            return component.html()
+
+        return str(component)
+
+    @property
+    def options(self) -> OptPanel.OptionIFrame:
+        """Property to the component options.
+        Options can either impact the Python side or the Javascript builder.
+
+        Python can pass some options to the JavaScript layer.
+        """
+        return super().options
 
     @property
     def dom(self) -> JsHtmlPanels.JsHtmlIFrame:
@@ -1682,36 +1713,42 @@ class IFrame(Html.Html):
         self.onReady(["%s.addEventListener(%s, function(event) {%s})" % (
             source.dom.varId, event, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))])
 
-    def to_header(self, aliases: List[str], force: bool = False):
+    def to_header(self, aliases: List[str], force: bool = False, need_exports: bool = False):
         """Set the IFrame header section.
 
         :param aliases: External JavaScript and CSS packages
         :param force: For the alias to be added as a string
+        :param need_exports:
         """
+        self.options.srcFunc = "srcdoc"
+        self.set_exports = self.set_exports or need_exports
         if force:
             self.headers.extend(aliases)
+            self.options.header.extend(aliases)
         else:
             scripts = self.page.imports.jsResolve(aliases)
             if scripts:
                 self.headers.append(scripts.replace("\n", ""))
+                self.options.header.append(scripts.replace("\n", ""))
             scripts = self.page.imports.cssResolve(aliases)
             if scripts:
                 self.headers.append(scripts.replace("\n", ""))
+                self.options.header.append(scripts.replace("\n", ""))
         return self
 
     def to_body(self, components: Union[Html.Html, List[Html.Html]]):
         """Update the static HTML definition of the IFrame.
+        Components added to the IFrame should be fully defined before added to the body.
 
         :param components: List of HTML components
         """
+        self.options.srcFunc = "srcdoc"
         if isinstance(components, list):
-            for c in components:
-                if hasattr(c, "options"):
-                    c.options.managed = False
+            components = [self._load_component(c) for c in components]
             self.body.extend(components)
+            self.options.body.extend(components)
         else:
-            if hasattr(components, "options"):
-                components.options.managed = False
+            components = self._load_component(components)
             self.body.append(components)
         return self
 
@@ -1721,28 +1758,18 @@ class IFrame(Html.Html):
         :param js_funcs: A Javascript Python function
         :param profile: Optional. Set to true to get the profile for the function on the Javascript console
         """
+        self.options.srcFunc = "srcdoc"
         if not isinstance(js_funcs, list):
             self.scripts.append(js_funcs)
+            self.options.script.append(js_funcs)
         else:
             self.scripts.extend(js_funcs)
+            self.options.script.append(js_funcs)
+        return self
 
     def __str__(self):
-        content = []
-        if self.headers:
-            content.append("<head>%s</head>" % "".join(self.headers))
-        if self.body:
-            _html_comps = []
-            for comp in self.body:
-                if hasattr(comp, "html"):
-                    _html_comps.append(comp.html())
-                else:
-                    _html_comps.append(str(comp))
-            content.append("<body>%s</body>" % "".join(_html_comps))
-        if self.scripts:
-            content.append("<script>%s</script>" % JsUtils.jsConvertFncs(self.scripts, toStr=True))
-        if content:
-            html_exp = "".join(content)
-            self.attr["srcdoc"] = html_exp
+        if self.options.srcFunc == "srcdoc":
+            self.attr["srcdoc"] = self.dom.get_doc().toStr()
         return "<%s src='%s' %s></%s>%s" % (
             self.tag, self.val, self.get_attrs(css_class_names=self.style.get_classes()), self.tag, self.helper)
 

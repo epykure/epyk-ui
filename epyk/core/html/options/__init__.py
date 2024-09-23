@@ -334,6 +334,25 @@ class Options(DataClass):
         return self.sub_data(name, cls_obj)
 
     @property
+    def excluded(self):
+        """Boolean flag to specify that the page will not attach the component and its dependencies.
+        This must be done later in another process. It will set the managed flag to False.
+
+        Usage::
+          but = page.ui.button(options={"excluded}: False)
+          print(but.options.managed)
+
+        :prop bool: Flag to specify if this component is considered part of the page
+        """
+        return self.get(False)
+
+    @excluded.setter
+    def excluded(self, flag: bool):
+        self.set(flag)
+        if flag:
+            self.managed = False
+
+    @property
     def managed(self):
         """Boolean flag to set if the component needs to be added to the page.
 

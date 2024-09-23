@@ -405,15 +405,16 @@ class Html(primitives.HtmlModel):
         self.components = Components()
         self.page = page
         self.require = Required(page)
-        for package in self.get_requirements(page, options):
-            if isinstance(package, tuple):
-                self.require.add(package[0], package[1], verbose=verbose)
-            elif isinstance(package, dict):
-                alias = list(package.keys())[0]
-                self.require.add(alias, version=package[alias].get("version"), verbose=verbose,
-                                 incl_css=package[alias].get("css", False), incl_js=package[alias].get("js", False))
-            else:
-                self.require.add(package, verbose=verbose)
+        if not options or not options.get("excluded", False):
+            for package in self.get_requirements(page, options):
+                if isinstance(package, tuple):
+                    self.require.add(package[0], package[1], verbose=verbose)
+                elif isinstance(package, dict):
+                    alias = list(package.keys())[0]
+                    self.require.add(alias, version=package[alias].get("version"), verbose=verbose,
+                                     incl_css=package[alias].get("css", False), incl_js=package[alias].get("js", False))
+                else:
+                    self.require.add(package, verbose=verbose)
 
         self.profile = profile
         self._on_ready_js, self._sort_propagate, self._sort_options, self.__aliasCode = {}, False, None, None

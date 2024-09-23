@@ -246,3 +246,19 @@ class JsHtmlIFrame(JsHtml.JsHtml):
         """
         content = JsUtils.jsConvertData(content, None)
         return JsUtils.jsWrap('document.head.appendChild(document.createElement("style")).innerHTML= %s' % content)
+
+    def get_doc(self) -> JsObjects.JsObject.JsObject:
+        """Return the HTML doc to feed the iFrame"""
+        content = []
+        if self.component.headers:
+            content.append("<head>%s</head>" % "".join(self.component.headers))
+        if self.component.body:
+            _html_comps = []
+            for comp in self.component.body:
+                _html_comps.append(str(comp))
+            content.append("<body>%s</body>" % "".join(_html_comps))
+        if self.component.scripts:
+            content.append("<script>%s</script>" % JsUtils.jsConvertFncs(self.component.scripts, toStr=True))
+        if content:
+            return JsObjects.JsObject.JsObject.get("".join(content))
+        return JsObjects.JsObject.JsObject.get("")

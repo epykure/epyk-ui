@@ -504,7 +504,7 @@ class Layouts:
     return component
 
   def iframe(self, url: str = "", width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (100, "%"),
-             helper: str = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.IFrame:
+             helper: str = None,  options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.IFrame:
     """Add an iframe component to the page.
 
     :tags:
@@ -526,7 +526,7 @@ class Layouts:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="%")
-    component = html.HtmlContainer.IFrame(self.page, url, width, height, helper, profile)
+    component = html.HtmlContainer.IFrame(self.page, url, width, height, helper, profile, options)
     html.Html.set_component_skin(component)
     return component
 

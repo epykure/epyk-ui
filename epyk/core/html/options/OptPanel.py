@@ -758,3 +758,47 @@ class OptionSideBar(Options):
 
 class OptionFooter(Options):
   ...
+
+
+class OptionIFrame(Options):
+  component_properties = ('srcFunc', "script", "body", "header")
+
+  @property
+  def srcFunc(self):
+    """
+    """
+    return self._config_get("src")
+
+  @srcFunc.setter
+  def srcFunc(self, val: str):
+    self._config(val)
+
+  @property
+  def body(self):
+    """
+    """
+    return self._config_get([])
+
+  @body.setter
+  def body(self, val: str):
+    self._config(val)
+
+  @property
+  def header(self):
+    """
+    """
+    return self._config_get([])
+
+  @header.setter
+  def header(self, val: str):
+    self._config(val)
+
+  @property
+  def script(self):
+    """
+    """
+    return self._config_get([])
+
+  @script.setter
+  def script(self, val: str):
+    self._config(val)
