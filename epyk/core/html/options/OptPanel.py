@@ -761,7 +761,7 @@ class OptionFooter(Options):
 
 
 class OptionIFrame(Options):
-  component_properties = ('srcFunc', "script", "body", "header")
+  component_properties = ('srcFunc', "script", "body", "header", "exts")
 
   @property
   def srcFunc(self):
@@ -801,4 +801,14 @@ class OptionIFrame(Options):
 
   @script.setter
   def script(self, val: str):
+    self._config(val)
+
+  @property
+  def exts(self):
+    """
+    """
+    return self._config_get([])
+
+  @exts.setter
+  def exts(self, val: str):
     self._config(val)

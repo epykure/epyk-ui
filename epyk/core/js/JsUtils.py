@@ -302,7 +302,7 @@ def jsConvertFncs(js_funcs: types.JS_FUNCS_TYPES, is_py_data: bool = False,
     return cnv_funcs
 
 
-def cleanFncs(fnc):
+def cleanFncs(fnc: str):
     """Try to remove as much as possible all the characters in order to speed up the javascript
     Indeed most of the browsers are using minify Javascript to make the page less heavy.
 
@@ -312,14 +312,17 @@ def cleanFncs(fnc):
 
     :return: Return a cleaned a minify Javascript String.
     """
-    return "".join([r.strip() for r in fnc.strip().split('\n')])
+    content = []
+    for r in fnc.strip().split('\n'):
+        split_content = r.split("//")
+        content.append(split_content[0].strip())
+    return "".join(content)
 
 
 def isNotDefined(varName: str):
     """Check if a variable is defined.
 
     Usage::
-
       JsUtils.isNotDefined(varId)
 
     :param varName: The varName
@@ -609,15 +612,18 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
         if js_file.exists():
             logs[file_nam] = js_file
             with open(js_file) as fp:
-                constructors[builder_name] = fp.read()
+                js_content = cleanFncs(fp.read())
+                constructors[builder_name] = js_content
     else:
         for p in possible_paths:
             js_file = Path(p, file_nam)
             if js_file.exists():
                 logs[file_nam] = js_file
                 with open(js_file) as fp:
-                    constructors[builder_name] = fp.read()
+                    js_content = cleanFncs(fp.read())
+                    constructors[builder_name] = js_content
                 return True
+
         else:
             if verbose:
                 logging.debug("NATIVE | JS | File not loaded %s" % file_nam)

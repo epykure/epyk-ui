@@ -17,6 +17,7 @@ from epyk.core.html.options import OptPanel
 from epyk.core.html.options import OptText
 from epyk.core.html.options import OptGridstack
 
+from epyk.core.js import treemap
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlPanels
@@ -1620,7 +1621,7 @@ class IFrame(Html.Html):
         self.add_helper(helper)
         self.headers, self.body, self.scripts = [], [], []
 
-    def _load_component(self, component: Html.Html):
+    def _load_component(self, component: Html.Html) -> str:
         """Load a component into the Iframe.
 
         :param component: HTML component to be added to the page
@@ -1632,9 +1633,11 @@ class IFrame(Html.Html):
                 for r in self.page.imports.cssResolve(component.requirements).split("\n"):
                     self.to_header(r, force=True)
             c = {}
-            JsUtils.addJsResources(c, component.builder_module + ".js", verbose=False)
+            JsUtils.addJsResources(
+                c, component.builder_module + ".js", verbose=False,
+                required_funcs=treemap._BUILDERS_MAP.get(component.builder_name, []))
             for v in c.values():
-                self.scripts.append(v)
+                self.options.exts.append(v)
             self.onReady(component.refresh())
             component.options.managed = False
             return component.html()
@@ -1760,11 +1763,11 @@ class IFrame(Html.Html):
         """
         self.options.srcFunc = "srcdoc"
         if not isinstance(js_funcs, list):
-            self.scripts.append(js_funcs)
-            self.options.script.append(js_funcs)
-        else:
-            self.scripts.extend(js_funcs)
-            self.options.script.append(js_funcs)
+            js_funcs = [js_funcs]
+
+        js_funcs_str = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+        self.scripts.append(js_funcs_str)
+        self.options.script.append(js_funcs_str)
         return self
 
     def __str__(self):
@@ -1807,7 +1810,6 @@ class IconsMenu(Html.Html):
         """Add an icon to the HTML object.
 
         Usage::
-
           checks.title.add_icon("fas fa-align-center")
 
         :param text: The icon reference from font-awesome website

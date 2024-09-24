@@ -1,6 +1,7 @@
 from typing import Union
 from epyk.core.py import primitives
 
+from epyk.core.js.Imports import string_to_base64
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.fncs import JsFncs
@@ -250,6 +251,9 @@ class JsHtmlIFrame(JsHtml.JsHtml):
     def get_doc(self) -> JsObjects.JsObject.JsObject:
         """Return the HTML doc to feed the iFrame"""
         content = []
+        if self.component.options.exts:
+            self.component.to_header('<script title="customResource" language="javascript" type="text/javascript" src="data:text/js;base64,%s"></script>' % (
+                string_to_base64(";".join(self.component.options.exts))), force=True)
         if self.component.headers:
             content.append("<head>%s</head>" % "".join(self.component.headers))
         if self.component.body:
@@ -258,7 +262,8 @@ class JsHtmlIFrame(JsHtml.JsHtml):
                 _html_comps.append(str(comp))
             content.append("<body>%s</body>" % "".join(_html_comps))
         if self.component.scripts:
-            content.append("<script>%s</script>" % JsUtils.jsConvertFncs(self.component.scripts, toStr=True))
+            content.append("<script>%s</script>" % ";".join(self.component.scripts))
         if content:
-            return JsObjects.JsObject.JsObject.get("".join(content))
+            return JsObjects.JsObject.JsObject.get("".join(content) + "?ok=4")
+
         return JsObjects.JsObject.JsObject.get("")

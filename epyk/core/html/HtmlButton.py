@@ -256,7 +256,8 @@ class Button(Html.Html):
 
     def __str__(self):
         str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-        self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
+        if not self.options.excluded:
+            self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
         return '<{tag} {attrs}><span name="button-content">{content}</span>{badge}</{tag}>'.format(
             tag=self.tag, attrs=self.get_attrs(css_class_names=self.style.get_classes()), badge=self.badge,
             content=str_div)
