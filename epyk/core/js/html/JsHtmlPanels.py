@@ -1,5 +1,6 @@
 from typing import Union
 from epyk.core.py import primitives
+from epyk.core.py import types
 
 from epyk.core.js.Imports import string_to_base64
 from epyk.core.js.html import JsHtml
@@ -248,8 +249,13 @@ class JsHtmlIFrame(JsHtml.JsHtml):
         content = JsUtils.jsConvertData(content, None)
         return JsUtils.jsWrap('document.head.appendChild(document.createElement("style")).innerHTML= %s' % content)
 
-    def get_doc(self) -> JsObjects.JsObject.JsObject:
-        """Return the HTML doc to feed the iFrame"""
+    def get_doc(self, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None
+                ) -> JsObjects.JsObject.JsObject:
+        """Return the HTML doc to feed the iFrame.
+
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        """
         content = []
         if self.component.options.exts:
             self.component.to_header('<script title="customResource" language="javascript" type="text/javascript" src="data:text/js;base64,%s"></script>' % (
@@ -261,6 +267,8 @@ class JsHtmlIFrame(JsHtml.JsHtml):
             for comp in self.component.body:
                 _html_comps.append(str(comp))
             content.append("<body>%s</body>" % "".join(_html_comps))
+        if js_funcs:
+            self.component.scripts.append(JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile))
         if self.component.scripts:
             content.append("<script>%s</script>" % ";".join(self.component.scripts))
         if content:
