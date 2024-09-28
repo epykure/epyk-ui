@@ -213,6 +213,8 @@ class PanelSplit(Html.Html):
 
         :param component: An HTML component
         """
+        if hasattr(component, "options"):
+            component.options.managed = False
         self.panels["left"].add(component)
         return self
 
@@ -225,6 +227,8 @@ class PanelSplit(Html.Html):
 
         :param component: An HTML component
         """
+        if hasattr(component, "options"):
+            component.options.managed = False
         self.panels["right"].add(component)
         return self
 
@@ -324,6 +328,8 @@ class PanelVSplit(Html.Html):
 
         :param component: An HTML component
         """
+        if hasattr(component, "options"):
+            component.options.managed = False
         self.panels["top"].add(component)
         return self
 
@@ -336,6 +342,8 @@ class PanelVSplit(Html.Html):
 
         :param component: An HTML component
         """
+        if hasattr(component, "options"):
+            component.options.managed = False
         self.panels["bottom"].add(component)
         return self
 

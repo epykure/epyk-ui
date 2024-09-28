@@ -272,6 +272,6 @@ class JsHtmlIFrame(JsHtml.JsHtml):
         if self.component.scripts:
             content.append("<script>%s</script>" % ";".join(self.component.scripts))
         if content:
-            return JsObjects.JsObject.JsObject.get("".join(content) + "?ok=4")
+            return JsObjects.JsObject.JsObject.get("".join(content))
 
         return JsObjects.JsObject.JsObject.get("")

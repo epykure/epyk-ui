@@ -392,7 +392,7 @@ class Html(primitives.HtmlModel):
     builder_module, builder_name, builder_cls = None, None, False
     _option_cls = Options
     tag = None
-    style_urls: List[str] = None
+    style_urls: List[Path] = None
     # Common CSS definition
     html_class: Optional[str] = "html-base"
     html_class_full_path: Path = Path(__file__).parent.parent / "css" / "native" / "html-base.css"
@@ -615,6 +615,18 @@ class Html(primitives.HtmlModel):
 
         if funcs_map is not None:
             treemap._FUNCTIONS_MAP.update(funcs_map)
+
+    def set_style_map(self, filenames: List[str], full_path: str = None) -> List[Path]:
+        """Set the CSS files definition for a specific object.
+        CSS properties might different from the class definition. CSS file must get the same class names than
+        the ones used for the component HTML definition.
+
+        :param filenames: CSS file names
+        :param full_path: Optional. CSS File path
+        """
+        from epyk.conf.global_settings import get_static_files
+        self.style_urls = get_static_files(filenames, full_path=full_path)
+        return self.style_urls
 
     @property
     def style(self) -> GrpCls.ClassHtml:
@@ -2254,8 +2266,6 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
                 css_files, style_vars=style_vars, resources=self.page.properties.resources)
             if css_content:
                 self.page.properties.css.add_text(css_content, map_id="CSS VarMap")
-                #self.page.headers.links.stylesheet(
-                #    "data:text/css;base64,%s" % Imports.string_to_base64(css_content), title="CSS VarMap")
 
     def show(self, component, js_funcs: types.JS_FUNCS_TYPES, load_flag: str = None, profile: types.PROFILE_TYPE = None):
         """Trigger an event when component is in the viewport.

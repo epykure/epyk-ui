@@ -287,7 +287,7 @@ class ContextMenu(Html.Html):
         self.__add__(component)
         return self.val[-1].val
 
-    def set(self, name: Union[Html.Html, str], js_funcs) -> Html.Html:
+    def set(self, name: Union[Html.Html, str], js_funcs: Union[list, str]) -> Html.Html:
         """Set a item with a click function to the menu
 
         :param name: Item component or name

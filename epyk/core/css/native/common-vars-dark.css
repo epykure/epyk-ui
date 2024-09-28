@@ -1,0 +1,15 @@
+:root {
+  --selected: $theme-6;
+  --grey: $greys-6;
+  --grey-dark: $greys-2;
+  --white: $greys-dark;
+  --font-color: $greys-0;
+  --background-color: $greys-dark;
+  --theme-dark: $theme-light;
+  --theme-light: $theme-dark;
+  --theme-lighter: $theme-dark;
+  --theme: $theme-dark ;
+  --font-family: $font-family;
+  --line-height: $line-height;
+  --font-size: $font-size;
+}

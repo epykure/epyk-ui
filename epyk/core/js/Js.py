@@ -2015,6 +2015,18 @@ if (!existingStyle && (styleElementId !== 'css_')) {
 
         return JsObject.JsObject.get(name.upper())
 
+    def setDocumentElementProperty(self, name: str, value: str = None):
+        """The CSSStyleDeclaration.setProperty() method interface sets a new value for a property on a CSS style
+        declaration object.
+
+        `w3schools <https://www.w3schools.com/jsref/met_cssstyle_setproperty.asp>`_
+
+        :param name: Style property's name
+        :param value: Optional. Style property's value
+        """
+        name = JsUtils.jsConvertData(name, None)
+        value = JsUtils.jsConvertData(value, None)
+        return JsUtils.jsWrap("document.documentElement.style.setProperty(%s, %s)" % (name, value))
 
 
 class JsConsole:

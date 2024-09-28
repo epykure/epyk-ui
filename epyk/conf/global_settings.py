@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from typing import List
 
 
@@ -73,3 +74,43 @@ def add_static_sub_folders(names: List[str]):
     ASSETS_STATIC_PATH = os.path.join(ASSETS_STATIC_PATH, *names)
     ASSETS_STATIC_ROUTE = "%s/%s" % (ASSETS_STATIC_ROUTE, "/".join(names))
 
+
+def get_static_files(filenames: List[str], full_path: str = None) -> List[Path]:
+    """Get the static files based on the configuration.
+    This will try to get the files from the most appropriate folder in the following order:
+
+     PRIMARY_RESOURCE_PATHS > NATIVE_XXX_PATH > Internal Module path
+
+    :param filenames: List of file names
+    :param full_path: Optional. Static path to use
+    """
+    if full_path is not None:
+        return [Path(full_path) / f for f in filenames]
+
+    results = []
+    if PRIMARY_RESOURCE_PATHS:
+        for f in filenames:
+            for p in PRIMARY_RESOURCE_PATHS:
+                file_path = Path(p) / f
+                if file_path.exists():
+                    results.append(file_path)
+                    break
+
+            else:
+                file_ext = f.split(".")[-1].lower()
+                native_path = NATIVE_CSS_PATH if file_ext == "css" else NATIVE_JS_PATH
+                if native_path:
+                    file_path = Path(p) / f
+                    if file_path.exists():
+                        results.append(file_path)
+                else:
+                    file_path = Path(__file__).parent.parent / "core" / file_ext / "native" / f
+                    if file_path.exists():
+                        results.append(file_path)
+    else:
+        for f in filenames:
+            file_ext = f.split(".")[-1].lower()
+            file_path = Path(__file__).parent.parent / "core" / file_ext / "native" / f
+            if file_path.exists():
+                results.append(file_path)
+    return results

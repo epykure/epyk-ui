@@ -24,6 +24,6 @@ function comments(htmlObj, data, options){
                 dateNews.innerHTML = comment.time; htmlObj.querySelector("div").prepend(dateNews);
             }
           });
-          document.getElementById(htmlObj.id  + "_counter").innerHTML = Math.min(0, htmlObj.querySelectorAll("p[name='comment-value']").length - 1) ;
+          document.getElementById(htmlObj.id  + "_counter").innerHTML = Math.max(0, htmlObj.querySelectorAll("p[name='comment-value']").length - 1) ;
     }
 }
