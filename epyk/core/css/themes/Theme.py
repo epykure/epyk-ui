@@ -306,9 +306,9 @@ class Theme:
     def groups(self) -> List[str]:
         """Get all the technical / extra colors categories defined for a selected theme"""
         if self.other_groups is not None:
-          return ["theme", "grey", "warning", "danger", "success"] + list(self.other_groups.keys())
+          return ["theme", "grey", "warning", "danger", "success", "info"] + list(self.other_groups.keys())
 
-        return ["theme", "grey", "warning", "danger", "success"]
+        return ["theme", "grey", "warning", "danger", "success", "info"]
 
     def update(self):
         """ Sync the colors with the ones stored from the static file. """

@@ -71,7 +71,6 @@ class Commons(Attrs):
     def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
         super(Commons, self).__init__(component, page=page)
         self.font_size = 'inherit'
-        self.font_family = 'inherit'
         self.box_sizing = 'border-box'
 
 
