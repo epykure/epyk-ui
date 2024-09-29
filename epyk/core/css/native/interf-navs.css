@@ -1,0 +1,29 @@
+.i-nav-side-panel {
+    background: var(--theme-lighter) ;
+    height: 100% ;
+    top: 0 ;
+    overflow-x: hidden ;
+}
+
+.i-nav-side-panel-l {
+    left: 0 ;
+    border-right: 1px solid var(--theme-dark);
+    padding: 5px
+}
+
+
+.i-nav-side-panel-r {
+    right: 0 ;
+    border-left: 1px solid var(--theme-dark);
+    padding: 5px
+}
+
+.i-nav-side-overlay {
+    left: 0 ;
+    top: 0 ;
+    right: 0 ;
+    display: None ;
+    position: fixed ;
+    cursor: pointer ;
+    background: rgba(0, 0, 0, 0.3) ;
+}

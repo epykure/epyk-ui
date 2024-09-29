@@ -893,8 +893,7 @@ class Html(primitives.HtmlModel):
         if text is not None:
             html_code_icon = self.sub_html_code("icon", html_code=html_code)
             self.icon = self.page.ui.images.icon(
-                text, html_code=html_code_icon, family=family, options=options
-            ).css({"margin-right": '5px', 'font-size': 'inherit'})
+                text, html_code=html_code_icon, family=family, options=options)
             self.icon.defined_code = self.defined_code
             if position == "before":
                 self.prepend_child(self.icon)

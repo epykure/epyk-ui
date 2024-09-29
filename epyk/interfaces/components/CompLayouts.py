@@ -522,6 +522,7 @@ class Layouts:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param helper: Optional. A tooltip helper
+    :param options: Optional. Specific options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
     width = Arguments.size(width, unit="%")

@@ -535,6 +535,14 @@ class IconEdit(Html.Html):
     name = 'Icon'
     tag = "span"
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-icons.css",
+    ]
+
+    style_refs = {
+        "html-icon-edit": "html-icon-edit",
+    }
+
     def __init__(self, page: primitives.PageModel, position, icon: Optional[str], text: Optional[str],
                  tooltip: Optional[str], width, height, html_code, options: dict,
                  profile: Optional[Union[bool, dict]], verbose: bool = False):
@@ -545,18 +553,16 @@ class IconEdit(Html.Html):
             self.tooltip(tooltip)
         # Add the internal components icons and helper
         self.add_span(text, options=options.get("span"))
+        self.classList.add(self.style_refs["html-icon-edit"])
         if self._vals:
             icon = self._vals
         notches = options.get("font-factor", 0)
         if width[0] is not None and width[1] == 'px':
-            self.add_icon(icon, {"margin-right": "None", "margin": "2px",
-                                 'font-size': "%s%s" % (width[0] - notches, width[1])},
+            self.add_icon(icon, {'font-size': "%s%s" % (width[0] - notches, width[1])},
                           html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
         else:
-            self.add_icon(icon, {"margin-right": "None", "margin": "2px",
-                                 'font-size': self.page.body.style.globals.font.normal(-notches)},
+            self.add_icon(icon, {'font-size': self.page.body.style.globals.font.normal(-notches)},
                           html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
-        self.hover_color = True
 
     def spin(self):
         """Add a spin effect to the icon.
@@ -631,15 +637,10 @@ class IconEdit(Html.Html):
         :param source_event: Optional. The source target for the event
         :param on_ready: Optional. Specify if the event needs to be trigger when the page is loaded
         """
-        if self.hover_color:
-            if self.hover_color == 'danger':
-                self.icon.style.add_classes.div.danger_hover()
-            else:
-                self.icon.style.add_classes.icon.basic()
         return super(IconEdit, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
     def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
-              profile: types.PROFILE_TYPE = None, pressed_class: str = None, on_ready: bool = False):
+              profile: types.PROFILE_TYPE = None, pressed_class: str = "html-icon-pressed", on_ready: bool = False):
         """Special click event to keep in memory the state of the component.
 
         :param js_press_funcs: Optional. Javascript functions
@@ -648,30 +649,8 @@ class IconEdit(Html.Html):
         :param pressed_class: Optional. The CSS class when component's status is pressed
         :param on_ready: Optional. Event when component is ready on HTML side
         """
-        str_fnc = ""
-        if pressed_class is None:
-            self.page.properties.css.add_text(
-                ".event-pressed {background-color: %s; color: %s; border: 1px solid %s}" % (
-                    self.page.theme.notch(), self.page.theme.greys[0], self.page.theme.notch()), "event-pressed")
-            pressed_class = "event-pressed"
-        self.aria.pressed = False
-        if js_press_funcs is not None:
-            if not isinstance(js_press_funcs, list):
-                js_press_funcs = [js_press_funcs]
-            js_press_funcs.insert(0, self.dom.setAttribute("aria-pressed", True))
-            js_press_funcs.append(self.dom.addClass(pressed_class))
-            str_fnc = "if(%s.getAttribute('aria-pressed') == 'false'){%s}" % (
-                self.dom.varId, JsUtils.jsConvertFncs(js_press_funcs, toStr=True))
-        if js_release_funcs is not None:
-            if js_press_funcs is None:
-                raise ValueError("Press Event must be defined")
-
-            if not isinstance(js_release_funcs, list):
-                js_release_funcs = [js_release_funcs]
-            js_release_funcs.insert(0, self.dom.setAttribute("aria-pressed", False))
-            js_release_funcs.append(self.dom.removeClass(pressed_class))
-            str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
-        return self.on("click", str_fnc, profile, on_ready=on_ready)
+        return self.icon.press(js_press_funcs=js_press_funcs, js_release_funcs=js_release_funcs,
+                               profile=profile, pressed_class=pressed_class, on_ready=on_ready)
 
     def goto(self, url: str, js_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None,
              target: str = "_blank", source_event: Optional[str] = None):

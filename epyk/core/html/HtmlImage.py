@@ -5,6 +5,7 @@ import os
 import io
 import base64
 
+from pathlib import Path
 from typing import Union, Optional, List
 from epyk.core.py import primitives
 from epyk.core.py import types
@@ -414,31 +415,39 @@ class ImgCarousel(Html.Html):
 class Icon(Html.Html):
     name = 'Icon'
     builder_module = "HtmlIcon"
+    _option_cls = OptImg.OptionsIcon
     tag = "i"
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-icons.css",
+    ]
+
+    style_refs = {
+        "html-icon": "html-icon",
+    }
+
     def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile, text: str = ""):
-        super(Icon, self).__init__(page, text, css_attrs={"color": color, "width": width, "height": height},
+        super(Icon, self).__init__(page, text, css_attrs={"width": width, "height": height},
                                    html_code=html_code, profile=profile)
-        if options['icon_family'] == 'office-ui-fabric-core':
-            self.attr['class'].add("ms-Icon")
+        if color is not None:
+            self.style.css.color = color
+        self.classList.add(self.style_refs["html-icon"])
+        if self.options.icon_family == 'office-ui-fabric-core':
             if not value.startswith("ms-Icon--"):
                 value = "ms-Icon--%s" % value
         elif options['icon_family'] == 'material-design-icons':
-            self.attr['class'].add("material-icons")
             self._vals = value
             value = ""
-        elif options['icon_family'] == 'bootstrap-icons':
-            self.attr['class'].add("bi")
-            from epyk.fwk.bs import PkgImports
-            if self.page.ext_packages is None:
-                self.page.ext_packages = {}
-            self.page.ext_packages.update(PkgImports.BOOTSTRAP)
-            self.page.cssImport.add("bootstrap-icons")
         if value is not None:
             self.attr['class'].add(value)
         self.attr['aria-hidden'] = 'true'
         if tooltip is not None:
             self.tooltip(tooltip)
+
+    @property
+    def options(self) -> OptImg.OptionsIcon:
+        """Property to set all the possible object for a button."""
+        return super().options
 
     @classmethod
     def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
@@ -480,13 +489,6 @@ class Icon(Html.Html):
             self._dom = JsHtml.JsHtmlIcon(self, page=self.page)
         return self._dom
 
-    @property
-    def style(self) -> GrpClsImage.ClassIcon:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsImage.ClassIcon(self)
-        return self._styleObj
-
     def spin(self):
         """Add the spin class to the font awesome icon.
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
@@ -499,40 +501,38 @@ class Icon(Html.Html):
         """Add the pulse class to the font awesome icon.
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/animating-icons>`_
         """
-        if 'font-awesome' in self.requirements:
-            self.attr['class'].add("fa-pulse")
+        if self.options.icon_family == 'font-awesome':
+            self.classList.add("fa-pulse")
         return self
 
     def border(self):
         """Add a border to the icon.
         `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/bordered-pulled-icons>`_
         """
-        if 'font-awesome' in self.requirements:
-            self.attr['class'].add("fa-border")
+        if self.options.icon_family == 'font-awesome':
+            self.classList.add("fa-border")
         return self
 
     def size(self, value: int):
         """Icons inherit the font-size of their parent container which allow them to match any text you might use with
         them. With the following classes, we can increase or decrease the size of icons relative to that inherited
-        font-size.
-        `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/sizing-icons>`_
+        font-size. `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/sizing-icons>`_
 
         :param value: The value of the size factor for the icon
         """
-        if 'font-awesome' in self.requirements:
+        if self.options.icon_family == 'font-awesome':
             if isinstance(value, int):
-                self.attr['class'].add("fa-%sx" % value)
+                self.classList.add("fa-%sx" % value)
             else:
-                self.attr['class'].add("fa-%s" % value)
+                self.classList.add("fa-%s" % value)
         return self
 
     def fixed_width(self):
         """Add a class of fa-fw on the HTML element referencing your icon to set one or more icons to the same fixed
-        width.
-        `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/fixed-width-icons>`_
+        width. `Fontawesome <https://fontawesome.com/how-to-use/on-the-web/styling/fixed-width-icons>`_
         """
-        if 'font-awesome' in self.requirements:
-            self.attr['class'].add("fa-fw")
+        if self.options.icon_family == 'font-awesome':
+            self.classList.add("fa-fw")
         return self
 
     def rotate(self, value: int):
@@ -541,8 +541,8 @@ class Icon(Html.Html):
 
         :param value: The rotation angle
         """
-        if 'font-awesome' in self.requirements:
-            self.attr['class'].add("fa-rotate-%s" % value)
+        if self.options.icon_family == 'font-awesome':
+            self.classList.add("fa-rotate-%s" % value)
         return self
 
     def flip(self, direction: str = 'h'):
@@ -554,13 +554,13 @@ class Icon(Html.Html):
 
         :param direction: Optional. The direction reference (h or v)
         """
-        if 'font-awesome' in self.requirements:
+        if self.options.icon_family == 'font-awesome':
             if direction.lower() == 'h':
-                self.attr['class'].add("fa-flip-horizontal")
+                self.classList.add("fa-flip-horizontal")
             elif direction.lower() == 'v':
-                self.attr['class'].add("fa-flip-vertical")
+                self.classList.add("fa-flip-vertical")
             else:
-                self.attr['class'].add("fa-flip-both")
+                self.classList.add("fa-flip-both")
         return self
 
     def pull(self, position: str = 'left'):
@@ -569,8 +569,8 @@ class Icon(Html.Html):
 
         :param position: Optional. The icon pull position
         """
-        if 'font-awesome' in self.requirements:
-            self.attr['class'].add("fa-pull-%s" % position)
+        if self.options.icon_family == 'font-awesome':
+            self.classList.add("fa-pull-%s" % position)
         return self
 
     def set_icon(self, value: str):
@@ -578,14 +578,13 @@ class Icon(Html.Html):
 
         :param value: An icon class reference
         """
-        self.attr['class'].add(value)
+        self.classList.add(value)
         return self
 
     def hover_colors(self, color_hover: str, color_out: str = None):
         """Change the color of the button background when the mouse is hover.
 
         Usage::
-
           page.ui.icons.capture().icon.hover_colors("red", "yellow")
 
         :param color_hover: The color of the icon when mouse hover
@@ -612,11 +611,10 @@ class Icon(Html.Html):
         return super(Icon, self).click(js_funcs, profile, source_event, on_ready=on_ready)
 
     def press(self, js_press_funcs: types.JS_FUNCS_TYPES = None, js_release_funcs: types.JS_FUNCS_TYPES = None,
-              profile: types.PROFILE_TYPE = None, pressed_class: str = None, on_ready: bool = False):
+              profile: types.PROFILE_TYPE = None, pressed_class: str = "html-icon-pressed", on_ready: bool = False):
         """Special click event to keep in memory the state of the component.
 
         Usage::
-
           i = page.ui.icon("Click Me")
 
         :param js_press_funcs: Optional. Javascript functions
@@ -625,16 +623,8 @@ class Icon(Html.Html):
         :param pressed_class: Optional. The CSS class when component's status is pressed
         :param on_ready: Optional. Event when component is ready on HTML side
         """
-        self.style.css.cursor = "pointer"
-        self.style.css.border_radius = 20
         self.style.css.remove("color")
-        self.style.add_classes.button.basic()
         self.aria.pressed = False
-        if pressed_class is None:
-            self.page.properties.css.add_text(
-                ".event-pressed {background-color: %s; color: %s; border: 1px solid %s" % (
-                    self.page.theme.notch(), self.page.theme.greys[0], self.page.theme.notch()), "event-pressed")
-            pressed_class = "event-pressed"
         if not isinstance(js_press_funcs, list):
             js_press_funcs = [js_press_funcs]
         js_press_funcs.insert(0, self.dom.setAttribute("aria-pressed", True))

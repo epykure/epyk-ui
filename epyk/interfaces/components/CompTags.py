@@ -747,10 +747,10 @@ class Tags:
       self.page, sys._getframe().f_code.co_name, text, width, height, html_code, tooltip, options, profile)
     self.page.imports.add(self.page.icons.family)
     html.Html.set_component_skin(html_i)
+    html_i.style.css.padding = "2px 4px"
     if css_class:
       for c in css_class.split(" "):
-        html_i.attr["class"].add(c)
-    html_i.style.css.remove('font-family')
+        html_i.classList.add(c)
     return html_i
 
   def q(self, text, width: Union[tuple, int] = (100, "px"), height: Union[tuple, int] = (None, "px"),

@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import re
 import base64
 
 from epyk.core.py import types
@@ -9,6 +10,7 @@ from epyk.core import html
 from epyk.core.js.packages import JsFontAwesome
 from epyk.interfaces import Arguments
 from epyk.core.css import Colors
+from epyk.core.css import css_files_loader
 
 
 class Icons:
@@ -56,10 +58,6 @@ class Icons:
         width = Arguments.size(width, unit="px")
         size = Arguments.size(size, unit="px")
         height = Arguments.size(height, unit="px")
-        if width[0] == "auto":
-            width = (self.page.body.style.globals.font.size, width[1])
-        if height[0] == "auto":
-            height = (self.page.body.style.globals.font.size, height[1])
         options = options or {}
         if "icon_family" not in options:
             icon_details = self.page.icons.get(icon)
@@ -69,14 +67,12 @@ class Icons:
         icon_size = size if size[0] is not None else width
         html_edit = html.HtmlButton.IconEdit(
             self.page, position, icon_details["icon"], text, tooltip, icon_size, height, html_code, options, profile)
-        html_edit.css({"margin": 0, 'cursor': 'pointer'})
         html_edit.style.css.float = position
         html_edit.style.css.text_align = align
-        if width[0] is not None:
+        if width[0] is not None and width[0] != "auto":
             html_edit.style.css.width = "%s%s" % (width[0], width[1])
         if width[0] == 100 and width[1] == '%':
             html_edit.icon.style.css.display = "block"
-        html_edit.style.css.display = "inline-block"
         html.Html.set_component_skin(html_edit)
         return html_edit
 
@@ -258,7 +254,8 @@ class Icons:
         """
         components = self.awesome('previous', text, tooltip, position, width, height, html_code, options, profile,
                                   align, size)
-        components.icon.style.css.font_factor(10)
+        components.icon.style.css.font_factor(2)
+        components.icon.style.css.padding = "2px 5px 2px 3px"
         html.Html.set_component_skin(components)
         return components
 
@@ -1805,6 +1802,32 @@ class Icons:
         grid.style.css.padding_top = 5
         grid.style.css.padding_bottom = 5
         return grid
+
+    def theme(self, icon: str, filename: str, width=(None, '%'), height=('auto', ''),
+              options=None, profile=None) -> html.HtmlButton.IconEdit:
+        """
+
+        :param icon:
+        :param filename:
+        :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
+        :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+        :param options: Dictionary. Optional. Specific Python options available for this component
+        :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
+        """
+        from epyk.conf.global_settings import get_static_files
+
+        options = options or {}
+        results = get_static_files([filename], full_path=options.get("full_path"))
+        if results:
+            icon = self.awesome(icon, width=width, height=height, profile=profile)
+            style_vars = self.page.theme.all()
+            style_vars.update(self.page.body.style.globals.vars())
+            content = css_files_loader(results, style_vars=style_vars, resources={})
+            matches = re.findall(options.get("regexp", "--([a-zA-Z0-9- ]*):([a-zA-Z0-9# ]*);"), content)
+            icon.click([self.page.js.setDocumentElementProperty("--%s" % match[0], match[1]) for match in matches])
+            return icon
+
+        raise Exception("CSS File not found for root themes: %s" % filename)
 
 
 class Toggles:

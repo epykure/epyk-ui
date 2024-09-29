@@ -56,6 +56,7 @@ class HtmlModel:
   var = None
   is_range = None # For slider component
   ref: None
+  classList: None
 
   @property
   @abstractmethod

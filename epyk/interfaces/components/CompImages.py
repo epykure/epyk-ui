@@ -607,11 +607,8 @@ class Images:
     options = options or {}
     options["icon_family"] = family or icon_details["icon_family"]
     component = html.HtmlImage.Icon(
-      self.page, icon_details["icon"], width=width, height=height, color=color or 'inherit', tooltip=tooltip,
+      self.page, icon_details["icon"], width=width, height=height, color=color, tooltip=tooltip,
       options=options, html_code=html_code, profile=profile, text=text)
-    if width[0] is not None and width[1] == 'px':
-      notches = options.get("font-factor", 0)
-      component.style.css.font_size = "%s%s" % (width[0]-notches, width[1])
     if align == "center":
       component.style.css.margin = "auto"
       component.style.css.display = "block"

@@ -31,14 +31,13 @@ class Navigation:
 
   def up(self, icon: str = "fas fa-arrow-up", top: int = 20, right: int = 20, bottom: int = None, tooltip: str = None,
          width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
-         options: dict = None, profile: Union[bool, dict] = False):
-    """ Navigation button to go to the top of the page directly.
+         options: dict = None, profile: Union[bool, dict] = None) -> html.HtmlImage.Icon:
+    """Navigation button to go to the top of the page directly.
 
     :tags:
     :categories:
 
     Usage::
-
       page.ui.navigation.up()
 
     :param icon: Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
@@ -75,15 +74,13 @@ class Navigation:
 
   def down(self, icon: str = "fas fa-arrow-down", top: int = 20, right: int = 20, bottom: int = None,
            tooltip: str = None, width: Union[tuple, int] = (25, 'px'), height: Union[tuple, int] = (25, 'px'),
-           options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Navigation button to go to the bottom of the page directly.
+           options: dict = None, profile: Union[bool, dict] = None) -> html.HtmlImage.Icon:
+    """Navigation button to go to the bottom of the page directly.
 
     :tags:
     :categories:
 
     Usage::
-
       page.ui.navigation.down()
 
     :param icon: Optional. The component icon content from font-awesome references. Default fas fa-arrow-up
@@ -120,15 +117,14 @@ class Navigation:
 
   def to(self, y, x: int = None, icon: str = "fas fa-map-pin", top: int = 20, right: int = 20,
          bottom: Optional[int] = None, tooltip: str = None, width: Union[tuple, int] = (25, 'px'),
-         height: Union[tuple, int] = (25, 'px'), options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Navigation button to go to a specific point in the page directly.
+         height: Union[tuple, int] = (25, 'px'), options: dict = None, profile: Union[bool, dict] = None
+         ) -> html.HtmlImage.Icon:
+    """Navigation button to go to a specific point in the page directly.
 
     :tags:
     :categories:
 
     Usage::
-
       page.ui.navigation.to(100, tooltip="test")
 
     :param y: The y position on the page
@@ -166,9 +162,9 @@ class Navigation:
 
   def pin(self, text: str, url: str = "#", icon: str = "fas fa-map-pin", top: int = 20, right: int = 20,
           bottom: int = None, tooltip: str = None, width: Union[tuple, int] = (25, 'px'),
-          height: Union[tuple, int] = (25, 'px'), options: dict = None, profile: Union[bool, dict] = False):
-    """
-    Shortcut to a specific position in the page.
+          height: Union[tuple, int] = (25, 'px'), options: dict = None, profile: Union[bool, dict] = None
+          ) -> html.HtmlImage.Icon:
+    """Shortcut to a specific position in the page.
 
     :tags:
     :categories:
@@ -209,7 +205,7 @@ class Navigation:
     return div
 
   def scroll(self, progress: int = 0, height: Union[tuple, int] = (3, 'px'), options: dict = None,
-             profile: Union[bool, dict] = False):
+             profile: Union[bool, dict] = None):
     """
     Add a horizontal progressbar to display the status of the page scrollbar.
 
@@ -235,14 +231,13 @@ class Navigation:
 
   def indices(self, count: int, selected: int = 1, width: Union[tuple, int] = (100, '%'),
               height: Union[tuple, int] = (None, 'px'), html_code: str = None, options: dict = None,
-              profile: Union[bool, dict] = False):
+              profile: Union[bool, dict] = None) -> html.HtmlContainer.Indices:
     """
 
     :tags:
     :categories:
 
     Usage::
-
       page.ui.navigation.indices(10)
 
     :param count: Optional. The number of pages
@@ -266,10 +261,9 @@ class Navigation:
            tooltip: Optional[str] = None, height: Union[tuple, int] = (None, "px"),
            align: str = "left", html_code: Optional[str] = None, profile: Union[dict, bool] = None,
            options: Optional[dict] = None):
-    """   Add a see more button to get the number of calls for a pagination on the server side.
+    """Add a see more button to get the number of calls for a pagination on the server side.
 
     Usage::
-
       t = page.ui.text("Rewind")
       btn = page.ui.navigation.more()
       btn.click([page.js.console.log(btn.dom.next())])
@@ -320,7 +314,6 @@ class Navigation:
     :categories:
 
     Usage::
-
       p = page.ui.navigation.points(10)
       for i, _ in enumerate(p):
         p.click_item(i, [])
@@ -350,7 +343,6 @@ class Navigation:
     :categories:
 
     Usage::
-
       d = page.ui.navigation.dots(10)
 
     :param count: Optional. The number of pages
@@ -378,7 +370,6 @@ class Navigation:
     :categories:
 
     Usage::
-
       record = [{"text": "Lin 1", 'url': 'report_list.html'}, {"text": "Link 2"}]
       page.ui.navigation.path(record)
 
@@ -410,7 +401,6 @@ class Navigation:
     :categories:
 
     Usage::
-
       page.ui.components_skin = {"nav": {"css": {"background-color": 'pink'}}}
       nav = page.ui.navigation.nav(height=60, options={"center": True, "logo_height": 50})
 
@@ -435,7 +425,7 @@ class Navigation:
     return nav_bar
 
   def bar(self, logo=None, title=None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (40, 'px'),
-          options=None, html_code=None, avatar: Union[bool, str] = False,
+          options=None, html_code: str = None, avatar: Union[bool, str] = False,
           profile: Union[dict, bool] = False) -> html.HtmlMenu.HtmlNavBar:
     """
 
@@ -443,7 +433,6 @@ class Navigation:
     :categories:
 
     Usage::
-
       nav = page.ui.navigation.bar(title="test")
       nav.add_text("Test text")
       nav + page.ui.button("Click")
@@ -504,9 +493,8 @@ class Navigation:
       # https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp
       self.page.body.onReady([self.page.js.number(0, "window.prevScrollpos")])
       self.page.body.scroll(['''var currentScrollPos = window.pageYOffset;
-if (window.prevScrollpos > currentScrollPos) {%(dom)s.style.top = "0"} 
-else {%(dom)s.style.top = "-%(height)spx"};
-window.prevScrollpos = currentScrollPos;
+if (window.prevScrollpos > currentScrollPos) {%(dom)s.style.top = "0"} else {%(dom)s.style.top = "-%(height)spx"};
+window.prevScrollpos = currentScrollPos
 ''' % {"dom": html_nav.dom.varName, "height": height[0]}])
     if logo and options.get("center") is not None:
         html_nav.logo.style.css.margin = "auto"
@@ -601,7 +589,7 @@ window.prevScrollpos = currentScrollPos;
     return component
 
   def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False,
-           z_index: int = 20, overlay: bool = False):
+           z_index: int = 20, overlay: bool = False) -> html.HtmlContainer.Div:
     """
 
     :tags:
@@ -625,16 +613,15 @@ window.prevScrollpos = currentScrollPos;
     """
     position_type = "absolute" if self.page.body.template is None else 'fixed'
     d = self.page.ui.div(components, options=options, profile=profile)
-    d.css({"background": self.page.theme.colors[2], "position": position_type, 'top': 0, 'height': '100%',
-           'overflow-x': 'hidden', 'width': "%spx" % size, 'z-index': z_index})
+    d.set_style_map(["interf-navs.css"])
+    d.classList.add("i-nav-side-panel")
+    d.css({"position": position_type, 'width': "%spx" % size, 'z-index': z_index})
     if position == 'left':
-      d.css({
-        'left': 0, 'margin-left': "-%spx" % size,
-        'border-right': '1px solid %s' % self.page.theme.notch(), 'padding': '5px'})
+      d.classList.add("i-nav-side-panel-l")
+      d.css({'margin-left': "-%spx" % size})
     else:
-      d.css({
-        'right': 0, 'margin-right': "-%spx" % size,
-        'border-left': '1px solid %s' % self.page.theme.notch(), 'padding': '5px'})
+      d.classList.add("i-nav-side-panel-r")
+      d.css({'margin-right': "-%spx" % size})
     self.page.body.style.custom_class({
       "overflow-x": 'hidden', "position": 'relative', 'min-height': '100%'}, "html, body", is_class=False)
 
@@ -648,13 +635,7 @@ window.prevScrollpos = currentScrollPos;
     if overlay:
       overlay = self.page.ui.div(width=(100, "vw"), height=(100, "vh"))
       overlay.style.css.z_index = z_index - 1
-      overlay.style.css.left = 0
-      overlay.style.css.top = 0
-      overlay.style.css.right = 0
-      overlay.style.css.display = None
-      overlay.style.css.position = "fixed"
-      overlay.style.css.cursor = "pointer"
-      overlay.style.css.background = "rgba(0, 0, 0, 0.3)"
+      overlay.classList.add("i-nav-side-overlay")
       overlay_event = [overlay.dom.toggle()]
       d.overlay = overlay
     else:
@@ -690,14 +671,15 @@ window.prevScrollpos = currentScrollPos;
         overlay.click([anchor.dom.events.trigger("click")])
     return d
 
-  def pilcrow(self, text: str = "", html_code: str = None, options: dict = None, profile: Union[dict, bool] = None):
-    """
-    Add an anchor on the page and move to this when it is clicked.
+  def pilcrow(self, text: str = "", html_code: str = None, options: dict = None,
+              profile: Union[dict, bool] = None) -> html.HtmlContainer.Div:
+    """Add an anchor on the page and move to this when it is clicked.
 
     :tags:
     :categories:
 
     Usage::
+      page.ui.navigation.pilcrow()
 
     :param text: Optional. The value to be displayed to the component
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
@@ -717,8 +699,6 @@ window.prevScrollpos = currentScrollPos;
 
     :tags:
     :categories:
-
-    Usage::
 
     Templates:
 
@@ -745,8 +725,6 @@ window.prevScrollpos = currentScrollPos;
 
     :tags:
     :categories:
-
-    Usage::
 
     :param components: List. The different HTML objects to be added to the component.
     :param logo:
@@ -777,14 +755,15 @@ class Banners:
   def __init__(self, ui):
     self.page = ui.page
 
-  def top(self, data="", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def top(
+          self, data="", background=None, width=(100, '%'), height=(None, 'px'), options=None, profile=None
+  ) -> html.HtmlContainer.Div:
     """
 
     :tags:
     :categories:
 
     Usage::
-
       # to Change the CSS style
       top = page.ui.banners.top("text")
       top.style.css.font_size = '40px'
@@ -818,14 +797,13 @@ class Banners:
     return div
 
   def bottom(self, data: Union[str, list] = "", background=None, align="center", width=(100, '%'), height=(None, 'px'),
-             options=None, profile=False):
+             options=None, profile=None):
     """
 
     :tags:
     :categories:
 
     Usage::
-
       # Add a banner with HTML content
       icon = page.ui.icon("fab fa-python")
       text = page.ui.text("This is a text")
@@ -863,14 +841,13 @@ class Banners:
     html.Html.set_component_skin(div)
     return div
 
-  def cookies(self, text, url, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=False):
+  def cookies(self, text, url, align="center", width=(100, '%'), height=(None, 'px'), options=None, profile=None):
     """
 
     :tags:
     :categories:
 
     Usage::
-
       page.ui.banners.cookies("Test", "#")
 
     :param text: String. The value to be displayed to the component.
@@ -898,14 +875,13 @@ class Banners:
     return container
 
   def corner(self, data="", background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None,
-             profile=False):
+             profile=None):
     """
 
     :tags:
     :categories:
 
     Usage::
-
       # Add a banner on the bottom right corner
       b = page.ui.banners.corner("bottom", 'red')
       # Add click event on the banner
@@ -960,7 +936,7 @@ class Banners:
     return div
 
   def info(self, data, icon="fas fa-info-circle", background=None, width=(100, '%'), height=(None, 'px'), options=None,
-           profile=False):
+           profile=None):
     """
 
     :tags:
@@ -995,7 +971,7 @@ class Banners:
     return div
 
   def text(self, data="", size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'),
-           options=None, html_code=None, profile=False):
+           options=None, html_code=None, profile=None):
     """
 
     :tags:
@@ -1031,7 +1007,7 @@ class Banners:
     return div
 
   def title(self, title, content, size_notch=0, background=None, width=(100, '%'), align="center", height=(None, 'px'),
-            options=None, profile=False):
+            options=None, profile=None):
     """
 
     :tags:
@@ -1074,7 +1050,7 @@ class Banners:
     return div
 
   def quote(self, content, author, avatar=None, background=None, size_notch=0, width=(100, '%'), align="center",
-            height=(None, 'px'), options=None, profile=False):
+            height=(None, 'px'), options=None, profile=None):
     """
 
     :tags:
@@ -1116,13 +1092,11 @@ class Banners:
     return div
 
   def disclaimer(self, copyright=None, links=None, width=(100, '%'), height=("auto", ''), align="center", options=None,
-                 profile=False):
+                 profile=None):
     """
 
     :tags:
     :categories:
-
-    Usage::
 
     :param copyright:
     :param links:
@@ -1155,14 +1129,12 @@ class Banners:
     html.Html.set_component_skin(div)
     return div
 
-  def follow(self, text, width=(100, '%'), height=("auto", ''), align="left", options=None, profile=False,
+  def follow(self, text, width=(100, '%'), height=("auto", ''), align="left", options=None, profile=None,
              youtube=True, twitter=True, facebook=True, twitch=True, instagram=True, linkedIn=True):
     """
 
     :tags:
     :categories:
-
-    Usage::
 
     :param text: String. Optional. The value to be displayed to the component.
     :param align: String. Optional. A string with the horizontal position of the component.
@@ -1222,7 +1194,7 @@ class Banners:
     return div
 
   def row(self, headers, links, size_notch=0, background=None, width=(100, '%'), align="left", height=(None, 'px'),
-          options=None, profile=False):
+          options=None, profile=None):
     """
 
     :tags:
@@ -1261,7 +1233,7 @@ class Banners:
     return div
 
   def contact_us(self, title="Contact Us", background=None, width=(100, '%'), align="left", height=(None, 'px'),
-                 html_code="contactus", options=None, profile=False):
+                 html_code="contactus", options=None, profile=None):
     """
 
     :tags:
@@ -1365,7 +1337,7 @@ class NavBars:
   def __init__(self, ui):
     self.page = ui.page
 
-  def fixed(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def fixed(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=None):
     """
 
     :tags:
@@ -1384,7 +1356,7 @@ class NavBars:
     html.Html.set_component_skin(bar)
     return bar
 
-  def top(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def top(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=None):
     """
 
     :tags:
@@ -1404,7 +1376,7 @@ class NavBars:
     html.Html.set_component_skin(bar)
     return bar
 
-  def transparent(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def transparent(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=None):
     """
 
     :tags:
@@ -1426,7 +1398,7 @@ class NavBars:
     html.Html.set_component_skin(bar)
     return bar
 
-  def dark(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=False):
+  def dark(self, logo=None, title=None, width=(100, '%'), height=(40, 'px'), options=None, profile=None):
     """
 
     :tags:

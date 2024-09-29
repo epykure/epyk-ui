@@ -72,14 +72,10 @@ class HtmlGeneric(Html.Html):
         :param pressed_class: Optional. The CSS class when component's status is pressed
         :param on_ready: Optional. Event when component is ready on HTML side
         """
-        self.style.css.cursor = "pointer"
-        self.style.css.border_radius = 20
-        self.style.css.remove("color")
-        self.style.add_classes.button.basic()
         self.aria.pressed = False
         if pressed_class is None:
             self.page.properties.css.add_text(
-                ".event-pressed {background-color: %s; color: %s; border: 1px solid %s" % (
+                ".event-pressed {cursor: pointer; border-radius: 10px; background-color: %s; color: %s; border: 1px solid %s" % (
                     self.page.theme.notch(), self.page.theme.greys[0], self.page.theme.notch()), "event-pressed")
             pressed_class = "event-pressed"
         if not isinstance(js_press_funcs, list):
