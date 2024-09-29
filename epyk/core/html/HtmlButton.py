@@ -557,7 +557,7 @@ class IconEdit(Html.Html):
         if self._vals:
             icon = self._vals
         notches = options.get("font-factor", 0)
-        if width[0] is not None and width[1] == 'px':
+        if width[0] is not None and width[0] != "auto" and width[1] == 'px':
             self.add_icon(icon, {'font-size': "%s%s" % (width[0] - notches, width[1])},
                           html_code=self.html_code, family=options.get("icon_family"), options=options.get("icon"))
         else:
