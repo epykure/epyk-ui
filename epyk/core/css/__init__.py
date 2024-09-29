@@ -5,14 +5,14 @@ from . import Defaults as Defaults_css
 from ...conf import global_settings
 
 import logging
-from typing import List
+from typing import List, Union
 from pathlib import Path
 import re
 from typing import Optional, Dict
 
 
 def css_files_loader(
-        file_path: Optional[List[str]],
+        file_path: Optional[Union[List[str], List[Path]]],
         selector: str = None,
         style_vars: Optional[Dict[str, str]] = None,
         minify: bool = True,
