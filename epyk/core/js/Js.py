@@ -1860,7 +1860,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         :param profile: Optional. A flag to set the component performance storage
         :param self_contained: Optional. A flag to specify where the import will be done
         """
-        if script.endswith(".js"):
+        if script.lower().endswith(".js"):
             if os.path.exists(script) and self_contained:
                 with open(script, 'rb') as fp:
                     base64_bytes = base64.b64encode(fp.read())
@@ -2027,6 +2027,28 @@ if (!existingStyle && (styleElementId !== 'css_')) {
         name = JsUtils.jsConvertData(name, None)
         value = JsUtils.jsConvertData(value, None)
         return JsUtils.jsWrap("document.documentElement.style.setProperty(%s, %s)" % (name, value))
+
+    def resource(self, func_name: str, tree_map: dict = None) -> JsUtils.jsWrap:
+        """Define an external resource to be used in a JavaScript process
+
+        Usage::
+            page.js.resource("RevealTrans", {"file": "RevealTrans.js", "folder": "utils"})
+
+        :param func_name: A function name
+        :param tree_map: Loading definition
+        """
+        if not tree_map and func_name in treemap._FUNCTIONS_MAP:
+            tree_map = treemap._FUNCTIONS_MAP[func_name]
+        if tree_map:
+            for package in tree_map.get("packages", []):
+                self.page.jsImports.add(package)
+                self.page.cssImport.add(package)
+            res = JsUtils.DefinedResource(
+                self.page, file_nam=tree_map.get("file"), sub_folder=tree_map.get("folder"),
+                full_path=tree_map.get("path"), required_funcs=tree_map.get("requirements"))
+            return res.func(func_name)
+
+        return JsUtils.jsWrap(func_name)
 
 
 class JsConsole:
