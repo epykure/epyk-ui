@@ -240,9 +240,9 @@ class PyOuts:
           0,
           'if(window.exports){Object.keys(window.exports).forEach(function(key){window[key] = window.exports[key]})}')
         if ASSETS_SPLIT_MINIFY:
-            cssStyle = "%s%s" % ("".join(cssParts.values()), self.page.properties.css.text),
+            cssStyle = "%s%s" % ("".join(cssParts.values()), self.page.properties.css.text)
         else:
-            cssStyle = "%s\n%s" % ("\n".join(cssParts.values()), self.page.properties.css.text),
+            cssStyle = "%s\n%s" % ("\n".join(cssParts.values()), self.page.properties.css.text)
         results = {
             'cssStyle': cssStyle,
             'cssContainer': ";".join(
