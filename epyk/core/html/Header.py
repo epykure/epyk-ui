@@ -162,6 +162,23 @@ class Meta:
       self.__cols.append(name)
     return self
 
+  def add(self, **kwargs):
+    """Add a bespoke meta HTML tag to the page.
+
+    Usage::
+      page.headers.meta.add(http_equiv="Page-Enter", content="RevealTrans(Duration=2.0,Transition=2)")
+      page.headers.meta.add(data_rh="true", name="twitter:site", content="@Epyk")
+
+    `Documentation <https://gist.github.com/lancejpollard/1978404>`_
+
+    :param kwargs: The value of the attribute you want to add
+    """
+    attrs = " ".join(['%s="%s"' % (k.replace("_", "-"), v) for k, v in kwargs.items()])
+    self._metas[attrs] = '<meta %s>' % attrs
+    if attrs not in self.__cols:
+      self.__cols.append(attrs)
+    return self
+
   def http_equiv(self, name: str, content: str):
     """
     Bespoke function to add other http-equiv tags to the meta section.

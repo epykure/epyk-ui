@@ -2007,6 +2007,16 @@ JS_IMPORTS = {
             ],
             'website': 'https://coloris.js.org/'
         },
+
+    # JavaScript mangler and compressor toolkit
+    'terser': {
+            "unpkg": False,
+            'version': "5.34.1",
+            'modules': [
+                {'script': 'bundle.min.js', 'path': 'terser@%(version)s/dist/', 'cdnjs': JSDELIVER},
+            ],
+            'website': 'https://terser.org/'
+    }
 }
 
 CSS_IMPORTS = {
@@ -4586,7 +4596,7 @@ class ImportManager:
         global JS_IMPORTS
 
         mod_entry = {'css': {}, 'js': {}}
-        for mod in config['modules']:
+        for mod in config.get('modules', []):
             if "version" not in mod and "version" in config:
                 mod["version"] = config["version"]
             if mod['script'].endswith(".css"):
@@ -4609,18 +4619,28 @@ class ImportManager:
                             mod_entry['js'].setdefault('req', []).append(req)
         if len(mod_entry['css']) > 0:
             CSS_IMPORTS.setdefault(alias, {}).update(mod_entry['css'])
-            self.cssImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': []}
+            self.cssImports[alias] = {
+                "main": collections.OrderedDict(), 'versions': [config.get("version", "")], 'dep': [],
+                "type": collections.OrderedDict()}
             for pkg in mod_entry.get('css', {}).get("modules", []):
                 self.cssImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config["version"])
+                if "type" in pkg:
+                    self.cssImports[alias]["type"][script_cdnjs_path(alias, pkg)] = pkg["type"]
+                else:
+                    self.cssImports[alias]["type"][script_cdnjs_path(alias, pkg)] = 'stylesheet'
         if len(mod_entry['js']) > 0:
             JS_IMPORTS.setdefault(alias, {}).update(mod_entry['js'])
             JS_IMPORTS[alias]["version"] = config.get("version", "")
-            self.jsImports[alias] = {"main": collections.OrderedDict(), 'versions': [], 'dep': [], "type": {}}
+            self.jsImports[alias] = {
+                "main": collections.OrderedDict(), 'versions': [JS_IMPORTS[alias]["version"]], 'dep': [],
+                "type": collections.OrderedDict()}
             for pkg in mod_entry['js']["modules"]:
                 self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version",
                                                                                        config.get("version", ''))
                 if "type" in pkg:
                     self.jsImports[alias]["type"][script_cdnjs_path(alias, pkg)] = pkg["type"]
+                else:
+                    self.jsImports[alias]["type"][script_cdnjs_path(alias, pkg)] = 'text/javascript'
         return self
 
     def to_requireJs(self, data: dict, excluded_packages: Optional[list] = None):
@@ -4784,9 +4804,7 @@ class ImportManager:
         """Shortcut properties to the various package definitions.
         This can be used in the script in order to change the path of the version of any external modules used.
         """
-        if self.__pkgs is None:
-            self.__pkgs = ImportPackages(self.jsImports, self.cssImports, page=self.page)
-        return self.__pkgs
+        return ImportPackages(self.jsImports, self.cssImports, page=self.page)
 
     def website(self, alias: str) -> str:
         """Get the official website for a JavaScript library.

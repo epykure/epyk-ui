@@ -588,8 +588,15 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
         logs = {}
     possible_paths = []
     if global_settings.PRIMARY_RESOURCE_PATHS:
+        # Add both the sub folder and the main folder to the searchable locations.
+        if sub_folder is not None:
+            for f in global_settings.PRIMARY_RESOURCE_PATHS:
+                possible_paths.append(Path(f) / sub_folder)
         possible_paths.extend(global_settings.PRIMARY_RESOURCE_PATHS)
     if global_settings.NATIVE_JS_PATH:
+        # Add both the sub folder and the main folder to the searchable locations.
+        if sub_folder is not None:
+            possible_paths.append(Path(global_settings.NATIVE_JS_PATH) / sub_folder)
         possible_paths.append(global_settings.NATIVE_JS_PATH)
     if sub_folder is not None:
         possible_paths.append(Path(__file__).parent / "native" / sub_folder)
@@ -634,7 +641,7 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
 class DefinedResource:
 
     def __init__(self, page, file_nam: str, sub_folder: str = None, full_path: str = None,
-                   required_funcs: List[str] = None):
+                 required_funcs: List[str] = None):
         if not file_nam.upper().endswith(".JS"):
             file_nam = file_nam + ".js"
         self.page = page

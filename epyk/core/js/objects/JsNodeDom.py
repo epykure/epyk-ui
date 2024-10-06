@@ -1902,6 +1902,17 @@ class JsDoms(JsObject.JsObject):
             self.varId, JsUtils.jsConvertData(attribute_value, None)))
         return self
 
+    def getMetaContent(self, **kwargs):
+        """Get content values for a meta tag.
+
+        Usage::
+            page.js.console.log(page.body.dom.getMetaContent(http_equiv="Page-Enter"))
+
+        :params **kwargs: Any filters and values used to define the meta HTML attribute
+        """
+        filters = "".join(['[%s=\'%s\']' % (k.replace("_", "-"), v) for k, v in kwargs.items()])
+        return JsString.JsString.get('document.head.querySelector("%s[content]").content' % filters)
+
 
 class JsDomsList(JsArray.JsArray):
 

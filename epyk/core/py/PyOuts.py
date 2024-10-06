@@ -138,7 +138,7 @@ class PyOuts:
 
         :return: A python dictionary with the HTML results
         """
-        from epyk.conf.global_settings import  ASSETS_STATIC_ROUTE
+        from epyk.conf.global_settings import ASSETS_SPLIT_MINIFY
 
         order_components = list(self.page.components.keys())
         if htmlParts is None:
@@ -239,8 +239,12 @@ class PyOuts:
         onloadParts.insert(
           0,
           'if(window.exports){Object.keys(window.exports).forEach(function(key){window[key] = window.exports[key]})}')
+        if ASSETS_SPLIT_MINIFY:
+            cssStyle = "%s%s" % ("".join(cssParts.values()), self.page.properties.css.text),
+        else:
+            cssStyle = "%s\n%s" % ("\n".join(cssParts.values()), self.page.properties.css.text),
         results = {
-            'cssStyle': "%s\n%s" % ("\n".join([v for v in cssParts.values()]), self.page.properties.css.text),
+            'cssStyle': cssStyle,
             'cssContainer': ";".join(
                 ["%s:%s" % (k, v) for k, v in self.page._props.get('css', {}).get('container', {}).items()]),
             'content': "\n".join(htmlParts),
