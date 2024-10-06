@@ -302,7 +302,7 @@ def jsConvertFncs(js_funcs: types.JS_FUNCS_TYPES, is_py_data: bool = False,
     return cnv_funcs
 
 
-def cleanFncs(fnc: str):
+def cleanFncs(fnc: str) -> str:
     """Try to remove as much as possible all the characters in order to speed up the javascript
     Indeed most of the browsers are using minify Javascript to make the page less heavy.
 
@@ -315,7 +315,10 @@ def cleanFncs(fnc: str):
     content = []
     for r in fnc.strip().split('\n'):
         split_content = r.split("//")
-        content.append(split_content[0].strip())
+        if split_content[0].endswith("https:"):
+            content.append(r.strip())
+        else:
+            content.append(split_content[0].strip())
     return "".join(content)
 
 

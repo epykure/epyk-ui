@@ -241,6 +241,10 @@ class CssProperties:
     @property
     def text(self) -> str:
         """Return the extra CSS styles manually added"""
+        from epyk.conf.global_settings import ASSETS_SPLIT_MINIFY
+        if ASSETS_SPLIT_MINIFY:
+            return "".join(self._context['css']["text"])
+
         return "\n".join(self._context['css']["text"])
 
     def add_text(self, text: str, map_id: str = None, replace: bool = False):
@@ -258,6 +262,10 @@ class CssProperties:
         :param map_id: Optional. Internal ID to avoid loading the same content multiple time
         :param replace: Optional. replace the CSS text if already defined
         """
+        from epyk.conf.global_settings import ASSETS_SPLIT_MINIFY
+
+        if ASSETS_SPLIT_MINIFY:
+            text = "".join([css.strip() for css in text.split("\n")])
         if map_id is None or map_id not in self.__map_css:
             self._context['css']["text"].append(text)
             if map_id is not None:

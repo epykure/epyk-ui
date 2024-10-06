@@ -14,8 +14,6 @@ from epyk.core.css.catalogs import CatalogTree
 from epyk.core.css.catalogs import CatalogIcons
 from epyk.core.css.catalogs import CatalogLayout
 from epyk.core.css.catalogs import CatalogLink
-from epyk.core.css.catalogs import CatalogList
-from epyk.core.css.catalogs import CatalogPopup
 from epyk.core.css.catalogs import CatalogRadio
 from epyk.core.css.catalogs import CatalogSelect
 from epyk.core.css.catalogs import CatalogTable
