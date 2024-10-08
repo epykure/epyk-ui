@@ -6,9 +6,96 @@
     left: 0 ;
     box-sizing: border-box ;
     padding: 0 5px 0 2px ;
-    position: fixed ;
-    background_color: var(--white) ;
-    border_bottom = 1px solid var(--grey) ;
+    background-color: var(--theme-lighter) ;
     top: 0 ;
     z-index: 510 ;
+}
+
+.html-navbar-horizontal {
+    width: 100% ;
+    position: fixed ;
+    top: 0 ;
+    border-bottom: 1px solid var(--grey) ;
+}
+
+
+.html-navbar-vertical {
+    height: 100% ;
+    text-align: center ;
+    position: fixed ;
+    border-right: 1px solid var(--grey) ;
+    left: 0 ;
+    display: flex ;
+    flex-direction: column;
+}
+
+
+.html-navbar-title {
+    height: 100% ;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-transform: uppercase ;
+    font-weight: 900 ;
+    display: inline-block ;
+}
+
+
+.html-navbar-subtitle {
+    display: inline-block ;
+}
+
+
+.html-navbar-logo {
+    display: inline ;
+    margin: 5px;
+}
+
+
+.html-navbar-scroll {
+    height: 5px ;
+    display: block ;
+}
+
+
+.html-navbar-avatar {
+    margin-left: 20px ;
+    display: inline ;
+}
+
+
+.html-navbar-item-h {
+    user-select: None ;
+    margin-left: 5px ;
+    margin-right: 5px ;
+    cursor: pointer ;
+    display: inline-block ;
+}
+
+
+.html-navbar-item-v {
+    user-select: None ;
+    margin-left: 5px ;
+    margin-right: 5px ;
+    cursor: pointer ;
+    display: block ;
+}
+
+
+.html-navbar-text {
+    height: 100% ;
+    vertical-align: middle ;
+}
+
+
+.html-navbar-panel {
+    display: inline-block ;
+    flex-grow: 1 ;
+}
+
+
+.html-navbar-panel-right {
+    display: inline-block ;
+    text-transform: uppercase ;
+    font-weight: 900 ;
+    align-items: flex-end;
 }

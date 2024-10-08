@@ -205,7 +205,7 @@ class Navigation:
     return div
 
   def scroll(self, progress: int = 0, height: Union[tuple, int] = (3, 'px'), options: dict = None,
-             profile: Union[bool, dict] = None):
+             profile: Union[bool, dict] = None, html_code: str = None):
     """
     Add a horizontal progressbar to display the status of the page scrollbar.
 
@@ -220,9 +220,10 @@ class Navigation:
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
+    :param html_code: Optional.
     """
     height = Arguments.size(height, unit="px")
-    p = self.page.ui.sliders.progressbar(progress, height=height, options=options, profile=profile)
+    p = self.page.ui.sliders.progressbar(progress, height=height, options=options, profile=profile, html_code=html_code)
     self.page.js.onReady(
       self.page.js.window.events.addScrollListener([
         p.build(self.page.js.window.scrollPercentage)]))
@@ -392,9 +393,9 @@ class Navigation:
     html.Html.set_component_skin(div)
     return div
 
-  def nav(self, logo=None, title: str = None, components=None, width: Union[tuple, int] = (100, '%'),
-          height: Union[tuple, int] = (40, 'px'), options: dict = None,
-          avatar: bool = False, profile: Union[dict, bool] = False) -> html.HtmlMenu.HtmlNavBar:
+  def nav(self, logo=None, title: str = None, components=None, size: Union[tuple, int] = (40, 'px'),
+          options: dict = None, avatar: bool = False, html_code: str = "page_nav_bar", profile: Union[dict, bool] = False
+          ) -> html.HtmlMenu.HtmlNavBar:
     """
 
     :tags:
@@ -413,18 +414,17 @@ class Navigation:
     :param avatar: Optional. Add a avatar picture to the right in the navbar
     :param profile: Optional. A flag to set the component performance storage
     """
-    comp_id = 'page_nav_bar'
-    if comp_id not in self.page.components:
-      nav_bar = self.bar(logo, title, width, height, options, avatar=avatar, html_code=comp_id, profile=profile)
+    if html_code not in self.page.components:
+      nav_bar = self.bar(logo, title, size, options, avatar=avatar, html_code=html_code, profile=profile)
     else:
-      nav_bar = self.page.components[comp_id]
+      nav_bar = self.page.components[html_code]
     if components is not None:
       for component in components:
         nav_bar.add(component)
     html.Html.set_component_skin(nav_bar)
     return nav_bar
 
-  def bar(self, logo=None, title=None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (40, 'px'),
+  def bar(self, logo=None, title=None, size: Union[tuple, int] = (40, 'px'),
           options=None, html_code: str = None, avatar: Union[bool, str] = False,
           profile: Union[dict, bool] = False) -> html.HtmlMenu.HtmlNavBar:
     """
@@ -443,77 +443,17 @@ class Navigation:
 
     :param logo:
     :param title: String. Optional. A panel title. This will be attached to the title property
-    :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
-    :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param size: Tuple. Optional. A tuple with the integer for the component width or height and its unit
     :param options: Optional. Specific Python options available for this component
     :param avatar: Optional.
     :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
     :param profile: Optional. A flag to set the component performance storage
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    components = []
-    options, scroll_height = options or {}, -5
-    options['logo_height'] = (height[0]-10, height[1]) if 'logo_height' not in options else Arguments.size(options['logo_height'], unit="px")
-    options['logo_width'] = (height[0]-10, height[1]) if 'logo_width' not in options else Arguments.size(options['logo_width'], unit="px")
-
-    if logo is None:
-      logo = self.page.ui.icons.epyk(size=options['logo_height'])
-      logo.style.css.max_width = 40
-      logo.style.css.max_height = 40
-      components.append(logo)
-    else:
-      if not hasattr(logo, 'options'):    # if it is not an option it is considered as a path
-        logo_url = logo
-        logo = self.page.ui.div(height=options['logo_height'], width=options['logo_width'])
-        if logo_url:
-          logo.style.css.background_url(logo_url) #, size="auto %s%s" % (options['logo_height'][0], options['logo_height'][1]))
-      components.append(logo)
-    if title is not None:
-      title = self.__format_text(title, self.page.body.style.globals.font.normal(5), italic=False)
-      title = self.page.ui.div(title, height=(100, "%"))
-      title.style.css.text_transform = "uppercase"
-      title.style.css.margin_left = 5
-      title.style.css.margin_right = 5
-      title.style.css.bold()
-      components.append(title)
-    if options.get('status', False):
-      scroll = self.page.ui.navigation.scroll()
-      scroll_height = 5
-      scroll.style.css.display = "block"
-      scroll.options.managed = False
-      scroll.style.css.height = scroll_height
-    html_nav = html.HtmlMenu.HtmlNavBar(self.page, components, width=width, height=height, options=options,
-                                        html_code=html_code, profile=profile)
-    if options.get('status', False):
-      html_nav.scroll = scroll
-    html_nav.logo = logo
-
-    if options.get("scroll", True):
-      # https://www.w3schools.com/howto/howto_js_navbar_hide_scroll.asp
-      self.page.body.onReady([self.page.js.number(0, "window.prevScrollpos")])
-      self.page.body.scroll(['''var currentScrollPos = window.pageYOffset;
-if (window.prevScrollpos > currentScrollPos) {%(dom)s.style.top = "0"} else {%(dom)s.style.top = "-%(height)spx"};
-window.prevScrollpos = currentScrollPos
-''' % {"dom": html_nav.dom.varName, "height": height[0]}])
-    if logo and options.get("center") is not None:
-        html_nav.logo.style.css.margin = "auto"
-        html_nav.logo.style.css.display = "block"
-    else:
-        html_nav.logo.style.css.margin_right = 20
-        html_nav.logo.style.css.display = "inline-block"
-    html_nav.title = title
-    html_nav.style.css.line_height = height[0]
-    Defaults_css.BODY_CONTAINER = {"padding-top": height[0] + scroll_height}
-    self.page.body.style.custom_class({
-      "padding-top": '%spx' % (height[0] + 5 + scroll_height)}, "body", is_class=False)
+    options = options or {}
+    html_nav = html.HtmlMenu.HtmlNavBar(
+      self.page, [], logo=logo, title=title, avatar=avatar, size=Arguments.size(size, unit="px"),
+      options=options, html_code=html_code, profile=profile)
     html.Html.set_component_skin(html_nav)
-    if avatar:
-      if isinstance(avatar, bool):
-        avatar = ""
-      html_nav.avatar = self.page.ui.images.avatar(
-        avatar, width=height[0]-10, height=height[0]-10, options={"status": False})
-      html_nav.avatar.style.css.margin_left = 20
     return html_nav
 
   def banner(self, image: str = "", text: str = "", link: str = "", width: Union[tuple, int] = (100, '%'),
@@ -555,7 +495,7 @@ window.prevScrollpos = currentScrollPos
     html.Html.set_component_skin(div)
     return div
 
-  def footer(self, components=None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (80, 'px'),
+  def footer(self, components=None, logo=None, width: Union[tuple, int] = (100, '%'), height: Union[tuple, int] = (40, 'px'),
              fixed=False, options=None, profile=False) -> html.HtmlMenu.HtmlFooter:
     """
 
@@ -571,6 +511,7 @@ window.prevScrollpos = currentScrollPos
       - :class:`epyk.core.html.HtmlMenu.HtmlFooter`
 
     :param components: list of html components.
+    :param logo:
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit.
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit.
     :param fixed: Boolean. Optional. Fix the component at the page bottom.
@@ -580,7 +521,7 @@ window.prevScrollpos = currentScrollPos
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
     component = html.HtmlMenu.HtmlFooter(
-      self.page, components, width=width, height=height, options=options, profile=profile)
+      self.page, components, logo=logo, width=width, height=height, options=options, profile=profile)
     if fixed:
       self.page.body.style.css.padding_bottom = height[0]
     else:
@@ -589,7 +530,7 @@ window.prevScrollpos = currentScrollPos
     return component
 
   def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False,
-           z_index: int = 20, overlay: bool = False) -> html.HtmlContainer.Div:
+           z_index: int = 20, overlay: bool = False, padding: int = None) -> html.HtmlContainer.Div:
     """
 
     :tags:
@@ -610,18 +551,25 @@ window.prevScrollpos = currentScrollPos
     :param profile: Optional. A flag to set the component performance storage.
     :param z_index: Optional.
     :param overlay: Optional.
+    :param padding: Optional.
     """
     position_type = "absolute" if self.page.body.template is None else 'fixed'
     d = self.page.ui.div(components, options=options, profile=profile)
+    # Default position based on the navbar orient
+    position = {"horizontal": "top", "vertical": "left"}.get(position, position)
+    d.options.set(position, name="position")
     d.set_style_map(["interf-navs.css"])
     d.classList.add("i-nav-side-panel")
-    d.css({"position": position_type, 'width': "%spx" % size, 'z-index': z_index})
-    if position == 'left':
-      d.classList.add("i-nav-side-panel-l")
-      d.css({'margin-left': "-%spx" % size})
+    d.classList.add("i-nav-side-panel-%s" % position[0])
+    d.css({'margin-%s' % position: "-%spx" % size, 'z-index': z_index, "position": position_type})
+    if padding:
+      d.css({'padding-%s' % position: Arguments.size(padding, toStr=True)})
+    if d.options.get(name="position") == 'left':
+      d.css({'width': "%spx" % size})
+    elif d.options.get(name="position") == 'top':
+      d.css({'height': "%spx" % size, "width": "100%"})
     else:
-      d.classList.add("i-nav-side-panel-r")
-      d.css({'margin-right': "-%spx" % size})
+      d.css({'width': "%spx" % size})
     self.page.body.style.custom_class({
       "overflow-x": 'hidden', "position": 'relative', 'min-height': '100%'}, "html, body", is_class=False)
 
@@ -642,7 +590,7 @@ window.prevScrollpos = currentScrollPos
       overlay_event = []
     html.Html.set_component_skin(d)
     if anchor is None:
-      if position == 'left':
+      if d.options.get(name="position") == 'left':
         i = self.page.ui.icon("fas fa-bars").click(
           overlay_event + [d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
         i.style.css.float = 'right'
@@ -664,6 +612,9 @@ window.prevScrollpos = currentScrollPos
       if position == 'left':
         anchor.click(
           overlay_event + [d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+      if position == 'top':
+        anchor.click(
+          overlay_event + [d.dom.toggle_transition("margin-top", "0px", "-%spx" % size)])
       else:
         anchor.click(
           overlay_event + [d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])

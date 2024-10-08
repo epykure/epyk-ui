@@ -1918,10 +1918,11 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
             style_vars.update(self.page.body.style.globals.vars())
             # Add CSS proxy mapping from the body
             self.page.body.set_css_maps(style_vars)
-            css_content = css_files_loader(
-                self.style_urls, style_vars=style_vars, resources=self.page.properties.resources)
-            if css_content:
-                self.page.properties.css.add_text(css_content, map_id=self.__class__.__name__)
+            for css_file in self.style_urls:
+                css_content = css_files_loader(
+                    [css_file], style_vars=style_vars, resources=self.page.properties.resources)
+                if css_content:
+                    self.page.properties.css.add_text(css_content, map_id=css_file)
 
         str_result = []
         if self._on_ready_js:

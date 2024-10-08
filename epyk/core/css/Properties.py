@@ -1877,6 +1877,8 @@ class CssMixin:
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    elif isinstance(val, tuple):
+      val = "%s%s" % (val[0], val[1])
     self.css({"padding-bottom": val})
 
   @property
@@ -1928,6 +1930,8 @@ class CssMixin:
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    elif isinstance(val, tuple):
+      val = "%s%s" % (val[0], val[1])
     self.css({"padding-left": val})
 
   @property
@@ -1945,6 +1949,8 @@ class CssMixin:
     val = val if val is not None else 'None'
     if isinstance(val, int):
       val = "%spx" % val
+    elif isinstance(val, tuple):
+      val = "%s%s" % (val[0], val[1])
     self.css({"padding-right": val})
 
   @property
@@ -1963,6 +1969,8 @@ class CssMixin:
   def padding_top(self, val):
     if isinstance(val, int):
       val = "%spx" % val
+    elif isinstance(val, tuple):
+      val = "%s%s" % (val[0], val[1])
     val = val if val is not None else 'None'
     self.css({"padding-top": val})
 

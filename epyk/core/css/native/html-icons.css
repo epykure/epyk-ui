@@ -61,3 +61,36 @@
     color: var(--white);
     border: 1px solid var(--selected) ;
 }
+
+.html-icon-menu-h {
+    outline: none;
+    position: absolute ;
+    line-height: normal ;
+    border: 1px solid var(--theme-dark) ;
+    border-radius: 5px ;
+    min-height: 20px ;
+    margin-top: 10px ;
+    left: 0 ;
+    top: 20px ;
+    padding: 3px ;
+    z-index: 600 ;
+    background-color: var(--white) ;
+    border: 1px solid var(--grey-light) ;
+}
+
+
+.html-icon-menu-v {
+    outline: none;
+    position: absolute ;
+    line-height: normal ;
+    border: 1px solid var(--theme-dark) ;
+    border-radius: 5px ;
+    min-height: 20px ;
+    margin-top: 10px ;
+    left: 40px ;
+    top: -15px ;
+    padding: 3px ;
+    z-index: 600 ;
+    background-color: var(--white) ;
+    border: 1px solid var(--grey-light) ;
+}

@@ -853,8 +853,7 @@ class Fields:
 
   def months(self, value=None, label: str = None, icon: str = None, width: types.SIZE_TYPE = (100, "%"),
              height: types.SIZE_TYPE = (None, "px"), html_code: str = None, helper: str = None,
-             options: types.OPTION_TYPE = None,
-             profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
+             options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlInput.FieldSelect:
     """
 
     :tags:
@@ -1166,6 +1165,8 @@ class Fields:
       component.label.style.css.line_height = Defaults.LINE_HEIGHT
       component.label.style.css.width = '{}px'.format(Defaults.INPUTS_MIN_WIDTH)
       component.extend([component.label, component.input])
+    else:
+      component.extend([component.input])
     html.Html.set_component_skin(component)
     return component
 
@@ -1215,6 +1216,8 @@ class Fields:
       component.label.style.css.width = '{}px'.format(Defaults.INPUTS_MIN_WIDTH)
       component.label.style.css.line_height = Defaults.LINE_HEIGHT
       component.extend([component.label, component.input])
+    else:
+      component.extend([component.input])
     if orientation == "vertical":
       component.input.style.css.height = component.input.style.css.width
       component.input.style.css.width = component.input.style.css.height

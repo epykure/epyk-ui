@@ -327,6 +327,10 @@ class AgGrid(JsPackage):
 
     @property
     def api(self):
+        """Switch JavaScript definition to the appropriate api"""
+        if self.component.options.useCreateGrid:
+            return JsObjects.JsObject.JsObject.get(self.varId)
+
         return JsObjects.JsObject.JsObject.get("%s.api" % self.varId)
 
     def add_row(self, data, flag: Union[types.JS_DATA_TYPES, bool] = False, dataflows: List[dict] = None):
@@ -378,7 +382,7 @@ class AgGrid(JsPackage):
 
         :param transaction:
         """
-        return JsObjects.JsVoid("%s.api.applyTransaction(%s)" % (self.varId, JsUtils.jsConvertData(transaction, None)))
+        return JsObjects.JsVoid("%s.applyTransaction(%s)" % (self.api, JsUtils.jsConvertData(transaction, None)))
 
     def applyTransactionAsync(self, transaction, callback):
         """Same as applyTransaction except executes asynchronous for efficiency.
@@ -387,14 +391,14 @@ class AgGrid(JsPackage):
         :param transaction:
         :param callback:
         """
-        return JsObjects.JsVoid("%s.api.applyTransaction(%s, %s)" % (
-            self.varId, JsUtils.jsConvertData(transaction, None), callback))
+        return JsObjects.JsVoid("%s.applyTransaction(%s, %s)" % (
+            self.api, JsUtils.jsConvertData(transaction, None), callback))
 
     def collapseAll(self):
         """
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
         """
-        return ColumnApi(self.page, "%s.api.collapseAll" % self.varId)
+        return ColumnApi(self.page, "%s.collapseAll" % self.api)
 
     @property
     def columnApi(self):
@@ -408,7 +412,7 @@ class AgGrid(JsPackage):
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grouping-opening-groups/#opening-group-levels-by-default>`_
         """
-        return ColumnApi(self.page, "%s.api.expandAll" % self.varId)
+        return ColumnApi(self.page, "%s.expandAll" % self.api)
 
     def exportDataAsCsv(self, csv_export_params: dict = None):
         """The grid data can be exported to CSV with an API call, or using the right-click context menu
@@ -420,9 +424,9 @@ class AgGrid(JsPackage):
         """
         if csv_export_params is not None:
             return JsObjects.JsVoid(
-                "%s.api.exportDataAsCsv(%s)" % (self.varId, JsUtils.jsConvertData(csv_export_params, None)))
+                "%s.exportDataAsCsv(%s)" % (self.api, JsUtils.jsConvertData(csv_export_params, None)))
 
-        return JsObjects.JsVoid("%s.api.exportDataAsCsv()" % self.varId)
+        return JsObjects.JsVoid("%s.exportDataAsCsv()" % self.api)
 
     def exportDataAsExcel(self, excel_export_params: dict = None):
         """Downloads an Excel export of the grid's data.
@@ -432,27 +436,27 @@ class AgGrid(JsPackage):
         """
         if excel_export_params is not None:
             return JsObjects.JsVoid(
-                "%s.api.exportDataAsExcel(%s)" % (self.varId, JsUtils.jsConvertData(excel_export_params, None)))
+                "%s.exportDataAsExcel(%s)" % (self.api, JsUtils.jsConvertData(excel_export_params, None)))
 
-        return JsObjects.JsVoid("%s.api.exportDataAsExcel()" % self.varId)
+        return JsObjects.JsVoid("%s.exportDataAsExcel()" % self.api)
 
     def getColumnDefs(self):
         """Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the rows.
         `Related Pages <https://www.ag-grid.com/documentation/javascript/column-updating-definitions/>`_
         """
-        return JsObjects.JsObject.JsObject("%s.api.getColumnDefs()" % self.varId)
+        return JsObjects.JsObject.JsObject("%s.getColumnDefs()" % self.api)
 
-    def getDataAsCsv(self, params: dict  = None) -> JsObjects.JsString.JsString:
+    def getDataAsCsv(self, params: dict = None) -> JsObjects.JsString.JsString:
         """Similar to exportDataAsCsv, except returns the result as a string rather than download it.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-api/>`_
 
         :param params
         """
         if not params:
-            return JsObjects.JsString.JsString.get("%s.api.getDataAsCsv(%s)" % (
-                self.varId, JsUtils.jsConvertData(params, None)))
+            return JsObjects.JsString.JsString.get("%s.getDataAsCsv(%s)" % (
+                self.api, JsUtils.jsConvertData(params, None)))
 
-        return JsObjects.JsString.JsString.get("%s.api.getDataAsCsv()" % self.varId)
+        return JsObjects.JsString.JsString.get("%s.getDataAsCsv()" % self.api)
 
     def getDataAsExcel(self, params: dict = None) -> JsObjects.JsString.JsString:
         """Similar to exportDataAsExcel, except instead of downloading a file, it will return a Blob to be processed by the user.
@@ -461,10 +465,10 @@ class AgGrid(JsPackage):
         :param params
         """
         if not params:
-            return JsObjects.JsString.JsString.get("%s.api.getDataAsExcel(%s)" % (
-                self.varId, JsUtils.jsConvertData(params, None)))
+            return JsObjects.JsString.JsString.get("%s.getDataAsExcel(%s)" % (
+                self.api, JsUtils.jsConvertData(params, None)))
 
-        return JsObjects.JsString.JsString.get("%s.api.getDataAsExcel()" % self.varId)
+        return JsObjects.JsString.JsString.get("%s.getDataAsExcel()" % self.api)
 
     def getDisplayedRowAtIndex(self, index):
         """Returns the displayed rowNode at the given index.
@@ -473,35 +477,35 @@ class AgGrid(JsPackage):
         :param index:
         """
         index = JsUtils.jsConvertData(index, None)
-        return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, index))
+        return JsObjects.JsVoid("%s.getRowNode(%s)" % (self.api, index))
 
     def getDisplayedRowCount(self):
         """Returns the total number of displayed rows.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.getDisplayedRowCount()" % self.varId)
+        return JsObjects.JsVoid("%s.getDisplayedRowCount()" % self.api)
 
     def getFilteredRowData(self):
         return JsObjects.JsArray.JsArray.get(
-            "(function(){let rowData = [];%s.api.forEachNodeAfterFilter(node => {rowData.push(node.data);}); return rowData})()" % self.varId)
+            "(function(){let rowData = [];%s.forEachNodeAfterFilter(node => {rowData.push(node.data);}); return rowData})()" % self.api)
 
     def getFirstDisplayedRow(self):
         """Get the index of the first displayed row due to scrolling (includes invisible rendered rows in the buffer).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.getFirstDisplayedRow()" % self.varId)
+        return JsObjects.JsVoid("%s.getFirstDisplayedRow()" % self.api)
 
     def getLastDisplayedRow(self):
         """Get the index of the last displayed row due to scrolling (includes invisible rendered rows in the buffer).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.getLastDisplayedRow()" % self.varId)
+        return JsObjects.JsVoid("%s.getLastDisplayedRow()" % self.api)
 
     def getQuickFilter(self):
         """Get the current Quick Filter text from the grid, or undefined if none is set.
         `Related Pages <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
         """
-        return JsObjects.JsVoid("%s.api.getQuickFilter()" % self.varId)
+        return JsObjects.JsVoid("%s.getQuickFilter()" % self.api)
 
     def getRowNode(self, row_id):
         """Returns the row node with the given ID. The row node ID is the one you provide with the callback
@@ -511,7 +515,7 @@ class AgGrid(JsPackage):
         :param row_id:
         """
         row_id = JsUtils.jsConvertData(row_id, None)
-        return JsObjects.JsVoid("%s.api.getRowNode(%s)" % (self.varId, row_id))
+        return JsObjects.JsVoid("%s.getRowNode(%s)" % (self.api, row_id))
 
     def hideColumn(self, column):
         """
@@ -534,7 +538,7 @@ class AgGrid(JsPackage):
         """Returns true if the Quick Filter is set, otherwise false.
         `Aggrid <https://ag-grid.com/javascript-data-grid/filter-quick//>`_
         """
-        return JsObjects.JsVoid("%s.api.isQuickFilterPresent()" % self.varId)
+        return JsObjects.JsVoid("%s.isQuickFilterPresent()" % self.api)
 
     def purgeServerSideCache(self, route):
         """
@@ -543,13 +547,13 @@ class AgGrid(JsPackage):
 
         :param route:
         """
-        return JsObjects.JsVoid("%s.api.purgeServerSideCache(%s)" % (self.varId, JsUtils.jsConvertData(route, None)))
+        return JsObjects.JsVoid("%s.purgeServerSideCache(%s)" % (self.api, JsUtils.jsConvertData(route, None)))
 
     def setAutoHeight(self):
         """Gets columns to adjust automatically height.
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.setDomLayout('autoHeight')" % self.varId)
+        return JsObjects.JsVoid("%s.setDomLayout('autoHeight')" % self.api)
 
     def setColumnDefs(self, col_defs: Any):
         """Call to set new column definitions. The grid will redraw all the column headers, and then redraw all of the
@@ -559,18 +563,18 @@ class AgGrid(JsPackage):
         """
         if min(self.page.imports.pkgs.ag_grid.version) > '31.0.0':
             if col_defs is None:
-                return JsObjects.JsVoid("%s.api.setGridOption('columnDefs', %s)" % (
-                    self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
+                return JsObjects.JsVoid("%s.setGridOption('columnDefs', %s)" % (
+                    self.api, JsUtils.jsConvertData(self.getColumnDefs(), None)))
 
             return JsObjects.JsVoid(
-                "%s.api.setGridOption('columnDefs', %s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
+                "%s.setGridOption('columnDefs', %s)" % (self.api, JsUtils.jsConvertData(col_defs, None)))
 
         else:
             if col_defs is None:
-                return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (
-                    self.varId, JsUtils.jsConvertData(self.getColumnDefs(), None)))
+                return JsObjects.JsVoid("%s.setColumnDefs(%s)" % (
+                    self.api, JsUtils.jsConvertData(self.getColumnDefs(), None)))
 
-            return JsObjects.JsVoid("%s.api.setColumnDefs(%s)" % (self.varId, JsUtils.jsConvertData(col_defs, None)))
+            return JsObjects.JsVoid("%s.setColumnDefs(%s)" % (self.api, JsUtils.jsConvertData(col_defs, None)))
 
     def setDomLayout(self, data: types.JS_DATA_TYPES):
         """Gets columns to adjust in size to fit the grid horizontally
@@ -579,12 +583,12 @@ class AgGrid(JsPackage):
         :param data: The layout properties
         """
         data = JsUtils.jsConvertData(data, None)
-        return JsObjects.JsVoid("%s.api.setDomLayout(%s)" % (self.varId, data))
+        return JsObjects.JsVoid("%s.setDomLayout(%s)" % (self.api, data))
 
     def setGridOption(self, name: types.JS_DATA_TYPES, value: types.JS_DATA_TYPES):
         name = JsUtils.jsConvertData(name, None)
         value = JsUtils.jsConvertData(value, None)
-        return JsUtils.jsWrap("%s.api.setGridOption(%s, %s)" % (self.varId, name, value))
+        return JsUtils.jsWrap("%s.setGridOption(%s, %s)" % (self.api, name, value))
 
     def setRowData(self, rows: types.JS_DATA_TYPES, dataflows: List[dict] = None):
         """Set rows.
@@ -595,21 +599,21 @@ class AgGrid(JsPackage):
         """
         if min(self.page.imports.pkgs.ag_grid.version) > '31.0.0':
             if self.component.options.rowTotal:
-                return JsObjects.JsVoid("%s.api.setGridOption('rowData', %s); %s" % (
-                    self.varId, JsUtils.dataFlows(rows, dataflows, self.page),
+                return JsObjects.JsVoid("%s.setGridOption('rowData', %s); %s" % (
+                    self.api, JsUtils.dataFlows(rows, dataflows, self.page),
                     self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
 
-            return JsObjects.JsVoid("%s.api.setGridOption('rowData', %s)" % (
-                self.varId, JsUtils.dataFlows(rows, dataflows, self.page)))
+            return JsObjects.JsVoid("%s.setGridOption('rowData', %s)" % (
+                self.api, JsUtils.dataFlows(rows, dataflows, self.page)))
 
         else:
             if self.component.options.rowTotal:
-                return JsObjects.JsVoid("%s.api.setRowData(%s); %s" % (
-                    self.varId, JsUtils.dataFlows(rows, dataflows, self.page),
+                return JsObjects.JsVoid("%s.setRowData(%s); %s" % (
+                    self.api, JsUtils.dataFlows(rows, dataflows, self.page),
                     self.setTotalRow(rows, self.component.options.rowTotal).toStr()))
 
-            return JsObjects.JsVoid("%s.api.setRowData(%s)" % (
-                self.varId, JsUtils.dataFlows(rows, dataflows, self.page)))
+            return JsObjects.JsVoid("%s.setRowData(%s)" % (
+                self.api, JsUtils.dataFlows(rows, dataflows, self.page)))
 
     def showColumn(self, column):
         """
@@ -632,51 +636,51 @@ class AgGrid(JsPackage):
         """Gets columns to adjust in size to fit the grid horizontally
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.sizeColumnsToFit()" % self.varId)
+        return JsObjects.JsVoid("%s.sizeColumnsToFit()" % self.api)
 
     def stopEditing(self):
         """The callback stopEditing (from the params above) gets called by the editor.
         This is how your cell editor informs the grid to stop editing.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing-start-stop/>`_
         """
-        return JsObjects.JsVoid("%s.api.stopEditing()" % self.varId)
+        return JsObjects.JsVoid("%s.stopEditing()" % self.api)
 
     def selectAll(self):
         """Select all rows (even rows that are not visible due to grouping being enabled and their groups not expanded).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.selectAll()" % self.varId)
+        return JsObjects.JsVoid("%s.selectAll()" % self.api)
 
     def deselectAll(self):
         """Clear all row selections.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.deselectAll()" % self.varId)
+        return JsObjects.JsVoid("%s.deselectAll()" % self.api)
 
     def selectAllFiltered(self):
         """Select all filtered rows.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.selectAllFiltered()" % self.varId)
+        return JsObjects.JsVoid("%s.selectAllFiltered()" % self.api)
 
     def deselectAllFiltered(self):
         """Clear all filtered selections.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.deselectAllFiltered()" % self.varId)
+        return JsObjects.JsVoid("%s.deselectAllFiltered()" % self.api)
 
     def getSelectedNodes(self):
         """Returns a list of selected nodes. Getting the underlying node (rather than the data) is useful when
         working with tree / aggregated data, as the node can be traversed.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.getSelectedNodes()" % self.varId)
+        return JsObjects.JsVoid("%s.getSelectedNodes()" % self.api)
 
     def getFocusedCell(self):
         """Returns the focused cell (or the last focused cell if the grid lost focus).
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/grid-api/
         """
-        return JsObjects.JsVoid("%s.api.getFocusedCell()" % self.varId)
+        return JsObjects.JsVoid("%s.getFocusedCell()" % self.api)
 
     def getFilterModel(self):
         """It is possible to get the state of all filters using the grid API method getFilterModel(), and to set the state
@@ -684,13 +688,13 @@ class AgGrid(JsPackage):
         These methods manage the filters states via the getModel() and setModel() methods of the individual filters.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models>`_
         """
-        return JsObjects.JsObject.JsObject("%s.api.getFilterModel()" % self.varId)
+        return JsObjects.JsObject.JsObject("%s.getFilterModel()" % self.api)
 
     def getAdvancedFilterModel(self):
         """Get the state of the Advanced Filter. Used for saving Advanced Filter state.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-advanced/>`_
         """
-        return JsObjects.JsObject.JsObject("%s.api.getAdvancedFilterModel()" % self.varId)
+        return JsObjects.JsObject.JsObject("%s.getAdvancedFilterModel()" % self.api)
 
     def setColumnFilterModel(self, column, data: types.JS_DATA_TYPES, dataflows: List[dict] = None):
         """Sets the filter model for the specified column. Setting a model of null will reset the filter (make inactive).
@@ -702,11 +706,11 @@ class AgGrid(JsPackage):
         """
         column = JsUtils.jsConvertData(column, None)
         if dataflows:
-            return JsObjects.JsObject.JsObject("%s.api.setColumnFilterModel(%s, %s)" % (
-                self.varId, column, JsUtils.dataFlows(data, dataflows, self.page)))
+            return JsObjects.JsObject.JsObject("%s.setColumnFilterModel(%s, %s)" % (
+                self.api, column, JsUtils.dataFlows(data, dataflows, self.page)))
 
         data = JsUtils.jsConvertData(data, None)
-        return JsObjects.JsObject.JsObject("%s.api.setColumnFilterModel(%s, %s)" % (self.varId, column, data))
+        return JsObjects.JsObject.JsObject("%s.setColumnFilterModel(%s, %s)" % (self.api, column, data))
 
     def getColumnFilterModel(self, column, dataflows: List[dict] = None):
         """Gets the current filter model for the specified column. Will return null if no active filter.
@@ -716,11 +720,11 @@ class AgGrid(JsPackage):
         :param dataflows: Chain of config transformations
         """
         if dataflows:
-            return JsObjects.JsObject.JsObject("%s.api.getColumnFilterModel(%s)" % (
-                self.varId, JsUtils.dataFlows(column, dataflows, self.page)))
+            return JsObjects.JsObject.JsObject("%s.getColumnFilterModel(%s)" % (
+                self.api, JsUtils.dataFlows(column, dataflows, self.page)))
 
         column = JsUtils.jsConvertData(column, None)
-        return JsObjects.JsObject.JsObject("%s.api.getColumnFilterModel(%s)" % (self.varId, column))
+        return JsObjects.JsObject.JsObject("%s.getColumnFilterModel(%s)" % (self.api, column))
 
     def setFilterModel(self, data: types.JS_DATA_TYPES, dataflows: List[dict] = None):
         """Sets the state of all the advanced filters.
@@ -731,11 +735,11 @@ class AgGrid(JsPackage):
         :param dataflows: Chain of config transformations
         """
         if dataflows:
-            return JsObjects.JsObject.JsObject("%s.api.setFilterModel(%s)" % (
-                self.varId, JsUtils.dataFlows(data, dataflows, self.page)))
+            return JsObjects.JsObject.JsObject("%s.setFilterModel(%s)" % (
+                self.api, JsUtils.dataFlows(data, dataflows, self.page)))
 
         data = JsUtils.jsConvertData(data, None)
-        return JsObjects.JsObject.JsObject("%s.api.setFilterModel(%s)" % (self.varId, data))
+        return JsObjects.JsObject.JsObject("%s.setFilterModel(%s)" % (self.api, data))
 
     def setAdvancedFilterModel(self, data: types.JS_DATA_TYPES, dataflows: List[dict] = None):
         """Set the state of the Advanced Filter. Used for restoring Advanced Filter state
@@ -745,18 +749,18 @@ class AgGrid(JsPackage):
         :param dataflows: Chain of config transformations
         """
         if dataflows:
-            return JsObjects.JsObject.JsObject("%s.api.setAdvancedFilterModel(%s)" % (
-                self.varId, JsUtils.dataFlows(data, dataflows, self.page)))
+            return JsObjects.JsObject.JsObject("%s.setAdvancedFilterModel(%s)" % (
+                self.api, JsUtils.dataFlows(data, dataflows, self.page)))
 
         data = JsUtils.jsConvertData(data, None)
-        return JsObjects.JsObject.JsObject("%s.api.setAdvancedFilterModel(%s)" % (self.varId, data))
+        return JsObjects.JsObject.JsObject("%s.setAdvancedFilterModel(%s)" % (self.api, data))
 
     def destroyFilter(self):
         """Sets the state of all the advanced filters.
         Provide it with what you get from getFilterModel() to restore filter state.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models>`_
         """
-        return JsObjects.JsObject.JsObject("%s.api.destroyFilter()" % self.varId)
+        return JsObjects.JsObject.JsObject("%s.destroyFilter()" % self.api)
 
     def getFilterInstance(self, data: types.JS_DATA_TYPES):
         """
@@ -770,53 +774,53 @@ class AgGrid(JsPackage):
         """Get table model.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/filter-api/#get--set-all-filter-models>`_
         """
-        return JsObjects.JsObject.JsObject("%s.api.getModel()" % self.varId)
+        return JsObjects.JsObject.JsObject("%s.getModel()" % self.api)
 
     def getRowsData(self) -> JsObjects.JsArray.JsArray:
         """Get all the data in the table.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/accessing-data/>`_
         """
         return JsObjects.JsArray.JsArray.get('''
-(function(table) {let rowData = []; table.api.forEachNode(node => rowData.push(node.data)); return rowData})(%s)''' % self.varId)
+(function(table) {let rowData = []; table.forEachNode(node => rowData.push(node.data)); return rowData})(%s)''' % self.api)
 
     def getSelectedRows(self) -> JsObjects.JsArray.JsArray:
         """Returns a list of selected rows (i.e. row data that you provided).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsArray.JsArray.get("%s.api.getSelectedRows()" % self.varId)
+        return JsObjects.JsArray.JsArray.get("%s.getSelectedRows()" % self.api)
 
     def getCellRanges(self):
         """Returns the list of selected cell ranges.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.getCellRanges()" % self.varId)
+        return JsObjects.JsVoid("%s.getCellRanges()" % self.api)
 
     def clearRangeSelection(self):
         """Clears the selected range.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.clearRangeSelection()" % self.varId)
+        return JsObjects.JsVoid("%s.clearRangeSelection()" % self.api)
 
     def refreshCells(self, params):
         """Performs change detection on all cells, refreshing cells where required.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
         params = JsUtils.jsConvertData(params, None)
-        return JsObjects.JsVoid("%s.api.refreshCells(%s)" % (self.varId, params))
+        return JsObjects.JsVoid("%s.refreshCells(%s)" % (self.api, params))
 
     def redrawRows(self, params):
         """Remove a row from the DOM and recreate it again from scratch.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
         params = JsUtils.jsConvertData(params, None)
-        return JsObjects.JsVoid("%s.api.redrawRows(%s)" % (self.varId, params))
+        return JsObjects.JsVoid("%s.redrawRows(%s)" % (self.api, params))
 
     def refreshHeader(self):
         """Redraws the header. Useful if a column name changes, or something else that changes how the column header is
         displayed.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.refreshHeader()" % self.varId)
+        return JsObjects.JsVoid("%s.refreshHeader()" % self.api)
 
     def flashCells(self, params):
         """Flash rows, columns or individual cells. See Flashing Cells.
@@ -824,25 +828,25 @@ class AgGrid(JsPackage):
         `Related Pages <https://www.ag-grid.com/angular-data-grid/flashing-cells/>`_
         """
         params = JsUtils.jsConvertData(params, None)
-        return JsObjects.JsVoid("%s.api.flashCells(%s)" % (self.varId, params))
+        return JsObjects.JsVoid("%s.flashCells(%s)" % (self.api, params))
 
     def clearFocusedCell(self):
         """Clears the focused cell.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.clearFocusedCell()" % self.varId)
+        return JsObjects.JsVoid("%s.clearFocusedCell()" % self.api)
 
     def tabToNextCell(self):
         """Navigates the grid focus to the next cell, as if tabbing.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.tabToNextCell()" % self.varId)
+        return JsObjects.JsVoid("%s.tabToNextCell()" % self.api)
 
     def tabToPreviousCell(self):
         """Navigates the grid focus to the previous cell, as if shift-tabbing.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.tabToPreviousCell()" % self.varId)
+        return JsObjects.JsVoid("%s.tabToPreviousCell()" % self.api)
 
     def overlayLoadingTemplate(self, js_data: types.JS_DATA_TYPES) -> JsObjects.JsVoid:
         """Set the template for loading overlay.
@@ -864,31 +868,31 @@ class AgGrid(JsPackage):
         """Show the 'loading' overlay.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.showLoadingOverlay()" % self.varId)
+        return JsObjects.JsVoid("%s.showLoadingOverlay()" % self.api)
 
     def showNoRowsOverlay(self):
         """Show the 'no rows' overlay.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.showNoRowsOverlay()" % self.varId)
+        return JsObjects.JsVoid("%s.showNoRowsOverlay()" % self.api)
 
     def hideOverlay(self) -> JsObjects.JsVoid:
         """Hides the overlay if showing.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.hideOverlay()" % self.varId)
+        return JsObjects.JsVoid("%s.hideOverlay()" % self.api)
 
     def destroy(self) -> JsObjects.JsVoid:
         """Will destroy the grid and release resources.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.destroy()" % self.varId)
+        return JsObjects.JsVoid("%s.destroy()" % self.api)
 
     def resetRowHeights(self) -> JsObjects.JsVoid:
         """Tells the grid to recalculate the row heights.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.resetRowHeights()" % self.varId)
+        return JsObjects.JsVoid("%s.resetRowHeights()" % self.api)
 
     def paginationIsLastPageFound(self) -> JsObjects.JsVoid:
         """Returns true when the last page is known; this will always be the case if you are using the Client-Side
@@ -896,51 +900,51 @@ class AgGrid(JsPackage):
         Returns false when the last page is not known; this only happens when using Infinite Scrolling Row Model.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationIsLastPageFound()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationIsLastPageFound()" % self.api)
 
     def copySelectedRangeToClipboard(self, include_headers) -> JsObjects.JsVoid:
         """Copies the selected ranges to the clipboard.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
         include_headers = JsUtils.jsConvertData(include_headers, None)
-        return JsObjects.JsVoid("%s.api.copySelectedRangeToClipboard(%s)" % (self.varId, include_headers))
+        return JsObjects.JsVoid("%s.copySelectedRangeToClipboard(%s)" % (self.api, include_headers))
 
     def copySelectedRangeDown(self) -> JsObjects.JsVoid:
         """Copies the selected range down, similar to Ctrl + D in Excel.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.copySelectedRangeDown()" % self.varId)
+        return JsObjects.JsVoid("%s.copySelectedRangeDown()" % self.api)
 
     def paginationGetPageSize(self) -> JsObjects.JsVoid:
         """Returns how many rows are being shown per page.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGetPageSize()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGetPageSize()" % self.api)
 
     def paginationSetPageSize(self, new_page_size) -> JsObjects.JsVoid:
         """Sets the paginationPageSize to newPageSize, then re-paginates the grid so the changes are applied immediately.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
         new_page_size = JsUtils.jsConvertData(new_page_size, None)
-        return JsObjects.JsVoid("%s.api.paginationSetPageSize(%s)" % (self.varId, new_page_size))
+        return JsObjects.JsVoid("%s.paginationSetPageSize(%s)" % (self.api, new_page_size))
 
     def paginationGetCurrentPage(self) -> JsObjects.JsVoid:
         """Returns the 0-based index of the page which is showing.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGetCurrentPage()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGetCurrentPage()" % self.api)
 
     def paginationGetTotalPages(self) -> JsObjects.JsVoid:
         """Returns the total number of pages. Returns null if paginationIsLastPageFound() == false.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGetTotalPages()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGetTotalPages()" % self.api)
 
     def paginationGetRowCount(self) -> JsObjects.JsVoid:
         """The total number of rows. Returns null if paginationIsLastPageFound() == false.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGetRowCount()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGetRowCount()" % self.api)
 
     def paginationGoToPage(self, page_number: types.JS_DATA_TYPES) -> JsObjects.JsVoid:
         """Goes to the specified page. If the page requested doesn't exist, it will go to the last page.
@@ -949,44 +953,44 @@ class AgGrid(JsPackage):
         :param page_number: Page index
         """
         page_number = JsUtils.jsConvertData(page_number, None)
-        return JsObjects.JsVoid("%s.api.paginationGoToPage(%s)" % (self.varId, page_number))
+        return JsObjects.JsVoid("%s.paginationGoToPage(%s)" % (self.api, page_number))
 
     def paginationGoToNextPage(self) -> JsObjects.JsVoid:
         """Shorthands for goToPage(relevantPageNumber).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGoToNextPage()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGoToNextPage()" % self.api)
 
     def paginationGoToPreviousPage(self) -> JsObjects.JsVoid:
         """Shorthands for goToPage(relevantPageNumber).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGoToPreviousPage()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGoToPreviousPage()" % self.api)
 
     def paginationGoToFirstPage(self) -> JsObjects.JsVoid:
         """Shorthands for goToPage(relevantPageNumber).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGoToFirstPage()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGoToFirstPage()" % self.api)
 
     def paginationGoToLastPage(self) -> JsObjects.JsVoid:
         """Shorthands for goToPage(relevantPageNumber).
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.paginationGoToLastPage()" % self.varId)
+        return JsObjects.JsVoid("%s.paginationGoToLastPage()" % self.api)
 
     def setSideBarVisible(self, show) -> JsObjects.JsVoid:
         """Tells the grid to recalculate the row heights.
         `Related Pages <https://www.ag-grid.com/javascript-grid-api/>`_
         """
         show = JsUtils.jsConvertData(show, None)
-        return JsObjects.JsVoid("%s.api.setSideBarVisible(%s)" % (self.varId, show))
+        return JsObjects.JsVoid("%s.setSideBarVisible(%s)" % (self.api, show))
 
     def getSortModel(self) -> JsObjects.JsVoid:
         """Returns the sort state.
         `Related Pages <https://www.ag-grid.com/javascript-grid-column-api/>`_
         """
-        return JsObjects.JsVoid("%s.api.getSortModel()" % self.varId)
+        return JsObjects.JsVoid("%s.getSortModel()" % self.api)
 
     def setPinnedBottomRowData(self, rowData) -> JsObjects.JsVoid:
         """
@@ -995,7 +999,7 @@ class AgGrid(JsPackage):
         :param rowData:
         """
         return JsObjects.JsVoid(
-            "%s.api.setPinnedBottomRowData(%s)" % (self.varId, JsUtils.jsConvertData(rowData, None)))
+            "%s.setPinnedBottomRowData(%s)" % (self.api, JsUtils.jsConvertData(rowData, None)))
 
     def setPinnedTopRowData(self, rowData) -> JsObjects.JsVoid:
         """
@@ -1003,7 +1007,7 @@ class AgGrid(JsPackage):
 
         :param rowData:
         """
-        return JsObjects.JsVoid("%s.api.setPinnedTopRowData(%s)" % (self.varId, JsUtils.jsConvertData(rowData, None)))
+        return JsObjects.JsVoid("%s.setPinnedTopRowData(%s)" % (self.api, JsUtils.jsConvertData(rowData, None)))
 
     def setTotalRow(self, rowData, cols: types.JS_DATA_TYPES = None) -> JsObjects.JsVoid:
         """
@@ -1017,7 +1021,7 @@ const calcTotalCols = %s; const totalRow = function(api) {
       let result = [{}]; calcTotalCols.forEach(function (params){result[0][params] = 0});
       calcTotalCols.forEach(function (params){%s.forEach(function (line) {result[0][params] += line[params];})});
       api.setPinnedBottomRowData(result);
-  }; totalRow(%s.api)''' % (JsUtils.jsConvertData(cols, None), JsUtils.jsConvertData(rowData, None), self.varId))
+  }; totalRow(%s)''' % (JsUtils.jsConvertData(cols, None), JsUtils.jsConvertData(rowData, None), self.api))
 
     def setServerSideDatasource(self, data) -> JsObjects.JsVoid:
         """Set new datasource for Server-Side Row Model.
@@ -1025,7 +1029,7 @@ const calcTotalCols = %s; const totalRow = function(api) {
 
         :param data:
         """
-        return JsObjects.JsVoid("%s.api.setServerSideDatasource(%s)" % (self.varId, JsUtils.jsConvertData(data, None)))
+        return JsObjects.JsVoid("%s.setServerSideDatasource(%s)" % (self.api, JsUtils.jsConvertData(data, None)))
 
     @property
     def fields(self) -> JsObjects.JsArray.JsArray:
@@ -1063,7 +1067,7 @@ var fakeServer = {
         return rest_call
 
     def onFilterChanged(self):
-        return JsObjects.JsVoid("%s.api.onFilterChanged()" % self.varId)
+        return JsObjects.JsVoid("%s.onFilterChanged()" % self.api)
 
     @property
     def _(self):

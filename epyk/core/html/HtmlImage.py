@@ -179,7 +179,8 @@ class AnimatedImage(Html.Html):
         self.img.options.managed = False
         self.title = page.ui.tags.h2(title, html_code=self.sub_html_code("title")).css({"display": 'block'})
         self.text = page.ui.tags.p(text, html_code=self.sub_html_code("text")).css({"display": 'block'})
-        self.a = page.ui.tags.a("Enter", url, html_code=self.sub_html_code("link")).css({"width": "100px", "background": "white"})
+        self.a = page.ui.tags.a("Enter", url, html_code=self.sub_html_code("link")).css(
+            {"width": "100px", "background": "white"})
         self.a.style.add_classes.image.info_link()
         self.div = page.ui.div([self.title, self.text, self.a], html_code=self.sub_html_code("menu"), width=(100, "%"))
         self.div.style.add_classes.image.mask()
@@ -236,8 +237,8 @@ class AnimatedImage(Html.Html):
 
     def __str__(self):
         return '''<%(tag)s %(cssAttr)s>%(div)s%(img)s</%(tag)s>''' % {
-          "cssAttr": self.get_attrs(css_class_names=self.style.get_classes()), 'img': self.img.html(),
-          'div': self.div.html(), "tag": self.tag}
+            "cssAttr": self.get_attrs(css_class_names=self.style.get_classes()), 'img': self.img.html(),
+            'div': self.div.html(), "tag": self.tag}
 
 
 class ImgCarousel(Html.Html):
@@ -424,10 +425,12 @@ class Icon(Html.Html):
 
     style_refs = {
         "html-icon": "html-icon",
+        "html-icon-menu-v": "html-icon-menu-v",
+        "html-icon-menu-h": "html-icon-menu-h",
     }
 
     def __init__(self, page, value, width, height, color, tooltip, options, html_code, profile, text: str = ""):
-        super(Icon, self).__init__(page, text, css_attrs={"width": width, "height": height},
+        super(Icon, self).__init__(page, [text], css_attrs={"width": width, "height": height},
                                    html_code=html_code, profile=profile)
         if color is not None:
             self.style.css.color = color
@@ -639,9 +642,41 @@ class Icon(Html.Html):
             str_fnc = "%s else{%s}" % (str_fnc, JsUtils.jsConvertFncs(js_release_funcs, toStr=True))
         return self.on("click", str_fnc, profile, on_ready=on_ready)
 
+    def add_menu(self, menu_item, orient: str = "horizontal", css: dict = None):
+        """Add a menu item when clicked.
+
+        :param menu_item: Optional. Menu container
+        :param orient: Optional. Component's orient definition to drive the menu display
+        :param css: Optional. CSS properties for the container
+        """
+        if isinstance(menu_item, list):
+            menu_item = self.page.ui.div(menu_item, width="auto")
+            menu_item.style.clear_all(True, False)
+        menu_item.style.css.display = "None"
+        menu_item.attr["tabindex"] = "1"
+        menu_item.classList.add("html-icon-menu-%s" % orient[0])
+        if css:
+            menu_item.css(css)
+        self.__add__(menu_item)
+        self.style.css.position = "relative"
+        self.click([menu_item.dom.show(), menu_item.dom.focus()])
+        menu_item.focusout([menu_item.dom.hide()])
+        return menu_item
+
+    def add_contex_menu(self, context_menu: primitives.HtmlModel):
+        """Attach a context menu to an existing component. A context menu must have a component attached to otherwise
+        the report will not be triggered.
+
+        :param context_menu: A Python context menu object
+        """
+        context_menu.source = self
+        self.page._contextMenu[self.dom.jquery.varName] = context_menu
+        return self
+
     def __str__(self):
+        str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
         return '<%s %s>%s</%s>%s' % (
-            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, self.tag, self.badge)
+            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.tag, self.badge)
 
 
 class IconToggle(Icon):
@@ -711,7 +746,7 @@ class Emoji(Html.Html):
 
 class Badge(Html.Html):
     name = 'Badge'
-    requirements = ('bootstrap', )
+    requirements = ('bootstrap',)
     _option_cls = OptButton.OptionsBadge
     tag = "span"
 

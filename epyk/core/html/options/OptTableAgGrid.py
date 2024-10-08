@@ -586,6 +586,19 @@ class Column(Options):
         self._config(val, js_type=True)
 
     @property
+    def type(self):
+        """Use columnTypes to define a set of Column properties to be applied together. The properties in a column
+        type are applied to a Column by setting its type property.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-definitions/#column-types>`_
+        """
+        return self._config_get()
+
+    @type.setter
+    def type(self, val: str):
+        self._config(val)
+
+    @property
     def filter(self):
         """   """
         return self._config_get()
@@ -1008,6 +1021,15 @@ class DefaultColDef(Options):
         return self._config_sub_data("cellRendererParams", CellRendererParams)
 
     @property
+    def cellStyle(self) -> dict:
+        """Use defaultColDef to set properties across ALL Columns."""
+        return self._config_get()
+
+    @cellStyle.setter
+    def cellStyle(self, values: dict):
+        self._config(values)
+
+    @property
     def enablePivot(self) -> bool:
         """"""
         return self._config_get()
@@ -1286,6 +1308,18 @@ class EnumStatusPanelsPanels(Options):
         self._config(val)
 
     @property
+    def statusPanelParams(self) -> dict:
+        """
+
+        `Doc <https://www.ag-grid.com/javascript-data-grid/status-bar/>`_
+        """
+        return self._config_get()
+
+    @statusPanelParams.setter
+    def statusPanelParams(self, values: dict):
+        self._config(values)
+
+    @property
     def align(self):
         """   """
         return self._config_get()
@@ -1384,6 +1418,17 @@ class TableConfig(OptionsWithTemplates):
         self._config(num)
 
     @property
+    def cellSelection(self) -> bool:
+        """
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/context-menu/>`_
+        """
+        return self._config_get()
+
+    @cellSelection.setter
+    def cellSelection(self, flag: bool):
+        self._config(flag)
+
+    @property
     def colResizeDefault(self):
         """
         If you hold 'shift' while dragging the resize handle, the column will take space away from the column adjacent
@@ -1435,8 +1480,11 @@ class TableConfig(OptionsWithTemplates):
         return self._config_get()
 
     @columnTypes.setter
-    def columnTypes(self, data: str):
-        self._config(data, js_type=True)
+    def columnTypes(self, data: Union[str, dict]):
+        if isinstance(data, dict):
+            self._config(data)
+        else:
+            self._config(data, js_type=True)
 
     @property
     def components(self):
@@ -1642,8 +1690,17 @@ class TableConfig(OptionsWithTemplates):
             str_func = "function(dataItem){%s}" % str_func
         self._config(str_func, js_type=True)
 
-    def getContextMenuItems(self):
-        pass
+    def getContextMenuItems(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
+        """Set table context menu.
+
+        `Context Menu <https://www.ag-grid.com/javascript-data-grid/context-menu/>`_
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        str_func = JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)
+        if not str_func.startswith("function(params)") and not func_ref:
+            str_func = "function(params){%s}" % str_func
+        self._config(str_func, js_type=True)
 
     def getRowClass(self, js_funcs: etypes.JS_FUNCS_TYPES, profile: etypes.PROFILE_TYPE = None, func_ref: bool = False):
         """
@@ -2173,6 +2230,7 @@ class TableConfig(OptionsWithTemplates):
     def popupParent(self):
         """
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/csv-export/>`_
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/context-menu/>`_
         """
         return self._config_get()
 
@@ -2696,6 +2754,18 @@ class TableConfig(OptionsWithTemplates):
             logging.warning("treeData not available in the community version")
 
         self._config(flag)
+
+    @property
+    def useCreateGrid(self) -> bool:
+        """ """
+        return self.get(False)
+
+    @useCreateGrid.setter
+    def useCreateGrid(self, flag: bool):
+        if self.page.imports.pkgs.ag_grid.version[0] < "31.0.0":
+            logging.warning(
+                "Aggrid version %s might not be component with createGrid definition" % self.page.imports.pkgs.ag_grid.version[0])
+        return self.set(flag)
 
     @property
     def valueCache(self):

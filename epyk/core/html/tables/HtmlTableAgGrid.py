@@ -31,7 +31,8 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         if records is not None:
             self.options.data = records
 
-    def theme(self, name: str, custom_cls_name: bool = False, row_height: int = None, css_overrides: dict = None):
+    def theme(self, name: str, custom_cls_name: bool = False, row_height: int = None, css_overrides: dict = None,
+              append_imports: bool = True):
         """Define the theme to be used for the Aggrid table.
 
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/themes/>`_
@@ -48,22 +49,24 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         :param custom_cls_name: Optional. Flag to specify if the theme is coming from the prdefined ones in Ag Grid
         :param row_height: Optional. To change the row height value to match the new theme definition (35px)
         :param css_overrides: Optional. Global Styling customisation
+        :param append_imports@ Optional.
         """
         if not custom_cls_name:
             if row_height is not None:
                 self.options.rowHeight = row_height
-            if self.page.imports.pkgs.ag_grid.community_version:
-                self.page.imports.append_to(
-                    "ag-grid-community", css_modules=[
-                        {'script': 'ag-theme-%s.min.css' % name,
-                         'path': 'ag-grid/%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
-                         'node_path': 'styles/'}])
-            else:
-                self.page.imports.append_to(
-                    "ag-grid-community", css_modules=[
-                        {'script': 'ag-theme-%s.min.css' % name,
-                         'path': 'ag-grid-enterprise@%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
-                         'node_path': 'styles/'}])
+            if append_imports:
+                if self.page.imports.pkgs.ag_grid.community_version:
+                    self.page.imports.append_to(
+                        "ag-grid-community", css_modules=[
+                            {'script': 'ag-theme-%s.min.css' % name,
+                             'path': 'ag-grid/%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
+                             'node_path': 'styles/'}])
+                else:
+                    self.page.imports.append_to(
+                        "ag-grid-community", css_modules=[
+                            {'script': 'ag-theme-%s.min.css' % name,
+                             'path': 'ag-grid-enterprise@%s/styles/' % self.page.imports.pkgs.ag_grid.version[0],
+                             'node_path': 'styles/'}])
             self.attr["class"].add("ag-theme-%s" % name)
         else:
             self.attr["class"].add(name)
@@ -201,8 +204,7 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         self.js_code = component_id
         if options is None:
-            options = JsUtils.jsWrap("%s.api" % self.js.varId)
-            return JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page))
+            return JsUtils.jsWrap(JsUtils.dataFlows(self.js.api, dataflows, self.page))
 
         return self.js.setColumnDefs(JsUtils.jsWrap(JsUtils.dataFlows(options, dataflows, self.page)))
 
@@ -264,7 +266,14 @@ class Table(MixHtmlState.HtmlOverlayStates, Html.Html):
             return "%s;if(!%s){%s};%s" % (
                 self.js.setRowData(data, dataflows=dataflows).toStr(), self.js.getDisplayedRowCount().toStr(),
                 self.js.showNoRowsOverlay().toStr(), state_expr)
-        # TODO Review this for V31
+
+        if self.options.useCreateGrid:
+            return 'var %(tableId)s = agGrid.createGrid(%(htmlCode)s, %(config)s); if(!%(rows)s){%(noRows)s}' % {
+                'tableId': self.js_code, 'config': self.options.config_js(options, incl_settings=False),
+                'htmlCode': self.dom.varName,
+                "rows": self.js.getDisplayedRowCount().toStr(), "noRows": self.js.showNoRowsOverlay().toStr()
+            }
+
         return 'var %(tableId)s = %(config)s; new agGrid.Grid(%(htmlCode)s, %(tableId)s); if(!%(rows)s){%(noRows)s}' % {
             'tableId': self.js_code, 'config': self.options.config_js(options, incl_settings=False), 'htmlCode': self.dom.varName,
             "rows": self.js.getDisplayedRowCount().toStr(), "noRows": self.js.showNoRowsOverlay().toStr()

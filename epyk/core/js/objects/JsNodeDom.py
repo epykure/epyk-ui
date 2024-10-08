@@ -2018,3 +2018,11 @@ class JsDomsList(JsArray.JsArray):
         :param index: The index number of the item
         """
         return JsDoms.get("%s[%s]" % (self.toStr(), index))
+
+    def show(self, display_value: str = None):
+        """Show a list of HTML Components"""
+        return self.css("display", display_value or "block")
+
+    def hide(self):
+        """Hide a list of HTML Components"""
+        return self.css("display", "None")
