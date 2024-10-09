@@ -205,7 +205,7 @@ class Navigation:
     return div
 
   def scroll(self, progress: int = 0, height: Union[tuple, int] = (3, 'px'), options: dict = None,
-             profile: Union[bool, dict] = None, html_code: str = None):
+             profile: Union[bool, dict] = None, html_code: str = None, width: Union[tuple, int] = (100, '%')):
     """
     Add a horizontal progressbar to display the status of the page scrollbar.
 
@@ -223,10 +223,10 @@ class Navigation:
     :param html_code: Optional.
     """
     height = Arguments.size(height, unit="px")
-    p = self.page.ui.sliders.progressbar(progress, height=height, options=options, profile=profile, html_code=html_code)
-    self.page.js.onReady(
+    p = self.page.ui.sliders.progressbar(progress, width=width, height=height, options=options, profile=profile, html_code=html_code)
+    self.page.js.onReady([
       self.page.js.window.events.addScrollListener([
-        p.build(self.page.js.window.scrollPercentage)]))
+        p.build(self.page.js.window.scrollPercentage)])])
     html.Html.set_component_skin(p)
     return p
 

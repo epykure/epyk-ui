@@ -11,15 +11,17 @@ from epyk.core.html import Html
 
 from epyk.core.js import expr
 from epyk.core.css import Selector
+from epyk.core.css import Defaults_css
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsMenu
 from epyk.core.html.HtmlList import Li
-from epyk.core.html.options import OptList
+from epyk.core.html.options import OptList, OptNavigation
 
 
 class HtmlNavBar(Html.Html):
     name = 'Nav Bar'
+    _option_cls = OptNavigation.OptionsBar
 
     style_urls = [
         Path(__file__).parent.parent / "css" / "native" / "html-navbar.css"
@@ -27,27 +29,83 @@ class HtmlNavBar(Html.Html):
 
     style_refs = {
         "html-navbar": "html-navbar",
+        "html-navbar-horizontal": "html-navbar-horizontal",
+        "html-navbar-vertical": "html-navbar-vertical",
+        "html-navbar-title": "html-navbar-title",
+        "html-navbar-subtitle": "html-navbar-subtitle",
+        "html-navbar-logo": "html-navbar-logo",
+        "html-navbar-scroll": "html-navbar-scroll",
+        "html-navbar-item": "html-navbar-item",
+        "html-navbar-item-h": "html-navbar-item-h",
+        "html-navbar-item-v": "html-navbar-item-v",
+        "html-navbar-panel": "html-navbar-panel",
+        "html-navbar-panel-right": "html-navbar-panel-right",
     }
 
-    def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]], width: tuple,
-                 height: tuple, options: Optional[dict], html_code: str, profile: Optional[Union[dict, bool]]):
-        super(HtmlNavBar, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
-                                         profile=profile, options=options)
+    def __init__(self, page: primitives.PageModel, components: Optional[List[Html.Html]], logo: str, title: str,
+                 avatar: Union[bool, str], size: tuple, options: Optional[dict], html_code: str,
+                 profile: Optional[Union[dict, bool]]):
+        self.avatar, self.status = None, None
+        super(HtmlNavBar, self).__init__(page, [], html_code=html_code, profile=profile, options=options)
         self.classList.add(self.style_refs["html-navbar"])
-        self.scroll, self.background = None, True
+        self.background, self.logo = True, None
+        self.options.size = size
+
+        # Logo
+        if logo is None:
+            self.logo = self.page.ui.icons.epyk()
+            self.logo.style.clear_all(True, False)
+        else:
+            if not hasattr(logo, 'options'):  # if it is not an option it is considered as a path
+                logo_url = logo
+                self.logo = self.page.ui.div()
+                self.logo.style.clear_all(True, False)
+
+                if logo_url:
+                    self.logo.style.css.background_url(logo_url)
+            else:
+                self.logo = logo
+        self.logo.options.managed = False
+        self.logo.classList.add(self.style_refs["html-navbar-logo"])
+        self.val.append(self.logo)
+        self.logo.tooltip(title)
+
+        # Title component
+        #title = self.__format_text(title, self.page.body.style.globals.font.normal(5), italic=False)
+        self.title = self.page.ui.div(title, html_code=self.sub_html_code("title"))
+        self.title.style.clear_all(True, False)
+        self.title.options.managed = False
+        self.title.classList.add(self.style_refs["html-navbar-title"])
+        self.val.append(self.title)
+
+        self.panel = self.page.ui.div([], html_code=self.sub_html_code("panel", auto_inc=True))
+        self.panel.style.clear_all(True, False)
+        self.panel.classList.add(self.style_refs["html-navbar-panel"])
+        self.panel.options.managed = False
+
+        self.settings = self.page.ui.div(html_code=self.sub_html_code("right", auto_inc=True))
+        self.settings.style.clear_all(True, False)
+        self.settings.classList.add(self.style_refs["html-navbar-panel-right"])
+        self.settings.options.managed = False
+
         if components is not None:
             if not isinstance(components, list):
                 components = [components]
             for c in components:
                 self.__add__(c)
+
         self.buttons = []
-        self.avatar = None
+        self.options.avatar = avatar
+
+    @property
+    def options(self) -> OptNavigation.OptionsBar:
+        """Component options"""
+        return super().options
 
     def move(self):
         """Move the object to this position in the final page. """
         super(HtmlNavBar, self).move()
         self.style.css.position = None
-        self.page.body.style.css.padding_top = 0
         return self
 
     def __add__(self, component: Html.Html):
@@ -55,18 +113,14 @@ class HtmlNavBar(Html.Html):
         if not hasattr(component, 'options'):
             component = self.page.ui.div(component, html_code=self.sub_html_code("menu", auto_inc=True))
             component.style.add_classes.div.color_hover()
-            component.style.css.user_select = "none"
-            component.style.css.margin_left = 5
-            component.style.css.margin_right = 5
-            component.style.css.cursor = "pointer"
+        component.classList.add(self.style_refs["html-navbar-item-%s" % self.options.orient[0]])
         # Has to be defined here otherwise it is set to late
         component.options.managed = False
-        component.style.css.display = 'inline'
         if component.css('height') is None:
             component.style.css.vertical_align = 'middle'
         if component.css('width') == '100%':
             component.style.css.width = None
-        self.val.append(component)
+        self.panel.val.append(component)
         if hasattr(self, 'buttons'):
             self.buttons.append(component)
         return self
@@ -101,42 +155,25 @@ class HtmlNavBar(Html.Html):
         if isinstance(component, list):
             component = self.page.ui.div(component, html_code=self.sub_html_code("menu", auto_inc=True))
             component.style.clear(no_default=True)
-            component.style.css.margin_left = 5
-            component.style.css.user_select = "none"
-            component.style.css.margin_right = 5
-            component.style.css.cursor = "pointer"
+            component.classList.add(self.style_refs["html-navbar-item"])
             component.options.managed = False
             if css is not None:
                 component.css(css)
 
         if not hasattr(component, 'options'):
-            component = self.page.ui.text(component, width=("auto", ''), html_code=self.sub_html_code("menu", auto_inc=True))
-            component.style.css.margin_left = 5
-            component.style.css.user_select = "none"
-            component.style.css.margin_right = 5
-            component.style.css.cursor = "pointer"
+            component = self.page.ui.text(
+                component, width=("auto", ''), html_code=self.sub_html_code("menu", auto_inc=True))
+            component.classList.add(self.style_refs["html-navbar-item"])
             component.options.managed = False
             if css is not None:
                 component.css(css)
         if with_css_cls:
             component.style.add_classes.div.color_hover()
         component.style.css.color = self.page.theme.greys[self.page.theme.index]
-        if not hasattr(self, '_right'):
-            self._right = self.page.ui.div(
-                width=("auto", ''), height=(100, "%"), html_code=self.sub_html_code("right", auto_inc=True))
-            self._right.style.css.display = 'inline-block'
-            self._right.style.css.float = 'right'
-            self._right.style.css.text_transform = 'uppercase'
-            self._right.style.css.font_weight = 'bold'
-            self._right.style.css.font_factor(0)
-            self._right.style.css.display = "flex"
-            self._right.style.css.align_items = "center"
-            self._right.options.managed = False
-            self._vals.append(self._right)
         if prepend:
-            self._right.insert(0, component)
+            self.settings.insert(0, component)
         else:
-            self._right.add(component)
+            self.settings.add(component)
         self.buttons.append(component)
         return component
 
@@ -144,7 +181,6 @@ class HtmlNavBar(Html.Html):
         """Add an item to the nav bar.
 
         Usage::
-
           n = page.ui.navbar()
           n.add_text("Nav bar title")
 
@@ -158,16 +194,47 @@ class HtmlNavBar(Html.Html):
         return text
 
     def __str__(self):
+        status_html = ""
         if self.avatar is not None:
             self.add_right(self.avatar, with_css_cls=False)
-        if self.scroll is not None:
-            self.val.append(self.scroll)
-            if self.scroll.css('width') == '100%':
-                self.scroll.style.css.width = None
+        if self.options.orient == "vertical":
+            self.style.css.width = "%s%s" % (self.options.size[0], self.options.size[1])
+            self.title.style.css.display = None
+            self.settings.style.css.align_self = "flex-end"
+            self.settings.style.css.width = "100%"
+            self.logo.style.css.width = "%s%s" % (self.options.size[0] - 20, self.options.size[1])
+            if self.page.body.style.css.padding_left:
+                padding_left = self.page.body.style.css.padding_left
+                if str(padding_left).endswith("px"):
+                    padding_left = int(padding_left[:-2])
+                self.page.body.style.css.padding_left = max(padding_left, self.options.size[0] + 5)
+            else:
+                self.page.body.style.css.padding_left = self.options.size[0] + 5
+        else:
+            self.style.css.height = "%s%s" % (self.options.size[0], self.options.size[1])
+            self.logo.style.css.height = "%s%s" % (self.options.size[0] - 15, self.options.size[1])
+            self.settings.style.css.float = "right"
+            self.style.css.line_height = self.options.size[0]
+            scroll_height = 5 if self.options.status else 0
+            if self.page.body.style.css.padding_top:
+                padding_top = self.page.body.style.css.padding_top
+                if str(padding_top).endswith("px"):
+                    padding_top = int(padding_top[:-2])
+                self.page.body.style.css.padding_top = max(padding_top, self.options.size[0] + scroll_height)
+            else:
+                self.page.body.style.css.padding_top = self.options.size[0] + scroll_height
+            if self.options.scroll:
+                self.page.body.onReady([self.page.js.number(0, "window.prevScrollpos")])
+                self.page.body.scroll(['''var currentScrollPos = window.pageYOffset;
+if(window.prevScrollpos > currentScrollPos) {%(dom)s.style.top = "0"} else {%(dom)s.style.top = "-%(height)spx"};
+window.prevScrollpos = currentScrollPos''' % {"dom": self.dom.varName, "height": self.options.size[0]}])
+            if self.options.status:
+                status_html = self.status.html()
         str_h = "".join([h.html() for h in self.val])
-        if self.style.css.position != 'fixed':
-            self.page.body.style.css.padding_top = 0
-        return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_h)
+        self.classList.add(self.style_refs["html-navbar-%s" % self.options.orient])
+        return "<div %s>%s%s%s%s</div>" % (
+            self.get_attrs(css_class_names=self.style.get_classes()), str_h, self.panel.html(), self.settings.html(),
+            status_html)
 
 
 class HtmlFooter(Html.Html):
@@ -179,12 +246,27 @@ class HtmlFooter(Html.Html):
 
     style_refs = {
         "html-footer": "html-footer",
+        "html-footer-logo": "html-footer-logo",
     }
 
-    def __init__(self, page: primitives.PageModel, components: List[Html.Html], width: tuple,
+    def __init__(self, page: primitives.PageModel, components: List[Html.Html], logo: str, width: tuple,
                  height: tuple, options: Optional[dict], profile: Optional[Union[dict, bool]]):
         super(HtmlFooter, self).__init__(page, [], css_attrs={"width": width, "height": height},
                                          options=options, profile=profile)
+        self.logo = None
+        if logo is not None:
+            if not hasattr(logo, 'options'):  # if it is not an option it is considered as a path
+                logo_url = logo
+                self.logo = self.page.ui.div()
+                self.logo.style.clear_all(True, False)
+                if logo_url:
+                    self.logo.style.css.background_url(logo_url)
+            else:
+                self.logo = logo
+            self.logo.options.managed = False
+            self.logo.classList.add(self.style_refs["html-footer-logo"])
+            self.val.append(self.logo)
+
         self.classList.add(self.style_refs["html-footer"])
         self.__col_lst = None
         if components is not None:

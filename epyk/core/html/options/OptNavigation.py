@@ -56,3 +56,7 @@ class OptionsBar(Options):
     @status.setter
     def status(self, flag: bool):
         self.set(flag)
+        if flag and not self.component.status:
+            self.component.status  = self.page.ui.navigation.scroll(height=5, html_code=self.component.sub_html_code("scroll"))
+            self.component.status .classList.add(self.component.style_refs["html-navbar-scroll"])
+            self.component.status .options.managed = False
