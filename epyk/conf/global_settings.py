@@ -59,6 +59,9 @@ ASSETS_STATIC_PUBLIC = os.environ.get("ASSETS_STATIC_PUBLIC", "public")
 ICONS_FAMILY = os.environ.get("ICONS_FAMILY", 'font-awesome')
 """ Default family reference """
 
+IMPORTS_EXPR = "%(cdnjs)s/%(path)s%(script)s"
+""" Common path to build the external files url in the HTML header """
+
 
 def add_static_sub_folders(names: List[str]):
     """Add sub folder to the static path.

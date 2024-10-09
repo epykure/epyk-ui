@@ -182,7 +182,7 @@ JS_IMPORTS = {
         'register': {'alias': 'accounting', 'module': 'accounting.min', 'name': 'accounting'},
         'v_prefix': 'v',
         'modules': [
-            {'script': 'accounting.min.js', 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
+            {'script': 'accounting.min.js', "node_path": "", 'path': 'accounting.js/%(version)s/', 'cdnjs': CDNJS_REPO},
         ],
         'website': 'https://openexchangerates.github.io/accounting.js/'},
 
@@ -464,7 +464,7 @@ JS_IMPORTS = {
                      'npm_path': 'js'},
         'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
-        'modules': [{'script': 'fontawesome.js', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
+        'modules': [{'script': 'fontawesome.js', 'node_path': 'fontawesome-free/js/', 'path': 'releases/v%(version)s/js/', 'cdnjs': 'https://use.fontawesome.com'}],
         'website': 'https://fontawesome.com/'},
 
     # Javascript packages to handle DataTables
@@ -838,7 +838,7 @@ JS_IMPORTS = {
         'version': '1.13.3',
         'register': {'alias': 'jqueryui', 'module': 'jquery-ui.min', 'npm': 'jquery-ui-dist', 'npm_path': ''},
         'modules': [
-            {'script': 'jquery-ui.min.js', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
+            {'script': 'jquery-ui.min.js', 'node_path': '', 'path': 'jqueryui/%(version)s/', 'cdnjs': CDNJS_REPO}]},
 
     # Jquery-bracket package width CDN links
     'jquery-bracket': {
@@ -2013,7 +2013,7 @@ JS_IMPORTS = {
             "unpkg": False,
             'version': "5.34.1",
             'modules': [
-                {'script': 'bundle.min.js', 'path': 'terser@%(version)s/dist/', 'cdnjs': JSDELIVER},
+                {'script': 'bundle.min.js', "node_path": "dist/", 'path': 'terser@%(version)s/dist/', 'cdnjs': JSDELIVER},
             ],
             'website': 'https://terser.org/'
     }
@@ -2022,7 +2022,7 @@ JS_IMPORTS = {
 CSS_IMPORTS = {
     'jqueryui': {
         'modules': [
-            {'script': 'jquery-ui.min.css', 'path': 'jqueryui/%(version)s/themes/base/', 'cdnjs': CDNJS_REPO},
+            {'script': 'jquery-ui.min.css', 'node_path': '', 'path': 'jqueryui/%(version)s/themes/base/', 'cdnjs': CDNJS_REPO},
         ]
     },
 
@@ -2244,7 +2244,7 @@ CSS_IMPORTS = {
         'package': {'zip': 'https://use.fontawesome.com/releases/v%(version)s/fontawesome-free-%(version)s-web.zip',
                     'root': 'fontawesome-free-%(version)s-web', 'folder': 'releases', 'path': 'v%(version)s'},
         'modules': [
-            {'script': 'all.css', 'version': '5.13.1', 'path': 'releases/v%(version)s/css/',
+            {'script': 'all.css', 'version': '5.13.1', 'node_path': 'fontawesome-free/css/', 'path': 'releases/v%(version)s/css/',
              'cdnjs': 'https://use.fontawesome.com'}],
         'assets': [
             {'script': 'fa-brands-400.woff2', 'version': '5.13.1', 'path': 'releases/v%(version)s/webfonts/',
@@ -2541,7 +2541,10 @@ def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = Fals
             details["node_path"] = ""
         return "https://www.unpkg.com/" + alias + "@latest/%(node_path)s%(script)s" % details
 
-    return "%(cdnjs)s/%(path)s%(script)s" % details
+    try:
+        return global_settings.IMPORTS_EXPR % details
+    except:
+        return "%(cdnjs)s/%(path)s%(script)s" % details
 
 
 def script_npm_path(alias: str, script_details: dict, static_path: str, with_prefix: bool = False):
@@ -4217,7 +4220,7 @@ class ImportManager:
                         if os.path.exists(package_path):
                             urlModule = os.path.join(
                                 self.page._node_modules[1], npm_alias, node_sub_path, css_file).replace("\\", "/")
-                if os.path.isabs(urlModule):
+                if os.path.isabs(urlModule) and Path(urlModule).exists():
                     with open(urlModule, "rb") as fp:
                         base64_bytes = base64.b64encode(fp.read())
                         base64_message = base64_bytes.decode('ascii')
@@ -4368,7 +4371,8 @@ class ImportManager:
                         mod_title, mod_type, url_module, extra_configs))
         if local_js is not None and len(local_js) > 0:
             for local_js_file in local_js:
-                js.append('<script title="%s" language="javascript" type="text/javascript" src="%s"></script>' % (local_title, local_js_file))
+                js.append('<script title="%s" language="javascript" type="text/javascript" src="%s"></script>' % (
+                    local_title, local_js_file))
         return "\n".join(js)
 
     def jsURLs(self, expr: str):
@@ -4555,7 +4559,7 @@ class ImportManager:
                     JS_IMPORTS[alias][k] = v
                     for module in js["modules"]:
                         module["path"] = module["path"] % {"version": version}
-                        self.jsImports[alias]['main']["%(cdnjs)s/%(path)s%(script)s" % module] = version
+                        self.jsImports[alias]['main'][global_settings.IMPORTS_EXPR % module] = version
         if css is not None:
             if not css:
                 if alias in CSS_IMPORTS:
@@ -4568,7 +4572,7 @@ class ImportManager:
                 for module in css["modules"]:
                     module["path"] = module["path"] % {"version": version}
                     self.cssImports.setdefault(alias, {}).setdefault('main', {})[
-                        "%(cdnjs)s/%(path)s%(script)s" % module] = version
+                        global_settings.IMPORTS_EXPR % module] = version
         return True
 
     def addPackage(self, alias: str, config: dict):
@@ -4623,7 +4627,8 @@ class ImportManager:
                 "main": collections.OrderedDict(), 'versions': [config.get("version", "")], 'dep': [],
                 "type": collections.OrderedDict()}
             for pkg in mod_entry.get('css', {}).get("modules", []):
-                self.cssImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config["version"])
+                self.cssImports[alias]["main"][
+                    script_cdnjs_path(alias, pkg)] = pkg.get("version", config["version"])
                 if "type" in pkg:
                     self.cssImports[alias]["type"][script_cdnjs_path(alias, pkg)] = pkg["type"]
                 else:
@@ -4635,8 +4640,7 @@ class ImportManager:
                 "main": collections.OrderedDict(), 'versions': [JS_IMPORTS[alias]["version"]], 'dep': [],
                 "type": collections.OrderedDict()}
             for pkg in mod_entry['js']["modules"]:
-                self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version",
-                                                                                       config.get("version", ''))
+                self.jsImports[alias]["main"][script_cdnjs_path(alias, pkg)] = pkg.get("version", config.get("version", ''))
                 if "type" in pkg:
                     self.jsImports[alias]["type"][script_cdnjs_path(alias, pkg)] = pkg["type"]
                 else:
@@ -4684,7 +4688,7 @@ class ImportManager:
                     results['paths']["'%s'" % alias] = list(self.jsImports[m]["main"].keys())[0][:-3]
                 else:
                     results['paths']["'%s'" % alias] = "%s/%s%s" % (
-                        first_module['cdnjs'], first_module['path'] % first_module,
+                        first_module["cdnjs"], first_module['path'] % first_module,
                         import_ref[m]['register'].get('module', first_module['script'][:-3]))
                 alias_to_name[m] = alias
                 alias_to_var[m] = import_ref[m]['register'].get('variable', alias)
@@ -4736,8 +4740,7 @@ class ImportManager:
                         if 'version' not in s:  # propagate the version number if not supplied from JS definition
                             s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version']
                         s['path'] = s['path'] % s
-                        packages.setdefault(c, []).append(
-                            {"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
+                        packages.setdefault(c, []).append({"script": global_settings.IMPORTS_EXPR % s, 'version': s['version']})
         else:
             for mod in [CSS_IMPORTS, JS_IMPORTS]:
                 for c, pkg in mod.items():
@@ -4746,7 +4749,7 @@ class ImportManager:
                             s["version"] = JS_IMPORTS[c]['version'] if c in JS_IMPORTS else CSS_IMPORTS[c]['version']
                         s['path'] = s['path'] % s
                         packages.setdefault(c, []).append(
-                            {"script": "%(cdnjs)s/%(path)s/%(script)s" % s, 'version': s['version']})
+                            {"script": global_settings.IMPORTS_EXPR % s, 'version': s['version']})
         return packages
 
     def google_products(self, products: List[str], api_key: Optional[str] = None,

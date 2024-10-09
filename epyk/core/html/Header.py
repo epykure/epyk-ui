@@ -694,6 +694,10 @@ class Header:
       base64_bytes = base64.b64encode(r.request(url, encoding="ascii"))
       base64_message = base64_bytes.decode('ascii')
       url = "data:image/x-icon;base64,%s" % base64_message
+    elif Path(url).exists():
+      with open(Path(url), "rb") as fp:
+        base64_bytes = base64.b64encode(fp.read())
+        url = "data:image/x-icon;base64,%s" % base64_bytes.decode('ascii')
     self._favicon_url[rel] = {"href": url, "rel": rel}
     if img_type is not None:
       self._favicon_url[rel]["type"] = img_type
