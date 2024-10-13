@@ -15,10 +15,7 @@ function stateTemplate(status, htmlObj, data, options, cssStyle){
   if(divLoading !== null){divLoading.remove()}
   if (status){
         var divLoading = document.createElement("div");
-        divLoading.setAttribute("name", "loading");
-        divLoading.style.width = '100%'; divLoading.style.height = '100%';  divLoading.style.zIndex = 100;
-        divLoading.style.position = 'absolute'; divLoading.style.top = 0; divLoading.style.left = 0;
-        divLoading.style.textAlign = 'center'; divLoading.style.display = 'table';
+        divLoading.setAttribute("name", "loading"); divLoading.classList.add("html-state-overlay") ;
         if(typeof cssStyle !== 'undefined'){for(var k in cssStyle){divLoading.style[k] = cssStyle[k]}}
         var divLoadingContainer = document.createElement("p"); divLoadingContainer.style.display = 'table-cell';
         divLoadingContainer.style.verticalAlign = 'middle';

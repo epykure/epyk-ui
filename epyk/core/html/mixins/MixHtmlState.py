@@ -144,11 +144,6 @@ class HtmlOverlayStates:
             js_data = "{%s}" % ",".join(tmp_data)
         else:
             js_data = JsUtils.jsConvertData(data, None)
-        css_attrs = css_attrs or {}
-        dflt_css_attrs = {"background": self.page.theme.greys[0]}
-        for k, v in dflt_css_attrs.items():
-            if k not in css_attrs:
-                css_attrs[k] = v
         options = options or {}
         options["templateMode"] = mode
         return "%s(%s, %s, %s, %s, %s)" % (
@@ -157,7 +152,7 @@ class HtmlOverlayStates:
             component_id or self.dom.container,
             js_data,
             self.options.config_js(options),
-            JsUtils.jsConvertData(css_attrs, None)
+            JsUtils.jsConvertData(css_attrs or {}, None)
         )
 
     def loading(

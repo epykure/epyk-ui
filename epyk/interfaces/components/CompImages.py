@@ -373,29 +373,6 @@ class Images:
         img.options.managed = False
         img.classList.add("i-avatar-img")
         div.img = img
-
-        def add_menu(menu_item: Union[html.Html.Html, list], orient: str = "horizontal", css: dict = None):
-            """Add a menu item when clicked.
-
-            :param menu_item: Optional. Menu container
-            :param orient: Optional. Component's orient definition to drive the menu display
-            :param css: Optional. CSS properties for the container
-            """
-            if isinstance(menu_item, list):
-                menu_item = self.page.ui.div(menu_item, width="auto")
-                menu_item.style.clear_all(True, False)
-            menu_item.classList.add("i-avatar-menu-%s" % orient[0])
-            menu_item.style.css.display = "None"
-            if css:
-                menu_item.css(css)
-            div.__add__(menu_item)
-            div.style.css.position = "relative"
-            div.img.click([menu_item.dom.toggle()])
-            div.menu = menu_item
-            return menu_item
-
-        div.add_menu = add_menu
-        div.img = img
         if align == 'center':
             div.style.css.margin = "auto"
             div.style.css.display = "block"

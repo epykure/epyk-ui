@@ -16,37 +16,3 @@
     font-weight: 900 ;
     padding: 0 ;
 }
-
-
-.i-avatar-menu-h {
-    position: absolute ;
-    display: None ;
-    line-height: normal ;
-    border: 1px solid var(--theme-dark) ;
-    border-radius: 5px ;
-    min-height: 20px ;
-    margin-top: 10px ;
-    right: 0 ;
-    top: 25px ;
-    padding: 3px ;
-    z-index: 600 ;
-    background-color: var(--white) ;
-    border: 1px solid var(--grey-light) ;
-}
-
-
-.i-avatar-menu-v {
-    position: absolute ;
-    display: None ;
-    line-height: normal ;
-    border: 1px solid var(--theme-dark) ;
-    border-radius: 5px ;
-    min-height: 20px ;
-    margin-top: 10px ;
-    left: 42px ;
-    bottom: 2px ;
-    padding: 3px ;
-    z-index: 600 ;
-    background-color: var(--white) ;
-    border: 1px solid var(--grey-light) ;
-}

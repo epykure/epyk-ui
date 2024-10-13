@@ -19,3 +19,49 @@
     padding: 0 ;
     border: 0 ;
 }
+
+
+.html-menu-h {
+    outline: none;
+    position: absolute ;
+    line-height: normal ;
+    border: 1px solid var(--theme-dark) ;
+    border-radius: 5px ;
+    min-height: 20px ;
+    margin-top: 10px ;
+    left: 0 ;
+    top: 20px ;
+    padding: 3px ;
+    z-index: 600 ;
+    background-color: var(--white) ;
+    border: 1px solid var(--grey-light) ;
+}
+
+
+.html-menu-v {
+    outline: none;
+    position: absolute ;
+    line-height: normal ;
+    border: 1px solid var(--theme-dark) ;
+    border-radius: 5px ;
+    min-height: 20px ;
+    margin-top: 10px ;
+    left: 40px ;
+    top: -15px ;
+    padding: 3px ;
+    z-index: 600 ;
+    background-color: var(--white) ;
+    border: 1px solid var(--grey-light) ;
+}
+
+.html-state-overlay {
+    width: 100% ;
+    height: 100% ;
+    zIndex: 100 ;
+    position: absolute ;
+    top: 0 ;
+    left 0 ;
+    text-align: center ;
+    display: table ;
+    background-color: var(--white) ;
+}

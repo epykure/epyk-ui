@@ -1824,7 +1824,7 @@ class Icons:
             style_vars.update(self.page.body.style.globals.vars())
             content = css_files_loader(results, style_vars=style_vars, resources={})
             matches = re.findall(options.get("regexp", "--([a-zA-Z0-9- ]*):([a-zA-Z0-9# ]*);"), content)
-            icon.click([self.page.js.setDocumentElementProperty("--%s" % match[0], match[1]) for match in matches])
+            icon.click([self.page.js.setDocumentElementProperty("--%s" % match[0], match[1].strip()) for match in matches])
             return icon
 
         raise Exception("CSS File not found for root themes: %s" % filename)

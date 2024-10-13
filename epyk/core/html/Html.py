@@ -857,7 +857,28 @@ class Html(primitives.HtmlModel):
             self.css(css)
         return self
 
-    def add_menu(self, context_menu: primitives.HtmlModel):
+    def add_menu(self, menu_item, orient: str = "horizontal", css: dict = None):
+        """Add a menu item when clicked.
+
+        :param menu_item: Optional. Menu container
+        :param orient: Optional. Component's orient definition to drive the menu display
+        :param css: Optional. CSS properties for the container
+        """
+        if isinstance(menu_item, list):
+            menu_item = self.page.ui.div(menu_item, width="auto")
+            menu_item.style.clear_all(True, False)
+        menu_item.style.css.display = "None"
+        menu_item.attr["tabindex"] = "1"
+        menu_item.classList.add("html-menu-%s" % orient[0])
+        if css:
+            menu_item.css(css)
+        self.__add__(menu_item)
+        self.style.css.position = "relative"
+        self.click([menu_item.dom.show(), menu_item.dom.focus()])
+        menu_item.focusout([menu_item.dom.hide()])
+        return menu_item
+
+    def add_context_menu(self, context_menu: primitives.HtmlModel):
         """Attach a context menu to an existing component. A context menu must have a component attached to otherwise
         the report will not be triggered.
 

@@ -60,7 +60,7 @@ ICONS_FAMILY = os.environ.get("ICONS_FAMILY", 'font-awesome')
 """ Default family reference """
 
 IMPORTS_EXPR = "%(cdnjs)s/%(path)s%(script)s"
-""" Common path to build the external files url in the HTML header """
+""" Common path to build the external files url in the HTML header - Default case %(cdnjs)s/%(path)s%(script)s """
 
 
 def add_static_sub_folders(names: List[str]):
