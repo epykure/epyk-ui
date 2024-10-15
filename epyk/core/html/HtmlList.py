@@ -550,7 +550,7 @@ class Items(Html.Html):
 
         if file_nam not in treemap._ITEMS_MAP:
             treemap._ITEMS_MAP[file_nam] = {
-                "folder": sub_folder, "file": full_path, "required_funcs": required_funcs,
+                "folder": sub_folder, "file": file_nam, "path": full_path, "required_funcs": required_funcs,
                 "builder": func_name or (file_nam[0].lower() + file_nam[1:-3])}
             if css:
                 treemap._ITEMS_MAP[file_nam]["css"] = css
