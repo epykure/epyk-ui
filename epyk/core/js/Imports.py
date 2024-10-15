@@ -1991,7 +1991,7 @@ JS_IMPORTS = {
             "unpkg": False,
             'version': "1.2.1",
             'modules': [
-                {'script': 'index.umd.min.js',
+                {'script': 'index.umd.min.js', 'node_path': 'dist/',
                  'path': '@easepick/bundle@%(version)s/dist/', 'cdnjs': JSDELIVER},
             ],
             'website': 'https://easepick.com/'
