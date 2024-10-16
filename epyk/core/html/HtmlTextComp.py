@@ -71,46 +71,6 @@ class UpDown(Html.Html):
         """
         return super().options
 
-    _js__builder__ = '''
-    htmlObj = htmlObj.querySelector("#" + htmlObj.id + "_content");
-    if(typeof data === 'number'){data = {value: data, previous: data}};
-    var delta = data.value - data.previous; htmlObj.innerHTML = "";
-    if(data.previous == 0) {var relMove = 'N/A'} 
-    else{var relMove = 100 * ((data.value - data.previous) / data.previous)};
-    if(data.digits == undefined){data.digits = 0};
-    if(data.label != undefined){var span = document.createElement("span");
-      span.innerHTML = data.label; htmlObj.appendChild(span)}
-    else {var span = document.createElement("span");
-      span.innerHTML = options.label; htmlObj.appendChild(span)}
-    var valueElt = document.createElement('span'); valueElt.setAttribute('style', 'padding:5px'); 
-    valueElt.innerHTML = accounting.formatNumber(data.value, options.digits, options.thousand_sep, options.decimal_sep); 
-    htmlObj.appendChild(valueElt); var deltaElt = document.createElement('span');
-    var relMoveElt = document.createElement('span'); var icon = document.createElement('i');
-    if (delta < 0){
-      deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
-      relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, options.digits_percent, options.thousand_sep, options.decimal_sep) +"%)";
-      deltaElt.style["color"] = options.red; relMoveElt.style["color"] = options.red;
-      icon.className = options.icon_down; 
-      icon.style["transform"] = "rotate(-"+ options.rotate + "deg)";
-      icon.style["color"] = options.red;
-    } else{  
-      deltaElt.innerHTML = "(+"+ accounting.formatNumber(delta, options.digits, options.thousand_sep, options.decimal_sep) +")";
-      deltaElt.style["color"] = options.green; relMoveElt.style["color"] = options.green;
-      relMoveElt.innerHTML = "("+ accounting.formatNumber(relMove, options.digits_percent, options.thousand_sep, options.decimal_sep) +"%)";
-      icon.className = options.icon_up; 
-      icon.style["transform"] = "rotate("+ options.rotate + "deg)";
-      icon.style["color"] = options.green;
-    };
-    relMoveElt.style["font-size"] = options.font_size;
-    deltaElt.style["font-size"] = options.font_size;
-    icon.style["font-size"] = options.font_size; 
-    Object.keys(options.css_stats).forEach(function(attr){
-      relMoveElt.style[attr] = options.css_stats[attr]; deltaElt.style[attr] = options.css_stats[attr];
-      icon.style[attr] = options.css_stats[attr]});
-    htmlObj.appendChild(deltaElt); htmlObj.appendChild(relMoveElt); htmlObj.appendChild(icon);
-    Object.keys(options.css).forEach(function(attr){htmlObj.style[attr] = options.css[attr]})
-    '''
-
     def __add__(self, component: Html.Html):
         """Add items to a container"""
         if hasattr(component, 'options'):
@@ -144,9 +104,10 @@ class BlockText(Html.Html):
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, record: list, color: Optional[str], border: str, width: tuple,
-                 height: tuple, helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]]):
+                 height: tuple, helper: Optional[str], html_code: str, options: Optional[dict],
+                 profile: Optional[Union[bool, dict]]):
         options = options or {}
-        super(BlockText, self).__init__(page, record, profile=profile, options=options,
+        super(BlockText, self).__init__(page, record, profile=profile, options=options, html_code=html_code,
                                         css_attrs={'color': color, "width": width, "height": height})
         self.add_helper(helper, options=options.get("helper"))
         self.css({'padding': '5px'})
@@ -157,17 +118,6 @@ class BlockText(Html.Html):
     def options(self) -> OptText.OptionsText:
         """Property to set all the possible object for a button"""
         return super().options
-
-    _js__builder__ = '''
-htmlObj.find('div').first().html(data.title); htmlObj.find('div').last().empty(); var content;
-if (typeof data.text === 'string' || data.text instanceof String) {content = data.text.split("\\n")}
-else {content = data.text}
-content.forEach(function(line){htmlObj.find('div').last().append('<p class="py_csstext">'+ line +'</a>')});
-if(options.showdown){var converter = new showdown.Converter(options.showdown); data.text = converter.makeHtml(data.text)} 
-htmlObj.find('div').last().html(data.text);
-if (data.color != undefined) {htmlObj.find('div').last().css('color', data.color)};
-if(typeof data.button != 'undefined'){
-    htmlObj.find("a").html(data.button.text); htmlObj.find("a").attr('href', data.button.url)}'''
 
     def __str__(self):
         items = [
@@ -185,10 +135,10 @@ class TextWithBorder(Html.Html):
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, record: list, width: tuple, height: tuple, align: Optional[str],
-                 helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
+                 helper: Optional[str], html_code: str, options: Optional[dict], profile: Optional[Union[dict, bool]]):
         options = options or {}
         super(TextWithBorder, self).__init__(
-            page, record, options=options, css_attrs={"width": width, "height": height}, profile=profile)
+            page, record, html_code=html_code, options=options, css_attrs={"width": width, "height": height}, profile=profile)
         self.add_helper(helper, options=options.get("helper"))
         self.align = align
         if 'colorTitle' not in self.val:
@@ -242,8 +192,10 @@ class Number(Html.Html):
     name = 'Number'
     tag = "div"
 
-    def __init__(self, page: primitives.PageModel, number, components, label, width, height, profile, options, helper):
-        super(Number, self).__init__(page, number, css_attrs={"width": width, "height": height}, profile=profile)
+    def __init__(
+            self, page: primitives.PageModel, number, components, label, width, height, html_code, profile, options, helper):
+        super(Number, self).__init__(
+            page, number, html_code=html_code, css_attrs={"width": width, "height": height}, profile=profile)
         if options.get('url', None) is not None:
             self.add_link(number, url=options['url'], css={
                 "width": "100%", 'text-decoration': 'none', 'display': 'inline-block', "text-align": 'center',
@@ -409,8 +361,9 @@ class Formula(Html.Html):
 
 
 class TrafficLight(Html.Html):
-    name = 'Light'
+    name = 'Traffic Light'
     tag = "div"
+    _option_cls = OptText.OptionsTrafficLight
 
     def __init__(self, page: primitives.PageModel, color, label, height, tooltip, helper, options, profile,
                  html_code: str=None):
@@ -427,11 +380,16 @@ class TrafficLight(Html.Html):
                   'vertical-align': 'middle'})
         self.set_attrs(name="title", value=tooltip)
         self.set_attrs(name="data-status", value=color)
-        self._jsStyles = {'red': self.page.theme.danger.base, 'green': self.page.theme.success.base,
-                          'orange': self.page.theme.warning.base}
         self.action = None
         if tooltip is not None:
             self.tooltip(tooltip)
+
+    @property
+    def options(self) -> OptText.OptionsTrafficLight:
+        """Property to the component options. Options can either impact the Python side or the Javascript builder.
+        Python can pass some options to the JavaScript layer.
+        """
+        return super().options
 
     @property
     def dom(self) -> JsHtml.JsHtmlBackground:
@@ -454,11 +412,11 @@ class TrafficLight(Html.Html):
         :return: self to allow the chains.
         """
         if neutral is not None:
-            self._jsStyles['orange'] = neutral
+            self.options.orange = neutral
         if green is not None:
-            self._jsStyles['green'] = green
+            self.options.green = green
         if red is not None:
-            self._jsStyles['red'] = red
+            self.options.red = red
         return self
 
     def resolve(self, js_funcs: Union[list, str], profile: Optional[Union[bool, dict]] = None):
@@ -492,12 +450,6 @@ class TrafficLight(Html.Html):
             "background-color", "rgb(%s, %s, %s)" % (
                 success[0], success[1], success[2]), self.page.theme.danger.base)] + js_funcs
         return super(TrafficLight, self).click(js_funcs, profile, source_event, on_ready)
-
-    _js__builder__ = '''
-if(data === false){htmlObj.firstChild.style.backgroundColor = options.red}
-else if (data === true){htmlObj.firstChild.style.backgroundColor = options.green}
-else if (data === null){htmlObj.firstChild.style.backgroundColor = options.orange}
-else {htmlObj.firstChild.style.backgroundColor = data}'''
 
     def __str__(self):
         if self.action is not None:

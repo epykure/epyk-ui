@@ -14,8 +14,8 @@ class Vignets:
         self.page = ui.page
 
     def bubble(self, records=None, width: Union[tuple, int] = (70, "px"), height: Union[tuple, int] = ("auto", ''),
-               color: str = None, background_color: str = None, helper: str = None, options: dict = None,
-               profile: Union[dict, bool] = None) -> html.HtmlContainer.Div:
+               color: str = None, background_color: str = None, helper: str = None, html_code: str = None,
+               options: dict = None, profile: Union[dict, bool] = None) -> html.HtmlContainer.Div:
         """The bubbles event property returns a Boolean value that indicates whether or not an event is a bubbling event.
         Event bubbling directs an event to its intended target, it works like this:
         A button is clicked and the event is directed to the button
@@ -44,6 +44,7 @@ class Vignets:
         :param color:  Optional. The font color in the component. Default inherit
         :param background_color: Optional. The hexadecimal color code
         :param helper: Optional. The value to be displayed to the helper icon
+        :param html_code: Optional.
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         """
@@ -55,12 +56,13 @@ class Vignets:
         if helper is not None:
             bubble.helper.style.css.right = 0
             bubble.helper.style.css.bottom = 0
-        div.number = self.page.ui.text(records["value"], width=width)
+        div.number = self.page.ui.text(records["value"], width=width, html_code=html_code)
         if records.get("url") is not None:
-            div.title = self.page.ui.link(records["title"], url=records['url'], profile=profile)
+            div.title = self.page.ui.link(
+                records["title"], url=records['url'], profile=profile, html_code=div.number.sub_html_code("title"))
             div.title.no_decoration()
         else:
-            div.title = self.page.ui.text(records["title"])
+            div.title = self.page.ui.text(records["title"], html_code=div.number.sub_html_code("text"))
         div.title.style.css.bold()
         div.number.style.css.line_height = width[0]
         div.number.style.css.text_align = "center"
@@ -79,8 +81,8 @@ class Vignets:
 
     def number(self, number: float, label: str = "", title: str = None, align: str = "center",
                components=None, width: Union[tuple, int] = ('auto', ""),
-               height: Union[tuple, int] = (None, "px"), profile: Union[dict, bool] = None, options: dict = None,
-               helper: str = None) -> html.HtmlContainer.Div:
+               height: Union[tuple, int] = (None, "px"), profile: Union[dict, bool] = None, html_code: str = None,
+               options: dict = None, helper: str = None) -> html.HtmlContainer.Div:
         """The <input type="number"> defines a field for entering a number.
         Use the following attributes to specify restrictions:
         max - specifies the maximum value allowed
@@ -111,6 +113,7 @@ class Vignets:
         :param width: Optional. A tuple with the integer for the component width and its unit
         :param height: Optional. A tuple with the integer for the component height and its unit
         :param profile: Optional. A flag to set the component performance storage
+        :param html_code:
         :param options: Optional. Specific Python options available for this component
         :param helper: Optional. The value to be displayed to the helper icon
         """
@@ -133,7 +136,7 @@ class Vignets:
                 title.style.css.text_align = align
             pre_components.append(title)
         pre_components.append(html.HtmlTextComp.Number(
-            self.page, number, components, label, width, ("auto", ""), profile, dfl_options, helper))
+            self.page, number, components, label, width, ("auto", ""), html_code, profile, dfl_options, helper))
 
         container = self.page.ui.div(
             [pre_components], align=align, height=height, width=width, profile=profile, options=options)
@@ -146,7 +149,7 @@ class Vignets:
         return container
 
     def block(self, records=None, color: str = None, border: str = 'auto', width: Union[tuple, int] = (300, 'px'),
-              height: Union[tuple, int] = (None, 'px'), helper: str = None, options: dict = None,
+              height: Union[tuple, int] = (None, 'px'), html_code: str = None, helper: str = None, options: dict = None,
               profile: Union[dict, bool] = None) -> html.HtmlTextComp.BlockText:
         """Every HTML element has a default display value depending on what type of element it is.
         The two display values are: block and inline.
@@ -170,17 +173,18 @@ class Vignets:
         :param border:
         :param width: Optional. A tuple with the integer for the component width and its unit
         :param height: Optional. A tuple with the integer for the component height and its unit
+        :param html_code:
         :param helper: Optional. The value to be displayed to the helper icon
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         """
         container = html.HtmlTextComp.BlockText(
-            self.page, records, color, border, width, height, helper, options, profile)
+            self.page, records, color, border, width, height, helper, html_code, options, profile)
         html.Html.set_component_skin(container)
         return container
 
     def text(self, records=None, width: Union[tuple, int] = (None, '%'), height: Union[tuple, int] = (None, "px"),
-             align: str = 'center', helper: str = None, options: dict = None,
+             align: str = 'center', helper: str = None, html_code: str = None, options: dict = None,
              profile: Union[dict, bool] = None) -> html.HtmlTextComp.TextWithBorder:
         """
 
@@ -204,7 +208,8 @@ class Vignets:
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         """
-        html_text = html.HtmlTextComp.TextWithBorder(self.page, records, width, height, align, helper, options, profile)
+        html_text = html.HtmlTextComp.TextWithBorder(
+            self.page, records, width, height, align, helper, html_code, options, profile)
         html.Html.set_component_skin(html_text)
         return html_text
 
@@ -464,17 +469,15 @@ class Vignets:
         return container
 
     def price(self, value, title: str, items: List[html.Html.Html] = None, components: List[html.Html.Html] = None,
-              url: str = None,
-              align: str = "center", width: Union[tuple, int] = (250, 'px'),
+              url: str = None, align: str = "center", width: Union[tuple, int] = (250, 'px'),
               height: Union[tuple, int] = ("auto", ''), currency: str = "£", options: dict = None,
-              profile: Union[dict, bool] = None, helper: str = None) -> html.HtmlContainer.Div:
+              profile: Union[dict, bool] = None, helper: str = None, html_code: str = None) -> html.HtmlContainer.Div:
         """
 
         :tags:
         :categories:
 
         Usage::
-
           page.ui.vignets.price(10, "This is the price", [])
 
         :param value:
@@ -489,13 +492,14 @@ class Vignets:
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         :param helper: Optional. The value to be displayed to the helper icon
+        :param html_code: Optional.
         """
         container = self.page.ui.div(
             align=align, width=width, height=height, options=options, profile=profile, helper=helper)
         container.style.css.border = "1px solid %s" % self.page.theme.greys[3]
         container.style.css.margin = "auto"
         if not hasattr(title, 'options'):
-            title = self.page.ui.titles.title(title)
+            title = self.page.ui.titles.title(title, html_code=html_code if not html_code else "%s_title" % html_code)
             title.style.css.display = "block"
             title.style.css.text_align = align
         container.add(title)
@@ -503,8 +507,8 @@ class Vignets:
             for component in components:
                 container.add(component)
         if not hasattr(value, 'options'):
-            value = self.page.ui.texts.number(value, options={"type_number": 'money', 'symbol': currency},
-                                              profile=profile)
+            value = self.page.ui.texts.number(
+                value, options={"type_number": 'money', 'symbol': currency}, profile=profile, html_code=html_code)
             value.style.css.font_size = self.page.body.style.globals.font.normal(30)
             container.number = value
         container.add(value)

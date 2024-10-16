@@ -3947,7 +3947,7 @@ class ImportManager:
                 continue
 
             if folder is None:
-                for alias, definition in import_type.items():
+                for alias, definition in dict(import_type).items():
                     main_css = collections.OrderedDict()
                     main_js, main_js_types = collections.OrderedDict(), collections.OrderedDict()
                     for i, mod in enumerate(definition['modules']):
@@ -3977,7 +3977,7 @@ class ImportManager:
                                                  'versions': list(main_js.values()),
                                                  "type": main_js_types}
             else:
-                for alias, definition in import_type.items():
+                for alias, definition in dict(import_type).items():
                     main, main_types = collections.OrderedDict(), collections.OrderedDict()
                     for i, mod in enumerate(definition['modules']):
                         if ovr_version is not None and alias in ovr_version:

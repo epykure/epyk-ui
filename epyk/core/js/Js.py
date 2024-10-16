@@ -2046,6 +2046,8 @@ if (!existingStyle && (styleElementId !== 'css_')) {
             res = JsUtils.DefinedResource(
                 self.page, file_nam=tree_map.get("file"), sub_folder=tree_map.get("folder"),
                 full_path=tree_map.get("path"), required_funcs=tree_map.get("requirements"))
+            if "css" in tree_map:
+                res.attach_style(**tree_map["css"])
             return res.func(func_name)
 
         return JsUtils.jsWrap(func_name)

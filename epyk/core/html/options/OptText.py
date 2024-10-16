@@ -290,7 +290,7 @@ class OptionsNumber(OptionsText):
 
 
 class OptionsNumberMoves(OptionsNumber):
-    component_properties = ("css", "rotate", "font_size", "css_stats", "icon_up", "icon_down", "digits_percent")
+    component_properties = ("css", "label", "rotate", "font_size", "css_stats", "icon_up", "icon_down", "digits_percent")
 
     @property
     def css(self):
@@ -304,6 +304,18 @@ class OptionsNumberMoves(OptionsNumber):
     @css.setter
     def css(self, attrs: dict):
         self._config(attrs)
+
+    @property
+    def label(self):
+        """The label attached to a number component.
+
+        :prop attrs: Dictionary. The CSS attributes.
+        """
+        return self._config_get("")
+
+    @label.setter
+    def label(self, value: str):
+        self._config(value)
 
     @property
     def rotate(self):
@@ -886,4 +898,32 @@ class OptionsSurveys(OptionsWithTemplates):
 
     @label.setter
     def label(self, value: str):
+        self._config(value)
+
+
+class OptionsTrafficLight(Options):
+    component_properties = ("red", 'green', 'orange')
+
+    @property
+    def green(self):
+        return self._config_get(self.page.theme.success.base)
+
+    @green.setter
+    def green(self, value: str):
+        self._config(value)
+
+    @property
+    def orange(self):
+        return self._config_get(self.page.theme.warning.base)
+
+    @orange.setter
+    def orange(self, value: str):
+        self._config(value)
+
+    @property
+    def red(self):
+        return self._config_get(self.page.theme.danger.base)
+
+    @red.setter
+    def red(self, value: str):
         self._config(value)

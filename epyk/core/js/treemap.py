@@ -78,6 +78,13 @@ _FUNCTIONS_MAP = {
         "folder": "utils",
         "file": "MarkdownData.js",
         "packages": ["showdown"],
+    },
+    "buildContextMenu": {
+        "folder": "utils",
+        "file": "ContextMenu.js",
+        "css": {
+            "file_name": "html-menu-context.css",
+        }
     }
 }
 

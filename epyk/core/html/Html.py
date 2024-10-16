@@ -868,7 +868,7 @@ class Html(primitives.HtmlModel):
             menu_item = self.page.ui.div(menu_item, width="auto")
             menu_item.style.clear_all(True, False)
         menu_item.style.css.display = "None"
-        menu_item.attr["tabindex"] = "1"
+        menu_item.attr["tabindex"] = "0"
         menu_item.classList.add("html-menu-%s" % orient[0])
         if css:
             menu_item.css(css)
@@ -878,15 +878,30 @@ class Html(primitives.HtmlModel):
         menu_item.focusout([menu_item.dom.hide()])
         return menu_item
 
-    def add_context_menu(self, context_menu: primitives.HtmlModel):
+    def get_context_menu(self, menu: List[dict]):
         """Attach a context menu to an existing component. A context menu must have a component attached to otherwise
         the report will not be triggered.
 
-        :param context_menu: A Python context menu object
+        Usage::
+            btn = page.ui.button("Button")
+            menu = btn.get_context_menu([
+                {"title": "test", "action": "alert('ok')", "icon": "fas fa-vials"},
+                {"title": "test2", "action": v4.build(True), "tooltip": "This is a test"},
+                {"title": "test3", "action": v3.build({"title": "ok", "text": "Result"})},
+            ])
+            
+        :param menu: A Python context menu object
         """
-        context_menu.source = self
-        self.page._contextMenu[self.dom.jquery.varName] = context_menu
-        return self
+        context_menu = self.page.ui.div(html_code=self.sub_html_code("context"))
+        context_menu.style.clear_all(True, False)
+        context_menu.classList.add("context-menu")
+        context_menu.style.css.display = None
+        context_menu.attr["tabindex"] = "0"
+        self.page.js.resource("buildContextMenu")
+        self.on("contextmenu", ['''
+event.preventDefault(); buildContextMenu(document.getElementById('%s'), %s, {left: event.clientX + 'px', top: event.clientY + 'px'})
+''' % (self.sub_html_code("context"), JsUtils.jsConvertData(menu, None))])
+        return context_menu
 
     def add_icon(self, text: str, css: Optional[dict] = None, position: str = "before", family: Optional[str] = None,
                  html_code: Optional[str] = None, options: Optional[dict] = None):

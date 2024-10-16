@@ -1,0 +1,27 @@
+.context-menu{
+    position: fixed;
+    display: none;
+    width: 140px;
+    box-shadow: 2px 2px 9px var(--grey-dark);
+    overflow: hidden;
+    border:solid 1px var(--grey-dark);
+}
+
+
+.context-menu > div{
+    padding: 2px 10px;
+    background: var(--grey-light);
+    border-bottom: solid 1px var(--grey-dark);
+    font-size: var(--font-size);
+    cursor:pointer;
+}
+
+
+.context-menu > div:hover{
+    background: var(--white);
+}
+
+
+.context-menu.show{
+    display:block;
+}
