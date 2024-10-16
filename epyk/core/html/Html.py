@@ -889,7 +889,7 @@ class Html(primitives.HtmlModel):
                 {"title": "test2", "action": v4.build(True), "tooltip": "This is a test"},
                 {"title": "test3", "action": v3.build({"title": "ok", "text": "Result"})},
             ])
-            
+
         :param menu: A Python context menu object
         """
         context_menu = self.page.ui.div(html_code=self.sub_html_code("context"))
