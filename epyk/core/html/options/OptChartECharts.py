@@ -1425,6 +1425,20 @@ class EChartOptions(OptionsWithTemplates):
             s.color = self.ek.colors[i]
         return s
 
+    def setXAxis(self, values):
+        """Set the X Axis definition
+
+        :param values: the X axis values
+        """
+        self._config(values, name="xAxis")
+
+    def setYAxis(self, values):
+        """Set the Y Axis definition
+
+        :param values: the Y axis values
+        """
+        self._config(values, name="yAxis")
+
     @property
     def visualMap(self) -> List[dict]:
         return self._config_get()
