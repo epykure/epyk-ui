@@ -628,6 +628,9 @@ def addJsResources(constructors: dict, file_nam: str, sub_folder: str = None, fu
         for p in possible_paths:
             js_file = Path(p, file_nam)
             if js_file.exists():
+                if js_file.resolve().name != file_nam:
+                    logging.error("Filename %s does not match: %s (expected: %s)" % (file_nam, js_file.resolve(), file_nam))
+
                 logs[file_nam] = js_file
                 with open(js_file) as fp:
                     js_content = cleanFncs(fp.read())
@@ -686,6 +689,7 @@ class DefinedResource:
                 content = fp.read()
                 if "function %s" % name not in content:
                     raise Exception("NATIVE | JS | Function %s missing from file %s" % (name, self._files_map[self.file_nam]))
+
         return jsWrap("%s(event)" % name, profile=profile)
 
     def call(self, name: str, data_ref: str = "data", flows: List[dict] = None, verbose: bool = None,

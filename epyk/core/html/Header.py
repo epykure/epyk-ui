@@ -641,7 +641,8 @@ class Header:
     self._base = url
     return self
 
-  def favicon(self, url: str, rel: str = "icon", sizes: Optional[str] = None, img_type: Optional[str] = None):
+  def favicon(self, url: str, rel: str = "icon", sizes: Optional[str] = None, img_type: Optional[str] = None,
+              self_contained: Optional[bool] = None):
     """
     The <link> tag defines a link between a document and an external resource.
 
@@ -656,10 +657,11 @@ class Header:
       https://developer.mozilla.org/fr/docs/Web/HTML/Element/link
       https://www.w3schools.com/tags/tag_link.asp
 
-    :param url: The url full path
-    :param rel: Optional
-    :param sizes: Optional
-    :param img_type: Optional
+    :param url: The url full path.
+    :param rel: Optional.
+    :param sizes: Optional. Set the file size
+    :param img_type: Optional. Set the image type. Icon for favicon
+    :param self_contained: Optional. Convert the favicon to a string
     """
     from epyk.conf.global_settings import (ASSETS_SPLIT, ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH, ASSETS_STATIC_PUBLIC)
 
@@ -689,12 +691,14 @@ class Header:
         logging.warning("Favicon - Missing extension %s - No default used" % extension)
     else:
       logging.warning("Favicon - Missing extension %s - No default used" % extension)
-    if self.page is not None and self.page.imports.self_contained:
+    if self_contained is None:
+      self_contained = self.page.imports.self_contained
+    if self.page is not None and self_contained:
       r = PyRest.PyRest(self.page)
       base64_bytes = base64.b64encode(r.request(url, encoding="ascii"))
       base64_message = base64_bytes.decode('ascii')
       url = "data:image/x-icon;base64,%s" % base64_message
-    elif Path(url).exists():
+    elif self_contained and Path(url).exists():
       with open(Path(url), "rb") as fp:
         base64_bytes = base64.b64encode(fp.read())
         url = "data:image/x-icon;base64,%s" % base64_bytes.decode('ascii')
