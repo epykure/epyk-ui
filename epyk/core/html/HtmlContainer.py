@@ -900,12 +900,19 @@ class Table(Html.Html):
     _option_cls = OptPanel.OptionPanelTable
     tag = "table"
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-table.css",
+    ]
+
+    style_refs = {
+        "html-table": "html-table"
+    }
+
     def __init__(self, page: primitives.PageModel, rows, width: types.SIZE_TYPE, height: types.SIZE_TYPE,
                  helper: Optional[str], options: types.OPTION_TYPE, profile: types.PROFILE_TYPE, html_code: str = None):
         super(Table, self).__init__(page, [], css_attrs={
-            "width": width, "height": height, 'table-layout': 'auto', 'white-space': 'nowrap',
-            'border-collapse': 'collapse',
-            'box-sizing': 'border-box'}, profile=profile, options=options, html_code=html_code)
+            "width": width, "height": height}, profile=profile, options=options, html_code=html_code)
+        self.classList.add(self.style_refs["html-table"])
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"})
         self.header = TSection(self.page, 'thead', options=options, html_code=self.sub_html_code('thead'))
         self.body = TSection(self.page, 'tbody', options=options, html_code=self.sub_html_code('tbody'))
@@ -933,9 +940,11 @@ class Table(Html.Html):
             row = row_data
         else:
             if not self.header.val and not self.body.val and self.options.header:
-                row = Tr(self.page, row_data, True, None, (100, "%"), (100, "%"), 'center', self.options, False)
+                row = Tr(self.page, row_data, True, None, (100, "%"), (100, "%"),
+                         'center', self.options, False)
             else:
-                row = Tr(self.page, row_data, False, None, (100, "%"), (100, "%"), 'left', self.options, False)
+                row = Tr(self.page, row_data, False, None, (100, "%"), (100, "%"),
+                         'left', self.options, False)
         if row.header:
             self.header += row
         else:
@@ -1035,6 +1044,7 @@ class Table(Html.Html):
         return self.body.val[i]
 
     def __str__(self):
+        self.attr["role"] = self.options.role
         caption = "" if self.caption is None else self.caption.html()
         return '<%s %s>%s%s%s%s</%s>%s' % (
             self.tag, self.get_attrs(css_class_names=self.style.get_classes()), caption, self.header.html(),
@@ -1392,11 +1402,28 @@ class Tabs(Html.Html):
     _option_cls = OptPanel.OptionPanelTabs
     tag = "div"
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-tabs.css",
+    ]
+
+    style_refs = {
+        "html-tabs": "html-tabs",
+        "html-tab": "html-tab",
+        "html-tab-plus": "html-tab-plus",
+        "html-tab-icon": "html-tab-icon",
+        "html-tabs-holder": "html-tabs-holder",
+        "html-tab-submenu-title": "html-tab-submenu-title",
+        "html-tab-submenu": "html-tab-submenu",
+        "html-tab-hover": "html-tab-hover",
+        "html-tab-submenu-link": "html-tab-submenu-link",
+    }
+
     def __init__(self, page: primitives.PageModel, color: str, width: tuple, height: tuple, html_code: Optional[str],
                  helper: Optional[str], options: Optional[dict], profile: Optional[Union[dict, bool]]):
         super(Tabs, self).__init__(page, "", html_code=html_code, profile=profile, options=options,
                                    css_attrs={"width": width, "height": height, 'color': color})
-        self.__panels, self.__panel_objs, self.__selected = [], {}, None
+        self.__panels, self.__panel_objs, self.__selected, self.save_funcs = [], {}, None, None
+        self.classList.add(self.style_refs["html-tabs"])
         self.tabs_name, self.panels_name = self.sub_html_code("button"), self.sub_html_code("panel")
         self.tabs_container = self.page.ui.div([], html_code=self.sub_html_code("parent"))
         self.tabs_container.options.managed = False
@@ -1476,7 +1503,7 @@ class Tabs(Html.Html):
         :param tooltip: Optional. Add a tooltip to the tab
         :param menu: Optional. Ada a sub panel between the tab and content
         """
-        width = Arguments.size(width or self.options.width, unit="px")
+        width = Arguments.size(width or self.options.width, unit="px", toStr=True)
         if not hasattr(div, 'options'):
             if div is None:
                 div = self.page.ui.div(html_code=self.sub_html_code("panel", auto_inc=True))
@@ -1484,7 +1511,7 @@ class Tabs(Html.Html):
             else:
                 div = self.page.ui.div(div, html_code=self.sub_html_code("panel", auto_inc=True))
                 show_div = [div.dom.show()]
-            div.style.clear(no_default=True)
+            div.style.clear_all(True, False)
             div.style.css.padding_left = 3
             div.style.css.padding_right = 3
         else:
@@ -1492,34 +1519,41 @@ class Tabs(Html.Html):
         div.css({"display": 'none', "width": "100%"})
         div.options.managed = False
         div.set_attrs(name="name", value=self.panels_name)
-
         self.__panels.append(name)
         if icon is not None:
             html_code_tab = self.sub_html_code("tab", auto_inc=True)
-            tab = self.page.ui.div([
-                self.page.ui.icon(icon, html_code="%s_icon" % html_code_tab).css(
-                    {"display": 'block', 'color': 'inherit', "width": '100%',
-                     "font-size": self.page.body.style.globals.font.normal(4)}),
-                name], width=width, html_code=html_code_tab)
+            tab_icon = self.page.ui.icon(icon, html_code=self.sub_html_code("tab_icon", auto_inc=True))
+            tab_icon.classList.add(self.style_refs["html-tab-icon"])
+            tab = self.page.ui.div([tab_icon, name], width=width, html_code=html_code_tab)
         else:
             if hasattr(name, "html"):
-                tab = self.page.ui.div(name, width=width, html_code=self.sub_html_code("tab", auto_inc=True))
+                tab = self.page.ui.div(name, html_code=self.sub_html_code("tab", auto_inc=True))
             else:
                 html_code_tab = "%s_%s" % (self.html_code, JsUtils.getJsValid(name, False))
-                tab = self.page.ui.div(name, width=width, html_code=html_code_tab)
+                tab = self.page.ui.div(name, html_code=html_code_tab)
+        tab.style.clear_all(True, False)
+        tab.style.css.width = width
         tab_style = self.options.tab_style(name, css_tab)
         tab_style_clicked = self.options.tab_clicked_style(name, css_tab_clicked)
-        tab.css(tab_style).css({"padding": '2px 0'})
+        tab.classList.add(self.style_refs["html-tab"])
+        tab.css(tab_style)
         tab.set_attrs(name="name", value=self.tabs_name)
         tab.set_attrs(name="data-index", value=len(self.__panels) - 1)
-        tab_container = self.page.ui.div(tab, width=width)
+        tab_container = self.page.ui.div(tab)
+        tab_container.style.clear_all(True, False)
+        tab_container.style.css.width = width
         tab_container.options.managed = False
         if css_tab:
             tab_container.css(css_tab)
-        tab_container.css({'display': 'inline-block'})
+        tab_container.classList.add(self.style_refs["html-tabs-holder"])
         css_cls_name = None
         if tooltip:
             tab.tooltip(tooltip)
+        if self.save_funcs:
+            tab.set_attrs(name="spellcheck", value="false")
+            tab.dblclick([tab.dom.setAttribute("contentEditable", "true")])
+            tab.focusout(["let data = %s.innerHTML" % tab.dom.varId] + self.save_funcs + [
+                tab.dom.setAttribute("contentEditable", "false")])
         tab.click([
             self.dom.deselect_tabs(),
             tab.dom.setAttribute("data-selected", True).r,
@@ -1534,6 +1568,12 @@ class Tabs(Html.Html):
         if selected:
             self.__selected = name
         return self
+
+    def add_save(self, save_funcs: types.JS_FUNCS_TYPES):
+        """This will make all the tab editable
+
+        """
+        self.save_funcs = save_funcs
 
     def add_sub_menus(
             self, name: str, values: List[list], width: Tuple[int, str] = (100, "px"), css_attrs: dict = None) -> Div:
@@ -1550,25 +1590,40 @@ class Tabs(Html.Html):
         :param css_attrs: Optional. Menu panel's CSS attributes
         """
         links = []
-        for row in values:
-            col_links = []
-            for col in row:
-                if isinstance(col, dict):
-                    a = self.page.ui.link(**col)
-                    a.style.css.display = "block"
-                    a.style.css.padding = "3px 5px"
-                    col_links.append(a)
-                else:
-                    col_links.append(col)
-            links.append(self.page.ui.div(col_links, width=width))
+        if isinstance(values, list):
+            for row in values:
+                col_links = []
+                for col in row:
+                    if isinstance(col, dict):
+                        a = self.page.ui.link(**col)
+                        a.classList.add(self.style_refs["html-tab-submenu-link"])
+                        col_links.append(a)
+                    else:
+                        col_links.append(col)
+                col = self.page.ui.div(col_links, width=width)
+                col.style.css.vertical_align = "top"
+                links.append(col)
+        elif isinstance(values, dict):
+            for title, row in values.items():
+                title = self.page.ui.text(title)
+                title.classList.add(self.style_refs["html-tab-submenu-title"])
+                col_links = [title]
+                for col in row:
+                    if isinstance(col, dict):
+                        a = self.page.ui.link(**col)
+                        a.classList.add(self.style_refs["html-tab-submenu-link"])
+                        col_links.append(a)
+                    else:
+                        col_links.append(col)
+                col = self.page.ui.div(col_links, width=width)
+                col.style.css.vertical_align = "top"
+                links.append(col)
         sub_items = self.page.ui.div(links)
-        sub_items.style.css.display = None
-        sub_items.style.css.min_height = "150px"
-        sub_items.style.css.background = self.page.theme.white
-        sub_items.style.css.position = "absolute"
+        sub_items.classList.add(self.style_refs["html-tab-submenu"])
         if not css_attrs:
             sub_items.css(css_attrs)
         self.__panel_objs[name]["tab"].add(sub_items)
+        self.__panel_objs[name]["tab"].classList.add(self.style_refs["html-tab-hover"])
         self.__panel_objs[name]["tab"].hover([
             sub_items.dom.css({
                 "left": self.__panel_objs[name]["tab"].dom.parentNode.getBoundingClientRect(unit=True).window_left,
@@ -1577,8 +1632,8 @@ class Tabs(Html.Html):
         self.__panel_objs[name]["tab"].on("mouseout", [sub_items.dom.hide()])
         return sub_items
 
-
     def __str__(self):
+        self.attr["role"] = self.options.role
         if self.__selected is not None:
             self.__panel_objs[self.__selected]["content"].style.css.display = self.options.display
             self.__panel_objs[self.__selected]["tab"][0].css(self.options.tab_clicked_style(self.__selected))
@@ -1589,29 +1644,14 @@ class Tabs(Html.Html):
         for p in self.__panels:
             self.tabs_container.add(self.__panel_objs[p]["tab"])
             content.append(self.__panel_objs[p]["content"].html())
+        if self.options.add_icon:
+            icon_add = self.page.ui.icon(self.options.add_icon)
+            icon_add.classList.add(self.style_refs["html-tab-plus"])
+            icon_add.click([self.dom.add_tab("New tab", save_funcs=self.save_funcs)])
+            self.tabs_container.add(icon_add)
         return "<%s %s>%s%s</%s>%s" % (
             self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tabs_container.html(),
             "".join(content), self.tag, self.helper)
-
-
-class TabsArrowsDown(Tabs):
-    name = 'Tabs Arrow Down'
-
-    def add_panel(
-            self, name: str, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=None, **kwargs):
-        super(TabsArrowsDown, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked, width)
-        self.tab_holder(name).style.add_classes.layout.panel_arrow_down()
-        return self
-
-
-class TabsArrowsUp(Tabs):
-    name = 'Tabs Arrow Up'
-
-    def add_panel(
-            self, name: str, div, icon=None, selected=False, css_tab=None, css_tab_clicked=None, width=None, **kwargs):
-        super(TabsArrowsUp, self).add_panel(name, div, icon, selected, css_tab, css_tab_clicked, width)
-        self.tab_holder(name).style.add_classes.layout.panel_arrow_up()
-        return self
 
 
 class IFrame(Html.Html):

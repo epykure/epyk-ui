@@ -7,7 +7,7 @@ from epyk.core.html import Defaults as defaultHtml
 from epyk.conf.global_settings import ICONS_FAMILY
 
 
-REG_EXP_SECTOR = r"([A-Za-z0-9\:\.,\>\<\@\#\+\*\-\ \=\"'\[\]]*){([#A-Za-z0-9\%\ \,\-\\\"\:\*\;\+\!\(\)\-\.]*) }"
+REG_EXP_SECTOR = r"([A-Za-z0-9~_\:\\+.,\(\)\>\<\@\#\+\*\-\ \=\"'\[\]]*){([#A-Za-z0-9\%\ \,\-\\\"'\:\*\;\+\!\(\)\-\.]*) }"
 """ Regular expression to parse the CSS files and extract the definition """
 
 

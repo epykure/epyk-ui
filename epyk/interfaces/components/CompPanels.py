@@ -72,18 +72,13 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"css_tab": {'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                                'border-radius': '5px', 'color': 'inherit'}}
+    dflt_options = {}
     if options is not None:
       dflt_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(
       self.page, color, width, height, html_code, helper, dflt_options, profile)
-    html_tabs.options.css_tab_clicked = {
-      'color': html_tabs.page.theme.greys[0],
-      'background': html_tabs.page.theme.colors[-1]}
-    html_tabs.style.css.overflow_x = "auto"
+    html_tabs.options.role = "pills"
     html_tabs.tabs_container.style.css.text_align = align
-    html_tabs.style.css.white_space = "nowrap"
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
@@ -160,8 +155,7 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
-                               'margin': '0 2px 5px 0', "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
+    dfl_options = {}
     if options is not None:
       dfl_options.update(options)
     html_tabs = html.HtmlContainer.Tabs(
@@ -171,7 +165,7 @@ class Panels:
 
   def arrows_up(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
                 html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
-                profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.TabsArrowsUp:
+                profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
     """Python wrapper for a multi Tabs component.
     `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
@@ -192,24 +186,19 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dfl_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
-                               'margin': '0 2px 0 0', "border-bottom": "2px solid %s" % self.page.theme.colors[-1]}}
+    dfl_options = {"css_tab": {}}
     if options is not None:
       dfl_options.update(options)
-    html_tabs = html.HtmlContainer.TabsArrowsUp(
-      self.page, color, width, height, html_code, helper, dfl_options, profile)
-    for t in html_tabs.tabs():
-      t.style.add_classes.layout.panel_arrow_up()
-    html_tabs.options.css_tab["color"] = 'inherit'
-    html_tabs.options.css_tab["height"] = "30px"
-    html_tabs.options.css_tab_clicked = {
-      "background": self.page.theme.colors[-1], "color": self.page.theme.greys[0]}
+    html_tabs = html.HtmlContainer.Tabs(self.page, color, width, height, html_code, helper, dfl_options, profile)
+    html_tabs.style_refs = dict(html_tabs.style_refs)
+    html_tabs.style_refs["html-tabs-holder"] = "html-tabs-holder-up"
+    html_tabs.options.role = "arrow"
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
   def arrows_down(self, color: str = None, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'),
                   html_code: str = None, helper: str = None, options: types.OPTION_TYPE = None,
-                  profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.TabsArrowsDown:
+                  profile: types.PROFILE_TYPE = False) -> html.HtmlContainer.Tabs:
     """Python wrapper for a multi Tabs component.
     `Bootstrap <https://getbootstrap.com/docs/4.0/components/navs/>`_
 
@@ -230,19 +219,14 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {
-      "css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 0 0',
-                  "border-bottom": "2px solid %s" % self.page.theme.greys[0]}}
+    dflt_options = {}
     if options is not None:
       dflt_options.update(options)
-    html_tabs = html.HtmlContainer.TabsArrowsDown(
+    html_tabs = html.HtmlContainer.Tabs(
       self.page, color, width, height, html_code, helper, dflt_options, profile)
-    for t in html_tabs.tabs():
-      t.style.add_classes.layout.panel_arrow_down()
-    html_tabs.options.css_tab["color"] = 'inherit'
-    html_tabs.options.css_tab["height"] = "30px"
-    html_tabs.options.css_tab_clicked = {
-      "background": html_tabs.page.theme.colors[-1], "color": self.page.theme.greys[0]}
+    html_tabs.style_refs = dict(html_tabs.style_refs)
+    html_tabs.style_refs["html-tabs-holder"] = "html-tabs-holder-down"
+    html_tabs.options.role = "arrow"
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 
@@ -269,17 +253,11 @@ class Panels:
     """
     width = Arguments.size(width, unit="%")
     height = Arguments.size(height, unit="px")
-    dflt_options = {"css_tab": {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer',
-                                'margin': '0 2px 0 0', 'border-radius': '10px 10px 0 0'}}
+    dflt_options = {}
     if options is not None:
       dflt_options.update(options)
-    html_tabs = html.HtmlContainer.Tabs(
-      self.page, color, width, height, html_code, helper, dflt_options, profile)
-    html_tabs.options.css_tab["color"] = 'inherit'
-    html_tabs.options.css_tab["background"] = html_tabs.page.theme.greys[0]
-    html_tabs.options.css_tab_clicked = {
-      'color': html_tabs.page.theme.greys[0], 'background': html_tabs.page.theme.colors[-1]}
-    html_tabs.tabs_container.css({"border-bottom": "2px solid %s" % html_tabs.page.theme.colors[-1]})
+    html_tabs = html.HtmlContainer.Tabs(self.page, color, width, height, html_code, helper, dflt_options, profile)
+    html_tabs.options.role = "menu"
     html.Html.set_component_skin(html_tabs)
     return html_tabs
 

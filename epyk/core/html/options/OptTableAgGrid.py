@@ -1733,6 +1733,19 @@ class TableConfig(OptionsWithTemplates):
         self._config(flag)
 
     @property
+    def groupAllowUnbalanced(self):
+        """This section covers Unbalanced Groups - when grouping by rows that can contain null or undefined group
+        values.
+
+        `Related Pages <https://www.ag-grid.com/angular-data-grid/grouping-unbalanced-groups//>`_
+        """
+        return self._config_get()
+
+    @groupAllowUnbalanced.setter
+    def groupAllowUnbalanced(self, flag: bool):
+        self._config(flag)
+
+    @property
     def groupIncludeFooter(self):
         """
         If you want to include a footer with each group, set the property groupIncludeFooter to true.

@@ -117,6 +117,17 @@ class OptionPanelSliding(Options):
 
 
 class OptionPanelTabs(Options):
+  component_properties = ("role", )
+
+  @property
+  def add_icon(self):
+    """
+    """
+    return self.get(None)
+
+  @add_icon.setter
+  def add_icon(self, value: str):
+    self.set(value)
 
   @property
   def display(self):
@@ -144,9 +155,7 @@ class OptionPanelTabs(Options):
     The default CSS style for the tabs.
     This must be changed before adding components
     """
-    dfl = {'display': 'inline-block', 'text-align': 'center', 'cursor': 'pointer', 'margin': '0 2px 5px 0',
-           "border-bottom": "2px solid %s" % self.component.page.theme.greys[0]}
-    return self.get(dfl)
+    return self.get({})
 
   @css_tab.setter
   def css_tab(self, attrs: dict):
@@ -158,11 +167,20 @@ class OptionPanelTabs(Options):
     The default CSS style for the clicked tab.
     This must be changed before adding components
     """
-    return self.get({"border-bottom": "2px solid %s" % self.component.page.theme.colors[-1]})
+    return self.get({})
 
   @css_tab_clicked.setter
   def css_tab_clicked(self, attrs: dict):
     self.set(attrs)
+
+  @property
+  def role(self):
+    """ """
+    return self.get("standard")
+
+  @role.setter
+  def role(self, value: str):
+    self.set(value)
 
   def tab_style(self, name: str, css_style: dict = None):
     """  
@@ -207,6 +225,7 @@ class OptionPanelTabs(Options):
 
 
 class OptionPanelTable(Options):
+  component_properties = ("role", )
 
   @property
   def header(self):
@@ -226,6 +245,15 @@ class OptionPanelTable(Options):
 
   @cell_align.setter
   def cell_align(self, value):
+    self.set(value)
+
+  @property
+  def role(self):
+    """ """
+    return self.get("standard")
+
+  @role.setter
+  def role(self, value: str):
     self.set(value)
 
 

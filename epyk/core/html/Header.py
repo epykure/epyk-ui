@@ -693,15 +693,15 @@ class Header:
       logging.warning("Favicon - Missing extension %s - No default used" % extension)
     if self_contained is None:
       self_contained = self.page.imports.self_contained
-    if self.page is not None and self_contained:
+    if self_contained and Path(url).exists():
+      with open(Path(url), "rb") as fp:
+        base64_bytes = base64.b64encode(fp.read())
+        url = "data:image/x-icon;base64,%s" % base64_bytes.decode('ascii')
+    elif self.page is not None and self_contained:
       r = PyRest.PyRest(self.page)
       base64_bytes = base64.b64encode(r.request(url, encoding="ascii"))
       base64_message = base64_bytes.decode('ascii')
       url = "data:image/x-icon;base64,%s" % base64_message
-    elif self_contained and Path(url).exists():
-      with open(Path(url), "rb") as fp:
-        base64_bytes = base64.b64encode(fp.read())
-        url = "data:image/x-icon;base64,%s" % base64_bytes.decode('ascii')
     self._favicon_url[rel] = {"href": url, "rel": rel}
     if img_type is not None:
       self._favicon_url[rel]["type"] = img_type

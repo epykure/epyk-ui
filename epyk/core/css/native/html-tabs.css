@@ -1,0 +1,198 @@
+.html-tabs[role~=standard] {
+
+}
+
+.html-tab-plus {
+
+}
+
+.html-tab-submenu-title {
+    font-weight: 900 ;
+    color: var(--grey-dark)  ;
+}
+
+.html-tab-submenu-link {
+    text-decoration: None ;
+    display: block ;
+    color: var(--font-color) ;
+    padding: 2px 0 ;
+}
+
+.html-tab-hover {
+    background: var(--white)  ;
+}
+
+
+.html-tab-hover:hover {
+    background: var(--grey-light)  ;
+}
+
+
+.html-tab-submenu {
+    display: None ;
+    min-height: 150px ;
+    background: var(--grey-light)  ;
+    position: absolute ;
+    z-index: 100 ;
+}
+
+.html-tabs[role~=standard] .html-tab {
+    padding: 2px 0 ;
+    display: inline-block ;
+    text-align: center ;
+    cursor: pointer ;
+    margin: 0 2px 5px 0;
+    border: 0.5px solid var(--grey) ;
+}
+
+.html-tabs[role~=standard] .html-tab-icon {
+    display: block ;
+    color: var(--font-color) ;
+    width: 100% ;
+    font-size: var(--font-size) ;
+}
+
+.html-tabs[role~=standard] .html-tab[data-selected~=true] {
+    color: var(--white) ;
+    background: var(--selected) ;
+    border-color: var(--selected) ;
+}
+
+.html-tabs[role~=standard] .html-tabs-holder {
+    display: inline-block ;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.html-tabs[role~=pills] {
+    overflow-x: auto ;
+    white-space: nowrap ;
+}
+
+.html-tabs[role~=pills] .html-tab {
+    padding: 2px 0 ;
+    text-align: center ;
+    cursor: pointer ;
+    margin: 0 2px 0 0 ;
+    border-radius: 5px ;
+    color: var(--font-color) ;
+}
+
+.html-tabs[role~=pills] .html-tab[data-selected~=true] {
+    color: var(--white) ;
+    background: var(--selected) ;
+}
+
+.html-tabs[role~=pills] .html-tabs-holder {
+    display: inline-block ;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+
+
+.html-tabs[role~=arrow] {
+    overflow-x: auto ;
+    white-space: nowrap ;
+}
+
+.html-tabs[role~=arrow] .html-tab {
+    padding: 2px 0 ;
+    height: 30px ;
+    display: inline-block ;
+    text-align: center ;
+    cursor: pointer ;
+    margin: 0 2px 0 0;
+    color: var(--font-color) ;
+    border-bottom: 0.5px solid var(--grey) ;
+}
+
+.html-tabs[role~=arrow] .html-tab[data-selected~=true] {
+    color: var(--white) ;
+    background: var(--selected) ;
+    border-color: var(--selected) ;
+}
+
+.html-tabs-holder-up {
+    display: inline-block ;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.html-tabs-holder-up::after {
+    box-sizing: border-box;
+}
+
+.html-tabs-holder-up::before {
+    content: " ";
+    border-left: 50px solid transparent ;
+    border-right: 50px solid transparent ;
+    position: relative ;
+    width: 0 ;
+    display: block;
+    border-bottom: 15px solid var(--white) ;
+}
+
+.html-tabs-holder-up:has(.html-tab[data-selected~=true])::before{
+    border-bottom-color: var(--selected) ;
+}
+
+
+.html-tabs-holder-down {
+    display: inline-block ;
+    box-sizing: border-box;
+    vertical-align: middle;
+}
+
+.html-tabs-holder-down::before {
+    box-sizing: border-box;
+}
+
+.html-tabs-holder-down::after {
+    content: " ";
+    border-left: 50px solid transparent ;
+    border-right: 50px solid transparent ;
+    position: relative ;
+    width: 0 ;
+    display: block;
+    border-top: 15px solid var(--white) ;
+}
+
+.html-tabs-holder-down:has(.html-tab[data-selected~=true])::after{
+    border-top-color: var(--selected) ;
+}
+
+
+.html-tabs[role~=standard] {
+
+}
+
+.html-tabs[role~=menu] .html-tab {
+    padding: 2px 0 ;
+    display: inline-block ;
+    text-align: center ;
+    cursor: pointer ;
+    margin: 0 2px 5px 0;
+    border: 0.5px solid var(--grey) ;
+    border-radius: 10px 10px 0 0 ;
+    border-bottom: 2px solid var(--selected) ;
+}
+
+.html-tabs[role~=menu] .html-tab-icon {
+    display: block ;
+    color: var(--font-color) ;
+    width: 100% ;
+    font-size: var(--font-size) ;
+}
+
+.html-tabs[role~=menu] .html-tab[data-selected~=true] {
+    color: var(--white) ;
+    background: var(--selected) ;
+    border-color: var(--selected) ;
+}
+
+.html-tabs[role~=menu] .html-tabs-holder {
+    display: inline-block ;
+    box-sizing: border-box;
+    vertical-align: middle ;
+}

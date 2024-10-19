@@ -128,27 +128,27 @@ class JsHtmlTabs(JsHtml.JsHtml):
             js_code="%s.firstChild.querySelector('div:nth-child('+ (parseInt(%s)+1) + ')')" % (
                 self.varId, i), page=self.page)
 
-    def add_tab(self, name: str):
+    def add_tab(self, name: str = "New Tab", save_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
         """
         Add a tab to the panel.
 
-        :param name: The name of the new tab
+        :param name: Optional. The name of the new tab
+        :param save_funcs: Optional.
+        :param profile: Optional.
         """
-        return JsFncs.JsFunctions([
-            JsObjects.JsNodeDom.JsDoms.new("div", js_code="new_table"),
-            JsObjects.JsNodeDom.JsDoms.new("div", js_code="new_table_content"),
-            JsObjects.JsNodeDom.JsDoms.get("new_table").css({
-                "width": "100px", "display": 'inline-block', "vertical-align": "middle", "box-sizing": 'border-box',
-                'text-align': 'left'}),
-            JsObjects.JsNodeDom.JsDoms.get("new_table_content").innerText(name),
-            JsObjects.JsNodeDom.JsDoms.get("new_table_content").setAttribute("name", self.component.tabs_name),
-            JsObjects.JsNodeDom.JsDoms.get("new_table_content").css({"width": "100px"}),
-            JsObjects.JsNodeDom.JsDoms.get("new_table_content").css(self.component.options.css_tab),
-            JsObjects.JsNodeDom.JsDoms.get("new_table_content").css({"padding": '5px 0'}),
-            JsObjects.JsNodeDom.JsDoms.get("new_table").appendChild(JsObjects.JsObjects.get("new_table_content")),
-            JsObjects.JsNodeDom.JsDoms.new("div", js_code="tab_container"),
-            self.querySelector("div").appendChild(JsObjects.JsObjects.get("new_table")),
-        ])
+        name = JsUtils.jsConvertData(name, None)
+        save_expr = JsUtils.jsConvertFncs(save_funcs or self.component.save_funcs, toStr=True, profile=profile)
+        return JsUtils.jsWrap('''
+let newTab = document.createElement("DIV"); newTab.classList.add('%(holder-cls)s'); newTab.style.width = %(width)s + "px";
+let tabItem = document.createElement("DIV"); tabItem.innerHTML = %(name)s ; tabItem.classList.add('%(html-tab)s'); tabItem.style.width = %(width)s + "px";
+tabItem.dataset.selected = false ; tabItem.dataset.index = %(holder)s.querySelectorAll('[name="%(tabs_name)s"]').length ; tabItem.setAttribute("name", "%(tabs_name)s");
+newTab.appendChild(tabItem); %(holder)s.appendChild(newTab); tabItem.setAttribute("spellcheck","false");
+tabItem.addEventListener("dblclick", function(){tabItem.setAttribute("contentEditable","true")});
+tabItem.addEventListener("focusout", function(){
+    let data = tabItem.innerHTML; %(save_expr)s; tabItem.setAttribute("contentEditable","false")});
+''' % {"holder": self.component.tabs_container.dom.varId, "holder-cls": self.component.style_refs["html-tabs-holder"],
+       "name": name, "html-tab": self.component.style_refs["html-tab"], "tabs_name": self.component.tabs_name,
+       "width": self.component.options.width, "save_expr": save_expr})
 
     def tab(self, i: int):
         """

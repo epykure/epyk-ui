@@ -407,7 +407,7 @@ class Items(Html.Html):
                     else:
                         v[self.options.checked_key] = False
         self.add_helper(helper, css={"float": "none", "margin-left": "5px"}, options=options.get("helper"))
-        self.__external_item = False
+        self.__external_item, self.q_filter = False, None
 
     @classmethod
     def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
@@ -596,8 +596,39 @@ class Items(Html.Html):
         self.options._config(func_name, name="items_type")
         return self
 
+    def quick_filter(self, label: str = "Quick Filter:", placeholder: str = "Filter...", tag_name: str = "value"):
+        """Quick Filter is a piece of text given to the list.
+
+        :param label: Input's label
+        :param placeholder: Optional. Input's placeholder when empty
+        :param tag_name: Optional. Tag name value used to do the filtering
+        """
+        q_span = self.page.ui.tags.span(label, html_code="%s_qfilter_label" % self.html_code)
+        q_input = self.page.ui.input(placeholder=placeholder, html_code="%s_qfilter_input" % self.html_code)
+        q_input.style.css.text_align = "left"
+        q_input.style.css.padding_left = 3
+        q_input.style.css.margin_top = 3
+        q_input.style.css.margin_bottom = 3
+        q_input.attr["name"] = self.html_code
+        self.q_filter = self.page.ui.div([q_span, q_input])
+        self.q_filter.options.managed = False
+        self.q_filter.input = q_input
+        self.q_filter.label = q_input
+        self.q_filter.tag_name = tag_name
+        return self.q_filter
+
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
+        if self.q_filter:
+            self.q_filter.input.oninput(['''%s.querySelectorAll('[name=%s]').forEach(function(item){
+let filterValue = %s; if (filterValue) {
+    if (item.innerHTML.includes(filterValue)){item.parentNode.style.display = 'block'} 
+    else {item.parentNode.style.display = 'None'}}
+else {item.parentNode.style.display = 'block'}})''' % (
+                self.dom.varId, self.q_filter.tag_name, self.q_filter.input.dom.content.toStr())])
+            return '%s<%s %s></%s>%s' % (
+              self.q_filter, self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag, self.helper)
+
         return '<%s %s></%s>%s' % (
           self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag, self.helper)
 
