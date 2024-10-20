@@ -1,5 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+from typing import Union
 
 from epyk.core import html
 from epyk.core.py import types
@@ -385,7 +386,8 @@ class Numbers:
         return html_up_down
 
     def progress(self, value: float = 0, width: types.SIZE_TYPE = (90, 'px'), height: types.SIZE_TYPE = (None, "px"),
-                 html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None):
+                 html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+                 ) -> Union[HtmlProgress.Circle, HtmlProgress.Gauge]:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
         options = options or {}

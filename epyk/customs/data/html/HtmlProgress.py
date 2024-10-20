@@ -3,10 +3,14 @@
 from typing import Optional, Union
 from epyk.core.py import primitives
 from epyk.core.html import Html
+from epyk.customs.data.options import OptNumProgress
 
 
 class Gauge(Html.Html):
+  requirements = ('jquery',)
   name = 'Progress Gauge'
+  tag = "div"
+  _option_cls = OptNumProgress.OptionsNumCircle
 
   def __init__(self, value: float, page: primitives.PageModel, width: tuple, height: tuple, html_code: Optional[str],
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
@@ -58,27 +62,16 @@ class Gauge(Html.Html):
     """
     return self.build(self._span.val, None)
 
-  _js__builder__ = '''
-var $bar = $(document.querySelector("#"+ htmlObj.id +" div[name='bar']"));
-var $val = $(htmlObj).find("span");
-$({p:0}).animate({p:data}, {
-    duration: 3000,
-    easing: "swing",
-    step: function(p) {
-      $bar.css({transform: "rotate("+ (45+(p*1.8)) +"deg)"});
-      $val.text(p|0);
-    }
-  })
-'''
-
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
     self.page.properties.js.add_builders(self.refresh())
-    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_div)
+    return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.tag)
 
 
 class Circle(Html.Html):
   name = 'Progress Circle'
+  tag = "div"
+  _option_cls = OptNumProgress.OptionsNumCircle
 
   def __init__(self, value: float, page: primitives.PageModel, width: tuple, height: tuple, html_code: Optional[str],
                options: Optional[dict], profile: Optional[Union[dict, bool]]):
@@ -109,7 +102,7 @@ class Circle(Html.Html):
   text-align: center;
   display: block;
 }
-''')
+''', map_id="NumberCircle")
 
     super(Circle, self).__init__(page, [], html_code=html_code, css_attrs={"width": width, "height": height},
                                  profile=profile, options=options)
@@ -126,14 +119,6 @@ class Circle(Html.Html):
     self.css({"--value": value})
     self.css({"--start": 0})
 
-  _js__builder__ = '''
-    htmlObj.style.setProperty('--start', htmlObj.getAttribute('aria-valuenow'));
-    htmlObj.style.setProperty('--value', data);
-    htmlObj.style.webkitAnimation = 'none';
-    setTimeout(function() {
-        htmlObj.style.webkitAnimation = '';
-    }, 1)'''
-
   def __str__(self):
     str_div = "".join([v.html() if hasattr(v, 'html') else str(v) for v in self.val])
-    return "<div %s>%s</div>" % (self.get_attrs(css_class_names=self.style.get_classes()), str_div)
+    return "<%s %s>%s</%s>" % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), str_div, self.tag)
