@@ -269,6 +269,14 @@ class DataEvents:
         return JsObjects.JsObjects.get("value")
 
     @property
+    def params(self):
+        """Interface to a standard value object available in any Event.
+        This is the default variable name in all the JavaScript embedded methods.
+        """
+        from epyk.core.js.primitives import JsObjects
+        return JsObjects.JsObjects.get("params")
+
+    @property
     def response(self):
         """Get the response from a promise event in the then statement.
 

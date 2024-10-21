@@ -1328,10 +1328,17 @@ for (let n=0; n < rowsNum; n++) {
     let row = document.createElement("div"); row.setAttribute('class', options.class_row); 
     for (let c=0; c < options.columns; c++) {let k = keys[i];
         if (k){
-            let col = document.createElement("div"); col.setAttribute('class', options.class_col); 
+            let col = document.createElement("div"); col.setAttribute('class', options.class_col);
             col.id = container.id + "_w_" + i; row.appendChild(col); componentsHolders.push(col); i++;
             let colLabel = document.createElement(options.title_tag); colLabel.innerHTML = k;
-            colLabel.setAttribute('class', options.class_title); col.appendChild(colLabel)}};
+            colLabel.setAttribute('class', options.class_title); col.appendChild(colLabel) ;
+            if (options.header_map){
+                if(options.header_map[k]) {
+                    let colHeader = document.createElement('span'); colHeader.innerHTML = options.header_map[k]; 
+                    col.appendChild(colHeader) ;
+                }
+            }
+    }};
     container.appendChild(row); if (options.sortable){Sortable.create(row, options.sortable)}
     }; 
     componentsHolders.forEach(function(col, i){let htmlObj = %(comp_builder)s;})}''' % {

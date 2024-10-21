@@ -9,6 +9,7 @@ from epyk.core.html.options import OptChartECharts
 from epyk.core.html.graph.evts import EvtECharts
 from epyk.core.html.mixins import MixHtmlState
 from epyk.core.js import JsUtils
+from epyk.core.js.html import JsHtmlCharts
 from epyk.core.js.packages import JsECharts
 
 
@@ -44,6 +45,17 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         if self._js is None:
             self._js = JsECharts.ECharts(selector="window['%s']" % self.js_code, component=self, page=self.page)
         return self._js
+
+    @property
+    def dom(self) -> JsHtmlCharts.ECharts:
+        """Return all the Javascript functions defined for an HTML Component.
+        Those functions will use plain javascript by default.
+
+        :return: A Javascript Dom object.
+        """
+        if self._dom is None:
+            self._dom = JsHtmlCharts.ECharts(page=self.page, component=self)
+        return self._dom
 
     def _set_js_code(self, html_code: str, js_code: str):
         """Set a different code for the component.

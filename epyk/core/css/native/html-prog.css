@@ -1,0 +1,28 @@
+
+.html-prog {
+    position: relative ;
+    display: inline-block ;
+    margin: 4px ;
+    text-align: center ;
+}
+
+.html-prog-flow {
+    position: relative ;
+    overflow: hidden ;
+}
+
+.html-prog-bar {
+    position: absolute ;
+    top: 0px ;
+    left: 0px ;
+    border-radius: 50% ;
+    box-sizing: border-box ;
+    border: 5px solid #eee ;
+    border-bottom-color: var(--selected) ;
+    border-right-color: var(--selected) ;
+}
+
+
+.html-prog-text {
+    font-size: 20px ;
+}

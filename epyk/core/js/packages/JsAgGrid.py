@@ -638,12 +638,18 @@ class AgGrid(JsPackage):
         """
         return JsObjects.JsVoid("%s.sizeColumnsToFit()" % self.api)
 
-    def stopEditing(self):
+    def stopEditing(self, cancel: bool = None):
         """The callback stopEditing (from the params above) gets called by the editor.
         This is how your cell editor informs the grid to stop editing.
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/cell-editing-start-stop/>`_
+
+        :param cancel: Optional. If a cell is editing, it stops the editing. Pass true if you want to cancel the editing
         """
-        return JsObjects.JsVoid("%s.stopEditing()" % self.api)
+        if cancel is None:
+            return JsObjects.JsVoid("%s.stopEditing()" % self.api)
+
+        cancel = JsUtils.jsConvertData(cancel, None)
+        return JsObjects.JsVoid("%s.stopEditing(%s)" % (self.api, cancel))
 
     def selectAll(self):
         """Select all rows (even rows that are not visible due to grouping being enabled and their groups not expanded).
@@ -711,6 +717,45 @@ class AgGrid(JsPackage):
 
         data = JsUtils.jsConvertData(data, None)
         return JsObjects.JsObject.JsObject("%s.setColumnFilterModel(%s, %s)" % (self.api, column, data))
+
+    def setFocusedCell(self, rowIndex: types.JS_DATA_TYPES, colKey: types.JS_DATA_TYPES,
+                       RowPinnedType: types.JS_DATA_TYPES = None):
+        """Sets the focus to the specified cell. rowPinned can be either 'top', 'bottom' or null (for not pinned).
+
+        :param rowIndex: Row index value
+        :param colKey: Column alias
+        :param RowPinnedType:
+        """
+        rowIndex = JsUtils.jsConvertData(rowIndex, None)
+        colKey = JsUtils.jsConvertData(colKey, None)
+        RowPinnedType = JsUtils.jsConvertData(RowPinnedType, None)
+        return JsObjects.JsObject.JsObject("%s.setFocusedCell(%s, %s, %s)" % (self.api, rowIndex, colKey, RowPinnedType))
+
+    def setFocusedHeader(self, colKey: types.JS_DATA_TYPES, floatingFilter: types.JS_DATA_TYPES = False):
+        """Sets the focus to the specified header. If floatingFilter is true, the Column's floatingFilter element will
+        be focused.
+
+        :param colKey: Column alias
+        :param floatingFilter:
+        """
+        colKey = JsUtils.jsConvertData(colKey, None)
+        floatingFilter = JsUtils.jsConvertData(floatingFilter, None)
+        return JsObjects.JsObject.JsObject("%s.setFocusedHeader(%s, %s)" % (self.api, colKey, floatingFilter))
+
+    def startEditingCell(self, rowIndex: types.JS_DATA_TYPES, colKey: types.JS_DATA_TYPES,
+                       RowPinnedType: types.JS_DATA_TYPES = None):
+        """Start editing the provided cell. If another cell is editing, the editing will be stopped in that other cell.
+
+        :param rowIndex: Row index value
+        :param colKey: Column alias
+        :param RowPinnedType:
+        """
+        rowIndex = JsUtils.jsConvertData(rowIndex, None)
+        colKey = JsUtils.jsConvertData(colKey, None)
+        RowPinnedType = JsUtils.jsConvertData(RowPinnedType, None)
+        return JsObjects.JsObject.JsObject(
+            "%s.startEditingCell({rowIndex: %s, colKey: %s, RowPinnedType: %s})" % (
+                self.api, rowIndex, colKey, RowPinnedType))
 
     def getColumnFilterModel(self, column, dataflows: List[dict] = None):
         """Gets the current filter model for the specified column. Will return null if no active filter.

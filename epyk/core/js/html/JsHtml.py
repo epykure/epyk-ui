@@ -9,6 +9,7 @@ import json
 
 from epyk.core.js import JsUtils
 from epyk.core.html import Defaults
+from epyk.core.css import css_files_loader
 from epyk.core.js.statements import JsIf
 from epyk.core.js.fncs import JsFncs
 
@@ -642,6 +643,18 @@ class JsHtml(JsNodeDom.JsDoms):
         return self.page.js.if_(self.component.aria.js_is("pressed", "true"), [self.trigger("click")])
 
     def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
+        
+        if self.component.style_urls is not None:
+            style_vars = self.page.theme.all()
+            style_vars.update(self.page.body.style.globals.vars())
+            # Add CSS proxy mapping from the body
+            self.page.body.set_css_maps(style_vars)
+            for css_file in self.component.style_urls:
+                css_content = css_files_loader(
+                    [css_file], style_vars=style_vars, resources=self.page.properties.resources)
+                if css_content:
+                    self.page.properties.css.add_text(css_content, map_id=css_file)
+
         if self.component.tag is None:
             raise Exception("No JavaScript define to generate this component")
 

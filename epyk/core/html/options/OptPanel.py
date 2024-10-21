@@ -585,6 +585,24 @@ class OptionGrid(OptionsWithTemplates):
     self._config(value)
 
   @property
+  def class_header(self):
+    """ CSS class definition for the cell header """
+    return self._config_get("text-center")
+
+  @class_header.setter
+  def class_header(self, value: str):
+    self._config(value)
+
+  @property
+  def header_map(self):
+    """ Header map / text added to each cards """
+    return self._config_get(None)
+
+  @header_map.setter
+  def header_map(self, values: dict):
+    self._config(values)
+
+  @property
   def title_tag(self):
     """ Title HTML tag - default H4 """
     return self._config_get("h4")
