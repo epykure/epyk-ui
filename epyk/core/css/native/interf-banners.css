@@ -1,0 +1,27 @@
+.i-banner {
+    background-color: var(--theme) ;
+    color: var(--white) ;
+    position: fixed ;
+    padding: 5px 15px ;
+    text-align: center ;
+}
+
+.i-banner-r {
+    right: 0 ;
+}
+
+.i-banner-l {
+    left: 0 ;
+}
+
+.i-banner-b {
+    bottom: 0 ;
+    transform: rotate(-40deg) ;
+    margin: 0 -30px 15px 0 ;
+}
+
+.i-banner-t {
+    top: 0;
+    transform: rotate(40deg) ;
+    margin: 20px -45px 0 0 ;
+}

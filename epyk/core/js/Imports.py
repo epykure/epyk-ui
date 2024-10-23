@@ -2393,15 +2393,15 @@ CSS_IMPORTS = {
     # AG Grid tables
     'ag-grid-community': {
         'modules': [
-            {'script': 'ag-grid.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+            {'script': 'ag-grid.min.css', 'node_path': 'styles/', 'path': 'ag-grid/%(version)s/styles/',
              'cdnjs': CDNJS_REPO}
         ],
         'assets': [
-            {'script': 'ag-theme-alpine.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+            {'script': 'ag-theme-alpine.min.css', 'node_path': 'styles/', 'path': 'ag-grid/%(version)s/styles/',
              'cdnjs': CDNJS_REPO},
-            {'script': 'ag-theme-bootstrap.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+            {'script': 'ag-theme-bootstrap.min.css', 'node_path': 'styles/', 'path': 'ag-grid/%(version)s/styles/',
              'cdnjs': CDNJS_REPO},
-            {'script': 'ag-theme-material.min.css', 'node_path': 'dist/styles/', 'path': 'ag-grid/%(version)s/styles/',
+            {'script': 'ag-theme-material.min.css', 'node_path': 'styles/', 'path': 'ag-grid/%(version)s/styles/',
              'cdnjs': CDNJS_REPO},
         ]
     },

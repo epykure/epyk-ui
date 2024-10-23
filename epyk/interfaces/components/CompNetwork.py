@@ -166,31 +166,31 @@ class Network:
                profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Alert:
         """Function to add when the python run some tags to put on the top of your report messages.
 
-    The type of the messages can be different according to its criticality.
-    This is fully defined and #driven in the Python and visible in the browser when the page is ready
+        The type of the messages can be different according to its criticality.
+        This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    All the notification can be hidden directly from the report by setting the flag alerts = False
-    e.g: rptObj.alerts = False
+        All the notification can be hidden directly from the report by setting the flag alerts = False
+        e.g: rptObj.alerts = False
 
-    Usage::
+        Usage::
 
-      page.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
+          page.ui.messaging.alert('danger', 'Server URL not recognized', 'Please check')
 
-    Underlying HTML Objects:
+        Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlMessaging.Alert`
+          - :class:`epyk.core.html.HtmlMessaging.Alert`
 
-    Related Pages:
+        Related Pages:
 
-      https://getbootstrap.com/docs/4.0/components/alerts/
- 
-    :param value: Optional. The content of the notification
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
-    """
+          https://getbootstrap.com/docs/4.0/components/alerts/
+
+        :param value: Optional. The content of the notification
+        :param width: Optional. A tuple with the integer for the component width and its unit
+        :param height: Optional. A tuple with the integer for the component height and its unit
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        """
         component = self.alert('danger', value, width, height, html_code, options, profile)
         html.Html.set_component_skin(component)
         return component
@@ -199,28 +199,28 @@ class Network:
              height: types.SIZE_TYPE = (None, None), options: dict = None,
              profile: types.PROFILE_TYPE = False) -> html.HtmlNetwork.Alert:
         """Function to add when the python run some tags to put on the top of your report messages.
-    The type of the messages can be different according to its criticallity.
-    This is fully defined and #driven in the Python and visible in the browser when the page is ready
+        The type of the messages can be different according to its criticallity.
+        This is fully defined and #driven in the Python and visible in the browser when the page is ready
 
-    Usage::
+        Usage::
 
-      page.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
+          page.ui.messaging.alert('info', 'Server URL not recognized', 'Please check')
 
-    Underlying HTML Objects:
+        Underlying HTML Objects:
 
-      - :class:`epyk.core.html.HtmlMessaging.Alert`
+          - :class:`epyk.core.html.HtmlMessaging.Alert`
 
-    Related Pages:
+        Related Pages:
 
-      https://getbootstrap.com/docs/4.0/components/alerts/
- 
-    :param value: Optional. The content of the notification.
-    :param width: Optional. A tuple with the integer for the component width and its unit
-    :param height: Optional. A tuple with the integer for the component height and its unit
-    :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-    :param options: Optional. Specific Python options available for this component
-    :param profile: Optional. A flag to set the component performance storage
-    """
+          https://getbootstrap.com/docs/4.0/components/alerts/
+
+        :param value: Optional. The content of the notification.
+        :param width: Optional. A tuple with the integer for the component width and its unit
+        :param height: Optional. A tuple with the integer for the component height and its unit
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        :param options: Optional. Specific Python options available for this component
+        :param profile: Optional. A flag to set the component performance storage
+        """
         component = self.alert('info', value, width, height, html_code, options, profile)
         html.Html.set_component_skin(component)
         return component

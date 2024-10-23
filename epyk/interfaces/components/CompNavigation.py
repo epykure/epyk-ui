@@ -825,8 +825,8 @@ class Banners:
     html.Html.set_component_skin(container)
     return container
 
-  def corner(self, data="", background=None, position="bottom", width=(180, 'px'), height=(None, 'px'), options=None,
-             profile=None):
+  def corner(self, data="", background: str = None, position="bottom", width=(180, 'px'), height=(None, 'px'),
+             align: str = "right", options=None, profile=None):
     """
 
     :tags:
@@ -861,6 +861,7 @@ class Banners:
     :param position: String. Optional. A string with the vertical position of the component
     :param width: Tuple. Optional. A tuple with the integer for the component width and its unit
     :param height: Tuple. Optional. A tuple with the integer for the component height and its unit
+    :param align:
     :param options: Dictionary. Optional. Specific Python options available for this component
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage
     """
@@ -868,21 +869,25 @@ class Banners:
     div = self.page.ui.div(data, width=width, height=height, options=options, profile=profile)
     if div.style.css.height is None:
       div.style.css.min_height = Defaults_html.LINE_HEIGHT
-    div.style.css.background_color = background or self.page.theme.colors[3]
-    div.style.css.color = "white"
+    div.set_style_map(["interf-banners.css"])
+    div.classList.add("i-banner")
     div.style.css.z_index = options.get("z_index", 860)
-    div.style.css.position = "fixed"
-    div.style.css.padding = "5px 15px"
-    div.style.css.text_align = "center"
+    if background:
+      div.style.css.background_color = background
+    if align == "right":
+      div.classList.add("i-banner-r")
+    elif align == "left":
+      div.classList.add("i-banner-l")
+    elif align:
+      div.classList.add("i-banner-%s" % align)
+
     div.style.css.right = 0
     if position == 'bottom':
-      div.style.css.bottom = 0
-      div.style.css.transform = "rotate(-40deg)"
-      div.style.css.margin = "0 -30px 15px 0"
-    else:
-      div.style.css.top = 0
-      div.style.css.transform = "rotate(40deg)"
-      div.style.css.margin = "20px -45px 0 0"
+      div.classList.add("i-banner-b")
+    elif position == 'top':
+      div.classList.add("i-banner-t")
+    elif position:
+      div.classList.add("i-banner-%s" % position)
     html.Html.set_component_skin(div)
     return div
 
