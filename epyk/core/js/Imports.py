@@ -4868,6 +4868,22 @@ class ImportManager:
             self.page.properties.js.add_constructor(name, "\n".join(main_data))
         return self.page.js.getVar(name.upper())
 
+    def insert_path(self, path: str, n: int = 0) -> bool:
+        """Add a path to the global path.
+
+        :param path: Path to add
+        :param n: Position in the resources list
+        """
+        if not Path(path).exists():
+            return False
+
+        for p in global_settings.PRIMARY_RESOURCE_PATHS:
+            if p == path:
+                return False
+
+        global_settings.PRIMARY_RESOURCE_PATHS.insert(n, path)
+        return True
+
 
 class Package:
 
