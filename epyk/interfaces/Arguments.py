@@ -33,11 +33,14 @@ def size(value: Any, unit: str = "%", toStr: bool = False):
                 unit = value[-1:]
                 value = int(value[:-1])
             else:
-                unit = value[-2:]
-                if unit not in ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "vw", "vh"]:
-                    raise ValueError("Unit not recognised {}".format(unit))
+                if value.startswith("calc"):
+                    unit = ""
+                else:
+                    unit = value[-2:]
+                    if unit not in ["cm", "mm", "in", "px", "pt", "pc", "em", "ex", "ch", "vw", "vh"]:
+                        raise ValueError("Unit not recognised {}".format(unit))
 
-                value = int(value[:-2])
+                    value = int(value[:-2])
         else:
             if value is not None and value > 100 and unit == "%":
                 unit = "px"
