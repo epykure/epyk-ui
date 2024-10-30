@@ -1,0 +1,7 @@
+.html-trafficlight {
+    width: var(--font-size) ;
+    height: var(--font-size) ;
+    border-radius: 60px ;
+    display: inline-block ;
+    vertical-align: middle ;
+}

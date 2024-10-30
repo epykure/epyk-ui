@@ -100,7 +100,7 @@ class Rich:
 
     def light(self, color: str = None, height: types.SIZE_TYPE = (None, 'px'), label: str = None, align: str = "left",
               tooltip: str = None, helper: str = None, html_code: str = None, options: types.OPTION_TYPE = None,
-              profile: types.PROFILE_TYPE = None):
+              profile: types.PROFILE_TYPE = None) -> html.HtmlTextComp.TrafficLight:
         """Add a traffic light component to give a visual status of a given process.
 
         :tags:
@@ -126,8 +126,6 @@ class Rich:
         :param profile: Optional. A flag to set the component performance storage
         """
         height = Arguments.size(height, unit="px")
-        if height is None or height[0] is None:
-            height = (self.page.body.style.globals.font.size, "px")
         if isinstance(color, bool):
             color = self.page.theme.success.base if color else self.page.theme.danger.base
         html_traffic = html.HtmlTextComp.TrafficLight(self.page, color, label, height, tooltip, helper, options,

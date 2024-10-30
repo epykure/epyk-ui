@@ -365,6 +365,13 @@ class TrafficLight(Html.Html):
     tag = "div"
     _option_cls = OptText.OptionsTrafficLight
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-trafficlight.css"
+    ]
+    style_refs = {
+        "html-trafficlight": "html-trafficlight"
+    }
+
     def __init__(self, page: primitives.PageModel, color, label, height, tooltip, helper, options, profile,
                  html_code: str=None):
         options = options or {}
@@ -376,8 +383,9 @@ class TrafficLight(Html.Html):
         self.add_label(label, css={"width": 'auto', 'float': 'none', 'vertical-align': 'middle', 'height': '100%',
                                    "margin": '0 5px', 'display': 'inline-block', "min-width": '100px'},
                        html_code=self.html_code, options=options.get("label"))
-        self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
-                  'vertical-align': 'middle'})
+        self.classList.add(self.style_refs["html-trafficlight"])
+        if self.val is not None:
+            self.style.css.background_color = self.val
         self.set_attrs(name="title", value=tooltip)
         self.set_attrs(name="name", value="light")
         self.set_attrs(name="data-status", value=color)
