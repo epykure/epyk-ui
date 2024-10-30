@@ -1202,24 +1202,35 @@ class JsHtmlBackground(JsHtml):
 
 class JsHtmlNumeric(JsHtmlRich):
 
-    def to(self, number: float, timer: int = 1, profile: types.PROFILE_TYPE = None):
-        """
+    def to(self, number: float, timer: int = 1, dataflows: List[dict] = None, step: float = 1, profile: types.PROFILE_TYPE = None):
+        """Change the value step by step.
 
         :param number:
         :param timer: The time spent for the increase in millisecond
+        :param dataflows: Chain of data transformations
+        :param step: Increment value
         :param profile: Optional. A flag to set the component performance storage
         """
+        html_code = self.component.html_code
         return JsUtils.jsConvertFncs([
-            self.page.js.objects.number(self.content.unformat(), js_code="%s_counter" % self.htmlCode, set_var=True),
+            self.page.js.objects.number(self.content.unformat(), js_code="%s_counter" % html_code, set_var=True),
             self.page.js.window.setInterval([
                 self.page.js.if_(
-                    self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) < number, [
+                    self.page.js.objects.number.get("window.%s_counter" % html_code) < JsUtils.jsWrap(JsUtils.dataFlows(number, dataflows, self.page)), [
                         self.page.js.objects.number(
-                            self.page.js.objects.number.get("window.%s_counter" % self.htmlCode) + 1,
-                            js_code="window.%s_counter" % self.htmlCode, set_var=True),
-                        self.component.build(self.page.js.objects.number.get("window.%s_counter" % self.htmlCode))
-                    ]).else_(self.page.js.window.clearInterval("%s_interval" % self.htmlCode))
-            ], "%s_interval" % self.htmlCode, timer)
+                            self.page.js.objects.number.get("window.%s_counter" % html_code) + step,
+                            js_code="window.%s_counter" % html_code, set_var=True),
+                        self.component.build(self.page.js.objects.number.get("window.%s_counter" % html_code))
+                    ]).else_(
+                        self.page.js.if_(self.page.js.objects.number.get("window.%s_counter" % html_code) > JsUtils.jsWrap(JsUtils.dataFlows(number, dataflows, self.page)), [
+                            self.page.js.objects.number(
+                                self.page.js.objects.number.get("window.%s_counter" % html_code) - step,
+                                js_code="window.%s_counter" % html_code, set_var=True),
+                            self.component.build(self.page.js.objects.number.get("window.%s_counter" % html_code))
+                    ]).else_([
+                            self.page.js.window.clearInterval("%s_interval" % html_code)])
+                )
+            ], "%s_interval" % html_code, timer)
         ], toStr=True, profile=profile)
 
     def add(self, item: float):

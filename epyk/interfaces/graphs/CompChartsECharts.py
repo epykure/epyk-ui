@@ -49,10 +49,10 @@ class ECharts:
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", 'value')
-        chart.options.tooltip.trigger = 'axis'
-        if data:
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'axis')
+        if data.get("labels"):
             chart.options.xAxis.data = data["labels"]
-            chart.options.xAxis.type = "category"
+            chart.options.xAxis.type = dfl_options.get("xAxis", {}).get("type", 'category')
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
@@ -72,7 +72,7 @@ class ECharts:
         chart.colors(self.page.theme.charts)
         chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", 'value')
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        if data.get("labels"):
             chart.options.xAxis.data = data["labels"]
             chart.options.xAxis.type = dfl_options.get("xAxis", {}).get("type", 'category')
             for dataset in data['datasets']:
@@ -94,7 +94,7 @@ class ECharts:
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        if data.get("labels"):
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
@@ -115,7 +115,7 @@ class ECharts:
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        if data.get("labels"):
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
@@ -138,7 +138,7 @@ class ECharts:
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        if data.get("labels"):
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
@@ -172,7 +172,8 @@ class ECharts:
              html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {
+            "ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", "category")
@@ -182,10 +183,10 @@ class ECharts:
         chart.options.toolbox.feature.saveAsImage = {}
         if data:
             chart.options.yAxis.data = data["labels"]
-            chart.options.yAxis.axisTick.show = False
-            chart.options.yAxis.axisLine.show = False
-            chart.options.yAxis.splitLine.show = False
-            chart.options.yAxis.axisLabel.show = False
+            chart.options.yAxis.axisTick.show = dfl_options.get("yAxis", {}).get("axisTick", {}).get("show", False)
+            chart.options.yAxis.axisLine.show = dfl_options.get("yAxis", {}).get("axisLine", {}).get("show", False)
+            chart.options.yAxis.splitLine.show = dfl_options.get("yAxis", {}).get("splitLine", {}).get("show", False)
+            chart.options.yAxis.axisLabel.show = dfl_options.get("yAxis", {}).get("axisLabel", {}).get("show", False)
             for dataset in data['datasets']:
                 s = chart.options.series
                 s.name = dataset['label']
@@ -225,7 +226,8 @@ class ECharts:
               options: dict = None, html_code: str = None, **kwargs) -> graph.GraphECharts.ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "scatter", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {
+            "ek": {"chart": {"type": "scatter", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
@@ -272,7 +274,8 @@ class ECharts:
               html_code: str = None, **kwargs) -> graph.GraphECharts.EChartsTreeMap:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "sunburst", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {
+            "ek": {"chart": {"type": "sunburst", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
         chart.set_builder("ekTreeECharts", in_module=True)

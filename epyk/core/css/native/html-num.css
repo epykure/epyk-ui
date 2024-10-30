@@ -1,0 +1,13 @@
+.html-num {
+    text-align: center ;
+    display: inline-block
+}
+
+
+.html-num-font {
+    vertical-align: middle ;
+    height: 100% ;
+    padding: 0 ;
+    margin: 0 ;
+    display: inline-block ;
+}

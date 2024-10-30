@@ -623,6 +623,15 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
     requirements = ('accounting',)
     _option_cls = OptText.OptionsNumber
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-num.css"
+    ]
+
+    style_refs = {
+        "html-num": "html-num",
+        "html-num-font": "html-num-font",
+    }
+
     def __init__(self, page: primitives.PageModel, number, title, label, icon, color, tooltip, html_code, options,
                  helper, width, profile):
         super(Numeric, self).__init__(page, number, html_code=html_code, profile=profile, options=options,
@@ -637,7 +646,7 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
                        css={"margin-bottom": 0, "margin-right": 0, "padding": 0})
 
         # Update the CSS Style of the component
-        self.css({'text-align': 'center', 'display': 'inline-block'})
+        self.classList.add(self.style_refs["html-num"])
         self.tooltip(tooltip)
 
     def money(self, symbol: str = "", digit: int = 0, thousand_sep: str = ".", decimal_sep: str = ",",
@@ -692,10 +701,11 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
             self._js = JsCompNumber.CompNumber(page=self.page, selector=self.dom.varId, set_var=False, component=self)
         return self._js
 
-    def to(self, number: int, timer: int = 1):
+    def to(self, number: int, timer: int = 1, step: float = 1):
         """
-        :param int number:
-        :param int timer: The increase in millisecond
+        :param number:
+        :param timer: The increase in millisecond
+        :param step: Increment value
         """
         self.page.body.onReady([
             self.page.js.objects.number(self.val, js_code="%s_counter" % self.html_code, set_var=True),
@@ -703,7 +713,7 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
                 self.page.js.if_(
                     self.page.js.objects.number.get("window.%s_counter" % self.html_code) < number, [
                         self.page.js.objects.number(
-                            self.page.js.objects.number.get("window.%s_counter" % self.html_code) + 1,
+                            self.page.js.objects.number.get("window.%s_counter" % self.html_code) + step,
                             js_code="window.%s_counter" % self.html_code, set_var=True),
                         self.build(self.page.js.objects.number.get("window.%s_counter" % self.html_code))
                     ]).else_(self.page.js.window.clearInterval("%s_interval" % self.html_code))
@@ -734,8 +744,9 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
         self.onReady([self.dom.setAttribute("data-content", self.dom.content)])
-        return "<%s %s><font style='vertical-align:middle;height:100%%;padding:0;margin:0;display:inline-block'>%s</font>%s</%s>" % (
-          self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.val, self.helper, self.tag)
+        return "<%s %s><font class='%s'>%s</font>%s</%s>" % (
+          self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.style_refs["html-num-font"],
+          self.val, self.helper, self.tag)
 
 
 class Highlights(MixHtmlState.HtmlStates, Html.Html):

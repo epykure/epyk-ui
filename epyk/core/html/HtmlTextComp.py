@@ -379,6 +379,7 @@ class TrafficLight(Html.Html):
         self.css({'border-radius': '60px', 'background-color': self.val, 'display': 'inline-block',
                   'vertical-align': 'middle'})
         self.set_attrs(name="title", value=tooltip)
+        self.set_attrs(name="name", value="light")
         self.set_attrs(name="data-status", value=color)
         self.action = None
         if tooltip is not None:
@@ -453,9 +454,9 @@ class TrafficLight(Html.Html):
 
     def __str__(self):
         if self.action is not None:
-            return '<div id="%s"><div %s></div>%s</div>%s' % (
-                self.html_code, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
-                self.action.html(), self.helper)
+            return '<%s id="%s"><div %s></div>%s</%s>%s' % (
+                self.tag, self.html_code, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),
+                self.action.html(), self.tag, self.helper)
 
         return '<%s id="%s"><div %s></div></%s>%s' % (
             self.tag, self.html_code, self.get_attrs(css_class_names=self.style.get_classes(), with_id=False),

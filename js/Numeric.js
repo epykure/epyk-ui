@@ -1,19 +1,23 @@
 
 
 function numeric(htmlObj, data, options){
-    data = getDataFromTemplate(data, options);
-    setCss(htmlObj, options, true);
+    data = getDataFromTemplate(data, options); setCss(htmlObj, options, true);
+    let fontDom = htmlObj.querySelector('font');
+    if(!fontDom){
+        fontDom = document.createElement("font"); fontDom.classList.add("html-num-font");
+        htmlObj.appendChild(fontDom)
+    };
     if (options.type_number == 'money'){
         if ((options.templateMode == 'loading') || (options.templateMode == 'error')){
-            htmlObj.querySelector('font').innerHTML = data
+            fontDom.innerHTML = data
         } else {
-            htmlObj.querySelector('font').innerHTML = accounting.formatMoney(
+            fontDom.innerHTML = accounting.formatMoney(
             data, options.symbol, options.digits, options.thousand_sep, options.decimal_sep, options.format)}}
     else {
         if ((options.templateMode == 'loading') || (options.templateMode == 'error')){
-            htmlObj.querySelector('font').innerHTML = data
+            fontDom.innerHTML = data
         } else {
-            htmlObj.querySelector('font').innerHTML = accounting.formatNumber(
+            fontDom.innerHTML = accounting.formatNumber(
             data, options.digits, options.thousand_sep, options.decimal_sep)}
         }
 }

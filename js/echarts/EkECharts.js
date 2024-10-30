@@ -41,5 +41,7 @@ function ekECharts(data, options){
             chartContext.series.push(dataSet)
         })
     };
+    if((options._ek.chart.type == 'bar') && (options._ek.chart.orient == "horizontal")){
+         chartContext.yAxis.data = chartContext.xAxis.data};
     return chartContext
 }
