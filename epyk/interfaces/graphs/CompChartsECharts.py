@@ -173,7 +173,7 @@ class ECharts:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
         dfl_options = Arguments.clean_opt(options, {
-            "ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns}}})
+            "ek": {"chart": {"type": "bar", "x_axis": x_axis, "y_columns": y_columns, "orient": "horizontal"}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", "category")
@@ -181,7 +181,8 @@ class ECharts:
         chart.options.xAxis.position = dfl_options.get("xAxis", {}).get("position", "top")
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
+        if data.get("labels"):
             chart.options.yAxis.data = data["labels"]
             chart.options.yAxis.axisTick.show = dfl_options.get("yAxis", {}).get("axisTick", {}).get("show", False)
             chart.options.yAxis.axisLine.show = dfl_options.get("yAxis", {}).get("axisLine", {}).get("show", False)
@@ -212,7 +213,7 @@ class ECharts:
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        if data.get("labels"):
             for i, dataset in enumerate(data['datasets']):
                 s = chart.options.series
                 s.name = dataset['label']
@@ -235,7 +236,7 @@ class ECharts:
         chart.options.xAxis.type = dfl_options.get("xAxis", {}).get("type", "value")
         chart.set_builder("ekScatterECharts", in_module=True)
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        if data.get("labels"):
             for i, dataset in enumerate(data['datasets']):
                 s = chart.options.series
                 s.name = dataset['label']
@@ -249,13 +250,14 @@ class ECharts:
               html_code: str = None, **kwargs) -> graph.GraphECharts.EChartsRadar:
         width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "radar", "x_axis": x_axis, "y_columns": y_columns}}})
+        dfl_options = Arguments.clean_opt(options, {
+            "ek": {"chart": {"type": "radar", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.EChartsRadar(self.page, width, height, html_code, dfl_options, profile)
         chart.set_builder("ekRadarECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
-        if data:
+        if data.get("labels"):
             chart.options.radar.indicator = [{"name": l} for l in data["labels"]]
             s = chart.options.series
             s.type = dfl_options["ek"]["chart"]["type"]
