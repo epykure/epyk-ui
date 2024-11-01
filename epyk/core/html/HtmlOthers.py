@@ -241,6 +241,10 @@ class Help(Html.Html):
     name = 'Info'
     tag = "i"
 
+    tyle_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-helper.css",
+    ]
+
     def __init__(self, page: primitives.PageModel, val, width: tuple, profile: Optional[Union[bool, dict]],
                  html_code: Optional[str], options: Optional[dict]):
         icon_details = page.icons.get("info")

@@ -7,21 +7,21 @@
 
 .i-nav-side-panel-l {
     left: 0 ;
-    border-right: 1px solid var(--theme-dark);
+    border-right: 1px solid var(--grey);
     padding: 5px ;
 }
 
 
 .i-nav-side-panel-r {
     right: 0 ;
-    border-left: 1px solid var(--theme-dark);
+    border-left: 1px solid var(--grey);
     padding: 5px ;
 }
 
 
 .i-nav-side-panel-t {
     top: 0 ;
-    border-bottom: 1px solid var(--theme-dark);
+    border-bottom: 1px solid var(--grey);
     padding: 5px ;
 }
 

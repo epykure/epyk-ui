@@ -1,0 +1,13 @@
+.html-textarea {
+    resize: none ;
+    margin-bottom: 5px ;
+    padding: 5px ;
+    background-color: var(--white) ;
+    border: 1px solid var(--theme-lighter) ;
+}
+
+
+.html-textarea:focus  {
+    outline: none !important ;
+    border-color: var(--theme) ;
+}

@@ -1,0 +1,66 @@
+.html-drawer {
+    position: relative ;
+}
+
+.html-drawer-panels {
+    padding-right: 10px ;
+    width: auto ;
+}
+
+.html-drawer-handle {
+    cursor: pointer ;
+    width: 6px ;
+    height: 100% ;
+    display: inline-block ;
+    background-color: var(--theme-light) ;
+}
+
+.html-drawer-large-handle {
+    cursor: pointer ;
+    width: 20px ;
+    height: 100% ;
+    display: inline-block ;
+    background-color: var(--theme-light) ;
+}
+
+.html-drawer-handle::after {
+   position: absolute ;
+   top: 50% ;
+   padding: 2px ;
+   height: 100% ;
+}
+
+
+.html-drawers {
+    overflow-y: auto ;
+    height: 100% ;
+    overflow-x: hidden ;
+    display: inline-block ;
+    background-color: var(--theme-lighter) ;
+}
+
+.html-drawer-panel {
+    clear: both ;
+    overflow-y: hidden ;
+    position: absolute ;
+    top: 0 ;
+    height: 100% ;
+    overflow-x: hidden ;
+}
+
+.html-drawer-link {
+    padding: 0 5px ;
+}
+
+
+.html-drawer-links {
+    padding: 5px ;
+    margin: 0 2px ;
+    cursor: pointer ;
+    writing-mode: vertical-rl ;
+    text-orientation: mixed ;
+}
+
+.html-drawer-links:hover {
+    color: var(--theme-dark) !IMPORTANT ;
+}

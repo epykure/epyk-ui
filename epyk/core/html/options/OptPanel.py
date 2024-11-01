@@ -316,6 +316,24 @@ class OptionDrawer(Options):
       num = "%spx" % num
     self.set(num)
 
+  @property
+  def trigger(self):
+    """Trigger event on the handler to change panel display"""
+    return self.get("click")
+
+  @trigger.setter
+  def trigger(self, event: str):
+    self.set(event)
+
+  @property
+  def push(self):
+    """Same layer. Panel will push other components"""
+    return self.get(False)
+
+  @push.setter
+  def push(self, flag: bool):
+    self.set(flag)
+
 
 class OptionsStepper(Options):
   component_properties = ("column_title", "column_text", "column_label", "column_tooltip")

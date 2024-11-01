@@ -1067,6 +1067,7 @@ class FieldSelect(Field):
 
 class InputCheckbox(Html.Html):
     name = 'Checkbox'
+    tag = "input"
 
     def __init__(self, page: primitives.PageModel, flag, label, group_name, width, height, html_code, options,
                  attrs, profile):
@@ -1108,12 +1109,13 @@ class InputCheckbox(Html.Html):
         return self._js
 
     def __str__(self):
-        return '<input %(strAttr)s>%(label)s' % {
-            'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'label': self._label}
+        return '<%(tag)s %(strAttr)s>%(label)s' % {
+            'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'label': self._label, "tag": self.tag}
 
 
 class Radio(Html.Html):
     name = 'Radio'
+    tag = "div"
 
     def __init__(self, page: primitives.PageModel, flag, label, group_name, icon, width, height, html_code, helper,
                  options, profile):
@@ -1178,20 +1180,29 @@ class Radio(Html.Html):
             value, width="5px", background_color=background_color, parent_html_code=self.input.html_code)
 
     def __str__(self):
-        return '<div %(strAttr)s>%(badge)s%(helper)s</div>' % {
+        return '<%(tag)s %(strAttr)s>%(badge)s%(helper)s</%(tag)s>' % {
             'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper,
-            "badge": "" if self.label else self.badge}
+            "badge": "" if self.label else self.badge, "tag": self.tag}
 
 
 class TextArea(Html.Html):
     name = 'Text Area'
+    tag = "textarea"
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-textarea.css",
+    ]
+
+    style_refs = {
+        "html-textarea": "html-textarea",
+    }
 
     def __init__(self, page: primitives.PageModel, text, width, rows, placeholder, background_color,
                  html_code, options, profile):
         super(TextArea, self).__init__(page, text, html_code=html_code, profile=profile,
                                        css_attrs={"width": width, 'box-sizing': 'border-box'})
         self.rows, self.background_color = rows, background_color
-        self.style.add_classes.input.textarea()
+        self.classList.add(self.style_refs["html-textarea"])
         self.set_attrs({"rows": rows, "placeholder": placeholder or ""})
         self.__options = OptInputs.OptionsTextarea(self, options)
 
@@ -1441,8 +1452,8 @@ var %(cachedVar)s;
                 js_funcs, toStr=True, profile=profile)}], profile=profile, source_event=source_event, on_ready=on_ready)
 
     def __str__(self):
-        return '<textarea %(strAttr)s>%(val)s</textarea>' % {
-            "strAttr": self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val}
+        return '<%(tag)s %(strAttr)s>%(val)s</%(tag)s>' % {
+            "strAttr": self.get_attrs(css_class_names=self.style.get_classes()), 'val': self.val, "tag": self.tag}
 
 
 class Search(Html.Html):

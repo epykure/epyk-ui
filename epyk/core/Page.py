@@ -379,13 +379,23 @@ class Properties:
 
 class Stats:
 
-    def __init__(self, context):
+    def __init__(self, context, components):
         self._context = context
+        self._components = components
 
     @property
     def transpiler(self):
-        """Stats for the transpilers"""
+        """Stats for the transpiler"""
         return Transpiler(self._context['context']['transpiler'])
+
+    @property
+    def components(self) -> dict:
+        """Get component type count"""
+        grp = collections.defaultdict(int)
+        for alias, c in self._components.items():
+            if c.name:
+                grp[c.name] += 1
+        return grp
 
 
 class Report:
@@ -491,7 +501,7 @@ class Report:
     def stats(self) -> Stats:
         """Property to the different Page statistics"""
         if self.__stats is None:
-            self.__stats = Stats(self._props)
+            self.__stats = Stats(self._props, self.components)
         return self.__stats
 
     @property

@@ -530,7 +530,7 @@ class Navigation:
     return component
 
   def side(self, components=None, anchor=None, size=262, position='right', options=None, profile=False,
-           z_index: int = 20, overlay: bool = False, padding: int = None) -> html.HtmlContainer.Div:
+           z_index: int = 20, overlay: bool = False, padding: int = None, push: bool = False) -> html.HtmlContainer.Div:
     """
 
     :tags:
@@ -583,6 +583,7 @@ class Navigation:
     if overlay:
       overlay = self.page.ui.div(width=(100, "vw"), height=(100, "vh"))
       overlay.style.css.z_index = z_index - 1
+      overlay.style.css.display = 'none'
       overlay.classList.add("i-nav-side-overlay")
       overlay_event = [overlay.dom.toggle()]
       d.overlay = overlay
@@ -591,8 +592,17 @@ class Navigation:
     html.Html.set_component_skin(d)
     if anchor is None:
       if d.options.get(name="position") == 'left':
-        i = self.page.ui.icon("fas fa-bars").click(
-          overlay_event + [d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+        if push:
+          self.page.body.style.css.margin_left = 0
+          i = self.page.ui.icon("fas fa-bars").click(
+            overlay_event + [
+              self.page.body.dom.toggle_transition("margin-left", "0px", "%spx" % size),
+              d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+        else:
+          i = self.page.ui.icon("fas fa-bars").click(
+            overlay_event + [
+              d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+
         i.style.css.float = 'right'
         if position_type == "fixed":
           i.style.css.position = "fixed"
@@ -606,18 +616,42 @@ class Navigation:
           i.style.css.left = 10
           i.style.css.top = 10
       i.css({"padding": '5px'})
+      i.style.css.z_index = 600
       if overlay:
         overlay.click([i.dom.events.trigger("click")])
     else:
       if position == 'left':
-        anchor.click(
-          overlay_event + [d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
-      if position == 'top':
-        anchor.click(
-          overlay_event + [d.dom.toggle_transition("margin-top", "0px", "-%spx" % size)])
+        if push:
+          self.page.body.style.css.margin_left = 0
+          anchor.click(
+            overlay_event + [
+              self.page.body.dom.toggle_transition("margin-left", "0px", "%spx" % size),
+              d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)])
+        else:
+          anchor.click(
+            overlay_event + [
+              d.dom.toggle_transition("margin-left", "0px", "-%spx" % size)
+            ])
+      elif position == 'top':
+        if push:
+          self.page.body.style.css.margin_top = 0
+          anchor.click(
+            overlay_event + [
+              self.page.body.dom.toggle_transition("margin-top", "0px", "%spx" % size),
+              d.dom.toggle_transition("margin-top", "0px", "-%spx" % size)])
+        else:
+          anchor.click(
+            overlay_event + [d.dom.toggle_transition("margin-top", "0px", "-%spx" % size)])
       else:
-        anchor.click(
-          overlay_event + [d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+        if push:
+          self.page.body.style.css.margin_right = 0
+          anchor.click(
+            overlay_event + [
+              self.page.body.dom.toggle_transition("margin-right", "0px", "%spx" % size),
+              d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
+        else:
+          anchor.click(
+            overlay_event + [d.dom.toggle_transition("margin-right", "0px", "-%spx" % size)])
       if overlay:
         overlay.click([anchor.dom.events.trigger("click")])
     return d

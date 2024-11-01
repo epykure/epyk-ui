@@ -64,7 +64,7 @@ class CodeMirror(JsHtml.JsHtmlRich):
     def __init__(self, component: primitives.HtmlModel, js_code: str = None, set_var: bool = True,
                  is_py_data: bool = True, page: primitives.PageModel = None):
         self.htmlCode = js_code if js_code is not None else component.html_code
-        self.varName, self.varData, self.__var_def = "%s.getWrapperElement()" % component.js_code, "", None
+        self.varName, self.varData, self.__var_def = component.js_code, "", None
         self.component, self.page = component, page
         self._js = []
         self._jquery, self._jquery_ui, self._d3 = None, None, None

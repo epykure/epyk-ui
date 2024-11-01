@@ -134,7 +134,7 @@ class OptionsInput(Options):
 
       https://www.w3schools.com/tags/att_textarea_maxlength.asp
     """
-    return self.get(True)
+    return self.get(False)
 
   @background.setter
   def background(self, flag: bool):

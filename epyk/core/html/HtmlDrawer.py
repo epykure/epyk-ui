@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
+from pathlib import Path
 from typing import Union, Optional
 from epyk.core.py import primitives
 
@@ -19,28 +19,40 @@ class Drawer(Html.Html):
     name = 'Drawer'
     _option_cls = OptPanel.OptionDrawer
 
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-drawer.css",
+    ]
+
+    style_refs = {
+        "html-drawer": "html-drawer",
+        "html-drawer-panels": "html-drawer-panels",
+        "html-drawer-handle": "html-drawer-handle",
+        "html-drawers": "html-drawers",
+        "html-drawer-panel": "html-drawer-panel",
+        "html-drawer-link": "html-drawer-link",
+    }
+
     def __init__(self, page: primitives.PageModel, width: tuple, height: tuple, options: Optional[dict],
                  helper: Optional[str], profile: Optional[Union[dict, bool]], verbose: bool = False):
         super(Drawer, self).__init__(page, None, profile=profile, options=options,
                                      css_attrs={"width": width, "height": height}, verbose=verbose)
         self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
-        self.style.css.position = 'relative'
+        self.classList.add(self.style_refs["html-drawer"])
 
         self.panels = page.ui.div(html_code=self.sub_html_code("panels"))
         self.panels.options.managed = False
-        self.panels.style.css.padding_right = 10
+        self.panels.classList.add(self.style_refs["html-drawer-panels"])
         self.panels.attr['name'] = 'drawer_panels'
 
         self.handle = page.ui.div(html_code=self.sub_html_code("handle"))
         self.handle.style.clear_all()
-        self.handle.style.css.cursor = 'pointer'
-
+        self.handle.classList.add(self.style_refs["html-drawer-handle"])
         self.handle.options.managed = False
         self.handle.attr['name'] = 'drawer_handle'
 
         self.drawers = page.ui.div(html_code=self.sub_html_code("drawers"))
         self.drawers.style.clear_all()
-        self.drawers.style.css.overflow_y = 'auto'
+        self.drawers.classList.add(self.style_refs["html-drawers"])
         self.drawers.options.managed = False
         self.drawers.attr['name'] = 'drawer_content'
 
@@ -65,7 +77,7 @@ class Drawer(Html.Html):
         """
         if not hasattr(link, 'options'):
             link = self.page.ui.div(link, html_code=self.sub_html_code("link", auto_inc=True))
-            link.style.css.padding = "0 5px"
+            link.classList.add(self.style_refs["html-drawer-link"])
             link.options.managed = False
         if not hasattr(container, 'options'):
             container = self.page.ui.div(container, html_code=self.sub_html_code("panel", auto_inc=True))
@@ -73,13 +85,7 @@ class Drawer(Html.Html):
         container.options.managed = False
         self.panels += container
         self.drawers += link
-
-    @property
-    def style(self) -> GrpClsContainer.ClassDrawer:
-        """Get the CSS Style of the object. """
-        if self._styleObj is None:
-            self._styleObj = GrpClsContainer.ClassDrawer(self)
-        return self._styleObj
+        return container
 
     def set_handle(self, component: Html.Html):
         """Set the handle used to trigger the open / close events.
@@ -96,29 +102,61 @@ class Drawer(Html.Html):
     def __str__(self):
         self.handle.style.css.float = self.options.side
         if self.options.side == 'left':
-            self.drawers.style.css.width = self.options.width
-            self.drawers.style.css.margin_right = "-%s" % self.options.width
-            self.handle.click([self.drawers.dom.toggle_transition("margin-right", "0px", "-%s" % self.options.width)])
+            if self.options.push:
+                self.drawers.style.css.width = 0
+                self.panels.style.css.margin_right = 0
+                self.handle.on(self.options.trigger, [
+                    self.panels.dom.toggle_transition("margin-right", "0px", self.options.width),
+                    self.panels.dom.toggle_transition("width", self.panels.style.css.width, "calc(%s - %s)" % (
+                        self.panels.style.css.width, self.options.width)),
+                    self.drawers.dom.toggle_transition("width", "0px", self.options.width),
+                ])
+            else:
+                self.drawers.style.css.width = self.options.width
+                self.drawers.style.css.margin_right = "-%s" % self.options.width
+                self.handle.on(
+                    self.options.trigger, [
+                        self.drawers.dom.toggle_transition("margin-right", "0px", "-%s" % self.options.width)])
         else:
-            self.drawers.style.css.width = self.options.width
-            self.drawers.style.css.margin_left = "-%s" % self.options.width
-            self.handle.click([self.drawers.dom.toggle_transition("margin-left", "0px", "-%s" % self.options.width)])
+            if self.options.push:
+                self.drawers.style.css.width = 0
+                self.panels.style.css.margin_left = 0
+                self.handle.on(self.options.trigger, [
+                    self.panels.dom.toggle_transition("margin-left", "0px", self.options.width),
+                    self.panels.dom.toggle_transition("width", self.panels.style.css.width, "calc(%s - %s)" % (
+                        self.panels.style.css.width, self.options.width)),
+                    self.drawers.dom.toggle_transition("width", "0px", self.options.width),
+                ])
+            else:
+                self.drawers.style.css.width =  self.options.width
+                self.drawers.style.css.margin_left = "-%s" % self.options.width
+                self.handle.on(self.options.trigger, [
+                    self.drawers.dom.toggle_transition("margin-left", "0px", "-%s" % self.options.width),
+                ])
         position = {"left": 'right', 'right': 'left'}
-        return '''
-      <div %(attr)s>
-        %(panels)s
-        <div name='drawer' style='clear:both;%(side)s:0;overflow-y:hidden'>
-          %(helper)s
-          %(handle)s%(drawer)s
-        </div>
-      </div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.htmlCode,
-                   'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
-                   'side': position[self.options.side], 'helper': self.helper}
+        return '''<div %(attr)s>%(panels)s<div name='drawer' class='%(cls)s' style='%(side)s:0'>
+%(helper)s%(handle)s%(drawer)s</div></div>''' % {
+            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.html_code,
+            'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
+            'side': position[self.options.side], 'helper': self.helper, "cls": self.style_refs["html-drawer-panel"]}
 
 
 class DrawerMulti(Html.Html):
     name = 'Multi Drawers'
     _option_cls = OptPanel.OptionDrawer
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-drawer.css",
+    ]
+
+    style_refs = {
+        "html-drawer": "html-drawer",
+        "html-drawer-panels": "html-drawer-panels",
+        "html-drawers": "html-drawers",
+        "html-drawer-large-handle": "html-drawer-large-handle",
+        "html-drawer-panel": "html-drawer-panel",
+        "html-drawer-links": "html-drawer-links",
+    }
 
     def __init__(self, page: primitives.PageModel, component: Html.Html, width: tuple, height: tuple,
                  options: Optional[dict], helper: Optional[str], profile: Optional[Union[bool, dict]],
@@ -126,16 +164,19 @@ class DrawerMulti(Html.Html):
         super(DrawerMulti, self).__init__(page, None, options=options, css_attrs={"width": width, "height": height},
                                           profile=profile, verbose=verbose)
         self.add_helper(helper, css={"line-height": '%spx' % Defaults.LINE_HEIGHT})
-        self.style.css.position = 'relative'
+        self.classList.add(self.style_refs["html-drawer"])
 
-        self.panels = component
+        if not component:
+            self.panels = page.ui.div(html_code=self.sub_html_code("panels"))
+        else:
+            self.panels = component
         self.panels.options.managed = False
+        self.panels.classList.add(self.style_refs["html-drawer-panels"])
         self.panels.style.css.display = "inline-block"
-        self.panels.style.css.width = "auto"
-        self.panels.style.css.padding_right = 10
 
         self.handle = page.ui.div(html_code=self.sub_html_code("handle"))
         self.handle.style.clear_all()
+        self.handle.classList.add(self.style_refs["html-drawer-large-handle"])
         self.handle.style.css.z_index = 10
         self.handle.style.css.position = 'relative'
 
@@ -144,7 +185,7 @@ class DrawerMulti(Html.Html):
 
         self.drawers = page.ui.div(html_code=self.sub_html_code("drawers"))
         self.drawers.style.clear_all()
-        self.drawers.style.css.overflow_y = 'auto'
+        self.drawers.classList.add(self.style_refs["html-drawers"])
         self.drawers.options.managed = False
         self.drawers.attr['name'] = 'drawer_content'
 
@@ -168,17 +209,13 @@ class DrawerMulti(Html.Html):
         """
         if not hasattr(link, 'options'):
             link = self.page.ui.div(link, html_code=self.sub_html_code("link", auto_inc=True))
-        link.style.css.padding = "5px 0"
+        link.classList.add(self.style_refs["html-drawer-links"])
         link.style.css.color = self.page.theme.colors[0]
-        link.style.css.margin = "0 2px"
-        link.style.css.cursor = "pointer"
         link.options.managed = False
         if not hasattr(container, 'options'):
             container = self.page.ui.div(container, html_code=self.sub_html_code("panel", auto_inc=True))
             container.style.css.padding = 5
         container.options.managed = False
-        link.style.css.writing_mode = "vertical-rl"
-        link.style.css.text_orientation = "mixed"
         self.handle += link
         self.drawers += container
         link.click([
@@ -203,13 +240,6 @@ class DrawerMulti(Html.Html):
         ])
         return self
 
-    @property
-    def style(self) -> GrpClsContainer.ClassDrawer:
-        """Get the CSS Style of the object. """
-        if self._styleObj is None:
-            self._styleObj = GrpClsContainer.ClassDrawer(self)
-        return self._styleObj
-
     def __str__(self):
         self.handle.style.css.float = self.options.side
         if self.options.side == 'left':
@@ -218,13 +248,8 @@ class DrawerMulti(Html.Html):
         else:
             self.drawers.style.css.width = self.options.width
             self.drawers.style.css.margin_left = "-%s" % self.options.width
-        return '''
-      <div %(attr)s>
-        %(panels)s
-        <div name='drawer' style='clear:both;%(side)s:0;overflow-y:hidden'>
-          %(drawer)s
-        </div>
-        %(handle)s
-      </div>''' % {'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.html_code,
-                   'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
-                   'side': self.options.side}
+        return '''<div %(attr)s>%(panels)s<div name='drawer' class='%(cls)s' style='%(side)s:0'>
+%(drawer)s</div>%(handle)s</div>''' % {
+            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'htmlCode': self.html_code,
+            'drawer': self.drawers.html(), 'handle': self.handle.html(), 'panels': self.panels.html(),
+            'side': self.options.side, "cls": self.style_refs["html-drawer-panel"]}
