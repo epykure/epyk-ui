@@ -25,6 +25,9 @@ def size(value: Any, unit: str = "%", toStr: bool = False):
         return value
 
     elif value == "auto":
+        if toStr:
+            return value
+
         return value, ''
 
     else:
