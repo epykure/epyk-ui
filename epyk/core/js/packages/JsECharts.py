@@ -20,7 +20,7 @@ class ECharts(JsPackage):
         """
         event_type = JsUtils.jsConvertData(event_type, None)
         return JsUtils.jsWrap("%s.on(%s, function (params) {%s})" % (
-            self.varName, event_type, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+            self.varId, event_type, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
     def off(self, event_type: Union[str, primitives.JsDataModel], js_funcs: types.JS_FUNCS_TYPES,
            profile: types.PROFILE_TYPE = False):
@@ -34,7 +34,7 @@ class ECharts(JsPackage):
         """
         event_type = JsUtils.jsConvertData(event_type, None)
         return JsUtils.jsWrap("%s.on(%s, function (params) {%s})" % (
-            self.varName, event_type, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
+            self.varId, event_type, JsUtils.jsConvertFncs(js_funcs, toStr=True, profile=profile)))
 
     def dispatchAction(self, type: Union[str, primitives.JsDataModel], **kwargs):
         """
@@ -44,11 +44,11 @@ class ECharts(JsPackage):
         """
         type = JsUtils.jsConvertData(type, None)
         if not kwargs:
-            return JsUtils.jsWrap("%s.dispatchAction({type: %s}})" % (self.varName, type))
+            return JsUtils.jsWrap("%s.dispatchAction({type: %s}})" % (self.varId, type))
 
         lnames = ["%s: %s" % (k, JsUtils.jsConvertData(v, None)) for k, v in kwargs.items()]
         return JsUtils.jsWrap("%s.dispatchAction({type: %s, %s}})" % (
-            self.varName, type, ",".join(lnames)))
+            self.varId, type, ",".join(lnames)))
 
     def connect(self, charts: list):
         """Connects interaction of multiple chart series.
@@ -83,14 +83,14 @@ class ECharts(JsPackage):
         :param seriesIndex:
         :param data:
         """
-        return JsUtils.jsWrap("%s.appendData({seriesIndex: %s, data: %s}})" % (self.varName, seriesIndex, data))
+        return JsUtils.jsWrap("%s.appendData({seriesIndex: %s, data: %s}})" % (self.varId, seriesIndex, data))
 
     def dispose(self):
         """Destroys chart instance, after which the instance cannot be used any more.
 
         `ECharts <https://echarts.apache.org/en/api.html#echarts.dispose>`_
         """
-        return JsUtils.jsWrap("echarts.dispose({target: %s}})" % (self.varName))
+        return JsUtils.jsWrap("echarts.dispose({target: %s}})" % self.varId)
 
     def getOption(self):
         """Gets option object maintained in current instance, which contains configuration item and data merged from
@@ -98,7 +98,7 @@ class ECharts(JsPackage):
         zooming area of data zoom, and so on. Therefore, a new instance that is exactly the same can be recovered from
         this option.
         """
-        return JsObjects.JsObject.JsObject.get("%s.getOption()" % self.varName)
+        return JsObjects.JsObject.JsObject.get("%s.getOption()" % self.varId)
 
     def setOption(self, options: Union[list, primitives.JsDataModel]):
         """Configuration item, data, universal interface, all parameters and data can all be modified through setOption.
@@ -108,34 +108,34 @@ class ECharts(JsPackage):
         :param options: Echarts options
         """
         options = JsUtils.jsConvertData(options, None)
-        return JsObjects.JsObject.JsObject.get("%s.setOption(%s)" % (self.varName, options))
+        return JsObjects.JsObject.JsObject.get("%s.setOption(%s)" % (self.varId, options))
 
     def clear(self):
         """Clears current instance; removes all components and series in current instance.
 
         `ECharts <https://echarts.apache.org/en/api.html#echartsInstance.clear>`_
         """
-        return JsUtils.jsWrap("echarts.clear()" % self.varName)
+        return JsUtils.jsWrap("echarts.clear()" % self.varId)
 
     def isDisposed(self):
         """Returns whether current instance has been disposed.
 
         `ECharts <https://echarts.apache.org/en/api.html#echartsInstance.isDisposed>`_
         """
-        return JsUtils.jsWrap("echarts.isDisposed()" % self.varName)
+        return JsUtils.jsWrap("echarts.isDisposed()" % self.varId)
 
     def dispose(self):
         """Returns whether current instance has been disposed.
 
         `ECharts <https://echarts.apache.org/en/api.html#echartsInstance.dispose>`_
         """
-        return JsUtils.jsWrap("echarts.dispose()" % self.varName)
+        return JsUtils.jsWrap("echarts.dispose()")
 
     def resize(self):
-        return JsUtils.jsWrap("%s.resize()" % self.varName)
+        return JsUtils.jsWrap("%s.resize()" % self.varId)
 
     def showLoading(self):
-        return JsUtils.jsWrap("%s.showLoading()" % self.varName)
+        return JsUtils.jsWrap("%s.showLoading()" % self.varId)
 
     def hideLoading(self):
-        return JsUtils.jsWrap("%s.hideLoading()" % self.varName)
+        return JsUtils.jsWrap("%s.hideLoading()" % self.varId)

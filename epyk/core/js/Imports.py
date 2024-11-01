@@ -2515,7 +2515,7 @@ def script_version(alias: str, script_details: dict, with_prefix: bool = False):
         return CSS_IMPORTS[alias].get("version")
 
 
-def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = False) -> str:
+def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = False, verbose: bool = None) -> str:
     """Get the script path to retrieve the content locally.
     This is mainly used by PyNpm package in order to retrieve the content of the script to produce local copies of them.
     Having script copied locally will speed up the loading of the page and also will ensure a run offline.
@@ -2527,7 +2527,7 @@ def script_cdnjs_path(alias: str, script_details: dict, with_prefix: bool = Fals
     details = dict(script_details)
     if global_settings.PACKAGES_PATH is not None:
         local_path = Path(global_settings.PACKAGES_PATH) / details['script']
-        if local_path.exists():
+        if local_path.exists() and verbose:
             logging.debug("IMPORTS | Package | file %s used from %s" % (
                 details['script'], global_settings.PACKAGES_PATH))
             return str(local_path)
@@ -4136,7 +4136,7 @@ class ImportManager:
         for req in import_hierarchy.get(mod, {}).get(req_key, []):
             self.getReq(req, modules, import_hierarchy, use_require_js=use_require_js)
 
-    def cleanImports(self, imports: List[str], import_hierarchy: Optional[dict] = None, use_require_js: bool = False):
+    def cleanImports(self, imports: List[str], import_hierarchy: Optional[dict] = None, use_require_js: bool = False, verbose: bool = None):
         """
         Remove the underlying imports to avoid duplicated entries.
 
@@ -4148,6 +4148,7 @@ class ImportManager:
         :param imports: An array with the list of aliases for the external packages
         :param import_hierarchy: Optional. The package definition (Javascript | CSS) from the above import list
         :param use_require_js: Optional. Define if this is using requirejs to load imports. Default False
+        :param verbose:
 
         :return: Return the list with the full list of aliases (including dependencies)
         """
@@ -4160,8 +4161,11 @@ class ImportManager:
                     raise ValueError("Package %s not allowed" % a)
 
                 if self.page is not None and "info" in PACKAGE_STATUS[a]:
-                    # Change this to be info logs instead of warnings
-                    logging.info("%s: %s" % (a, PACKAGE_STATUS[a]["info"]))
+                    if verbose is None and self.page is not None:
+                        verbose = self.page.verbose
+                    if verbose:
+                        # Change this to be info logs instead of warnings
+                        logging.info("%s: %s" % (a, PACKAGE_STATUS[a]["info"]))
             occurrences = [j for j, x in enumerate(import_resolved) if x == a]
             if len(occurrences) > 1:
                 for j in occurrences[::-1][1:]:
@@ -4260,7 +4264,7 @@ class ImportManager:
         return re.findall('<link rel="stylesheet" href="(.*?)" type="text/css">', css_str)
 
     def jsResolve(self, js_aliases: List[str], local_js: Optional[dict] = None, excluded: Optional[List[str]] = None,
-                  local_title=""):
+                  local_title="", verbose: bool = None):
         """Return the list of Javascript modules to add to the header.
 
         Usage::
@@ -4280,6 +4284,8 @@ class ImportManager:
                                                ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH, ASSETS_STATIC_JS)
 
         js = []
+        if verbose is None and self.page is not None:
+            verbose = self.page.verbose
         if self.set_exports:
             # Fix for missing require function
             js.append("<script>var exports = {}; function require(a){return window[a]}</script>")
@@ -4338,7 +4344,7 @@ class ImportManager:
                                 base64_bytes = base64.b64encode(js_content)
                                 base64_message = base64_bytes.decode('ascii')
                                 url_module = "data:text/js;base64,%s" % base64_message
-                    else:
+                    elif verbose:
                         logging.warning("Missing File: %s" % url_module)
                 elif self.self_contained:
                     try:

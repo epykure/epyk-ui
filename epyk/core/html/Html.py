@@ -2278,12 +2278,16 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
         self.footer = self.page.ui.div(components, tag="footer", **kwargs)
         return self.footer
 
-    def set_css_maps(self, style_vars: dict):
+    def set_css_maps(self, style_vars: dict, verbose: bool = None):
         """Attach to the page header the CSS mapping rules.
 
         :param style_vars: Theme variables
+        :param verbose: Add extra log messages
         """
         from epyk.conf.global_settings import THEME_SASS_PATH
+
+        if verbose is None:
+            verbose = self.page.verbose
         # Add CSS proxy mapping from the body
         if self.page.body.css_map_files:
             css_files = self.page.body.css_map_files
@@ -2292,7 +2296,7 @@ document.body.removeChild(window['popup_loading_body']); window['popup_loading_b
                 for f in self.page.body.css_map_files:
                     c_file = Path(f)
                     n_file = Path(THEME_SASS_PATH, c_file.name)
-                    if n_file.exists():
+                    if n_file.exists() and verbose:
                         logging.debug("NATIVE | CSS | file %s used from %s" % (
                             c_file.name, THEME_SASS_PATH))
                         css_files.append(n_file)

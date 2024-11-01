@@ -475,7 +475,8 @@ class ECharts(JsHtml.JsHtml):
 
     def active(self):
         """Return the active clicked point"""
-        return JsObjects.JsObject.JsObject.get("params")
+        return JsObjects.JsObject.JsObject.get(
+            "{x: params.name, y: params.value, label: params.seriesName, seriesIndex: params.seriesIndex, dataIndex: params.dataIndex}")
 
     def createWidget(self, html_code: str, container: str = None, options: types.JS_DATA_TYPES = None):
         """Create a new widget derived from an existing one.
