@@ -43,7 +43,7 @@ class Drawers:
     html.Html.set_component_skin(component)
     return component
 
-  def left(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
+  def left(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = ("auto", 'px'),
            options: dict = None, profile: types.PROFILE_TYPE = None,
            helper: str = None) -> html.HtmlDrawer.Drawer:
     """  
@@ -69,7 +69,7 @@ class Drawers:
     html.Html.set_component_skin(component)
     return component
 
-  def right(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (200, 'px'),
+  def right(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = ("auto", 'px'),
             options: dict = None, profile: types.PROFILE_TYPE = None,
             helper: str = None) -> html.HtmlDrawer.Drawer:
     """  
@@ -108,7 +108,7 @@ class Drawers:
     return component
 
   def multi(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
-            height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
+            height: types.SIZE_TYPE = ("auto", 'px'), options: dict = None,
             profile: dict = None, helper: str = None) -> html.HtmlDrawer.DrawerMulti:
     """  
 
@@ -138,7 +138,7 @@ class Drawers:
     return drawer
 
   def no_handle(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
-                height: types.SIZE_TYPE = (200, 'px'), options: dict = None,
+                height: types.SIZE_TYPE = ("auto", 'px'), options: dict = None,
                 profile: types.PROFILE_TYPE = None,
                 helper: str = None) -> html.HtmlDrawer.Drawer:
     """  
