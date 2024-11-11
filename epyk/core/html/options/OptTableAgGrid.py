@@ -1200,6 +1200,44 @@ class DefaultColDef(Options):
         self._config(flag)
 
     @property
+    def suppressHeaderFilterButton(self):
+        """Set to true to not display the filter button in the column header. Doesn't apply when columnMenu = 'legacy'.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-menu/#customising-the-column-menu/>`_
+        """
+        return self._config_get()
+
+    @suppressHeaderFilterButton.setter
+    def suppressHeaderFilterButton(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def suppressHeaderMenuButton(self):
+        """Set to true to not display the column menu when the column header is right-clicked.
+        Doesn't apply when columnMenu = 'legacy'.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-menu/#customising-the-column-menu/>`_
+        """
+        return self._config_get()
+
+    @suppressHeaderMenuButton.setter
+    def suppressHeaderMenuButton(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def suppressHeaderContextMenu(self):
+        """Set to true to not display the column menu when the column header is right-clicked.
+        Doesn't apply when columnMenu = 'legacy'.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-menu/#customising-the-column-menu/>`_
+        """
+        return self._config_get()
+
+    @suppressHeaderContextMenu.setter
+    def suppressHeaderContextMenu(self, flag: bool):
+        self._config(flag)
+
+    @property
     def treeData(self):
         """
         `Related Pages <https://www.ag-grid.com/documentation/javascript/tree-data/>`_
@@ -1395,6 +1433,19 @@ class TableConfig(OptionsWithTemplates):
         return self._config_sub_data("autoGroupColumnDef", DefaultColDef)
 
     @property
+    def blockLoadDebounceMillis(self):
+        """It may be desirable to scroll through the entire dataset without the need for intermediate blocks to be
+        loaded.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-configuration/#block-loading-debounce/>`_
+        """
+        return self._config_get()
+
+    @blockLoadDebounceMillis.setter
+    def blockLoadDebounceMillis(self, num: int):
+        self._config(num)
+
+    @property
     def cacheBlockSize(self):
         """
         `Related Pages <http://54.222.217.254/javascript-grid-server-side-model-tree-data/>`_
@@ -1522,7 +1573,7 @@ class TableConfig(OptionsWithTemplates):
         """
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/data-update-row-data/>`_
         """
-        return self._config_get()
+        return self._config_get(False)
 
     @debug.setter
     def debug(self, flag: bool):
@@ -2288,6 +2339,41 @@ class TableConfig(OptionsWithTemplates):
         self._config(val)
 
     @property
+    def groupDisplayType(self) -> str:
+        """
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-grouping/#group-total-rows>`_
+        """
+        return self._config_get()
+
+    @groupDisplayType.setter
+    def groupDisplayType(self, value: str):
+        self._config(value)
+
+    @property
+    def groupHideOpenParents(self) -> bool:
+        """
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-grouping/#hide-open-parents>`_
+        """
+        return self._config_get()
+
+    @groupHideOpenParents.setter
+    def groupHideOpenParents(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def groupTotalRow(self):
+        """To enable Group Total Rows, set the groupTotalRow property to 'top' or 'bottom'. Note that the grand total
+        row is not supported by the SSRM.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-grouping/#group-total-rows>`_
+        """
+        return self._config_get()
+
+    @groupTotalRow.setter
+    def groupTotalRow(self, position: str):
+        self._config(position)
+
+    @property
     def groupSelectsChildren(self):
         """Filler groups do not keep their selection state should the filler group be moved.
 
@@ -2421,6 +2507,47 @@ class TableConfig(OptionsWithTemplates):
     @rowStyle.setter
     def rowStyle(self, values: Union[dict, str]):
         self._config(values)
+
+    @property
+    def serverSideDatasource(self) -> str:
+        """The datasource is registered with the grid via either a) the grid property serverSideDatasource or b)
+        the grid API.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-datasource/#registering-the-datasource>`_
+        """
+        return self._config_get()
+
+    @serverSideDatasource.setter
+    def serverSideDatasource(self, val: str):
+        self._config(val)
+
+    @property
+    def serverSideEnableClientSideSort(self) -> bool:
+        """The Server-Side Row Model supports client-side sorting, which can be enabled using the property
+        serverSideEnableClientSideSort. With this property enabled, if the grid has all of the rows belonging to a
+        group, the grid can sort these rows on the client-side.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-sorting/#client-side-sorting>`_
+        """
+        return self._config_get()
+
+    @serverSideEnableClientSideSort.setter
+    def serverSideEnableClientSideSort(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def serverSideSortAllLevels(self) -> bool:
+        """In the SSRM it is possible to provide the grid with additional group row data which you may wish to be
+        sorted. To disable this caching behaviour and instead always refresh from the server when a sort is attempted,
+        enable the property serverSideSortAllLevels: true
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-sorting/#client-side-sorting>`_
+        """
+        return self._config_get()
+
+    @serverSideSortAllLevels.setter
+    def serverSideSortAllLevels(self, flag: bool):
+        self._config(flag)
 
     @property
     def sideBar(self):
@@ -2683,6 +2810,19 @@ class TableConfig(OptionsWithTemplates):
 
     @rowTotal.setter
     def rowTotal(self, flag: bool):
+        self._config(flag)
+
+    @property
+    def suppressGroupRowsSticky(self):
+        """By default the group nodes stick to the top of the Grid, to disable this behaviour,
+        set the suppressGroupRowsSticky property to true. This behaviour applies to all row group levels.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-grouping/#suppressing-sticky-groups/>`_
+        """
+        return self._config_get()
+
+    @suppressGroupRowsSticky.setter
+    def suppressGroupRowsSticky(self, flag: bool):
         self._config(flag)
 
     @property

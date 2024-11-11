@@ -363,6 +363,17 @@ class AgGrid(JsPackage):
             options["fileName"] = filename
             return self.exportDataAsCsv(options)
 
+    def ensureIndexVisible(self, n: int, position: str = "top"):
+        """When using the server-side row model the initial scroll position of the grid can be set. This is achieved
+        by calling api.ensureIndexVisible() after setting the data source to the grid.
+
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/server-side-model-configuration/#initial-scroll-position/>`_
+        """
+        n = JsUtils.jsConvertData(n, None)
+        position = JsUtils.jsConvertData(position, None)
+        return JsObjects.JsVoid("%s.ensureIndexVisible(%s, %s)" % (self.api, n, position))
+
+
     def show_column(self, column: str):
         return self.columnApi.setColumnVisible(column, False)
 
