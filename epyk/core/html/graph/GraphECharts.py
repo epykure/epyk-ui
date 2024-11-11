@@ -24,6 +24,8 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         super(ECharts, self).__init__(
             page, [], html_code=html_code, profile=profile, options=options,
             css_attrs={"width": width, "height": height})
+        # Add a map layer on top of the chart series
+        self._registered_map = None
 
     @property
     def options(self) -> OptChartECharts.EChartOptions:
@@ -148,6 +150,11 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
             state_expr = ""
             if stop_state:
                 state_expr = ";%s" % self.hide_state(self.html_code)
+            if self._registered_map:
+              return '%(chartId)s.clear();fetch(%(mapFile)s).then(response => response.text()).then(x => (function(mapData){echarts.registerMap(%(mapAlias)s, {svg: mapData}); %(chartId)s.setOption(%(builder)s, true);%(state)s})(x))' % {
+                'mapFile': self._registered_map[0], 'mapAlias': self._registered_map[1],
+                'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
+
             return '%(chartId)s.clear();%(chartId)s.setOption(%(builder)s, true);%(state)s' % {
                 'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
 

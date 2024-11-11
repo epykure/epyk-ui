@@ -1,4 +1,5 @@
 from typing import Union
+from pathlib import Path
 from epyk.core.py import primitives, types
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
@@ -71,7 +72,7 @@ class ECharts(JsPackage):
         :param charts: List of charts object.
         """
         chart_ids = [k.varName for k in charts]
-        if not self.varName in chart_ids:
+        if self.varName not in chart_ids:
             chart_ids.append(self.varName)
         return JsUtils.jsWrap("echarts.disconnect([%s])" % ",".join(chart_ids))
 
@@ -139,3 +140,11 @@ class ECharts(JsPackage):
 
     def hideLoading(self):
         return JsUtils.jsWrap("%s.hideLoading()" % self.varId)
+
+    def registerMap(self, file_path: str, alias: str):
+      """Register a specific map during the chart build mechanism.
+
+      :param file_path: Path for the map
+      :param alias: Map alias used for the series (default file name
+      """
+      self.component._registered_map = (JsUtils.jsConvertData(file_path, None), JsUtils.jsConvertData(alias, None))
