@@ -1,4 +1,3 @@
-
 from typing import List
 
 from epyk.core.css import Colors
@@ -110,7 +109,8 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
                 rec.color = self.options.ek.colors[i]
             rec.borderWidth = 1
 
-    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None, component_id: str = None) -> str:
+    def define(self, options: types.JS_DATA_TYPES = None, dataflows: List[dict] = None,
+               component_id: str = None) -> str:
         """Override the chart settings on the JavaScript side.
         This will allow ot set specific styles for some series or also add commons properties.
 
@@ -151,9 +151,9 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
             if stop_state:
                 state_expr = ";%s" % self.hide_state(self.html_code)
             if self._registered_map:
-              return '%(chartId)s.clear();fetch(%(mapFile)s).then(response => response.text()).then(x => (function(mapData){echarts.registerMap(%(mapAlias)s, {svg: mapData}); %(chartId)s.setOption(%(builder)s, true);%(state)s})(x))' % {
-                'mapFile': self._registered_map[0], 'mapAlias': self._registered_map[1],
-                'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
+                return '%(chartId)s.clear();fetch(%(mapFile)s).then(response => response.text()).then(x => (function(mapData){echarts.registerMap(%(mapAlias)s, {svg: mapData}); %(chartId)s.setOption(%(builder)s, true);%(state)s})(x))' % {
+                    'mapFile': self._registered_map[0], 'mapAlias': self._registered_map[1],
+                    'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
 
             return '%(chartId)s.clear();%(chartId)s.setOption(%(builder)s, true);%(state)s' % {
                 'chartId': self.js_code, 'builder': builder_fnc, "state": state_expr}
@@ -181,6 +181,14 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         """
         return self.events.click(js_funcs, profile)
 
+    def registerMap(self, file_path: str, alias: str):
+        """Register a specific map during the chart build mechanism.
+
+        :param file_path: Path for the map
+        :param alias: Map alias used for the series (default file name
+        """
+        self._registered_map = (JsUtils.jsConvertData(file_path, None), JsUtils.jsConvertData(alias, None))
+
     def __str__(self):
         self.page.properties.js.add_builders(self.build())
         return '<%s %s></%s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self.tag)
@@ -193,6 +201,7 @@ class EChartsRadar(ECharts):
     def options(self) -> OptChartECharts.EChartRadarOptions:
         """Chart specific options"""
         return super().options
+
 
 class EChartsTreeMap(ECharts):
     _option_cls = OptChartECharts.EChartTreeOptions

@@ -140,11 +140,3 @@ class ECharts(JsPackage):
 
     def hideLoading(self):
         return JsUtils.jsWrap("%s.hideLoading()" % self.varId)
-
-    def registerMap(self, file_path: str, alias: str):
-      """Register a specific map during the chart build mechanism.
-
-      :param file_path: Path for the map
-      :param alias: Map alias used for the series (default file name
-      """
-      self.component._registered_map = (JsUtils.jsConvertData(file_path, None), JsUtils.jsConvertData(alias, None))

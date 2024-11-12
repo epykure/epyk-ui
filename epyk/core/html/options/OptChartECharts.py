@@ -1291,11 +1291,11 @@ class OptionsBaseOption(Options):
         return self._config_sub_data("yAxis", OptionYAxis)
 
     @property
-    def visualMap(self) -> List[dict]:
+    def visualMap(self) -> Union[dict, List[dict]]:
         return self._config_get()
 
     @visualMap.setter
-    def visualMap(self, val: List[dict]):
+    def visualMap(self, val: Union[dict, List[dict]]):
         self._config(val)
 
 
