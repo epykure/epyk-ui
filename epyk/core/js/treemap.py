@@ -45,6 +45,7 @@ _BUILDERS_MAP = {
     "pre": ["setCss"],
     "qRCode": ["setCss"],
     "radio": ["setCss"],
+    "stars": ["setCss"],
     "textArea": ["setCss"],
 
     # Echarts

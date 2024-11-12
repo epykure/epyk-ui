@@ -1,6 +1,7 @@
 
 
 function stars(htmlObj, data, options){
+  setCss(htmlObj, options, true);
   if (options.templateMode == 'loading'){
     data = options.templateLoading(data)}
   else if (options.templateMode == 'error'){
@@ -9,5 +10,7 @@ function stars(htmlObj, data, options){
   htmlObj.querySelectorAll("span").forEach(function(span, i){
     if (options.tail && (i < data)){span.style.color = options.colors[i]}
     else if (!options.tail && (i == (data-1))){span.style.color = options.colors[i]}
-    else {span.style.color = ''}})
+    else {span.style.color = ''};
+    if(options.style){ for(var k in options.style){span.style[k] = options.style[k]} }
+  })
 }

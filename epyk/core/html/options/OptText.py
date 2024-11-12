@@ -818,6 +818,18 @@ class OptionsSurveys(OptionsWithTemplates):
         self._config(value)
 
     @property
+    def css(self):
+        """The container CSS definition.
+
+        :prop attrs: Dictionary. The CSS attributes.
+        """
+        return self._config_get()
+
+    @css.setter
+    def css(self, attrs: dict):
+        self._config(attrs)
+
+    @property
     def icon(self) -> Union[List[str], str]:
         return self._config_get("star")
 
