@@ -509,15 +509,15 @@ class Html(primitives.HtmlModel):
         """
         if profile is None and self.profile:
             if event is None:
-                return {"name": element_id or self.htmlCode}
+                return {"name": element_id or self.html_code}
 
-            return {"name": "%s[%s]" % (element_id or self.htmlCode, event)}
+            return {"name": "%s[%s]" % (element_id or self.html_code, event)}
 
         if profile is None and self.page.profile:
             if event is None:
-                return {"name": element_id or self.htmlCode}
+                return {"name": element_id or self.html_code}
 
-            return {"name": "%s[%s]" % (element_id or self.htmlCode, event)}
+            return {"name": "%s[%s]" % (element_id or self.html_code, event)}
 
         return profile
 
@@ -571,7 +571,7 @@ class Html(primitives.HtmlModel):
 
         return self.val[i]
 
-    def set_builder(self, name: str, all_components: bool = True, in_module: Union[str, bool] = False,
+    def set_builder(self, name: str, all_components: bool = False, in_module: Union[str, bool] = False,
                     required_funcs: List[str] = None, funcs_map: Dict[str, dict] = None):
         """Change the default builder definition.
 
