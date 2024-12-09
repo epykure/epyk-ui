@@ -63,6 +63,14 @@ IMPORTS_EXPR = "%(cdnjs)s/%(path)s%(script)s"
 """ Common path to build the external files url in the HTML header - Default case %(cdnjs)s/%(path)s%(script)s """
 
 
+def component_reference(component) -> str:
+    """ Function to change way object are defined by the library by default
+
+    :param component: HTML component
+    """
+    return "%s_%s" % (component.__class__.__name__.lower(), id(component))
+
+
 def add_static_sub_folders(names: List[str]):
     """Add sub folder to the static path.
     Using this method will update both ASSETS_STATIC_PATH and ASSETS_STATIC_ROUTE.

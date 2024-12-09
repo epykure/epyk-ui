@@ -96,7 +96,7 @@ def inprogress(func):
 
 
 def jbuilder(group: str = None, name: str = None, refresh: bool = False, asynchronous: bool = False,
-            required_funcs: List[str] = None):
+             required_funcs: List[str] = None):
     """Set a builder for a component.
     This will load the corresponding JavaScript file to allow the refresh on the Js side of teh component.
 
@@ -658,7 +658,8 @@ class Html(primitives.HtmlModel):
         if self.__htmlCode is not None:
             return self.__htmlCode
 
-        return "%s_%s" % (self.__class__.__name__.lower(), id(self))
+        from epyk.conf.global_settings import component_reference
+        return component_reference(self)
 
     def sub_html_code(self, suffix: str, html_code: str = None, auto_inc: bool = False) -> Optional[str]:
         """Generate a sub HTML code for internal components to the widget.
@@ -730,7 +731,8 @@ class Html(primitives.HtmlModel):
             logging.debug("[DEPRECATED] htmlCode must be replaced by html_code - %s" % self.__htmlCode)
             return self.__htmlCode
 
-        return "%s_%s" % (self.__class__.__name__.lower(), id(self))
+        from epyk.conf.global_settings import component_reference
+        return component_reference(self)
 
     @property
     def js(self) -> 'Js.JsBase':

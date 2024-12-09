@@ -499,6 +499,19 @@ class Column(Options):
         self._config(flag)
 
     @property
+    def lockVisible(self) -> bool:
+        """When lockVisible=true, the column will not hide when it is dragged out of the grid, and columns dragged
+        from the tool panel onto the grid will not become visible.
+
+        `Aggrid <https://www.ag-grid.com/javascript-data-grid/column-moving/>`_
+        """
+        return self._config_get()
+
+    @lockVisible.setter
+    def lockVisible(self, flag: bool):
+        self._config(flag)
+
+    @property
     def marryChildren(self):
         """Sometimes you want columns of the group to always stick together.
         To achieve this, set the column group property marryChildren=true. The example below demonstrates the following:
@@ -1137,7 +1150,7 @@ class DefaultColDef(Options):
         self._config(val)
 
     @property
-    def headerName(self):
+    def headerName(self) -> str:
         """
         `Related Pages <https://www.ag-grid.com/javascript-data-grid/component-floating-filter/>`_
         """
@@ -1146,6 +1159,19 @@ class DefaultColDef(Options):
     @headerName.setter
     def headerName(self, name: str):
         self._config(name)
+
+    @property
+    def lockVisible(self) -> bool:
+        """When lockVisible=true, the column will not hide when it is dragged out of the grid, and columns dragged
+        from the tool panel onto the grid will not become visible.
+
+        `Aggrid <https://www.ag-grid.com/javascript-data-grid/column-moving/>`_
+        """
+        return self._config_get()
+
+    @lockVisible.setter
+    def lockVisible(self, flag: bool):
+        self._config(flag)
 
     @property
     def minWidth(self):
@@ -1869,6 +1895,19 @@ class TableConfig(OptionsWithTemplates):
                 str_func = "return %s" % str_func
             str_func = "function(row){%s}" % str_func
         self._config(str_func, js_type=True)
+
+    @property
+    def maintainColumnOrder(self):
+        """If you instead want to prioritise the order of the columns as they appear in the grid,
+        set the grid property maintainColumnOrder to true.
+        
+        `Related Pages <https://www.ag-grid.com/javascript-data-grid/column-updating-definitions/>`_
+        """
+        return self._config_get()
+
+    @maintainColumnOrder.setter
+    def maintainColumnOrder(self, flag: bool):
+        self._config(flag)
 
     @property
     def maxBlocksInCache(self):
