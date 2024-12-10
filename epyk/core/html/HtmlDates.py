@@ -608,6 +608,18 @@ class EasePick(Html.Html):
             self._dom = JsHtmlJqueryUI.JsHtmlEasePick(self, page=self.page)
         return self._dom
 
+    def select(self, js_funcs: types.JS_FUNCS_TYPES, profile: types.PROFILE_TYPE = None):
+        """Event trigger when the DatePicker component changes.
+
+        `Package Doc <https://easepick.com/packages/core.html#event-select>`_
+
+        :param js_funcs: A Javascript Python function
+        :param profile: Optional. Set to true to get the profile for the function on the Javascript console
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        return self.on("select", js_funcs=js_funcs, profile=profile, source_event=self.js.varId, method="on")
+
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())
         return '<%(tag)s %(attr)s>%(helper)s</%(tag)s>' % {

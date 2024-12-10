@@ -332,7 +332,11 @@ class PresetPlugin(Options):
     def customPreset(self, values):
         result = []
         for k, v in values.items():
-            result.append("'%s': [%s]" % (k, ",".join(v)))
+            if v[0].startswith("Y:"):
+                result.append("'%(label)s': [new Date(%(year)s, 0, 1), new Date(%(year)s, 11, 31)]" % {
+                    "label": k, "year": v[0][2:]})
+            else:
+                result.append("'%s': [%s]" % (k, ",".join(v)))
         self._config("{%s}" % ",".join(result), js_type=True)
 
     @property
