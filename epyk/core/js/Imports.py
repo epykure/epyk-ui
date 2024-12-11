@@ -2016,7 +2016,18 @@ JS_IMPORTS = {
                 {'script': 'bundle.min.js', "node_path": "dist/", 'path': 'terser@%(version)s/dist/', 'cdnjs': JSDELIVER},
             ],
             'website': 'https://terser.org/'
+    },
+
+    # Static analysis tool for JavaScript
+    'jshint': {
+        "unpkg": False,
+        'version': "2.13.6",
+        'modules': [
+            {'script': 'jshint.min.js', "node_path": "dist/", 'path': 'jshint/%(version)s/'},
+        ],
+        'website': 'https://jshint.com/?utm_source=cdnjs&utm_medium=cdnjs_link&utm_campaign=cdnjs_library'
     }
+
 }
 
 CSS_IMPORTS = {

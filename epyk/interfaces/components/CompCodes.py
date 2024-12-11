@@ -320,3 +320,33 @@ class Code:
             self.page, text, color, width, height, html_code, dfl_options, helper, profile)
         html.Html.set_component_skin(component)
         return component
+
+    def yaml(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+            height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+            options: types.OPTION_TYPE = None, helper: str = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """ """
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = {"lineNumbers": True, 'mode': 'yaml', 'autoRefresh': True, 'styleActiveLine': True}
+        if options is not None:
+            dfl_options.update(options)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+        html.Html.set_component_skin(component)
+        return component
+
+    def json(self, text: str = "", color: Union[str, bool] = None, width: types.SIZE_TYPE = (90, '%'),
+            height: types.SIZE_TYPE = (200, 'px'), html_code: str = None,
+            options: types.OPTION_TYPE = None, helper: str = None,
+            profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.CodeEditor:
+        """ """
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = {"lineNumbers": True, 'mode': 'json', 'autoRefresh': True, 'styleActiveLine': True}
+        if options is not None:
+            dfl_options.update(options)
+        component = html.HtmlTextEditor.CodeEditor(
+            self.page, text, color, width, height, html_code, dfl_options, helper, profile)
+        html.Html.set_component_skin(component)
+        return component

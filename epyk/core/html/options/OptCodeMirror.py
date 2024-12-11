@@ -312,7 +312,7 @@ class OptionsCode(OptionsWithTemplates):
 
     @mode.setter
     def mode(self, value):
-        MAP_MODES = {"html": "htmlmixed", "yaml": "yaml-frontmatter", "json": "javascript"}
+        MAP_MODES = {"html": "htmlmixed", "yaml": "yaml", "json": "javascript"}
         value = MAP_MODES.get(value, value)
         self.page.imports.append_to(
             "codemirror", [{"script": '%s.js' % value, "path": 'codemirror/%%(version)s/mode/%s/' % value}])
@@ -520,6 +520,26 @@ class OptionsCode(OptionsWithTemplates):
     @keyMap.setter
     def keyMap(self, value):
         self._config(value)
+
+    @property
+    def lint(self) -> bool:
+        """Add linter.
+
+        Related Pages:
+
+          https://codemirror.net/doc/manual.html#config
+        """
+        return self._config_get(False)
+
+    @lint.setter
+    def lint(self, flag: bool):
+        self._config(flag)
+        self.page.imports.add("jshint")
+        self.page.imports.append_to(
+            "codemirror", [
+                {"script": 'lint.js', "path": 'codemirror/%(version)s/addon/lint/'},
+                {"script": '%s-lint.min.js' % self.mode, "path": 'codemirror/%(version)s/addon/lint/'}
+            ])
 
     @property
     def lineWrapping(self):
