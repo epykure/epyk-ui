@@ -71,6 +71,7 @@ class ECharts:
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
         chart.colors(self.page.theme.charts)
         chart.options.yAxis.type = dfl_options.get("yAxis", {}).get("type", 'value')
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'axis')
         chart.options.toolbox.feature.saveAsImage = {}
         if data.get("labels"):
             chart.options.xAxis.data = data["labels"]
@@ -91,6 +92,7 @@ class ECharts:
         dfl_options = Arguments.clean_opt(options, {"ek": {"chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
@@ -112,6 +114,7 @@ class ECharts:
             "chart": {"type": "pie", "x_axis": x_axis, "y_columns": y_columns}, "series": {"radius": ['40%', '70%']}}})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
@@ -135,6 +138,7 @@ class ECharts:
         }})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
@@ -210,6 +214,7 @@ class ECharts:
             }})
         data = self.page.data.chartJs.xy(record, y_columns, x_axis)
         chart = graph.GraphECharts.ECharts(self.page, width, height, html_code, dfl_options, profile)
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
         chart.set_builder("ekPieECharts", in_module=True)
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
@@ -255,6 +260,7 @@ class ECharts:
         data = self.page.data.chartJs.y(record or [], y_columns, x_axis)
         chart = graph.GraphECharts.EChartsRadar(self.page, width, height, html_code, dfl_options, profile)
         chart.set_builder("ekRadarECharts", in_module=True)
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
         chart.colors(self.page.theme.charts)
         chart.options.toolbox.feature.saveAsImage = {}
         if data.get("labels"):
@@ -281,6 +287,7 @@ class ECharts:
         data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
         chart.set_builder("ekTreeECharts", in_module=True)
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
         chart.colors(self.page.theme.charts)
         if data:
             chart.options.series.type = dfl_options["ek"]["chart"]["type"]
@@ -298,6 +305,7 @@ class ECharts:
         data = self.page.data.to_hyr(record or [], x_axis.split("/"), y_columns)
         chart = graph.GraphECharts.EChartsTreeMap(self.page, width, height, html_code, dfl_options, profile)
         chart.set_builder("ekTreeECharts", in_module=True)
+        chart.options.tooltip.trigger = dfl_options.get("tooltip", {}).get("trigger", 'item')
         chart.colors(self.page.theme.charts)
         if data:
             chart.options.series.type = dfl_options["ek"]["chart"]["type"]

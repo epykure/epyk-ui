@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from typing import Union, List
+from typing import Union, List, Dict
 from epyk.core.html.options import Options
 from epyk.core.html.options import OptionsWithTemplates
 from epyk.core.html.options import OptChart
@@ -1457,6 +1457,14 @@ class OptionRadar(Options):
     @indicator.setter
     def indicator(self, val: List[dict]):
         self._config(val)
+
+    @property
+    def indicator_attrs(self) -> Dict[str, dict]:
+        return self.component.options.ek.chart.js_tree.get("indicator", {})
+
+    @indicator_attrs.setter
+    def indicator_attrs(self, values: Dict[str, dict]):
+        self.component.options.ek.chart.js_tree["indicator"] = values
 
 
 class EChartRadarOptions(EChartOptions):
