@@ -149,12 +149,15 @@ class IconModel:
         self._family = "SCSS"
         Defaults_css.ICON_MAPPINGS[self._family] = self.__icons
 
-    def add_icons(self, icons: Dict[str, str], name: str = None):
+    def add_icons(self, icons: Dict[str, str], name: str = None, default_family: bool = False):
         """Add Icons to the family internal definition.
         Framework will not use direct class names in components but alias instead.
 
         :param icons: Icons mapping rules
         :param name: Optional. Family Name
+        :param default_family: Optional. Change the default family for the entire report
         """
         name = name or self.family
         Defaults_css.ICON_MAPPINGS.setdefault(name, {}).update(icons)
+        if default_family:
+            self._family = name

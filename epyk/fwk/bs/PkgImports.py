@@ -2,24 +2,37 @@
 
 BOOTSTRAP = {
   'tempus-dominus': {
-    'version': '6.7.13',
     'req': [
-      {'alias': 'font-awesome'},
       {'alias': 'bootstrap'},
-      {'alias': 'moment'}],
+      {'alias': '@popperjs/core'}
+    ],
+    'version': '6.7.13',
     'website': 'https://getdatepicker.com/6/',
     'register': {'alias': 'datetimepicker', 'module': 'tempusdominus-bootstrap-4.min', 'npm': 'datetimepicker'},
     'modules': [
       {'script': 'tempus-dominus.min.js', 'path': 'tempus-dominus/%(version)s/js/'},
       {'script': 'tempus-dominus.min.css', 'path': 'tempus-dominus/%(version)s/css/'},
     ]},
+  'tempusdominus-bootstrap-5': {
+    'version': '5.39.0',
+    'req': [
+      {'alias': 'bootstrap'},
+      {'alias': 'jquery'},
+      {'alias': 'moment', "version": "2.29.0"}
+    ],
+    'website': 'https://getdatepicker.com/5-4/Installing/',
+    'register': {'alias': 'datetimepicker', 'module': 'tempusdominus-bootstrap-4.min', 'npm': 'datetimepicker'},
+    'modules': [
+      {'script': 'tempusdominus-bootstrap-4.min.js', 'path': 'tempusdominus-bootstrap-4/%(version)s/js/'},
+      {'script': 'tempusdominus-bootstrap-4.min.css', 'path': 'tempusdominus-bootstrap-4/%(version)s/css/'},
+    ]},
   'tempusdominus-bootstrap-4': {
     'version': '5.39.0',
     'req': [
-      {'alias': 'font-awesome'},
       {'alias': 'bootstrap'},
-      {'alias': 'moment'},
-      {'alias': 'jquery'}],
+      {'alias': 'jquery'},
+      {'alias': 'moment', "version": "2.29.0"}
+    ],
     'website': 'https://getdatepicker.com/5-4/Installing/',
     'register': {'alias': 'datetimepicker', 'module': 'tempusdominus-bootstrap-4.min', 'npm': 'datetimepicker'},
     'modules': [
@@ -63,8 +76,9 @@ ICON_MAPPINGS = {
   "search": None,
   "save": None,
   "excel": None,
-  "times": None,
-  "close": None,
+  "time": None,
+  "time": "bi bi-clock-fill",
+  "close": "bi bi-x",
   "upload": None,
   "word": None,
   "csv": None,
@@ -75,12 +89,13 @@ ICON_MAPPINGS = {
   "clock": None,
   "lock_open": None,
   "compress": None,
-  "calendar": None,
+  "calendar": "bi bi-calendar-week",
   "spin": None,
-  "next": None,
-  "previous": None,
+  "next": "bi bi-arrow-right-short",
+  "previous": "bi bi-arrow-left-short",
   "play": None,
   "stop": None,
+  "today": "bi bi-calendar2-check",
   "zoom_out": None,
   "zoom_in": None,
   "warning": None,

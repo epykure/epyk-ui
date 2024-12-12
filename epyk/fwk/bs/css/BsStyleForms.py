@@ -7,9 +7,7 @@ class BsClsInput(GrpClsInput.ClassInput):
   def size(self, breakpoint: str):
     """  
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/5.0/forms/form-control/
+    `getbootstrap >https://getbootstrap.com/docs/5.0/forms/form-control/>`_
 
     :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)
@@ -23,9 +21,7 @@ class BsClsInput(GrpClsInput.ClassInput):
   def plain_text(self):
     """  
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/5.0/forms/form-control/
+    `getbootstrap >https://getbootstrap.com/docs/5.0/forms/form-control/>`_
     """
     self.component.attr["class"].add("form-control-plaintext")
     return self
@@ -34,12 +30,9 @@ class BsClsInput(GrpClsInput.ClassInput):
 class BsClsSelect(GrpClsInput.ClassInput):
 
   def size(self, breakpoint: str):
-    """  
-    You may also choose from small and large custom selects to match our similarly sized text inputs.
+    """You may also choose from small and large custom selects to match our similarly sized text inputs.
 
-    Related Pages:
-
-      https://getbootstrap.com/docs/5.0/forms/select/
+    `getbootstrap >https://getbootstrap.com/docs/5.0/forms/select/>`_
 
     :param breakpoint: Optional. Grid system category, with
       - xs (for phones - screens less than 768px wide)

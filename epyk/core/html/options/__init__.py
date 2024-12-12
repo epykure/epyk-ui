@@ -9,6 +9,7 @@ TODO: Change the model to get Option as an interface of two sub classes .js and 
 
 import sys
 import json
+import logging
 
 from typing import Any, Union, List
 from epyk.core.py import primitives
@@ -636,6 +637,21 @@ class Options(DataClass):
                 else:
                     js_attrs.append("%s: %s" % (k, json.dumps(v)))
         return JsUtils.jsWrap("{%s}" % ", ".join(js_attrs))
+
+    def export(self) -> list:
+        """Export the various options defined for a given component"""
+        props = []
+        for d in dir(self):
+            if not d.startswith("_") and d not in ["with_builder"]:
+                try:
+                    val = getattr(self, d)
+                    props.append({"name": d, "doc": val.__doc__ or ""})
+                    val = getattr(self, d)
+                    if issubclass(val.__class__, Options):
+                        props[-1]["options"] = val.export()
+                except Exception as err:
+                    logging.error(err)
+        return props
 
     def __str__(self):
         return str(self.config_js())

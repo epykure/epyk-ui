@@ -5,171 +5,140 @@ from epyk.core.html.options import Options
 
 
 class OptionsDt(Options):
-  """
 
-  """
+    @property
+    def date(self):
+        """Returns the component's model current date, a moment object or null if not set.
 
-  @property
-  def date(self):
-    """  
-    Returns the component's model current date, a moment object or null if not set.
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/#date>`_
+        """
+        return self._config_get()
 
-    Related Pages:
+    @date.setter
+    def date(self, dt):
+        self._config(dt)
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/#date
-    """
-    return self._config_get()
+    @property
+    def dayViewHeaderFormat(self) -> str:
+        """Changes the heading of the datepicker when in "days" view.
 
-  @date.setter
-  def date(self, dt):
-    self._config(dt)
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/#dayviewheaderformat>`_
+        """
+        return self._config_get('MMMM YYYY')
 
-  @property
-  def dayViewHeaderFormat(self):
-    """  
-    Changes the heading of the datepicker when in "days" view.
+    @dayViewHeaderFormat.setter
+    def dayViewHeaderFormat(self, dt):
+        self._config(dt)
 
-    Related Pages:
+    @property
+    def sideBySide(self) -> bool:
+        """
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/#dayviewheaderformat
-    """
-    return self._config_get('MMMM YYYY')
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/>`_
+        """
+        return self._config_get(False)
 
-  @dayViewHeaderFormat.setter
-  def dayViewHeaderFormat(self, dt):
-    self._config(dt)
+    @sideBySide.setter
+    def sideBySide(self, flag: bool):
+        self._config(flag)
 
-  @property
-  def sideBySide(self):
-    """  
+    @property
+    def inline(self) -> bool:
+        """
 
-    Related Pages:
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/>`_
+        """
+        return self._config_get(False)
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/
-    """
-    return self._config_get(False)
+    @inline.setter
+    def inline(self, flag: bool):
+        self._config(flag)
 
-  @sideBySide.setter
-  def sideBySide(self, flag: bool):
-    self._config(flag)
+    @property
+    def daysOfWeekDisabled(self) -> bool:
+        """
 
-  @property
-  def inline(self):
-    """  
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/>`_
+        """
+        return self._config_get()
 
-    Related Pages:
+    @daysOfWeekDisabled.setter
+    def daysOfWeekDisabled(self, flag: bool):
+        self._config(flag)
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/
-    """
-    return self._config_get(False)
+    @property
+    def viewMode(self) -> bool:
+        """
 
-  @inline.setter
-  def inline(self, flag: bool):
-    self._config(flag)
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/>`_
+        """
+        return self._config_get()
 
-  @property
-  def daysOfWeekDisabled(self):
-    """  
+    @viewMode.setter
+    def viewMode(self, flag: bool):
+        self._config(flag)
 
-    Related Pages:
+    @property
+    def defaultDate(self) -> bool:
+        """
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/
-    """
-    return self._config_get()
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/>`_
+        """
+        return self._config_get(False)
 
-  @daysOfWeekDisabled.setter
-  def daysOfWeekDisabled(self, flag: bool):
-    self._config(flag)
+    @defaultDate.setter
+    def defaultDate(self, flag: bool):
+        self._config(flag)
 
-  @property
-  def viewMode(self):
-    """  
+    @property
+    def format(self) -> bool:
+        """See momentjs' docs for valid formats.
+        Format also dictates what components are shown, e.g. MM/dd/YYYY will not display the time picker.
 
-    Related Pages:
+        `bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/#format>`_
+        """
+        return self._config_get(False)
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/
-    """
-    return self._config_get()
+    @format.setter
+    def format(self, flag: bool):
+        self._config(flag)
 
-  @viewMode.setter
-  def viewMode(self, flag: bool):
-    self._config(flag)
+    @property
+    def locale(self) -> bool:
+        """
 
-  @property
-  def defaultDate(self):
-    """  
+        `eonasdan <https://eonasdan.github.io/bootstrap-datetimepicker/Options/>`_
+        """
+        return self._config_get(False)
 
-    Related Pages:
+    @locale.setter
+    def locale(self, flag: bool):
+        self._config(flag)
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/
-    """
-    return self._config_get(False)
+    @property
+    def options(self) -> dict:
+        """Returns the components current options object.
+        Note that the changing the values of the returned object does not change the components actual configuration.
+        Use options(options) to set the components options massively or the other methods for setting config options
+        individually.
 
-  @defaultDate.setter
-  def defaultDate(self, flag: bool):
-    self._config(flag)
+        `Bootstrap-datetimepicker <https://eonasdan.github.io/bootstrap-datetimepicker/Options/#options_1>`_
+        """
+        return self.page._jsStyles
 
-  @property
-  def format(self):
-    """  
-    See momentjs' docs for valid formats.
-    Format also dictates what components are shown, e.g. MM/dd/YYYY will not display the time picker.
+    @options.setter
+    def options(self, otps):
+        if otps is not None:
+            self.page._jsStyles.update(otps)
 
-    Related Pages:
+    @property
+    def stepping(self) -> int:
+        """Number of minutes the up/down arrow's will move the minutes value in the time picker.
 
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/#format
-    """
-    return self._config_get(False)
+        `eonasdan <https://eonasdan.github.io/bootstrap-datetimepicker/Options/#stepping>`_
+        """
+        return self._config_get(1)
 
-  @format.setter
-  def format(self, flag: bool):
-    self._config(flag)
-
-  @property
-  def locale(self):
-    """  
-
-    Related Pages:
-
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/
-    """
-    return self._config_get(False)
-
-  @locale.setter
-  def locale(self, flag: bool):
-    self._config(flag)
-
-  @property
-  def options(self):
-    """  
-    Returns the components current options object.
-    Note that the changing the values of the returned object does not change the components actual configuration.
-    Use options(options) to set the components options massively or the other methods for setting config options
-    individually.
-
-    Related Pages:
-
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/#options_1
-    """
-    return self.page._jsStyles
-
-  @options.setter
-  def options(self, otps):
-    if otps is not None:
-      self.page._jsStyles.update(otps)
-
-  @property
-  def stepping(self):
-    """  
-    Number of minutes the up/down arrow's will move the minutes value in the time picker.
-
-    Related Pages:
-
-      https://eonasdan.github.io/bootstrap-datetimepicker/Options/#stepping
-    """
-    return self._config_get(1)
-
-  @stepping.setter
-  def stepping(self, num: int):
-    self._config(num)
-
+    @stepping.setter
+    def stepping(self, num: int):
+        self._config(num)

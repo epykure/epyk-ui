@@ -5,7 +5,5 @@ class DomCheck(JsHtml.JsHtmlRich):
 
   @property
   def content(self):
-    """
-    Common function to get the component content.
-    """
+    """Common function to get the component content."""
     return JsHtml.ContentFormatters(self.page, "%s.checked" % self.varName)

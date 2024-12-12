@@ -8,7 +8,7 @@ class BsStyles:
     self.page = page
 
   def remove(self, style: str):
-    """   Remove a specific CSS class for all the components.
+    """Remove a specific CSS class for all the components.
  
     :param style: String the css style to be removed
     """
@@ -16,10 +16,9 @@ class BsStyles:
     return self
 
   def replace(self, style: str, new_style: str):
-    """   Apply a style change on all the components.
+    """Apply a style change on all the components.
 
     Usage::
-
       page.styles.replace('btn', 'btn btn-custom')
  
     :param style: String the css style to be replaced
@@ -35,10 +34,9 @@ class BsStyles:
     return self
 
   def apply_calc(self, component: primitives.HtmlModel, style_map: dict):
-    """   Apply a style calc on a component and its hierarchy of underlying components
+    """Apply a style calc on a component and its hierarchy of underlying components
 
     Usage::
-
       page.styles.apply_calc(d, {'btn': 'toto'})
  
     :param component: The HTML component
