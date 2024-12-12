@@ -310,8 +310,8 @@ class Panels:
     return html_slide
 
   def split(self, left: html.Html.Html = None, right: html.Html.Html = None, width: types.SIZE_TYPE = (100, '%'),
-            height: types.SIZE_TYPE = (None, 'px'), left_width: types.SIZE_TYPE = (80, 'vw'), resizable: bool = True,
-            helper: str = None, options: types.OPTION_TYPE = None,
+            height: types.SIZE_TYPE = (None, 'px'), left_width: types.SIZE_TYPE = (80, 'vw'),
+            right_width: types.SIZE_TYPE = None, resizable: bool = True, helper: str = None, options: types.OPTION_TYPE = None,
             profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelSplit:
     """
 
@@ -332,7 +332,8 @@ class Panels:
 
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
-    :param left_width: Optional.
+    :param left_width: Optional. Set width for the left panel
+    :param right_width: Optional. Set width for the right panel
     :param left: Optional.
     :param right: Optional.
     :param resizable: Optional.
@@ -344,13 +345,19 @@ class Panels:
     height = Arguments.size(height, unit="px")
     html_split = html.HtmlContainer.PanelSplit(
       self.page, width, height, left_width, left, right, resizable, helper, options, profile)
+    left = (html_split.panels["left"].style.css.width or "").strip()
+    if not right_width and left.startswith("calc("):
+      right_width = left.split("-")[1][:-1].strip()
+    right_width = Arguments.size(right_width, unit="px")
+    if right_width[0]:
+      html_split.panels["right"].style.css.width = Arguments.size(right_width, unit="px", toStr=True)
     html.Html.set_component_skin(html_split)
     return html_split
 
   def vertical(self, top: html.Html.Html = None, bottom: html.Html.Html = None, width: types.SIZE_TYPE = (100, '%'),
-            height: types.SIZE_TYPE = (330, 'px'), top_height: types.SIZE_TYPE = (80, '%'), resizable: bool = True,
-            helper: str = None, options: types.OPTION_TYPE = None,
-            profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelVSplit:
+            height: types.SIZE_TYPE = (330, 'px'), top_height: types.SIZE_TYPE = (80, '%'),
+            bottom_height: types.SIZE_TYPE = None, resizable: bool = True,
+            helper: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None) -> html.HtmlContainer.PanelVSplit:
     """
 
     :tags:
@@ -368,6 +375,7 @@ class Panels:
     :param width: Optional. A tuple with the integer for the component width and its unit
     :param height: Optional. A tuple with the integer for the component height and its unit
     :param top_height: Optional.
+    :param bottom_height: Optional.
     :param top: Optional.
     :param bottom: Optional.
     :param resizable: Optional.
@@ -379,6 +387,9 @@ class Panels:
     height = Arguments.size(height, unit="px")
     html_split = html.HtmlContainer.PanelVSplit(
       self.page, width, height, top_height, top, bottom, resizable, helper, options, profile)
+    bottom_height = Arguments.size(bottom_height, unit="px")
+    if bottom_height[0]:
+      html_split.panels["bottom"].style.css.width = Arguments.size(bottom_height, unit="px", toStr=True)
     html.Html.set_component_skin(html_split)
     return html_split
 
