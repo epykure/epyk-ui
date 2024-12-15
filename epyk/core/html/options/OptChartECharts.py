@@ -1003,6 +1003,22 @@ class OptionSeries(Options):
     def width(self, num: int):
         self._config(num)
 
+    @property
+    def yAxisIndex(self) -> int:
+        return self._config_get()
+
+    @yAxisIndex.setter
+    def yAxisIndex(self, num: int):
+        self._config(num)
+
+    @property
+    def xAxisIndex(self) -> int:
+        return self._config_get()
+
+    @xAxisIndex.setter
+    def xAxisIndex(self, num: int):
+        self._config(num)
+
 
 class OptionToolBoxDataZoom(Options):
 
@@ -1438,6 +1454,13 @@ class EChartOptions(OptionsWithTemplates):
         :param values: the Y axis values
         """
         self._config(values, name="yAxis")
+
+    def setLegend(self, values: dict):
+        """For the legend definition
+
+        :param values: Legend properties
+        """
+        self._config(values, name="legend")
 
     @property
     def visualMap(self) -> List[dict]:

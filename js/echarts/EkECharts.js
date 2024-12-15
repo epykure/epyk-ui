@@ -37,7 +37,7 @@ function ekECharts(data, options){
               dataSet = Object.assign(dataSet, options._ek.series)}
             if ((typeof options._ek.names !== 'undefined') && (typeof options._ek.names[series] !== 'undefined')){
               dataSet = Object.assign(dataSet, options._ek.names[series])} ;
-            if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(dataSet, i)}
+            if(typeof options?._ek?.alterSeries !== 'undefined'){options._ek.alterSeries(dataSet, i)};
             chartContext.series.push(dataSet)
         })
     };

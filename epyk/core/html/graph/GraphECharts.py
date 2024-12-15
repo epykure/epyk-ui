@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 
 from epyk.core.css import Colors
 from epyk.core.py import types
@@ -163,6 +163,23 @@ class ECharts(MixHtmlState.HtmlOverlayStates, Html.Html):
         ''' % {"chartId": self.js_code, "hmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
                'builder': builder_fnc}
 
+    def dataset(self, i: int = None, name: str = None) -> Optional[OptChartECharts.OptionSeries]:
+        """Get Python datasets.
+
+        :param i: Optional. The series index according to the y_columns
+        :param name: Optional. Series' name
+        """
+        if name:
+            for k in self.options.js_tree["series"]:
+                if k.name == name:
+                    return k
+
+            return None
+
+        if i is None:
+            return self.options.js_tree["series"][-1]
+
+        return self.options.js_tree["series"][i]
     @property
     def events(self) -> EvtECharts.EvtECharts:
         """Common Chart events"""
