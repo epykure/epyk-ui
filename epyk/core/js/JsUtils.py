@@ -143,9 +143,12 @@ def jsConvertData(js_data: Union[str, primitives.JsDataModel, float, dict, list]
                             result.append("%s: %s" % (k, jsConvertData(v, js_funcs, depth=depth)))
                         return "{%s}" % ", ".join(result)
 
-                    else:
+                    elif isinstance(js_data, list):
                         result = [jsConvertData(v, js_funcs, depth=depth) for v in js_data]
                         return "[%s]" % ", ".join(result)
+
+                    else:
+                        return jsConvertData(js_data, js_funcs)
 
                 if force:
                     return json.dumps(js_data)

@@ -5,6 +5,7 @@ from typing import Union, List, Dict
 from epyk.core.html.options import Options
 from epyk.core.html.options import OptionsWithTemplates
 from epyk.core.html.options import OptChart
+from epyk.core.js import JsUtils
 
 
 class OptionTitle(Options):
@@ -193,6 +194,14 @@ class OptionAxisTick(Options):
 
 
 class OptionAxisLabel(Options):
+
+    @property
+    def formatter(self):
+        return self._config_get()
+
+    @formatter.setter
+    def formatter(self, value):
+        self._config(value, js_type=True)
 
     @property
     def interval(self) -> int:
@@ -1446,14 +1455,15 @@ class EChartOptions(OptionsWithTemplates):
 
         :param values: the X axis values
         """
-        self._config(values, name="xAxis")
+        self._config(JsUtils.jsWrap(JsUtils.jsConvertData(values, None, depth=True)), name="xAxis", js_type=True)
+
 
     def setYAxis(self, values):
         """Set the Y Axis definition
 
         :param values: the Y axis values
         """
-        self._config(values, name="yAxis")
+        self._config(JsUtils.jsWrap(JsUtils.jsConvertData(values, None, depth=True)), name="yAxis", js_type=True)
 
     def setLegend(self, values: dict):
         """For the legend definition
