@@ -10,13 +10,13 @@ from epyk.interfaces import Arguments
 
 class Media:
 
-  def __init__(self, ui):
-    self.page = ui.page
+    def __init__(self, ui):
+        self.page = ui.page
 
-  def video(self, value: str = "", align: str = "center", path: str = None, width: types.SIZE_TYPE = (100, '%'),
-            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
-            profile: types.PROFILE_TYPE = None, options: dict = None):
-    """   Add a video from the server to the page.
+    def video(self, value: str = "", align: str = "center", path: str = None, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+              profile: types.PROFILE_TYPE = None, options: dict = None):
+        """   Add a video from the server to the page.
     The format for the video must be MP4.
 
     Usage::
@@ -44,22 +44,22 @@ class Media:
     :param profile: Optional. A flag to set the component performance storage.
     :param options: Optional. Specific Python options available for this component.
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    dft_options = {"autoplay": True}
-    if options is not None:
-      dft_options.update(options)
-    html_media = html.HtmlMedia.Media(self.page, value, path, width, height, html_code, profile, dft_options)
-    if align == "center":
-      html_media.style.css.margin = "auto"
-      html_media.style.css.display = "block"
-    html.Html.set_component_skin(html_media)
-    return html_media
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dft_options = {"autoplay": True}
+        if options is not None:
+            dft_options.update(options)
+        html_media = html.HtmlMedia.Media(self.page, value, path, width, height, html_code, profile, dft_options)
+        if align == "center":
+            html_media.style.css.margin = "auto"
+            html_media.style.css.display = "block"
+        html.Html.set_component_skin(html_media)
+        return html_media
 
-  def audio(self, value: str = "", path: str = None, width: types.SIZE_TYPE = (100, '%'),
-            height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, profile: types.PROFILE_TYPE = None,
-            options: dict = None):
-    """   Add a audio track from the server to the page.
+    def audio(self, value: str = "", path: str = None, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None, profile: types.PROFILE_TYPE = None,
+              options: dict = None):
+        """   Add a audio track from the server to the page.
     The format for the video must be mpeg.
 
     Usage::
@@ -86,19 +86,19 @@ class Media:
     :param profile: Optional. A flag to set the component performance storage.
     :param options: Optional. Specific Python options available for this component.
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    dft_options = {"autoplay": True}
-    if options is not None:
-      dft_options.update(options)
-    html_audio = html.HtmlMedia.Audio(self.page, value, path, width, height, html_code, profile, dft_options)
-    html.Html.set_component_skin(html_audio)
-    return html_audio
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dft_options = {"autoplay": True}
+        if options is not None:
+            dft_options.update(options)
+        html_audio = html.HtmlMedia.Audio(self.page, value, path, width, height, html_code, profile, dft_options)
+        html.Html.set_component_skin(html_audio)
+        return html_audio
 
-  def youtube(self, link: str, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
-              height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
-              profile: types.PROFILE_TYPE = None, options: dict = None):
-    """   This will add a youtube video using the shared line to embedded to a website.
+    def youtube(self, link: str, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
+                height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+                profile: types.PROFILE_TYPE = None, options: dict = None):
+        """   This will add a youtube video using the shared line to embedded to a website.
 
     Usage::
 
@@ -124,22 +124,22 @@ class Media:
     :param profile: Optional. A flag to set the component performance storage.
     :param options: Optional. A dictionary with the components properties.
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    dflt_options = {"width": "420", "height": "315", "type": "text/html"}
-    if '/embed/' not in link:
-      link = html.HtmlMedia.Youtube.get_embed_link(link)
-    if options is not None:
-      dflt_options.update(options)
-    html_youtube = html.HtmlMedia.Youtube(self.page, link, width, height, html_code, profile, dflt_options)
-    html_youtube.style.css.text_align = align
-    html.Html.set_component_skin(html_youtube)
-    return html_youtube
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dflt_options = {"width": "420", "height": "315", "type": "text/html"}
+        if '/embed/' not in link:
+            link = html.HtmlMedia.Youtube.get_embed_link(link)
+        if options is not None:
+            dflt_options.update(options)
+        html_youtube = html.HtmlMedia.Youtube(self.page, link, width, height, html_code, profile, dflt_options)
+        html_youtube.style.css.text_align = align
+        html.Html.set_component_skin(html_youtube)
+        return html_youtube
 
-  def camera(self, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
-             height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
-             profile: types.PROFILE_TYPE = None, options: dict = None):
-    """Add a video from the server to the page.
+    def camera(self, align: str = "center", width: types.SIZE_TYPE = (100, '%'),
+               height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+               profile: types.PROFILE_TYPE = None, options: dict = None):
+        """Add a video from the server to the page.
     The format for the video must be MP4.
 
     Usage::
@@ -166,14 +166,14 @@ class Media:
     :param profile: Optional. A flag to set the component performance storage.
     :param options: Optional. Specific Python options available for this component.
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    dft_options = {"autoplay": True}
-    if options is not None:
-      dft_options.update(options)
-    html_media = html.HtmlMedia.Camera(self.page, width, height, html_code, profile, dft_options)
-    if align == "center":
-      html_media.style.css.margin = "auto"
-      html_media.style.css.display = "block"
-    html.Html.set_component_skin(html_media)
-    return html_media
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dft_options = {"autoplay": True}
+        if options is not None:
+            dft_options.update(options)
+        html_media = html.HtmlMedia.Camera(self.page, width, height, html_code, profile, dft_options)
+        if align == "center":
+            html_media.style.css.margin = "auto"
+            html_media.style.css.display = "block"
+        html.Html.set_component_skin(html_media)
+        return html_media

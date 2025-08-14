@@ -2,22 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Any, List
-from epyk.core.py import primitives
-from epyk.core.py import types
-
-from epyk.core.js.fncs import JsFncs
-from epyk.core.css import Colors
-from epyk.core.css.styles.effects import Effects
-
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsString
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsBoolean
-from epyk.core.js.primitives import JsArray
-
-from epyk.core.js.objects import JsNodeDomRect
-
-from epyk.core.js import JsUtils
+from ...py import primitives, types
+from ..fncs import JsFncs
+from ...css import Colors
+from ...css.styles.effects import Effects
+from ..primitives import JsObject, JsString, JsNumber, JsBoolean, JsArray
+from ..objects import JsNodeDomRect
+from .. import JsUtils
 
 
 class JsDomEvents(primitives.JsDataModel):
@@ -832,7 +823,8 @@ class JsDoms(JsObject.JsObject):
         :param values: Dictionary of CSS properties
         """
         values = JsUtils.jsConvertData(values, None)
-        return JsObject.JsObject('Object.entries(%s).forEach(([k,v]) => { %s.style.setProperty(k, v) } )' % (values, self.varId))
+        return JsObject.JsObject(
+            'Object.entries(%s).forEach(([k,v]) => { %s.style.setProperty(k, v) } )' % (values, self.varId))
 
     @property
     def events(self) -> JsDomEvents:
@@ -915,10 +907,11 @@ class JsDoms(JsObject.JsObject):
         name = JsUtils.jsConvertData(name, None)
         if targets:
             s_targets = ["%s.dispatchEvent(evt)" % t.dom.varId for t in targets]
-            return JsUtils.jsWrap("let evt = new CustomEvent(%s, {%s}); %s" % (name, ",".join(options), ";".join(s_targets)))
+            return JsUtils.jsWrap(
+                "let evt = new CustomEvent(%s, {%s}); %s" % (name, ",".join(options), ";".join(s_targets)))
 
-        return JsUtils.jsWrap("let evt = new CustomEvent(%s, {%s}); document.dispatchEvent(evt)" % (name, ",".join(options)))
-
+        return JsUtils.jsWrap(
+            "let evt = new CustomEvent(%s, {%s}); document.dispatchEvent(evt)" % (name, ",".join(options)))
 
     def addOnReady(self, js_funcs: types.JS_FUNCS_TYPES):
         """The ready event occurs when the DOM (document object model) has been loaded.
@@ -1656,7 +1649,7 @@ class JsDoms(JsObject.JsObject):
 
     @property
     def nextElementSibling(self) -> 'JsDoms':
-      return JsDoms("%s.nextElementSibling" % self.varId)
+        return JsDoms("%s.nextElementSibling" % self.varId)
 
     def contentEditable(self, flag: types.JS_DATA_TYPES) -> JsBoolean.JsBoolean:
         """Set content editable
@@ -1710,7 +1703,7 @@ class JsDoms(JsObject.JsObject):
         """
         return JsDoms("%s.cloneNode(%s)" % (self.varId, JsUtils.jsConvertData(deep, None)))
 
-    def replaceWith(self, dom = None) -> 'JsDoms':
+    def replaceWith(self, dom=None) -> 'JsDoms':
         """
 
         :param dom:
@@ -1753,7 +1746,7 @@ class JsDoms(JsObject.JsObject):
 
     def removeEventListener(self, event_type: str, event_handler: types.JS_FUNCS_TYPES = None,
                             flag: bool = False) -> 'JsDoms':
-      """
+        """
 
       :param event_type:
       :param event_handler:
@@ -1761,14 +1754,15 @@ class JsDoms(JsObject.JsObject):
 
       :return:
       """
-      if event_handler:
-        self._js.append("%s.removeEventListener(%s, %s, %s)" % (
-          self.varId, JsUtils.jsConvertData(event_type, None),
-          JsUtils.jsConvertData(event_handler, None), JsUtils.jsConvertData(flag, None)))
-      else:
-        self._js.append("%(id)s.removeEventListener(%(type)s, %(id)s.%(type)s, %(f)s)" % {
-          "id": self.varId, "type": JsUtils.jsConvertData(event_type, None), "f": JsUtils.jsConvertData(flag, None)})
-      return self
+        if event_handler:
+            self._js.append("%s.removeEventListener(%s, %s, %s)" % (
+                self.varId, JsUtils.jsConvertData(event_type, None),
+                JsUtils.jsConvertData(event_handler, None), JsUtils.jsConvertData(flag, None)))
+        else:
+            self._js.append("%(id)s.removeEventListener(%(type)s, %(id)s.%(type)s, %(f)s)" % {
+                "id": self.varId, "type": JsUtils.jsConvertData(event_type, None),
+                "f": JsUtils.jsConvertData(flag, None)})
+        return self
 
     def appendChild(self, dom: types.JS_DATA_TYPES) -> 'JsDoms':
         """The appendChild() method appends a node as the last child of a node.
@@ -1891,7 +1885,7 @@ class JsDoms(JsObject.JsObject):
         return JsDomsList("document.getElementsByName(%s)" % JsUtils.jsConvertData(name, None))
 
     def focus(self) -> JsString.JsString:
-      return JsString.JsString.get("%s?.focus()" % self.varId)
+        return JsString.JsString.get("%s?.focus()" % self.varId)
 
     def tooltip(self, attribute_value):
         """Shortcut to set the DOM component title.

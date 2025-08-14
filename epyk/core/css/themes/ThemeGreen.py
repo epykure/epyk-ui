@@ -2,7 +2,7 @@
 Theme module for the Green classes
 """
 
-from epyk.core.css.themes import Theme
+from . import Theme
 
 
 class Green(Theme.Theme):

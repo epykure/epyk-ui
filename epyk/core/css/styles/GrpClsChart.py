@@ -9,9 +9,9 @@ from epyk.core.css.styles.attributes import AttrClsChart
 
 class ClassBSpartlines(GrpCls.ClassHtml):
 
-  @property
-  def css(self) -> AttrClsChart.AttrSkarkline:
-    """
+    @property
+    def css(self) -> AttrClsChart.AttrSkarkline:
+        """
     Property to the underlying CSS definition to be added to the style HTML tag of a component.
 
     Usage::
@@ -20,19 +20,19 @@ class ClassBSpartlines(GrpCls.ClassHtml):
 
     :rtype: AttrClsChart.AttrSkarkline
     """
-    if self._css_struct is None:
-      self._css_struct = AttrClsChart.AttrSkarkline(self.component)
-    return self._css_struct
+        if self._css_struct is None:
+            self._css_struct = AttrClsChart.AttrSkarkline(self.component)
+        return self._css_struct
 
-  @property
-  def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
-    """
+    @property
+    def css_class(self) -> Classes.CatalogDiv.CatalogDiv:
+        """
     The internal class used to put a custom Style to this object.
     Only 1 CSS class can be added to an HTML object.
 
     :rtype: Classes.CatalogDiv.CatalogDiv
     """
-    if self._css_class is None:
-      self._css_class = Classes.CatalogDiv.CatalogDiv(
-        self.component.page, self.classList['main'], component=self.component).margin_vertical()
-    return self._css_class
+        if self._css_class is None:
+            self._css_class = Classes.CatalogDiv.CatalogDiv(
+                self.component.page, self.classList['main'], component=self.component).margin_vertical()
+        return self._css_class

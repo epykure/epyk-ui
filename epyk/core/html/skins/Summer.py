@@ -1,15 +1,14 @@
-
 # https://codepen.io/JulianLaval/pen/KpLXOO
 
-from epyk.core.html.graph import GraphCanvas
+from epyk.core.html.HtmlCanvas import Canvas
 from epyk.core.html.options import OptSkins
 
 
-class Lights(GraphCanvas.Canvas):
-  name = 'Skin Lights'
-  _option_cls = OptSkins.OptionsSkin
+class Lights(Canvas):
+    name = 'Skin Lights'
+    _option_cls = OptSkins.OptionsSkin
 
-  _js__builder__ = '''
+    _js__builder__ = '''
       var c = init(htmlObj);
       
       class firefly{
@@ -103,8 +102,7 @@ class Lights(GraphCanvas.Canvas):
       setInterval(loop, 1000 / 60);  
     '''
 
-  def __str__(self):
-    self.page.properties.js.add_builders(self.refresh())
-    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(css_class_names=self.style.get_classes()))
-
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
+            self.get_attrs(css_class_names=self.style.get_classes()))

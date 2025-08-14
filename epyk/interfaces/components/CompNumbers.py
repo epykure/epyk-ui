@@ -4,7 +4,6 @@ from typing import Union
 
 from epyk.core import html
 from epyk.core.py import types
-from epyk.core.html import graph
 from epyk.customs.data.html import HtmlProgress
 
 from epyk.core.html import Defaults as defaults_html
@@ -283,54 +282,6 @@ class Numbers:
         html_number.money(symbol, fmt="%v %s")
         html.Html.set_component_skin(html_number)
         return html_number
-
-    def plotly(self, value: float = 0, profile: types.PROFILE_TYPE = None, options: dict = None,
-               width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-               html_code: str = None) -> graph.GraphPlotly.Indicator:
-        """
-
-        :tags:
-        :categories:
-
-        Underlying HTML Objects:
-
-          - :class:`epyk.core.graph.GraphPlotly.Indicator`
-
-        :param value: Optional. Number. a value
-        :param profile: Optional. A flag to set the component performance storage
-        :param options: Optional. Specific Python options available for this component
-        :param width: Optional. A tuple with the integer for the component width and its unit
-        :param height: Optional. A tuple with the integer for the component height and its unit
-        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-        """
-        ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
-        ind.add_trace({'value': value}, mode="number")
-        html.Html.set_component_skin(ind)
-        return ind
-
-    def plotly_with_delta(self, value, profile: types.PROFILE_TYPE = None, options: dict = None,
-                          width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (330, "px"),
-                          html_code: str = None) -> graph.GraphPlotly.Indicator:
-        """
-
-        :tags:
-        :categories:
-
-        Underlying HTML Objects:
-
-          - :class:`epyk.core.graph.GraphPlotly.Indicator`
-
-        :param value: Number. a value
-        :param profile: Optional. A flag to set the component performance storage
-        :param options: Optional. Specific Python options available for this component
-        :param width: Optional. A tuple with the integer for the component width and its unit
-        :param height: Optional. A tuple with the integer for the component height and its unit
-        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-        """
-        ind = graph.GraphPlotly.Indicator(self.page, width, height, options or {}, html_code, profile)
-        ind.add_trace({'value': value}, mode="number+delta")
-        html.Html.set_component_skin(ind)
-        return ind
 
     def move(self, current, previous=None, components=None, title: str = None, align: str = "center",
              width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, "px"), color: str = None,

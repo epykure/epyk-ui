@@ -2,12 +2,11 @@ from typing import Dict
 
 
 # Global name on the JavaScript side
-EXPORT_INIT_OPTIONS = "INIT_OPTIONS"
+EXPORT_INIT_OPTIONS: str = "INIT_OPTIONS"
 
 
-def set_global_options(builders: Dict[str, str], init_options: Dict[str, str]):
-    """
-    Set the global scope for all components in the reports.
+def set_global_options(builders: Dict[str, str], init_options: Dict[str, str]) -> str:
+    """Set the global scope for all components in the reports.
     This will be used when building the report in a static manner.
 
     :param builders: Common object with all components builders definition

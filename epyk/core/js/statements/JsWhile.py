@@ -2,117 +2,113 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
-from epyk.core.py import primitives
-from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsObject
+from ...py import primitives
+from .. import JsUtils
+from ..primitives import JsObject
 
 
 class JsWhile:
 
-  def __init__(self, pivot: str, options: Optional[dict] = None, context: Optional[primitives.PageModel] = None,
-               profile: Optional[Union[dict, bool]] = None):
-    """   Create a JavaScript while statement.
+    def __init__(self, pivot: str, options: Optional[dict] = None, context: Optional[primitives.PageModel] = None,
+                 profile: Optional[Union[dict, bool]] = None):
+        """Create a JavaScript while statement.
 
-    :param str pivot: The JavaScript expression.
-    :param Optional[dict] options:
-    :param Optional[primitives.PageModel] context:
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    """
-    self._context = context
-    self.options = {"var": 'i'}
-    if options is not None:
-      self.options.update(options)
-    self.__js_funcs, self.__next = [], None
-    self.__pivot = pivot
-    self.profile = profile
+        :param  pivot: The JavaScript expression.
+        :param options:
+        :param context:
+        :param profile: Optional. A flag to set the component performance storage.
+        """
+        self._context = context
+        self.options = {"var": 'i'}
+        if options is not None:
+            self.options.update(options)
+        self.__js_funcs, self.__next = [], None
+        self.__pivot = pivot
+        self.profile = profile
 
-  def next(self, rule: str):
-    """   Set the way the while will increment the cursor.
+    def next(self, rule: str):
+        """Set the way the while will increment the cursor.
 
-    :param str rule: The JavaScript fragment for the next statement,
-    """
-    self.__next = rule
-    return self
+        :param rule: The JavaScript fragment for the next statement,
+        """
+        self.__next = rule
+        return self
 
-  def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
-    """   Set the functions, event to be trigger during the while loop.
+    def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
+        """ Set the functions, event to be trigger during the while loop.
 
-    :param Union[list, str] js_funcs: The Javascript functions.
-    :param bool reset: Reset the defined javascript functions or append to them.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    if reset:
-      self.__js_funcs = js_funcs
-    else:
-      self.__js_funcs.extend(js_funcs)
-    self.profile = profile
-    return self
+        :param js_funcs: The Javascript functions.
+        :param reset: Reset the defined javascript functions or append to them.
+        :param profile: Optional. A flag to set the component performance storage.
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        if reset:
+            self.__js_funcs = js_funcs
+        else:
+            self.__js_funcs.extend(js_funcs)
+        self.profile = profile
+        return self
 
-  def toStr(self):
-    if self.__next is None:
-      raise ValueError("next() function must be used to avoid infinite loops !!")
+    def toStr(self):
+        if self.__next is None:
+            raise ValueError("next() function must be used to avoid infinite loops !!")
 
-    funcs = JsUtils.jsConvertFncs(self.__js_funcs, toStr=True, profile=self.profile)
-    return "while(%s){%s; %s}" % (self.__pivot, funcs, self.__next)
+        funcs = JsUtils.jsConvertFncs(self.__js_funcs, toStr=True, profile=self.profile)
+        return "while(%s){%s; %s}" % (self.__pivot, funcs, self.__next)
 
 
 class JsWhileIterable:
 
-  def __init__(self, iterable: Union[primitives.JsDataModel, str], options: Optional[dict] = None,
-               profile: Optional[Union[dict, bool]] = None):
-    """   
+    def __init__(self, iterable: Union[primitives.JsDataModel, str], options: Optional[dict] = None,
+                 profile: Optional[Union[dict, bool]] = None):
+        """
 
-    :param Union[primitives.JsDataModel, str] iterable:
-    :param Optional[dict] options: Optional. While options.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    """
-    self.__js_it = iterable
-    self.options = {"var": 'x'}
-    if options is not None:
-      self.options.update(options)
-    self.options['it'] = JsUtils.jsConvertData(self.__js_it, None)
-    self.profile = profile
+        :param iterable:
+        :param options: Optional. While options.
+        :param profile: Optional. A flag to set the component performance storage.
+        """
+        self.__js_it = iterable
+        self.options = {"var": 'x'}
+        if options is not None:
+            self.options.update(options)
+        self.options['it'] = JsUtils.jsConvertData(self.__js_it, None)
+        self.profile = profile
 
-  @property
-  def var(self) -> str:
-    """   
-`   Return the variable reference for this loop.
-    """
-    return self.options['var']
+    @property
+    def var(self) -> str:
+        """Return the variable reference for this loop."""
+        return self.options['var']
 
-  @var.setter
-  def var(self, value: str):
-    """   
-`   Return the variable reference for this loop.
+    @var.setter
+    def var(self, value: str):
+        """Return the variable reference for this loop.
 
-    :param str value: The value reference for the JavaScript variable.
-    """
-    self.options['var'] = value
+        :param value: The value reference for the JavaScript variable.
+        """
+        self.options['var'] = value
 
-  @property
-  def value(self):
-    """   return the value during the while loop.
-    """
-    return JsObject.JsObject.get("%(it)s[%(var)s]" % self.options)
+    @property
+    def value(self):
+        """return the value during the while loop."""
+        return JsObject.JsObject.get("%(it)s[%(var)s]" % self.options)
 
-  def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
-    """   
+    def fncs(self, js_funcs: Union[list, str], reset: bool = True, profile: Optional[Union[dict, bool]] = None):
+        """
 
-    :param Union[list, str] js_funcs: The PyJs functions.
-    :param bool reset: Optional. Reset the JavaScript functions for this loop.
-    :param Optional[Union[dict, bool]] profile: Optional. A flag to set the component performance storage.
-    """
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    if reset:
-      self.__js_funcs = js_funcs
-    else:
-      self.__js_funcs.extend(js_funcs)
-    self.profile = profile
-    return self
+        :param js_funcs: The PyJs functions.
+        :param reset: Optional. Reset the JavaScript functions for this loop.
+        :param profile: Optional. A flag to set the component performance storage.
+        """
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        if reset:
+            self.__js_funcs = js_funcs
+        else:
+            self.__js_funcs.extend(js_funcs)
+        self.profile = profile
+        return self
 
-  def toStr(self):
-    self.options['jsFncs'] = JsUtils.jsConvertFncs(self.__js_funcs, toStr=True, profile=self.profile)
-    return "var %(var)s = 0; while(%(it)s[%(var)s]){%(jsFncs)s; %(var)s++}" % self.options
+    def toStr(self):
+        self.options['jsFncs'] = JsUtils.jsConvertFncs(self.__js_funcs, toStr=True, profile=self.profile)
+        return "var %(var)s = 0; while(%(it)s[%(var)s]){%(jsFncs)s; %(var)s++}" % self.options

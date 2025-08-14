@@ -443,12 +443,11 @@ ICON_WRENCH = 'fa fa-wrench'
 EFFECT_SPIN = 'fa-spin'
 EFFECT_PULSE = 'fa-pulse'
 
-
 if __name__ == '__main__':
-  data = '''
+    data = '''
   '''
-  for rec in data.split("\n"):
-    if rec.strip() != "":
-      srec = rec.strip().split(" ")
-      icon = srec[1].replace("fa-", "ICON_").replace("-", "_")
-      print("%s = '%s'" % (icon.upper(), rec.strip()))
+    for rec in data.split("\n"):
+        if rec.strip() != "":
+            srec = rec.strip().split(" ")
+            icon = srec[1].replace("fa-", "ICON_").replace("-", "_")
+            print("%s = '%s'" % (icon.upper(), rec.strip()))

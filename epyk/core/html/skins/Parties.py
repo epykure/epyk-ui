@@ -4,15 +4,15 @@
 # https://codepen.io/MillerTime/pen/oXmgJe
 # https://dev.to/soorajsnblaze333/make-it-rain-in-html-canvas-1fj0
 
-from epyk.core.html.graph import GraphCanvas
+from epyk.core.html.HtmlCanvas import Canvas
 from epyk.core.html.options import OptSkins
 
 
-class Fireworks(GraphCanvas.Canvas):
-  name = 'Skin Fireworks'
-  _option_cls = OptSkins.OptionsSkin
+class Fireworks(Canvas):
+    name = 'Skin Fireworks'
+    _option_cls = OptSkins.OptionsSkin
 
-  _js__builder__ = '''
+    _js__builder__ = '''
   window.addEventListener("resize", resizeCanvas, false);
         window.addEventListener("DOMContentLoaded", onLoad, false);
         
@@ -132,17 +132,17 @@ class Fireworks(GraphCanvas.Canvas):
         } 
     '''
 
-  def __str__(self):
-    self.page.properties.js.add_builders(self.refresh())
-    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(css_class_names=self.style.get_classes()))
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
+            self.get_attrs(css_class_names=self.style.get_classes()))
 
 
-class Birthday(GraphCanvas.Canvas):
-  name = 'Skin Birthday'
-  _option_cls = OptSkins.OptionsSkin
+class Birthday(Canvas):
+    name = 'Skin Birthday'
+    _option_cls = OptSkins.OptionsSkin
 
-  _js__builder__ = '''
+    _js__builder__ = '''
 let W = window.innerWidth; let H = window.innerHeight;
 const context = htmlObj.getContext("2d"); const maxConfettis = 150;
 const particles = [];
@@ -239,7 +239,7 @@ htmlObj.height = H;
 Draw();
     '''
 
-  def __str__(self):
-    self.page.properties.js.add_builders(self.refresh())
-    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(css_class_names=self.style.get_classes()))
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
+            self.get_attrs(css_class_names=self.style.get_classes()))

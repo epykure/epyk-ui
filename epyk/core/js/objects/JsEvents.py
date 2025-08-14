@@ -1,13 +1,7 @@
 from typing import Union
-from epyk.core.py import primitives
-
-from epyk.core.js import JsUtils
-
-from epyk.core.js.primitives import JsArray
-from epyk.core.js.primitives import JsBoolean
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsString
-from epyk.core.js.primitives import JsNumber
+from ...py import primitives
+from .. import JsUtils
+from ..primitives import JsArray, JsBoolean, JsObject, JsString, JsNumber
 
 
 class Event(primitives.JsDataModel):

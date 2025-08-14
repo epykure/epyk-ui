@@ -1,0 +1,34 @@
+.html-bot {
+    text-align: right ;
+    position: fixed ;
+    bottom: 0 ;
+    margin: 10px ;
+    height: 80px ;
+    padding: 5px ;
+    z-index: 200 ;
+}
+
+.speech-bubble {
+    border-radius: 4px ;
+    margin: 0 auto 10px' ;
+    padding: 5px ;
+    position: relative ;
+}
+
+.speech-bubble-ds {
+    border: 1px solid #a7a7a7 ;
+    border-radius: 4px ;
+    box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.2) ;
+    display: inline-block ;
+    margin: 0 auto 40px ;
+    padding: 0 5px ;
+    position: relative ;
+}
+
+.speech-bubble-ds__arrow {
+    border-left: 21px solid transparent ;
+    border-top: 20px solid rgba(0, 0, 0, 0.2) ;
+    bottom: -25px ;
+    position: absolute ;
+    right: 10px ;
+}

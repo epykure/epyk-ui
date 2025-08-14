@@ -17,17 +17,10 @@ import csv
 import hashlib
 import os
 import json
+from urllib.request import urlopen, Request, ProxyHandler, build_opener, install_opener
 
 TMP_PATH = None  # path for all the temporary files
 
-try:
-    from urllib.parse import urlparse, urlencode
-    from urllib.request import urlopen, Request, ProxyHandler, build_opener, install_opener
-    from urllib.error import HTTPError
-except ImportError:
-    from urlparse import urlparse
-    from urllib import urlencode
-    from urllib2 import urlopen, Request, HTTPError, ProxyHandler, build_opener, install_opener
 
 
 class PyRest:

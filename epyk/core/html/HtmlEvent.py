@@ -8,20 +8,13 @@ from pathlib import Path
 
 from epyk.core.py import primitives
 from epyk.core.py import types
-
 from epyk.core.html import Html
 from epyk.core.js import treemap
-from epyk.core.html.options import OptSliders
-from epyk.core.html.options import OptList
-
+from epyk.core.html.options import OptSliders, OptList
 from epyk.core.html.entities import EntHtml4
-
 from epyk.core.js import JsUtils
-from epyk.core.js.html import JsHtmlJqueryUI
-from epyk.core.js.html import JsHtmlList
-from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsQueryUi
-from epyk.core.js.packages import JsComponents
+from epyk.core.js.html import JsHtmlJqueryUI, JsHtmlList
+from epyk.core.js.packages import JsQuery, JsQueryUi, JsComponents
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsJqueryUI

@@ -13,11 +13,11 @@ from typing import Optional, Dict
 
 def css_files_loader(
         file_path: Optional[Union[List[str], List[Path]]],
-        selector: str = None,
+        selector: Optional[str] = None,
         style_vars: Optional[Dict[str, str]] = None,
         minify: bool = True,
         resources: Dict[str, Path] = None,
-        verbose: bool = None
+        verbose: Optional[bool] = None
 ) -> str:
     """Get the CSS content from CSS component files.
 
@@ -26,7 +26,7 @@ def css_files_loader(
     :param style_vars: Optional. The value to replace in the CSS template file (SCSS file)
     :param minify: Optional. Flag to minify or not the CSS content
     :param resources: Optional.
-    :param verbose: Show extra log messages
+    :param verbose: Optional. Show extra log messages
     """
     style_vars = style_vars or {}
     regex = re.compile(Defaults_css.REG_EXP_SECTOR)
@@ -102,20 +102,19 @@ def css_files_loader(
     return "\n".join(css_formatted)
 
 
-def export_scss_files(out_path: str = None):
+def export_scss_files(out_path: Optional[str] = None):
     """This will export all SCSS files namely the colors and the Icons theme
 
-    :param out_path: The export path. If None it will take the current directory
+    :param out_path: Optional. The export path. If None it will take the current directory
     """
     out_path = out_path or global_settings.THEME_SASS_PATH or Path.cwd()
     out_theme_path = Path(out_path, "%s.SCSS" % Defaults_css.THEME.upper())
     scss_colors(file_path=str(out_theme_path), theme=themes.get_theme(), override=True)
-
     out_icons_path = Path(out_path, "%s.SCSS" % global_settings.ICONS_FAMILY.upper())
     scss_icons(file_path=str(out_icons_path), family=global_settings.ICONS_FAMILY, override=True)
 
 
-def scss_colors(file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None, override: bool = False):
+def scss_colors(file_path: str = "COLORS.SCSS", theme: Optional[themes.Theme.Theme] = None, override: bool = False):
     """Create a SCSS template file for the definition of colors theme.
     It will generate a schema based on the default theme definition.
 
@@ -171,12 +170,11 @@ def scss_colors(file_path: str = "COLORS.SCSS", theme: themes.Theme.Theme = None
         themes.set_theme(dyn_theme.name)
 
 
-def scss_icons(file_path: str = "ICONS.SCSS", family: str = None, override: bool = False):
+def scss_icons(file_path: str = "ICONS.SCSS", family: Optional[str] = None, override: bool = False):
     """Create a SCSS template file for the definition of Icons.
     It will generate a schema based on the default definition using font-awesome icons.
 
     Usages::
-
         import epyk as ek
         ek.helpers.scss_icons()
 

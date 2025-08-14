@@ -2,7 +2,7 @@
 Theme module for the Red classes
 """
 
-from epyk.core.css.themes import Theme
+from . import Theme
 
 
 class Red(Theme.Theme):

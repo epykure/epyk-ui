@@ -1,12 +1,10 @@
-
-from typing import Union, Optional, Any, List
-from epyk.core.py import primitives
-
 import json
+from typing import Union, Optional, Any, List
+from ...py import primitives
+from .. import JsUtils
 
-from epyk.core.js import JsUtils
 
-_JSVARS = 0
+_JSVARS: int = 0
 
 
 class JsKeyword:

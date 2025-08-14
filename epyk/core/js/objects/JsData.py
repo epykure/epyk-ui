@@ -2,20 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional, Union, List, Any
-from epyk.core.py import primitives
-
-from epyk.core.js.primitives import JsArray
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsBoolean
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsString
-
-from epyk.core.js.objects import JsNodeDom
-
-from epyk.core.js.packages.JsVis import VisDataSet, VisDataView
-
-from epyk.core.js.fncs import JsFncs
-from epyk.core.js import JsUtils
+from ...py import primitives
+from ..primitives import JsArray, JsObject, JsBoolean, JsNumber, JsString
+from ..objects import JsNodeDom
+from ..fncs import JsFncs
+from .. import JsUtils
 
 
 class DataLoop:
@@ -119,9 +110,9 @@ class RawData(primitives.JsDataModel):
         :param component: An HTML component to be linked to
         :param profile: Optional. Activate the profiling features
         """
-        self.page.properties.data.get_schema_containers(self._data_id)[component.htmlCode] = {
+        self.page.properties.data.get_schema_containers(self._data_id)[component.html_code] = {
             'fncs': [], 'outs': None, "profile": profile}
-        return ContainerData(self.page, self._data["schema"][self._data_id]['containers'][component.htmlCode])
+        return ContainerData(self.page, self._data["schema"][self._data_id]['containers'][component.html_code])
 
     def toTsv(self, col_names: list = None, profile: Optional[Union[bool, dict]] = False):
         """
@@ -245,7 +236,8 @@ const [key, value] of Object.entries(data)){urlParts.push(key +"="+ value);};ret
         :return:
         """
         return JsObject.JsObject.get(
-            "{%s}[%s]" % (",".join(["%s: %s" % (k, v) for k, v in self._data]), JsUtils.jsConvertData(value, None)))
+            "{%s}[%s]" % (
+                ",".join(["%s: %s" % (k, v) for k, v in self._data]), JsUtils.jsConvertData(value, None)))
 
     def update(self, attrs: dict):
         """Direct update of the object attributes.
@@ -308,7 +300,7 @@ class FormData(primitives.JsDataModel):
         :param html_code: Optional. The Html code.
         """
         return "%s.append(%s, %s)" % (
-            self.alias, JsUtils.jsConvertData(html_code or component.htmlCode, None),
+            self.alias, JsUtils.jsConvertData(html_code or component.html_code, None),
             JsUtils.jsConvertData(component.dom.content, None))
 
     def update(self, attrs: Union[Datamap, dict]):
@@ -393,44 +385,6 @@ class JsData:
         This is an internal structure to link the HTML component and various object to the JavaScript definition.
         """
         return Datamap(components, attrs)
-
-    def dataset(self, data: Any, js_code: str = None, options: Union[dict, primitives.JsDataModel] = None):
-        """One of the starting points of the visualizations of vis.js is that they can deal with dynamic data,
-        and allow manipulation of the data.
-        To enable this, vis.js includes a flexible key/value based DataSet and DataView to handle unstructured JSON data.
-
-        Related Pages:
-
-          https://visjs.github.io/vis-data/data/index.html
-
-        :param data: The data to be passed to the JavaScript side.
-        :param js_code: The variable reference to this object on the JavaScript side.
-        :param options: The options to be added to this object.
-        """
-        vis_obj = VisDataSet(self.page, data=data, js_code=JsUtils.getJsValid(js_code))
-        if options is not None:
-            vis_obj.setOptions(options)
-        return vis_obj
-
-    def dataview(self, dataset, var_name: str = None, options: Union[dict, primitives.JsDataModel] = None):
-        """A DataView offers a filtered and/or formatted view on a DataSet.
-        One can subscribe to change in a DataView, and easily get filtered or formatted data without having to specify
-        filters and field types all the time.
-
-        Viz.Js module
-
-        Related Pages:
-
-          https://visjs.github.io/vis-data/data/dataview.html
-
-        :param dataset:
-        :param options:
-        :param var_name:
-        """
-        vis_obj = VisDataView(self.page, data=dataset.varId, js_code=JsUtils.getJsValid(var_name))
-        if options is not None:
-            vis_obj.setOptions(options)
-        return vis_obj
 
     def records(self, data: Any):
         """

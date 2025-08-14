@@ -7,10 +7,10 @@ from epyk.core.py import primitives, types
 from epyk.core import html
 
 from epyk.core.css import Defaults_css
+from epyk.core.html import Defaults_html
 
 from epyk.interfaces.components import CompAnimations
 from epyk.interfaces.components import CompLayouts
-from epyk.interfaces.components import CompCodes
 from epyk.interfaces.components import CompButtons
 from epyk.interfaces.components import CompIcons
 from epyk.interfaces.components import CompInputs
@@ -19,7 +19,6 @@ from epyk.interfaces.components import CompLists
 from epyk.interfaces.components import CompNumbers
 from epyk.interfaces.tables import CompTables
 from epyk.interfaces.graphs import CompCharts
-from epyk.interfaces.geo import CompGeo
 from epyk.interfaces.components import CompTexts
 from epyk.interfaces.components import CompRich
 from epyk.interfaces.components import CompImages
@@ -42,17 +41,10 @@ from epyk.interfaces.components import CompTitles
 from epyk.interfaces.components import CompCalendars
 from epyk.interfaces.components import CompPictos
 from epyk.interfaces.components import CompPollers
+from epyk.interfaces.components import CompSvg
+
 
 from epyk.interfaces import Arguments
-
-# External web frameworks
-from epyk.fwk.toast import UI as ToastUI
-from epyk.fwk.clr import UI as ClarityUI
-from epyk.fwk.evr import UI as EvergreenUI
-from epyk.fwk.bs import UI as BoostrapUI
-from epyk.fwk.mdc import UI as MaterialUI
-from epyk.fwk.jqui import UI as JqueryUI
-from epyk.fwk.ftw import UI as FluentUI
 
 # All the custom modules.
 from epyk.customs import pyks
@@ -84,8 +76,6 @@ class Components:
         self.grid = self.layouts.grid
         self.row = self.layouts.row
         self.col = self.layouts.col
-        self.table = getattr(self.tables, html.Defaults.TABLE_FAMILY)
-        self.pivot = self.tables.pivot
         self.text = self.texts.text
         self.title = self.texts.title
         self.subtitle = self.titles.subtitle
@@ -123,11 +113,6 @@ class Components:
         self.header = self.layouts.header
         self.section = self.layouts.section
         self.composite = self.rich.composite
-
-        # Set the default chart to be ChartJs
-        # TODO fix ApexChart and BillboardJs
-        self.chart = self.charts.chartJs
-        self.analytics = self.charts.c3
 
     def css(self, css_attrs: dict):
         """Change the CSS Style of the main container in the page.
@@ -178,20 +163,6 @@ class Components:
         return div
 
     @property
-    def codes(self) -> CompCodes.Code:
-        """Group all the UI Components dedicated to display code fragments.
-        This will wrap the Javascript module codemirror.
-        More details on the :py:class:`Codes property <epyk.interfaces.components.CompCodes.Code>` page
-
-        Usage::
-
-          page.ui.codes.css(".test {color: red}")
-
-        `codemirror <https://codemirror.net/doc/manual.html>`_
-        """
-        return CompCodes.Code(self)
-
-    @property
     def pollers(self) -> CompPollers.Poller:
         """Group all the UI with polling feature.
         More details on the :py:class:`Animations property <epyk.interfaces.components.CompPollers.Poller>` page
@@ -233,30 +204,6 @@ class Components:
             slider.options.slide(precision=2)
         """
         return CompSliders.Sliders(self)
-
-    @property
-    def _3d(self) -> CompCharts.Chart3d:
-        """Group all the 3D charts.
-        More details on the :py:class:`Charts 3D property <epyk.interfaces.components.CompCharts.Chart3d>` page
-
-        Usage::
-
-            page = pk.Page()
-            page.ui._3d
-        """
-        return CompCharts.Chart3d(self)
-
-    @property
-    def _2d(self) -> CompCharts.Chart2d:
-        """Group all the 2D charts.
-        More details on the :py:class:`Charts 2D property <epyk.interfaces.components.CompCharts.Chart2d>` page
-
-        Usage::
-
-            page = pk.Page()
-            page.ui._2d
-        """
-        return CompCharts.Chart2d(self)
 
     @property
     def titles(self) -> CompTitles.Titles:
@@ -393,22 +340,6 @@ class Components:
     def trees(self) -> CompTrees.Trees:
         """Group all the UI components dedicated to produce Trees or selection items."""
         return CompTrees.Trees(self)
-
-    @property
-    def geo(self) -> CompGeo.Geo:
-        """Group all the UI components dedicated to produce Trees or selection items.
-
-        Usage::
-
-          l = page.ui.geo.mapbox.globe()
-          l.load([...])
-          l.options.style = 'mapbox://styles/mapbox/streets-v11'
-
-          marker = l.js.marker(-0.11, 51.508)
-          marker2 = l.js.marker(12.65147, 55.608166, options={"color": 'black', "rotation": 45})
-          page.body.onReady([marker, marker2])
-        """
-        return CompGeo.Geo(self)
 
     @property
     def buttons(self) -> CompButtons.Buttons:
@@ -802,37 +733,6 @@ class Components:
         container = html.HtmlOthers.HtmlJson(self.page, data, width, height, options, profile)
         if height[1] != '%':
             container.style.css.overflow = 'auto'
-        html.Html.set_component_skin(container)
-        return container
-
-    def slideshow(self, components: List[html.Html.Html] = None, width: types.SIZE_TYPE = (100, "%"),
-                  height: types.SIZE_TYPE = ('auto', ""), options: types.OPTION_TYPE = None,
-                  profile: types.PROFILE_TYPE = None) -> html.HtmlImage.SlideShow:
-        """SlideShow component for pictures from the tiny-slider library.
-        More details regarding this library here: https://github.com/ganlanyuan/tiny-slider.
-
-        Usage::
-
-          ss = page.ui.slideshow([page.ui.text("Great results %s" % i) for i in range(20)])
-
-          ss.add_index_changed([
-            page.js.console.log("ok"),
-            page.js.console.log(ss.dom.info.indexCached),
-            page.js.console.log(ss.dom.info.index),
-          ])
-
-        `Tiny-slider <https://github.com/ganlanyuan/tiny-slider>`_
-        `Demo tiny-slider <http://ganlanyuan.github.io/tiny-slider/demo/>`_
-
-        :param components: Optional. With the different components
-        :param width: Optional. The component width in pixel or percentage
-        :param height: Optional. The component height in pixel
-        :param options: Optional. Specific Python options available for this component
-        :param profile: Optional. A flag to set the component performance storage
-        """
-        width = Arguments.size(width)
-        height = Arguments.size(height, "px")
-        container = html.HtmlImage.SlideShow(self.page, components or [], width, height, options or {}, profile)
         html.Html.set_component_skin(container)
         return container
 
@@ -1258,151 +1158,123 @@ class Components:
         """Get the list of bespoke selector aliases loaded as components """
         return self.page._props["schema"].keys()
 
-    def quill(
-            self, text: str = "", width: types.SIZE_TYPE = (None, 'px'), height: types.SIZE_TYPE = (330, 'px'),
-            html_code: str = None, options: types.OPTION_TYPE = None, profile: types.PROFILE_TYPE = None
-    ) -> html.HtmlOthers.HtmlQuill:
-        """Quill is a modern rich text editor built for compatibility and extensibility.
+    def canvas(self, height: types.SIZE_TYPE = (400, "px"), width: types.SIZE_TYPE = (100, "%"),
+            profile: types.PROFILE_TYPE = None, options: types.OPTION_TYPE = None, html_code: str = None
+            ) -> html.HtmlCanvas.Canvas:
+        """The HTML <canvas> tag is used to draw graphics, on the fly, via scripting (usually JavaScript).
+        However, the <canvas> element has no drawing abilities of its own (it is only a container for graphics) -
+        you must use a script to actually draw the graphics.
+        The getContext() method returns an object that provides methods and properties for drawing on the canvas.
+        This reference will cover the properties and methods of the getContext("2d") object, which can be used to draw text,
+        lines, boxes, circles, and more - on the canvas
 
-        Usage::
-          page.ui.quill()
+        :tags:
+        :categories:
 
-        :param text: Optional.
+        `Canva <https://www.w3schools.com/tags/ref_canvas.asp>`_
+
         :param width: Optional. A tuple with the integer for the component width and its unit
         :param height: Optional. A tuple with the integer for the component height and its unit
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        :param profile: Optional. A flag to set the component performance storage
+        :param options: Optional. Specific Python options available for this component
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        """
+        if not isinstance(width, tuple):
+            width = (width, "px")
+        html_svg = html.HtmlCanvas.Canvas(self.page, width, height, html_code, options, profile)
+        return html_svg
+
+    @property
+    def svg(self) -> CompSvg.SVG:
+        """SVG defines vector-based graphics in XML format.
+
+        `Related Pages <https://www.w3schools.com/graphics/svg_intro.asp>`_
+        """
+        return CompSvg.SVG(self)
+
+    def skillbars(self, records=None, y_column: str = None, x_axis: str = None, title: str = None,
+                  width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (None, 'px'), html_code: str = None,
+                  options: dict = None, profile: types.PROFILE_TYPE = False) -> html.HtmlEvent.SkillBar:
+        """Python interface for the HTML Skill bars, simple bars chart done in pure Javascript and CSS.
+
+        :Category: Web Application, Analytics
+
+        Usage::
+          records = [
+            {"label": 'python', 'value': 12}, {"label": 'Java', 'value': 5}, {"label": 'Javascript', 'value': 80}]
+          page.ui.charts.skillbars(records, y_column='value', x_axis='label').css({"width": '100px'})
+
+          s3 = page.ui.charts.skillbars(records, y_column='value', x_axis='label')
+          s3.options.height = "10px"
+
+        `Related Pages <https://www.w3schools.com/howto/howto_css_skill_bar.asp>`_
+
+        :param records: Optional. The Python list of dictionaries
+        :param y_column: Optional. The columns corresponding to keys in the dictionaries in the record
+        :param x_axis: Optional. The column corresponding to a key in the dictionaries in the record
+        :param title: Optional. The chart title
+        :param width: Optional. A tuple with the integer for the component width and its unit
+        :param height: Optional. A tuple with the integer for the component height and its unit
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
         :param options: Optional. Specific Python options available for this component
         :param profile: Optional. A flag to set the component performance storage
         """
-        width = Arguments.size(width, unit="px")
+        if y_column is None or x_axis is None:
+            raise ValueError("seriesName and axis must be defined")
+
+        width = Arguments.size(width, unit="%")
         height = Arguments.size(height, unit="px")
-        ql = html.HtmlOthers.HtmlQuill(self.page, text, width, height, options or {}, html_code, profile)
-        html.Html.set_component_skin(ql)
-        return ql
+        options = options or {}
+        html_skillbar = html.HtmlEvent.SkillBar(
+            self.page, records or [], y_column, x_axis, title, width, height, html_code, options, profile)
+        html.Html.set_component_skin(html_skillbar)
+        return html_skillbar
+
+    def plot(self, pkg: str = "apex", record=None, y: list = None, x: str = None, kind: str = "line",
+             profile: types.PROFILE_TYPE = None, width: types.SIZE_TYPE = (100, "%"),
+             height: types.SIZE_TYPE = (Defaults_html.CHARTS_HEIGHT_PX, "px"), options: dict = None,
+             html_code: str = None):
+        """Generic shortcut to plot a chart in the framework.
+        Family and kind of chart are passed in parameter.
+
+        :param pkg: Optional. The external chart package reference. Default ApexCharts
+        :param record: Optional. The list of dictionaries with the input data
+        :param y: Optional. The columns corresponding to keys in the dictionaries in the record
+        :param x: Optional. The column corresponding to a key in the dictionaries in the record
+        :param kind: Optional. The chart type
+        :param profile:  Optional. A flag to set the component performance storage
+        :param width: Optional. The width of the component in the page, default (100, '%')
+        :param height: Optional. The height of the component in the page, default (330, "px")
+        :param options: Optional. Specific Python options available for this component
+        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
+        """
+        if y is not None and not isinstance(y, list):
+            y = [y]
+        chart_pkg = getattr(self, pkg)
+        return getattr(chart_pkg, kind)(record=record, y_columns=y, x_axis=x, profile=profile, width=width,
+                                        height=height,
+                                        options=options, html_code=html_code)
 
 
 class WebComponents:
 
     def __init__(self, page: primitives.PageModel):
         self.page = page
-        self.fwks = {}
-        self.page.properties.context["libs"] = Defaults_css.WEB_LIBS
 
     @property
-    def default(self) -> str:
-        return self.page.properties.context["libs"]
-
-    @default.setter
-    def default(self, alias: str):
-        self.page.properties.context["libs"] = alias
+    def fwks(self) -> List[str]:
+        """Get list of external web frameworks loaded"""
+        return list(self.page._props["fwks"])
 
     @property
-    def std(self) -> Components:
-        """ The internal components. """
-        if 'ui' not in self.fwks:
-            self.fwks["ui"] = Components(self.page)
-        return self.fwks["ui"]
+    def pyks(self) -> List[str]:
+        """Get list of external component libraries loaded """
+        return list(self.page._props["pyks"])
 
-    @property
-    def jqui(self) -> JqueryUI.Components:
-        """JQuery UI is a curated set of user interface interactions, effects, widgets, and themes built on top of the
-        jQuery JavaScript Library. Whether you're building highly interactive web applications or you just need to add
-        a date picker to a form control, jQuery UI is the perfect choice.
+    def __getattr__(self, key: str):
+        if key in self.page._props["fwks"]:
+            return self.page._props["fwks"][key]
 
-        More details on the :py:class:`Jquery property <epyk.fwk.jqui.UI.Components>` page
-
-        `jqueryui <https://jqueryui.com/>'_
-        """
-        if 'jqui' not in self.fwks:
-            self.fwks["jqui"] = JqueryUI.Components(self.page)
-        return self.fwks["jqui"]
-
-    @property
-    def bs(self) -> BoostrapUI.Components:
-        """Add the entire Bootstrap framework as a dependency to the framework.
-        This will enable more components to the framework.
-        More details on the :py:class:`Bootstrap property <epyk.fwk.bs.UI.Components>` page
-
-        ..note::
-
-          This will be using bootstrap 5.
-
-        Usage::
-
-          icon = page.web.bs.icons.danger()
-        """
-        if 'bs' not in self.fwks:
-            self.fwks["bs"] = BoostrapUI.Components(self.page)
-        return self.fwks["bs"]
-
-    @property
-    def mdc(self) -> MaterialUI.Components:
-        """Set the material components entry point.
-        This will be available in the same way than ui is available for anything else in the core framework.
-
-        More details on the :py:class:`Bootstrap property <epyk.fwk.mdc.UI.Components>` page
-
-        `Material <https://material.io/develop/web/>`_
-        `Material Components <https://material.io/components?platform=web>`_
-
-        :return: Python HTML object
-        """
-        if 'mdc' not in self.fwks:
-            self.fwks["mdc"] = MaterialUI.Components(self.page)
-        return self.fwks["mdc"]
-
-    @property
-    def tui(self) -> ToastUI.Components:
-        """Add the entire TOAST UI framework as a dependency to the framework.
-        This will enable more components to the framework.
-
-        `Toast <https://ui.toast.com/>`_
-
-        Usage::
-
-          dt = page.web.tui.date()
-          cal = page.web.tui.calendar()
-        """
-        if 'tui' not in self.fwks:
-            self.fwks["tui"] = ToastUI.Components(self.page)
-        return self.fwks["tui"]
-
-    @property
-    def clr(self) -> ClarityUI.Components:
-        """Clarity is a scalable, customizable, open source design system bolstered by the people that build with it,
-        the people we build it for, and the community that makes us who we are.
-
-        `Clarity <https://clarity.design/>`_
-        """
-        if 'clr' not in self.fwks:
-            self.fwks["clr"] = ClarityUI.Components(self.page)
-        return self.fwks["clr"]
-
-    @property
-    def evr(self) -> EvergreenUI.Components:
-        """Evergreen is a React UI Framework for building ambitious products on the web. Brought to you by Segment.
-
-        `Evergreen <https://evergreen.segment.com/introduction/getting-started>`_
-        """
-        if 'evr' not in self.fwks:
-            self.fwks["evr"] = EvergreenUI.Components(self.page)
-        return self.fwks["evr"]
-
-    @property
-    def ftw(self) -> FluentUI.Components:
-        """Simple components that focus on appearance and styling while showing the visual language of Office.
-
-        Usage::
-
-          page.web.ftw.check(label="Test Checkbox")
-          page.web.ftw.check(label="Test Checkbox 2")
-          page.web.ftw.buttons.small("Test Checkbox 2")
-          page.web.ftw.icon("add")
-          page.web.ftw.toggle(True)
-          page.web.ftw.loading("add", options={"large": True})
-          select = page.web.ftw.lists.select(selected="value 2")
-          data = ["value 1", "value 2", "value 3"]
-          select.data = select.parsers.from_list(data)
-        """
-        if 'ftw' not in self.fwks:
-            self.fwks["ftw"] = FluentUI.Components(self.page)
-        return self.fwks["ftw"]
+        if key in self.page._props["pyks"]:
+            return self.page._props["pyks"][key]

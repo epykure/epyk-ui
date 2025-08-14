@@ -27,7 +27,7 @@ class Component:
         """Create a tag for the HTML component. This will be used by some JavaScript framework like Angular"""
         return "%s-%s" % (Defaults.COMP_PREFIX, self.folder)
 
-    def ts(self, name: Optional[str] = None):
+    def ts(self, name: Optional[str] = None) -> dict:
         """Component export for an Angular app.
         This will allow building apps directly from reports using each underlying components available in the framework.
 

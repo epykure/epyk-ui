@@ -11,15 +11,11 @@ Related Pages:
 
 from typing import Any, Optional, List, Union
 from epyk.core.py import primitives
-
-from epyk.core.js import JsUtils
-from epyk.core.js import JsGlobals
+from epyk.core.js import JsUtils, JsGlobals
 
 # All the predefined variable types
 from epyk.core.js.fncs import JsFncs
-from epyk.core.js.primitives import JsObjects
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsString
+from epyk.core.js.primitives import JsObjects, JsObject, JsString
 
 
 class URLSearchParams:
@@ -28,14 +24,13 @@ class URLSearchParams:
         self.query = query
 
     def get(self, key: str, default: Any = None):
-        """
-        Get the value of a request parameter in the url.
+        """Get the value of a request parameter in the url.
 
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
         :param key: The url parameter
         :param default: Optional. The default value
-    """
+        """
         key = JsUtils.jsConvertData(key, None)
         default = JsUtils.jsConvertData(default, None)
         return JsString.JsString.get(
@@ -43,8 +38,7 @@ class URLSearchParams:
                 self.query, key, default))
 
     def set(self, key: str, value: Any):
-        """
-        Set the value of a request parameter in the url.
+        """Set the value of a request parameter in the url.
 
         Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
@@ -61,8 +55,7 @@ class URLSearchParams:
         return self.set(component.html_code, component.dom.content)
 
     def getAll(self, key: Union[str, primitives.JsDataModel]):
-        """
-        Get all the values of a request parameter in the url.
+        """Get all the values of a request parameter in the url.
 
         Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
@@ -72,8 +65,7 @@ class URLSearchParams:
         return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().getAll(%s)" % (self.query, key))
 
     def has(self, key: Union[str, primitives.JsDataModel]):
-        """
-        Check if a given parameter is in the url.
+        """Check if a given parameter is in the url.
 
         Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
@@ -83,8 +75,7 @@ class URLSearchParams:
         return JsObject.JsObject.get("(function(){return new URLSearchParams(%s)})().has(%s)" % (self.query, key))
 
     def append(self, key: Union[str, primitives.JsDataModel], value: Any):
-        """
-        Append a key, value to the url parameter object.
+        """Append a key, value to the url parameter object.
 
         Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams>`_
 
@@ -97,9 +88,8 @@ class URLSearchParams:
             "(function(){return new URLSearchParams(%s)})().append(%s, %s)" % (self.query, key, value))
 
     def delete(self, key):
-        """
-        The delete() method of the URLSearchParams interface deletes the given search parameter and all its associated
-        values, from the list of all search parameters.
+        """The delete() method of the URLSearchParams interface deletes the given search parameter and all its
+        associated values, from the list of all search parameters.
 
         Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/delete>`_
 
@@ -122,7 +112,7 @@ class URLSearchParams:
 
 
 class JsLocation:
-    """  JavaScript Location module. """
+    """JavaScript Location module."""
 
     def __init__(self, page: primitives.PageModel = None):
         self.page = page
@@ -455,7 +445,7 @@ document.body.appendChild(form); form.submit()''' % (method, target, url, "".joi
     if (!removedParams.includes(entry[0]) && params[entry[0]] === undefined){
       newParams.push(entry[0] +"="+ entry[1])
     }
-  }
+  };
   return url.origin + url.pathname + "?"+ newParams.join("&")
 })(%s, %s)
 ''' % (JsUtils.jsConvertData(params, None), JsUtils.jsConvertData(removed_params, None)), is_py_data=False)

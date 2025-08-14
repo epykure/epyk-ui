@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-from typing import Union, Any
+from typing import Union
 from epyk.core.js import JsUtils
 from epyk.core.py import types as etypes
 from epyk.core.html.options import Options, OptInputs, OptText

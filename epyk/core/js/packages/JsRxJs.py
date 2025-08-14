@@ -5,11 +5,10 @@ from epyk.core.js.packages import JsPackage
 from epyk.core.js.primitives import JsObjects
 from typing import Optional, Union, List, Any
 
-
 LIB_REF = "rxjs."
 
 
-def filter(predicate, thisArg = None):
+def filter(predicate, thisArg=None):
     """Filter items emitted by the source Observable by only emitting those that satisfy a specified predicate.
 
     `rxjs <https://rxjs.dev/api/operators/filter>`_
@@ -24,7 +23,7 @@ def filter(predicate, thisArg = None):
     return JsUtils.jsWrap("%sfilter(%s, %s)" % (LIB_REF, predicate, thisArg))
 
 
-def first(predicate = None, defaultValue = None):
+def first(predicate=None, defaultValue=None):
     """Emits only the first value (or the first value that meets some condition) emitted by the source Observable.
 
     `rxjs <https://rxjs.dev/api/operators/first>`_
@@ -42,7 +41,7 @@ def first(predicate = None, defaultValue = None):
     return JsUtils.jsWrap("%sfirst(%s, %s)" % (LIB_REF, predicate, defaultValue))
 
 
-def last(predicate = None, defaultValue = None):
+def last(predicate=None, defaultValue=None):
     """Returns an Observable that emits only the last item emitted by the source Observable.
     It optionally takes a predicate function as a parameter, in which case, rather than emitting the last item from
     the source Observable, the resulting Observable will emit the last item from the source Observable that
@@ -164,7 +163,7 @@ def mergeAll():
     return JsUtils.jsWrap("%smergeAll()" % LIB_REF)
 
 
-def distinct(keySelector = None, flushes = None):
+def distinct(keySelector=None, flushes=None):
     """Filtering Operators.
 
     Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from
@@ -341,7 +340,7 @@ class Observable(Subscriber):
         """
         return JsObjects.JsPromise()
 
-    def subscribe(self, observerOrNext = None) -> Subscription:
+    def subscribe(self, observerOrNext=None) -> Subscription:
         """Invokes an execution of an Observable and registers Observer handlers for notifications it will emit.
 
         :param observerOrNext: Optional. Default is undefined.
@@ -380,7 +379,7 @@ class Subject(Observable, SubscriptionLike):
         return JsUtils.jsWrap("hasError")
 
 
-def fromEvent(target, eventName: str, options = None, resultSelector = None) -> Observable:
+def fromEvent(target, eventName: str, options=None, resultSelector=None) -> Observable:
     """Creates an Observable that emits events of a specific type coming from the given event target.
 
     Usage::
@@ -406,7 +405,7 @@ def fromEvent(target, eventName: str, options = None, resultSelector = None) -> 
     return Observable("%sfromEvent(%s, %s)" % (LIB_REF, target, eventName))
 
 
-def interval(number: int, scheduler = None) -> Observable:
+def interval(number: int, scheduler=None) -> Observable:
     """Creates an Observable that emits sequential numbers every specified interval of time, on a specified SchedulerLike.
 
     `rxjs <https://rxjs.dev/api/index/function/interval>`_
@@ -428,7 +427,7 @@ def of(*args) -> Observable:
     return Observable("%sof(%s)" % (LIB_REF, ", ".join(args)))
 
 
-def range(start: int, count: int, scheduler = None) -> Observable:
+def range(start: int, count: int, scheduler=None) -> Observable:
     """Creates an Observable that emits a sequence of numbers within a specified range.
 
     `rxjs <https://rxjs.dev/api/index/function/range>`_
@@ -452,7 +451,7 @@ def ii(expression: str, trueResult: Observable, falseResult: Observable):
     return Observable("%siif(%s, %s, %s)" % (LIB_REF, expression, trueResult, falseResult))
 
 
-def timer(due: int, scheduler = None):
+def timer(due: int, scheduler=None):
     """Creates an observable that will wait for a specified time period, or exact date, before emitting the number 0.
 
     `rxjs <https://rxjs.dev/api/index/function/timer>`_
@@ -463,7 +462,7 @@ def timer(due: int, scheduler = None):
     return Observable("%stimer(%s, %s)" % (LIB_REF, due, scheduler))
 
 
-def concatAll(project, resultSelector = None):
+def concatAll(project, resultSelector=None):
     """Transformation Operators.
 
     Projects each source value to an Observable which is merged in the output Observable,

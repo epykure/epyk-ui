@@ -5,7 +5,6 @@ from epyk.core.js import JsUtils
 import abc
 
 
-
 class OptionsCoreChartSettings(Options):
 
     @property
@@ -83,6 +82,15 @@ class OptionsCoreChart(Options):
     @params.setter
     def params(self, values: List[str]):
         self._config(values)
+
+    @property
+    def prepare(self) -> bool:
+        """Parameter to run step to prepare data"""
+        return self._config_get(False)
+
+    @prepare.setter
+    def prepare(self, flag: bool):
+        self._config(flag)
 
 
 class OptionsChart(OptionsWithTemplates):

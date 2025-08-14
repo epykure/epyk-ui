@@ -22,16 +22,10 @@ import importlib
 from typing import List
 
 from epyk.core.py import primitives
-
-from epyk.core.data import DataCore
-from epyk.core.data import DataPy
-from epyk.core.data import DataGrpc
-
-from epyk.core.js.Imports import requires
-from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsUnderscore
+from epyk.core.data import DataCore, DataPy, DataGrpc
+from epyk.core.js.imports.utils import requires
+from epyk.core.js.packages import JsQuery, JsUnderscore
 from epyk.core.js import JsUtils
-
 from epyk.core.js.primitives import JsObjects
 
 
@@ -45,7 +39,6 @@ class DataJs:
         This will allow interactivity of the various HTML components.
 
         Usage::
-
             js_data = page.data.js.record(js_code="myData", data=randoms.languages) # Create JavaScript data
             filter1 = js_data.filterGroup("filter1") # Add a filter object
 
@@ -58,7 +51,8 @@ class DataJs:
             pie = page.ui.charts.chartJs.pie(randoms.languages, y_columns=['change'], x_axis='name')
 
             select.change([
-              bar.build(filter1.group().sumBy(['rating', 'change'], select.dom.content), options={"x_axis": select.dom.content}),
+              bar.build(filter1.group().sumBy(
+                ['rating', 'change'], select.dom.content), options={"x_axis": select.dom.content}),
               pie.build(filter1.group().sumBy(['change'], select.dom.content), options={"x_axis": select.dom.content}),
             ])
 
@@ -95,14 +89,13 @@ class DataJs:
         return JsObjects.JsObjects().new(value, js_code=js_code, page=self.page)
 
     def server(self, hostname: str, port: int = 8080) -> DataCore.ServerConfig:
+        """Configuration data for server interaction.
+
+        This will only help on centralising the configuration in the final page.
+
+        :param hostname: The server hostname
+        :param port: Optional. The server port
         """
-    Configuration data for server interaction.
-
-    This will only help on centralising the configuration in the final page.
-
-    :param hostname: The server hostname
-    :param port: Optional. The server port
-    """
         return DataCore.ServerConfig(hostname, port, self.page)
 
     @property
@@ -118,63 +111,44 @@ class DataSrc:
 
     @property
     def vis(self) -> DataPy.Vis:
-        """Interface to Vis data transformation.
-
-        This will convert Python object to input data for Vis charts.
-        """
+        """Interface to Vis data transformation. This will convert Python object to input data for Vis charts"""
         return DataPy.Vis()
 
     @property
     def chartJs(self) -> DataPy.ChartJs:
-        """Interface to chartJs data transformation.
-
-        This will convert Python object to input data for chartJs charts.
+        """Interface to chartJs data transformation. This will convert Python object to input data for chartJs charts.
         """
         return DataPy.ChartJs()
 
     @property
     def plotly(self) -> DataPy.Plotly:
-        """Interface to Plotly data transformation.
-
-        This will convert Python object to input data for Plotly charts.
-        """
+        """Interface to Plotly data transformation. This will convert Python object to input data for Plotly charts"""
         return DataPy.Plotly()
 
     @property
     def c3(self) -> DataPy.C3:
-        """Interface to C3 data transformation.
-
-        This will convert Python object to input data for C3 charts.
-        """
+        """Interface to C3 data transformation. This will convert Python object to input data for C3 charts."""
         return DataPy.C3()
 
     @property
     def bb(self) -> DataPy.C3:
         """Interface to Billboard data transformation.
-
-        This will convert Python object to input data for Billboard charts.
-        """
+        This will convert Python object to input data for Billboard charts."""
         return DataPy.C3()
 
     @property
     def nvd3(self) -> DataPy.NVD3:
-        """Interface to NVD3 data transformation.
-
-        This will convert Python object to input data for NVD3 charts.
-        """
+        """Interface to NVD3 data transformation. This will convert Python object to input data for NVD3 charts."""
         return DataPy.NVD3()
 
     @property
     def google(self) -> DataPy.Google:
-        """Interface to Google data transformation.
-
-        This will convert Python object to input data for Google charts.
-        """
+        """Interface to Google data transformation. This will convert Python object to input data for Google charts"""
         return DataPy.Google()
 
     @property
     def js(self) -> DataJs:
-        """ Interface to standard JavaScript transformation. """
+        """Interface to standard JavaScript transformation. """
         return DataJs(self.page)
 
     @property
@@ -184,7 +158,6 @@ class DataSrc:
         :rtype: DataDb.DataDb
         """
         from epyk.core.data import DataDb
-
         return DataDb.DataDb(self.page)
 
     def from_cache(self, code: str, is_secured: bool = False, report_name: str = None):
@@ -251,7 +224,7 @@ class DataSrc:
 
         :param http_data: The input data for the service
         :param file_name: The service file name
-        :param func_ame: Optional, the function name in the service. Default getData
+        :param func_name: Optional, the function name in the service. Default getData
         :param report_name: Optional, the report name. Default the current one
         :param folder: Optional, the folder with the services. Default sources
         :param path: Optional, the path to be added to the python system path
@@ -280,7 +253,6 @@ class DataSrc:
         This will require an external module PyPDF2.
 
         Usage::
-
           data = page.data.pdf("document.pdf", r"")
           data.getPage(0)
 
@@ -302,7 +274,6 @@ class DataSrc:
         This function will require an external python package zeep to use SOAP
 
         Usage::
-
           soap = page.data.soap("http://www.soapclient.com/xml/soapresponder.wsdl")
           soap.Method1('Zeep', 'is cool')
 
@@ -314,7 +285,8 @@ class DataSrc:
 
         :return: The SOAP services
         """
-        soap = requires("zeep", reason='Missing Package', install="zeep", source_script=__file__, raise_except=True)
+        soap = requires(
+            "zeep", reason='Missing Package', install="zeep", source_script=__file__, raise_except=True)
         return soap.Client(wsdl).service
 
     def rest(self, url, data=None, method=None, encoding='utf-8', headers=None, unverifiable=False, proxy=None):
@@ -323,7 +295,6 @@ class DataSrc:
         Test with a online server can be done here https://jsonplaceholder.typicode.com/
 
         Usage::
-
           page.data.rest("https://jsonplaceholder.typicode.com/posts/1", method="PUT")
 
         `jsonrpc <https://jsonrpcclient.readthedocs.io/en/latest/api.html>`_
@@ -359,7 +330,6 @@ class DataSrc:
         This module will require beautifulsoup4 as external package
 
         Usage::
-
           xml_soup = rptObj.data.rss("http://feeds.reuters.com/reuters/businessNews")
           for title in xml_soup.findAll('title'):
             print(title)
@@ -384,7 +354,6 @@ class DataSrc:
         This module will require beautifulsoup4 as external package
 
         Usage::
-
           page.data.webscrapping("https://www.w3schools.com/colors/default.asp")
           xml_soup.findAll('title')
 
@@ -438,7 +407,6 @@ class DataSrc:
         """Interface to a GRPC server.
 
         Usage::
-
           grpc = page.data.grpc(serviceName="GreeterStub", module="helloworld_pb2_grpc", path="")
           data = grpc.imp("helloworld_pb2").HelloRequest(name="Test")
           print(grpc.request("SayHello", data))

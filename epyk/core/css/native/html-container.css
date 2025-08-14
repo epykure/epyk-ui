@@ -1,0 +1,10 @@
+.html-container {
+    margin: 0 ;
+    clear: both ;
+    padding: 0 ;
+    border: 0 ;
+}
+
+.html-container:focus {
+    outline: 1px solid var(--grey) ;
+}

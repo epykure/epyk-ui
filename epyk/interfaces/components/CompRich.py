@@ -5,7 +5,7 @@ from epyk.core import html
 from epyk.core.py import types
 from epyk.interfaces import Arguments
 from epyk.core.css import Colors
-from epyk.core.js import Imports
+from epyk.core.js.imports import registry
 
 
 class Rich:
@@ -605,7 +605,7 @@ class Rich:
             by = sorted(list(self.page.jsImports))
         elif by is True:
             by = []
-            for alias, pkg in Imports.JS_IMPORTS.items():
+            for alias, pkg in registry.get_js().items():
                 if "node_folder" not in pkg:
                     by.append(alias)
         for i, b in enumerate(by):

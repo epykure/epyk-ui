@@ -6,7 +6,7 @@ from epyk.core.py import primitives
 
 
 def indent(level: int = 0, spaces: Optional[int] = None):
-    """  Add the number of spaces according to the indent level.
+    """Add the number of spaces according to the indent level.
 
     :param level: Optional. The level for the line indent
     :param spaces: Optional. The number of spaces. (Default 2)
@@ -16,7 +16,7 @@ def indent(level: int = 0, spaces: Optional[int] = None):
 
 
 def parse_statements(content: str, level: int, delimiter: str = ";", spaces: Optional[int] = None):
-    """  Parse and format a JavaScript line.
+    """Parse and format a JavaScript line.
 
     :param content: The JavaScript statements
     :param level: The level of indent to be added to this line
@@ -62,15 +62,15 @@ def parse(data: str, minify: Optional[bool] = None, to_str: bool = True, spaces:
             if i > 0 and i != k:
                 k = i
                 frags.extend(parse_statements("{", level - 1, spaces=spaces))
-                #level += 1
-            #elif len(closing) == 0 or (len(closing) == 1 and closing[0] == ""):
+                # level += 1
+            # elif len(closing) == 0 or (len(closing) == 1 and closing[0] == ""):
             #  print(parse_statements("}", level-1))
             #  level -= 1
             if closing:
                 frags.extend(parse_statements(closing, level, spaces=spaces))
-            #if j > 0:
+            # if j > 0:
             #  level -= 1
-            #if i > 0 and len(closings) > 1 and i != k:
+            # if i > 0 and len(closings) > 1 and i != k:
             if i > 0 and j < len(closings) - 1:
                 level -= 1
                 frags.extend(parse_statements("}", level, spaces=spaces))
@@ -95,11 +95,9 @@ def events(component: primitives.HtmlModel, minify: Optional[bool] = None, to_st
     """Extract the JavaScript events from an HTML component.
 
     Usage::
-
       but = page.ui.button()
       but.click([page.js.alert("test1"), page.js.alert("test2")])
       but.hover([page.js.alert("test3"), page.js.alert("test4")])
-
       results = JsLinter.events(but)
 
     :param component: An internal component in the framework

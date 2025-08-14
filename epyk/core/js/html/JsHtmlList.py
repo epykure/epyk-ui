@@ -509,7 +509,7 @@ class JsItem(JsHtml.JsHtmlRich):
 (function(dom){var values = []; dom.childNodes.forEach( function(dom, k){  
     const item = dom.querySelector('[name=value]');
     if (item != null){
-      const valid = item.getAttribute("data-valid");
+      const valid = item.getAttribute("data-valid"); 
       if (valid == null){
         const checkItems = dom.querySelector('[data-valid=true]');
         if (checkItems != null){values.push(item.innerHTML)}
@@ -641,10 +641,10 @@ document.body.removeChild(dummy)''' % self.all.toStr())
 }})''' % self.varName)
 
         return JsObjects.JsVoid('''
-%s.childNodes.forEach( function(dom, k){  
-  dom.querySelector('[name=value]').classList.remove('list_%s_selected');
+%s.childNodes.forEach( function(dom, k){ 
+  dom.querySelector('[name=value]').classList.remove('%s');
   dom.querySelector('[name=value]').setAttribute("data-valid", false);
-})''' % (self.varName, self.component.options.items_type))
+})''' % (self.varName, self.component.options.style_select))
 
     def add(self, value: Union[str, dict], css_attrs: dict = None, css_cls: str = None, before: bool = False,
             options: dict = None):

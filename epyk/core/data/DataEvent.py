@@ -34,7 +34,7 @@ class DataConfig:
 
     def fromConfig(self, k: str, default: Any = None, page: primitives.PageModel = None,
                    end_point: str = "/static/configs") -> str:
-        """ Get the configuration for loading the report from json files.
+        """Get the configuration for loading the report from json files.
         This will allow the creation of templates on the Python side and configuration in a static manner in json.
 
         By using this way of working it is easier to split the page and the configuration and non developers can
@@ -84,27 +84,6 @@ class DataConfig:
         if self.docs:
             vals["_comment"] = self.docs
         return json.dumps(vals, indent=indent)
-
-
-class TabulatorEvents:
-
-    @property
-    def row(self):
-        """Get a Tabulator Row object"""
-        from epyk.core.js.packages import JsTabulator
-        return JsTabulator.RowComponent(set_var=False, js_code=None)
-
-    @property
-    def cell(self):
-        """Get a Tabulator cell object"""
-        from epyk.core.js.packages import JsTabulator
-        return JsTabulator.CellComponent(set_var=False, js_code=None)
-
-    @property
-    def column(self):
-        """Get a Tabulator column object"""
-        from epyk.core.js.packages import JsTabulator
-        return JsTabulator.ColumnComponent(set_var=False, js_code=None)
 
 
 class DataFile:
@@ -157,7 +136,6 @@ class DataEvents:
         """Get a bespoke variable.
 
         Examples::
-
             btn = page.ui.button("Click")
             btn.click(["var data2 = 'Static example'", page.js.alert(pk.events["data2"])])
 
@@ -165,11 +143,6 @@ class DataEvents:
         """
         from epyk.core.js.primitives import JsObjects
         return JsObjects.JsObjects.get(alias)
-
-    @property
-    def tabulator(self) -> TabulatorEvents:
-        """Interface to the Tabulator events"""
-        return TabulatorEvents()
 
     @property
     def files(self):
@@ -200,7 +173,6 @@ class DataEvents:
         """Get headers from a XMLHttpRequest response
 
         Usage::
-
             s_query = web.js.get("/url", data={"value": 45, "ok": "test"})
             b.click([js_query.onSuccess([web.js.console.log(pk.events.headers)])])
             """
@@ -212,7 +184,6 @@ class DataEvents:
         """Get specific header value from a XMLHttpRequest response
 
         Usage::
-
             s_query = web.js.get("/url", data={"value": 45, "ok": "test"})
             b.click([js_query.onSuccess([
                 web.js.if_(pk.events.header("valid") == "Yes", [web.js.console.log(pk.events.header("content-type"))])

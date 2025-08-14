@@ -1,16 +1,21 @@
-from typing import Union
-from epyk.core.py import primitives
+from typing import Union, Optional
+from ..py import primitives
 
 
 class Selector:
 
-    def __init__(self, component: primitives.HtmlModel = None):
+    def __init__(self, component: Optional[primitives.HtmlModel] = None) -> None:
         self._js = []
         if component is not None:
             self._js.append("#%s" % component.html_code)
 
-    def with_attribute(self, name: str, value: str = None, startswith: bool = False, containing: bool = False,
-                       endswith: bool = False):
+    def with_attribute(
+            self, name: str,
+            value: Optional[str] = None,
+            startswith: bool = False,
+            containing: bool = False,
+            endswith: bool = False
+    ):
         """	Specify HTML attributes to select.
 
         `Set Attribute <https://www.w3schools.com/cssref/sel_attribute_value.asp>`_
@@ -66,7 +71,6 @@ class Selector:
         `CSS Selector <https://www.w3schools.com/cssref/css_selectors.asp>`_
 
         Usage::
-
             self.state("disabled")
 
         :params str value: The state value

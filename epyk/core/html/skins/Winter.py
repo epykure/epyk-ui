@@ -1,19 +1,19 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.html.graph import GraphCanvas
+from epyk.core.html.HtmlCanvas import Canvas
 from epyk.core.html.options import OptSkins
 
 
-class WinterSnow(GraphCanvas.Canvas):
-  name = 'Skin Winter Snow'
-  _option_cls = OptSkins.OptionsSkin
+class WinterSnow(Canvas):
+    name = 'Skin Winter Snow'
+    _option_cls = OptSkins.OptionsSkin
 
-  @property
-  def cursors(self):
-    pass
+    @property
+    def cursors(self):
+        pass
 
-  _js__builder__ = '''
+    _js__builder__ = '''
   var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
   function(callback){window.setTimeout(callback, 1000 / 60)}; window.requestAnimationFrame = requestAnimationFrame;
   window.flakes = []; window.flakeCount = 400; var mX = -100; var mY = -100;
@@ -29,16 +29,16 @@ class WinterSnow(GraphCanvas.Canvas):
   startSnow()
 '''
 
-  def __str__(self):
-    self.page.properties.js.add_builders(self.refresh())
-    self.page.properties.js.add_constructor("resetSnow", '''
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        self.page.properties.js.add_constructor("resetSnow", '''
 function resetSnow(flake){
   var canvas = document.getElementById("%s");
   flake.x = Math.floor(Math.random() * canvas.width); flake.y = 0; flake.size = (Math.random() * 3) + 2;
   flake.speed = (Math.random() * 1) + 0.5; flake.velY = flake.speed; flake.velX = 0;
   flake.opacity = (Math.random() * 0.5) + 0.3}''' % self.htmlCode)
 
-    self.page.properties.js.add_constructor('startSnow', '''
+        self.page.properties.js.add_constructor('startSnow', '''
 function startSnow() { var mX = -100; var mY = -100;
   var canvas = document.getElementById("%s");  var ctx = canvas.getContext("2d"); 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -57,15 +57,15 @@ function startSnow() { var mX = -100; var mY = -100;
     if (flake.x >= canvas.width || flake.x <= 0) {resetSnow(flake)}
     ctx.beginPath(); ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2); ctx.fill()}
   requestAnimationFrame(startSnow)}''' % self.htmlCode)
-    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(css_class_names=self.style.get_classes()))
+        return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
+            self.get_attrs(css_class_names=self.style.get_classes()))
 
 
-class Rains(GraphCanvas.Canvas):
-  name = 'Skin Winter Rain'
-  _option_cls = OptSkins.OptionsSkin
+class Rains(Canvas):
+    name = 'Skin Winter Rain'
+    _option_cls = OptSkins.OptionsSkin
 
-  _js__builder__ = '''
+    _js__builder__ = '''
   htmlObj.width = window.innerWidth;
   htmlObj.height = window.innerHeight;
   
@@ -125,7 +125,7 @@ class Rains(GraphCanvas.Canvas):
 
   '''
 
-  def __str__(self):
-    self.page.properties.js.add_builders(self.refresh())
-    return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
-      self.get_attrs(css_class_names=self.style.get_classes()))
+    def __str__(self):
+        self.page.properties.js.add_builders(self.refresh())
+        return "<canvas %s>Your browser does not support the HTML5 canvas tag.</canvas>" % (
+            self.get_attrs(css_class_names=self.style.get_classes()))

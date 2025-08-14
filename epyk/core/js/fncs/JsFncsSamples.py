@@ -7,11 +7,9 @@ class Samples:
         self.page = page
 
     def scale_linear(self, count_: int = None, attrs: dict = None):
-        """
-        Add linear scale definition from JavaScript.
+        """Add linear scale definition from JavaScript.
 
         Usage::
-
           page.js.samples.scale_linear(count_=12)
 
         :param count_: The number of items in the list.
@@ -27,11 +25,9 @@ for (let i = 0; i < count; ++i) {labels.push(i.toString());} return labels ''',
         return JsUtils.jsWrap("scaleLinear({})".format(JsUtils.jsConvertData(attrs, None)))
 
     def rand(self, min_: int = 0, max_: int = 1, seed: int = None, from_: int = 0, attrs: dict = None):
-        """
-        Get a random number.
+        """Get a random number.
 
         Usage::
-
           page.js.samples.rand(min_=-100, max_=100)
 
         :param min_: The min value for the items.
@@ -59,11 +55,9 @@ for (let i = 0; i < count; ++i) {labels.push(i.toString());} return labels ''',
         return JsUtils.jsWrap("sampleRand({})".format(JsUtils.jsConvertData(attrs, None)))
 
     def months(self, count_: int = None, section: int = None, attrs: dict = None):
-        """
-        Return a list with the months labels.
+        """Return a list with the months labels.
 
         Usage::
-
           page.js.samples.months(count_=7)
 
         :param count_: The number of items in the list.
@@ -86,11 +80,9 @@ for (i = 0; i < count; ++i) {
         return JsUtils.jsWrap("sampleMonths({})".format(JsUtils.jsConvertData(attrs, None)))
 
     def numbers(self, count_: int = None, min_: int = 0, max_: int = 1, decimals: int = 8, attrs: dict = None):
-        """
-        Return a list of random numbers.
+        """Return a list of random numbers.
 
         Usage::
-
           page.js.samples.numbers(count_=7, min_=-100, max_=100)
 
         :param count_: The number of items in the returned list.
@@ -123,11 +115,9 @@ for (i = 0; i < count; ++i) {
         return JsUtils.jsWrap("sampleNumbers({})".format(JsUtils.jsConvertData(attrs, None)))
 
     def points(self, count_: int = None, min_: int = 0, max_: int = 1, attrs: dict = None):
-        """
-        Return a list of random series of points with x, y coordinates.
+        """Return a list of random series of points with x, y coordinates.
 
         Usage::
-
           page.js.samples.points(count_=7, min_=-100, max_=100)
 
         :param count_: The number of items in the returned list.
@@ -149,11 +139,9 @@ return records})(%s)''' % JsUtils.jsConvertData(attrs, None))
 
     def bubble(self, count_: int = None, min_: int = 0, max_: int = 1, r_min: int = 1, r_max: int = 10,
                attrs: dict = None):
-        """
-        Return a list of random series with x, y and r coordinates.
+        """Return a list of random series with x, y and r coordinates.
 
         Usage::
-
           page.js.samples.bubble(count_=7, min_=-100, max_=100)
 
         :param count_: The number of items in the returned list.

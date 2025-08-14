@@ -4,8 +4,7 @@
 
 from pathlib import Path
 from typing import Union, Optional, List
-from epyk.core.py import primitives
-from epyk.core.py import types
+from epyk.core.py import primitives, types
 
 from epyk.core.html import Html
 from epyk.core.html.mixins import MixHtmlState
@@ -17,14 +16,11 @@ from epyk.core.js import JsUtils
 from epyk.core.js.statements import JsIf
 from epyk.core.js.objects import JsComponents
 
-# The list of CSS classes
-from epyk.core.css.styles import GrpClsButton
-
 
 class Button(Html.Html):
-    name = 'button'
+    name: str = 'button'
     _option_cls = OptButton.OptionsButton
-    tag = "button"
+    tag: str = "button"
 
     style_urls = [
         Path(__file__).parent.parent / "css" / "native" / "html-button.css",
@@ -154,18 +150,6 @@ class Button(Html.Html):
             js_funcs = [js_funcs]
         js_funcs.append(self.js.location.open_new_tab(url, target))
         return self.click(js_funcs, profile, source_event)
-
-    @property
-    def style(self) -> GrpClsButton.ClassButton:
-        """Property to the CSS Style of the component.
-
-        Usage::
-          but = page.ui.button("Click Me")
-          but.style.css.margin = "5px"
-        """
-        if self._styleObj is None:
-            self._styleObj = GrpClsButton.ClassButton(self)
-        return self._styleObj
 
     def disable(self, background_color: Optional[str] = None, color: Optional[str] = None):
         """Add the HTML tag to disable the button.
@@ -481,13 +465,6 @@ class CheckButton(Html.Html):
         if self._js is None:
             self._js = JsComponents.CheckButton(self, page=self.page)
         return self._js
-
-    @property
-    def style(self) -> GrpClsButton.ClassButtonCheckBox:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsButton.ClassButtonCheckBox(self)
-        return self._styleObj
 
     def click(self, js_fnc_true: types.JS_FUNCS_TYPES = None, js_fnc_false: Optional[Union[list, str]] = None,
               with_colors: bool = True, profile: types.PROFILE_TYPE = None, on_ready: bool = False):
@@ -848,17 +825,6 @@ class ButtonMenu(Html.Html):
           but.options.multiple = False
         """
         return super().options
-
-    @property
-    def style(self) -> GrpClsButton.ClassButtonMenu:
-        """Property to the CSS Style of the component.
-
-        Usage::
-          self.style.css.margin = "5px"
-        """
-        if self._styleObj is None:
-            self._styleObj = GrpClsButton.ClassButtonMenu(self)
-        return self._styleObj
 
     def __str__(self):
         self.page.properties.js.add_builders(self.refresh())

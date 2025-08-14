@@ -4,13 +4,11 @@
 import json
 import sys
 from pathlib import Path
-from typing import Union, Any, List, Dict
+from typing import Union, Any, List
 
-from epyk.core.py import primitives
-from epyk.core.js import JsUtils
-from epyk.core.py import OrderedSet
-
-from epyk.core.js.primitives import JsObjects
+from ..py import primitives, OrderedSet
+from ..js import JsUtils
+from ..js.primitives import JsObjects
 
 
 class DataAggregators:
@@ -161,17 +159,17 @@ class DataAggregators:
         :param records: Optional. Shortcut for the data reference used by this transformation
         :param verbose: Optional. Flag to display extra log messages
         """
-        return self.func(func_args={"columns": columns, "attrs": attrs}, js_src_path=js_src_path, records=records, verbose=verbose)
+        return self.func(
+            func_args={"columns": columns, "attrs": attrs}, js_src_path=js_src_path, records=records, verbose=verbose)
 
     def count(self, columns: list, attrs: dict = None, js_src_path: str = None, records: List[dict] = None,
               verbose: bool = None):
         """Reduce the record set by counting all the columns.
 
         Usages::
-
             page.body.onReady([
-                page.js.console.log(ek.aggs.count(["rating", "change"], records=randoms.languages), skip_data_convert=True)
-            ])
+                page.js.console.log(
+                    ek.aggs.count(["rating", "change"], records=randoms.languages), skip_data_convert=True)])
 
         :param columns: The columns in the records to be counted
         :param attrs: Optional. The static values to be added to the final records
@@ -186,10 +184,8 @@ class DataAggregators:
         """Reduce the record set by counting all the columns.
 
         Usages::
-
             page.body.onReady([
-                page.js.console.log(ek.aggs.countBy("type", records=randoms.languages), skip_data_convert=True)
-            ])
+                page.js.console.log(ek.aggs.countBy("type", records=randoms.languages), skip_data_convert=True)])
 
         :param column: The columns in the records to be counted
         :param attrs: Optional. The static values to be added to the final records
@@ -204,10 +200,10 @@ class DataAggregators:
         """
 
         Usages::
-
             page.body.onReady([
-                page.js.console.log(ek.aggs.sumBy(["rating", "change"], keys=["type"], records=randoms.languages), skip_data_convert=True)
-            ])
+                page.js.console.log(
+                    ek.aggs.sumBy(
+                        ["rating", "change"], keys=["type"], records=randoms.languages), skip_data_convert=True)])
 
         :param columns: The list of columns / attributes in the JavaScript object
         :param keys: The list of keys
@@ -231,12 +227,10 @@ class DataAggregators:
         """Sum a list of column and put the result to a new key.
 
         Usages::
-
             page.body.onReady([
                 "let data = %s" % randoms.languages,
                 page.js.console.log(ek.events.data.fltrs.setPage(page)
-                    .sumCols(["rating", "change"], "total", case_sensitive=False)
-            ])
+                    .sumCols(["rating", "change"], "total", case_sensitive=False)])
 
         :param columns: The list of columns / attributes in the JavaScript object
         :param dst_key: Optional. Destination key in the record`
@@ -261,13 +255,11 @@ class DataAggregators:
         This column can then be used by other transformation functions.
 
         Usages::
-
             page.body.onReady([
                 "let data = %s" % randoms.languages,
                 page.js.console.log(ek.events.data.fltrs.setPage(page)
                     .aggs.processCols("${rec.rating - rec.change}", "total")
-                    .inf("total", 4)
-            ])
+                    .inf("total", 4)])
 
         :param literal: A literal expression
         :param dst_key: Optional. Destination key in the record
@@ -370,12 +362,10 @@ class DataFilters:
         """Filtering rule based on a Dictionary of lists.
 
         Usages::
-
             page.body.onReady([
                 "let data = %s" % randoms.languages,
                 page.js.console.log(ek.events.data.fltrs.setPage(page)
-                    .match({"type": "Code"}, case_sensitive=False)
-            ])
+                    .match({"type": "Code"}, case_sensitive=False)])
 
         :param data: The keys, values to be filtered
         :param case_sensitive: Optional. To make sure algorithm case-sensitive
@@ -395,6 +385,7 @@ class DataFilters:
 
         :param value: The value to keep
         :param keys: Optional. The list of keys to check
+        :param case_sensitive: Optional. To make sure algorithm case-sensitive
         :param js_src_path: Optional. JavaScript file path
         :param verbose: Optional. Flag to display extra log messages
         """
@@ -410,7 +401,6 @@ class DataFilters:
         """Filtering rule based on a key, value.
 
         Usage::
-
             select = page.ui.select(components.select.from_records(languages, column=filter_column))
             table = page.ui.tables.aggrid(languages)
             filter_data = DataJs(page).record(js_code="myData", data=languages)
@@ -456,11 +446,13 @@ class DataFilters:
             name, key, values, case_sensitive, empty_all))
         return self
 
-    def startswith(self, key: str, value: str, case_sensitive: bool = True, js_src_path: str = None, verbose: bool = None):
+    def startswith(
+            self, key: str, value: str, case_sensitive: bool = True, js_src_path: str = None, verbose: bool = None):
         """Filtering rule based on a key, and a value starting with a specific format.
 
         :param key: The key in the various records
         :param value: The list of values to keep
+        :param case_sensitive: Optional. To make sure algorithm case-sensitive
         :param js_src_path: Optional. JavaScript file path
         :param verbose: Optional. Flag to display extra log messages
         """
@@ -476,7 +468,6 @@ class DataFilters:
         """Filter values below a certain value.
 
         Usages::
-
             page.body.onReady([
                 "let data = %s" % randoms.languages,
                 page.js.console.log(ek.events.data.fltrs.setPage(page)
@@ -502,7 +493,6 @@ class DataFilters:
         """Filter values above a certain value.
 
         Usages::
-
             page.body.onReady([
                 "let data = %s" % randoms.languages,
                 page.js.console.log(ek.events.data.fltrs.setPage(page)
@@ -528,12 +518,13 @@ class DataFilters:
         This will be defined in the Python but processed on the JavaScript side.
 
         Usage::
-
           js_data = page.data.js.record(js_code="myData", data=randoms.languages) # Create JavaScript data
           filter1 = js_data.filterGroup("filter1") # Add a filter object
 
           select.change([
-              bar.build(filter1.group().sumBy(['rating', 'change'], select.dom.content), options={"x_axis": select.dom.content}),
+              bar.build(
+                filter1.group().sumBy(
+                    ['rating', 'change'], select.dom.content), options={"x_axis": select.dom.content}),
               ...
           ])
         """
@@ -558,7 +549,6 @@ class DataFilters:
         This should reduce the size of the record and it will make it usable in charts.
 
         Usages::
-
           page.js.fetch(data_urls.C02_DATA).csvtoRecords().get([
             page.js.console.log(page.data.js.record("data").filterGroup("test").pivot("country", "co2", "year"))
           ])
@@ -584,7 +574,6 @@ class DataFilters:
         """Reduce the recordset to a defined set of columns.
 
         Usages::
-
             page.body.onReady([
                 "let data = %s" % randoms.languages,
                 page.js.console.log(ek.events.data.fltrs.setPage(page)
@@ -609,7 +598,6 @@ class DataFilters:
         This function will not reduce the records but only change / replace some keys
 
         Usages::
-
             page.body.onReady([
                 "let data = %s" % randoms.languages,
                 page.js.console.log(ek.events.data.fltrs.setPage(page)
@@ -690,7 +678,6 @@ class DataGlobal:
         """Create a JavaScript filtering group.
 
         Usage::
-
           js_data = page.data.js.record(js_code="myData", data=randoms.languages) # Create JavaScript data
           filter1 = js_data.filterGroup("filter1") # Add a filter object
 

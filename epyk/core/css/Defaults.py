@@ -2,12 +2,12 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional, Union
-from epyk.core.py import primitives
-from epyk.core.html import Defaults as defaultHtml
-from epyk.conf.global_settings import ICONS_FAMILY
+from ..py import primitives
+from ..html import Defaults as defaultHtml
+from ...conf.global_settings import ICONS_FAMILY
 
 
-REG_EXP_SECTOR = r"([A-Za-z0-9~_\:\\+.,\(\)\>\<\@\#\+\*\-\ \=\"'\[\]]*){([#A-Za-z0-9\%\ \,\-\\\"'\:\*\;\+\!\(\)\-\.]*) }"
+REG_EXP_SECTOR: str = r"([A-Za-z0-9~_\:\\+.,\(\)\>\<\@\#\+\*\-\ \=\"'\[\]]*){([#A-Za-z0-9\%\ \,\-\\\"'\:\*\;\+\!\(\)\-\.]*) }"
 """ Regular expression to parse the CSS files and extract the definition """
 
 
@@ -37,7 +37,7 @@ class Font:
         self.header_size = value + 2
         self._size = value
 
-    def normal(self, step: int = 0, unit: str = None) -> str:
+    def normal(self, step: int = 0, unit: Optional[str] = None) -> str:
         """Font text format.
 
         :param step: Optional. The value to be added to the default font size
@@ -45,7 +45,7 @@ class Font:
         """
         return "%s%s" % (self._size + step, unit or self.unit)
 
-    def header(self, step: int = 0, unit: str = None) -> str:
+    def header(self, step: int = 0, unit: Optional[str] = None) -> str:
         """Font header format.
 
         :param step: Optional. The value to be added to the default font size
@@ -64,7 +64,7 @@ class Icon:
     def family(self):
         return ICONS_FAMILY
 
-    def small_size(self, step: int = 0, unit: str = None) -> str:
+    def small_size(self, step: int = 0, unit: Optional[str] = None) -> str:
         """Icon small format.
 
         :param step: Optional. The value to be added to the default font size
@@ -72,7 +72,7 @@ class Icon:
         """
         return "%s%s" % (self.small + step, unit or self.unit)
 
-    def normal_size(self, step: int = 0, unit: str = None) -> str:
+    def normal_size(self, step: int = 0, unit: Optional[str] = None) -> str:
         """Icon normal format.
 
         :param step: Optional. The value to be added to the default font size
@@ -80,7 +80,7 @@ class Icon:
         """
         return "%s%s" % (self.normal + step, unit or self.unit)
 
-    def big_size(self, step: int = 0, unit: str = None) -> str:
+    def big_size(self, step: int = 0, unit: Optional[str] = None) -> str:
         """Icon big format.
 
         :param step: Optional. The value to be added to the default font size
@@ -148,11 +148,11 @@ def em_to_px(value: float, with_unit: bool = True) -> Union[str, float]:
 # Global configuration for the entire framework
 # Changing those variables will impact all reports generated
 # Theme global settings
-THEME = "default"
-DARK_MODE = False
+THEME: str = "default"
+DARK_MODE: bool = False
 
 # Icon global settings
-DEFAULT_STYLE = "no_border"
+DEFAULT_STYLE: str = "no_border"
 """ """
 DEFINED_FAMILIES = ('office-ui-fabric-core', 'material-design-icons', 'font-awesome', 'bootstrap-icons')
 """ """
@@ -236,10 +236,10 @@ ICON_MAPPINGS = {
     }
 }
 
-WEB_LIBS = "std"
+WEB_LIBS: str = "std"
 
 
-def get_icon(alias: Optional[str], family: str = None) -> dict:
+def get_icon(alias: Optional[str], family: Optional[str] = None) -> dict:
     """Return the icon from an alias from any family.
     This will allow the integration of multiple icon libraries.
 
@@ -265,6 +265,7 @@ MENU_ICON_SIZE = -1
 # Default CSS
 CSS_EXCEPTIONS = True
 CSS_EXCEPTIONS_FORMAT = "CSS - %s - invalid %s"
+CSS_BORDER: str = "1px solid %s"
 
 
 class GlobalStyle:
@@ -305,8 +306,8 @@ class GlobalStyle:
             class GlobalTable:
                 header_background = self.page.theme.colors[0] if self.page.theme.dark else self.page.theme.colors[-1]
                 header_color = self.page.theme.white  # if self.page.theme.dark else self.page.theme.white
-                header_border = '1px solid %s' % self.page.theme.black if self.page.theme.dark else self.page.theme.white
-                cell_border_bottom = "1px solid %s" % self.page.theme.colors[4]
+                header_border = CSS_BORDER % self.page.theme.black if self.page.theme.dark else self.page.theme.white
+                cell_border_bottom = CSS_BORDER % self.page.theme.colors[4]
                 cell_border_right = None
                 sorter_arrow_selected = self.page.theme.colors[-3]
                 sorter_arrow = self.page.theme.black if self.page.theme.dark else self.page.theme.white

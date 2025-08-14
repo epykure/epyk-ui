@@ -1,6 +1,5 @@
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsBoolean
-from epyk.core.js.primitives import JsObjects
+from epyk.core.js.primitives import JsBoolean, JsObjects
 
 
 class Cache:
@@ -30,7 +29,7 @@ class Cache:
         options = JsUtils.jsConvertData(options, None)
         return JsObjects.JsObject.JsObject.get("await %s.match(%s, %s)" % (self.varId, request, options))
 
-    def matchAll(self, request, options = None):
+    def matchAll(self, request, options = None) -> JsUtils.jsWrap:
         """Returns a Promise that resolves to an array of all matching responses in the Cache object.
 
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Cache/matchAll>`_
@@ -46,7 +45,7 @@ class Cache:
         options = JsUtils.jsConvertData(options, None)
         return JsUtils.jsWrap("await %s.matchAll(%s, %s)" % (self.varId, request, options))
 
-    def add(self, request):
+    def add(self, request) -> JsUtils.jsWrap:
         """Takes a URL, retrieves it and adds the resulting response object to the given cache.
         This is functionally equivalent to calling fetch(), then using put() to add the results to the cache.
 
@@ -58,7 +57,7 @@ class Cache:
         request = JsUtils.jsConvertData(request, None)
         return JsUtils.jsWrap("%s.add(%s)" % (self.varId, request))
 
-    def addAll(self, requests):
+    def addAll(self, requests) -> JsUtils.jsWrap:
         """Takes an array of URLs, retrieves them, and adds the resulting response objects to the given cache.
 
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Cache/addAll>`_
@@ -69,7 +68,7 @@ class Cache:
         requests = JsUtils.jsConvertData(requests, None)
         return JsUtils.jsWrap("%s.addAll(%s)" % (self.varId, requests))
 
-    def put(self, request, response = None):
+    def put(self, request, response = None) -> JsUtils.jsWrap:
         """Takes both a request and its response and adds it to the given cache.
 
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Cache/put>`_
@@ -85,7 +84,7 @@ class Cache:
         response = JsUtils.jsConvertData(response, None)
         return JsUtils.jsWrap("%s.put(%s, %s)" % (self.varId, request, response))
 
-    def delete(self, request, options = None):
+    def delete(self, request, options = None) -> JsUtils.jsWrap:
         """Finds the Cache entry whose key is the request, returning a Promise that resolves to true if a matching
         Cache entry is found and deleted. If no Cache entry is found, the promise resolves to false.
 
@@ -93,6 +92,7 @@ class Cache:
         `Example <https://blog.logrocket.com/javascript-cache-api/>`_
 
         :param request: Url as string or a request object
+        :param options:
         """
         request = JsUtils.jsConvertData(request, None)
         if not options:
@@ -101,13 +101,14 @@ class Cache:
         options = JsUtils.jsConvertData(options, None)
         return JsUtils.jsWrap("%s.delete(%s, %s)" % (self.varId, request, options))
 
-    def keys(self, request, options = None):
+    def keys(self, request, options = None) -> JsUtils.jsWrap:
         """Returns a Promise that resolves to an array of Cache keys.
 
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/Cache/keys>`_
         `Example <https://blog.logrocket.com/javascript-cache-api/>`_
 
         :param request: Url as string or a request object
+        :param options:
         """
         request = JsUtils.jsConvertData(request, None)
         if not options:
@@ -125,7 +126,6 @@ class CacheStorage:
     def match(self, request, options = None) -> JsObjects.JsPromise:
         """Checks if a given Request is a key in any of the Cache objects that the CacheStorage object tracks, and
         returns a Promise that resolves to that match.
-
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/match>`_
 
         :param request: The Request you want to match. This can be a Request object or a URL string.
@@ -140,8 +140,9 @@ class CacheStorage:
 
     def has(self, name) -> JsBoolean.JsBoolean:
         """Returns a Promise that resolves to true if a Cache object matching the cacheName exists.
-
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/has>`_
+
+        :param name: The name of the cache
         """
         name = JsUtils.jsConvertData(name, None)
         return JsBoolean.JsBoolean.get("window.caches.has(%s)" % name)
@@ -149,18 +150,18 @@ class CacheStorage:
     def open(self, name: str) -> Cache:
         """Returns a Promise that resolves to the Cache object matching the cacheName (a new cache is created
         if it doesn't already exist.)
-
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/open>`_
 
         :param name: The name of the cache
         """
         return Cache(name, self.page)
 
-    def delete(self, name: str):
+    def delete(self, name: str) -> JsUtils.jsWrap:
         """Finds the Cache object matching the cacheName, and if found, deletes the Cache object and returns a
         Promise that resolves to true. If no Cache object is found, it resolves to false.
-
         `Mozilla <https://developer.mozilla.org/en-US/docs/Web/API/CacheStorage/delete>`_
+
+        :param name: The name of the cache
         """
         name = JsUtils.jsConvertData(name, None)
         return JsUtils.jsWrap("window.caches.delete(%s)" % name)

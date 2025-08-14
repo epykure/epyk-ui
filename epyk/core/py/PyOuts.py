@@ -6,13 +6,10 @@ import collections
 
 from typing import Optional, List, Dict, Any, Union
 from epyk.core.py import primitives
-
-from epyk.core.js import Imports
-from epyk.core.js import Js
-from epyk.core.js import JsUtils
-from epyk.core.js import JsGlobals
-from epyk.core.js import JsLinter
-
+from epyk.core.js import JsUtils, JsGlobals, JsLinter
+from epyk.core.js.imports.manager import ImportManager
+from epyk.core.js.imports.utils import string_to_base64
+from epyk.core.js.imports.registry import NOTEBOOK_MAPPING
 from epyk.core.html.templates import HtmlTmplBase
 
 
@@ -20,105 +17,21 @@ class OutBrowsers:
     def __init__(self, context):
         self._context = context
 
-    def codepen(self, path: Optional[str] = None, target: str = "_blank", open_browser: bool = True):
+    def export(
+            self, alias: str,
+            path: Optional[str] = None,
+            target: str = "_blank",
+            open_browser: bool = True,
+            **kwargs
+    ):
         """
-        Update the Html launcher and send the data to Codepen.
-        URL used: https://codepen.io/pen/define/
-
-        Usage::
-
-          page = Report()
-          page.ui.text("This is a text")
-          page.outs.browser.codepen()
-
-        Related Pages:
-
-          https://www.debuggex.com/cheatsheet/regex/python
 
         :param path: Optional. Output path in which the static files will be generated
         :param target: Optional. Load the data in a new tab in the browser
         :param open_browser: Optional. Flag to open the browser automatically
-
-        :return: The output launcher full file name.
         """
-        import re
-        import webbrowser
-
-        results = self._context._to_html_obj()
-        js_external = re.findall(
-            '<script language="javascript" type="text/javascript" src="(.*?)"></script>', results['jsImports'])
-        css_external = re.findall(
-            '<link rel="stylesheet" href="(.*?)" type="text/css">', results['cssImports'])
-        js_obj = Js.JsBase()
-        result = {"js": results["jsFrgs"], "js_external": ";".join(js_external), "css_external": ";".join(css_external),
-                  "html": results['content'], "css": results["cssStyle"]}
-        data = js_obj.location.postTo("https://codepen.io/pen/define/", {"data": json.dumps(result)}, target=target)
-        if path is None:
-            path = os.path.join(os.getcwd(), "outs")
-        else:
-            path = os.path.join(path)
-        if not os.path.exists(path):
-            os.makedirs(path)
-        with open(os.path.join(path, "RunnerCodepen.html"), "w") as f:
-            f.write('<html><body></body><script>%s</script></html>' % data.replace("\\\\n", ""))
-        launcher_file = os.path.join(path, "RunnerCodepen.html")
-        if open_browser:
-            webbrowser.open(launcher_file)
-        return launcher_file
-
-    def stackblitz(self, path: Optional[str] = None, target: str = "_blank", open_browser: bool = True):
-        """
-        Create an output to be compatible with stackblitz.
-
-        Usage::
-
-          page = Report()
-          page.ui.text("This is a text")
-          page.outs.codepen()
-
-        Related Pages:
-
-          https://stackblitz.com/docs
-
-        :param path: Optional. Output path in which the static files will be generated
-        :param target: Optional. Not used. Load the data in a new tab in the browser
-        :param open_browser: Optional. Flag to open the browser automatically
-        """
-        import webbrowser
-
-        results = self._context._to_html_obj()
-        results['jsFrgs'] = results['jsFrgs'].replace('"', "'")
-        results['cssImports'] = results['cssImports'].replace('"', "'")
-        results['content'] = results['content'].replace('"', "'")
-        with open(os.path.join(path, "RunnerStackblitz.html"), "w") as f:
-            f.write('''
-<html lang="en">
-<head></head>
-<body>
-<form id="mainForm" method="post" action="https://stackblitz.com/run" target="_self">
-<input type="hidden" name="project[files][index.js]" value="
-%(jsFrgs)s
-">
-<input type="hidden" name="project[files][index.html]" value="
-%(cssImports)s
-<style>
-%(cssStyle)s
-</style>
-%(content)s
-">
-<input type="hidden" name="project[description]" value="Epyk Example">
-<input type="hidden" name="project[dependencies]" value="{&quot;rxjs&quot;:&quot;5.5.6&quot;}">
-<input type="hidden" name="project[template]" value="javascript">
-<input type="hidden" name="project[settings]" value="{&quot;compile&quot;:{&quot;clearConsole&quot;:false}}">
-</form>
-<script>document.getElementById("mainForm").submit();</script>
-
-</body></html>
-''' % results)
-        launcher_file = os.path.join(path, "RunnerStackblitz.html")
-        if open_browser:
-            webbrowser.open(launcher_file)
-        return launcher_file
+        return getattr(self, alias)(
+            context=self._context, path=path, target=target, open_browser=open_browser, **kwargs).export()
 
 
 class PyOuts:
@@ -127,8 +40,11 @@ class PyOuts:
         self.excluded_packages, html_tmpl = None, HtmlTmplBase.JUPYTERLAB
         self.__requireJs, self.__requireJs_attrs, self.__jupyter_cell = None, {}, False
 
-    def _to_html_obj(self, htmlParts: Optional[List[str]] = None, cssParts: Optional[Dict[str, Any]] = None,
-                     splitOpts: dict = None):
+    def _to_html_obj(
+            self,
+            htmlParts: Optional[List[str]] = None,
+            cssParts: Optional[Dict[str, Any]] = None,
+            splitOpts: dict = None):
         """
         Create the HTML result object from the report definition.
 
@@ -190,7 +106,6 @@ class PyOuts:
                 continue
 
             onloadParts.extend(component._browser_data['component_ready'])
-
             for event, source_funcs in component._browser_data['mouse'].items():
                 for source, event_funcs in source_funcs.items():
                     func_args = ["event"] + event_funcs.get('args', []) # Mandatory first argument for an event
@@ -226,13 +141,13 @@ class PyOuts:
         if self.page is not None:
             import_mng = self.page.imports
         else:
-            import_mng = Imports.ImportManager(page=self.page)
+            import_mng = ImportManager(page=self.page)
 
         if splitOpts and splitOpts.get("split", False) and splitOpts.get("path"):
             onloadPartsCommon.update(self.page._props.get('js', {}).get("constructors", {}))
         else:
             self.page.jsLocalImports.add(
-                "data:text/js;base64,%s" % Imports.string_to_base64(JsGlobals.set_global_options(
+                "data:text/js;base64,%s" % string_to_base64(JsGlobals.set_global_options(
                     self.page._props.get('js', {}).get("constructors", {}),
                     self.page.properties.js.get_init_options())))
         # Set the env variable if the exports is using to load packages
@@ -254,14 +169,13 @@ class PyOuts:
             'cssImports': import_mng.cssResolve(
                 self.page.cssImport, self.page.cssLocalImports, excluded=self.excluded_packages),
             'jsImports': import_mng.jsResolve(
-                self.page.jsImports, self.page.jsLocalImports, excluded=self.excluded_packages, local_title="constructors")
+                self.page.jsImports, self.page.jsLocalImports, excluded=self.excluded_packages,
+                local_title="constructors")
         }
         return results
 
-    def _repr_html_(self):
-        """
-        Standard output for Jupyter Notebooks.
-
+    def _repr_html_(self) -> str:
+        """Standard output for Jupyter Notebooks.
         This is what will use IPython in order to display the results in cells.
         """
         if self.__requireJs is not None:
@@ -271,7 +185,7 @@ class PyOuts:
             if self.page is not None:
                 import_manager = self.page.imports
             else:
-                import_manager = Imports.ImportManager(page=self.page)
+                import_manager = ImportManager(page=self.page)
             require_js = import_manager.to_requireJs(results, self.excluded_packages)
             lib_paths = []
             for k, p in require_js['paths'].items():
@@ -285,12 +199,10 @@ class PyOuts:
         return self.html_tmpl.strip() % results
 
     def jupyterlab(self):
-        """
-        For a display of the report in JupyterLab.
+        """For a display of the report in JupyterLab.
         Thanks to this function some packages will not be imported to not conflict with the existing ones.
 
         Usage::
-
           page = Report()
           page.ui.text("This is a text")
           page.outs.jupyterlab()
@@ -306,12 +218,10 @@ class PyOuts:
 
     def jupyter(self, verbose: bool = False, requireJs: Optional[dict] = None, closure: bool = True,
                 requirejs_path: Optional[dict] = None, requirejs_func: Optional[dict] = None):
-        """
-        For a display of the report in Jupyter.
+        """For a display of the report in Jupyter.
         Thanks to this function some packages will not be imported to not conflict with the existing ones.
 
         Usage::
-
           page = Report()
           page.ui.text("This is a text")
           page.outs.jupyter()
@@ -373,17 +283,15 @@ if (typeof icon === "undefined"){
                 if verbose:
                     print("Package already available in Jupyter: %s" % f)
 
-                self.excluded_packages.append(Imports.NOTEBOOK_MAPPING.get(f, f))
+                self.excluded_packages.append(NOTEBOOK_MAPPING.get(f, f))
         except Exception as err:
             self.excluded_packages = ['bootstrap', 'jquery', 'moment', 'jqueryui', 'mathjax']
         return self
 
     def w3cTryIt(self, path: Optional[str] = None, name: Optional[str] = None):
-        """
-        This will produce everything in a single page which can be directly copied to the try editor in w3C website.
+        """This will produce everything in a single page which can be directly copied to the try editor in w3C website.
 
         Usage::
-
           page = Report()
           page.ui.text("This is a text")
           page.outs.w3cTryIt()
@@ -409,11 +317,9 @@ if (typeof icon === "undefined"){
         return file_path
 
     def codepen(self, path: Optional[str] = None, name: Optional[str] = None):
-        """
-        Produce files which will be compatible with codepen.
+        """Produce files which will be compatible with codepen.
 
         Usage::
-
           page = Report()
           page.ui.text("This is a text")
           page.outs.codepen()
@@ -433,13 +339,10 @@ if (typeof icon === "undefined"){
         self.jsfiddle(path, name, framework="codepen")
 
     def jsfiddle(self, path: Optional[str] = None, name: Optional[str] = None, framework: str = "jsfiddle"):
-        """
-        Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform changes.
-
-        The output is always in a sub-directory jsfiddle.
+        """Produce files which can be copied directly to https://jsfiddle.net in order to test the results and perform
+        changes. The output is always in a sub-directory jsfiddle.
 
         Usage::
-
           page = Report()
           page.ui.text("This is a text")
           page.outs.codepen()
@@ -475,12 +378,10 @@ if (typeof icon === "undefined"){
         return path
 
     def html_file(self, path: Optional[str] = None, name: Optional[str] = None, options: Optional[dict] = None,
-                  print_paths: Union[bool, dict] = None, run_id: Union[bool, str] = True):
-        """
-        Function used to generate a static HTML page for the report.
+                  print_paths: Union[bool, dict] = None, run_id: Union[bool, str] = True, encoding: str = None):
+        """Function used to generate a static HTML page for the report.
 
         Usage::
-
           page = Report()
           page.ui.text("This is a text")
           page.outs.html_file()
@@ -494,6 +395,7 @@ if (typeof icon === "undefined"){
         :param print_paths: Optional. Print the page for the created file
         :param options: Optional.
         :param run_id: Optional.
+        :param encoding: Optional.
 
         :return: The file full path.
         """
@@ -580,7 +482,7 @@ if (typeof icon === "undefined"){
         # Add the worker sections when no server available
         for js_id, wk_content in self.page._props.get('js', {}).get("workers", {}).items():
             body += '\n<script id="%s" type="javascript/worker">\n%s\n</script>' % (js_id, wk_content)
-        with open(html_file_path, "w") as f:
+        with open(html_file_path, "w", encoding=encoding) as f:
             results['body'] = body
             results['header'] = self.page.headers
             if results.get("cssStyle"):
@@ -603,8 +505,7 @@ if (typeof icon === "undefined"){
         return html_file_path
 
     def web(self) -> dict:
-        """
-        Return the complete page structure to allow the various web framework to split the code accordingly.
+        """Return the complete page structure to allow the various web framework to split the code accordingly.
         Fragments will then be used by the various framework to create the corresponding pages.
         """
         html_parts = []
@@ -623,52 +524,45 @@ if (typeof icon === "undefined"){
         results['body'] = body.replace("<body", "<div").replace("</body>", "</div>")
         return results
 
-    def component(self, selector: str):
-        """
-        Return a standalone component like object for the different web framework.
-        """
-        return
+    # def publish(self, server: str, root_path: str, selector: str, alias: Optional[str] = None,
+    #             target_folder: str = "apps"):
+    #     """
+    #     Publish the HTML page to a distant web server.
+    #
+    #     Usage::
+    #
+    #
+    #     :param server: Target web framework alias
+    #     :param root_path: Root path for the web server
+    #     :param selector: Component / Application internal selector (name)
+    #     :param alias: The url endpoint for the new page
+    #     :param target_folder: The applications sub folder (default apps)
+    #     """
+    #     from epyk.web import angular, node, vue, react, deno, svelte
+    #
+    #     if server.upper() == 'NODE':
+    #         srv = node.Node(root_path, page=self.page)
+    #     elif server.upper() == 'DENO':
+    #         srv = deno.Deno(root_path, page=self.page)
+    #     elif server.upper() == 'ANGULAR':
+    #         srv = angular.Angular(root_path, page=self.page)
+    #     elif server.upper() == 'VUE':
+    #         srv = vue.VueJs(root_path, page=self.page)
+    #     elif server.upper() == 'REACT':
+    #         srv = react.React(root_path, page=self.page)
+    #     elif server.upper() == 'SVELTE':
+    #         srv = svelte.Svelte(root_path, page=self.page)
+    #     else:
+    #         raise ValueError("Server type - %s - not recognised [Node, Deno, Angular, Vue, React, Svelte]" % server)
+    #
+    #     srv.publish(alias, selector=selector, page=self.page, target_folder=target_folder)
+    #     return srv
 
-    def publish(self, server: str, root_path: str, selector: str, alias: Optional[str] = None,
-                target_folder: str = "apps"):
-        """
-        Publish the HTML page to a distant web server.
+    def markdown_file(self, path: Optional[str] = None, name: Optional[str] = None) -> Optional[str]:
+        """Writes a Markdown file from the report object.
 
-        Usage::
-
-
-        :param server: Target web framework alias
-        :param root_path: Root path for the web server
-        :param selector: Component / Application internal selector (name)
-        :param alias: The url endpoint for the new page
-        :param target_folder: The applications sub folder (default apps)
-        """
-        from epyk.web import angular, node, vue, react, deno, svelte
-
-        if server.upper() == 'NODE':
-            srv = node.Node(root_path, page=self.page)
-        elif server.upper() == 'DENO':
-            srv = deno.Deno(root_path, page=self.page)
-        elif server.upper() == 'ANGULAR':
-            srv = angular.Angular(root_path, page=self.page)
-        elif server.upper() == 'VUE':
-            srv = vue.VueJs(root_path, page=self.page)
-        elif server.upper() == 'REACT':
-            srv = react.React(root_path, page=self.page)
-        elif server.upper() == 'SVELTE':
-            srv = svelte.Svelte(root_path, page=self.page)
-        else:
-            raise ValueError("Server type - %s - not recognised [Node, Deno, Angular, Vue, React, Svelte]" % server)
-
-        srv.publish(alias, selector=selector, page=self.page, target_folder=target_folder)
-        return srv
-
-    def markdown_file(self, path: Optional[str] = None, name: Optional[str] = None):
-        """
-        Writes a Markdown file from the report object.
-
-        :param path: The path in which the output files will be created.
-        :param name: The filename without the extension.
+        :param path: The path in which the output files will be created
+        :param name: The filename without the extension
 
         :return: The file path
         """
@@ -693,12 +587,10 @@ if (typeof icon === "undefined"){
                         f.write("%s\n" % component.to_markdown(component.vals))
             return file_path
 
-    def html(self):
-        """
-        Function to get the result HTML page fragments from all the HTML components.
+    def html(self) -> str:
+        """Function to get the result HTML page fragments from all the HTML components.
 
         Usage::
-
           page = Report()
           page.ui.text("This is a text")
           page.outs.html()
@@ -708,7 +600,7 @@ if (typeof icon === "undefined"){
         if self.page is not None:
             import_mng = self.page.imports
         else:
-            import_mng = Imports.ImportManager(page=self.page)
+            import_mng = ImportManager(page=self.page)
         require_js = import_mng.to_requireJs(results, self.excluded_packages)
         results['paths'] = "{%s}" % ", ".join(["%s: '%s'" % (k, p) for k, p in require_js['paths'].items()])
         results['jsFrgs_in_req'] = require_js['jsFrgs']

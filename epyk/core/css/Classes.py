@@ -3,8 +3,8 @@
 import base64
 import os
 from pathlib import Path
-
-from epyk.core.js import Imports
+from typing import Optional
+from epyk.conf.global_settings import IMPORT_STATIC_PATH
 
 from epyk.core.css.catalogs import CatalogButton
 from epyk.core.css.catalogs import CatalogInput
@@ -24,7 +24,7 @@ from epyk.core.css.catalogs import CatalogStd
 
 # Change predefined CSS classes.
 # This will allow to fully change the framework in order to align with other CSS classes and attributes.
-OVERRIDES = None
+OVERRIDES: Optional[dict] = None
 
 
 def get_class_override(css_cls):
@@ -94,7 +94,6 @@ class Catalog:
         """Get the list of CSS Classes impacting to the component but not added to the class tag of the HTML component.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.other)
         """
@@ -118,7 +117,6 @@ class Catalog:
         """Shortcut to standard CSS classes (for layout purposes like margin, padding...).
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           t1.style.add_classes.std.margin(7)
 
@@ -133,7 +131,6 @@ class Catalog:
         """CSS Classes specific to the buttons components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.button)
         """
@@ -146,7 +143,6 @@ class Catalog:
         """CSS Classes specific to the select compatibility components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.select)
         """
@@ -159,7 +155,6 @@ class Catalog:
         """CSS Classes specific to the screen compatibility components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.screens)
         """
@@ -172,7 +167,6 @@ class Catalog:
         """CSS Classes specific to the Icon components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.icon)
         """
@@ -185,7 +179,6 @@ class Catalog:
         """CSS Classes specific to Layout / Container components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.layout)
         """
@@ -198,7 +191,6 @@ class Catalog:
         """CSS Classes specific to the DropDown components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.dropdown)
         """
@@ -211,7 +203,6 @@ class Catalog:
         """CSS Classes specific to the Table components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.table)
         """
@@ -224,7 +215,6 @@ class Catalog:
         """CSS Classes specific to Chart components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.chart)
         """
@@ -237,7 +227,6 @@ class Catalog:
         """CSS Classes specific to Link components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.link)
         """
@@ -250,7 +239,6 @@ class Catalog:
         """CSS Classes specific to Date components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.date)
         """
@@ -263,7 +251,6 @@ class Catalog:
         """CSS Classes specific to Text components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.text)
         """
@@ -276,7 +263,6 @@ class Catalog:
         """CSS Classes specific to Input components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.input)
         """
@@ -289,7 +275,6 @@ class Catalog:
         """CSS Classes specific to Image components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.image)
         """
@@ -302,7 +287,6 @@ class Catalog:
         """CSS Classes specific to Div / Container components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.div)
         """
@@ -315,7 +299,6 @@ class Catalog:
         """CSS Classes specific to Div / Container components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.shapes)
         """
@@ -328,7 +311,6 @@ class Catalog:
         """CSS Classes specific to Radio button components.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           print(t1.style.add_classes.radio)
         """
@@ -348,7 +330,7 @@ class Catalog:
         self.__class_list_type.add(css_cls_obj)
         return self
 
-    def customFile(self, filename: str, path: str = None):
+    def customFile(self, filename: str, path: Optional[str] = None):
         """Add an external CSS file to the final HTML report.
         If the file is defined with a local absolute path the content will be encoded and included to the page.
 
@@ -358,9 +340,11 @@ class Catalog:
 
         :return: self for the chaining.
         """
-        from epyk.conf.global_settings import ASSETS_STATIC_CSS, ASSETS_SPLIT, ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH, ASSETS_SPLIT_MINIFY
+        from epyk.conf.global_settings import (ASSETS_STATIC_CSS, ASSETS_SPLIT, ASSETS_STATIC_ROUTE, ASSETS_STATIC_PATH,
+                                               ASSETS_SPLIT_MINIFY)
         if path is None:
-            self.page.cssLocalImports.add("%s/%s/%s" % (Imports.STATIC_PATH.replace("\\", "/"), ASSETS_STATIC_CSS, filename))
+            self.page.cssLocalImports.add(
+                "%s/%s/%s" % (IMPORT_STATIC_PATH.replace("\\", "/"), ASSETS_STATIC_CSS, filename))
         else:
             file_path = os.path.join(path, filename)
             if os.path.exists(file_path):
@@ -404,7 +388,6 @@ class Catalog:
         This will internal build the class and return it.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           v_cls = t1.style.add_classes.anonymous_cls({
             '_attrs': {'color': 'green', 'cursor': 'pointer'},
@@ -415,7 +398,6 @@ class Catalog:
         :return: The Python class
         """
         import hashlib
-
         from epyk.core.css.styles.classes import CssStyle
 
         has_style = str(hashlib.sha1(str(attrs).encode()).hexdigest())
@@ -427,12 +409,10 @@ class Catalog:
         """Add external CSS classes to a component.
 
         Usage::
-
           t1 = page.ui.title("Templates structure")
           t1.style.add_classes.external("cssClassReference")
 
         :param classname: The external class name to be added
-
         :return: self for the chaining.
         """
         if isinstance(classname, list):

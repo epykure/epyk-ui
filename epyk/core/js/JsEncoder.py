@@ -14,47 +14,49 @@ import datetime
 
 
 class Encoder(json.JSONEncoder):
-  """  Python to Js Encoding.
+    """Python to Js Encoding.
 
-  Class in charge of encoding the data to be written on the Javascript side.
-  In most of the function the simple json module is used but this module is there to encode more complex object
-  frequently coming from Pandas.
+    Class in charge of encoding the data to be written on the Javascript side.
+    In most of the function the simple json module is used but this module is there to encode more complex object
+    frequently coming from Pandas.
 
-  Usage::
+    Usage::
 
-    >>> json.dumps({"test": ""}, cls=Encoder, allow_nan=False)
-    '{"test": ""}'
+      >>> json.dumps({"test": ""}, cls=Encoder, allow_nan=False)
+      '{"test": ""}'
 
-  :return: A serializable item.
-  """
-  def default(self, obj):
-    try:
-      import pandas
+    :return: A serializable item.
+    """
 
-      if isinstance(obj, pandas.core.series.Series):
-        return list(obj)
+    def default(self, obj):
+        try:
+            import pandas
 
-      elif isinstance(obj, datetime.datetime):
-        if isinstance(obj, type(pandas.NaT)):
-          return ''
+            if isinstance(obj, pandas.core.series.Series):
+                return list(obj)
 
-        return obj.strftime('%Y-%m-%d')
-    except ImportError: pass
+            elif isinstance(obj, datetime.datetime):
+                if isinstance(obj, type(pandas.NaT)):
+                    return ''
 
-    try:
-      import numpy
+                return obj.strftime('%Y-%m-%d')
+        except ImportError:
+            pass
 
-      if isinstance(obj, (numpy.int_, numpy.intc, numpy.intp, numpy.int8, numpy.int16, numpy.int32, numpy.int64,
-                          numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.integer)):
-        return int(obj)
+        try:
+            import numpy
 
-      elif isinstance(obj, (numpy.float_, numpy.float16, numpy.float32, numpy.float64, numpy.floating)):
-        return float(obj)
+            if isinstance(obj, (numpy.int_, numpy.intc, numpy.intp, numpy.int8, numpy.int16, numpy.int32, numpy.int64,
+                                numpy.uint8, numpy.uint16, numpy.uint32, numpy.uint64, numpy.integer)):
+                return int(obj)
 
-      elif isinstance(obj, numpy.ndarray):
-        return obj.tolist()
+            elif isinstance(obj, (numpy.float_, numpy.float16, numpy.float32, numpy.float64, numpy.floating)):
+                return float(obj)
 
-    except ImportError: pass
+            elif isinstance(obj, numpy.ndarray):
+                return obj.tolist()
 
-    return super(Encoder, self).default(obj)
+        except ImportError:
+            pass
 
+        return super(Encoder, self).default(obj)

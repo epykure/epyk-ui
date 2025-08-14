@@ -3,35 +3,29 @@
 
 from typing import Union, List
 from epyk.core.py import primitives
-
 from epyk.core.js import JsUtils
-from epyk.core.js.primitives import JsString
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsObjects
-from epyk.core.js.primitives import JsBoolean
+from epyk.core.js.primitives import JsString, JsObject, JsObjects, JsBoolean
 
 
 class JsGeolocation:
 
-  def __init__(self, page: primitives.PageModel):
-    self.page, self.options = page, {}
+    def __init__(self, page: primitives.PageModel):
+        self.page, self.options = page, {}
 
-  def set_timeout(self, value: float):
-    """
-    Amount of time before the error callback is invoked, if 0 it will never invoke.
+    def set_timeout(self, value: float):
+        """Amount of time before the error callback is invoked, if 0 it will never invoke.
 
-    Related Pages:
+        Related Pages:
 
-      https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
- 
-    :param float value: Time in milliseconds.
-    """
-    self.options["timeout"] = value
-    return self
+          https://developer.mozilla.org/en-US/docs/Web/API/Geolocation/getCurrentPosition
 
-  def set_maximum_age(self, value: float):
-    """
-    Maximum cached position age.
+        :param float value: Time in milliseconds.
+        """
+        self.options["timeout"] = value
+        return self
+
+    def set_maximum_age(self, value: float):
+        """Maximum cached position age.
 
     Related Pages:
 
@@ -39,11 +33,11 @@ class JsGeolocation:
  
     :param float value: Time in milliseconds.
     """
-    self.options["maximumAge"] = value
-    return self
+        self.options["maximumAge"] = value
+        return self
 
-  def set_enable_high_accuracy(self, flag: bool = False):
-    """
+    def set_enable_high_accuracy(self, flag: bool = False):
+        """
     Indicates the application would like to receive the best possible results
 
     Related Pages:
@@ -52,12 +46,12 @@ class JsGeolocation:
  
     :param bool flag: If true and if the device is able to provide a more accurate position.
     """
-    self.options["enableHighAccuracy"] = flag
-    return self
+        self.options["enableHighAccuracy"] = flag
+        return self
 
-  def getCurrentPosition(self, callback_func: Union[List[Union[str, primitives.JsDataModel]], str] = None,
-                         error_func=None, options=None, profile=None):
-    """
+    def getCurrentPosition(self, callback_func: Union[List[Union[str, primitives.JsDataModel]], str] = None,
+                           error_func=None, options=None, profile=None):
+        """
     The getCurrentPosition() method is used to return the user's position.
 
     You can use the underlying data object pk.events.geolocationPosition to get geo location information.
@@ -82,16 +76,16 @@ class JsGeolocation:
     :param options: Dictionary. Optional. An optional PositionOptions object.
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     """
-    options = options or self.options
-    callback_func = JsUtils.jsConvertFncs(callback_func, toStr=True, profile=profile)
-    return JsObject.JsObject.get(
-      "navigator.geolocation.getCurrentPosition(function(navPos){let data = navPos; %s}, function(err){%s}, %s)" % (
-        callback_func, JsUtils.jsConvertFncs(
-          error_func, toStr=True, profile=profile), JsUtils.jsConvertData(options, None)))
+        options = options or self.options
+        callback_func = JsUtils.jsConvertFncs(callback_func, toStr=True, profile=profile)
+        return JsObject.JsObject.get(
+            "navigator.geolocation.getCurrentPosition(function(navPos){let data = navPos; %s}, function(err){%s}, %s)" % (
+                callback_func, JsUtils.jsConvertFncs(
+                    error_func, toStr=True, profile=profile), JsUtils.jsConvertData(options, None)))
 
-  def watchPosition(self, callback_func: Union[List[Union[str, primitives.JsDataModel]], str],
-                    watch_id, error_func=None, options=None, profile=None, global_scope=True):
-    """
+    def watchPosition(self, callback_func: Union[List[Union[str, primitives.JsDataModel]], str],
+                      watch_id, error_func=None, options=None, profile=None, global_scope=True):
+        """
     Returns the current position of the user and continues to return updated position as the user moves.
 
     Usage::
@@ -117,18 +111,18 @@ class JsGeolocation:
     :param profile: Boolean | Dictionary. Optional. A flag to set the component performance storage.
     :param global_scope: Boolean. Optional. Flag to properly set the scope for global variables.
     """
-    options = options or self.options
-    callback_func = JsUtils.jsConvertFncs(callback_func, toStr=True, profile=profile)
-    if global_scope:
-      watch_id = "window['%s']" % watch_id
-    return JsObject.JsObject.new(
-      "navigator.geolocation.watchPosition(function(navPos){let data = navPos; %s}, function(err){%s}, %s)" % (
-        callback_func, JsUtils.jsConvertFncs(
-          error_func, toStr=True, profile=profile), JsUtils.jsConvertData(options, None))
-      , is_py_data=False).setVar(watch_id)
+        options = options or self.options
+        callback_func = JsUtils.jsConvertFncs(callback_func, toStr=True, profile=profile)
+        if global_scope:
+            watch_id = "window['%s']" % watch_id
+        return JsObject.JsObject.new(
+            "navigator.geolocation.watchPosition(function(navPos){let data = navPos; %s}, function(err){%s}, %s)" % (
+                callback_func, JsUtils.jsConvertFncs(
+                    error_func, toStr=True, profile=profile), JsUtils.jsConvertData(options, None))
+            , is_py_data=False).setVar(watch_id)
 
-  def clearWatch(self, watch_id, global_scope: bool = True):
-    """
+    def clearWatch(self, watch_id, global_scope: bool = True):
+        """
     Stops the watchPosition() method.
 
     Usage::
@@ -145,28 +139,28 @@ class JsGeolocation:
     you wish to remove.
     :param bool global_scope: Optional. Flag to properly set the scope for global variables.
     """
-    if global_scope:
-      watch_id = "window['%s']" % watch_id
-    return JsObject.JsObject("navigator.geolocation.clearWatch(%s)" % watch_id, is_py_data=False)
+        if global_scope:
+            watch_id = "window['%s']" % watch_id
+        return JsObject.JsObject("navigator.geolocation.clearWatch(%s)" % watch_id, is_py_data=False)
 
 
 class JsClipboard:
 
-  def __init__(self, page: primitives.PageModel):
-    self.page, self.options = page, {}
+    def __init__(self, page: primitives.PageModel):
+        self.page, self.options = page, {}
 
-  def readText(self):
-    return JsObjects.JsPromise("window.navigator.clipboard.readText()")
+    def readText(self):
+        return JsObjects.JsPromise("window.navigator.clipboard.readText()")
 
 
 class JsNavigator:
 
-  def __init__(self, page: primitives.PageModel):
-    self.page = page
+    def __init__(self, page: primitives.PageModel):
+        self.page = page
 
-  @property
-  def geolocation(self):
-    """
+    @property
+    def geolocation(self):
+        """
     The HTML Geolocation API is used to locate a user's position.
 
     Related Pages:
@@ -174,22 +168,22 @@ class JsNavigator:
       https://w3c.github.io/geolocation-api/#navi-geo
       https://www.w3schools.com/html/html5_geolocation.asp
     """
-    return JsGeolocation(self.page)
+        return JsGeolocation(self.page)
 
-  @property
-  def language(self):
-    """
+    @property
+    def language(self):
+        """
     The language property returns the language version of the browser.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/prop_nav_language.asp
     """
-    return JsString.JsString("navigator.language", is_py_data=False)
+        return JsString.JsString("navigator.language", is_py_data=False)
 
-  @property
-  def browserLanguage(self):
-    """
+    @property
+    def browserLanguage(self):
+        """
     The language property returns the language version of the browser.
     For IE10 and earlier versions, you can use the browserLanguage property.
 
@@ -197,83 +191,83 @@ class JsNavigator:
 
       https://www.w3schools.com/jsref/prop_nav_language.asp
     """
-    return JsString.JsString("navigator.browserLanguage", is_py_data=False)
+        return JsString.JsString("navigator.browserLanguage", is_py_data=False)
 
-  @property
-  def appCodeName(self):
-    """
+    @property
+    def appCodeName(self):
+        """
     The appCodeName property returns the application code name of the browser.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_window_navigator.asp
     """
-    return JsString.JsString("navigator.appCodeName", is_py_data=False)
+        return JsString.JsString("navigator.appCodeName", is_py_data=False)
 
-  @property
-  def appName(self):
-    """
+    @property
+    def appName(self):
+        """
     The appName property returns the application name of the browser.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_window_navigator.asp
     """
-    return JsString.JsString("navigator.appName", is_py_data=False)
+        return JsString.JsString("navigator.appName", is_py_data=False)
 
-  @property
-  def product(self):
-    """
+    @property
+    def product(self):
+        """
     The product property returns the product name of the browser engine.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_window_navigator.asp
     """
-    return JsString.JsString("navigator.product", is_py_data=False)
+        return JsString.JsString("navigator.product", is_py_data=False)
 
-  @property
-  def appVersion(self):
-    """
+    @property
+    def appVersion(self):
+        """
     The appVersion property returns version information about the browser.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_window_navigator.asp
     """
-    return JsString.JsString("navigator.appVersion", is_py_data=False)
+        return JsString.JsString("navigator.appVersion", is_py_data=False)
 
-  @property
-  def cookieEnabled(self):
+    @property
+    def cookieEnabled(self):
+        """
     """
-    """
-    return JsString.JsString("navigator.cookieEnabled", is_py_data=False)
+        return JsString.JsString("navigator.cookieEnabled", is_py_data=False)
 
-  @property
-  def onLine(self):
-    """
+    @property
+    def onLine(self):
+        """
     The onLine property returns true if the browser is online.
 
     Related Pages:
 
       https://www.w3schools.com/js/js_window_navigator.asp
     """
-    return JsBoolean.JsBoolean("navigator.onLine", is_py_data=False)
+        return JsBoolean.JsBoolean("navigator.onLine", is_py_data=False)
 
-  @property
-  def platform(self):
-    """
+    @property
+    def platform(self):
+        """
     The platform property returns the browser platform (operating system).
 
     Related Pages:
 
       https://www.w3schools.com/js/js_window_navigator.asp
     """
-    return JsString.JsString("navigator.platform", is_py_data=False)
+        return JsString.JsString("navigator.platform", is_py_data=False)
 
-  @property
-  def userAgent(self):
-    """
+    @property
+    def userAgent(self):
+        """
     The userAgent property returns the user-agent header sent by the browser to the server.
 
     Related Pages:
@@ -281,21 +275,21 @@ class JsNavigator:
       https://www.w3schools.com/js/js_window_navigator.asp
 
     """
-    return JsString.JsString("navigator.userAgent", is_py_data=False)
+        return JsString.JsString("navigator.userAgent", is_py_data=False)
 
-  def javaEnabled(self):
-    """
+    def javaEnabled(self):
+        """
     The javaEnabled() method returns a Boolean value that specifies whether the browser has Java enabled.
 
     Related Pages:
 
       https://www.w3schools.com/jsref/met_nav_javaenabled.asp
     """
-    return JsBoolean.JsBoolean("navigator.javaEnabled()", is_py_data=False)
+        return JsBoolean.JsBoolean("navigator.javaEnabled()", is_py_data=False)
 
-  @property
-  def clipboard(self) -> JsClipboard:
-    """
+    @property
+    def clipboard(self) -> JsClipboard:
+        """
 
     """
-    return JsClipboard(self.page)
+        return JsClipboard(self.page)

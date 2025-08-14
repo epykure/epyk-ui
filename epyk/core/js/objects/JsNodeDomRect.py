@@ -1,6 +1,4 @@
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsString
-from epyk.core.js.primitives import JsObject
+from ..primitives import JsNumber, JsString, JsObject
 
 
 class JsDOMRect:

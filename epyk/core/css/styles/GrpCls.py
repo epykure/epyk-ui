@@ -8,15 +8,13 @@ from epyk.core.py import primitives
 from epyk.core.css import Classes
 from epyk.core.css import Defaults_css
 from epyk.core.css import css_files_loader
-from epyk.core.css import Properties
 from epyk.core.css.styles.effects import Effects
 from epyk.core.css.styles import GrpConfigs
 from epyk.core.css.styles.attributes import Attrs  # for the rtype in the documentation
 from epyk.core.css.styles.attributes import Commons, Body, Empty
 from epyk.core.css.styles.classes import CssStyle, CssStyleScrollbar, CssStylesPage
 from epyk.core.py import OrderedSet
-from epyk.fwk.bs import CssClasses as BsCssClasses
-from epyk.core.js.Imports import string_to_base64
+from epyk.core.js.imports.utils import string_to_base64
 
 
 class ClassPage:
@@ -331,7 +329,8 @@ class ClassHtml:
             self.component.style_refs = dict(self.component.style_refs)
         for k, v in ovrs.items():
             if k not in self.component.style_refs:
-                logging.warning("Style | GrpCls | Missing definition %s for in style_refs for %s" % (k, self.component.__class__.__name__))
+                logging.warning("Style | GrpCls | Missing definition %s for in style_refs for %s" % (
+                    k, self.component.__class__.__name__))
             self.component.style_refs[k] = v
 
     def from_str(self, content: str, replace: bool = True, dsc: str = None):
@@ -710,18 +709,6 @@ class ClassHtml:
         :param class_name: CSS class reference (selector)
         """
         self.classList["main"].add(class_name)
-
-    @property
-    def bs(self) -> BsCssClasses.Style:
-        """Add shortcut to the Bootstrap predefined styles.
-
-        Related Pages:
-
-          https://getbootstrap.com/docs/5.0/getting-started/introduction/
-        """
-        self.page.jsImports.add("bootstrap")
-        self.page.cssImport.add("bootstrap")
-        return BsCssClasses.Style(self.component.attr['class'])
 
 
 class ClassHtmlEmpty(ClassHtml):

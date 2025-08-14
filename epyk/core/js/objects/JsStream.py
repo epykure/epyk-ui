@@ -1,58 +1,56 @@
-
 from typing import Union
-from epyk.core.py import primitives
 
-from epyk.core.js import JsUtils
-
-from epyk.core.js.packages import JsPackage
-from epyk.core.js.primitives import JsObjects
+from ...py import primitives
+from .. import JsUtils
+from ..packages import JsPackage
+from ..primitives import JsObjects
 
 
 class TeedStreams:
 
-  def __init__(self, js_code: str):
-    self.varId = js_code
+    def __init__(self, js_code: str):
+        self.varId = js_code
 
-  @property
-  def stream_0(self):
-    return ReadableStream("%s[0]" % self.varId)
+    @property
+    def stream_0(self):
+        return ReadableStream("%s[0]" % self.varId)
 
-  @property
-  def stream_1(self):
-    return ReadableStream("%s[1]" % self.varId)
+    @property
+    def stream_1(self):
+        return ReadableStream("%s[1]" % self.varId)
 
 
 class TransformStream(JsPackage):
 
-  @property
-  def readable(self):
-    """
+    @property
+    def readable(self):
+        """
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
     """
-    return "%s.readable" % self.varId
+        return "%s.readable" % self.varId
 
-  @property
-  def writable(self):
-    """
+    @property
+    def writable(self):
+        """
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/TransformStream
     """
-    return "%s.writable" % self.varId
+        return "%s.writable" % self.varId
 
 
 class ReadableStream(JsPackage):
 
-  @property
-  def locked(self):
-    return JsObjects.JsPromise("%s.locked" % self.varId)
+    @property
+    def locked(self):
+        return JsObjects.JsPromise("%s.locked" % self.varId)
 
-  def cancel(self):
-    """
+    def cancel(self):
+        """
     The cancel() method of the ReadableStream interface cancels the associated stream.
     The supplied reason parameter will be given to the underlying source, which may or may not use it.
 
@@ -60,10 +58,10 @@ class ReadableStream(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/cancel
     """
-    return self.fnc("cancel()")
+        return self.fnc("cancel()")
 
-  def getReader(self):
-    """
+    def getReader(self):
+        """
     The getReader() method of the ReadableStream interface creates a reader and locks the stream to it.
     While the stream is locked, no other reader can be acquired until this one is released.
 
@@ -71,10 +69,10 @@ class ReadableStream(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/getReader
     """
-    return ReadableStream("%s.getReader()" % self.varId)
+        return ReadableStream("%s.getReader()" % self.varId)
 
-  def pipeThrough(self, transform_stream, options: dict = None):
-    """
+    def pipeThrough(self, transform_stream, options: dict = None):
+        """
     The pipeThrough() method of the ReadableStream interface provides a chainable way of piping the current stream
     through a transform stream or any other writable/readable pair.
 
@@ -89,13 +87,13 @@ class ReadableStream(JsPackage):
                       - preventCancel
                       - signal
     """
-    if options is None:
-      return TransformStream("%s.pipeThrough(%s)" % (self.varId, transform_stream))
+        if options is None:
+            return TransformStream("%s.pipeThrough(%s)" % (self.varId, transform_stream))
 
-    return TransformStream("%s.pipeThrough(%s, %s)" % (self.varId, transform_stream, options))
+        return TransformStream("%s.pipeThrough(%s, %s)" % (self.varId, transform_stream, options))
 
-  def pipeTo(self, destination, options: dict = None):
-    """
+    def pipeTo(self, destination, options: dict = None):
+        """
     The pipeTo() method of the ReadableStream interface pipes the current ReadableStream to a given WritableStream
     and returns a promise that fulfills when the piping process completes successfully, or rejects if any errors were encountered.
 
@@ -106,13 +104,13 @@ class ReadableStream(JsPackage):
     :param destination:
     :param options:
     """
-    if options is None:
-      return WritableStream("%s.pipeTo(%s)" % (self.varId, destination))
+        if options is None:
+            return WritableStream("%s.pipeTo(%s)" % (self.varId, destination))
 
-    return WritableStream("%s.pipeTo(%s, %s)" % (self.varId, destination, options))
+        return WritableStream("%s.pipeTo(%s, %s)" % (self.varId, destination, options))
 
-  def tee(self):
-    """
+    def tee(self):
+        """
     The tee() method of the ReadableStream interface tees the current readable stream, returning a two-element array
     containing the two resulting branches as new ReadableStream instances.
 
@@ -120,14 +118,14 @@ class ReadableStream(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream/tee
     """
-    return TeedStreams("%s.tee()" % self.varId)
+        return TeedStreams("%s.tee()" % self.varId)
 
 
 class WritableStreamDefaultWriter(JsPackage):
 
-  @property
-  def desiredSize(self):
-    """
+    @property
+    def desiredSize(self):
+        """
     The desiredSize read-only property of the WritableStreamDefaultWriter interface returns the desired size required
     to fill the stream's internal queue.
 
@@ -135,11 +133,11 @@ class WritableStreamDefaultWriter(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/desiredSize
     """
-    return "%s.desiredSize" % self.varId
+        return "%s.desiredSize" % self.varId
 
-  @property
-  def writer(self):
-    """
+    @property
+    def writer(self):
+        """
     The closed read-only property of the WritableStreamDefaultWriter interface returns a promise that fulfills
     if the stream becomes closed or the writer's lock is released, or rejects if the stream errors.
 
@@ -147,11 +145,11 @@ class WritableStreamDefaultWriter(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/closed
     """
-    return JsObjects.JsPromise("%s.writer" % self.varId)
+        return JsObjects.JsPromise("%s.writer" % self.varId)
 
-  @property
-  def ready(self):
-    """
+    @property
+    def ready(self):
+        """
     The ready read-only property of the WritableStreamDefaultWriter interface returns a Promise that resolves when
     the desired size of the stream's internal queue transitions from non-positive to positive, signaling that it is
     no longer applying backpressure.
@@ -160,10 +158,10 @@ class WritableStreamDefaultWriter(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/ready
     """
-    return JsObjects.JsPromise("%s.ready" % self.varId)
+        return JsObjects.JsPromise("%s.ready" % self.varId)
 
-  def abort(self, reason: Union[str, primitives.JsDataModel] = None):
-    """
+    def abort(self, reason: Union[str, primitives.JsDataModel] = None):
+        """
     The abort() method of the WritableStreamDefaultWriter interface aborts the stream, signaling that the producer
     can no longer successfully write to the stream and it is to be immediately moved to an error state, with any
     queued writes discarded.
@@ -172,24 +170,24 @@ class WritableStreamDefaultWriter(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/abort
     """
-    if reason is None:
-      return JsObjects.JsPromise("%s.abort()" % self.varId)
+        if reason is None:
+            return JsObjects.JsPromise("%s.abort()" % self.varId)
 
-    reason = JsUtils.jsConvertData(reason, None)
-    return JsObjects.JsPromise("%s.abort(%s)" % (self.varId, reason))
+        reason = JsUtils.jsConvertData(reason, None)
+        return JsObjects.JsPromise("%s.abort(%s)" % (self.varId, reason))
 
-  def close(self):
-    """
+    def close(self):
+        """
     The close() method of the WritableStreamDefaultWriter interface closes the associated writable stream.
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/close
     """
-    return JsObjects.JsPromise("%s.close()" % self.varId)
+        return JsObjects.JsPromise("%s.close()" % self.varId)
 
-  def releaseLock(self):
-    """
+    def releaseLock(self):
+        """
     The releaseLock() method of the WritableStreamDefaultWriter interface releases the writer's lock on the
     corresponding stream.
 
@@ -197,10 +195,10 @@ class WritableStreamDefaultWriter(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStreamDefaultWriter/releaseLock
     """
-    return self.fnc_closure("%s.releaseLock()" % self.varId)
+        return self.fnc_closure("%s.releaseLock()" % self.varId)
 
-  def write(self, chunk: Union[str, primitives.JsDataModel]):
-    """
+    def write(self, chunk: Union[str, primitives.JsDataModel]):
+        """
     The write() property of the WritableStreamDefaultWriter interface writes a passed chunk of data to a
     WritableStream and its underlying sink, then returns a Promise that resolves to indicate the success or failure of
     the write operation.
@@ -211,24 +209,24 @@ class WritableStreamDefaultWriter(JsPackage):
 
     :param chunk: A block of binary data to pass to the WritableStream.
     """
-    chunk = JsUtils.jsConvertData(chunk, None)
-    return JsObjects.JsPromise("%s.write(%s)" % (self.varId, chunk))
+        chunk = JsUtils.jsConvertData(chunk, None)
+        return JsObjects.JsPromise("%s.write(%s)" % (self.varId, chunk))
 
 
 class WritableStream(JsPackage):
 
-  @property
-  def locked(self):
-    """
+    @property
+    def locked(self):
+        """
 
     Related Pages:
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStream
     """
-    return "%s.locked" % self.varId
+        return "%s.locked" % self.varId
 
-  def abort(self, reason: Union[str, primitives.JsDataModel] = None):
-    """
+    def abort(self, reason: Union[str, primitives.JsDataModel] = None):
+        """
     The abort() method of the WritableStream interface aborts the stream, signaling that the producer can no longer
     successfully write to the stream and it is to be immediately moved to an error state, with any queued writes
     discarded.
@@ -237,17 +235,17 @@ class WritableStream(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/abort
     """
-    if reason is None:
-      return JsObjects.JsPromise("%s.abort()" % self.varId)
+        if reason is None:
+            return JsObjects.JsPromise("%s.abort()" % self.varId)
 
-    reason = JsUtils.jsConvertData(reason, None)
-    return JsObjects.JsPromise("%s.abort(%s)" % (self.varId, reason))
+        reason = JsUtils.jsConvertData(reason, None)
+        return JsObjects.JsPromise("%s.abort(%s)" % (self.varId, reason))
 
-  def close(self):
-    return self.fnc_closure("close()")
+    def close(self):
+        return self.fnc_closure("close()")
 
-  def getWriter(self):
-    """
+    def getWriter(self):
+        """
     The getWriter() method of the WritableStream interface returns a new instance of WritableStreamDefaultWriter
     and locks the stream to that instance. While the stream is locked, no other writer can be acquired until this
     one is released.
@@ -256,5 +254,4 @@ class WritableStream(JsPackage):
 
       https://developer.mozilla.org/en-US/docs/Web/API/WritableStream/getWriter
     """
-    return WritableStreamDefaultWriter("%s.getWriter()" % self.varId)
-
+        return WritableStreamDefaultWriter("%s.getWriter()" % self.varId)

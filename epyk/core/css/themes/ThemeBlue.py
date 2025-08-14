@@ -1,7 +1,7 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from epyk.core.css.themes import Theme
+from . import Theme
 
 
 class Blue(Theme.Theme):

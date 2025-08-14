@@ -604,66 +604,6 @@ class Inputs:
             component.add_badge(badge)
         return component
 
-    def editor(self, text: str = "", language: str = 'python', width: types.SIZE_TYPE = (100, "%"),
-               height: types.SIZE_TYPE = (300, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
-               profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.Editor:
-        """
-
-        Usage::
-
-          page.ui.inputs.editor()
-
-        Underlying HTML Objects:
-
-          - :class:`epyk.core.html.HtmlTextEditor.Editor`
-
-        :param text: Optional. The value to be displayed to the componen
-        :param language:
-        :param width: Optional. A tuple with the integer for the component width and its unit
-        :param height: Optional. A tuple with the integer for the component height and its unit
-        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-        :param options: Optional. Specific Python options available for this component
-        :param profile: Optional. A flag to set the component performance storage
-        """
-        dflt_options = {
-            "lineNumbers": True, 'mode': 'css', 'matchBrackets': True, 'styleActiveLine': True, 'autoRefresh': True}
-        if options is not None:
-            dflt_options.update(options)
-        component = html.HtmlTextEditor.Editor(
-            self.page, text, language, width, height, html_code, dflt_options, profile)
-        html.Html.set_component_skin(component)
-        return component
-
-    def cell(self, text: str = "", language: str = 'python', width: types.SIZE_TYPE = (100, "%"),
-             height: types.SIZE_TYPE = (60, "px"), html_code: str = None, options: types.OPTION_TYPE = None,
-             profile: types.PROFILE_TYPE = None) -> html.HtmlTextEditor.Cell:
-        """
-
-        Usage::
-
-          page.ui.inputs.cell()
-
-        Underlying HTML Objects:
-
-          - :class:`epyk.core.html.HtmlTextEditor.Cell`
-
-        :param text: Optional. The value to be displayed to the componen
-        :param language:
-        :param width: Optional. A tuple with the integer for the component width and its unit
-        :param height: Optional. A tuple with the integer for the component height and its unit
-        :param html_code: Optional. An identifier for this component (on both Python and Javascript side)
-        :param options: Optional. Specific Python options available for this component
-        :param profile: Optional. A flag to set the component performance storage
-        """
-        dflt_options = {"lineNumbers": True, 'mode': language, 'matchBrackets': True, 'styleActiveLine': True,
-                        'autoRefresh': True}
-        if options is not None:
-            dflt_options.update(options)
-        component = html.HtmlTextEditor.Cell(
-            self.page, text, language, width, height, html_code, dflt_options, profile)
-        html.Html.set_component_skin(component)
-        return component
-
     def search(self, text: str = '', placeholder: str = 'Search..', align: str = "left", color: str = None,
                width: types.SIZE_TYPE = (100, "%"), height: types.SIZE_TYPE = (None, "px"),
                html_code: str = None, tooltip: str = None, extensible: bool = False, options: types.OPTION_TYPE = None,

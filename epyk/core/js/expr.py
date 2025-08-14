@@ -5,11 +5,7 @@ from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
 
 # All the predefined Javascript Statements
-from epyk.core.js.statements import JsIf
-from epyk.core.js.statements import JsErrors
-from epyk.core.js.statements import JsFor
-from epyk.core.js.statements import JsSwitch
-from epyk.core.js.statements import JsWhile
+from epyk.core.js.statements import JsIf, JsErrors, JsFor, JsSwitch, JsWhile
 
 
 def if_(condition: Union[List[Union[str, primitives.JsDataModel]], bool, str], js_funcs: Union[list, str]) -> JsIf.JsIf:

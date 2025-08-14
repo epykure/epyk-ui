@@ -3,19 +3,16 @@
 from pathlib import Path
 from typing import Union, Optional, List
 from epyk.core.py import primitives
-
 from epyk.core.html import Html
-
 from epyk.core.js import expr
 from epyk.core.css import Selector
-
 from epyk.core.html import Defaults
 from epyk.core.html.options import OptPanel
 from epyk.core.js.html import JsHtmlStepper
 
 
 class Drawer(Html.Html):
-    name = 'Drawer'
+    name: str = 'Drawer'
     _option_cls = OptPanel.OptionDrawer
 
     style_urls = [

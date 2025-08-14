@@ -1,77 +1,75 @@
-
 from epyk.core.css.styles.classes import CssStyle
 
 
 class CssHrefNoDecoration(CssStyle.Style):
-  _attrs = {'text-decoration': 'none', 'color': 'inherit'}
+    _attrs = {'text-decoration': 'none', 'color': 'inherit'}
 
-  def customize(self):
-    self.hover.css({'color': self.page.theme.notch(-1)})
+    def customize(self):
+        self.hover.css({'color': self.page.theme.notch(-1)})
 
 
 class CssLabelDates(CssStyle.Style):
-  _selectors = {'child': 'a'}
+    _selectors = {'child': 'a'}
 
-  def customize(self):
-    self.css({'background-color': self.page.theme.notch(), 'background-image': 'none',
-              'color': self.page.theme.greys[0]}, important=True)
+    def customize(self):
+        self.css({'background-color': self.page.theme.notch(), 'background-image': 'none',
+                  'color': self.page.theme.greys[0]}, important=True)
 
 
 class CssHreftMenu(CssStyle.Style):
-  _attrs = {'margin': 0, 'clear': 'both', 'border': 0, 'display': 'block', 'position': 'relative', 'color': 'inherit',
-            'height': '32px', 'list-style': 'none', 'padding': '0 0 0 5px', 'text-decoration': 'none'}
-  _selectors = {'child': 'a'}
+    _attrs = {'margin': 0, 'clear': 'both', 'border': 0, 'display': 'block', 'position': 'relative', 'color': 'inherit',
+              'height': '32px', 'list-style': 'none', 'padding': '0 0 0 5px', 'text-decoration': 'none'}
+    _selectors = {'child': 'a'}
 
-  def customize(self):
-    self.css({'background': self.page.theme.notch(), 'color': self.page.theme.notch(-1)})
+    def customize(self):
+        self.css({'background': self.page.theme.notch(), 'color': self.page.theme.notch(-1)})
 
 
 class CssHrefSubMenu(CssStyle.Style):
-  _attrs = {'width': '100%', 'padding-left': '5px', 'color': 'white', 'text-decoration': 'none'}
-  _selectors = {'child': 'a'}
-  
-  def customize(self):
-    self.css({'color': self.page.theme.greys[-1]})
-    self.hover.css({'color': self.page.theme.notch(2)})
+    _attrs = {'width': '100%', 'padding-left': '5px', 'color': 'white', 'text-decoration': 'none'}
+    _selectors = {'child': 'a'}
+
+    def customize(self):
+        self.css({'color': self.page.theme.greys[-1]})
+        self.hover.css({'color': self.page.theme.notch(2)})
 
 
 class CssSideBarLinks(CssStyle.Style):
-  _attrs = {'padding-top': '5px', 'padding-bottom': '5px', 'text-decoration': 'none', 'display': 'block'}
-  _hover = {'text-decoration': 'none'}
+    _attrs = {'padding-top': '5px', 'padding-bottom': '5px', 'text-decoration': 'none', 'display': 'block'}
+    _hover = {'text-decoration': 'none'}
 
-  def customize(self):
-    self.hover.css({'background-color': self.page.theme.greys[2]})
+    def customize(self):
+        self.hover.css({'background-color': self.page.theme.greys[2]})
 
 
 class CssHrefContentLevel1(CssStyle.Style):
-  _attrs = {'padding': 0, 'display': 'inline-block', 'margin': 0}
+    _attrs = {'padding': 0, 'display': 'inline-block', 'margin': 0}
 
 
 class CssHrefContentLevel2(CssStyle.Style):
-  _attrs = {'padding': 0, 'display': 'inline-block', 'margin-left': '20px'}
+    _attrs = {'padding': 0, 'display': 'inline-block', 'margin-left': '20px'}
 
 
 class CssHrefContentLevel3(CssStyle.Style):
-  attrs = {'padding': 0, 'display': 'inline-block', 'margin-left': '40px'}
+    attrs = {'padding': 0, 'display': 'inline-block', 'margin-left': '40px'}
 
 
 class CssHrefContentLevel4(CssStyle.Style):
-  _attrs = {'padding': 0, 'display': 'inline-block', 'margin-left': '60px'}
+    _attrs = {'padding': 0, 'display': 'inline-block', 'margin-left': '60px'}
 
 
 class CssFeedbackLink(CssStyle.Style):
-  _attrs = {'position': 'fixed', 'bottom': '5px', 'cursor': 'pointer', 'right': '25px', 'padding': '0 10px',
-            'z-index': 1000}
-  _hover = {'text-decoration': 'underline'}
+    _attrs = {'position': 'fixed', 'bottom': '5px', 'cursor': 'pointer', 'right': '25px', 'padding': '0 10px',
+              'z-index': 1000}
+    _hover = {'text-decoration': 'underline'}
 
-  def customize(self):
-    self.css({'background-color': self.page.theme.greys[2]})
+    def customize(self):
+        self.css({'background-color': self.page.theme.greys[2]})
 
 
 class CssStandardLinks(CssStyle.Style):
-  _hover = {'text-decoration': 'underline'}
+    _hover = {'text-decoration': 'underline'}
 
-  def customize(self):
-    self.css({'color': self.page.theme.colors[-1]})
-    self.hover.css({'color': self.page.theme.colors[-1]})
-
+    def customize(self):
+        self.css({'color': self.page.theme.colors[-1]})
+        self.hover.css({'color': self.page.theme.colors[-1]})

@@ -1,24 +1,16 @@
 from typing import Union, Optional
+
 from epyk.core.py import primitives
-
-from epyk.core.js.Js import JsConsole
-from epyk.core.js.Js import JsWindow
-from epyk.core.js.Js import JsBase
-from epyk.core.js.Js import JsMaths
-
+from epyk.core.js.Js import JsConsole, JsWindow, JsBase, JsMaths
 from epyk.core.css import Selector
-
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsObjects
-
-from epyk.core.js.objects.JsNodeDom import JsDoms
-from epyk.core.js.objects.JsNodeDom import JsDomsList
+from epyk.core.js.objects.JsNodeDom import JsDoms, JsDomsList
 from epyk.core.js.objects.JsEvents import Event
 
 
 def selector(component: Optional[primitives.HtmlModel] = None):
-    """
-    CSS Selectors
+    """CSS Selectors
 
     Related Pages:
 
@@ -41,8 +33,7 @@ alert = JsWindow.JsWindow().alert
 
 
 def querySelectorAll(reference: Union[primitives.JsDataModel, str]):
-    """
-    The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
+    """The querySelectorAll() method returns all elements in the document that matches a specified CSS selector(s),
     as a static NodeList object.
 
     Related Pages:
@@ -55,8 +46,7 @@ def querySelectorAll(reference: Union[primitives.JsDataModel, str]):
 
 
 def querySelector(reference: Union[primitives.JsDataModel, str]):
-    """
-    The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
+    """The querySelector() method returns the first element that matches a specified CSS selector(s) in the document.
 
     Related Pages:
 
@@ -81,8 +71,7 @@ maths = JsMaths.JsMaths()
 
 
 def comment(value: str):
-    """
-    Javascript Comment section.
+    """Javascript Comment section.
 
     Related Pages:
 
@@ -95,8 +84,7 @@ def comment(value: str):
 
 def var(name: str, value: Union[primitives.JsDataModel, str, bool] = None, global_scope: bool = False,
         depth: bool = False):
-    """
-    Hoisting is JavaScript's default behavior of moving declarations to the top.
+    """Hoisting is JavaScript's default behavior of moving declarations to the top.
 
     :param name: The variable name
     :param value: Optional. The object
@@ -115,8 +103,7 @@ def var(name: str, value: Union[primitives.JsDataModel, str, bool] = None, globa
 
 
 def recordset(name: str, value: Union[primitives.JsDataModel, str] = None, global_scope: bool = False):
-    """
-    Hoisting is JavaScript's default behavior of moving declarations to the top.
+    """Hoisting is JavaScript's default behavior of moving declarations to the top.
     Create a recordset variable on the JavaScript side (a list of dictionaries).
 
     :param name: The variable name
@@ -135,8 +122,7 @@ def recordset(name: str, value: Union[primitives.JsDataModel, str] = None, globa
 
 
 def let(name: str, value: Union[primitives.JsDataModel, str], depth: bool = False):
-    """
-    Redeclaring a variable using the let keyword can solve this problem.
+    """Redeclaring a variable using the let keyword can solve this problem.
 
     Redeclaring a variable inside a block will not redeclare the variable outside the block:
 
@@ -154,8 +140,7 @@ def let(name: str, value: Union[primitives.JsDataModel, str], depth: bool = Fals
 
 
 def const(name: str, value: Union[primitives.JsDataModel, str] = None, depth: bool = False):
-    """
-    The keyword const is a little misleading.
+    """The keyword const is a little misleading.
 
     It does NOT define a constant value. It defines a constant reference to a value.
 

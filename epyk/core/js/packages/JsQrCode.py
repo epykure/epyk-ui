@@ -9,10 +9,10 @@ from epyk.core.js.primitives import JsObjects
 
 
 class QrCode(JsPackage):
-  lib_alias = {"js": "qrcodejs", 'css': "qrcodejs"}
+    lib_alias = {"js": "qrcodejs", 'css': "qrcodejs"}
 
-  def clear(self):
-    """  
+    def clear(self):
+        """
     Clear the code.
 
     Usage::
@@ -25,10 +25,10 @@ class QrCode(JsPackage):
 
       https://davidshimjs.github.io/qrcodejs/
     """
-    return JsObjects.JsObjects.get('%s.clear()' % self.varName)
+        return JsObjects.JsObjects.get('%s.clear()' % self.varName)
 
-  def makeCode(self, data: Union[str, primitives.JsDataModel]):
-    """  
+    def makeCode(self, data: Union[str, primitives.JsDataModel]):
+        """
     Make another code.
 
     Usage::
@@ -43,5 +43,5 @@ class QrCode(JsPackage):
 
     :param Union[str, primitives.JsDataModel] data: The text to be used to build to code.
     """
-    data = JsUtils.jsConvertData(data, None)
-    return JsObjects.JsObjects.get('%s.makeCode(%s)' % (self.varName, data))
+        data = JsUtils.jsConvertData(data, None)
+        return JsObjects.JsObjects.get('%s.makeCode(%s)' % (self.varName, data))

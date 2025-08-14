@@ -3,9 +3,7 @@
 
 from typing import Union, Optional, List
 from epyk.core.py import primitives, types
-
 from epyk.core.html.options import OptText
-
 from epyk.core.html import Html
 from epyk.core.html import Defaults as Default_html
 from epyk.core.js.html import JsHtml
@@ -13,7 +11,7 @@ from epyk.core.js import JsUtils
 
 
 class HtmlGeneric(Html.Html):
-    name = 'GenericTag'
+    name: str = 'GenericTag'
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, tag: Union[str], text: Union[str, list, primitives.HtmlModel],
@@ -63,7 +61,6 @@ class HtmlGeneric(Html.Html):
         """Special click event to keep in memory the state of the component.
 
         Usage::
-
           i = page.ui.icon("Click Me")
 
         :param js_press_funcs: Optional. Javascript functions
@@ -124,7 +121,6 @@ class HtmlGeneric(Html.Html):
         """Display a loading message in the component.
 
         Usage::
-
           btn.click([t.loading(True, label="`Loading: ${data.result}`", data={"result": "Waiting for response"})])
 
         :param status: Optional. The message status (true is active)
@@ -142,7 +138,6 @@ class HtmlGeneric(Html.Html):
         """Display an error message in the component.
 
         Usage::
-
           btn.click([t.error(True, label="`Error: ${data.result}`", data={"result": "Wrong Parameter"})])
 
         :param status: Optional. The message status (true is active)
@@ -157,8 +152,8 @@ class HtmlGeneric(Html.Html):
 
 
 class HtmlGenericLink(HtmlGeneric):
-    name = 'tagLink'
-    builder_module = "HtmlGeneric"
+    name: str = 'tagLink'
+    builder_module: str = "HtmlGeneric"
 
     @property
     def ipopup(self):
@@ -179,7 +174,6 @@ class HtmlGenericLink(HtmlGeneric):
                      'padding': '10px'}).position(),
                 self.page.body.dom.appendChild(self.page.js.object(popup_id))])
         ], profile=profile)
-
         self.on('mouseleave', [self.page.js.getElementById(popup_id).remove()], profile=profile)
 
 

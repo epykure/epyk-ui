@@ -5,7 +5,7 @@ from . import Defaults as Defaults_css
 from ...conf import global_settings
 
 
-def defined_icons()-> Dict[str, str]:
+def defined_icons() -> Dict[str, str]:
     """Return a copy of the internal icon mapping """
     return dict(Defaults_css.ICON_MAPPINGS[global_settings.ICONS_FAMILY])
 
@@ -60,10 +60,10 @@ class IconModel:
     def family(self, fam: str):
         self._family = fam
 
-    def other(self, package: str = None, icons_map: dict = None):
+    def other(self, package: Optional[str] = None, icons_map: Optional[dict] = None):
         """Set the default icon to another bespoke package.
 
-        This will not rely anymore to fontawesome by default.
+        This will not rely on anymore to fontawesome by default.
         By using this it is important to align _ICON_MAPPINGS variables to point to the updated icon classes
 
         Usage::
@@ -83,7 +83,13 @@ class IconModel:
         if icons_map is not None:
             Defaults_css.ICON_MAPPINGS[self._family] = icons_map
 
-    def get(self, alias: Optional[str], family: str = None, options: dict = None, verbose: bool = None) -> dict:
+    def get(
+            self,
+            alias: Optional[str],
+            family: Optional[str] = None,
+            options: Optional[dict] = None,
+            verbose: Optional[bool] = None
+    ) -> dict:
         """Return the icon properties based on the internal mapping
 
         :param alias: The full icon definition or an alias from the internal mapping
@@ -98,7 +104,8 @@ class IconModel:
         if verbose or (verbose is None and global_settings.DEBUG):
             # This will display only entries which are defined in the shortcut mapping
             # bespoke names won't be seen as warnings
-            if alias in Defaults_css.ICON_MAPPINGS["font-awesome"] and not alias in Defaults_css.ICON_MAPPINGS.get(family, {}):
+            if (alias in Defaults_css.ICON_MAPPINGS["font-awesome"] and
+                    alias not in Defaults_css.ICON_MAPPINGS.get(family, {})):
                 logging.warning("Icon %s missing from family %s" % (alias, family))
         icon = Defaults_css.ICON_MAPPINGS.get(family, {}).get(alias, alias)
         if icon is None:
@@ -118,11 +125,22 @@ class IconModel:
         if set_default:
             self._family = alias
 
-    def set(self, alias: Optional[str], component: Any, family: str = None, options: dict = None):
+    def set(
+            self,
+            alias: Optional[str],
+            component: Any,
+            family: Optional[str] = None,
+            options: Optional[dict] = None
+    ):
         """Decorate the component with the corresponding type.
         Some icon frameworks use CSS Classes some other will use value instead.
 
         By default, the framework will use font awesome and then rely on class definition.
+
+        :param alias:
+        :param component:
+        :param family:
+        :param options:
         """
         if options is not None:
             family = options.get("icon_family")
@@ -149,7 +167,12 @@ class IconModel:
         self._family = "SCSS"
         Defaults_css.ICON_MAPPINGS[self._family] = self.__icons
 
-    def add_icons(self, icons: Dict[str, str], name: str = None, default_family: bool = False):
+    def add_icons(
+            self,
+            icons: Dict[str, str],
+            name: str = Optional[None],
+            default_family: bool = False
+    ):
         """Add Icons to the family internal definition.
         Framework will not use direct class names in components but alias instead.
 

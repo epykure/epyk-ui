@@ -11,7 +11,6 @@ from epyk.core.html import Html
 
 from epyk.core.js import expr
 from epyk.core.css import Selector
-from epyk.core.css import Defaults_css
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsMenu

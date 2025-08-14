@@ -4,8 +4,7 @@
 import os
 import re
 from typing import List, Optional, Dict
-from epyk.core.css.themes import palettes
-from epyk.core.css.Colors import THEME_REFERENCE
+from . import palettes
 
 
 class ColorRange:
@@ -91,14 +90,14 @@ class Theme:
         return self.colors[self.index]
 
     def __getitem__(self, item: str):
-      """
+        """
 
-      This will raise an exception if the group does not exist for the theme.
-      """
-      if item in self.__colors:
-        return self.__colors[item]
+        This will raise an exception if the group does not exist for the theme.
+        """
+        if item in self.__colors:
+            return self.__colors[item]
 
-      return self.other_groups[item]
+        return self.other_groups[item]
 
     @property
     def white(self) -> str:
@@ -306,7 +305,7 @@ class Theme:
     def groups(self) -> List[str]:
         """Get all the technical / extra colors categories defined for a selected theme"""
         if self.other_groups is not None:
-          return ["theme", "grey", "warning", "danger", "success", "info"] + list(self.other_groups.keys())
+            return ["theme", "grey", "warning", "danger", "success", "info"] + list(self.other_groups.keys())
 
         return ["theme", "grey", "warning", "danger", "success", "info"]
 
@@ -328,7 +327,7 @@ class Theme:
             else:
                 # Add the extra category to the internal mapping anyway
                 if self.other_groups is None:
-                  self.other_groups = {}
+                    self.other_groups = {}
                 self.other_groups[category] = self.category(category)
 
     def category(self, name: str, reverse: bool = None) -> List[str]:

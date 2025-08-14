@@ -22,6 +22,8 @@ from . import HtmlTrees
 from . import HtmlTags
 from . import HtmlStepper
 from . import HtmlDrawer
+from . import HtmlCanvas
+from . import HtmlSvg
 from . import Header
 
 from . import tables

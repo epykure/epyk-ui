@@ -8,21 +8,18 @@ Related Pages: https://www.w3schools.com/Jsref/prop_win_localstorage.asp
 """
 
 from typing import Union, Optional, Any, List
-from epyk.core.py import primitives
 
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsNodeDom
-
-# All the predefined variable types
 from epyk.core.js.fncs import JsFncs
-from epyk.core.js.primitives import JsBoolean
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsObject
+from epyk.core.js.primitives import JsBoolean, JsNumber, JsObject
+from epyk.core.js import indexedDB
 
 
 class JsUrl:
 
-    def createObjectURL(self, data: Union[primitives.JsDataModel, str]):
+    def createObjectURL(self, data: Union[primitives.JsDataModel, str]) -> JsObject.JsObject:
         """
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/Blob>`_
 
@@ -34,14 +31,13 @@ class JsUrl:
 
 class JsLocalStorage:
 
-    def key(self, i: Union[primitives.JsDataModel, int]):
+    def key(self, i: Union[primitives.JsDataModel, int]) -> JsObject.JsObject:
         """The key() method returns name of the key with the specified index.
 
         The localStorage object stores data with no expiration date.
         The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
         Usage::
-
           jsObj.localStorage.key(0)
 
         `Related Pages <https://www.w3schools.com/jsref/met_storage_key.asp>`_
@@ -65,21 +61,19 @@ class JsLocalStorage:
         """Python wrapper to getItem.
 
         Usage::
-
           jsObj.console.log(jsObj.sessionStorage["lastname"])
 
         :param item: The item name
         """
         return self.getItem(item)
 
-    def setItem(self, key: Union[primitives.JsDataModel, str], data: Any, force_json: bool = True):
+    def setItem(self, key: Union[primitives.JsDataModel, str], data: Any, force_json: bool = True) -> JsObject.JsObject:
         """Syntax for SAVING data to localStorage.
 
         The localStorage object stores data with no expiration date.
         The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
         Usage::
-
           jsObj.localStorage.getItem("lastname", "test")
 
         `Related Pages <https://www.w3schools.com/jsref/met_storage_setitem.asp>`_
@@ -97,14 +91,13 @@ class JsLocalStorage:
 
         return JsObject.JsObject("localStorage.setItem(%s, %s)" % (key, data))
 
-    def getItem(self, key: Union[primitives.JsDataModel, str], force_json: bool = True):
+    def getItem(self, key: Union[primitives.JsDataModel, str], force_json: bool = True) -> JsObject.JsObject:
         """Syntax for READING data from localStorage:
 
         The localStorage object stores data with no expiration date.
         The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
         Usage::
-
           jsObj.localStorage.getItem("lastname")
 
         `Related Pages <https://www.w3schools.com/jsref/met_storage_getitem.asp>`_
@@ -120,14 +113,13 @@ class JsLocalStorage:
 
         return JsObject.JsObject("localStorage.getItem(%s)" % key)
 
-    def removeItem(self, key: Union[primitives.JsDataModel, str]):
+    def removeItem(self, key: Union[primitives.JsDataModel, str]) -> JsFncs.JsFunction:
         """The removeItem() method removes the specified Storage Object item.
 
         The localStorage object stores data with no expiration date.
         The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
         Usage::
-
           jsObj.localStorage.removeItem("lastname")
 
         `Related Pages <https://www.w3schools.com/jsref/met_storage_removeitem.asp>`_
@@ -139,15 +131,13 @@ class JsLocalStorage:
         key = JsUtils.jsConvertData(key, None)
         return JsFncs.JsFunction("localStorage.removeItem(%s)" % key)
 
-    def clear(self):
-        """
-        The clear() method removes all the Storage Object item for this domain.
+    def clear(self) -> JsFncs.JsFunction:
+        """The clear() method removes all the Storage Object item for this domain.
 
         The localStorage object stores data with no expiration date.
         The data will not be deleted when the browser is closed, and will be available the next day, week, or year.
 
         Usage::
-
           jsObj.localStorage.clear()
 
         `Related Pages <https://www.w3schools.com/jsref/met_storage_clear.asp>`_
@@ -373,13 +363,11 @@ class JsHistory:
         return JsFncs.JsFunction("window.history.replaceState('%s', '%s', %s)" % (state, title, url))
 
     def updateState(self, key: str, val: str):
-        """Wrapper function
-
-        This function is a simple wrapping function on top of the pushState history method.
-        The purpose of this method is to make easier the update of the url whenever a component in the framework is updated.
+        """Wrapper function. This function is a simple wrapping function on top of the pushState history method.
+        The purpose of this method is to make easier the update of the url whenever a component in the framework is
+        updated.
 
         Usage::
-
           component.js.window.history.updateState(self.htmlCode, self.val)
 
         `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/History_API>`_
@@ -428,16 +416,16 @@ class JsHistory:
           dt.select([
             page.js.window.history.updateStateFromComponent(dt),
             page.js.window.history.updateStateFromComponent(input)
+          ])
 
         :param component: The HTML component
         """
-        return self.updateState(component.htmlCode, component.dom.content)
+        return self.updateState(component.html_code, component.dom.content)
 
     def cleanState(self, keys: List[str]):
         """Remove all attributes which are not useful or should not be passed.
 
         Usage::
-
           btn = page.ui.button("Clean URL")
           btn.click([page.js.window.history.cleanState(["date"])])
 
@@ -653,12 +641,11 @@ class JsWindow:
         """Interface to the History object.
 
         Usage::
-
           dt = page.ui.date(html_code="date")
           input = page.ui.input(html_code="input")
           dt.select([
             page.js.window.history.updateStateFromComponent(dt),
-            page.js.window.history.updateStateFromComponent(input)
+            page.js.window.history.updateStateFromComponent(input)])
 
         :return: A Python Js History object.
         """
@@ -715,15 +702,7 @@ class JsWindow:
         replace = JsUtils.jsConvertData(replace, None)
         return JsFncs.JsFunction("%s.open(%s, %s, %s, %s)" % (window_id, url, name, specs, replace))
 
-    def postData(self, data):
-        """
-
-        :param data:
-        """
-        if not isinstance(data, list):
-            data = [data]
-
-    def download(self, data, file_name: str, profile: Optional[Union[dict, bool]] = False):
+    def download(self, data, file_name: str, profile: Optional[Union[dict, bool]] = False, data_tyep: str = "data:text/csv;base64"):
         """Download the data from a flat file.
 
         Usage::
@@ -737,9 +716,10 @@ class JsWindow:
         :return: Void,
         """
         data = JsUtils.jsConvertData(data, None)
+        data_tyep = JsUtils.jsConvertData(data_tyep, None)
         return JsFncs.JsFunction(JsUtils.jsConvertFncs([
             self.page.js.createElement("a", js_code="a_temp").setAttribute("download", file_name).setAttribute(
-                "href", JsFncs.JsFunction("'data:text/csv;base64,'+ %s" % data)),
+                "href", JsFncs.JsFunction("%s + ','+ %s" % (data_tyep, data))),
             self.page.js.body.appendChild(self.page.js.objects.get("a_temp")),
             self.page.js.objects.dom.get("a_temp").click(),
             # self.__src.objects.dom.get("a_temp").remove()
@@ -870,14 +850,12 @@ class JsWindow:
 
     def setInterval(self, js_funcs: Union[list, str], var_id: str, milliseconds: int, window_id: str = "window",
                     set_var: bool = True, profile=False, run_on_start: bool = False):
-        """The setInterval() method calls a function or evaluates an expression at specified intervals (in milliseconds).
-
-        The setInterval() method will continue calling the function until clearInterval() is called, or the window
-        is closed.
+        """The setInterval() method calls a function or evaluates an expression at specified intervals
+        (in milliseconds). The setInterval() method will continue calling the function until clearInterval() is called,
+        or the window is closed.
         #TODO: Add a control on setInterval to only have one created
 
         Usage::
-
           jsObj.window.setInterval([jsObj.console.log(jsObj.math.random())], 5000)
 
         `Related Pages <https://www.w3schools.com/jsref/met_win_setinterval.asp>`_
@@ -979,13 +957,12 @@ class JsWindow:
         return JsFncs.JsFunction("%s.clearTimeout(%s)" % (window_id, JsUtils.jsConvertData(data, js_funcs)))
 
     def getComputedStyle(self, element, pseudo_element=None, window_id: str = "window"):
-        """The getComputedStyle() method gets all the actual (computed) CSS property and values of the specified element.
-
-        `Related Pages <https://www.w3schools.com/jsref/jsref_getcomputedstyle.asp>`_
+        """The getComputedStyle() method gets all the actual (computed) CSS property and values of the specified
+        element. `Related Pages <https://www.w3schools.com/jsref/jsref_getcomputedstyle.asp>`_
 
         :param element: The element to get the computed style for
         :param pseudo_element: Optional.
-        :param window_id: Optional. The JavaScript window object.
+        :param window_id: Optional. The JavaScript window object
 
         :return: A CSSStyleDeclaration object containing CSS declaration block of the element
         """
@@ -996,17 +973,19 @@ class JsWindow:
 
     def getPropertyValue(self, name, element_id: str = ":root", pseudo_element=None, window_id: str = "window"):
         """Set value for a given style attribute for DOM component on the page.
-
         `W3School <https://www.w3schools.com/css/css3_variables_javascript.asp>`_
 
         :param name: CSS Style attribute
         :param element_id: Optional. Component ID on the page. Default :root
+        :param pseudo_element: Optional.
         :param window_id: Optional. The JavaScript window object.
         """
         name = JsUtils.jsConvertData(name, None)
         element_id = JsUtils.jsConvertData(element_id, None)
         return JsUtils.jsWrap("%s.getPropertyValue(%s)" % (
-            self.getComputedStyle(JsNodeDom.JsDoms("document").querySelector(element_id), pseudo_element, window_id=window_id).toStr(), name))
+            self.getComputedStyle(
+                JsNodeDom.JsDoms("document").querySelector(element_id),
+                pseudo_element, window_id=window_id).toStr(), name))
 
     def setProperties(self, values, element_id: str = ":root") -> JsObject.JsObject:
         """Set style properties for a specific DOM component to the page.
@@ -1080,10 +1059,10 @@ class JsWindow:
         """
         return self.addEventListener("offline", js_funcs, window_id, profile)
 
-    def onOnline(self, js_funcs: Union[primitives.JsDataModel, str], window_id: str = "window",
-                  profile: Optional[Union[dict, bool]] = False):
+    def onOnline(
+            self, js_funcs: Union[primitives.JsDataModel, str], window_id: str = "window",
+            profile: Optional[Union[dict, bool]] = False):
         """The browser starts working online.
-
         `Learn more dom event <https://www.w3schools.com/jsref/dom_obj_event.asp>`_
 
         :param js_funcs: The Javascript functions
@@ -1092,8 +1071,9 @@ class JsWindow:
         """
         return self.addEventListener("online", js_funcs, window_id, profile)
 
-    def onBlur(self, js_funcs: Union[primitives.JsDataModel, str], window_id: str = "window",
-                  profile: Optional[Union[dict, bool]] = False):
+    def onBlur(
+            self, js_funcs: Union[primitives.JsDataModel, str], window_id: str = "window",
+            profile: Optional[Union[dict, bool]] = False):
         """TAn element loses focus.
 
         `Learn more dom event <https://www.w3schools.com/jsref/dom_obj_event.asp>`_
@@ -1104,8 +1084,9 @@ class JsWindow:
         """
         return self.addEventListener("blur", js_funcs, window_id, profile)
 
-    def onFocus(self, js_funcs: Union[primitives.JsDataModel, str], window_id: str = "window",
-                  profile: Optional[Union[dict, bool]] = False):
+    def onFocus(
+            self, js_funcs: Union[primitives.JsDataModel, str], window_id: str = "window",
+            profile: Optional[Union[dict, bool]] = False):
         """An element gets focus.
 
         `Learn more dom event <https://www.w3schools.com/jsref/dom_obj_event.asp>`_
@@ -1127,4 +1108,9 @@ class JsWindow:
         if i is None:
             return JsNumber.JsNumber.get("window[%(name)s]" % {"name": name})
 
-        return JsUtils.jsWrap("window[%(name)s] = (window[%(name)s] ?? %(start)s) + %(i)s" % {"name": name, "start": start, "i": i})
+        return JsUtils.jsWrap("window[%(name)s] = (window[%(name)s] ?? %(start)s) + %(i)s" % {
+            "name": name, "start": start, "i": i})
+
+    @property
+    def indexedDB(self):
+        ...

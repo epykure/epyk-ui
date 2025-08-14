@@ -1,28 +1,17 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 from pathlib import Path
-from typing import Union, Optional, List
-from epyk.core.py import primitives
-from epyk.core.py import types
+from typing import Union, Optional
+from epyk.core.py import primitives, types
 
-from epyk.core.html import Html, HtmlContainer
-from epyk.core.html.options import OptJsonFormatter
-from epyk.core.html.options import OptText
-from epyk.core.html.options import OptQrCode
-from epyk.core.html.options import OptQuill
+from epyk.core.html import Html
+from epyk.core.html.options import OptJsonFormatter, OptText, OptQrCode
 
-from epyk.core.js.html import JsHtmlStars
-from epyk.core.js.html import JsHtmlJson
-from epyk.core.js.html import JsHtmlQuill
-from epyk.core.js.packages import JsJsonFormatter
-from epyk.core.js.packages import JsQrCode
-from epyk.core.js.packages import JsQuill
+from epyk.core.js.html import JsHtmlStars, JsHtmlJson
+from epyk.core.js.packages import JsJsonFormatter, JsQrCode
 from epyk.core.js.primitives import JsObjects
 
 from epyk.core.js import JsUtils
-
-# The list of CSS classes
-from epyk.core.css.styles import GrpClsLayout
 from epyk.core.css import Defaults
 
 from epyk.core import data
@@ -40,6 +29,7 @@ class Hr(Html.Html):
                                             'background-color': background_color or page.theme.greys[5]})
         if align == "center":
             self.style.css.margin = "auto"
+        self.style.css.margin = "5px 0"
 
     def margin(self, left: int = 0, right: int = 0, unit: str = '%'):
         """Shortcut to set the margin let and right for this HTML component.
@@ -54,13 +44,6 @@ class Hr(Html.Html):
             self.style.css.margin_right = "%s%s" % (right, unit)
         self.style.css.width = "calc(100%% - %s%s)" % (left + right, unit)
         return self
-
-    @property
-    def style(self) -> GrpClsLayout.ClassStandard:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsLayout.ClassStandard(self)
-        return self._styleObj
 
     def __str__(self):
         return '<%s %s>' % (self.tag, self.get_attrs(css_class_names=self.style.get_classes()))
@@ -252,6 +235,7 @@ class Help(Html.Html):
         self.attr['class'].add(icon_details["icon"])
         self.attr['title'] = val
         self._jsStyles = options
+        self.style.css.margin = "5px 0"
 
     @classmethod
     def get_requirements(cls, page: primitives.PageModel, options: types.OPTION_TYPE = None) -> tuple:
@@ -264,13 +248,6 @@ class Help(Html.Html):
             return (options['icon_family'],)
 
         return (page.icons.family,)
-
-    @property
-    def style(self) -> GrpClsLayout.ClassHelp:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsLayout.ClassHelp(self)
-        return self._styleObj
 
     def __str__(self):
         return '<%(t)s %(a)s></%(t)s>' % {"a": self.get_attrs(css_class_names=self.style.get_classes()), "t": self.tag}
@@ -705,128 +682,3 @@ class HtmlCaptcha(Html.Html):
     def __str__(self):
         return '<%s %s>%s</%s>' % (
         self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)
-
-
-class HtmlQuill(Html.Html):
-    name = 'Wysiwyg'
-    tag = "div"
-    requirements = ('quill',)
-    _option_cls = OptQuill.OptionsQuill
-
-    class Toolbar(HtmlContainer.Div):
-
-        def select(self, cls: str, values: list, auto_prefix: bool = True):
-            """Add select to the toolbar.
-
-            :param cls: CSS Class name for the component
-            :param values: Component values
-            :param auto_prefix: Auto prefix class name with ql if missing
-            """
-            sl = self.page.ui.div([], tag="select", html_code=self.sub_html_code("_button", auto_inc=True))
-            if values:
-                for v in values:
-                    if not isinstance(v, dict):
-                        v = {"value": v}
-                    opt = self.page.ui.div(v.get("text", ""), tag="option", html_code=self.sub_html_code("_button", auto_inc=True))
-                    opt.attr["value"] = v["value"]
-                    sl.add(opt)
-            sl.style.clear_all(True, False)
-            if auto_prefix and not cls.startswith("ql"):
-                sl.classList.add("ql-%s" % cls)
-                sl.attr["class"] = "ql-%s" % cls
-            else:
-                sl.classList.add(cls)
-            self.add(sl)
-            return sl
-
-        def button(self, cls: str, auto_prefix: bool = True):
-            """Add button to the toolbar.
-
-            :param cls: CSS Class name for the component
-            :param auto_prefix: Auto prefix class name with ql if missing
-            """
-            bt = self.page.ui.div("", tag="button", html_code=self.sub_html_code("_button", auto_inc=True))
-            bt.style.clear_all(True, False)
-            if auto_prefix and not cls.startswith("ql"):
-                bt.classList.add("ql-%s" % cls)
-            else:
-                bt.classList.add(cls)
-            self.add(bt)
-            return bt
-
-    def __init__(self, page: primitives.PageModel, record, width: tuple, height: tuple, options: Optional[dict],
-                 html_code: str, profile: Optional[Union[bool, dict]]):
-        super(HtmlQuill, self).__init__(
-            page, record, profile=profile, options=options, html_code=html_code, css_attrs={
-                "height": height, "width": width})
-        self.toolbar = None
-
-    @property
-    def options(self) -> OptQuill.OptionsQuill:
-        """Property to the component options. Options can either impact the Python side or the Javascript builder.
-        Python can pass some options to the JavaScript layer.
-        """
-        return super().options
-
-    def build(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None,
-              profile: types.PROFILE_TYPE = None, component_id: str = None,
-              stop_state: bool = True, dataflows: List[dict] = None):
-        """Update Quill component with context and / or data changes.
-
-        :param data: Optional. Text
-        :param options: Optional. Specific Python options available for this component
-        :param profile: Optional. A flag to set the component performance storage
-        :param component_id: Optional. Not used
-        :param stop_state: Remove the top panel for the component state (error, loading...)
-        :param dataflows: Chain of data transformations
-        """
-        builder_fnc = self.options.config_js(options).toStr()
-        if data:
-            data = self.js.setText(JsUtils.dataFlows(data, dataflows, self.page)).toStr()
-        return '''%(chartId)s = new Quill(document.getElementById(%(hmlCode)s), %(builder)s); %(expr)s
-                ''' % {
-            "chartId": self.js_code, "hmlCode": JsUtils.jsConvertData(component_id or self.html_code, None),
-            'builder': builder_fnc, "expr": data}
-
-    def set_toolbar(self) -> Toolbar:
-        """The Toolbar module allow users to easily format Quill's contents.
-        `Quill <https://quilljs.com/docs/modules/toolbar>`_
-        """
-        self.toolbar = self.Toolbar(
-            self.page, [], None, None, None, None, None,
-            False, "", None, self.sub_html_code("toolbar"),
-            "div", None, {}, None)
-        self.toolbar.style.clear_all(True, False)
-        self.toolbar.options.managed = False
-        self.options.modules.toolbar = "#%s" % self.sub_html_code("toolbar")
-        return self.toolbar
-
-    @property
-    def dom(self) -> JsHtmlQuill.Quill:
-        """Return all the Javascript functions defined for an HTML Component.
-        Those functions will use plain javascript available for a DOM element by default.
-        """
-        if self._dom is None:
-            self._dom = JsHtmlQuill.Quill(component=self, page=self.page)
-        return self._dom
-
-    @property
-    def js(self) -> JsQuill.Quill:
-        """Return the Javascript internal object.
-
-        :return: A Javascript object
-        """
-        if self._js is None:
-            self._js = JsQuill.Quill(
-                selector="window['%s']" % self.js_code, set_var=False, component=self, page=self.page)
-        return self._js
-
-    def __str__(self):
-        self.page.properties.js.add_builders(self.refresh())
-        if self.toolbar:
-            return '%s<%s %s>%s</%s>' % (
-                self.toolbar.html(), self.tag,
-                self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)
-
-        return '<%s %s>%s</%s>' % (
-            self.tag, self.get_attrs(css_class_names=self.style.get_classes()), self._vals, self.tag)

@@ -1,395 +1,362 @@
 from typing import Union
 from epyk.core.py import primitives
-
 from epyk.core.js import JsUtils
 from epyk.core.js.primitives import JsNumber
 
 
 class JsMaths:
-  """
-  Wrapper for the Javascript Math module
+    """Wrapper for the Javascript Math module
 
-  Related Pages:
-
-        https://www.w3schools.com/jsref/jsref_obj_math.asp
-  """
-
-  @property
-  def E(self) -> JsNumber.JsNumber:
+    `w3schools <https://www.w3schools.com/jsref/jsref_obj_math.asp>`_
     """
-    The E property returns the Euler's number and the base of natural logarithms, approximately 2.718.
 
-    Usage::
+    @property
+    def E(self) -> JsNumber.JsNumber:
+        """The E property returns the Euler's number and the base of natural logarithms, approximately 2.718.
 
-      page.js.math.E
+        Usage::
+          page.js.math.E
 
-    Related Pages:
+        Related Pages:
 
-      https//www.w3schools.com/jsref/jsref_e.asp
+          https//www.w3schools.com/jsref/jsref_e.asp
 
-    :return: Returns Euler's number (approx. 2.718)
-    """
-    return JsNumber.JsNumber("Math.E", is_py_data=False)
+        :return: Returns Euler's number (approx. 2.718)
+        """
+        return JsNumber.JsNumber("Math.E", is_py_data=False)
 
-  @property
-  def LN2(self):
-    """
-    The LN2 property returns the natural logarithm of 2, approximately 0.693.
+    @property
+    def LN2(self) -> JsNumber.JsNumber:
+        """The LN2 property returns the natural logarithm of 2, approximately 0.693.
 
-    Usage::
+        Usage::
+          jsObj.math.LN2
 
-      jsObj.math.LN2
+        Related Pages:
 
-    Related Pages:
+          https//www.w3schools.com/jsref/jsref_ln2.asp
 
-      https//www.w3schools.com/jsref/jsref_ln2.asp
+        :return: Returns the natural logarithm of 2 (approx. 0.693)
+        """
+        return JsNumber.JsNumber("Math.LN2", is_py_data=False)
 
-    :return: Returns the natural logarithm of 2 (approx. 0.693)
-    """
-    return JsNumber.JsNumber("Math.LN2", is_py_data=False)
+    @property
+    def LN10(self) -> JsNumber.JsNumber:
+        """The LN10 property returns the natural logarithm of 10, approximately 2.302.
 
-  @property
-  def LN10(self):
-    """
-    The LN10 property returns the natural logarithm of 10, approximately 2.302.
+        Usage::
+          jsObj.math.LN10
 
-    Usage::
+        Related Pages:
 
-      jsObj.math.LN10
+          https://www.w3schools.com/jsref/jsref_ln10.asp
 
-    Related Pages:
+        :return: Returns the natural logarithm of 10 (approx. 2.302)
+        """
+        return JsNumber.JsNumber("Math.LN10", is_py_data=False)
 
-      https://www.w3schools.com/jsref/jsref_ln10.asp
+    @property
+    def LOG2E(self) -> JsNumber.JsNumber:
+        """The LOG2E property returns the base-2 logarithm of E, approximately 1.442
 
-    :return: Returns the natural logarithm of 10 (approx. 2.302)
-    """
-    return JsNumber.JsNumber("Math.LN10", is_py_data=False)
+        Usage::
+          jsObj.math.LOG2E
 
-  @property
-  def LOG2E(self):
-    """
-    The LOG2E property returns the base-2 logarithm of E, approximately 1.442
+        Related Pages:
 
-    Usage::
+          https//www.w3schools.com/jsref/jsref_log2e.asp
 
-      jsObj.math.LOG2E
+        :return: Returns the base-2 logarithm of E (approx. 1.442)
+        """
+        return JsNumber.JsNumber("Math.LOG2E", is_py_data=False)
 
-    Related Pages:
+    @property
+    def SQRT1_2(self) -> JsNumber.JsNumber:
+        """The SQRT1_2 property returns the square root of 1/2, approximately 0.707.
 
-      https//www.w3schools.com/jsref/jsref_log2e.asp
+        Usage::
+          jsObj.math.SQRT1_2
 
-    :return: Returns the base-2 logarithm of E (approx. 1.442)
-    """
-    return JsNumber.JsNumber("Math.LOG2E", is_py_data=False)
+        Related Pages:
 
-  @property
-  def SQRT1_2(self):
-    """
-    The SQRT1_2 property returns the square root of 1/2, approximately 0.707.
+          https//www.w3schools.com/jsref/jsref_sqrt1_2.asp
 
-    Usage::
+        :return: Returns the square root of 1/2 (approx. 0.707)
+        """
+        return JsNumber.JsNumber("Math.SQRT1_2", is_py_data=False)
 
-      jsObj.math.SQRT1_2
+    @property
+    def SQRT2(self) -> JsNumber.JsNumber:
+        """The SQRT2 property returns the square root of 2, approximately 1.414.
 
-    Related Pages:
+        Usage::
+          jsObj.math.SQRT2
 
-      https//www.w3schools.com/jsref/jsref_sqrt1_2.asp
+        Related Pages:
 
-    :return: Returns the square root of 1/2 (approx. 0.707)
-    """
-    return JsNumber.JsNumber("Math.SQRT1_2", is_py_data=False)
+          https//www.w3schools.com/jsref/jsref_sqrt2.asp
 
-  @property
-  def SQRT2(self) -> JsNumber:
-    """
-    The SQRT2 property returns the square root of 2, approximately 1.414.
+        :return: Returns the square root of 2 (approx. 1.414)
+        """
+        return JsNumber.JsNumber("Math.SQRT2", is_py_data=False)
 
-    Usage::
+    @property
+    def PI(self) -> JsNumber.JsNumber:
+        """The PI property returns the ratio of a circle's area to the square of its radius, approximately 3.14.
 
-      jsObj.math.SQRT2
+        Related Pages:
 
-    Related Pages:
+          https://www.w3schools.com/jsref/jsref_pi.asp
+        """
+        return JsNumber.JsNumber("Math.PI", is_py_data=False)
 
-      https//www.w3schools.com/jsref/jsref_sqrt2.asp
+    def random(
+            self,
+            min_val: Union[int, primitives.JsDataModel] = 0,
+            max_val: Union[int, primitives.JsDataModel] = 1
+    ) -> JsNumber.JsNumber:
+        """Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
 
-    :return: Returns the square root of 2 (approx. 1.414)
-    """
-    return JsNumber.JsNumber("Math.SQRT2", is_py_data=False)
+        Usage::
+          page.js.math.random()
+          jsObj.math.random(10, 100)
 
-  @property
-  def PI(self):
-    """
-    The PI property returns the ratio of a circle's area to the square of its radius, approximately 3.14.
+        Related Pages:
 
-    Related Pages:
+          https://www.w3schools.com/js/js_random.asp
 
-      https://www.w3schools.com/jsref/jsref_pi.asp
-    """
-    return JsNumber.JsNumber("Math.PI", is_py_data=False)
+        :param min_val: Optional The minimum value for the random function.
+        :param max_val: Optional The maximum value for the random function.
 
-  def random(self, min_val: Union[int, primitives.JsDataModel] = 0, max_val: Union[int, primitives.JsDataModel] = 1):
-    """
-    Math.random() returns a random number between 0 (inclusive),  and 1 (exclusive):
+        :return: A Number, representing a number from 0 up to but not including 1.
+        """
+        if min_val == 0 and max_val == 1:
+            return JsNumber.JsNumber("Math.random()", is_py_data=False)
 
-    Usage::
+        min_val = JsUtils.jsConvertData(min_val, None)
+        max_val = JsUtils.jsConvertData(max_val, None)
+        return JsNumber.JsNumber("Math.random() * (%(max)s - %(min)s + 1) + %(min)s" % {"min": min_val, "max": max_val})
 
-      page.js.math.random()
-      jsObj.math.random(10, 100)
+    def min(self, *args) -> JsNumber.JsNumber:
+        """The min() method returns the number with the lowest value.
 
-    Related Pages:
+        Usage::
+          jsObj.math.min(10, 45, 100, -3, 56)
 
-      https://www.w3schools.com/js/js_random.asp
+        Related Pages:
 
-    :param Union[int, primitives.JsDataModel] min_val: Optional The minimum value for the random function.
-    :param Union[int, primitives.JsDataModel] max_val: Optional The maximum value for the random function.
+          https://www.w3schools.com/jsref/jsref_min.asp
 
-    :return: A Number, representing a number from 0 up to but not including 1.
-    """
-    if min_val == 0 and max_val == 1:
-      return JsNumber.JsNumber("Math.random()", is_py_data=False)
+        :param args: Optional. One or more numbers to compare.
 
-    min_val = JsUtils.jsConvertData(min_val, None)
-    max_val = JsUtils.jsConvertData(max_val, None)
-    return JsNumber.JsNumber("Math.random() * (%(max)s - %(min)s + 1) + %(min)s" % {"min": min_val, "max": max_val})
+        :return: A Number, representing the lowest number of the arguments, or Infinity
+        if no arguments are given, or NaN if one or more arguments are not numbers
+        """
+        js_args = [JsUtils.jsConvertData(a, None) for a in args]
+        return JsNumber.JsNumber("Math.min(%s)" % ",".join([str(jsa) for jsa in js_args]), is_py_data=False)
 
-  def min(self, *args):
-    """
-    The min() method returns the number with the lowest value.
+    def max(self, *args) -> JsNumber.JsNumber:
+        """The max() method returns the number with the highest value.
 
-    Usage::
+        Usage::
+          jsObj.math.max(10, 45, 100, -3, 56)
 
-      jsObj.math.min(10, 45, 100, -3, 56)
+        Related Pages:
 
-    Related Pages:
+          https://www.w3schools.com/jsref/jsref_max.asp
+          https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
 
-      https://www.w3schools.com/jsref/jsref_min.asp
+        :param args: Optional. One or more numbers to compare.
 
-    :param args: Optional. One or more numbers to compare.
+        :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN
+        if one or more arguments are not numbers
+        """
+        js_args = [JsUtils.jsConvertData(a, None) for a in args]
+        if len(js_args) == 1 and getattr(js_args[0], '_jsClass', None) == "Array":
+            # ES2015 use of the new spread operator
+            js_args[0] = "...%s" % js_args[0]
+        return JsNumber.JsNumber("Math.max(%s)" % ",".join([str(jsa) for jsa in js_args]), is_py_data=False)
 
-    :return: A Number, representing the lowest number of the arguments, or Infinity
-    if no arguments are given, or NaN if one or more arguments are not numbers
-    """
-    js_args = [JsUtils.jsConvertData(a, None) for a in args]
-    return JsNumber.JsNumber("Math.min(%s)" % ",".join([str(jsa) for jsa in js_args]), is_py_data=False)
+    def floor(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The floor() method rounds a number DOWNWARDS to the nearest integer, and returns the result.
 
-  def max(self, *args):
-    """
-    The max() method returns the number with the highest value.
+        Usage::
+          jsObj.math.floor(13.566)
 
-    Usage::
+        Related Pages:
 
-      jsObj.math.max(10, 45, 100, -3, 56)
+          https//www.w3schools.com/jsref/jsref_floor.asp
 
-    Related Pages:
+        :param number: Required. The number you want to round.
 
-      https://www.w3schools.com/jsref/jsref_max.asp
-      https://www.jstips.co/en/javascript/calculate-the-max-min-value-from-an-array/
+        :return: A Number, representing the nearest integer when rounding downwards
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.floor(%s)" % number, is_py_data=False)
 
-    :param args: Optional. One or more numbers to compare.
+    def trunc(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The trunc() method returns the integer part of a number.
 
-    :return: A Number, representing the highest number of the arguments, or -Infinity if no arguments are given, or NaN
-    if one or more arguments are not numbers
-    """
-    js_args = [JsUtils.jsConvertData(a, None) for a in args]
-    if len(js_args) == 1 and getattr(js_args[0], '_jsClass', None) == "Array":
-      # ES2015 use of the new spread operator
-      js_args[0] = "...%s" % js_args[0]
-    return JsNumber.JsNumber("Math.max(%s)" % ",".join([str(jsa) for jsa in js_args]), is_py_data=False)
+        Usage::
+          page.js.math.trunc(rptObj.js.math.SQRT2)
 
-  def floor(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The floor() method rounds a number DOWNWARDS to the nearest integer, and returns the result.
+        Related Pages:
 
-    Usage::
+          https//www.w3schools.com/jsref/jsref_trunc.asp
 
-      jsObj.math.floor(13.566)
+        :param number: Number. Required. A number.
 
-    Related Pages:
+        :return: Returns the integer part of a number (x).
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.trunc(%s)" % number, is_py_data=False)
 
-      https//www.w3schools.com/jsref/jsref_floor.asp
+    def abs(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The abs() method returns the absolute value of a number.
 
-    :param Union[float, primitives.JsDataModel] number: Required. The number you want to round.
+        Related Pages:
 
-    :return: A Number, representing the nearest integer when rounding downwards
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.floor(%s)" % number, is_py_data=False)
+          https//www.w3schools.com/jsref/jsref_abs.asp
 
-  def trunc(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The trunc() method returns the integer part of a number.
+        :param number: A number.
 
-    Usage::
+        :return: Returns the absolute value of x.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.abs(%s)" % number, is_py_data=False)
 
-      page.js.math.trunc(rptObj.js.math.SQRT2)
+    def cos(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The acos() method returns the cosinus of a number as a value between 0 and PI radians.
 
-    Related Pages:
+        Related Pages:
 
-      https//www.w3schools.com/jsref/jsref_trunc.asp
+          https//www.w3schools.com/jsref/jsref_cos.asp
 
-    :param Union[float, primitives.JsDataModel] number: Number. Required. A number.
+        :param number: Returns the cosine of x (x is in radians)
 
-    :return: Returns the integer part of a number (x).
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.trunc(%s)" % number, is_py_data=False)
+        :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.cos(%s)" % number, is_py_data=False)
 
-  def abs(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The abs() method returns the absolute value of a number.
+    def sin(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The sin() method returns the sinus of a number as a value between 0 and PI radians.
 
-    Related Pages:
+        Related Pages:
 
-      https//www.w3schools.com/jsref/jsref_abs.asp
+          https//www.w3schools.com/jsref/jsref_sin.asp
 
-    :param Union[infloatt, primitives.JsDataModel] number: A number.
+        :param number: Returns the sinus of x (x is in radians)
 
-    :return: Returns the absolute value of x.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.abs(%s)" % number, is_py_data=False)
+        :return: Number. from -1 to 1, representing the sine of an angle, or NaN if the value is empty.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.sin(%s)" % number, is_py_data=False)
 
-  def cos(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The acos() method returns the cosinus of a number as a value value between 0 and PI radians.
+    def log(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The log() method returns the natural logarithm (base E) of a number.
 
-    Related Pages:
+        Related Pages:
 
-      https//www.w3schools.com/jsref/jsref_cos.asp
+          https//www.w3schools.com/jsref/jsref_log.asp
 
-    :param Union[float, primitives.JsDataModel] number: Returns the cosine of x (x is in radians).
+        :param number: Number. Required. A number
 
-    :return: A Number, from -1 to 1, representing the cosine of an angle, or NaN if the value is empty.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.cos(%s)" % number, is_py_data=False)
+        :return: Returns the natural logarithm (base E) of x.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.log(%s)" % number, is_py_data=False)
 
-  def sin(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The sin() method returns the sinus of a number as a value value between 0 and PI radians.
+    def exp(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The exp() method returns the value of Ex, where E is Euler's number (approximately 2.7183) and x is the
+        number passed to it.
 
-    Related Pages:
+        Related Pages:
 
-      https//www.w3schools.com/jsref/jsref_sin.asp
+          https//www.w3schools.com/jsref/jsref_exp.asp
 
-    :param Union[float, primitives.JsDataModel] number: Returns the sinus of x (x is in radians).
+        :param number: Number. Required. A number
 
-    :return: Number. from -1 to 1, representing the sine of an angle, or NaN if the value is empty.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.sin(%s)" % number, is_py_data=False)
+        :return: Returns the value of exponential of x,
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.exp(%s)" % number, is_py_data=False)
 
-  def log(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The log() method returns the natural logarithm (base E) of a number.
+    def round(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The round() method rounds a number to the nearest integer.
 
-    Related Pages:
+        Note: 2.49 will be rounded down (2), and 2.5 will be rounded up (3).
 
-      https//www.w3schools.com/jsref/jsref_log.asp
+        Usage::
+          jsObj.objects.number.new(23.6, varName="MyNumber")
+          jsObj.math.round(jsObj.objects.number.get("MyNumber"))
 
-    :param Union[float, primitives.JsDataModel] number: Number. Required. A number.
+        Related Pages:
 
-    :return: Returns the natural logarithm (base E) of x.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.log(%s)" % number, is_py_data=False)
+          https//www.w3schools.com/jsref/jsref_round.asp
 
-  def exp(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The exp() method returns the value of Ex, where E is Euler's number (approximately 2.7183) and x is the
-    number passed to it.
+        :param number: The number to be rounded.
 
-    Related Pages:
+        :return: Rounds x to the nearest integer.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.round(%s)" % number, is_py_data=False)
 
-      https//www.w3schools.com/jsref/jsref_exp.asp
+    def sqrt(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The sqrt() method returns the square root of a number.
 
-    :param Union[float, primitives.JsDataModel] number: Number. Required. A number,
+        Usage::
+          jsObj.objects.number.new(23.6, varName="MyNumber")
+          jsObj.math.sqrt(jsObj.objects.number.get("MyNumber"))
 
-    :return: Returns the value of exponential of x,
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.exp(%s)" % number, is_py_data=False)
+        Related Pages:
 
-  def round(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The round() method rounds a number to the nearest integer.
+          https//www.w3schools.com/jsref/jsref_sqrt.asp
 
-    Note: 2.49 will be rounded down (2), and 2.5 will be rounded up (3).
+        :param number: A number.
 
-    Usage::
+        :return: A Number. If x is a negative number, NaN is returned.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.sqrt(%s)" % number, is_py_data=False)
 
-      jsObj.objects.number.new(23.6, varName="MyNumber")
-      jsObj.math.round(jsObj.objects.number.get("MyNumber"))
+    def ceil(self, number: Union[float, primitives.JsDataModel]) -> JsNumber.JsNumber:
+        """The ceil() method rounds a number UPWARDS to the nearest integer, and returns the result.
 
-    Related Pages:
+        Usage::
+          jsObj.math.ceil(jsObj.objects.number.get("MyNumber"))
 
-      https//www.w3schools.com/jsref/jsref_round.asp
+        Related Pages:
 
-    :param Union[float, primitives.JsDataModel] number: The number to be rounded.
+          https//www.w3schools.com/jsref/jsref_ceil.asp
 
-    :return: Rounds x to the nearest integer.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.round(%s)" % number, is_py_data=False)
+        :param number: The number you want to round
 
-  def sqrt(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The sqrt() method returns the square root of a number.
+        :return: Returns x, rounded upwards to the nearest integer.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        return JsNumber.JsNumber("Math.ceil(%s)" % number, is_py_data=False)
 
-    Usage::
+    @staticmethod
+    def pow(
+            number: Union[primitives.JsDataModel, float],
+            power: Union[primitives.JsDataModel, int]
+    ) -> JsNumber.JsNumber:
+        """The pow() method returns the value of x to the power of y (xy).
 
-      jsObj.objects.number.new(23.6, varName="MyNumber")
-      jsObj.math.sqrt(jsObj.objects.number.get("MyNumber"))
+        Usage::
+          jsObj.objects.number.new(23.6, varName="MyNumber")
+          jsObj.math.pow(jsObj.objects.number.get("MyNumber"), 2)
 
-    Related Pages:
+        Related Pages:
 
-      https//www.w3schools.com/jsref/jsref_sqrt.asp
+          https//www.w3schools.com/jsref/jsref_pow.asp
 
-    :param Union[float, primitives.JsDataModel] number: A number.
+        :param number: The base
+        :param power: The exponent
 
-    :return: A Number. If x is a negative number, NaN is returned.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.sqrt(%s)" % number, is_py_data=False)
-
-  def ceil(self, number: Union[float, primitives.JsDataModel]):
-    """
-    The ceil() method rounds a number UPWARDS to the nearest integer, and returns the result.
-
-    Usage::
-
-      jsObj.math.ceil(jsObj.objects.number.get("MyNumber"))
-
-    Related Pages:
-
-      https//www.w3schools.com/jsref/jsref_ceil.asp
-
-    :param Union[float, primitives.JsDataModel] number: The number you want to round.
-
-    :return: Returns x, rounded upwards to the nearest integer.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    return JsNumber.JsNumber("Math.ceil(%s)" % number, is_py_data=False)
-
-  @staticmethod
-  def pow(number: Union[primitives.JsDataModel, float], power: Union[primitives.JsDataModel, int]):
-    """
-    The pow() method returns the value of x to the power of y (xy).
-
-    Usage::
-
-      jsObj.objects.number.new(23.6, varName="MyNumber")
-      jsObj.math.pow(jsObj.objects.number.get("MyNumber"), 2)
-
-    Related Pages:
-
-      https//www.w3schools.com/jsref/jsref_pow.asp
-
-    :param Union[float, primitives.JsDataModel] number: The base.
-    :param Union[int, primitives.JsDataModel] power: The exponent.
-
-    :return: Returns the value of x to the power of y.
-    """
-    number = JsUtils.jsConvertData(number, None)
-    power = JsUtils.jsConvertData(power, None)
-    return JsNumber.JsNumber("Math.pow(%s, %s)" % (number, power), is_py_data=False)
+        :return: Returns the value of x to the power of y.
+        """
+        number = JsUtils.jsConvertData(number, None)
+        power = JsUtils.jsConvertData(power, None)
+        return JsNumber.JsNumber("Math.pow(%s, %s)" % (number, power), is_py_data=False)

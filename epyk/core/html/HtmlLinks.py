@@ -13,8 +13,8 @@ from epyk.core.html.options import OptText
 
 
 class ExternalLink(Html.Html):
-    name = 'External link'
-    tag = "a"
+    name: str = 'External link'
+    tag: str = "a"
     _option_cls = OptText.OptionsLink
 
     def __init__(self, page: primitives.PageModel, text: str, url: str, icon: str, helper: str, height: tuple,
@@ -163,9 +163,9 @@ class ExternalLink(Html.Html):
 
 
 class DataLink(Html.Html):
-    name = 'Data link'
-    filename = "Download"
-    tag = "a"
+    name: str = 'Data link'
+    filename: str = "Download"
+    tag: str = "a"
     _option_cls = OptText.OptionsLink
 
     def __init__(self, page: primitives.PageModel, text: str, value: Any, width: tuple, height: tuple, fmt: str,

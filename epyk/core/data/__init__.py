@@ -4,13 +4,12 @@
 import json
 import sys
 
-from typing import Any
-from epyk.core.data import Data
-from epyk.core.data import DataPy
-from epyk.core.data import DataEvent
-
-from epyk.core.js.objects.JsData import Datamap
-from epyk.core.js.JsLocation import URLSearchParams
+from typing import Any, Optional
+from . import Data
+from . import DataPy
+from . import DataEvent
+from ..js.objects.JsData import Datamap
+from ..js.JsLocation import URLSearchParams
 
 
 # Shortcut data in the framework.
@@ -54,109 +53,102 @@ list_items = DataPy.ListItems()
 
 class Sent:
 
-  def __init__(self, data):
-    self.__data = data
+    def __init__(self, data):
+        self.__data = data
 
-  def get(self, name: str = None):
-    """Set the option attribute to be added on the Javascript side during the component build.
+    def get(self, name: Optional[str] = None):
+        """Set the option attribute to be added on the Javascript side during the component build.
 
-    :param name: The attribute name
-    """
-    return self.__data[name or sys._getframe().f_back.f_code.co_name]
+        :param name: The attribute name
+        """
+        return self.__data[name or sys._getframe().f_back.f_code.co_name]
 
 
 class Received:
+    data_sent = None
 
-  data_sent = None
+    def __init__(self, data=None, tags=None):
+        self.__data = data
+        self.__tags = tags
+        self.__response_tags = set()
 
-  def __init__(self, data=None, tags=None):
-    self.__data = data
-    self.__tags = tags
-    self.__response_tags = set()
-
-  def set(self, value: Any, name: str = None):
-    """ Set the option attribute to be added on the Javascript side during the component build.
+    def set(self, value: Any, name: Optional[str] = None):
+        """ Set the option attribute to be added on the Javascript side during the component build.
 
     :param value: The value for the name
     :param name: The attribute name
     """
-    self.__response_tags.add(name or sys._getframe().f_back.f_code.co_name)
-    self.__data[name or sys._getframe().f_back.f_code.co_name] = value
+        self.__response_tags.add(name or sys._getframe().f_back.f_code.co_name)
+        self.__data[name or sys._getframe().f_back.f_code.co_name] = value
 
-  def get(self, name: str = None):
-    """ Set the option attribute to be added on the Javascript side during the component build.
+    def get(self, name: Optional[str] = None):
+        """ Set the option attribute to be added on the Javascript side during the component build.
 
     :param name: The attribute name
     """
-    if self.__data is not None:
-      return self.__data[name or sys._getframe().f_back.f_code.co_name]
+        if self.__data is not None:
+            return self.__data[name or sys._getframe().f_back.f_code.co_name]
 
-    return events.data[name or sys._getframe().f_back.f_code.co_name]
+        return events.data[name or sys._getframe().f_back.f_code.co_name]
 
-  @property
-  def s(self):
-    """
+    @property
+    def s(self):
+        """TODO: Find a way to keep autocompletion without overriding this property."""
+        if self.data_sent is None:
+            raise ValueError("data_sent must be defined")
 
-    TODO: Find a way to keep autocompletion without overriding this property.
-    """
-    if self.data_sent is None:
-      raise ValueError("data_sent must be defined")
+        return self.data_sent(self.__data)
 
-    return self.data_sent(self.__data)
+    @classmethod
+    def flask_request(cls, req):
+        if req.method == 'POST':
+            return cls(req.get_json())
 
-  @classmethod
-  def flask_request(cls, req):
-    if req.method == 'POST':
-      return cls(req.get_json())
+        return cls(req)
 
-    return cls(req)
-
-  def response(self):
-    data = {}
-    for t in list(self.__response_tags):
-      data[t] = self.__data[t]
-    return json.dumps(data)
+    def response(self) -> str:
+        return json.dumps({t: self.__data[t] for t in list(self.__response_tags)})
 
 
 class DataSchemaProperties:
 
-  def __init__(self, context: dict):
-    self._context = context
+    def __init__(self, context: dict):
+        self._context = context
 
-  @property
-  def keys(self):
-    return self._context['keys']
+    @property
+    def keys(self):
+        return self._context['keys']
 
-  @property
-  def values(self):
-    return self._context['values']
+    @property
+    def values(self):
+        return self._context['values']
 
-  @property
-  def columns(self):
-    return list(self.keys | self.values)
+    @property
+    def columns(self):
+        return list(self.keys | self.values)
 
-  @property
-  def funcs(self):
-    return self._context['fncs']
+    @property
+    def funcs(self):
+        return self._context['fncs']
 
-  @property
-  def containers(self):
-    return self._context['containers']
+    @property
+    def containers(self):
+        return self._context['containers']
 
 
 class DataProperties:
 
-  def __init__(self, context: dict):
-    self._context = context
+    def __init__(self, context: dict):
+        self._context = context
 
-  def add(self, records, js_funcs: list = None, profile=None):
-    data_id = len(self._context["sources"])
-    self._context["sources"][data_id] = records
-    self._context["schema"][data_id] = {"containers": {}, 'fncs': js_funcs or [], "profile": profile}
-    return data_id
+    def add(self, records, js_funcs: Optional[list] = None, profile=None):
+        data_id = len(self._context["sources"])
+        self._context["sources"][data_id] = records
+        self._context["schema"][data_id] = {"containers": {}, 'fncs': js_funcs or [], "profile": profile}
+        return data_id
 
-  def get_schema(self, data_id: int):
-    return self._context["schema"][data_id]
+    def get_schema(self, data_id: int):
+        return self._context["schema"][data_id]
 
-  def get_records(self, data_id: int):
-    return self._context["sources"][data_id]
+    def get_records(self, data_id: int):
+        return self._context["sources"][data_id]

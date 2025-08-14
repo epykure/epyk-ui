@@ -2,22 +2,19 @@
 # -*- coding: utf-8 -*-
 from pathlib import Path
 from typing import Union, Optional, List
-from epyk.core.py import primitives
-from epyk.core.py import types
+from epyk.core.py import primitives, types
 
-from epyk.core.html import Html
+from epyk.core.html import Html, Defaults as htmlDefaults
 
-from epyk.core.js.html import JsHtmlSelect
-from epyk.core.js.html import JsHtmlField
+from epyk.core.js.html import JsHtmlSelect, JsHtmlField
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsComponents
 
-from epyk.core.html import Defaults as htmlDefaults
 
 
 class Radio(Html.Html):
-    name = 'Radio Buttons'
-    tag = "div"
+    name: str = 'Radio Buttons'
+    tag: str = "div"
 
     def __init__(self, page: primitives.PageModel, vals: List[dict], html_code: Optional[str],
                  group_name: Optional[str], width: tuple, height: tuple, options: Optional[dict],
@@ -193,8 +190,8 @@ class Tick(Html.Html):
 
 class Switch(Html.Html):
     requirements = ('bootstrap', 'jquery')
-    name = 'Switch Buttons'
-    builder_module = "HtmlSwitch"
+    name: str = 'Switch Buttons'
+    builder_module: str = "HtmlSwitch"
 
     def __init__(self, page: primitives.PageModel, records: dict, color: str, width: types.SIZE_TYPE,
                  height: types.SIZE_TYPE, html_code: str, options: dict, profile: types.PROFILE_TYPE,
@@ -283,7 +280,6 @@ class Switch(Html.Html):
         """Add click event to the switch component.
 
         Usage::
-
           mode_switch = page.ui.fields.toggle({"off": 'hidden', "on": "visible"}, is_on=True, label="", htmlCode="switch")
           mode_switch.input.click([page.js.console.log(mode_switch.input.dom.val)])
 
@@ -314,7 +310,6 @@ class Switch(Html.Html):
         The toggle event allow specifying different Javascript functions for each states of the component.
 
         Usage::
-
           sw = page.ui.buttons.switch({'on': "true", 'off': 'false'})
           sw.toggle([page.js.console.log(sw.content)])
 

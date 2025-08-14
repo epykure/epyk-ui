@@ -2,24 +2,19 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional, List, Tuple
-from epyk.core.py import primitives
-from epyk.core.py import types
-
-from epyk.core.html import Html
-from epyk.core.html import Defaults
-
+from epyk.core.py import primitives, types
+from epyk.core.html import Html, Defaults
 from epyk.core.js.html import JsHtmlTree
 from epyk.core.js import JsUtils
 from epyk.core.html.options import OptTrees
-
 from epyk.core.css.styles import GrpClsList
 
 
 class Tree(Html.Html):
-    name = 'List Expandable'
+    name: str = 'List Expandable'
     _option_cls = OptTrees.OptionsTree
-    builder_module = "HtmlTree"
-    tag = "ul"
+    builder_module: str = "HtmlTree"
+    tag: str = "ul"
 
     def __init__(self, page: primitives.PageModel, records: list, width: tuple, height: tuple, html_code: Optional[str],
                  helper: Optional[str], options: Optional[dict], profile: Optional[Union[bool, dict]],

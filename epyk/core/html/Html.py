@@ -11,25 +11,15 @@ import inspect
 from pathlib import Path
 from typing import Union, Optional, List, Any, Dict
 from epyk.core.py import primitives, types
-
-from epyk.core.js import JsUtils
-from epyk.core.js import Js
-from epyk.core.js import Imports
+from epyk.core.js import JsUtils, Js
+from epyk.core.js.imports.require import Required
 from epyk.core.js.html import JsHtml
-from epyk.core.js import packages
-from epyk.core.js import treemap
-from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import packageImport
-
-from epyk.core.css import css_files_loader
+from epyk.core.js import packages, treemap
+from epyk.core.js.packages import JsQuery, packageImport
+from epyk.core.css import css_files_loader, Defaults as Defaults_css
 from epyk.core.css.styles import GrpCls
-from epyk.core.css import Defaults as Defaults_css
-
-from epyk.core.html import Aria
-from epyk.core.html import WebComponents
-from epyk.core.html import KeyCodes
+from epyk.core.html import Aria, WebComponents, KeyCodes, Defaults as Default_html
 from epyk.core.html.options import Options
-from epyk.core.html import Defaults as Default_html
 
 try:  # For python 3
     import urllib.request as urllib2
@@ -206,51 +196,6 @@ def set_component_skin(component: primitives.HtmlModel):
             for cls in comp_skin.get("cls", []):
                 component.attr["class"].add(cls)
     return component
-
-
-class Required:
-    js, css = None, None
-
-    def __init__(self, page: primitives.PageModel):
-        self.js, self.css = {}, {}
-        self._page = page
-
-    def add(self, package: str, version: Optional[str] = None, verbose: bool = None, incl_css: bool = True,
-            incl_js: bool = True):
-        """Add the package to the main page context.
-
-        TODO: Use the version number
-
-        :param package: The package alias
-        :param version: Optional. The package version number
-        :param verbose: Optional. Display version details (default True)
-        :param incl_css: Optional. Include CSS files
-        :param incl_js: Optional. Include Js files
-        """
-        html_types = set()
-        if package in Imports.JS_IMPORTS and incl_js:
-            self.js[package] = version or '*'
-            self._page.jsImports.add(package)
-            html_types.add('js')
-        if package in Imports.CSS_IMPORTS and incl_css:
-            self.css[package] = version or '*'
-            self._page.cssImport.add(package)
-            html_types.add('css')
-        if self._page.ext_packages is not None and package in self._page.ext_packages:
-            for mod in self._page.ext_packages[package]['modules']:
-                if mod['script'].endswith(".css"):
-                    self._page.cssImport.add(package)
-                    html_types.add('css')
-                elif mod['script'].endswith(".js"):
-                    self._page.jsImports.add(package)
-                    html_types.add('js')
-            if "services" in self._page.ext_packages[package]:
-                self._page.cssImport.add(package)
-        if not html_types and verbose and package != "other-icons":
-            logging.warning("%s - Not defined in neither JS nor CSS configurations" % str(package))
-        if version:
-            if self._page.imports.setVersion(package, version, verbose=verbose):
-                self._page.imports.reload()
 
 
 class EventTouch:
@@ -1318,7 +1263,7 @@ event.preventDefault(); buildContextMenu(document.getElementById('%s'), %s, {lef
                 if options is not None:
                     self.attr.update(options)
                 self.page.properties.js.add_on_ready('''
-var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
 var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
   return new bootstrap.Tooltip(tooltipTriggerEl)})''')
                 if hasattr(value, 'toStr'):
@@ -1950,7 +1895,6 @@ if (urlParams.has(param)){paramValue = urlParams.get(param); %s};
                     resources=self.page.properties.resources)
                 if css_content:
                     self.page.properties.css.add_text(css_content, map_id="html (%s)" % self.__class__.__name__)
-
         if self.style_urls is not None:
             style_vars = self.page.theme.all()
             style_vars.update(self.page.body.style.globals.vars())

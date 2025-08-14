@@ -2,43 +2,42 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional
-from epyk.core.py import primitives
 
+from epyk.core.py import primitives
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObject
 
 
-CSS_PADDING = "5px 10px"
+CSS_PADDING: str = "5px 10px"
+""" """
 
 
 class Msg:
 
-  def __init__(self, page: Optional[primitives.PageModel] = None):
-    self.page = page
+    def __init__(self, page: Optional[primitives.PageModel] = None):
+        self.page = page
 
-  def status(self, timer: int = 3000, css_attrs: Optional[dict] = None):
-    """
-    This function will display a popup message using the key status from the service return.
-    If content.status is empty or False the message won't be triggered.
+    def status(self, timer: int = 3000, css_attrs: Optional[dict] = None):
+        """This function will display a popup message using the key status from the service return.
+        If content.status is empty or False the message won't be triggered.
 
-    Usage::
+        Usage::
+          page.js.msg.status()
+          page.js.msg.status(200, {"color": "red"})
 
-      page.js.msg.status()
-      page.js.msg.status(200, {"color": "red"})
- 
-    :param int timer: Optional. The time the popup will be displayed.
-    :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
-    """
-    dfl_attrs = {"position": "fixed", "padding": CSS_PADDING, 'border-radius': "5px",
-                 "bottom": "10px", 'right': "10px"}
-    if css_attrs is not None:
-      dfl_attrs.update(css_attrs)
-      if 'top' in css_attrs:
-        del dfl_attrs["bottom"]
-      if 'left' in css_attrs:
-        del dfl_attrs["right"]
-    return '''
+        :param int timer: Optional. The time the popup will be displayed.
+        :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
+        """
+        dfl_attrs = {"position": "fixed", "padding": CSS_PADDING, 'border-radius': "5px",
+                     "bottom": "10px", 'right': "10px"}
+        if css_attrs is not None:
+            dfl_attrs.update(css_attrs)
+            if 'top' in css_attrs:
+                del dfl_attrs["bottom"]
+            if 'left' in css_attrs:
+                del dfl_attrs["right"]
+        return '''
 (function(event, content, response){
   if(content.status){
     var popup = document.createElement("div"); 
@@ -55,41 +54,37 @@ class Msg:
   }
 })(event, data, response)''' % (JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, timer)
 
-  def mouse(self, content: str, timer: int = 3000, css_attrs: Optional[dict] = None):
-    """
-    Display a popup message close to the mouse.
+    def mouse(self, content: str, timer: int = 3000, css_attrs: Optional[dict] = None):
+        """Display a popup message close to the mouse.
 
-    Usage::
+        Usage::
+          page.js.msg.mouse("This is a message")
 
-      page.js.msg.mouse("This is a message")
- 
-    :param str content: The content of the popup.
-    :param int timer: Optional. The time the popup will be displayed.
-    :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
-    """
-    dfl_attrs = {"position": "absolute", "background": "white", "padding": CSS_PADDING, 'border-radius': "5px",
-                 "top": JsObject.JsObject.get('event.clientY + "px"'),
-                 'left': JsObject.JsObject.get('event.clientX + "px"')}
-    if css_attrs is not None:
-      dfl_attrs.update(css_attrs)
-      if 'bottom' in css_attrs:
-        del dfl_attrs["top"]
-      if 'right' in css_attrs:
-        del dfl_attrs["left"]
-    return '''
+        :param str content: The content of the popup.
+        :param int timer: Optional. The time the popup will be displayed.
+        :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
+        """
+        dfl_attrs = {"position": "absolute", "background": "white", "padding": CSS_PADDING, 'border-radius': "5px",
+                     "top": JsObject.JsObject.get('event.clientY + "px"'),
+                     'left': JsObject.JsObject.get('event.clientX + "px"')}
+        if css_attrs is not None:
+            dfl_attrs.update(css_attrs)
+            if 'bottom' in css_attrs:
+                del dfl_attrs["top"]
+            if 'right' in css_attrs:
+                del dfl_attrs["left"]
+        return '''
       (function(event, content){
         var popup = document.createElement("div"); %s
         popup.innerHTML = content; document.body.appendChild(popup);
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
       })(event, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, timer, JsUtils.jsConvertData(content, None))
 
-  def text(self, content: str, timer: int = 3000, fixed: bool = True, css_attrs: Optional[dict] = None,
-           options: Optional[dict] = None):
-    """
-    Display a text message from a Javascript event for a specific period of time.
+    def text(self, content: str, timer: int = 3000, fixed: bool = True, css_attrs: Optional[dict] = None,
+             options: Optional[dict] = None):
+        """Display a text message from a Javascript event for a specific period of time.
 
     Usage::
-
       page.js.msg.text("This is a message")
  
     :param str content: The content of the popup.
@@ -98,19 +93,19 @@ class Msg:
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     :param Optional[dict] options: Optional. Specific Python options available for this component.
     """
-    dfl_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": CSS_PADDING,
-                 'border-radius': "5px", "bottom": "10px", 'right': "10px"}
-    if css_attrs is not None:
-      dfl_attrs.update(css_attrs)
-      if 'top' in css_attrs:
-        del dfl_attrs["bottom"]
-      if 'left' in css_attrs:
-        del dfl_attrs["right"]
-    options = options or {}
-    if options.get("markdown", False) or options.get("showdown", False):
-      self.page.jsImports.add("showdown")
-      options["showdown"] = {}
-    return '''
+        dfl_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": CSS_PADDING,
+                     'border-radius': "5px", "bottom": "10px", 'right': "10px"}
+        if css_attrs is not None:
+            dfl_attrs.update(css_attrs)
+            if 'top' in css_attrs:
+                del dfl_attrs["bottom"]
+            if 'left' in css_attrs:
+                del dfl_attrs["right"]
+        options = options or {}
+        if options.get("markdown", False) or options.get("showdown", False):
+            self.page.jsImports.add("showdown")
+            options["showdown"] = {}
+        return '''
       (function(event, content, options){
         var popup = document.createElement("div"); %s;
         if(options.showdown){
@@ -118,25 +113,25 @@ class Msg:
         popup.innerHTML = content; document.body.appendChild(popup);
         setTimeout(function(){ document.body.removeChild(popup); }, %s);
       })(event, %s, %s)''' % (
-      JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, timer, JsUtils.jsConvertData(content, None),
-      JsUtils.jsConvertData(options, None))
+            JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, timer, JsUtils.jsConvertData(content, None),
+            JsUtils.jsConvertData(options, None))
 
-  def count(self, value: int, content: Optional[str] = None, css_attrs: Optional[dict] = None):
-    """
- 
-    :param int value:
-    :param Optional[str] content: Optional. The content of the popup.
-    :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
-    """
-    dfl_attrs = {"position": "absolute", "background": "white", "padding": CSS_PADDING, 'border-radius': "5px",
-                 "bottom": "40px", 'right': "10px"}
-    if css_attrs is not None:
-      dfl_attrs.update(css_attrs)
-      if 'top' in css_attrs:
-        del dfl_attrs["bottom"]
-      if 'left' in css_attrs:
-        del dfl_attrs["right"]
-    return '''
+    def count(self, value: int, content: Optional[str] = None, css_attrs: Optional[dict] = None):
+        """
+
+        :param int value:
+        :param Optional[str] content: Optional. The content of the popup.
+        :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
+        """
+        dfl_attrs = {"position": "absolute", "background": "white", "padding": CSS_PADDING, 'border-radius': "5px",
+                     "bottom": "40px", 'right': "10px"}
+        if css_attrs is not None:
+            dfl_attrs.update(css_attrs)
+            if 'top' in css_attrs:
+                del dfl_attrs["bottom"]
+            if 'left' in css_attrs:
+                del dfl_attrs["right"]
+        return '''
       (function(event, inc, content){
         var currentVal;
         if(content == null){
@@ -164,24 +159,25 @@ class Msg:
       if(currentVal == 0){
         document.body.removeChild(window['globalPoopup']); window['globalPoopup'] = undefined}
       })(event, %s, %s)''' % (
-      JsNodeDom.JsDoms.get("window['globalPoopup']").css(dfl_attrs).r, value, JsUtils.jsConvertData(content, None))
+            JsNodeDom.JsDoms.get("window['globalPoopup']").css(dfl_attrs).r, value,
+            JsUtils.jsConvertData(content, None))
 
-  def fixed(self, content: str, fixed: bool = True, css_attrs: Optional[dict] = None):
-    """
+    def fixed(self, content: str, fixed: bool = True, css_attrs: Optional[dict] = None):
+        """
  
-    :param str content: The content of the popup.
-    :param bool fixed: Optional.
-    :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
+    :param content: The content of the popup
+    :param fixed: Optional.
+    :param css_attrs: Optional. The CSS attributes for the popup
     """
-    dfl_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px",
-                 'border-radius': "5px", "bottom": "10px", 'right': "10px"}
-    if css_attrs is not None:
-      dfl_attrs.update(css_attrs)
-      if 'top' in css_attrs:
-        del dfl_attrs["bottom"]
-      if 'left' in css_attrs:
-        del dfl_attrs["right"]
-    return '''
+        dfl_attrs = {"position": "fixed" if fixed else "absolute", "background": "white", "padding": "10px 20px",
+                     'border-radius': "5px", "bottom": "10px", 'right': "10px"}
+        if css_attrs is not None:
+            dfl_attrs.update(css_attrs)
+            if 'top' in css_attrs:
+                del dfl_attrs["bottom"]
+            if 'left' in css_attrs:
+                del dfl_attrs["right"]
+        return '''
       (function(event, content){
         var popup = document.createElement("div"); %s 
         var popupSpan = document.createElement("span");
@@ -197,22 +193,22 @@ class Msg:
         popup.appendChild(popupContent); document.body.appendChild(popup);
       })(event, %s)''' % (JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, JsUtils.jsConvertData(content, None))
 
-  def center(self, content: str, timer: int = None, css_attrs: Optional[dict] = None):
-    """
- 
-    :param str content: The content of the popup.
-    :param int timer: Optional. The time the popup will be displayed.
-    :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
-    """
-    dfl_attrs = {"position": "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
-                 "top": "50%", 'left': "50%", 'zIndex': 110, 'border': '1px solid black'}
-    if css_attrs is not None:
-      dfl_attrs.update(css_attrs)
-      if 'top' in css_attrs:
-        del dfl_attrs["bottom"]
-      if 'left' in css_attrs:
-        del dfl_attrs["right"]
-    return '''
+    def center(self, content: str, timer: int = None, css_attrs: Optional[dict] = None):
+        """
+
+        :param content: The content of the popup.
+        :param timer: Optional. The time the popup will be displayed.
+        :param css_attrs: Optional. The CSS attributes for the popup.
+        """
+        dfl_attrs = {"position": "absolute", "background": "white", "padding": "10px 20px", 'border-radius': "5px",
+                     "top": "50%", 'left': "50%", 'zIndex': 110, 'border': '1px solid black'}
+        if css_attrs is not None:
+            dfl_attrs.update(css_attrs)
+            if 'top' in css_attrs:
+                del dfl_attrs["bottom"]
+            if 'left' in css_attrs:
+                del dfl_attrs["right"]
+        return '''
       (function(event, content){
         var popup = document.createElement("div"); %(dom)s
         var popupSpan = document.createElement("span");
@@ -232,19 +228,19 @@ class Msg:
       })(event, %(content)s)''' % {'dom': JsNodeDom.JsDoms.get("popup").css(dfl_attrs).r, 'timer': timer,
                                    'content': JsUtils.jsConvertData(content, None)}
 
-  def banner(self, content: str, timer: Optional[int] = None, css_attrs: Optional[dict] = None):
-    """
+    def banner(self, content: str, timer: Optional[int] = None, css_attrs: Optional[dict] = None):
+        """
  
     :param str content: The content of the popup.
     :param Optional[int] timer: Optional. The time the popup will be displayed.
     :param Optional[dict] css_attrs: Optional. The CSS attributes for the popup.
     """
-    dfl_attrs = {"position": "absolute", "padding": "10px", "bottom": "0", "width": '100%', 'background': 'pink'}
-    if css_attrs is not None:
-      dfl_attrs.update(css_attrs)
-      if 'top' in css_attrs:
-        del dfl_attrs["bottom"]
-    return '''
+        dfl_attrs = {"position": "absolute", "padding": "10px", "bottom": "0", "width": '100%', 'background': 'pink'}
+        if css_attrs is not None:
+            dfl_attrs.update(css_attrs)
+            if 'top' in css_attrs:
+                del dfl_attrs["bottom"]
+        return '''
       (function(event, content){
         var popup = document.createElement("div"); %(dom)s
         var popupSpan = document.createElement("span");

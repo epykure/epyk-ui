@@ -2,22 +2,11 @@
 # -*- coding: utf-8 -*-
 
 from typing import Optional, Any, Type, Callable, List, Union, Tuple
-from epyk.core.py import primitives
-from epyk.core.py import types
 
-from epyk.core.js.primitives import JsArray
-from epyk.core.js.primitives import JsDate
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsString
-from epyk.core.js.primitives import JsBoolean
-
-from epyk.core.js.objects import JsIntersectionObserver
-from epyk.core.js.objects import JsNodeDom
-from epyk.core.js.objects import JsData
-from epyk.core.js.objects import JsEvents
-
-from epyk.core.js import JsUtils
+from ...py import primitives, types
+from . import JsArray, JsDate, JsObject, JsNumber, JsString, JsBoolean
+from ..objects import JsIntersectionObserver, JsNodeDom, JsData, JsEvents
+from .. import JsUtils
 
 
 class JsVoid(primitives.JsDataModel):

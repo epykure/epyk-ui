@@ -2,10 +2,15 @@
 from pathlib import Path
 import shutil
 import base64
+import requests
 from calmjs.parse import io
 from calmjs.parse import es5
 from calmjs.parse.unparsers.es5 import minify_print
 from typing import List, Union
+
+
+# https://www.toptal.com/developers/javascript-minifier/documentation
+JSMIN_API = "https://www.toptal.com/developers/javascript-minifier/api/raw"
 
 
 def get_files(path: Union[str, Path] = None) -> List[Path]:
@@ -41,6 +46,7 @@ def copy_files(js_files: List[Path]):
     :param js_files: The list of Js files to minify
     :return:
     """
+    log_file = open("minify-log.txt", "w")
     replace_str = Path(Path(__file__).resolve().parent.parent, "js")
     dest_path = Path(Path(__file__).resolve().parent.parent, "epyk", "core", "js", "native")
     dest_path.mkdir(parents=True, exist_ok=True)
@@ -54,11 +60,23 @@ def copy_files(js_files: List[Path]):
             Path(dest_path).mkdir(parents=True, exist_ok=True)
             with open(dst_file_path, "w") as min_js:
                 min_js.write(min_content)
-        except:
-            print(file)
+        except Exception as err:
+            log_file.write("\n")
+            log_file.write("%s\n" % file)
+            log_file.write("%s\n" %err)
             with open(file, "r") as src_js:
-                with open(dst_file_path, "w") as min_js:
-                    min_js.write(src_js.read())
+                input = src_js.read()
+                response = requests.post(JSMIN_API,{"input": input, "config": {
+                    "minify": True,
+                    "jsc": {"minify": {"compress": {"ecma": 6}}}}})
+                log_file.write("API Call: %s\n" % response.status_code)
+                if response.status_code == 200:
+                    with open(dst_file_path, "w") as min_js:
+                        min_js.write(response.text)
+                else:
+                    with open(dst_file_path, "w") as min_js:
+                        min_js.write(input)
+    log_file.close()
 
 
 def get_file_content(file_path: str, full_import: bool = False) -> str:

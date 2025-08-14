@@ -34,3 +34,7 @@
     border: 1px solid var(--grey) ;
     border-radius: 10px ;
 }
+
+.list_text_selected {
+    color: red ;
+}

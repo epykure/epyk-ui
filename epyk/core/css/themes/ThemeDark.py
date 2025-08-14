@@ -15,7 +15,7 @@ A theme class must have the below class variables defined
   success : A tuple with the two colours used for success (light, dark)
 """
 
-from epyk.core.css.themes import Theme
+from . import Theme
 
 
 class Dark(Theme.Theme):

@@ -5,26 +5,22 @@ import time
 import datetime
 
 from typing import Union, Optional, List
-from epyk.core.py import primitives
-from epyk.core.py import types
-
+from epyk.core.utils import sdom_from
+from epyk.core.py import primitives, types
 from epyk.core.html import Html
-from epyk.core.html.options import OptCalendars
-from epyk.core.html.options import OptText
-
+from epyk.core.html.options import OptCalendars, OptText
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlJqueryUI, JsHtml
 from epyk.core.js.packages import JsEasePick
 
-from epyk.core.html import Defaults as HTML_Defaults
 from epyk.core.css import Defaults
 
 
 class DatePicker(Html.Html):
     requirements = ('jqueryui',)
-    name = 'Date Picker'
+    name: str = 'Date Picker'
     _option_cls = OptCalendars.OptionDatePicker
-    tag = "div"
+    tag: str = "div"
 
     def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str], width: tuple,
                  height: tuple, color: Optional[str], html_code: Optional[str],
@@ -65,7 +61,6 @@ class DatePicker(Html.Html):
         """The Javascript Dom proxy to the input object.
 
         Usage::
-
           today = page.ui.fields.today()
           today.select([page.js.console.log(today.dom.content)])
         """
@@ -77,7 +72,6 @@ class DatePicker(Html.Html):
         """Event trigger when the DatePicker component changes.
 
         Usage::
-
           today = page.ui.fields.today()
           today.select([page.js.console.log(today.dom.content)])
 
@@ -95,11 +89,9 @@ class DatePicker(Html.Html):
     def excluded_dates(self, dts: Optional[List[str]] = None, js_funcs: types.JS_FUNCS_TYPES = None,
                        dataflows: List[dict] = None, profile: types.PROFILE_TYPE = False):
         """Exclude some dates from the date picker selection.
-
         Those dates will be visible but no available for selection.
 
         Usage::
-
           today = page.ui.fields.today()
           today.excluded_dates(["2021-01-01"])
 
@@ -112,12 +104,9 @@ class DatePicker(Html.Html):
 
     def included_dates(self, dts: List[str] = None, selected: str = None, js_funcs: types.JS_FUNCS_TYPES = None,
                        dataflows: List[dict] = None, profile: types.PROFILE_TYPE = False):
-        """Include some date to be available for selection.
-
-        All the other dates will be visible but not valid ones.
+        """Include some date to be available for selection. All the other dates will be visible but not valid ones.
 
         Usage::
-
           today = page.ui.fields.today()
           today.included_dates(["2021-01-01"])
 
@@ -147,16 +136,15 @@ class DatePicker(Html.Html):
             setattr(self.input.options, k, v)
         return self
 
-    def __str__(self):
+    def __str__(self) -> str:
         self.page.properties.js.add_builders(self.refresh())
-        return '<%(tag)s %(attr)s>%(helper)s</%(tag)s>' % {
-            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper, "tag": self.tag}
+        return sdom_from(self, self.helper)
 
 
 class TimePicker(Html.Html):
     requirements = ('timepicker',)
-    name = 'Time Picker'
-    tag = "div"
+    name: str = 'Time Picker'
+    tag: str = "div"
 
     def __init__(self, page: primitives.PageModel, value, label: Optional[str], icon: Optional[str],
                  color: Optional[str], html_code: Optional[str], profile: Optional[Union[bool, dict]],
@@ -182,7 +170,6 @@ class TimePicker(Html.Html):
         """The Javascript Dom proxy to the input object.
 
         Usage::
-
           time_picker = page.ui.fields.time()
           time_picker.change([page.js.console.log(time_picker.dom.content)])
         """
@@ -197,7 +184,6 @@ class TimePicker(Html.Html):
         Note: the variable time is a function parameter received in the Javascript side.
 
         Usage::
-
           morning = page.ui.fields.time("8:13:00", label="Time field")
           morning.change([page.js.alert("time", skip_data_convert=True)])
 
@@ -211,13 +197,12 @@ class TimePicker(Html.Html):
         return self
 
     def __str__(self):
-        return '<%(tag)s %(attr)s>%(helper)s</%(tag)s>' % {
-            'attr': self.get_attrs(css_class_names=self.style.get_classes()), 'helper': self.helper, "tag": self.tag}
+        return sdom_from(self, content=self.helper)
 
 
 class CountDownDate(Html.Html):
-    name = 'Count Down Date'
-    tag = "div"
+    name: str = 'Count Down Date'
+    tag: str = "div"
 
     def __init__(self, page: primitives.PageModel, day: int, month: int, year: int, hour: int, minute: int, second: int,
                  label: Optional[str], icon: Optional[str], timestamp, width, height, html_code, helper, options,
@@ -257,9 +242,9 @@ class CountDownDate(Html.Html):
 
 
 class LastUpdated(Html.Html):
-    name = 'Last Update'
+    name: str = 'Last Update'
     _option_cls = OptText.OptionsUpdate
-    tag = "div"
+    tag: str = "div"
 
     def __init__(self, page: primitives.PageModel, label: Optional[str], color: Optional[str], width: tuple,
                  height: tuple, html_code: Optional[str], options: Optional[dict],
@@ -279,11 +264,9 @@ class LastUpdated(Html.Html):
     @property
     def dom(self) -> JsHtml.JsHtmlRich:
         """Return all the Javascript functions defined for an HTML Component.
-
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           div = page.ui.div(htmlCode="testDiv")
           print(div.dom.content)
 
@@ -297,7 +280,6 @@ class LastUpdated(Html.Html):
         """Javascript shortcut to change the timestamp to this component.
 
         Usage::
-
           update = page.ui.rich.update()
           update.click([update.refresh()])
         """
@@ -305,8 +287,7 @@ class LastUpdated(Html.Html):
             local_time=self.options.local_time).getStrTimeStamp().prepend(self._label))
 
     def __str__(self):
-        return '<%(tag)s %(strAttr)s>%(content)s</%(tag)s>' % {
-            'strAttr': self.get_attrs(css_class_names=self.style.get_classes()), 'content': self.val, "tag": self.tag}
+        return sdom_from(self, content=self.val)
 
 
 class Calendar(Html.Html):

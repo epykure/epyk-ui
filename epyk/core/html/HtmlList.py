@@ -15,7 +15,7 @@ from typing import List as type_List
 from epyk.core.py import primitives
 from epyk.core.py import types
 
-from epyk.core.js import Imports
+from epyk.core.js.imports import registry
 from epyk.core.js import JsUtils
 from epyk.core.js import treemap
 from epyk.core.html import Html
@@ -541,11 +541,13 @@ class Items(Html.Html):
         :param required_funcs:
         :param css:
         """
+        all_js = registry.get_js()
+        all_css = registry.get_css()
         if dependencies is not None:
             for d in dependencies:
-                if d in Imports.JS_IMPORTS:
+                if d in all_js:
                     self.page.jsImports.add(d)
-                if d in Imports.CSS_IMPORTS:
+                if d in all_css:
                     self.page.cssImport.add(d)
 
         if file_nam not in treemap._ITEMS_MAP:

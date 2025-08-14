@@ -2,16 +2,14 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
-from epyk.core.py import primitives
-
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.fncs import JsFncs
-
-from epyk.core.js import JsUtils
+from ...py import primitives
+from . import JsObject
+from ..fncs import JsFncs
+from .. import JsUtils
 
 
 class JsArray(JsObject.JsObject):
-    _jsClass = "Array"
+    _jsClass: str = "Array"
 
     @property
     def length(self):

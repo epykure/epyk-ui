@@ -2,13 +2,13 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Optional
-from epyk.core.py import primitives, types
+from ...py import primitives, types
 
-from epyk.core.js.packages import JsPackage
-from epyk.core.js.primitives import JsObjects
-from epyk.core.js import JsUtils
-from epyk.core.js.html import JsHtml
-from epyk.core.js.objects import JsNodeDom
+from ..packages import JsPackage
+from ..primitives import JsObjects
+from .. import JsUtils
+from ..html import JsHtml
+from . import JsNodeDom
 
 
 class Radio(JsPackage):

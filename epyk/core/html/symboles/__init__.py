@@ -13,13 +13,11 @@ from epyk.core.html.symboles import SymbShapes
 
 
 class Symboles:
-  """ Pre defined HTML symboles.
+    """ Pre defined HTML symboles."""
 
-  """
-
-  @property
-  def shapes(self):
-    """
+    @property
+    def shapes(self):
+        """
     UTF-8 Geometric Shapes.
     Range: Decimal 9632-9727. Hex 25A0-25FF.
 
@@ -27,11 +25,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_utf_geometric.asp
     """
-    return SymbShapes
+        return SymbShapes
 
-  @property
-  def punctuations(self):
-    """
+    @property
+    def punctuations(self):
+        """
     UTF-8 General Punctuation.
     Range: Decimal 8192-8303. Hex 2000-206F.
 
@@ -39,11 +37,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_utf_punctuation.asp
     """
-    return SymbPunctuations
+        return SymbPunctuations
 
-  @property
-  def maths(self):
-    """
+    @property
+    def maths(self):
+        """
     UTF-8 Mathematical Operators.
     Range: Decimal 8704-8959. Hex 2200-22FF.
 
@@ -51,11 +49,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_utf_math.asp
     """
-    return SymbMaths
+        return SymbMaths
 
-  @property
-  def emojis(self):
-    """
+    @property
+    def emojis(self):
+        """
     Emoji Unicode Reference.
     Emojis For Web.
 
@@ -63,11 +61,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_emoji.asp
     """
-    return SymbEmojis
+        return SymbEmojis
 
-  @property
-  def letters(self):
-    """
+    @property
+    def letters(self):
+        """
     UTF-8 Letterlike Symbols.
     Range: Decimal 8448-8527. Hex 2100-214F.
 
@@ -75,11 +73,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_utf_letterlike.asp
     """
-    return SymbLetters
+        return SymbLetters
 
-  @property
-  def currencies(self):
-    """
+    @property
+    def currencies(self):
+        """
     UTF-8 Currency Symbols.
     Range: Decimal 8352-8399. Hex 20A0-20CF.
 
@@ -87,11 +85,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_utf_currency.asp
     """
-    return SymbCurrencies
+        return SymbCurrencies
 
-  @property
-  def smileys(self):
-    """
+    @property
+    def smileys(self):
+        """
     Smiley Emoji.
     Smiley Emojis For Web.
 
@@ -99,11 +97,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_emoji_smileys.asp
     """
-    return SymbSmileys
+        return SymbSmileys
 
-  @property
-  def html(self):
-    """
+    @property
+    def html(self):
+        """
     HTML Symbols.
     Symbols that are not present on your keyboard can also be added by using entities.
 
@@ -112,11 +110,11 @@ class Symboles:
       https://www.w3schools.com/html/html_symbols.asp
       https://www.w3schools.com/charsets/ref_utf_math.asp
     """
-    return SymbHtml
+        return SymbHtml
 
-  @property
-  def arrows(self):
-    """
+    @property
+    def arrows(self):
+        """
     UTF-8 Arrows.
     Range: Decimal 8592-8703. Hex 2190-21FF.
 
@@ -124,11 +122,11 @@ class Symboles:
 
       https://www.w3schools.com/charsets/ref_utf_arrows.asp
     """
-    return SymbArrows
+        return SymbArrows
 
 
 if __name__ == '__main__':
-  data = '''
+    data = '''
 †	dagger	02020	8224
 ℸ	daleth	02138	8504
 ↡	Darr	021A1	8609
@@ -248,19 +246,19 @@ $	dollar	00024	36
 ⟿	dzigrarr	027FF	10239
   '''
 
-  for rec in data.split("\n"):
-    split_line = rec.split("\t")
-    if len(split_line) == 4:
-      code = "&#%s" % split_line[3] if not split_line[3].startswith("&#") else split_line[3]
-      print("%s = '%s'" % (split_line[1].strip().replace(" ", "_").replace("-", "_"), code))
-    if len(split_line) > 4 and split_line[4].strip() != "":
-      if split_line[1].endswith(";"):
-        code = split_line[1]
-      else:
-        code = "&#%s" % split_line[1].strip() if not split_line[1].startswith("&#") else split_line[1].strip()
-      if code == "&#" or code == '':
-        continue
+    for rec in data.split("\n"):
+        split_line = rec.split("\t")
+        if len(split_line) == 4:
+            code = "&#%s" % split_line[3] if not split_line[3].startswith("&#") else split_line[3]
+            print("%s = '%s'" % (split_line[1].strip().replace(" ", "_").replace("-", "_"), code))
+        if len(split_line) > 4 and split_line[4].strip() != "":
+            if split_line[1].endswith(";"):
+                code = split_line[1]
+            else:
+                code = "&#%s" % split_line[1].strip() if not split_line[1].startswith("&#") else split_line[1].strip()
+            if code == "&#" or code == '':
+                continue
 
-      names = split_line[4].split("=")
-      for name in names:
-        print("%s = '%s'" % (name.strip().replace(" ", "_").replace("-", "_").upper(), code))
+            names = split_line[4].split("=")
+            for name in names:
+                print("%s = '%s'" % (name.strip().replace(" ", "_").replace("-", "_").upper(), code))

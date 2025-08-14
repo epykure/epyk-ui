@@ -5,23 +5,16 @@ import datetime
 import json
 from pathlib import Path
 from typing import Optional, List
-from epyk.core.py import primitives
-from epyk.core.py import types
+from epyk.core.py import primitives, types
 
-from epyk.core.html import Html
-from epyk.core.html import Defaults
+from epyk.core.html import Html, Defaults
 from epyk.core.html.options import OptInputs
 
-#
-from epyk.core.js import packages
-from epyk.core.js import JsUtils
+from epyk.core.js import packages, JsUtils
 from epyk.core.js.html import JsHtmlInput
 from epyk.core.js.objects import JsComponents
-from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsTimepicker
-from epyk.core.js.packages import JsQueryUi
-from epyk.core.js.html import JsHtmlField
-from epyk.core.js.html import JsHtmlJqueryUI
+from epyk.core.js.packages import JsQuery, JsTimepicker, JsQueryUi
+from epyk.core.js.html import JsHtmlField, JsHtmlJqueryUI
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpClsInput

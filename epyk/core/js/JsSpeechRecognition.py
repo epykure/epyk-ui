@@ -74,15 +74,15 @@ class SpeechRecognition:
     maxAlternatives: int = 1
 
     def __init__(self, js_code: str, page: primitives.PageModel = None):
-      self.page = page
-      self.js_code = js_code
-      self._js = [
-        "var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition",
-        "var %s = new SpeechRecognition()" % js_code]
+        self.page = page
+        self.js_code = js_code
+        self._js = [
+            "var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition",
+            "var %s = new SpeechRecognition()" % js_code]
 
     @property
     def event(self):
-      return SpeechRecognitionEvent()
+        return SpeechRecognitionEvent()
 
     @property
     def grammars(self):
@@ -90,7 +90,7 @@ class SpeechRecognition:
 
     @grammars.setter
     def grammars(self, value: str):
-      self.__grammars = value
+        self.__grammars = value
 
     def abort(self):
         """
@@ -126,9 +126,10 @@ class SpeechRecognition:
         return JsObjects.JsVoid("%s.stop()" % self.js_code)
 
     def addEventListener(self, event: str, js_funcs: Union[list, str], profile: Union[bool, dict] = None):
-        self._js.append("%(selector)s.%(event)s = function(event) {var transcript = event.results[0][0].transcript; var confidence = event.results[0][0].confidence;%(funcs)s}" % {
-          "selector": self.js_code, "event": event,
-          "funcs": JsUtils.jsConvertFncs(js_funcs, profile=profile, toStr=True)})
+        self._js.append(
+            "%(selector)s.%(event)s = function(event) {var transcript = event.results[0][0].transcript; var confidence = event.results[0][0].confidence;%(funcs)s}" % {
+                "selector": self.js_code, "event": event,
+                "funcs": JsUtils.jsConvertFncs(js_funcs, profile=profile, toStr=True)})
         return self
 
     def audiostart(self, js_funcs: Union[list, str], profile: Union[bool, dict] = None):
@@ -205,7 +206,6 @@ class SpeechRecognition:
         self._js.insert(4, "%s.interimResults = %s" % (self.js_code, json.dumps(self.interimResults)))
         self._js.insert(5, "%s.maxAlternatives = %s" % (self.js_code, json.dumps(self.maxAlternatives)))
         for js in self._js:
-          obj_content.append(js)
+            obj_content.append(js)
         self._js = []
         return "; ".join(obj_content)
-

@@ -8,13 +8,13 @@ from epyk.core.py import types
 
 class Drawers:
 
-  def __init__(self, ui):
-    self.page = ui.page
+    def __init__(self, ui):
+        self.page = ui.page
 
-  def drawer(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
-             options: dict = None, profile: types.PROFILE_TYPE = None,
-             helper: str = None) -> html.HtmlDrawer.Drawer:
-    """  
+    def drawer(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = (100, '%'),
+               options: dict = None, profile: types.PROFILE_TYPE = None,
+               helper: str = None) -> html.HtmlDrawer.Drawer:
+        """
     Bespoke drawer with handle on the right.
 
     :tags:
@@ -36,17 +36,17 @@ class Drawers:
     :param profile: Optional. A flag to set the component performance storage
     :param helper: Optional. A tooltip helper
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    component = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
-    component.style.css.min_height = 200
-    html.Html.set_component_skin(component)
-    return component
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        component = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
+        component.style.css.min_height = 200
+        html.Html.set_component_skin(component)
+        return component
 
-  def left(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = ("auto", 'px'),
-           options: dict = None, profile: types.PROFILE_TYPE = None,
-           helper: str = None) -> html.HtmlDrawer.Drawer:
-    """  
+    def left(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = ("auto", 'px'),
+             options: dict = None, profile: types.PROFILE_TYPE = None,
+             helper: str = None) -> html.HtmlDrawer.Drawer:
+        """
     Bespoke drawer with handle on the left.
 
     :tags:
@@ -60,19 +60,19 @@ class Drawers:
     :param profile: Optional. A flag to set the component performance storage
     :param helper: Optional. A tooltip helper
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    dfl_options = {"side": "left"}
-    if options is not None:
-      dfl_options.update(options)
-    component = html.HtmlDrawer.Drawer(self.page, width, height, dfl_options, helper, profile)
-    html.Html.set_component_skin(component)
-    return component
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = {"side": "left"}
+        if options is not None:
+            dfl_options.update(options)
+        component = html.HtmlDrawer.Drawer(self.page, width, height, dfl_options, helper, profile)
+        html.Html.set_component_skin(component)
+        return component
 
-  def right(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = ("auto", 'px'),
-            options: dict = None, profile: types.PROFILE_TYPE = None,
-            helper: str = None) -> html.HtmlDrawer.Drawer:
-    """  
+    def right(self, width: types.SIZE_TYPE = (100, '%'), height: types.SIZE_TYPE = ("auto", 'px'),
+              options: dict = None, profile: types.PROFILE_TYPE = None,
+              helper: str = None) -> html.HtmlDrawer.Drawer:
+        """
     Bespoke drawer with handle on the left.
 
     :tags:
@@ -98,19 +98,19 @@ class Drawers:
     :param profile: Optional. A flag to set the component performance storage
     :param helper: Optional. A tooltip helper
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    dfl_options = {"side": "right"}
-    if options is not None:
-      dfl_options.update(options)
-    component = html.HtmlDrawer.Drawer(self.page, width, height, dfl_options, helper, profile)
-    html.Html.set_component_skin(component)
-    return component
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = {"side": "right"}
+        if options is not None:
+            dfl_options.update(options)
+        component = html.HtmlDrawer.Drawer(self.page, width, height, dfl_options, helper, profile)
+        html.Html.set_component_skin(component)
+        return component
 
-  def multi(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
-            height: types.SIZE_TYPE = ("auto", 'px'), options: dict = None,
-            profile: dict = None, helper: str = None) -> html.HtmlDrawer.DrawerMulti:
-    """  
+    def multi(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
+              height: types.SIZE_TYPE = ("auto", 'px'), options: dict = None,
+              profile: dict = None, helper: str = None) -> html.HtmlDrawer.DrawerMulti:
+        """
 
     :tags:
     :categories:
@@ -128,20 +128,20 @@ class Drawers:
     :param profile: Optional. A flag to set the component performance storage
     :param helper: Optional. A tooltip helper
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    dfl_options = {"side": "right"}
-    if options is not None:
-      dfl_options.update(options)
-    drawer = html.HtmlDrawer.DrawerMulti(self.page, component, width, height, dfl_options, helper, profile)
-    html.Html.set_component_skin(drawer)
-    return drawer
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        dfl_options = {"side": "right"}
+        if options is not None:
+            dfl_options.update(options)
+        drawer = html.HtmlDrawer.DrawerMulti(self.page, component, width, height, dfl_options, helper, profile)
+        html.Html.set_component_skin(drawer)
+        return drawer
 
-  def no_handle(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
-                height: types.SIZE_TYPE = ("auto", 'px'), options: dict = None,
-                profile: types.PROFILE_TYPE = None,
-                helper: str = None) -> html.HtmlDrawer.Drawer:
-    """  
+    def no_handle(self, component: html.Html.Html, width: types.SIZE_TYPE = (100, '%'),
+                  height: types.SIZE_TYPE = ("auto", 'px'), options: dict = None,
+                  profile: types.PROFILE_TYPE = None,
+                  helper: str = None) -> html.HtmlDrawer.Drawer:
+        """
     Bespoke drawer without handle.
     The event to display the panel will be attached to the component.
 
@@ -159,11 +159,11 @@ class Drawers:
     :param profile: Optional. A flag to set the component performance storage
     :param helper: Optional. A tooltip helper
     """
-    width = Arguments.size(width, unit="%")
-    height = Arguments.size(height, unit="px")
-    options = options or {}
-    options["side"] = 'right'
-    drawer = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
-    drawer.set_handle(component)
-    html.Html.set_component_skin(drawer)
-    return drawer
+        width = Arguments.size(width, unit="%")
+        height = Arguments.size(height, unit="px")
+        options = options or {}
+        options["side"] = 'right'
+        drawer = html.HtmlDrawer.Drawer(self.page, width, height, options, helper, profile)
+        drawer.set_handle(component)
+        html.Html.set_component_skin(drawer)
+        return drawer

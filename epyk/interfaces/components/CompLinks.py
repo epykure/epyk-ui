@@ -10,13 +10,13 @@ from epyk.core.css import Defaults as Defaults_css
 
 class Links:
 
-  def __init__(self, ui):
-    self.page = ui.page
+    def __init__(self, ui):
+        self.page = ui.page
 
-  def external(self, text: str, url: str, icon: str = None, align: str = "left", helper: str = None,
-               height: types.SIZE_TYPE = (None, 'px'), decoration=False, html_code: str = None, options: dict = None,
-               profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
-    """  
+    def external(self, text: str, url: str, icon: str = None, align: str = "left", helper: str = None,
+                 height: types.SIZE_TYPE = (None, 'px'), decoration=False, html_code: str = None, options: dict = None,
+                 profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
+        """
 
     Usage::
 
@@ -40,22 +40,22 @@ class Links:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
-    height = Arguments.size(height, unit="px")
-    dft_options = {"target": '_blank'}
-    if options is not None:
-      dft_options.update(options)
-    text = self.page.py.encode_html(text)
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height,
-                                            decoration, html_code, dft_options, profile)
-    if align == "center":
-      self.page.ui.div(html_link, align=align)
-    html.Html.set_component_skin(html_link)
-    return html_link
+        height = Arguments.size(height, unit="px")
+        dft_options = {"target": '_blank'}
+        if options is not None:
+            dft_options.update(options)
+        text = self.page.py.encode_html(text)
+        html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height,
+                                                decoration, html_code, dft_options, profile)
+        if align == "center":
+            self.page.ui.div(html_link, align=align)
+        html.Html.set_component_skin(html_link)
+        return html_link
 
-  def button(self, text: str = "", url: str = "", icon: str = None, helper: str = None,
-             height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
-             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
-    """  
+    def button(self, text: str = "", url: str = "", icon: str = None, helper: str = None,
+               height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
+               options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
+        """
 
     Underlying HTML Objects:
 
@@ -77,21 +77,22 @@ class Links:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
-    height = Arguments.size(height, unit="px")
-    dft_options = {"target": '_blank'}
-    if options is not None:
-      dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height,
-                                            decoration, html_code, dft_options, profile)
-    html_link.style.add_classes.button.basic()
-    html_link.style.css.padding = "0 10px"
-    html.Html.set_component_skin(html_link)
-    return html_link
+        height = Arguments.size(height, unit="px")
+        dft_options = {"target": '_blank'}
+        if options is not None:
+            dft_options.update(options)
+        html_link = html.HtmlLinks.ExternalLink(self.page, text, url, icon, helper, height,
+                                                decoration, html_code, dft_options, profile)
+        html_link.style.add_classes.button.basic()
+        html_link.style.css.padding = "0 10px"
+        html.Html.set_component_skin(html_link)
+        return html_link
 
-  def link(self, text: str = "", url: str = "", icon: str = None, align: str = "left", tooltip: str = None,
-           helper: str = None, height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
-           options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
-    """Python interface to the common Hyperlink.
+    def link(self, text: str = "", url: str = "", icon: str = None, align: str = "left", tooltip: str = None,
+             helper: str = None, height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False,
+             html_code: str = None,
+             options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
+        """Python interface to the common Hyperlink.
 
     Usage::
 
@@ -116,24 +117,24 @@ class Links:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
-    height = Arguments.size(height, unit="px")
-    options = options or {}
-    if url is not None and not hasattr(url, 'toStr') and url.startswith("www."):
-      url = "//%s" % url
-    html_link = html.HtmlLinks.ExternalLink(
-      self.page, text, url, icon, helper, height, decoration, html_code, options, profile)
-    if tooltip is not None:
-      html_link.tooltip(tooltip)
-    if align == "center":
-      html_link.style.css.margin = "auto"
-      html_link.style.css.display = "block"
-    html_link.style.css.text_align = align
-    html.Html.set_component_skin(html_link)
-    return html_link
+        height = Arguments.size(height, unit="px")
+        options = options or {}
+        if url is not None and not hasattr(url, 'toStr') and url.startswith("www."):
+            url = "//%s" % url
+        html_link = html.HtmlLinks.ExternalLink(
+            self.page, text, url, icon, helper, height, decoration, html_code, options, profile)
+        if tooltip is not None:
+            html_link.tooltip(tooltip)
+        if align == "center":
+            html_link.style.css.margin = "auto"
+            html_link.style.css.display = "block"
+        html_link.style.css.text_align = align
+        html.Html.set_component_skin(html_link)
+        return html_link
 
-  def data(self, text: str, value, width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'),
-           fmt: str = 'txt', options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.DataLink:
-    """Python interface to the Hyperlink to retrieve data.
+    def data(self, text: str, value, width: types.SIZE_TYPE = (None, '%'), height: types.SIZE_TYPE = (None, 'px'),
+             fmt: str = 'txt', options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.DataLink:
+        """Python interface to the Hyperlink to retrieve data.
 
     Usage::
 
@@ -154,16 +155,17 @@ class Links:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storag.e
     """
-    height = Arguments.size(height, unit="px")
-    html_data = html.HtmlLinks.DataLink(self.page, text, value, width=width, height=height, fmt=fmt, options=options,
-                                        profile=profile)
-    html.Html.set_component_skin(html_data)
-    return html_data
+        height = Arguments.size(height, unit="px")
+        html_data = html.HtmlLinks.DataLink(self.page, text, value, width=width, height=height, fmt=fmt,
+                                            options=options,
+                                            profile=profile)
+        html.Html.set_component_skin(html_data)
+        return html_data
 
-  def colored(self, text: str = "", url: str = "", icon: str = None, helper: str = None, color: str = None,
-              height: types.SIZE_TYPE =(None, 'px'), decoration: bool = False, html_code: str = None,
-              options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
-    """Display a link with the same layout than a buttons.colored HTML component.
+    def colored(self, text: str = "", url: str = "", icon: str = None, helper: str = None, color: str = None,
+                height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, html_code: str = None,
+                options: dict = None, profile: types.PROFILE_TYPE = None) -> html.HtmlLinks.ExternalLink:
+        """Display a link with the same layout than a buttons.colored HTML component.
 
     Usage::
 
@@ -180,30 +182,30 @@ class Links:
     :param options: Optional. Specific Python options available for this component.
     :param profile: Optional. Optional. A flag to set the component performance storage.
     """
-    height = Arguments.size(height, unit="px")
-    dft_options = {"target": '_blank'}
-    if options is not None:
-      dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(
-      self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
-    html_link.style.add_classes.button.basic()
-    html_link.style.css.padding = "0 10px"
-    html_link.style.css.background = color or self.page.theme.colors[-1]
-    html_link.style.css.border = "1px solid %s" % (color or self.page.theme.colors[-1])
-    if icon is not None:
-      html_link.icon.style.css.color = self.page.theme.colors[0]
-    html_link.style.css.color = self.page.theme.colors[0]
-    html_link.style.css.margin_top = 5
-    html_link.style.css.line_height = Defaults_html.LINE_HEIGHT
-    html_link.style.css.margin_bottom = 5
-    html.Html.set_component_skin(html_link)
-    return html_link
+        height = Arguments.size(height, unit="px")
+        dft_options = {"target": '_blank'}
+        if options is not None:
+            dft_options.update(options)
+        html_link = html.HtmlLinks.ExternalLink(
+            self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
+        html_link.style.add_classes.button.basic()
+        html_link.style.css.padding = "0 10px"
+        html_link.style.css.background = color or self.page.theme.colors[-1]
+        html_link.style.css.border = "1px solid %s" % (color or self.page.theme.colors[-1])
+        if icon is not None:
+            html_link.icon.style.css.color = self.page.theme.colors[0]
+        html_link.style.css.color = self.page.theme.colors[0]
+        html_link.style.css.margin_top = 5
+        html_link.style.css.line_height = Defaults_html.LINE_HEIGHT
+        html_link.style.css.margin_bottom = 5
+        html.Html.set_component_skin(html_link)
+        return html_link
 
-  def upload(self, url: str = "#", text: str = "", icon: str = "upload", helper: str = None,
-             height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
-             html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
-             ) -> html.HtmlLinks.ExternalLink:
-    """HTML component to upload files.
+    def upload(self, url: str = "#", text: str = "", icon: str = "upload", helper: str = None,
+               height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
+               html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+               ) -> html.HtmlLinks.ExternalLink:
+        """HTML component to upload files.
 
     Usage::
 
@@ -220,34 +222,34 @@ class Links:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
-    height = Arguments.size(height, unit="px")
-    dft_options = {"target": '_self'}
-    if options is not None:
-      dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(
-      self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
-    html_link.style.add_classes.button.basic()
-    html_link.style.css.padding = "0 10px"
-    html_link.style.css.remove("border", set_none=True)
-    if not text:
-      html_link.icon.style.css.remove("margin-right")
-    html_link.style.css.border_radius = 20
-    html_link.style.css.margin_top = 5
-    html_link.style.css.line_height = False
-    html_link.style.css.margin_bottom = 5
-    if align == "center":
-      html_link.style.css.margin = "auto"
-      html_link.style.css.display = "block"
-    elif align == "right":
-      html_link.style.css.float = align
-    html.Html.set_component_skin(html_link)
-    return html_link
+        height = Arguments.size(height, unit="px")
+        dft_options = {"target": '_self'}
+        if options is not None:
+            dft_options.update(options)
+        html_link = html.HtmlLinks.ExternalLink(
+            self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
+        html_link.style.add_classes.button.basic()
+        html_link.style.css.padding = "0 10px"
+        html_link.style.css.remove("border", set_none=True)
+        if not text:
+            html_link.icon.style.css.remove("margin-right")
+        html_link.style.css.border_radius = 20
+        html_link.style.css.margin_top = 5
+        html_link.style.css.line_height = False
+        html_link.style.css.margin_bottom = 5
+        if align == "center":
+            html_link.style.css.margin = "auto"
+            html_link.style.css.display = "block"
+        elif align == "right":
+            html_link.style.css.float = align
+        html.Html.set_component_skin(html_link)
+        return html_link
 
-  def download(self, url: str = "#", text: str = "", icon: str = "download", helper: str = None,
-               height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
-               html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
-               ) -> html.HtmlLinks.ExternalLink:
-    """HTML component to upload files.
+    def download(self, url: str = "#", text: str = "", icon: str = "download", helper: str = None,
+                 height: types.SIZE_TYPE = (None, 'px'), decoration: bool = False, align: str = "left",
+                 html_code: str = None, options: dict = None, profile: types.PROFILE_TYPE = None
+                 ) -> html.HtmlLinks.ExternalLink:
+        """HTML component to upload files.
 
     Usage::
 
@@ -264,27 +266,27 @@ class Links:
     :param options: Optional. Specific Python options available for this component
     :param profile: Optional. A flag to set the component performance storage
     """
-    height = Arguments.size(height, unit="px")
-    dft_options = {"target": '_self'}
-    if options is not None:
-      dft_options.update(options)
-    html_link = html.HtmlLinks.ExternalLink(
-      self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
-    html_link.style.add_classes.button.basic()
-    html_link.style.css.padding = "0 10px"
-    html_link.style.css.remove("border", set_none=True)
-    if not text:
-      html_link.icon.style.css.remove("margin-right")
-    html_link.style.css.border_radius = 20
-    html_link.style.css.margin_top = 5
-    html_link.style.css.line_height = False
-    html_link.style.css.margin_bottom = 5
-    if icon is not None:
-      html_link.icon.style.css.margin_top = -3
-    if align == "center":
-      html_link.style.css.margin = "auto"
-      html_link.style.css.display = "block"
-    elif align == "right":
-      html_link.style.css.float = align
-    html.Html.set_component_skin(html_link)
-    return html_link
+        height = Arguments.size(height, unit="px")
+        dft_options = {"target": '_self'}
+        if options is not None:
+            dft_options.update(options)
+        html_link = html.HtmlLinks.ExternalLink(
+            self.page, text, url, icon, helper, height, decoration, html_code, dft_options, profile)
+        html_link.style.add_classes.button.basic()
+        html_link.style.css.padding = "0 10px"
+        html_link.style.css.remove("border", set_none=True)
+        if not text:
+            html_link.icon.style.css.remove("margin-right")
+        html_link.style.css.border_radius = 20
+        html_link.style.css.margin_top = 5
+        html_link.style.css.line_height = False
+        html_link.style.css.margin_bottom = 5
+        if icon is not None:
+            html_link.icon.style.css.margin_top = -3
+        if align == "center":
+            html_link.style.css.margin = "auto"
+            html_link.style.css.display = "block"
+        elif align == "right":
+            html_link.style.css.float = align
+        html.Html.set_component_skin(html_link)
+        return html_link

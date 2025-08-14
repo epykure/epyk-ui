@@ -23,13 +23,18 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js.html import JsHtmlPanels
 from epyk.core.js.packages import JsGridstack
 
-# The list of CSS classes
-from epyk.core.css.styles import GrpClsContainer
-
 
 class Panel(Html.Html):
-    name = 'Panel'
-    tag = "div"
+    name: str = 'Panel'
+    tag: str = "div"
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-container.css",
+    ]
+
+    style_refs = {
+        "html-container": "html-container",
+    }
 
     def __init__(self, page: primitives.PageModel, components: Union[List[Html.Html], Html.Html],
                  title: Optional[str], color: Optional[str], width: types.SIZE_TYPE, height: types.SIZE_TYPE,
@@ -53,13 +58,7 @@ class Panel(Html.Html):
         super(Panel, self).__init__(page, component, html_code=html_code, profile=profile, options=options,
                                     css_attrs={"color": color, "width": width, "height": height})
         container.set_attrs(name="name", value="panel_%s" % self.html_code)
-
-    @property
-    def style(self) -> GrpClsContainer.ClassDiv:
-        """Property to the CSS Style of the component."""
-        if self._styleObj is None:
-            self._styleObj = GrpClsContainer.ClassDiv(self)
-        return self._styleObj
+        self.classList.add(self.style_refs["html-container"])
 
     @property
     def dom(self) -> JsHtmlPanels.JsHtmlPanel:
@@ -146,8 +145,8 @@ class Panel(Html.Html):
 
 
 class PanelSplit(Html.Html):
-    name = 'Panel Horizontal Split'
-    tag = 'div'
+    name: str = 'Panel Horizontal Split'
+    tag: str = 'div'
 
     style_urls = [
         Path(__file__).parent.parent / "css" / "native" / "html-panel-h.css",
@@ -261,8 +260,8 @@ class PanelSplit(Html.Html):
 
 
 class PanelVSplit(Html.Html):
-    name = 'Panel Vertical Split'
-    tag = 'div'
+    name: str = 'Panel Vertical Split'
+    tag: str = 'div'
 
     style_urls = [
         Path(__file__).parent.parent / "css" / "native" / "html-panel-v.css",
@@ -377,9 +376,9 @@ class PanelVSplit(Html.Html):
 
 
 class PanelSlide(Panel):
-    name = 'Slide Panel'
+    name: str = 'Slide Panel'
     _option_cls = OptPanel.OptionPanelSliding
-    tag = 'div'
+    tag: str = 'div'
     category = None
 
     style_urls = [
@@ -524,8 +523,16 @@ class PanelSlide(Panel):
 
 
 class Div(Html.Html):
-    name = 'Simple Container'
+    name: str = 'Simple Container'
     _option_cls = OptPanel.OptionsDiv
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-container.css",
+    ]
+
+    style_refs = {
+        "html-container": "html-container",
+    }
 
     def __init__(self, page: primitives.PageModel, components: List[Html.Html], label: Optional[str],
                  color: Optional[str], width: types.SIZE_TYPE, icon: Optional[str], height: types.SIZE_TYPE,
@@ -567,6 +574,7 @@ class Div(Html.Html):
         if editable:
             self.set_attrs(name='contenteditable', value="true")
             self.css('overflow', 'auto')
+        self.classList.add(self.style_refs["html-container"])
 
     def __enter__(self):
         return self
@@ -674,13 +682,6 @@ class Div(Html.Html):
         """Property to set all the possible object for a button."""
         return super().options
 
-    @property
-    def style(self) -> GrpClsContainer.ClassDiv:
-        """Property to the CSS Style of the component."""
-        if self._styleObj is None:
-            self._styleObj = GrpClsContainer.ClassDiv(self)
-        return self._styleObj
-
     def build(self, data: types.JS_DATA_TYPES = None, options: Optional[dict] = None,
               profile: types.PROFILE_TYPE = None, component_id: Optional[str] = None,
               dataflows: List[dict] = None, **kwargs):
@@ -740,7 +741,7 @@ class Div(Html.Html):
 
 
 class Td(Html.Html):
-    name = 'Cell'
+    name: str = 'Cell'
 
     def __init__(self, page: primitives.PageModel, components: Optional[List[Union[Html.Html, str]]],
                  header: bool, position: Optional[str], width: types.SIZE_TYPE,
@@ -1153,7 +1154,7 @@ class Col(MixHtmlState.HtmlOverlayStates, Html.Html):
 
 
 class Row(Html.Html):
-    name = 'Column'
+    name: str = 'Column'
     requirements = ('bootstrap',)
     _option_cls = OptPanel.OptionGrid
     html_class: str = None
@@ -1971,8 +1972,8 @@ class Form(Html.Html):
 
 
 class Modal(Html.Html):
-    name = 'Modal Popup'
-    tag = 'div'
+    name: str = 'Modal Popup'
+    tag: str = 'div'
 
     style_urls = [
         Path(__file__).parent.parent / "css" / "native" / "html-popup.css",
@@ -2042,13 +2043,6 @@ class Modal(Html.Html):
         self.__outOfScopeClose = val
 
     @property
-    def style(self) -> GrpClsContainer.ClassModal:
-        """Property to the CSS Style of the component."""
-        if self._styleObj is None:
-            self._styleObj = GrpClsContainer.ClassModal(self)
-        return self._styleObj
-
-    @property
     def header(self):
         return self.__header
 
@@ -2091,9 +2085,9 @@ class Modal(Html.Html):
 
 
 class Indices(Html.Html):
-    name = 'Index'
+    name: str = 'Index'
     _option_cls = OptPanel.OptionsPanelPoints
-    tag = 'div'
+    tag: str = 'div'
 
     def __init__(self, page: primitives.PageModel, count: int, width: tuple, height: tuple, html_code: str,
                  options: dict, profile: Optional[Union[dict, bool]]):
@@ -2169,9 +2163,9 @@ class Indices(Html.Html):
 
 
 class Points(Html.Html):
-    name = 'Index'
+    name: str = 'Index'
     _option_cls = OptPanel.OptionsPanelPoints
-    tag = 'div'
+    tag: str = 'div'
 
     def __init__(self, page: primitives.PageModel, count: int, width: tuple, height: tuple, html_code: str,
                  options: dict, profile: Union[dict, bool]):
@@ -2268,9 +2262,9 @@ class Points(Html.Html):
 
 
 class Header(Html.Html):
-    name = 'Header'
+    name: str = 'Header'
     _option_cls = OptPanel.OptionsDiv
-    tag = "header"
+    tag: str = "header"
 
     def __init__(self, page: primitives.PageModel, component: primitives.HtmlModel, width: tuple, height: tuple,
                  html_code: str, helper: str, options: dict, profile: Union[dict, bool]):
@@ -2303,9 +2297,9 @@ class Header(Html.Html):
 
 
 class Section(Html.Html):
-    name = 'Section'
+    name: str = 'Section'
     _option_cls = OptPanel.OptionsDiv
-    tag = "section"
+    tag: str = "section"
 
     def __init__(self, page: primitives.PageModel, component: Union[Html.Html, List[Html.Html]], width: tuple,
                  height: tuple,

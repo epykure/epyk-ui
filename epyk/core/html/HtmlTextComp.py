@@ -10,14 +10,12 @@ from epyk.core.py import types
 from epyk.core.html import Html
 from epyk.core.css import Colors
 from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsMathjax
 
 from epyk.core.html.options import OptText
 from epyk.core.js.html import JsHtml
 
 # The list of CSS classes
 from epyk.core.css.styles import GrpCls
-from epyk.core.css.styles import GrpClsText
 
 
 class UpDown(Html.Html):
@@ -100,7 +98,7 @@ class UpDown(Html.Html):
 
 
 class BlockText(Html.Html):
-    name = 'Block text'
+    name: str = 'Block text'
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, record: list, color: Optional[str], border: str, width: tuple,
@@ -131,7 +129,7 @@ class BlockText(Html.Html):
 
 
 class TextWithBorder(Html.Html):
-    name = 'Text with Border and Icon'
+    name: str = 'Text with Border and Icon'
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, record: list, width: tuple, height: tuple, align: Optional[str],
@@ -189,8 +187,8 @@ htmlObj.querySelector('legend').innerHTML = data.title; htmlObj.querySelector('s
 
 
 class Number(Html.Html):
-    name = 'Number'
-    tag = "div"
+    name: str = 'Number'
+    tag: str = "div"
 
     def __init__(
             self, page: primitives.PageModel, number, components, label, width, height, html_code, profile, options, helper):
@@ -247,7 +245,7 @@ class Number(Html.Html):
 
 class Delta(Html.Html):
     requirements = ('jqueryui', 'accounting')
-    name = 'Delta Figures'
+    name: str = 'Delta Figures'
     _option_cls = OptText.OptionsNumberDelta
 
     def __init__(self, page: primitives.PageModel, records, components, width, height, options, helper, profile):
@@ -325,44 +323,9 @@ jHtmlObj.find('div').last().html(options.previous_label + accounting.formatNumbe
                    "greyColor": self.page.theme.greys[6], "helper": self.helper}
 
 
-class Formula(Html.Html):
-    requirements = ('mathjax',)
-    name = 'Latex Formula'
-
-    def __init__(self, page: primitives.PageModel, text, width, height, color, html_code, helper, options, profile):
-        options = options or {}
-        super(Formula, self).__init__(page, text, options=options, html_code=html_code,
-                                      css_attrs={"color": color, "width": width, "height": height}, profile=profile)
-        self.add_helper(helper, options=options.get("helper"))
-
-    _js__builder__ = '''htmlObj.innerHTML = data; MathJax.typeset([htmlObj])'''
-
-    @property
-    def style(self) -> GrpClsText.ClsFormula:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsText.ClsFormula(self)
-        return self._styleObj
-
-    @property
-    def js(self) -> JsMathjax.Mathjax:
-        """Return all the Javascript functions defined for an HTML Component.
-        Those functions will use plain javascript by default.
-
-        :return: A Javascript Dom object
-        """
-        if self._js is None:
-            self._js = JsMathjax.Mathjax(self, selector=self.dom.varId)
-        return self._js
-
-    def __str__(self):
-        return '<font %s>%s</font>%s' % (
-        self.get_attrs(css_class_names=self.style.get_classes()), self.content, self.helper)
-
-
 class TrafficLight(Html.Html):
-    name = 'Traffic Light'
-    tag = "div"
+    name: str = 'Traffic Light'
+    tag: str = "div"
     _option_cls = OptText.OptionsTrafficLight
 
     style_urls = [
@@ -472,8 +435,8 @@ class TrafficLight(Html.Html):
 
 
 class ContentsTable(Html.Html):
-    name = 'Contents Table'
-    tag = "div"
+    name: str = 'Contents Table'
+    tag: str = "div"
     _option_cls = OptText.OptContents
 
     style_urls = [

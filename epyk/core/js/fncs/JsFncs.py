@@ -2,11 +2,8 @@
 # -*- coding: utf-8 -*-
 
 from typing import Union, Any
-from epyk.core.py import primitives
-from epyk.core.py import types
-
+from epyk.core.py import primitives, types
 from epyk.core.js.fncs import JsFncsRecords
-from epyk.core.js.objects import JsChartD3
 from epyk.core.js.primitives import JsObject
 from epyk.core.js import JsUtils
 
@@ -38,13 +35,13 @@ class FncToObject:
     @property
     def d3(self):
         """ Data transformation to the D3 package. """
+        from ..objects import JsChartD3
         return JsChartD3.JsChartD3Links(self._data, self._js_src, self._data_schema)
 
     @property
     def dc(self):
         """ Data transformation to the DC package. """
         from epyk.core.js.objects import JsChartDC
-
         return JsChartDC.JsChartDCLinks(self._data, self._js_src, self._data_schema)
 
 

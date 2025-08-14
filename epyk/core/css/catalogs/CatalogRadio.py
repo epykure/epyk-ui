@@ -1,29 +1,24 @@
-"""
-
-"""
-
-from epyk.core.css.catalogs import Catalog
-
-from epyk.core.css.styles.classes import CssStylesRadio
+from . import Catalog
+from ..styles.classes import CssStylesRadio
 
 
 class CatalogRadio(Catalog.CatalogGroup):
-  def button(self):
-    """  """
-    return self._set_class(CssStylesRadio.CssRadioButton)
+    def button(self):
+        """  """
+        return self._set_class(CssStylesRadio.CssRadioButton)
 
-  def selected(self):
-    """  """
-    return self._set_class(CssStylesRadio.CssRadioButtonSelected)
+    def selected(self):
+        """  """
+        return self._set_class(CssStylesRadio.CssRadioButtonSelected)
 
-  def switch_checkbox(self):
-    """  """
-    return self._set_class(CssStylesRadio.CssRadioSwitch)
+    def switch_checkbox(self):
+        """  """
+        return self._set_class(CssStylesRadio.CssRadioSwitch)
 
-  def switch_label(self):
-    """  """
-    return self._set_class(CssStylesRadio.CssRadioSwitchLabel)
+    def switch_label(self):
+        """  """
+        return self._set_class(CssStylesRadio.CssRadioSwitchLabel)
 
-  def switch_checked(self):
-    """  """
-    return self._set_class(CssStylesRadio.CssRadioSwitchChecked)
+    def switch_checked(self):
+        """  """
+        return self._set_class(CssStylesRadio.CssRadioSwitchChecked)

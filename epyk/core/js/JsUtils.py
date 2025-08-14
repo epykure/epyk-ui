@@ -10,15 +10,13 @@ from pathlib import Path
 from typing import Union, Optional, List, Any
 from epyk.core.py import primitives
 from epyk.core.py import types
-
 from epyk.core.js import treemap
-from epyk.core.js import Imports
+from epyk.core.js.imports import manager, registry
 from epyk.core.js.primitives import JsObject
-
 from epyk.core.css import css_files_loader
 
 
-PROFILE_COUNT = 0
+PROFILE_COUNT: int = 0
 
 
 # --------------------------------------------------------------------------------------------------------------
@@ -55,10 +53,11 @@ def fromVersion(data: dict):
     def decorator(func):
         @functools.wraps(func)
         def decorated(*args, **kwargs):
+            all_js = registry.get_js()
             for k, v in data.items():
-                if k in Imports.JS_IMPORTS:
-                    for mod in Imports.JS_IMPORTS[k]['modules']:
-                        if mod.get('version', Imports.JS_IMPORTS[k]['version']) < v:
+                if k in all_js:
+                    for mod in all_js[k]['modules']:
+                        if mod.get('version', all_js[k]['version']) < v:
                             raise ValueError("Function %s can only be used from %s version %s (current %s)" % (
                                 func.__name__, k, v, mod['version']))
 
@@ -88,10 +87,11 @@ def untilVersion(data: dict, new_feature: str):
     def decorator(func):
         @functools.wraps(func)
         def decorated(*args, **kwargs):
+            all_js = registry.get_js()
             for k, v in data.items():
-                if k in Imports.JS_IMPORTS:
-                    for mod in Imports.JS_IMPORTS[k]['modules']:
-                        if mod.get('version', Imports.JS_IMPORTS[k]['version']) > v:
+                if k in all_js:
+                    for mod in all_js[k]['modules']:
+                        if mod.get('version', all_js[k]['version']) > v:
                             raise ValueError(
                                 "Function %s can only be used since %s version %s (current %s). It has been replaced by %s" % (
                                     func.__name__, k, v, mod['version'], new_feature))
@@ -516,7 +516,7 @@ class JsFile:
             result = {"js": results["jsFrgs"], "js_external": ";".join(js_external)}
         else:
             self.writeReport(js_base)
-            import_obj = Imports.ImportManager()
+            import_obj = manager.ImportManager()
             import_obj.online = True
             css_external = import_obj.cssURLs(import_obj.cssResolve(js_base.page.cssImport))
             js_external = import_obj.jsURLs(import_obj.jsResolve(js_base.page.jsImports))
@@ -544,7 +544,7 @@ class JsFile:
             out_file.write("\n\n//Javascript Global functions \n\n")
             for fnc, details in src_obj._props.get('js', {}).get('functions', {}).items():
                 out_file.write("function %s(%s){%s}" % (fnc, ",".join(details.get('pmt', [])), details["content"]))
-            import_obj = Imports.ImportManager()
+            import_obj = manager.ImportManager()
             import_obj.online = True
             js_external = import_obj.jsResolve(src_obj.jsImports)
         out_file.write("\n\n")

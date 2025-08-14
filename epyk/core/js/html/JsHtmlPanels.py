@@ -1,8 +1,6 @@
-from typing import Union
-from epyk.core.py import primitives
-from epyk.core.py import types
-
-from epyk.core.js.Imports import string_to_base64
+from typing import Union, Optional
+from epyk.core.py import primitives, types
+from epyk.core.js.imports.utils import string_to_base64
 from epyk.core.js.html import JsHtml
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.fncs import JsFncs
@@ -11,7 +9,7 @@ from epyk.core.js import JsUtils
 
 class JsHtmlPanel(JsHtml.JsHtml):
 
-    def __init__(self, js_code: str = None, set_var: bool = False, is_py_data: bool = False,
+    def __init__(self, js_code: Optional[str] = None, set_var: bool = False, is_py_data: bool = False,
                  page: primitives.PageModel = None, component=None):
         super(JsHtmlPanel, self).__init__(component, js_code, set_var, is_py_data, page)
         if js_code is not None:
@@ -45,16 +43,15 @@ class JsHtmlSlidingPanel(JsHtml.JsHtml):
                              ])
         ])
 
-    def set_title(self, data, options: dict = None):
-        """
-        Set the component title.
+    def set_title(self, data, options: Optional[dict] = None):
+        """Set the component title.
 
         :param data: A String corresponding to a JavaScript object
         :param dict options: Optional. Specific Python options available for this component
         """
         return self.component.title[1].build(data, options=options)
 
-    def set_icon(self, data: str, css: dict = None, options: dict = None):
+    def set_icon(self, data: str, css: Optional[dict] = None, options: Optional[dict] = None):
         """
         Set the icon from Font-awesome options.
 
@@ -89,8 +86,7 @@ class JsHtmlGrid(JsHtml.JsHtml):
         return self.component.input.dom.content
 
     def panel(self, i: int):
-        """
-        Return the underlying panel object.
+        """Return the underlying panel object.
 
         :param i: The panel index
         """
@@ -107,9 +103,7 @@ class JsHtmlGrid(JsHtml.JsHtml):
         return ""
 
     def togglePanel(self, i: int):
-        """
-        Toggle the display of the column in a grid component.
-        Thw other columns will be resized accordingly.
+        """Toggle the display of the column in a grid component. Thw other columns will be resized accordingly.
 
         :param i: The column number (start at 0)
         """
@@ -129,8 +123,7 @@ class JsHtmlTabs(JsHtml.JsHtml):
                 self.varId, i), page=self.page)
 
     def add_tab(self, name: str = "New Tab", save_funcs: types.JS_FUNCS_TYPES = None, profile: types.PROFILE_TYPE = None):
-        """
-        Add a tab to the panel.
+        """Add a tab to the panel.
 
         :param name: Optional. The name of the new tab
         :param save_funcs: Optional.
@@ -151,11 +144,9 @@ tabItem.addEventListener("focusout", function(){
        "width": self.component.options.width, "save_expr": save_expr})
 
     def tab(self, i: int):
-        """
-        Return the Javascript tab object.
+        """Return the Javascript tab object.
 
         Usage::
-
           tab.dom.tab(3).firstChild.css({"color": 'red'})
 
         :param i: Starting from 0 as we keep the Python indexing as reference
@@ -163,8 +154,7 @@ tabItem.addEventListener("focusout", function(){
         return JsObjects.JsNodeDom.JsDoms.get("%s.firstChild.querySelector('div:nth-child(%s)')" % (self.varId, i + 1))
 
     def set_tab_name(self, i: int, name: Union[str, primitives.JsDataModel]):
-        """
-        Change the name for a specific panel.
+        """Change the name for a specific panel.
 
         :param i: The panel index
         :param name: The panel name
@@ -176,8 +166,7 @@ tabItem.addEventListener("focusout", function(){
 
     @property
     def selected_index(self):
-        """
-        Return the index of the selected tab.
+        """Return the index of the selected tab.
 
         :return: The index or -1
         """

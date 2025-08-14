@@ -1,5 +1,4 @@
 #!/usr/bin/python
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
 
 import json
@@ -7,44 +6,23 @@ import os
 import base64
 import logging
 from typing import Union, Optional, Any, List, Callable, Tuple
-from epyk.core.py import primitives
-from epyk.core.py import types
-
+from epyk.conf.global_settings import IMPORT_STATIC_PATH
+from epyk.core.py import primitives, types
 from epyk.core.html import KeyCodes
-
-from epyk.core.js import Imports
-from epyk.core.js import JsLocation
-from epyk.core.js import JsMaths
-from epyk.core.js import JsNavigator
-from epyk.core.js import JsPerformance
-from epyk.core.js import JsUtils
-from epyk.core.js import JsWindow
-from epyk.core.js import JsWebSocket
-from epyk.core.js import JsMsgAlerts
-from epyk.core.js import JsMediaRecorder
-from epyk.core.js import JsSpeechRecognition
-from epyk.core.js import JsCacheStorage
-from epyk.core.js import treemap
+from epyk.core.js import JsLocation, JsMaths, JsNavigator, JsPerformance, JsUtils, JsWindow, JsWebSocket, \
+    JsMsgAlerts, JsMediaRecorder, JsSpeechRecognition, JsCacheStorage, treemap, crypto
 
 # All the predefined variable types
-from epyk.core.js.fncs import JsFncs
-from epyk.core.js.fncs import JsFncsSamples
-from epyk.core.js.objects import JsData
-from epyk.core.js.objects import JsNodeAttributes
-from epyk.core.js.objects import JsNodeDom
-from epyk.core.js.objects import JsIntersectionObserver
-from epyk.core.js.primitives import JsNumber
-from epyk.core.js.primitives import JsObject
-from epyk.core.js.primitives import JsObjects
-from epyk.core.js.primitives import JsString
+from epyk.core.js.fncs import JsFncs, JsFncsSamples
+from epyk.core.js.objects import JsData, JsNodeAttributes, JsNodeDom, JsIntersectionObserver
+from epyk.core.js.primitives import JsNumber, JsObject, JsObjects, JsString
+from epyk.core.js.imports.registry import PACKAGE_STATUS
 
 # All the predefined Javascript Statements
-from epyk.core.js.statements import JsIf
-from epyk.core.js.statements import JsWhile
-from epyk.core.js.statements import JsSwitch
-from epyk.core.js.statements import JsFor
+from .statements import JsIf, JsWhile, JsSwitch, JsFor
 
-_CONSOLE_LOG_EXPR = "console.log({})"
+
+_CONSOLE_LOG_EXPR: str = "console.log({})"
 
 
 class JsBreadCrumb:
@@ -322,11 +300,6 @@ class JsStorage:
             value: Optional. The value to set (or function to use)
             setOnce: Optional. Enable mechanism to store value. Default False
             profile: Optional. Set the profile to None
-
-        :param js_code: Variable name and cache key
-        :param value: Optional. Cache value
-        :param set_once: Optional. Flag or object {missing, exists} to set variable only once
-        :param profile: Optional. A flag to set the component performance storage
         """
         if options.get("type") == "session":
             return self.session(
@@ -474,6 +447,15 @@ class JsBase:
         if self.__media_recorder is None:
             self.__media_recorder = JsMediaRecorder.MediaRecorder(self.page)
         return self.__media_recorder
+
+    @property
+    def crypto(self) -> crypto.JsCrypto:
+        """The MediaRecorder interface of the MediaStream Recording API provides functionality to easily record media.
+        It is created using the MediaRecorder() constructor.
+
+        `Related Pages <https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder>`_
+        """
+        return crypto.JsCrypto(self.page)
 
     def speechRecognition(self, js_code: str) -> JsSpeechRecognition.SpeechRecognition:
         """The SpeechRecognition interface of the Web Speech API is the controller interface for the recognition service;
@@ -635,19 +617,6 @@ class JsBase:
         :param html_code: The EventSource id (variable name) on the JavaScript side
         """
         return JsWebSocket.ServerSentEvent(html_code, self.page)
-
-    @property
-    def d3(self):
-        """D3.js is a JavaScript library for manipulating documents based on data.
-        D3 helps you bring data to life using HTML, SVG, and CSS.
-
-        D3’s emphasis on web standards gives you the full capabilities of modern browsers without tying yourself to a
-        proprietary framework, combining powerful visualization components and a data-driven approach to DOM manipulation.
-
-        `Related Pages <https://d3js.org/>`_
-        """
-        from epyk.core.js.packages import JsD3
-        return JsD3.JsD3(page=self.page, component=self.component)
 
     def not_(self, data, js_conv_func: Optional[Union[str, list]] = None) -> JsFncs.JsFunction:
         """Add the Symbol (!) for the boolean negation.
@@ -858,7 +827,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             if absolute_path:
                 path = os.getcwd()
             else:
-                path = "%s/js" % Imports.STATIC_PATH.replace("\\", "/")
+                path = "%s/js" % IMPORT_STATIC_PATH.replace("\\", "/")
         file_alias = 'local_%s' % filename[:-3].lower()
         self.page.imports.addPackage(file_alias, {
             'version': "", 'req': requirements or [],
@@ -871,7 +840,7 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             import inspect
 
             mod_path = inspect.getmodule(inspect.stack()[1][0]).__file__
-            Imports.PACKAGE_STATUS[file_alias] = {"allowed": True, "info": "from {}".format(mod_path)}
+            PACKAGE_STATUS[file_alias] = {"allowed": True, "info": "from {}".format(mod_path)}
             randomize = False  # No point to change the url in this case.
 
         if randomize:
@@ -1265,11 +1234,13 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
             self._breadcrumb = JsBreadCrumb(self.page)
         return self._breadcrumb
 
-    def navigateTo(self, url: Union[str, primitives.JsDataModel], options: Optional[dict] = None) -> JsObject.JsObject:
+    def navigateTo(
+            self, url: Union[str, primitives.JsDataModel],
+            options: Optional[dict] = None
+    ) -> Union[JsObject.JsObject, JsFncs.JsFunction]:
         """Navigator to another URL like NodeJs.
 
         Usage::
-
           icon.click([self.context.page.js.navigateTo(url)])
 
         `Related Pages <https://redfin.github.io/react-server/annotated-src/navigateTo.html>`_
@@ -1304,7 +1275,6 @@ document.execCommand('copy', false, elInput.select()); elInput.remove()
         """The onkeydown event occurs when the user is pressing a key (on the keyboard).
 
         Usage::
-
           page.js.keydown.enter(pk.js_std.alert('Hello World'), profile=True)
 
         `Related Pages <https://www.w3schools.com/jsref/event_onkeydown.asp>`_

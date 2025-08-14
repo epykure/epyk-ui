@@ -6,9 +6,9 @@ import os
 import logging
 
 from typing import List, Union, Optional
-from epyk.core.py import OrderedSet
-from epyk.core.data.recs import RecItems
-from epyk.core.js import JsUtils
+from ..py import OrderedSet
+from .recs import RecItems
+from ..js import JsUtils
 
 
 class Plotly:

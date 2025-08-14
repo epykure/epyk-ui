@@ -1,24 +1,25 @@
 import sys
-
-from typing import Union, Any
+from typing import Union, Any, Optional
 from epyk.core.py import primitives
-
 from epyk.core.css import Properties
 from epyk.core.css.styles.classes.CssStyle import Style
 
-IMPORTANT_EXPR = "{} !IMPORTANT"
+IMPORTANT_EXPR: str = "{} !IMPORTANT"
 
 
 class Attrs(Properties.CssMixin):
 
-    def __init__(self, component: primitives.HtmlModel, page: primitives.PageModel = None):
+    delimiter: str = ";" # symbol to delimit different attributes
+    assigner: str = ":" # symbol to assign value to an attribute
+
+    def __init__(self, component: primitives.HtmlModel, page: Optional[primitives.PageModel] = None):
         self.attrs = {}
         self.component = component
         self.page = page
         if component is not None and page is None:
             self.page = component.page
 
-    def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False):
+    def css(self, attrs: Union[dict, str], value: Any = None, important: bool = False) -> dict:
         """Set multiple CSS attributes to the HTML component.
 
         :param attrs: optional. The attributes to be added
@@ -39,7 +40,7 @@ class Attrs(Properties.CssMixin):
             self.attrs[k] = v
         return self.attrs
 
-    def remove(self, attr: str = None, set_none: bool = False):
+    def remove(self, attr: Optional[str] = None, set_none: bool = False):
         """Remove a CSS attribute to the HTML component.
 
         This function will either remove it if it is part of the existing CSS attribute or set it to auto in case it is
@@ -57,13 +58,13 @@ class Attrs(Properties.CssMixin):
                 del self.attrs[key]
                 if key in self.component.attr['css']:
                     del self.component.attr['css'][key]
+
             else:
                 self.attrs[key] = "unset"
                 self.component.attr['css'][key] = "auto"
 
-    def __str__(self):
-        css_tag = ["%s:%s" % (k, v) for k, v in self.attrs.items()]
-        return ";".join(css_tag)
+    def __str__(self) -> str:
+        return self.delimiter.join(["%s%s%s" % (k, self.assigner, v) for k, v in self.attrs.items()])
 
 
 class Commons(Attrs):
@@ -124,7 +125,7 @@ class CssInline(Attrs):
     def fill_opacity(self, num):
         self.css({"fill-opacity": num})
 
-    def to_dict(self, copy: bool = False):
+    def to_dict(self, copy: bool = False) -> dict:
         """Returns the underlying CSS attributes.
         This is the internal object and not a copy by default.
 
@@ -135,7 +136,7 @@ class CssInline(Attrs):
 
         return self.attrs
 
-    def important(self, attrs: list = None):
+    def important(self, attrs: Optional[list] = None):
         """If attrs is not defined all the attributes will be important.
 
         :param attrs: The Css Python property to be changed
@@ -147,7 +148,7 @@ class CssInline(Attrs):
             for k in attrs:
                 setattr(self, k, "%s !IMPORTANT" % getattr(self, k))
 
-    def to_class(self, class_name: str = None):
+    def to_class(self, class_name: Optional[str] = None):
         """The CSS class object.
 
         :param class_name: The class name

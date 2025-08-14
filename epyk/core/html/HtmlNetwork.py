@@ -14,13 +14,10 @@ from epyk.core.js.objects import JsComponents
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlNetwork
 
-# The list of CSS classes
-from epyk.core.css.styles import GrpClsNetwork
-
 
 class Comments(Html.Html):
-    name = 'Comments'
-    tag = "div"
+    name: str = 'Comments'
+    tag: str = "div"
     _option_cls = OptNet.OptionsComments
 
     style_urls = [
@@ -217,19 +214,22 @@ class Bot(Html.Html):
       - Advice / Information
 
     """
-    name = 'Bot'
+    name: str = 'Bot'
+
+    style_urls = [
+        Path(__file__).parent.parent / "css" / "native" / "html-bot.css",
+    ]
+
+    style_refs = {
+        "html-bot": "html-bot",
+        "speech-bubble": "speech-bubble",
+        "speech-bubble-ds__arrow": "speech-bubble-ds__arrow",
+        "speech-bubble-ds": "speech-bubble-ds",
+    }
 
     def __init__(self, page: primitives.PageModel, width, height, html_code, options, profile):
         super(Bot, self).__init__(page, [], css_attrs={"width": width}, html_code=html_code, profile=profile)
-        self.css({"text-align": 'right', "position": 'fixed', "bottom": 0, 'margin': '10px', "height": "80px",
-                  "padding": "5px", "z-index": 200})
-
-    @property
-    def style(self) -> GrpClsNetwork.ClassNetworkBot:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpClsNetwork.ClassNetworkBot(self)
-        return self._styleObj
+        self.classList.add(self.style_refs["html-bot"])
 
     def __str__(self):
         return '''
@@ -239,7 +239,7 @@ class Bot(Html.Html):
             <div class="speech-bubble-ds__arrow"></div>
           </div>
           <div style="background-repeat:no-repeat;height:80px;width:80px;display:inline-block;background-image:url('')">&nbsp;</div>
-       </div>''' % {'attr': self.get_attrs(), "name": 'Test'}
+       </div>''' % {'attr': self.get_attrs(), "bubble_cls": self.style_refs["speech-bubble"]}
 
 
 class Assistant(Html.Html):

@@ -237,7 +237,7 @@ class KeyCode:
         """
         self.key(27, js_funcs, profile, reset, source_event)
 
-    def get_event(self):
+    def get_event(self) -> dict:
         """ Return the complete definition for the key event. """
         event = {}
         for source, event_funcs in self.__events_per_source.items():

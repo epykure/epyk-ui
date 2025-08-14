@@ -17,7 +17,6 @@ from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsBoolean
 from epyk.core.js.primitives import JsObjects
 from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsD3
 from epyk.core.js.packages import JsQueryUi
 from epyk.core.js.packages import JsCrossFilter
 from epyk.core.js.packages import packageImport
@@ -335,13 +334,13 @@ class JsHtml(JsNodeDom.JsDoms):
                 component=self.component, selector=JsQuery.decorate_var("#%s" % self.component.html_code), set_var=False)
         return self._jquery
 
-    @property
-    def d3(self) -> JsD3.D3Select:
-        """Wrapper to the D3 library"""
-        if self._d3 is None:
-            self._d3 = JsD3.D3Select(
-                component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.html_code)
-        return self._d3
+    #@property
+    #def d3(self) -> JsD3.D3Select:
+    #    """Wrapper to the D3 library"""
+    #    if self._d3 is None:
+    #        self._d3 = JsD3.D3Select(
+    #            component=self.component, page=self.page, selector="d3.select('#%s')" % self.component.html_code)
+    #    return self._d3
 
     @property
     def jquery_ui(self) -> JsQueryUi.JQueryUI:

@@ -1,12 +1,9 @@
-"""
-Mapping table for the pre defined HTML colors
+"""Mapping table for the pre-defined HTML colors
 
-Related Pages:
-
-      https://www.rapidtables.com/web/color/RGB_Color.html
+`RGB_Color <https://www.rapidtables.com/web/color/RGB_Color.html>`_
 """
 
-from typing import List
+from typing import List, Optional
 import random
 import math
 import re
@@ -167,28 +164,24 @@ defined = {
 }
 
 
-def getHexToRgb(hex_color: str):
-    """
-    Convert a hexadecimal color to a rgb code.
+def getHexToRgb(hex_color: str) -> List[int]:
+    """Convert a hexadecimal color to a rgb code.
 
     An RGB color value is specified with the rgb() function, which has the following syntax:
     rgb(red, green, blue)
     Each parameter (red, green, and blue) defines the intensity of the color and can be an integer between 0 and 255 or
     a percentage value (from 0% to 100%).
-    For example, the rgb(0,0,255) value is rendered as blue, because the blue parameter is set to its highest value (255)
-    and the others are set to 0.
+    For example, the rgb(0,0,255) value is rendered as blue, because the blue parameter is set to its highest
+    value (255) and the others are set to 0.
     Also, the following values define equal color: rgb(0,0,255) and rgb(0%,0%,100%).
 
     A Rgb color can be passed as input.
 
     Usages::
-
         >>> getHexToRgb('#213B68')
         [33, 59, 104]
 
-    Related Pages:
-
-        https://www.w3schools.com/cssref/css_colors_legal.asp
+    `w3schools <https://www.w3schools.com/cssref/css_colors_legal.asp>`_
 
     :param hex_color: A hexadecimal code color
 
@@ -207,22 +200,18 @@ def getHexToRgb(hex_color: str):
     return [int(hex_color[1:3], 16), int(hex_color[3:5], 16), int(hex_color[5:7], 16)]
 
 
-def rgba(red: int, green: int, blue: int, alpha: float):
-    """
-    RGBA color values are an extension of RGB color values with an alpha channel which specifies the opacity.
+def rgba(red: int, green: int, blue: int, alpha: float) -> str:
+    """RGBA color values are an extension of RGB color values with an alpha channel which specifies the opacity.
 
     An RGBA color is specified with the rgba() function, which has the following syntax:
     rgba(red, green, blue, alpha)
     The alpha parameter is a number between 0.0 (fully transparent) and 1.0 (fully opaque).
 
     Usage::
-
         >>> rgba(33, 59, 104, 0.5)
         'rgba(33, 59, 104, 0.5)'
 
-    Related Pages:
-
-        https://www.w3schools.com/cssref/css_colors_legal.asp
+    `w3schools <https://www.w3schools.com/cssref/css_colors_legal.asp>`_
 
     :param red: The red RGB color number
     :param green: The green RGB color number
@@ -232,12 +221,10 @@ def rgba(red: int, green: int, blue: int, alpha: float):
     return "rgba(%s, %s, %s, %s)" % (red, green, blue, alpha)
 
 
-def getRgbToHex(rgb_color: List[int]):
-    """
-    Convert a RGB color to a hexadecimal code.
+def getRgbToHex(rgb_color: List[float]) -> str:
+    """Convert a RGB color to a hexadecimal code.
 
     Usage::
-
         >>> getRgbToHex([255, 0, 0])
         '#ff0000'
 
@@ -255,12 +242,10 @@ def getRgbToHex(rgb_color: List[int]):
     return "#%s" % "".join(color)
 
 
-def randColor(seed_no: int = None):
-    """
-    Generate a random hexadecimal color code.
+def randColor(seed_no: Optional[int] = None) -> str:
+    """Generate a random hexadecimal color code.
 
     Usage::
-
         >>> randColor(10)
         '#9693DD'
 
@@ -280,12 +265,10 @@ def randColor(seed_no: int = None):
     return "".join(color)
 
 
-def gradient(start: str, end: str, factor: float):
-    """
-    Deduce the color from a factor in a range of colors.
+def gradient(start: str, end: str, factor: float) -> str:
+    """Deduce the color from a factor in a range of colors.
 
     Usage::
-
         >>> gradient("#ffffff", "#FF0000", 0.2)
         '#ffcccc'
 
@@ -303,12 +286,10 @@ def gradient(start: str, end: str, factor: float):
     return getRgbToHex(rgb_diff)
 
 
-def colors(start: str, end: str, steps: int):
-    """
-    Generate a list of colors between two color codes.
+def colors(start: str, end: str, steps: int) -> List[str]:
+    """Generate a list of colors between two color codes.
 
     Usage::
-
         >>> colors("#ffffff", "#FF0000", 10)
         ['#ffffff', '#ffe2e2', '#ffc6c6', '#ffaaaa', '#ff8d8d', '#ff7171', '#ff5555', '#ff3838', '#ff1c1c', '#FF0000']
 
@@ -330,11 +311,9 @@ def colors(start: str, end: str, steps: int):
 
 
 def transparentize(color: str, alpha: float, is_hex: bool = False):
-    """
-    Change the color opacity.
+    """Change the color opacity.
 
     Usage::
-
       pk.colors.transparentize(pk.colors.HexColors.BLUE_VIOLET, 0.2, True)
 
     :param color: The color code hexa or rgb
@@ -347,11 +326,9 @@ def transparentize(color: str, alpha: float, is_hex: bool = False):
 
 
 def transparentize_all(colors: List[str], alpha: float, is_hex: bool = False):
-    """
-    Change the colors opacity.
+    """Change the colors opacity.
 
     Usage::
-
       pk.colors.transparentize_all(page.theme.charts, 0.2, True)
 
     :param colors: The color codes hexa or rgb
@@ -362,8 +339,7 @@ def transparentize_all(colors: List[str], alpha: float, is_hex: bool = False):
 
 
 def color_from_raw(color: str, data: list):
-    """
-    Get rgba colors based on the values.
+    """Get rgba colors based on the values.
 
     :param color: The base color.
     :param data: The intensities.
@@ -652,30 +628,22 @@ class DefinedColors:
 
     @property
     def hex(self):
-        """
-        Returns the Hexadecimal predefined color codes.
+        """Returns the Hexadecimal predefined color codes.
 
         Usage::
-
           Colors.DefinedColors().hex.CYAN
 
-        Related Pages:
-
-          https://www.rapidtables.com/web/color/RGB_Color.html
+        `RGB_Color <https://www.rapidtables.com/web/color/RGB_Color.html>`_
         """
         return HexColors
 
     @property
     def rgb(self):
-        """
-        Returns the RGB predefined color codes.
+        """Returns the RGB predefined color codes.
 
         Usage::
-
           Colors.DefinedColors().rgb.CYAN
 
-        Related Pages:
-
-          https://www.rapidtables.com/web/color/RGB_Color.html
+        `RGB_Color <https://www.rapidtables.com/web/color/RGB_Color.html>`_
         """
         return RgbColors

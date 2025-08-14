@@ -9,7 +9,7 @@ from abc import ABC, abstractmethod
 
 
 class JsRecFunc(ABC):
-  """
+    """
   This class cannot be used directly to format a record as the mandatory parameters are not defined and are set to None.
 
   Anyway as an interface this will give you the different information which have to be defined to create a new
@@ -35,55 +35,55 @@ class JsRecFunc(ABC):
     3. Be put together sum(count(...))
 
   """
-  alias = None
-  params = None
-  value = None
+    alias = None
+    params = None
+    value = None
 
-  @staticmethod
-  def extendArgs(category, originParams, newCols):
-    """
+    @staticmethod
+    def extendArgs(category, originParams, newCols):
+        """
 
     :param category:
     :param originParams:
     :param newCols:
     """
-    return originParams
+        return originParams
 
-  @staticmethod
-  @abstractmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    @abstractmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
     """
-    pass
+        pass
 
 
 class JsRowBuckets(JsRecFunc):
 
-  @staticmethod
-  def extendArgs(category, originParams, newCols):
-    """
+    @staticmethod
+    def extendArgs(category, originParams, newCols):
+        """
 
     :param category:
     :param originParams:
     :param newCols:
     """
-    originParams[1] += newCols
-    return originParams
+        originParams[1] += newCols
+        return originParams
 
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
     """
 
-  alias = "row-buckets"
-  params = ("allGroups", "seriesNames")
-  value = '''
+    alias = "row-buckets"
+    params = ("allGroups", "seriesNames")
+    value = '''
     var groupRowsIds = {}; var groupRows = {};
     data.forEach(function(rec, i){
       var inBuckets = {}; for(var g in allGroups){inBuckets[g] = null};
@@ -105,28 +105,28 @@ class JsRowBuckets(JsRecFunc):
 
 class JsRowTotal(JsRecFunc):
 
-  @staticmethod
-  def extendArgs(category, originParams, newCols):
-    """
+    @staticmethod
+    def extendArgs(category, originParams, newCols):
+        """
 
     :param category:
     :param originParams:
     :param newCols:
     """
-    originParams[0] += newCols
-    return originParams
+        originParams[0] += newCols
+        return originParams
 
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
     """
 
-  alias = "row-total"
-  params = ("seriesNames", "rowDefinition")
-  value = '''
+    alias = "row-total"
+    params = ("seriesNames", "rowDefinition")
+    value = '''
     seriesNames.forEach(function(v){rowDefinition[v] = 0});
     data.forEach(function(rec){
       if(!rec['_system']){seriesNames.forEach(function(v){rowDefinition[v] += rec[v]})};
@@ -136,38 +136,38 @@ class JsRowTotal(JsRecFunc):
 
 
 class JsAll(JsRecFunc):
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
     """
-    if params[0] is not None and params[1] is not None:
-      jsSchema['keys'] |= set(params[0])
-      jsSchema['values'] |= set(params[1])
+        if params[0] is not None and params[1] is not None:
+            jsSchema['keys'] |= set(params[0])
+            jsSchema['values'] |= set(params[1])
 
-  alias = "all"
-  params = ("keys", "values")
-  value = 'result = data'
+    alias = "all"
+    params = ("keys", "values")
+    value = 'result = data'
 
 
 class JsSum(JsRecFunc):
 
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
     """
-    if params[0] is not None and params[1] is not None:
-      jsSchema['keys'] |= set(params[0])
-      jsSchema['values'] |= set(params[1])
+        if params[0] is not None and params[1] is not None:
+            jsSchema['keys'] |= set(params[0])
+            jsSchema['values'] |= set(params[1])
 
-  alias = "sum"
-  params = ("keys", "values", "xOrder")
-  value = '''
+    alias = "sum"
+    params = ("keys", "values", "xOrder")
+    value = '''
     if ((keys == null) || (values == null)){result = data}
     else{
       var temp = {}; var order = []; 
@@ -187,20 +187,20 @@ class JsSum(JsRecFunc):
 
 class JsPercentage(JsRecFunc):
 
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
     """
-    if params[0] is not None and params[1] is not None:
-      jsSchema['keys'] |= set(params[0])
-      jsSchema['values'] |= set(params[1])
+        if params[0] is not None and params[1] is not None:
+            jsSchema['keys'] |= set(params[0])
+            jsSchema['values'] |= set(params[1])
 
-  alias = "percentage"
-  params = ("keys", "values")
-  value = ''' 
+    alias = "percentage"
+    params = ("keys", "values")
+    value = ''' 
     if ((keys == null) || (values == null)){result = data}
     else{
       var temp = {}; var order = []; var sumPerSeries = {};
@@ -220,7 +220,7 @@ class JsPercentage(JsRecFunc):
 
 
 class JsOperations(JsRecFunc):
-  """
+    """
   This function will aggregate the different values for each series according to a shcema defined in a Python
   dictionary in the last position of the tuple.
 
@@ -229,9 +229,9 @@ class JsOperations(JsRecFunc):
     aggFnc=('aggregation', ['direction'], values, {'dn': 'sum', 'Date': 'count'}),
   """
 
-  @staticmethod
-  def extendArgs(category, originParams, newCols):
-    """
+    @staticmethod
+    def extendArgs(category, originParams, newCols):
+        """
     This function will update the function argument according to the mode defined by the user. Indeed some properties
     can be received to validate the accuracy of the data.
     Those data should be added to the different transformation functions and the columns should be passed to the final
@@ -240,26 +240,26 @@ class JsOperations(JsRecFunc):
 
     :return: The update set of columns to be considered in the Javascript function
     """
-    if category == 'age':
-      originParams[1] = originParams[1] + newCols
-      for c in newCols:
-        originParams[2][c] = 'sum'
-    return originParams
+        if category == 'age':
+            originParams[1] = originParams[1] + newCols
+            for c in newCols:
+                originParams[2][c] = 'sum'
+        return originParams
 
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
     """
-    if params[0] is not None and params[1] is not None:
-      jsSchema['keys'] |= set(params[0])
-      jsSchema['values'] |= set(params[1])
+        if params[0] is not None and params[1] is not None:
+            jsSchema['keys'] |= set(params[0])
+            jsSchema['values'] |= set(params[1])
 
-  alias = "aggregation"
-  params = ("keys", "values", "operations")
-  value = '''
+    alias = "aggregation"
+    params = ("keys", "values", "operations")
+    value = '''
     var temp = {};
     var order = [];
     data.forEach( function(rec) { 
@@ -278,8 +278,8 @@ class JsOperations(JsRecFunc):
 
 
 class JsCount(JsRecFunc):
-  params = ("keys", "values")
-  value = '''
+    params = ("keys", "values")
+    value = '''
     var temp = {}; var order = [];
     data.forEach(function(rec){ 
       var aggKey = []; keys.forEach(function(k){aggKey.push(rec[k])}); var newKey = aggKey.join("#"); 
@@ -294,8 +294,8 @@ class JsCount(JsRecFunc):
 
 
 class JsCountSum(JsRecFunc):
-  params = ("keys", "values")
-  value = '''
+    params = ("keys", "values")
+    value = '''
     var temp = {}; var order = [];
     data.forEach(function(rec){ 
       var aggKey = []; keys.forEach(function(k){aggKey.push(rec[k])}); var newKey = aggKey.join("#"); 
@@ -317,12 +317,12 @@ class JsCountSum(JsRecFunc):
 
 class JsTop:
 
-  @staticmethod
-  def extendColumns(jsSchema, params): pass
+    @staticmethod
+    def extendColumns(jsSchema, params): pass
 
-  alias = "top"
-  params = ("countItems", "value", "sortType")
-  value = '''
+    alias = "top"
+    params = ("countItems", "value", "sortType")
+    value = '''
     var tmpRec = {};
     data.forEach(function(rec){
       if(tmpRec[rec[value]] === undefined){ tmpRec[rec[value]] = [rec] } else {tmpRec[rec[value]].push(rec)}});
@@ -337,14 +337,14 @@ class JsTop:
 
 
 class JsCountDistinct:
-  """
+    """
   Return the distinct counts of element in a list of columns. This function will return a list of dictionaries
   with the following structure {'column': '', 'count_distinct': 0}
 
   :return: A new recordSet with the properties of the requested keys
   """
-  params = ("keys", )
-  value = '''
+    params = ("keys",)
+    value = '''
     var temp = {}; keys.forEach(function(k){temp[k] = {}});
     data.forEach(function(rec){keys.forEach(function(k){temp[k][rec[k]] = 1})}); 
     for(var col in temp){
@@ -353,14 +353,14 @@ class JsCountDistinct:
 
 
 class JsCountAll:
-  """
+    """
   Function to produce KPI on an original recordSet. This function will create a new recordSet based on the selected
   columns of the original data source.
 
   :return: A new recordSet with the properties of the requested keys
   """
-  params = ("keys", )
-  value = '''
+    params = ("keys",)
+    value = '''
     var temp = {}; var order= [];
     data.forEach(function(rec){ 
       keys.forEach(function(k){
@@ -371,21 +371,21 @@ class JsCountAll:
 
 
 class JsRename:
-  """
+    """
   Function to remap some columns in the recordSet. The renaming is done based on the input parameter.
   The parameter passed in this function is a dictionary with as keys the existing column names and value the new column.
 
   :return: The Js recordSet with the new columns in each record. The original keys will be removed
   """
-  alias = "rename"
-  params = ("colsWithName", )
-  value = '''
+    alias = "rename"
+    params = ("colsWithName",)
+    value = '''
     data.forEach(function(rec){ 
       for(var col in colsWithName){rec[colsWithName[col]] = rec[col]; delete rec[col]; result.push(rec)}})'''
 
 
 class JsExtend:
-  """
+    """
   Function to add some predefined entries to each records in the RecordSet
   The parameter passed in the function call should be a dictionary with as keys the columns to be added to the original record
   and the value {'static': {}, 'dynamic': {}}
@@ -393,9 +393,9 @@ class JsExtend:
 
   :return: A new Js recordSet with the extra columns
   """
-  alias = "extend"
-  params = ('values', 'recKey')
-  value = '''
+    alias = "extend"
+    params = ('values', 'recKey')
+    value = '''
     if (Array.isArray(data)){
       if(recKey == undefined){
         data.forEach(function(rec, i){ 
@@ -419,12 +419,12 @@ class JsExtend:
 
 
 class JsExtendDataSet:
-  """
+    """
   :return: A new Js recordSet with the extra columns in the datasets section
   """
-  alias = "extend-dataset"
-  params = ("values", 'recKey')
-  value = '''
+    alias = "extend-dataset"
+    params = ("values", 'recKey')
+    value = '''
     var records; var recResults; 
     if(recKey == undefined){records = data; recResults = result} 
     else {records = data[recKey];result[recKey] = [];recResults = result[recKey];
@@ -436,15 +436,15 @@ class JsExtendDataSet:
 
 
 class JsFilter:
-  """
+    """
   Filter the different records in a recordSet from the definition given as a parameter.
   The filters definition is based on a dictionary as keys the column names. Each records should have the given columns.
   All records which do not match the rules will not be considered
 
   :return: A new JS dictionary with only the selected lines
   """
-  pmts = ("filterCols", )
-  content = ''' 
+    pmts = ("filterCols",)
+    content = ''' 
     filters = {};
     filterCols.forEach(function(rec){  
       if (filters[rec['colName']] === undefined){
@@ -466,12 +466,12 @@ class JsFilter:
 
 
 class JsIntensity:
-  """
+    """
 
   """
-  alias = "intensity"
-  params = ("cols",)
-  value = '''
+    alias = "intensity"
+    params = ("cols",)
+    value = '''
     stats = {};
     cols.forEach(function(col){stats[col] = {min: null, max: null}});
     data.forEach(function(rec){
@@ -483,9 +483,9 @@ class JsIntensity:
       result.push(rec)});
     '''
 
-  @staticmethod
-  def extendColumns(jsSchema, params):
-    """
+    @staticmethod
+    def extendColumns(jsSchema, params):
+        """
 
     :param jsSchema:
     :param params:
@@ -493,8 +493,8 @@ class JsIntensity:
 
 
 class JsToUrl:
-  alias = "dictToUrl"
-  value = '''
+    alias = "dictToUrl"
+    value = '''
     var tmpResults = [];
     for(var k in data["pmts"]){tmpResults.push(k +"="+ data["pmts"][k])}; 
     result = tmpResults.join("&");

@@ -4,14 +4,11 @@ import logging
 from pathlib import Path
 from typing import Optional, List, Tuple, Any, Dict, Union
 from epyk.core.py import primitives, types
-
 from epyk.core.html import html_template_loader, html_formatter
 from epyk.core.html.Html import Html
 from epyk.core.html.options import OptionsWithTemplates
 from epyk.core.html.mixins import MixHtmlState
-
 from epyk.core.css import css_files_loader
-
 from epyk.core.js import JsUtils
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.primitives import JsObjects
@@ -19,7 +16,7 @@ from epyk.core.js.html import JsHtml
 from epyk.core.js.packages import JsPackage
 
 
-EXPORTS_VAR = "exports"
+EXPORTS_VAR: str = "exports"
 
 
 def resolve_attributes(attributes: list, result: dict = None):
@@ -161,7 +158,7 @@ def get_static_method(func_name: str, library: str = None, set_exports: bool = F
 
 
 class DomComponent(JsHtml.JsHtml):
-    arg_container_id = "containerId"
+    arg_container_id: str = "containerId"
 
     @property
     def container(self):
@@ -237,7 +234,12 @@ class JsComponents(JsPackage):
         self.component, self.page = component, page
         self._js, self._jquery = [], None
 
-    def build(self, data: types.JS_DATA_TYPES, options: types.JS_DATA_TYPES = None, fnc: str = "build"):
+    def build(
+            self,
+            data: types.JS_DATA_TYPES,
+            options: types.JS_DATA_TYPES = None,
+            fnc: str = "build"
+    ) -> JsObjects.JsObject.JsObject:
         """
         :param data: Optional. Component data
         :param options: Optional. Specific Python options available for this component
@@ -247,7 +249,7 @@ class JsComponents(JsPackage):
         return JsObjects.JsObject.JsObject.get("%s.%s(%s, %s)" % (
             self.varName, fnc, JsUtils.jsConvertData(data, None), JsUtils.jsConvertData(options or {}, None)))
 
-    def empty(self, options: types.JS_DATA_TYPES = None, fnc: str = "empty"):
+    def empty(self, options: types.JS_DATA_TYPES = None, fnc: str = "empty") -> JsObjects.JsObject.JsObject:
         """Empty the content of the container.
         This will call the underlying empty function which must be defined in the JavaScript component.
 
@@ -258,7 +260,12 @@ class JsComponents(JsPackage):
         return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (
             self.varName, fnc, JsUtils.jsConvertData(options, None)))
 
-    def set(self, data: types.JS_DATA_TYPES = None, options: types.JS_DATA_TYPES = None, fnc: str = "set"):
+    def set(
+            self,
+            data: types.JS_DATA_TYPES = None,
+            options: types.JS_DATA_TYPES = None,
+            fnc: str = "set"
+    ) -> JsObjects.JsObject.JsObject:
         """Set the content of the container. This method usually is used fto init / reset the component.
         This will call the underlying set function which must be defined in the JavaScript component.
 
@@ -271,12 +278,11 @@ class JsComponents(JsPackage):
             self.varName, fnc, JsUtils.jsConvertData(data, None),
             JsUtils.jsConvertData(options, None)))
 
-    def custom(self, func_name: str, **kwargs):
+    def custom(self, func_name: str, **kwargs) -> JsObjects.JsObject.JsObject:
         """Map a custom method not yet defined in the Python schema.
         This will accept also any kwargs in order to pass this to the JavaScript underlying method.
 
         Usage::
-
             # JavaScript side
             Component.prototype.testFnc = function(data){ console.log(data) }
 
@@ -285,7 +291,7 @@ class JsComponents(JsPackage):
         _args = ["%s=%s" % (k, JsUtils.jsConvertData(v, None)) for k, v in kwargs.items()]
         return JsObjects.JsObject.JsObject.get("%s.%s(%s)" % (self.varName, func_name, ", ".join(_args)))
 
-    def trim(self, fnc: str = None):
+    def trim(self, fnc: str = None) -> JsUtils.jsWrap:
         """Trim a JavaScript component with the specific features of the component.
 
         :param fnc: Optional. Static method to define / pain the component (Default trim%(className)s)
@@ -423,7 +429,6 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
             page.onDOMContentLoaded([
                 comp.dom.container.lastChild.css({"border": "1px solid red"}),
                 comp.dom.container.child(1).css({"color": "blue"})
@@ -484,7 +489,6 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         """Return the JavaScript fragment to refresh the component content.
 
         Usage::
-
           dt = page.ui.rich.update()
           page.ui.button("Update").click([dt.refresh()])
 
@@ -497,8 +501,10 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         """
         # check if there is no nested HTML components in the data
         if isinstance(data, dict):
-            tmp_data = ["%s: %s" % (JsUtils.jsConvertData(k, None), JsUtils.jsConvertData(v, None)) for k, v in
-                        data.items()]
+            tmp_data = [
+                "%s: %s" % (
+                    JsUtils.jsConvertData(k, None),
+                    JsUtils.jsConvertData(v, None)) for k, v in data.items()]
             js_data = "{%s}" % ",".join(tmp_data)
         else:
             js_data = JsUtils.dataFlows(data, dataflows, self.page)
@@ -558,7 +564,6 @@ class Component(MixHtmlState.HtmlOverlayStates, Html):
         By default this function will add the values defined for the component to the {text} key.
 
         Usage::
-
             comp = page.ui.component("test-color")
             comp.prepare(text="Test")
         """

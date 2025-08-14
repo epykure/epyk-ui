@@ -1,27 +1,22 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import json
 from pathlib import Path
 from typing import Union, Optional
-from epyk.core.py import primitives
-from epyk.core.py import types
-import json
-
+from epyk.core.py import primitives, types
 from epyk.core.html import Html
 from epyk.core.html.options import OptSelect
 from epyk.core.data.DataPy import SelectionBox
-
-#
 from epyk.core.js import JsUtils
 from epyk.core.js.html import JsHtmlSelect
-from epyk.core.js.packages import JsQuery
-from epyk.core.js.packages import JsSelect
+from epyk.core.js.packages import JsQuery, JsSelect
 
 
 class Option(Html.Html):
-    name = 'Select Option'
+    name: str = 'Select Option'
     builder_name = False
-    tag = "option"
+    tag: str = "option"
 
     def __init__(self, page: primitives.PageModel, value, text: str, icon: Optional[str], selected: bool,
                  options: Optional[dict] = None, verbose: bool = False):
@@ -41,9 +36,9 @@ class Option(Html.Html):
 
 
 class Optgroup(Html.Html):
-    name = 'Select Option Group'
+    name: str = 'Select Option Group'
     builder_name = False
-    tag = "optgroup"
+    tag: str = "optgroup"
 
     def __init__(self, page: primitives.PageModel, data: list, label: str, verbose: bool = False):
         super(Optgroup, self).__init__(page, data, verbose=verbose)
@@ -56,9 +51,9 @@ class Optgroup(Html.Html):
 
 class Select(Html.Html):
     requirements = ('bootstrap-select',)
-    name = 'Select'
-    tag = "select"
-    builder_module = "SelectPicker"
+    name: str = 'Select'
+    tag: str = "select"
+    builder_module: str = "SelectPicker"
     _option_cls = OptSelect.OptionsSelectJs
 
     style_urls = [
@@ -129,9 +124,8 @@ class Select(Html.Html):
 
     @property
     def js(self) -> JsSelect.JSelect:
-        """Return all the Javascript functions defined for an HTML Component.
-        Those functions will use plain javascript by default.
-        `Package Doc <https://developer.snapappointments.com/bootstrap-select/methods/>`_
+        """Return all the Javascript functions defined for an HTML Component. Those functions will use plain javascript
+        by default. `Package Doc <https://developer.snapappointments.com/bootstrap-select/methods/>`_
 
         :return: A Javascript Dom object
         """
@@ -253,7 +247,11 @@ selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_
             opt_rp.options.managed = False
             data.append(opt_rp.html())
         self.page.properties.js.add_builders(
-            "%s.selectpicker(%s).selectpicker('refresh')" % (self.dom.jquery.varId, json.dumps(self._jsStyles)))
+            '''(function(){let selectInitValue = (new URLSearchParams(document.location.search)).get("%(html_code)s"); 
+%(id)s.selectpicker(%(options)s); 
+if(selectInitValue){if(%(id)s[0].multiple){%(id)s.val(selectInitValue.split(','))}else {%(id)s.val(selectInitValue)}};
+%(id)s.selectpicker('refresh')})()
+            ''' % {"html_code": self.html_code, "options": json.dumps(self._jsStyles), "id": self.dom.jquery.varId})
         if self.attr.get("data-width") is not None:
             self.page.css.customText('.%s_width {width: %s !IMPORTANT}' % (self.html_code, self.attr.get("data-width")))
             self.attr['class'].add("%s_width" % self.html_code)
@@ -275,7 +273,7 @@ selectObj.val(selections).change()''' % JsQuery.decorate_var("htmlObj", convert_
 
 class Lookup(Select):
     requirements = ('bootstrap-select',)
-    tag = "select"
+    tag: str = "select"
 
     def __init__(self, page: primitives.PageModel, records: list, html_code: Optional[str], width: tuple, height: tuple,
                  profile: Optional[Union[bool, dict]], multiple: bool, options: Optional[dict], verbose: bool = False):

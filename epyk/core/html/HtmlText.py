@@ -17,12 +17,11 @@ from epyk.core.html import Defaults as Default_html
 from epyk.core.js.objects import JsNodeDom
 from epyk.core.js.packages import JsCompNumber
 from epyk.core.js.html import JsHtml
-from epyk.core.css.styles import GrpCls
 
 
 class Label(MixHtmlState.HtmlStates, Html.Html):
-    name = 'Label'
-    tag = "label"
+    name: str = 'Label'
+    tag: str = "label"
     _option_cls = OptText.OptionsText
 
     style_urls = [
@@ -54,7 +53,6 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
         Those functions will use plain javascript available for a DOM element by default.
 
         Usage::
-
           div = page.ui.label(htmlCode="testDiv")
           print(div.dom.content)
 
@@ -85,7 +83,6 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
         has been build.
 
         Usage::
-
           select.label.click(str(page.js.console.log("test")))
 
         `Doc event <https://www.w3schools.com/js/js_htmldom_eventlistener.asp>`_
@@ -131,8 +128,8 @@ class Label(MixHtmlState.HtmlStates, Html.Html):
 
 
 class Span(MixHtmlState.HtmlStates, Html.Html):
-    name = 'Span'
-    tag = "span"
+    name: str = 'Span'
+    tag: str = "span"
     _option_cls = OptText.OptionsText
 
     style_urls = [
@@ -191,7 +188,6 @@ class Span(MixHtmlState.HtmlStates, Html.Html):
         has been build.
 
         Usage::
-
           select.label.click(str(page.js.console.log("test")))
 
         `Doc event <https://www.w3schools.com/js/js_htmldom_eventlistener.asp>`_
@@ -243,8 +239,8 @@ class Position(Span):
 
 class Text(MixHtmlState.HtmlStates, Html.Html):
     """Text component (based on DIV)"""
-    name = 'Text'
-    tag = "div"
+    name: str = 'Text'
+    tag: str = "div"
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, text: str, color: str, align: str, width, height, html_code: str,
@@ -326,7 +322,6 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
         """Change the component properties to be editable if double clicked.
 
         Usage::
-
           page.ui.text("This is a text").editable()
 
         :return: Self to allow the chaining.
@@ -380,8 +375,8 @@ class Text(MixHtmlState.HtmlStates, Html.Html):
 
 class Pre(MixHtmlState.HtmlStates, Html.Html):
     """Pre-formatted text component"""
-    name = 'Pre formatted text'
-    tag = "pre"
+    name: str = 'Pre formatted text'
+    tag: str = "pre"
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, vals, color, width, height, html_code, options, helper, profile):
@@ -427,8 +422,8 @@ class Pre(MixHtmlState.HtmlStates, Html.Html):
 
 class Paragraph(MixHtmlState.HtmlStates, Html.Html):
     """Paragraph component"""
-    name = 'Paragraph'
-    tag = "div"
+    name: str = 'Paragraph'
+    tag: str = "div"
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, text, color, background_color, border, width, height, html_code,
@@ -488,8 +483,8 @@ class Paragraph(MixHtmlState.HtmlStates, Html.Html):
 
 
 class BlockQuote(Html.Html):
-    name = 'Block Quote'
-    tag = "blockquote"
+    name: str = 'Block Quote'
+    tag: str = "blockquote"
 
     def __init__(self, page: primitives.PageModel, text, author, color, width, height, html_code, helper, options,
                  profile):
@@ -509,8 +504,8 @@ class BlockQuote(Html.Html):
 
 
 class Title(MixHtmlState.HtmlStates, Html.Html):
-    name = 'Title'
-    tag = "div"
+    name: str = 'Title'
+    tag: str = "div"
     _option_cls = OptText.OptionsTitle
 
     style_urls = [
@@ -554,13 +549,6 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
         self.classList.add(self.style_refs["html-title"])
 
     @property
-    def style(self) -> GrpCls.ClassHtmlEmpty:
-        """Property to the CSS Style of the component"""
-        if self._styleObj is None:
-            self._styleObj = GrpCls.ClassHtmlEmpty(self)
-        return self._styleObj
-
-    @property
     def dom(self) -> JsHtml.JsHtmlRich:
         """Return all the Javascript functions defined for an HTML Component.
         Those functions will use plain javascript by default.
@@ -586,7 +574,6 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
         activated once the component has been build.
 
         Usage::
-
           select.label.click(str(page.js.console.log("test")))
 
         `Doc eventlistener <https://www.w3schools.com/js/js_htmldom_eventlistener.asp>`_
@@ -618,8 +605,8 @@ class Title(MixHtmlState.HtmlStates, Html.Html):
 
 class Numeric(MixHtmlState.HtmlStates, Html.Html):
     """Numeric component"""
-    name = 'Numeric'
-    tag = "div"
+    name: str = 'Numeric'
+    tag: str = "div"
     requirements = ('accounting',)
     _option_cls = OptText.OptionsNumber
 
@@ -750,8 +737,8 @@ class Numeric(MixHtmlState.HtmlStates, Html.Html):
 
 
 class Highlights(MixHtmlState.HtmlStates, Html.Html):
-    name = 'Highlights'
-    tag = "div"
+    name: str = 'Highlights'
+    tag: str = "div"
     requirements = ('bootstrap',)
     _option_cls = OptText.OptionsHighlights
 
@@ -793,8 +780,8 @@ class Highlights(MixHtmlState.HtmlStates, Html.Html):
 
 
 class Fieldset(MixHtmlState.HtmlStates, Html.Html):
-    name = 'Fieldset'
-    tag = "fieldset"
+    name: str = 'Fieldset'
+    tag: str = "fieldset"
     _option_cls = OptText.OptionsText
 
     def __init__(self, page: primitives.PageModel, legend: str, width: str, height: str, helper: Optional[str],

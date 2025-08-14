@@ -58,3 +58,5 @@ ts/*
 epyk/core/js/native/*
 ts/*/node_modules/*
 utils/hc_json.py
+minify-log.txt
+fake_output.txt

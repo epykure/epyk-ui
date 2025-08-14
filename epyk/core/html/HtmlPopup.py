@@ -11,8 +11,8 @@ from epyk.core.js.html import JsHtmlPopup
 
 
 class Popup(Html.Html):
-    name = 'Popup Container'
-    tag = "div"
+    name: str = 'Popup Container'
+    tag: str = "div"
 
     style_urls = [
         Path(__file__).parent.parent / "css" / "native" / "html-popup.css",

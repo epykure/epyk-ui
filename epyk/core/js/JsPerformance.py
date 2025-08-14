@@ -11,7 +11,6 @@ Related Pages:
 
 """
 
-
 from typing import Union, Optional
 from epyk.core.py import primitives
 
@@ -23,13 +22,13 @@ from epyk.core.js.primitives import JsArray
 
 
 class JsPerformance:
-  def __init__(self, page: primitives.PageModel = None):
-    self.page = page
-    self.__marks = set([])
-    self.__count = 0
+    def __init__(self, page: primitives.PageModel = None):
+        self.page = page
+        self.__marks = set([])
+        self.__count = 0
 
-  def add_profiling(self, js_funcs: Optional[Union[list, str]]):
-    """
+    def add_profiling(self, js_funcs: Optional[Union[list, str]]):
+        """
     Wrap the Javascript functions with function to asset on the execution time.
 
     Usage::
@@ -44,16 +43,16 @@ class JsPerformance:
 
     :return: The profile variable name
     """
-    profile_var = "profile_%s" % self.__count
-    if not isinstance(js_funcs, list):
-      js_funcs = [js_funcs]
-    js_funcs.insert(0, "var %s_start = %s" % (profile_var, self.now))
-    js_funcs.append("var %s = %s - %s_start" % (profile_var, self.now, profile_var))
-    self.__count += 1
-    return profile_var
+        profile_var = "profile_%s" % self.__count
+        if not isinstance(js_funcs, list):
+            js_funcs = [js_funcs]
+        js_funcs.insert(0, "var %s_start = %s" % (profile_var, self.now))
+        js_funcs.append("var %s = %s - %s_start" % (profile_var, self.now, profile_var))
+        self.__count += 1
+        return profile_var
 
-  def clearMarks(self, name: Optional[str] = None):
-    """
+    def clearMarks(self, name: Optional[str] = None):
+        """
     The clearMarks() method removes the named mark from the browser's performance entry buffer.
     If the method is called with no arguments, all performance entries with an entry type of "mark" will be removed
     from the performance entry buffer.
@@ -70,16 +69,16 @@ class JsPerformance:
 
     :return: Void, the String for the Javascript side
     """
-    if name is not None:
-      if name not in self.__marks:
-        raise ValueError("Mark %s not defined in the performances" % name)
+        if name is not None:
+            if name not in self.__marks:
+                raise ValueError("Mark %s not defined in the performances" % name)
 
-      return JsFncs.JsFunction("performance.clearMarks(%s)" % name)
+            return JsFncs.JsFunction("performance.clearMarks(%s)" % name)
 
-    return JsFncs.JsFunction("performance.clearMarks()")
+        return JsFncs.JsFunction("performance.clearMarks()")
 
-  def clearMeasures(self, name: Optional[str] = None):
-    """
+    def clearMeasures(self, name: Optional[str] = None):
+        """
     The clearMeasures() method removes the named measure from the browser's performance entry buffer.
     If the method is called with no arguments, all performance entries with an entry type of "measure" will be removed
     from the performance entry buffer.
@@ -96,14 +95,14 @@ class JsPerformance:
 
     :return: Void, the String for the Javascript side
     """
-    if name is not None:
-      self.__marks.remove(name)
-      return JsFncs.JsFunction("performance.clearMeasures(%s)" % name)
+        if name is not None:
+            self.__marks.remove(name)
+            return JsFncs.JsFunction("performance.clearMeasures(%s)" % name)
 
-    return JsFncs.JsFunction("performance.clearMeasures()")
+        return JsFncs.JsFunction("performance.clearMeasures()")
 
-  def clearResourceTimings(self):
-    """
+    def clearResourceTimings(self):
+        """
     The clearResourceTimings() method removes all performance entries with an entryType of "resource" from
     the browser's performance data buffer and sets the size of the performance data buffer to zero.
     To set the size of the browser's performance data buffer, use the Performance.setResourceTimingBufferSize() method.
@@ -118,10 +117,10 @@ class JsPerformance:
 
     :return: This method has no return value, but only the String for the Javascript side
     """
-    return JsFncs.JsFunction("performance.clearResourceTimings()")
+        return JsFncs.JsFunction("performance.clearResourceTimings()")
 
-  def getEntries(self):
-    """
+    def getEntries(self):
+        """
     The getEntries() method returns a list of all PerformanceEntry objects for the page.
     The list's members (entries) can be created by making performance marks or
     measures (for example by calling the mark() method) at explicit points in time.
@@ -134,10 +133,10 @@ class JsPerformance:
 
     :return: An array of PerformanceEntry objects
     """
-    return JsArray.JsArray("window.performance.getEntries()", is_py_data=False)
+        return JsArray.JsArray("window.performance.getEntries()", is_py_data=False)
 
-  def getEntriesByName(self, name: Union[primitives.JsDataModel, str], entry_type: Optional[str] = None):
-    """
+    def getEntriesByName(self, name: Union[primitives.JsDataModel, str], entry_type: Optional[str] = None):
+        """
     The getEntriesByName() method returns a list of PerformanceEntry objects for the given name and type.
     The list's members (entries) can be created by making performance marks or
     measures (for example by calling the mark() method) at explicit points in time.
@@ -155,17 +154,17 @@ class JsPerformance:
 
     :return: A list of PerformanceEntry objects that have the specified name and type
     """
-    if name not in self.__marks:
-      raise ValueError("Mark %s not defined in the performances" % name)
+        if name not in self.__marks:
+            raise ValueError("Mark %s not defined in the performances" % name)
 
-    name = JsUtils.jsConvertData(name, None)
-    if entry_type is not None:
-      return JsArray.JsArray("window.performance.getEntriesByName(%s, %s)" % (name, entry_type), is_py_data=False)
+        name = JsUtils.jsConvertData(name, None)
+        if entry_type is not None:
+            return JsArray.JsArray("window.performance.getEntriesByName(%s, %s)" % (name, entry_type), is_py_data=False)
 
-    return JsArray.JsArray("window.performance.getEntriesByName(%s)" % name, is_py_data=False)
+        return JsArray.JsArray("window.performance.getEntriesByName(%s)" % name, is_py_data=False)
 
-  def getEntriesByType(self, entry_type: str):
-    """
+    def getEntriesByType(self, entry_type: str):
+        """
     The getEntriesByType() method returns a list of PerformanceEntry objects for a given type.
     The list's members (entries) can be created by making performance marks or
     measures (for example by calling the mark() method) at explicit points in time.
@@ -182,10 +181,10 @@ class JsPerformance:
 
     :return: A list of PerformanceEntry objects that have the specified type.
     """
-    return JsArray.JsArray("window.performance.getEntriesByType('%s')" % entry_type, is_py_data=False)
+        return JsArray.JsArray("window.performance.getEntriesByType('%s')" % entry_type, is_py_data=False)
 
-  def mark(self, name: Union[primitives.JsDataModel, str]):
-    """
+    def mark(self, name: Union[primitives.JsDataModel, str]):
+        """
     The mark() method creates a timestamp in the browser's performance entry buffer with the given name.
     The application defined timestamp can be retrieved by one of the Performance interface's getEntries*() methods
     (getEntries(), getEntriesByName() or getEntriesByType()).
@@ -202,13 +201,13 @@ class JsPerformance:
 
     :return: Void, The String for the Javascript side.
     """
-    self.__marks.add(name)
-    name = JsUtils.jsConvertData(name, None)
-    return JsFncs.JsFunction("performance.mark(%s)" % name)
+        self.__marks.add(name)
+        name = JsUtils.jsConvertData(name, None)
+        return JsFncs.JsFunction("performance.mark(%s)" % name)
 
-  def measure(self, name: Union[primitives.JsDataModel, str], start_mark: Optional[str] = None,
-              end_mark: Optional[str] = None):
-    """
+    def measure(self, name: Union[primitives.JsDataModel, str], start_mark: Optional[str] = None,
+                end_mark: Optional[str] = None):
+        """
     The measure() method creates a named timestamp in the browser's performance entry buffer between marks,
     the navigation start time, or the current time.
 
@@ -225,24 +224,24 @@ class JsPerformance:
 
     :return: Void, The String for the Javascript side
     """
-    name = JsUtils.jsConvertData(name, None)
-    if start_mark is not None:
-      if start_mark not in self.__marks:
-        raise ValueError("Mark %s not defined in the performances" % start_mark)
+        name = JsUtils.jsConvertData(name, None)
+        if start_mark is not None:
+            if start_mark not in self.__marks:
+                raise ValueError("Mark %s not defined in the performances" % start_mark)
 
-      if end_mark is not None:
-        if start_mark not in self.__marks:
-          raise ValueError("Mark %s not defined in the performances" % start_mark)
+            if end_mark is not None:
+                if start_mark not in self.__marks:
+                    raise ValueError("Mark %s not defined in the performances" % start_mark)
 
-        return JsFncs.JsFunction("performance.measure(%s, %s, %s)" % (name, start_mark, end_mark))
-      else:
-        return JsFncs.JsFunction("performance.measure(%s, '%s')" % (name, end_mark))
+                return JsFncs.JsFunction("performance.measure(%s, %s, %s)" % (name, start_mark, end_mark))
+            else:
+                return JsFncs.JsFunction("performance.measure(%s, '%s')" % (name, end_mark))
 
-    return JsFncs.JsFunction("performance.measure(%s)" % name)
+        return JsFncs.JsFunction("performance.measure(%s)" % name)
 
-  @property
-  def now(self):
-    """
+    @property
+    def now(self):
+        """
     The performance.now() method returns a DOMHighResTimeStamp, measured in milliseconds.
 
     Usage::
@@ -255,10 +254,10 @@ class JsPerformance:
 
     :return: A Javascript Number
     """
-    return JsNumber.JsNumber("performance.now()", is_py_data=False)
+        return JsNumber.JsNumber("performance.now()", is_py_data=False)
 
-  def setResourceTimingBufferSize(self, max_size: int):
-    """
+    def setResourceTimingBufferSize(self, max_size: int):
+        """
     The setResourceTimingBufferSize() method sets the browser's resource timing buffer size to the specified number
     of "resource" performance entry type objects.
 
@@ -274,10 +273,10 @@ class JsPerformance:
 
     :return: Void, the String for the Javascript side.
     """
-    return JsFncs.JsFunction("performance.setResourceTimingBufferSize(%s)" % max_size)
+        return JsFncs.JsFunction("performance.setResourceTimingBufferSize(%s)" % max_size)
 
-  def toJSON(self):
-    """
+    def toJSON(self):
+        """
     The toJSON() method of the Performance interface is a standard serializer: it returns a JSON representation of
     the performance object's properties.
 
@@ -291,5 +290,4 @@ class JsPerformance:
 
     :return: A JSON object that is the serialization of the Performance object.
     """
-    return JsObject.JsObject("performance.toJSON()", is_py_data=False)
-
+        return JsObject.JsObject("performance.toJSON()", is_py_data=False)

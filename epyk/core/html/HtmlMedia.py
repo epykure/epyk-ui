@@ -7,8 +7,7 @@ import os
 from typing import Union, Optional
 from epyk.core.py import primitives
 
-from epyk.core.html import Html
-from epyk.core.html import Defaults
+from epyk.core.html import Html, Defaults
 from epyk.core.html.options import OptButton
 
 # The list of JSS modules
@@ -17,8 +16,8 @@ from epyk.core.js.html import JsHtml
 
 
 class Source(Html.Html):
-    name = 'Source'
-    tag = "source"
+    name: str = 'Source'
+    tag: str = "source"
 
     def __init__(self, page: primitives.PageModel, path: str, video: str):
         super(Source, self).__init__(page, "")
@@ -32,8 +31,8 @@ class Source(Html.Html):
 
 
 class Media(Html.Html):
-    name = 'Video'
-    tag = "video"
+    name: str = 'Video'
+    tag: str = "video"
     _option_cls = OptButton.OptMedia
     mime_mapping = {
         ".avi": "video/x-msvideo",
@@ -79,8 +78,8 @@ class Media(Html.Html):
 
 
 class Audio(Media):
-    name = 'Audio'
-    tag = "audio"
+    name: str = 'Audio'
+    tag: str = "audio"
     mime_mapping = {
         ".aac": "audio/aac",
         ".midi": "audio/midi",
@@ -102,10 +101,10 @@ class Audio(Media):
 
 
 class Youtube(Html.Html):
-    name = 'Youtube Video'
-    tag = "div"
+    name: str = 'Youtube Video'
+    tag: str = "div"
 
-    EMBED_URL = "https://www.youtube.com/embed"
+    EMBED_URL: str = "https://www.youtube.com/embed"
 
     def __init__(self, page: primitives.PageModel, link: str, width: tuple, height: tuple, html_code: str,
                  profile: Union[bool, dict], options: Optional[dict]):
@@ -133,8 +132,8 @@ class Youtube(Html.Html):
 
 
 class Camera(Html.Html):
-    name = 'Camera'
-    tag = "video"
+    name: str = 'Camera'
+    tag: str = "video"
     _option_cls = OptButton.OptMedia
 
     def __init__(self, page: primitives.PageModel, width: tuple, height: tuple, html_code: str,

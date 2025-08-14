@@ -5,5 +5,4 @@ from epyk.core.js.packages import JsPackage
 
 
 class JQueryTime(JsPackage):
-  lib_alias = {"js": 'timepicker', 'css': 'timepicker'}
-
+    lib_alias = {"js": 'timepicker', 'css': 'timepicker'}
